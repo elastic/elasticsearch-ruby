@@ -3,21 +3,28 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "elasticsearch"
-  spec.version       = Elasticsearch::VERSION
-  spec.authors       = ["Karel Minarik"]
-  spec.email         = ["karmi@karmi.cz"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
-  spec.license       = "MIT"
+Gem::Specification.new do |s|
+  s.name          = "elasticsearch"
+  s.version       = Elasticsearch::VERSION
+  s.authors       = ["Karel Minarik"]
+  s.email         = ["karel.minarik@elasticsearch.org"]
+  s.summary       = "Ruby integrations for Elasticsearch"
+  s.homepage      = "http://github.com/elasticsearch/elasticsearch-ruby"
+  s.license       = "Apache 2"
 
-  spec.files         = `git ls-files`.split($/)
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  s.files         = `git ls-files`.split($/)
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
+  s.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
+  s.extra_rdoc_files  = [ "README.md", "LICENSE.txt" ]
+  s.rdoc_options      = [ "--charset=UTF-8" ]
+
+  s.add_development_dependency "bundler", "> 1"
+  s.add_development_dependency "rake"
+
+  s.description = <<-DESC.gsub(/^    /, '')
+    Ruby client, API/DSL and components for Elasticsearch.
+    A "meta-gem" wrapping `elasticsearch-client` and `elasticsearch-api`.
+  DESC
 end
