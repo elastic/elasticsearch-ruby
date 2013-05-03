@@ -1,1 +1,41 @@
 require "bundler/gem_tasks"
+
+task :default => :test
+
+# ----- Test tasks ------------------------------------------------------------
+
+require 'rake/testtask'
+Rake::TestTask.new(:test) do |test|
+  test.libs << 'lib' << 'test'
+  test.test_files = FileList['test/unit/**/*_test.rb', 'test/integration/**/*_test.rb']
+  # test.verbose = true
+  # test.warning = true
+end
+
+namespace :test do
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/unit/**/*_test.rb"]
+  end
+  Rake::TestTask.new(:integration) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/integration/**/*_test.rb"]
+  end
+end
+
+# ----- Documentation tasks ---------------------------------------------------
+
+require 'yard'
+YARD::Rake::YardocTask.new (:doc) do |t|
+  t.options = %w| --embed-mixins --markup=markdown |
+end
+
+# ----- Code analysis tasks ---------------------------------------------------
+
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  require 'cane/rake_task'
+  Cane::RakeTask.new(:quality) do |cane|
+    cane.abc_max = 15
+    cane.no_style = true
+  end
+end
