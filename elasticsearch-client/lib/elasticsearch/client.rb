@@ -1,4 +1,5 @@
 require "time"
+require "timeout"
 require "multi_json"
 require "faraday"
 

@@ -23,6 +23,10 @@ Gem::Specification.new do |s|
   s.add_dependency "multi_json"
   s.add_dependency "faraday"
 
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+    s.add_dependency "system_timer"
+  end
+
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 
