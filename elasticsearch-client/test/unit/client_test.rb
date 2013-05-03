@@ -8,6 +8,7 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
 
   context "Client" do
     setup do
+      Elasticsearch::Client::Client::DEFAULT_TRANSPORT_CLASS.any_instance.stubs(:__build_connections)
       @client = Elasticsearch::Client::Client.new
     end
 

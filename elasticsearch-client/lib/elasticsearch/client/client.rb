@@ -2,7 +2,6 @@ module Elasticsearch
   module Client
     class Client
       DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
-      DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
 
       DEFAULT_LOGGER = lambda do
         require 'logger'
@@ -24,7 +23,6 @@ module Elasticsearch
 
       def initialize(hosts=nil, options={})
         transport_class  = options[:transport_class] || DEFAULT_TRANSPORT_CLASS
-        options[:serializer_class] ||= DEFAULT_SERIALIZER_CLASS
         options[:logger] ||= options[:log]   ? DEFAULT_LOGGER.call() : nil
         options[:tracer] ||= options[:trace] ? DEFAULT_TRACER.call() : nil
         options[:rebuild_connections] ||= false
