@@ -20,10 +20,11 @@ module Elasticsearch
               :connections => hosts.map { |host|
                 host[:protocol] ||= DEFAULT_PROTOCOL
                 host[:port]     ||= DEFAULT_PORT
+                url               = "#{host[:protocol]}://#{host[:host]}:#{host[:port]}"
 
                 Connections::Connection.new \
                   :host => host,
-                  :connection => ::Faraday::Connection.new("#{host[:protocol]}://#{host[:host]}:#{host[:port]}")
+                  :connection => ::Faraday::Connection.new( :url => url, &@block )
               },
               :selector_class => options[:selector_class],
               :selector => options[:selector]

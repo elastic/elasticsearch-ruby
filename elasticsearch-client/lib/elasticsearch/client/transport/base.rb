@@ -10,9 +10,10 @@ module Elasticsearch
         attr_reader   :hosts, :options, :connections, :counter, :protocol
         attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :reload_connections
 
-        def initialize(arguments={})
+        def initialize(arguments={}, &block)
           @hosts       = arguments[:hosts]   || []
           @options     = arguments[:options] || {}
+          @block       = block
           @connections = __build_connections
 
           @serializer  = options[:serializer] || ( options[:serializer_class] ? options[:serializer_class].new(self) : DEFAULT_SERIALIZER_CLASS.new(self) )

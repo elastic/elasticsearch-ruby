@@ -42,6 +42,16 @@ class Elasticsearch::Client::Transport::HTTP::FaradayTest < Test::Unit::TestCase
                          @transport.connections.selector
     end
 
+    should "allow to set options for Faraday" do
+      config_block = lambda do |f|
+        f.response :logger
+      end
+
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ], &config_block
+
+      handlers = transport.connections.first.connection.instance_variable_get(:@builder).instance_variable_get(:@handlers)
+      assert handlers.include?(::Faraday::Response::Logger), "#{handlers.inspect} does not include <::Faraday::Adapter::Typhoeus>"
+    end
   end
 
 end
