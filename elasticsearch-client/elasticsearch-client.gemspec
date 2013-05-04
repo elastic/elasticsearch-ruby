@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_dependency "system_timer"
   end
-
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 
@@ -34,6 +33,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mocha"
   s.add_development_dependency "turn"
   s.add_development_dependency "yard"
+
+  # Gems for testing integrations
+  s.add_development_dependency "curb"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
