@@ -32,6 +32,16 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
       @client.perform_request 'GET', '/'
     end
 
+    should "have default logger for transport" do
+      client = Elasticsearch::Client::Client.new 'localhost', :log => true
+      assert_respond_to client.transport.logger, :info
+    end
+
+    should "have default tracer for transport" do
+      client = Elasticsearch::Client::Client.new 'localhost', :trace => true
+      assert_respond_to client.transport.tracer, :info
+    end
+
     context "extracting hosts" do
       should "handle defaults" do
         assert_equal [ {:host => 'localhost', :port => nil} ], @client.__extract_hosts
