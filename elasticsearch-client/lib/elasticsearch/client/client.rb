@@ -25,7 +25,10 @@ module Elasticsearch
         transport_class  = options[:transport_class] || DEFAULT_TRANSPORT_CLASS
         options[:logger] ||= options[:log]   ? DEFAULT_LOGGER.call() : nil
         options[:tracer] ||= options[:trace] ? DEFAULT_TRACER.call() : nil
-        options[:rebuild_connections] ||= false
+        options[:reload_connections] ||= false
+        options[:retry_on_failure]   ||= false
+        options[:reload_on_failure]  ||= false
+
         @transport = options[:transport] || transport_class.new(:hosts => __extract_hosts(hosts), :options => options)
       end
 

@@ -41,6 +41,10 @@ module Elasticsearch
               },
               :selector => options[:selector]
           end
+
+          def host_unreachable_exceptions
+            [::Curl::Err::HostResolutionError, ::Curl::Err::ConnectionFailedError]
+          end
         end
 
       end

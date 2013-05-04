@@ -5,10 +5,11 @@ module Elasticsearch
         DEFAULT_PORT         = 9200
         DEFAULT_PROTOCOL     = 'http'
         DEFAULT_RELOAD_AFTER = 10_000
+        DEFAULT_MAX_TRIES    = 3
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
 
         attr_reader   :hosts, :options, :connections, :counter, :protocol
-        attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :reload_connections
+        attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :max_tries
 
         def initialize(arguments={}, &block)
           @hosts       = arguments[:hosts]   || []
@@ -25,6 +26,7 @@ module Elasticsearch
           @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
           @counter     = 0
           @reload_after = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
+          @max_tries    = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_TRIES
         end
 
         def get_connection(options={})
@@ -71,16 +73,37 @@ module Elasticsearch
 
         def perform_request(method, path, params={}, body=nil, &block)
           raise NoMethodError, "Implement this method in your transport class" unless block_given?
-
-          connection = get_connection or raise Error.new("Cannot get new connection from pool.")
-
-          start      = Time.now if logger || tracer
-          url        = connection.full_url(path, params)
+          start = Time.now if logger || tracer
+          tries = 0
 
           begin
-            response = block.call(connection, url)
+            tries     += 1
+            connection = get_connection or raise Error.new("Cannot get new connection from pool.")
+            url        = connection.full_url(path, params)
+            response   = block.call(connection, url)
+
+          rescue *host_unreachable_exceptions => e
+            logger.error "[#{e.class}] #{e.message} #{connection.host.inspect}" if logger
+
+            if @options[:reload_on_failure] and tries < connections.all.size
+              logger.warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.size})" if logger
+              reload_connections! and retry
+            end
+
+            if @options[:retry_on_failure]
+              logger.warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}" if logger
+              if tries < max_tries
+                retry
+              else
+                logger.fatal "[#{e.class}] Cannot connect to #{connection.host.inspect} after #{tries} tries" if logger
+                raise e
+              end
+            else
+              raise e
+            end
+
           rescue Exception => e
-            logger.fatal "[#{e.class}] #{e.message}" if logger
+            logger.fatal "[#{e.class}] #{e.message} (#{connection.host.inspect})" if logger
             raise e
           end
 
@@ -97,6 +120,10 @@ module Elasticsearch
           else
             Response.new response.status, json || response.body, response.headers
           end
+        end
+
+        def host_unreachable_exceptions
+          [Errno::ECONNREFUSED]
         end
 
         def __build_connections

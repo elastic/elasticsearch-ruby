@@ -141,7 +141,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 'FOOBAR', response.body
     end
 
-    should "raise an error on failed response" do
+    should "raise an error on server failure" do
       @transport.expects(:get_connection).returns(stub_everything)
       assert_raise Elasticsearch::Client::Transport::ServerError do
         @transport.perform_request 'GET', '/' do
@@ -149,7 +149,71 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
         end
       end
     end
+
+    should "raise an error on connection failure" do
+      @transport.expects(:get_connection).returns(stub_everything)
+
+      # `block.expects(:call).raises(::Errno::ECONNREFUSED)` fails on Ruby 1.8
+      block = lambda { |a, b| raise ::Errno::ECONNREFUSED }
+
+      assert_raise ::Errno::ECONNREFUSED do
+        @transport.perform_request 'GET', '/', &block
+      end
+    end
   end
+
+  context "performing a request with reload connections on connection failures" do
+    setup do
+      fake_collection = stub_everything :get_connection => stub_everything, :all => stub_everything(:size => 2)
+      @transport = DummyTransportPerformer.new :options => { :reload_on_failure => 2 }
+      @transport.stubs(:connections).
+                 returns(fake_collection)
+      @block = lambda { |c, u| puts "UNREACHABLE" }
+    end
+
+    should "reload connections when host is unreachable" do
+      @block.expects(:call).times(2).
+            raises(Errno::ECONNREFUSED).
+            then.returns(stub_everything)
+
+      @transport.expects(:reload_connections!).returns([])
+
+      @transport.perform_request('GET', '/', &@block)
+      assert_equal 2, @transport.counter
+    end
+  end unless RUBY_1_8
+
+  context "performing a request with retry on connection failures" do
+    setup do
+      @transport = DummyTransportPerformer.new :options => { :retry_on_failure => true }
+      @transport.stubs(:connections).returns(stub :get_connection => stub_everything)
+      @block = Proc.new { |c, u| puts "UNREACHABLE" }
+    end
+
+    should "retry DEFAULT_MAX_TRIES when host is unreachable" do
+      @block.expects(:call).times(3).
+            raises(Errno::ECONNREFUSED).
+            then.raises(Errno::ECONNREFUSED).
+            then.returns(stub_everything)
+
+      assert_nothing_raised do
+        @transport.perform_request('GET', '/', &@block)
+        assert_equal 3, @transport.counter
+      end
+    end
+
+    should "raise an error after max tries" do
+      @block.expects(:call).times(3).
+            raises(Errno::ECONNREFUSED).
+            then.raises(Errno::ECONNREFUSED).
+            then.raises(Errno::ECONNREFUSED).
+            then.raises(Errno::ECONNREFUSED)
+
+      assert_raise Errno::ECONNREFUSED do
+        @transport.perform_request('GET', '/', &@block)
+      end
+    end
+  end unless RUBY_1_8
 
   context "logging" do
     setup do
@@ -230,6 +294,12 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
   context "reloading connections" do
     setup do
       @transport = DummyTransport.new :options => { :logger => Logger.new('/dev/null') }
+    end
+
+    should "rebuild connections" do
+      @transport.sniffer.expects(:hosts).returns([])
+      @transport.expects(:__rebuild_connections)
+      @transport.reload_connections!
     end
 
     should "log error and continue when timing out while sniffing hosts" do

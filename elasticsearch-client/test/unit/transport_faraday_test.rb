@@ -8,6 +8,10 @@ class Elasticsearch::Client::Transport::HTTP::FaradayTest < Test::Unit::TestCase
       @transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ]
     end
 
+    should "implement host_unreachable_exceptions" do
+      assert_instance_of Array, @transport.host_unreachable_exceptions
+    end
+
     should "implement __build_connections" do
       assert_equal 1, @transport.hosts.size
       assert_equal 1, @transport.connections.size

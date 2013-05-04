@@ -29,6 +29,10 @@ module Elasticsearch
               :selector_class => options[:selector_class],
               :selector => options[:selector]
           end
+
+          def host_unreachable_exceptions
+            [::Faraday::Error::ConnectionFailed, ::Faraday::Error::TimeoutError]
+          end
         end
       end
     end
