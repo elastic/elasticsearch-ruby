@@ -37,6 +37,7 @@ Gem::Specification.new do |s|
 
   # Gems for testing integrations
   s.add_development_dependency "curb"
+  s.add_development_dependency "typhoeus"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
