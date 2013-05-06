@@ -4,10 +4,17 @@ require 'rubygems' if RUBY_1_8
 
 require 'simplecov' and SimpleCov.start { add_filter "/test/" } if ENV["COVERAGE"]
 
+# Register `at_exit` handler for integration tests shutdown.
+# MUST be called before requiring `test/unit`.
+at_exit { Elasticsearch::IntegrationTest.__run_at_exit_hooks }
+
 require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
-require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"]
+require 'ansi/code'
+require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
+
+require 'test_extensions'
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-client'
@@ -20,5 +27,14 @@ class Test::Unit::TestCase
   end
 
   def teardown
+  end
+end
+
+module Elasticsearch
+  class IntegrationTest < Test::Unit::TestCase
+    extend IntegrationTestStartupShutdown
+
+    shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
+    context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
   end
 end

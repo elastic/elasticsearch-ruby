@@ -1,32 +1,53 @@
 require "bundler/gem_tasks"
 
-task :default => :test
+desc "Run unit tests"
+task :default => 'test:unit'
+task :test    => 'test:unit'
 
 # ----- Test tasks ------------------------------------------------------------
 
 require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.test_files = FileList['test/unit/**/*_test.rb', 'test/integration/**/*_test.rb']
-  # test.verbose = true
-  # test.warning = true
-end
-
 namespace :test do
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/unit/**/*_test.rb"]
+    # test.verbose = true
+    # test.warning = true
   end
+
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
+  end
+
+  Rake::TestTask.new(:all) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
+  end
+
+  namespace :server do
+    desc "Start Elasticsearch nodes for tests"
+    task :start do
+      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
+      require 'elasticsearch/core'
+      require 'test_extensions'
+      Elasticsearch::TestServer.start
+    end
+
+    desc "Stop Elasticsearch nodes for tests"
+    task :stop do
+      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
+      require 'elasticsearch/core'
+      require 'test_extensions'
+      Elasticsearch::TestServer.stop
+    end
   end
 end
 
 # ----- Documentation tasks ---------------------------------------------------
 
 require 'yard'
-YARD::Rake::YardocTask.new (:doc) do |t|
+YARD::Rake::YardocTask.new(:doc) do |t|
   t.options = %w| --embed-mixins --markup=markdown |
 end
 
