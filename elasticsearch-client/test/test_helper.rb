@@ -2,7 +2,7 @@ RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 
 require 'rubygems' if RUBY_1_8
 
-require 'simplecov' and SimpleCov.start { add_filter "/test/" } if ENV["COVERAGE"]
+require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["COVERAGE"]
 
 # Register `at_exit` handler for integration tests shutdown.
 # MUST be called before requiring `test/unit`.
@@ -18,6 +18,7 @@ require 'test_extensions'
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-client'
+require 'elasticsearch/client/extensions/test_cluster'
 require 'logger'
 
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
