@@ -22,7 +22,7 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
 
     should "use the Curb client" do
       require 'curb'
-      require 'elasticsearch/core/transport/http/curb'
+      require 'elasticsearch/client/transport/http/curb'
 
       transport = Elasticsearch::Client::Transport::HTTP::Curb.new \
         :hosts => [ { :host => 'localhost', :port => '9250' } ] do |curl|

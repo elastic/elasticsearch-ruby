@@ -95,7 +95,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "get the connection" do
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.perform_request 'GET', '/' do; Elasticsearch::Client::Transport::Response.new 200, 'OK'; end
     end
 
@@ -108,7 +108,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
 
     should "call the passed block" do
       x = 0
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
 
       @transport.perform_request 'GET', '/' do |connection, url|
         x += 1
@@ -119,7 +119,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "deserialize a JSON body" do
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).returns({'foo' => 'bar'})
 
       response = @transport.perform_request 'GET', '/' do
@@ -131,7 +131,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "not deserialize a string body" do
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).never
       response = @transport.perform_request 'GET', '/' do
                    Elasticsearch::Client::Transport::Response.new 200, 'FOOBAR'
@@ -142,7 +142,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "raise an error on server failure" do
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       assert_raise Elasticsearch::Client::Transport::ServerError do
         @transport.perform_request 'GET', '/' do
           Elasticsearch::Client::Transport::Response.new 500, 'ERROR'
@@ -151,7 +151,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "raise an error on connection failure" do
-      @transport.expects(:get_connection).returns(stub_everything)
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
 
       # `block.expects(:call).raises(::Errno::ECONNREFUSED)` fails on Ruby 1.8
       block = lambda { |a, b| raise ::Errno::ECONNREFUSED }
@@ -160,11 +160,23 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
         @transport.perform_request 'GET', '/', &block
       end
     end
+
+    should "mark the connection as dead on failure" do
+      c = stub_everything :failures => 1
+      @transport.expects(:get_connection).returns(c)
+
+      block = lambda { |a,b| raise ::Errno::ECONNREFUSED }
+
+      c.expects(:dead!)
+
+      assert_raise( ::Errno::ECONNREFUSED ) { @transport.perform_request 'GET', '/', &block }
+    end
   end
 
   context "performing a request with reload connections on connection failures" do
     setup do
-      fake_collection = stub_everything :get_connection => stub_everything, :all => stub_everything(:size => 2)
+      fake_collection = stub_everything :get_connection => stub_everything(:failures => 1),
+                                        :all            => stub_everything(:size => 2)
       @transport = DummyTransportPerformer.new :options => { :reload_on_failure => 2 }
       @transport.stubs(:connections).
                  returns(fake_collection)
@@ -174,7 +186,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
     should "reload connections when host is unreachable" do
       @block.expects(:call).times(2).
             raises(Errno::ECONNREFUSED).
-            then.returns(stub_everything)
+            then.returns(stub_everything :failures => 1)
 
       @transport.expects(:reload_connections!).returns([])
 
@@ -186,7 +198,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
   context "performing a request with retry on connection failures" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :retry_on_failure => true }
-      @transport.stubs(:connections).returns(stub :get_connection => stub_everything)
+      @transport.stubs(:connections).returns(stub :get_connection => stub_everything(:failures => 1))
       @block = Proc.new { |c, u| puts "UNREACHABLE" }
     end
 
@@ -194,7 +206,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       @block.expects(:call).times(3).
             raises(Errno::ECONNREFUSED).
             then.raises(Errno::ECONNREFUSED).
-            then.returns(stub_everything)
+            then.returns(stub_everything :failures => 1)
 
       assert_nothing_raised do
         @transport.perform_request('GET', '/', &@block)
@@ -218,7 +230,10 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
   context "logging" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :logger => Logger.new('/dev/null') }
-      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search?size=1', :host => 'localhost'
+      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search?size=1',
+                                                      :host     => 'localhost',
+                                                      :failures  => 0,
+                                                      :healthy! => true
       @transport.serializer.stubs(:load).returns 'foo' => 'bar'
       @transport.serializer.stubs(:dump).returns '{"foo":"bar"}'
     end
@@ -257,7 +272,10 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
   context "tracing" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :tracer => Logger.new('/dev/null') }
-      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search'
+      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search?size=1',
+                                                     :host      => 'localhost',
+                                                     :failures  => 0,
+                                                     :healthy!  => true
       @transport.serializer.stubs(:load).returns 'foo' => 'bar'
       @transport.serializer.stubs(:dump).returns <<-JSON.gsub(/^      /, '')
       {
@@ -320,6 +338,43 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       assert_equal [], @transport.connections
       @transport.__rebuild_connections :hosts => ['foo', 'bar']
       assert_equal ['foo', 'bar'], @transport.connections
+    end
+  end
+
+  context "resurrecting connections" do
+    setup do
+      @transport = DummyTransportPerformer.new
+    end
+
+    should "delegate to dead connections" do
+      @transport.connections.expects(:dead).returns([])
+      @transport.resurrect_dead_connections!
+    end
+
+    should "not resurrect connections until timeout" do
+      @transport.connections.expects(:get_connection).returns(stub_everything :failures => 1).times(5)
+      @transport.expects(:resurrect_dead_connections!).never
+      5.times { @transport.get_connection }
+    end
+
+    should "resurrect connections after timeout" do
+      @transport.connections.expects(:get_connection).returns(stub_everything :failures => 1).times(5)
+      @transport.expects(:resurrect_dead_connections!)
+
+      4.times { @transport.get_connection }
+
+      now = Time.now + 60*2
+      Time.stubs(:now).returns(now)
+
+      @transport.get_connection
+    end
+
+    should "mark connection healthy if it succeeds" do
+      c = stub_everything(:failures => 1)
+      @transport.expects(:get_connection).returns(c)
+      c.expects(:healthy!)
+
+      @transport.perform_request('GET', '/') { |connection, url| Elasticsearch::Client::Transport::Response.new 200, 'OK' }
     end
   end
 

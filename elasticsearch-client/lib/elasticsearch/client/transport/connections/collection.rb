@@ -8,7 +8,7 @@ module Elasticsearch
 
           DEFAULT_SELECTOR = Selector::RoundRobin
 
-          attr_reader :connections, :selector
+          attr_reader :selector
 
           def initialize(arguments={})
             selector_class = arguments[:selector_class] || DEFAULT_SELECTOR
@@ -17,10 +17,26 @@ module Elasticsearch
           end
 
           def hosts
-            connections.to_a.map { |c| c.host }
+            @connections.to_a.map { |c| c.host }
+          end
+
+          def connections
+            @connections.reject { |c| c.dead? }
+          end
+          alias :alive :connections
+
+          def dead
+            @connections.select { |c| c.dead? }
+          end
+
+          def all
+            @connections
           end
 
           def get_connection(options={})
+            if connections.empty? && dead_connection = dead.sort { |a,b| a.failures <=> b.failures }.first
+              dead_connection.alive!
+            end
             selector.select(options)
           end
 
