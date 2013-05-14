@@ -75,6 +75,12 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
           @client.__extract_hosts 123
         end
       end
+
+      should "randomize hosts" do
+        hosts = [ {:host => 'host1'}, {:host => 'host2'}, {:host => 'host3'}, {:host => 'host4'}, {:host => 'host5'}]
+        assert_not_equal     hosts, @client.__extract_hosts(hosts, :randomize_hosts => true)
+        assert_same_elements hosts, @client.__extract_hosts(hosts, :randomize_hosts => true)
+      end
     end
 
   end

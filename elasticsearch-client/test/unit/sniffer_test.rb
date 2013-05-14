@@ -102,6 +102,45 @@ class Elasticsearch::Client::Transport::SnifferTest < Test::Unit::TestCase
       end
     end
 
+    should "randomize hosts" do
+      @transport = DummyTransport.new :options => { :randomize_hosts => true }
+      @sniffer   = Elasticsearch::Client::Transport::Sniffer.new @transport
+
+      @transport.expects(:perform_request).returns __nodes_info <<-JSON
+        {
+          "ok" : true,
+          "cluster_name" : "elasticsearch_test",
+          "nodes" : {
+            "N1" : {
+              "name" : "Node 1",
+              "http_address" : "inet[/192.168.1.23:9200]"
+            },
+            "N2" : {
+              "name" : "Node 2",
+              "http_address" : "inet[/192.168.1.23:9201]"
+            },
+            "N3" : {
+              "name" : "Node 3",
+              "http_address" : "inet[/192.168.1.23:9202]"
+            },
+            "N4" : {
+              "name" : "Node 4",
+              "http_address" : "inet[/192.168.1.23:9203]"
+            },
+            "N5" : {
+              "name" : "Node 5",
+              "http_address" : "inet[/192.168.1.23:9204]"
+            }
+          }
+        }
+      JSON
+
+      hosts = @sniffer.hosts
+
+      assert_not_equal       ['Node 1', 'Node 2', 'Node 3', 'Node 4', 'Node 5'], hosts.map { |h| h['name'] }
+      assert_same_elements ['Node 1', 'Node 2', 'Node 3', 'Node 4', 'Node 5'], hosts.map { |h| h['name'] }
+    end
+
   end
 
 end

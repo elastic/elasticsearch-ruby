@@ -28,17 +28,19 @@ module Elasticsearch
         options[:reload_connections] ||= false
         options[:retry_on_failure]   ||= false
         options[:reload_on_failure]  ||= false
+        options[:randomize_hosts]    ||= false
 
-        @transport = options[:transport] || transport_class.new(:hosts => __extract_hosts(hosts), :options => options)
+        @transport = options[:transport] || transport_class.new(:hosts => __extract_hosts(hosts, options), :options => options)
       end
 
       def perform_request(method, path, params={}, body=nil)
         transport.perform_request method, path, params, body
       end
 
-      def __extract_hosts(hosts=nil)
-        hosts = hosts.nil? ? ['localhost'] : Array(hosts)
-        hosts.map do |host|
+      def __extract_hosts(hosts_config=nil, options={})
+        hosts_config = hosts_config.nil? ? ['localhost'] : Array(hosts_config)
+
+        hosts = hosts_config.map do |host|
           case host
           when String
             # TODO: Handle protocol?
@@ -50,6 +52,9 @@ module Elasticsearch
             raise ArgumentError, "Please pass host as a String or Hash, #{host.class} given."
           end
         end
+
+        hosts.shuffle! if options[:randomize_hosts]
+        hosts
       end
     end
   end

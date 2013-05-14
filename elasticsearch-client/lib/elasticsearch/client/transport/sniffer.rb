@@ -15,12 +15,15 @@ module Elasticsearch
         def hosts
           Timeout::timeout(timeout, SnifferTimeoutError) do
             nodes = transport.perform_request('GET', '_cluster/nodes').body
-            nodes['nodes'].map do |id,info|
+            hosts = nodes['nodes'].map do |id,info|
               if matches = info["#{transport.protocol}_address"].to_s.match(RE_URL)
                 # TODO: Implement lightweight "indifferent access" here
                 info.merge :host => matches[1], :port => matches[2], :id => id
               end
             end.compact
+
+            hosts.shuffle! if transport.options[:randomize_hosts]
+            hosts
           end
         end
       end
