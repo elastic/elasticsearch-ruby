@@ -18,5 +18,9 @@ require "elasticsearch/client/version"
 
 module Elasticsearch
   module Client
+    def new(arguments={})
+      Elasticsearch::Client::Client.new(arguments)
+    end
+    extend self
   end
 end

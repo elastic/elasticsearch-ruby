@@ -12,6 +12,12 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
       @client = Elasticsearch::Client::Client.new
     end
 
+    should "be aliased as Elasticsearch::Client" do
+      assert_nothing_raised do
+        assert_instance_of(Elasticsearch::Client::Client, Elasticsearch::Client.new)
+      end
+    end
+
     should "have default transport" do
       assert_instance_of Elasticsearch::Client::Client::DEFAULT_TRANSPORT_CLASS, @client.transport
     end
