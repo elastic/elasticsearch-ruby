@@ -21,16 +21,19 @@ module Elasticsearch
 
       attr_accessor :transport
 
-      def initialize(hosts=nil, options={})
-        transport_class  = options[:transport_class] || DEFAULT_TRANSPORT_CLASS
-        options[:logger] ||= options[:log]   ? DEFAULT_LOGGER.call() : nil
-        options[:tracer] ||= options[:trace] ? DEFAULT_TRACER.call() : nil
-        options[:reload_connections] ||= false
-        options[:retry_on_failure]   ||= false
-        options[:reload_on_failure]  ||= false
-        options[:randomize_hosts]    ||= false
+      def initialize(arguments={})
+        transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
+        hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
 
-        @transport = options[:transport] || transport_class.new(:hosts => __extract_hosts(hosts, options), :options => options)
+        arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
+        arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
+        arguments[:reload_connections] ||= false
+        arguments[:retry_on_failure]   ||= false
+        arguments[:reload_on_failure]  ||= false
+        arguments[:randomize_hosts]    ||= false
+
+        @transport = arguments[:transport] || \
+                     transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
       end
 
       def perform_request(method, path, params={}, body=nil)

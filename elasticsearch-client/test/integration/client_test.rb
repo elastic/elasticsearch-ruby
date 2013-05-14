@@ -20,7 +20,7 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
         ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
       end
 
-      @client = Elasticsearch::Client::Client.new 'localhost:9250'
+      @client = Elasticsearch::Client::Client.new host: 'localhost:9250'
     end
 
     should "connect to the cluster" do
@@ -40,7 +40,9 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
 
     context "with round robin selector" do
       setup do
-        @client = Elasticsearch::Client::Client.new %w| localhost:9250 localhost:9251 |, logger: @logger
+        @client = Elasticsearch::Client::Client.new \
+                    hosts: %w| localhost:9250 localhost:9251 |,
+                    logger: @logger
       end
 
       should "rotate nodes" do
@@ -60,9 +62,10 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
 
     context "with a sick node and retry on failure" do
       setup do
-        @client = Elasticsearch::Client::Client.new %w| localhost:9250 foobar1 |,
-                  logger: @logger,
-                  retry_on_failure: true
+        @client = Elasticsearch::Client::Client.new \
+                    hosts: %w| localhost:9250 foobar1 |,
+                    logger: @logger,
+                    retry_on_failure: true
       end
 
       should "retry the request with next server" do
@@ -72,7 +75,8 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
       end
 
       should "raise exception when it cannot get any healthy server" do
-        @client = Elasticsearch::Client::Client.new %w| localhost:9250 foobar1 foobar2 foobar3 |,
+        @client = Elasticsearch::Client::Client.new \
+                  hosts: %w| localhost:9250 foobar1 foobar2 foobar3 |,
                   logger: @logger,
                   retry_on_failure: 1
 
@@ -90,7 +94,8 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
 
     context "with a sick node and reloading on failure" do
       setup do
-        @client = Elasticsearch::Client::Client.new %w| localhost:9250 foobar1 foobar2 |,
+        @client = Elasticsearch::Client::Client.new \
+                  hosts: %w| localhost:9250 foobar1 foobar2 |,
                   logger: @logger,
                   reload_on_failure: true
       end

@@ -17,12 +17,12 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
     end
 
     should "instantiate custom transport class" do
-      client = Elasticsearch::Client::Client.new 'localhost', :transport_class => DummyTransport
+      client = Elasticsearch::Client::Client.new :transport_class => DummyTransport
       assert_instance_of DummyTransport, client.transport
     end
 
     should "take custom transport instance" do
-      client = Elasticsearch::Client::Client.new 'localhost', :transport => DummyTransport.new
+      client = Elasticsearch::Client::Client.new :transport => DummyTransport.new
       assert_instance_of DummyTransport, client.transport
     end
 
@@ -33,13 +33,29 @@ class Elasticsearch::Client::ClientTest < Test::Unit::TestCase
     end
 
     should "have default logger for transport" do
-      client = Elasticsearch::Client::Client.new 'localhost', :log => true
+      client = Elasticsearch::Client::Client.new :log => true
       assert_respond_to client.transport.logger, :info
     end
 
     should "have default tracer for transport" do
-      client = Elasticsearch::Client::Client.new 'localhost', :trace => true
+      client = Elasticsearch::Client::Client.new :trace => true
       assert_respond_to client.transport.tracer, :info
+    end
+
+    context "when passed hosts" do
+      should "have localhost by default" do
+        c = Elasticsearch::Client::Client.new
+        assert_equal 'localhost', c.transport.hosts.first[:host]
+      end
+
+      should "take :hosts, :host or :url" do
+        c1 = Elasticsearch::Client::Client.new :hosts => ['foobar']
+        c2 = Elasticsearch::Client::Client.new :host  => 'foobar'
+        c3 = Elasticsearch::Client::Client.new :url   => 'foobar'
+        assert_equal 'foobar', c1.transport.hosts.first[:host]
+        assert_equal 'foobar', c2.transport.hosts.first[:host]
+        assert_equal 'foobar', c3.transport.hosts.first[:host]
+      end
     end
 
     context "extracting hosts" do

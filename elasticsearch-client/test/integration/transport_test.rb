@@ -16,7 +16,7 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
           f.adapter  :typhoeus
         end
 
-      client = Elasticsearch::Client::Client.new nil, transport: transport
+      client = Elasticsearch::Client::Client.new transport: transport
       client.perform_request 'GET', ''
     end
 
@@ -29,7 +29,7 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationT
           curl.verbose = true
         end
 
-      client = Elasticsearch::Client::Client.new nil, transport: transport
+      client = Elasticsearch::Client::Client.new transport: transport
       client.perform_request 'GET', ''
     end
   end
