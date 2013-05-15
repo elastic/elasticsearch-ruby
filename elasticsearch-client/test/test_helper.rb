@@ -40,4 +40,14 @@ module Elasticsearch
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end
   end
+
+  module Test
+    class ProfilingTest < ::Test::Unit::TestCase
+      extend IntegrationTestStartupShutdown
+      extend ProfilingTestSupport
+
+      shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
+      context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
+    end
+  end
 end

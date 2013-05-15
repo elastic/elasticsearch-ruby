@@ -25,6 +25,11 @@ namespace :test do
     test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
   end
 
+  Rake::TestTask.new(:profile) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/profile/**/*_test.rb"]
+  end
+
   namespace :server do
     desc "Start Elasticsearch nodes for tests"
     task :start do
