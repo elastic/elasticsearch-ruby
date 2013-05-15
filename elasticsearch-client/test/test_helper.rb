@@ -6,7 +6,7 @@ require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["CO
 
 # Register `at_exit` handler for integration tests shutdown.
 # MUST be called before requiring `test/unit`.
-at_exit { Elasticsearch::IntegrationTest.__run_at_exit_hooks }
+at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 
 require 'test/unit'
 require 'shoulda-context'
@@ -32,10 +32,12 @@ class Test::Unit::TestCase
 end
 
 module Elasticsearch
-  class IntegrationTest < Test::Unit::TestCase
-    extend IntegrationTestStartupShutdown
+  module Test
+    class IntegrationTestCase < ::Test::Unit::TestCase
+      extend IntegrationTestStartupShutdown
 
-    shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
-    context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
+      shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
+      context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
+    end
   end
 end

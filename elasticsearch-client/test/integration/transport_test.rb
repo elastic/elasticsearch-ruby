@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::IntegrationTest
+class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
   startup do
     Elasticsearch::TestCluster.start if ENV['SERVER'] and not Elasticsearch::TestCluster.running?
   end
