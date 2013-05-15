@@ -18,6 +18,9 @@ require "elasticsearch/client/version"
 
 module Elasticsearch
   module Client
+
+    # A convenience wrapper for {::Elasticsearch::Client::Client#initialize}.
+    #
     def new(arguments={})
       Elasticsearch::Client::Client.new(arguments)
     end

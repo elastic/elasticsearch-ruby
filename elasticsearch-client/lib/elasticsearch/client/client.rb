@@ -1,5 +1,10 @@
 module Elasticsearch
   module Client
+
+    # Handles communication with an Elasticsearch cluster.
+    #
+    # See {file:README.md README} for usage and code examples.
+    #
     class Client
       DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
 
@@ -19,8 +24,50 @@ module Elasticsearch
         logger
       end
 
+      # Returns the transport object.
+      #
+      # @see Elasticsearch::Client::Transport::Base
+      # @see Elasticsearch::Client::Transport::HTTP::Faraday
+      #
       attr_accessor :transport
 
+      # Create a client connected to an Elasticsearch cluster.
+      #
+      # @option arguments [String,Array] :hosts Single host passed as a String or Hash, or multiple hosts
+      #                                         passed as an Array; `host` or `url` keys are also valid
+      #
+      # @option arguments [Boolean] :log   Use the default logger (disabled by default)
+      #
+      # @option arguments [Boolean] :trace Use the default tracer (disabled by default)
+      #
+      # @option arguments [Object] :logger An instance of a Logger-compatible object
+      #
+      # @option arguments [Object] :tracer An instance of a Logger-compatible object
+      #
+      # @option arguments [Number] :resurrect_after After how many seconds a dead connection should be tried again
+      #
+      # @option arguments [Boolean,Number] :reload_connections Reload connections after X requests (false by default)
+      #
+      # @option arguments [Boolean] :randomize_hosts   Shuffle connections on initialization and reload (false by default)
+      #
+      # @option arguments [Integer] :sniffer_timeout   Timeout for reloading connections in seconds (1 by default)
+      #
+      # @option arguments [Boolean,Number] :retry_on_failure   Retry X times when request fails before raising and
+      #                                                        exception (false by default)
+      #
+      # @option arguments [Boolean] :reload_on_failure Reload connections after failure (false by default)
+      #
+      # @option arguments [Constant] :transport_class  A specific transport class to use, will be initialized by
+      #                                                the client and passed hosts and all arguments
+      #
+      # @option arguments [Object] :transport A specific transport instance
+      #
+      # @option arguments [Constant] :serializer_class A specific serializer class to use, will be initialized by
+      #                                               the transport and passed the transport instance
+      #
+      # @option arguments [Constant] :selector An instance of selector strategy implemented with
+      #                                        {Elasticsearch::Client::Transport::Connections::Selector::Base}.
+      #
       def initialize(arguments={})
         transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
         hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
@@ -36,10 +83,22 @@ module Elasticsearch
                      transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
       end
 
+      # Performs a request through delegation to {#transport}.
+      #
       def perform_request(method, path, params={}, body=nil)
         transport.perform_request method, path, params, body
       end
 
+      # Normalizes and returns hosts configuration.
+      #
+      # Arrayifies the `hosts_config` argument and extracts `host` and `port` info from strings.
+      # Performs shuffling when the `randomize_hosts` option is set.
+      #
+      # @return [Array<Hash>]
+      # @raise  [ArgumentError]
+      #
+      # @api private
+      #
       def __extract_hosts(hosts_config=nil, options={})
         hosts_config = hosts_config.nil? ? ['localhost'] : Array(hosts_config)
 

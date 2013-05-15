@@ -1,6 +1,10 @@
 require 'ansi/code'
 
 module Elasticsearch
+
+  # A convenience Ruby class for starting and stopping a separate testing cluster,
+  # to not depend on -- and not mess up -- <localhost:9200>.
+  #
   module TestCluster
     require 'timeout'
     require 'net/http'
@@ -9,6 +13,15 @@ module Elasticsearch
     @@number_of_nodes = 2
     @@pids            = []
 
+    # Start a cluster
+    #
+    # Starts the desired number of nodes in test-suitable configuration (memory store, no persistence, etc).
+    #
+    # @option arguments [Integer] :count        Number of desired nodes (default: 2).
+    # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch-ruby-test`).
+    # @option arguments [String]  :node_name    Starting node name; ill be auto-incremented (default: `test-{i}`).
+    # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250).
+    #
     def start(arguments={})
       unless system "which elasticsearch > /dev/null 2>&1"
         STDERR.puts ANSI.red("[ERROR] Elasticsearch can't be started, is it installed? Run: $ which elasticsearch"), ''
@@ -51,6 +64,10 @@ module Elasticsearch
       __wait_for_green(arguments[:port])
     end
 
+    # Stop the cluster.
+    #
+    # Gets the PID numbers from pidfiles in `$CWD/tmp` and stops any matching nodes.
+    #
     def stop
       pids     = __get_pids
       pidfiles = __get_pidfiles
@@ -69,6 +86,11 @@ module Elasticsearch
       end
     end
 
+    # Returns true when a specific test node is running.
+    #
+    # @option arguments [Integer] :on The port on which the node is running.
+    # @option arguments [String]  :as The cluster name.
+    #
     def running?(arguments={})
       port         = arguments[:on] || 9250
       cluster_name = arguments[:as] || 'elasticsearch-ruby-test'
@@ -80,6 +102,9 @@ module Elasticsearch
       return false
     end
 
+    # Blocks the process and waits for the cluster to be in a "green" state.
+    # Prints information about the cluster on STDOUT.
+    #
     def __wait_for_green(port=9250)
       uri = URI("http://localhost:#{port}/_cluster/health")
 
@@ -109,6 +134,8 @@ module Elasticsearch
       end
     end
 
+    # Tries to load cluster health information
+    #
     def __get_cluster_health(port=9250)
       uri = URI("http://localhost:#{port}/_cluster/health")
       if response = Net::HTTP.get(uri) rescue nil
@@ -116,10 +143,13 @@ module Elasticsearch
       end
     end
 
+    # Returns a collection of PID numbers from pidfiles.
     def __get_pids
       __get_pidfiles.map { |pidfile| File.read(pidfile).to_i }.uniq
     end
 
+    # Returns a collection of files with PID information.
+    #
     def __get_pidfiles
       Dir[File.expand_path('tmp/elasticsearch-*.pid', Dir.pwd)]
     end

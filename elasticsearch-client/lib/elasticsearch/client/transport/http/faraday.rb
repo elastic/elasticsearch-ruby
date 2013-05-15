@@ -2,9 +2,20 @@ module Elasticsearch
   module Client
     module Transport
       module HTTP
+
+        # The default transport implementation, using the [_Faraday_](https://rubygems.org/gems/faraday)
+        # library for abstracting the HTTP client.
+        #
+        # @see Transport::Base
+        #
         class Faraday
           include Base
 
+          # Performs the request by invoking {Transport::Base#perform_request} with a block.
+          #
+          # @return [Response]
+          # @see    Transport::Base#perform_request
+          #
           def perform_request(method, path, params={}, body=nil)
             super do |connection, url|
               connection.connection.run_request \
@@ -15,6 +26,10 @@ module Elasticsearch
             end
           end
 
+          # Builds and returns a collection of connections.
+          #
+          # @return [Connections::Collection]
+          #
           def __build_connections
             Connections::Collection.new \
               :connections => hosts.map { |host|
@@ -30,6 +45,10 @@ module Elasticsearch
               :selector => options[:selector]
           end
 
+          # Returns an array of implementation specific connection errors.
+          #
+          # @return [Array]
+          #
           def host_unreachable_exceptions
             [::Faraday::Error::ConnectionFailed, ::Faraday::Error::TimeoutError]
           end
