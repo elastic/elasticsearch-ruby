@@ -1,0 +1,52 @@
+module Elasticsearch
+  module API
+    <%- @module_namespace.each_with_index do |name, i| -%>
+    <%= '  '*i %>module <%= name.capitalize %>
+    <%- end -%>
+    <%= '  '*@namespace_depth %>module Actions
+
+      <%= '  '*@namespace_depth %># <%= @spec['description'] || 'TODO: Description' %>
+      <%= '  '*@namespace_depth %>#
+<%# URL parts -%>
+      <%- @spec['url']['parts'].each do |name,info| -%>
+      <%= '  '*@namespace_depth + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description']}" + ( info['required'] ? ' (*Required*)' : '' ) + "\n" -%>
+      <%- end -%>
+<%# Body -%>
+<%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] || 'TODO: Description') + "\n" if @spec['body'] -%>
+<%# URL parameters -%>
+      <%- @spec['url']['params'].each do |name,info| -%>
+      <%= '  '*@namespace_depth + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description']}" + "\n" -%>
+      <%- end -%>
+      <%= '  '*@namespace_depth -%>#
+<%# Documentation link -%>
+      <%= '  '*@namespace_depth %># @see <%= @spec['documentation'] %>
+      <%= '  '*@namespace_depth %>#
+<%# Method definition -%>
+      <%= '  '*@namespace_depth -%>def <%= @method_name %>(arguments={})
+<%# Required arguments -%>
+      <%- @spec['url']['parts'].select { |name, info| info['required'] }.each do |name, info| -%>
+      <%= '  '*(@namespace_depth+1) + "raise ArgumentError, \"Required argument '#{name}' missing\" unless arguments[:#{name}]" + "\n" -%>
+      <%- end -%>
+<%# Method, path, params, body  -%>
+      <%= '  '*@namespace_depth %>  method = '<%= @spec['methods'].first %>'
+      <%- unless @spec['url']['parts'].empty?  -%>
+      <%= '  '*@namespace_depth %>  path   = "<%= @spec['url']['path'].split('/').compact.reject {|p| p =~ /^\s*$/}.map {|p| "\#\{arguments[:#{p.tr('{}', '')}]\}"}.join('/') %>"
+      <%- else -%>
+      <%= '  '*@namespace_depth %>  path   = "<%= @spec['url']['path'] %>"
+      <%- end -%>
+      <%= '  '*@namespace_depth %>  params = arguments.select do |k,v|
+      <%= '  '*@namespace_depth %>    [ :<%= @spec['url']['params'].keys.join(",\n#{'  '*(@namespace_depth+6)}:") %> ].include?(k)
+      <%= '  '*@namespace_depth %>  end
+      <%= '  '*@namespace_depth %>  # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+      <%= '  '*@namespace_depth %>  params = Hash[params] unless params.is_a?(Hash)
+      <%= '  '*@namespace_depth %>  body = <%= @spec['body'].nil? ? 'nil' : '"TODO: Body specification missing"' %>
+<%# Perform request %>
+      <%= '  '*@namespace_depth %>  perform_request(method, path, params, body).body
+      <%= '  '*@namespace_depth %>end
+
+      <%- @namespace_depth-1.downto(0) do |i| -%>
+      <%= '  '*i %>end
+      <%- end if @namespace_depth > 0 -%>
+    end
+  end
+end
