@@ -141,9 +141,18 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 'FOOBAR', response.body
     end
 
+    should "raise an error for HTTP status 404" do
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
+      assert_raise Elasticsearch::Client::Transport::Errors::NotFound do
+        @transport.perform_request 'GET', '/' do
+          Elasticsearch::Client::Transport::Response.new 404, 'NOT FOUND'
+        end
+      end
+    end
+
     should "raise an error on server failure" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
-      assert_raise Elasticsearch::Client::Transport::ServerError do
+      assert_raise Elasticsearch::Client::Transport::Errors::InternalServerError do
         @transport.perform_request 'GET', '/' do
           Elasticsearch::Client::Transport::Response.new 500, 'ERROR'
         end
@@ -254,7 +263,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
 
       @transport.logger.expects(:fatal)
 
-      assert_raise Elasticsearch::Client::Transport::ServerError do
+      assert_raise Elasticsearch::Client::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
     end unless RUBY_1_8

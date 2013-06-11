@@ -124,6 +124,14 @@ module Elasticsearch
           tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
         end
 
+        # Raise error specific for the HTTP response status or a generic server error
+        #
+        # @api private
+        def __raise_transport_error(response)
+          error = ERRORS[response.status] || ServerError
+          raise error.new "[#{response.status}] #{response.body}"
+        end
+
         # Performs a request to Elasticsearch, while handling logging, tracing, marking dead connections,
         # retrying the request and reloading the connections.
         #
@@ -188,9 +196,9 @@ module Elasticsearch
           __log   method, path, params, body, url, response, json, took, duration if logger
           __trace method, path, params, body, url, response, json, took, duration if tracer
 
-          if response.status.to_i >= 500
+          if response.status.to_i >= 300
             __log_failed response if logger
-            raise ServerError.new("[#{response.status}] #{response.body}")
+            __raise_transport_error response
           else
             Response.new response.status, json || response.body, response.headers
           end
