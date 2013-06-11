@@ -39,6 +39,16 @@ module Elasticsearch
       end
     end
 
-    FakeResponse = Struct.new(:status, :body, :headers)
+    FakeResponse = Struct.new(:status, :body, :headers) do
+      def status
+        values[0] || 200
+      end
+      def body
+        values[1] || '{}'
+      end
+      def headers
+        values[2] || {}
+      end
+    end
   end
 end

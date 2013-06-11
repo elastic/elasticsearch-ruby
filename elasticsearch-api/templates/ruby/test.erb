@@ -5,14 +5,14 @@ module Elasticsearch
     class <%= @module_namespace.empty? ? 'Common' : @module_namespace.map {|n| n.capitalize}.join('_') %>_Test < ::Test::Unit::TestCase
 
       context "<%= ActiveSupport::Inflector.humanize @method_name %>" do
-        subject { FakeClient.new }
+        subject { FakeClient.new(nil) }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'FAKE', method
             assert_equal 'test', url
             assert_equal Hash.new, params
-            assert_equal Hash.new, body
+            <%= @spec['body'].nil? ? 'assert_nil   body' : 'assert_equal Hash.new, body' %>
             true
           end.returns(FakeResponse.new)
 
