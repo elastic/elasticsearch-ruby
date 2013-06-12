@@ -15,22 +15,8 @@ RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
 module Elasticsearch
   module Test
-    def __full_namespace(o)
-      o.constants.inject([o]) do |sum, c|
-        m   = o.const_get(c.to_s.to_sym)
-        sum << __full_namespace(m).flatten if m.is_a?(Module)
-        sum
-      end.flatten
-    end; module_function :__full_namespace
-
     class FakeClient
-      include Elasticsearch::API::Common::Client
-
-      # Include all API modules into the fake client
-      Elasticsearch::Test.__full_namespace(Elasticsearch::API).select { |m| m.class == Module }.each do |m|
-        puts "Including: #{m}" if ENV['DEBUG']
-        include m
-      end
+      include Elasticsearch::API
 
       def perform_request(method, path, params, body)
         puts "PERFORMING REQUEST:", "--> #{method.to_s.upcase} #{path} #{params} #{body}"
