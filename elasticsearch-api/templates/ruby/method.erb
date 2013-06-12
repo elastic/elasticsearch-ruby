@@ -9,7 +9,9 @@ module Elasticsearch
       <%= '  '*@namespace_depth %>#
 <%# URL parts -%>
       <%- @spec['url']['parts'].each do |name,info| -%>
-      <%= '  '*@namespace_depth + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description']}" + ( info['required'] ? ' (*Required*)' : '' ) + "\n" -%>
+      <%- info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings' -%>
+      <%= '  '*@namespace_depth + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description']}" + ( info['required'] ? ' (*Required*)' : '' ) -%><%= " (options: #{info['options'].join(', ')})" if info['options'] -%>
+      <%= "\n" -%>
       <%- end -%>
 <%# Body -%>
 <%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] || 'TODO: Description') + "\n" if @spec['body'] -%>
