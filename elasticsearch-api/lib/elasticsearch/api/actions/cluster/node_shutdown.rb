@@ -1,0 +1,32 @@
+module Elasticsearch
+  module API
+    module Cluster
+      module Actions
+
+        # Shutdown one or all nodes
+        #
+        # @option arguments [List] :node_id A comma-separated list of node IDs or names to perform the operation on; use
+        #                                   `_local` to shutdown the node you're connected to, leave empty to
+        #                                   shutdown all nodes
+        # @option arguments [Time] :delay Set the delay for the operation (default: 1s)
+        # @option arguments [Boolean] :exit Exit the JVM as well (default: true)
+        #
+        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
+        #
+        def node_shutdown(arguments={})
+          method = 'POST'
+          path   = Utils.__pathify( '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown' )
+          params = arguments.select do |k,v|
+            [ :delay,
+              :exit ].include?(k)
+          end
+          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+          params = Hash[params] unless params.is_a?(Hash)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+      end
+    end
+  end
+end
