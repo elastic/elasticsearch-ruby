@@ -1,0 +1,35 @@
+require 'test_helper'
+
+module Elasticsearch
+  module Test
+    class ClusterNodeHotThreadsTest < ::Test::Unit::TestCase
+
+      context "Cluster: Node hot threads" do
+        subject { FakeClient.new(nil) }
+
+        should "perform correct request" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'GET', method
+            assert_equal '_cluster/nodes/hot_threads', url
+            assert_equal Hash.new, params
+            assert_nil   body
+            true
+          end.returns(FakeResponse.new)
+
+          subject.cluster.node_hot_threads
+        end
+
+        should "send :node_id correctly" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal '_cluster/nodes/foo/hot_threads', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.cluster.node_hot_threads :node_id => 'foo'
+        end
+
+      end
+
+    end
+  end
+end
