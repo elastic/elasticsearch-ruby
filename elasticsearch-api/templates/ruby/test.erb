@@ -2,9 +2,9 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class <%= @module_namespace.empty? ? 'Common' : @module_namespace.map {|n| n.capitalize}.join('_') %>_Test < ::Test::Unit::TestCase
+    class <%= @module_namespace.empty? ? @method_name.camelize : @module_namespace.map {|n| n.capitalize}.join + @method_name.camelize %>Test < ::Test::Unit::TestCase
 
-      context "<%= ActiveSupport::Inflector.humanize @method_name %>" do
+      context "<%= @module_namespace.empty? ? '' : @module_namespace.map {|n| n.capitalize}.join + ': ' %><%= @method_name.humanize %>" do
         subject { FakeClient.new(nil) }
 
         should "perform correct request" do
