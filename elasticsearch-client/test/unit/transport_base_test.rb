@@ -118,7 +118,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 1, x
     end
 
-    should "deserialize a JSON body" do
+    should "deserialize a response JSON body" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).returns({'foo' => 'bar'})
 
@@ -130,7 +130,7 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 'bar', response.body['foo']
     end
 
-    should "not deserialize a string body" do
+    should "not deserialize a response string body" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).never
       response = @transport.perform_request 'GET', '/' do
@@ -139,6 +139,18 @@ class Elasticsearch::Client::Transport::BaseTest < Test::Unit::TestCase
 
       assert_instance_of Elasticsearch::Client::Transport::Response, response
       assert_equal 'FOOBAR', response.body
+    end
+
+    should "serialize non-String objects" do
+      @transport.serializer.expects(:dump).times(3)
+      @transport.__convert_to_json({:foo => 'bar'})
+      @transport.__convert_to_json([1, 2, 3])
+      @transport.__convert_to_json(nil)
+    end
+
+    should "not serialize a String object" do
+      @transport.serializer.expects(:dump).never
+      @transport.__convert_to_json('{"foo":"bar"}')
     end
 
     should "raise an error for HTTP status 404" do

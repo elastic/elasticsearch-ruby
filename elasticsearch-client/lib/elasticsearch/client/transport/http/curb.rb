@@ -24,7 +24,7 @@ module Elasticsearch
                 when 'PUT'         then connection.connection.http_put serializer.dump(body)
                 when 'DELETE'      then connection.connection.http_delete
                 when 'POST'
-                  connection.connection.post_body = serializer.dump(body)
+                  connection.connection.post_body = __convert_to_json(body) if body
                   connection.connection.http_post
                 else raise ArgumentError, "Unsupported HTTP method: #{method}"
               end

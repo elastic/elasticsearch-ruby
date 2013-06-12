@@ -32,6 +32,18 @@ class Elasticsearch::Client::Transport::HTTP::FaradayTest < Test::Unit::TestCase
       @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
     end
 
+    should "serialize the request body" do
+      @transport.connections.first.connection.expects(:run_request).returns(stub_everything)
+      @transport.serializer.expects(:dump)
+      @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
+    end
+
+    should "not serialize a String request body" do
+      @transport.connections.first.connection.expects(:run_request).returns(stub_everything)
+      @transport.serializer.expects(:dump).never
+      @transport.perform_request 'POST', '/', {}, '{"foo":"bar"}'
+    end
+
     should "pass the selector_class options to collection" do
       @transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
                                :options => { :selector_class => Elasticsearch::Client::Transport::Connections::Selector::Random }

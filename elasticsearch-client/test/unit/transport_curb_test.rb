@@ -23,6 +23,18 @@ class Elasticsearch::Client::Transport::HTTP::FaradayTest < Test::Unit::TestCase
       @transport.perform_request 'GET', '/'
     end
 
+    should "serialize the request body" do
+      @transport.connections.first.connection.expects(:http_post).returns(stub_everything)
+      @transport.serializer.expects(:dump)
+      @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
+    end
+
+    should "not serialize a String request body" do
+      @transport.connections.first.connection.expects(:http_post).returns(stub_everything)
+      @transport.serializer.expects(:dump).never
+      @transport.perform_request 'POST', '/', {}, '{"foo":"bar"}'
+    end
+
     should "handle HTTP methods" do
       @transport.connections.first.connection.expects(:http).twice.returns(stub_everything)
       @transport.connections.first.connection.expects(:http_put).returns(stub_everything)

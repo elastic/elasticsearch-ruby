@@ -132,6 +132,13 @@ module Elasticsearch
           raise error.new "[#{response.status}] #{response.body}"
         end
 
+        # Converts any non-String object to JSON
+        #
+        # @api private
+        def __convert_to_json(o=nil)
+          o = o.is_a?(String) ? o : serializer.dump(o)
+        end
+
         # Performs a request to Elasticsearch, while handling logging, tracing, marking dead connections,
         # retrying the request and reloading the connections.
         #
