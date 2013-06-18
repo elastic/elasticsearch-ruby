@@ -1,0 +1,21 @@
+module Elasticsearch
+  module API
+    module Actions
+
+      # Create a document.
+      #
+      # Enforce the _create_ operation when indexing a document -- the operation will return an error
+      # when the document already exists.
+      #
+      # @option (see Actions#index)
+      #
+      # (The `:op_type` argument is ignored.)
+      #
+      # @see http://elasticsearch.org/guide/reference/api/index_/
+      #
+      def create(arguments={})
+        index arguments.update :op_type => 'create'
+      end
+    end
+  end
+end
