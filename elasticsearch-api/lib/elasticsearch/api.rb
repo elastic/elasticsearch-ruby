@@ -15,9 +15,7 @@ module Elasticsearch
                 Elasticsearch::API::Common::Client,
                 Elasticsearch::API::Actions,
                 Elasticsearch::API::Cluster,
-                Elasticsearch::API::Cluster::Actions,
-                Elasticsearch::API::Indices,
-                Elasticsearch::API::Indices::Actions
+                Elasticsearch::API::Indices
     end
   end
 end
