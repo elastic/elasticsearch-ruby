@@ -3,25 +3,23 @@ module Elasticsearch
     module Indices
       module Actions
 
-        # Close an index (keep the data on disk, but deny operations with the index).
-        #
-        # A closed index can be opened again with the {Indices::Actions#close} API.
+        # Open a previously closed index (see the {Indices::Actions#close} API).
         #
         # @option arguments [String] :index The name of the index (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
         #
-        def close(arguments={})
+        def open(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'POST'
-          path   = "#{arguments[:index]}/_close"
+          path   = "#{arguments[:index]}/_open"
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end
           # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
           params = Hash[params] unless params.is_a?(Hash)
-          body   = nil
+          body = nil
 
           perform_request(method, path, params, body).body
         end
