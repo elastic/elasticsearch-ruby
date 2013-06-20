@@ -7,11 +7,11 @@ module Elasticsearch
         #
         # @example Return all indices an alias points to
         #
-        #     client.indices.get_alias name: 2013
+        #     client.indices.get_alias name: '2013'
         #
         # @example Return all indices matching a wildcard pattern an alias points to
         #
-        #     client.indices.get_alias index: 'log*', name: 2013
+        #     client.indices.get_alias index: 'log*', name: '2013'
         #
         # @option arguments [List] :index A comma-separated list of index names to filter aliases
         # @option arguments [List] :name A comma-separated list of alias names to return (*Required*)
