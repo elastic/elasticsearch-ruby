@@ -34,6 +34,7 @@ module Elasticsearch
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
             assert_equal 'foo/bar/123', url
+            assert_nil   params[:id]
             assert_equal({:foo => 'bar'}, body)
             true
           end.returns(FakeResponse.new)
@@ -62,7 +63,7 @@ module Elasticsearch
             assert_equal 'PUT', method
             assert_equal 'foo/bar/123', url
             assert_equal 'create', params[:op_type]
-            assert_equal '123',    params[:id]
+            assert_nil   params[:id]
             assert_equal({:foo => 'bar'}, body)
             true
           end.returns(FakeResponse.new)

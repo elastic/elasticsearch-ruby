@@ -43,7 +43,6 @@ module Elasticsearch
         path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id] )
         params = arguments.select do |k,v|
           [ :consistency,
-            :id,
             :op_type,
             :parent,
             :percolate,
@@ -58,8 +57,6 @@ module Elasticsearch
         end
         # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
         params = Hash[params] unless params.is_a?(Hash)
-
-        # params.update :op_type => 'create'
 
         body   = arguments[:body]
 
