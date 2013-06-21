@@ -14,7 +14,7 @@ module Elasticsearch
         #     client.indices.put_alias index: 'logs-2013-06', name: 'year-2013'
         #     client.indices.put_alias index: 'logs-2013-05', name: 'year-2013'
         #
-        # See the {Indices::Actions#put_aliases} for performing operations with index aliases in bulk.
+        # See the {Indices::Actions#update_aliases} for performing operations with index aliases in bulk.
         #
         # @option arguments [String] :index The name of the index with an alias
         # @option arguments [String] :name The name of the alias to be created or updated

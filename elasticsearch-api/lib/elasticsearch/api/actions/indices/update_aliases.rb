@@ -9,7 +9,7 @@ module Elasticsearch
         #
         # @example Add multiple indices to a single alias
         #
-        #     client.indices.put_aliases body: {
+        #     client.indices.update_aliases body: {
         #       actions: [
         #         { add: { index: 'logs-2013-06', alias: 'year-2013' } },
         #         { add: { index: 'logs-2013-05', alias: 'year-2013' } }
@@ -18,7 +18,7 @@ module Elasticsearch
         #
         # @example Swap an alias (atomic operation)
         #
-        #     client.indices.put_aliases body: {
+        #     client.indices.update_aliases body: {
         #       actions: [
         #         { remove: { index: 'logs-2013-06', alias: 'current-month' } },
         #         { add:    { index: 'logs-2013-07', alias: 'current-month' } }
@@ -30,7 +30,7 @@ module Elasticsearch
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
-        def put_aliases(arguments={})
+        def update_aliases(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           method = 'POST'
           path   = "_aliases"

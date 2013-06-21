@@ -9,7 +9,7 @@ module Elasticsearch
         #
         #     client.indices.delete_alias index: 'foo', name: 'bar'
         #
-        # See the {Indices::Actions#put_aliases} for performing operations with index aliases in bulk.
+        # See the {Indices::Actions#update_aliases} for performing operations with index aliases in bulk.
         #
         # @option arguments [String] :index The name of the index with an alias (*Required*)
         # @option arguments [String] :name The name of the alias to be deleted (*Required*)

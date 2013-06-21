@@ -4,12 +4,12 @@ module Elasticsearch
   module Test
     class IndicesPutAliasesTest < ::Test::Unit::TestCase
 
-      context "Indices: Put aliases" do
+      context "Indices: Update aliases" do
         subject { FakeClient.new(nil) }
 
         should "require the :body argument" do
           assert_raise ArgumentError do
-            subject.indices.put_aliases
+            subject.indices.update_aliases
           end
         end
 
@@ -22,7 +22,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.indices.put_aliases :body => { :actions => [] }
+          subject.indices.update_aliases :body => { :actions => [] }
         end
 
         should "pass the URL parameters" do
@@ -32,7 +32,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.indices.put_aliases :body => {}, :timeout => '1s'
+          subject.indices.update_aliases :body => {}, :timeout => '1s'
         end
 
       end
