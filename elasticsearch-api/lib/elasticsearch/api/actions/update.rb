@@ -1,0 +1,94 @@
+module Elasticsearch
+  module API
+    module Actions
+
+      # Update a document without sending the whole document in the request ("partial update").
+      #
+      # Send either a partial document (`doc` ) which will be deeply merged into an existing document,
+      # or a `script`, which will update the document content, in the `:body` argument.
+      #
+      # The partial update operation allows you to limit the amount of data you send over the wire and
+      # reduces the chance of failed updates due to conflict.
+      #
+      # Specify the `:version` and `:retry_on_conflict` arguments to balance convenience and consistency.
+      #
+      # @example Update document _title_ using partial `doc`-ument
+      #
+      #     client.update index: 'myindex', type: 'mytype', id: '1',
+      #                   body: { doc: { title: 'Updated' } }
+      #
+      # @example Add a tag to document `tags` property using a `script`
+      #
+      #     client.update index: 'myindex', type: 'mytype', id: '1',
+      #                   body: { script: 'ctx._source.tags += tag', params: { tag: 'x' } }
+      #
+      # @example Increment a document counter by 1 _or_ initialize it, when the document does not exist
+      #
+      #     client.update index: 'myindex', type: 'mytype', id: '666',
+      #                   body: { script: 'ctx._source.counter += 1', upsert: { counter: 1 } }
+      #
+      # @example Delete a document if it's tagged "to-delete"
+      #
+      #     client.update index: 'myindex', type: 'mytype', id: '1',
+      #                   body: { script: 'ctx._source.tags.contains(tag) ? ctx.op = "delete" : ctx.op = "none"',
+      #                           params: { tag: 'to-delete' } }
+      #
+      # @option arguments [String] :id Document ID (*Required*)
+      # @option arguments [String] :index The name of the index (*Required*)
+      # @option arguments [String] :type The type of the document (*Required*)
+      # @option arguments [Hash] :body The request definition using either `script` or partial `doc` (*Required*)
+      # @option arguments [String] :consistency Explicit write consistency setting for the operation
+      #                                         (options: one, quorum, all)
+      # @option arguments [List] :fields A comma-separated list of fields to return in the response
+      # @option arguments [String] :lang The script language (default: mvel)
+      # @option arguments [String] :parent ID of the parent document
+      # @option arguments [String] :percolate Perform percolation during the operation;
+      #                                       use specific registered query name, attribute, or wildcard
+      # @option arguments [Boolean] :refresh Refresh the index after performing the operation
+      # @option arguments [String] :replication Specific replication type (options: sync, async)
+      # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried
+      #                                               when a conflict occurs (default: 0)
+      # @option arguments [String] :routing Specific routing value
+      # @option arguments [String] :script The URL-encoded script definition (instead of using request body)
+      # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [Time] :timestamp Explicit timestamp for the document
+      # @option arguments [Duration] :ttl Expiration time for the document
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [Number] :version_type Explicit version number for concurrency control
+      #
+      # @since 0.20
+      #
+      # @see http://elasticsearch.org/guide/reference/api/update/
+      #
+      def update(arguments={})
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
+        raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+        method = 'POST'
+        path   = "#{arguments[:index]}/#{arguments[:type]}/#{arguments[:id]}/_update"
+        params = arguments.select do |k,v|
+          [ :consistency,
+            :fields,
+            :lang,
+            :parent,
+            :percolate,
+            :refresh,
+            :replication,
+            :retry_on_conflict,
+            :routing,
+            :script,
+            :timeout,
+            :timestamp,
+            :ttl,
+            :version,
+            :version_type ].include?(k)
+        end
+        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+        params = Hash[params] unless params.is_a?(Hash)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+    end
+  end
+end
