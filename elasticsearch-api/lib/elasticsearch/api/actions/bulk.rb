@@ -59,18 +59,7 @@ module Elasticsearch
         body   = arguments[:body]
 
         if body.is_a? Array
-          payload = body.
-            inject([]) do |sum, item|
-              operation, meta = item.to_a.first
-              data            = meta.delete(:data)
-
-              sum << { operation => meta }
-              sum << data if data
-              sum
-            end.
-            map { |item| MultiJson.dump(item) }
-          payload << "" unless payload.empty?
-          payload = payload.join("\n")
+          payload = Utils.__bulkify(body)
         else
           payload = body
         end

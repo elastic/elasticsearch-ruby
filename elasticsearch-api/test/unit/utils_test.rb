@@ -47,6 +47,23 @@ module Elasticsearch
 
         end
 
+        context "__bulkify" do
+
+          should "convert the Array payload to string" do
+            result = Elasticsearch::API::Utils.__bulkify [
+              { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
+              { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } }
+            ]
+            assert_equal <<-RESULT, result
+{"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
+{"title":"Test"}
+{"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
+{"doc":{"title":"Update"}}
+            RESULT
+          end
+
+        end
+
       end
     end
   end
