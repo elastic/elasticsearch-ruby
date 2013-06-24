@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Returns statistical information about nodes in the cluster.
         #
+        # @example Return statistics about JVM
+        #
+        #     client.cluster.node_stats clear: true, jvm: true
+        #
         # @option arguments [List] :metric Limit the information returned for `indices` family to a specific metric
         #                                  (options: docs, fielddata, filter_cache, flush, get, id_cache, indexing, merges,
         #                                  refresh, search, store, warmer)

@@ -13,14 +13,14 @@ module Elasticsearch
         subject { MyDummyClient.new(nil) }
 
         should "have the cluster namespace" do
-          assert_respond_to subject, :indices
+          assert_respond_to subject, :cluster
         end
 
         should "have the indices namespace" do
           assert_respond_to subject, :indices
         end
 
-        should "have the API methods" do
+        should "have API methods" do
           assert_respond_to subject, :bulk
         end
 

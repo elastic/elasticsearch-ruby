@@ -8,6 +8,14 @@ module Elasticsearch
         # Pass the operations you want to perform in the `:body` option. Use the `dry_run` option to
         # evaluate the result of operations without actually performing them.
         #
+        # @example Move shard `0` of index `myindex` from node named _Node1_ to node named _Node2_
+        #
+        #     client.cluster.reroute body: {
+        #       commands: [
+        #         { move: { index: 'myindex', shard: 0, from_node: 'Node1', to_node: 'Node2' } }
+        #       ]
+        #     }
+        #
         # @note If you want to explicitely set the shard allocation to a certain node, you might
         #       want to look at the `allocation.*` cluster settings.
         #

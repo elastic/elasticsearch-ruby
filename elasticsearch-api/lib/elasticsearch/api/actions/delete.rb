@@ -4,9 +4,12 @@ module Elasticsearch
 
       # Delete a single document.
       #
-      # @example
+      # @example Delete a document
       #
       #     client.delete index: 'myindex', type: 'mytype', id: '1'
+      #
+      # @example Delete a document with specific routing
+      #
       #     client.delete index: 'myindex', type: 'mytype', id: '1', routing: 'abc123'
       #
       # @option arguments [String] :id The document ID (*Required*)

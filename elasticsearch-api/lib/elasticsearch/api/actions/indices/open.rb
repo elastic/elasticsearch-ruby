@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Open a previously closed index (see the {Indices::Actions#close} API).
         #
+        # @example Open index named _myindex_
+        #
+        #     client.indices.open index: 'myindex'
+        #
         # @option arguments [String] :index The name of the index (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
         #

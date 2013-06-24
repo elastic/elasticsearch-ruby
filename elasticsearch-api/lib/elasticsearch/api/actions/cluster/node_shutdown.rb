@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Shutdown one or all nodes
         #
+        # @example Shut down node named _Bloke_
+        #
+        #     client.cluster.node_shutdown node_id: 'Bloke'
+        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to perform the operation on; use
         #                                   `_local` to shutdown the node you're connected to, leave empty to
         #                                   shutdown all nodes

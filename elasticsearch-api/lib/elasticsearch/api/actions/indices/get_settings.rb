@@ -5,6 +5,14 @@ module Elasticsearch
 
         # Return the settings for all indices, or a list of indices.
         #
+        # @example Get settings for all indices
+        #
+        #     client.indices.get_settings
+        #
+        # @example Get settings for an index named _myindex_
+        #
+        #     client.indices.get_settings index: 'myindex'
+        #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string
         #                                 to perform the operation on all indices
         #

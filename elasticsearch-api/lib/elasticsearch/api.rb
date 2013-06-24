@@ -9,6 +9,9 @@ Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require
 
 module Elasticsearch
   module API
+
+    # Auto-include all namespaces in the receiver
+    #
     def self.included(base)
       base.send :include,
                 Elasticsearch::API::Common,

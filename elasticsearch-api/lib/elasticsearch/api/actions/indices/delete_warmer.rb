@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Delete one or more warmers for a list of indices.
         #
+        # @example Delete a warmer named _mywarmer_ for index named _myindex_
+        #
+        #     client.indices.delete_warmer index: 'myindex', name: 'mywarmer'
+        #
         # @option arguments [List] :index A comma-separated list of index names to register warmer for; use `_all`
         #                                 or empty string to perform the operation on all indices (*Required*)
         # @option arguments [String] :name The name of the warmer (supports wildcards); leave empty to delete all warmers

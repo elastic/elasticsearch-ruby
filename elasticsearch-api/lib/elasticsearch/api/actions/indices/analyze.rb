@@ -9,6 +9,16 @@ module Elasticsearch
         # same text with different analyzers. An ad-hoc analysis chain can be built from specific
         # _tokenizer_ and _filters_.
         #
+        # @example Analyze text "Quick Brown Jumping Fox" with the _snowball_ analyzer
+        #
+        #     client.indices.analyze text: 'The Quick Brown Jumping Fox', analyzer: 'snowball'
+        #
+        # @example Analyze text "Quick Brown Jumping Fox" with the _snowball_ analyzer
+        #
+        #     client.indices.analyze text: 'The Quick Brown Jumping Fox',
+        #                            tokenizer: 'whitespace',
+        #                            filters: ['lowercase','stop']
+        #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Hash] :body The text on which the analysis should be performed
         # @option arguments [String] :analyzer The name of the analyzer to use

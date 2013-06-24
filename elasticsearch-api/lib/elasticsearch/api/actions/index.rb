@@ -16,6 +16,20 @@ module Elasticsearch
       # By default, the document will be available for {Actions#get} immediately, for {Actions#search} only
       # after an index refresh operation has been performed (either automatically or manually).
       #
+      #
+      # @example Create or update a document `myindex/mytype/1`
+      #
+      #     client.index index: 'myindex',
+      #                  type: 'mytype',
+      #                  id: '1',
+      #                  body: {
+      #                   title: 'Test 1',
+      #                   tags: ['y', 'z'],
+      #                   published: true,
+      #                   published_at: Time.now.utc.iso8601,
+      #                   counter: 1
+      #                 }
+      #
       # @option arguments [String] :id Document ID (optional, will be auto-generated if missing)
       # @option arguments [String] :index The name of the index (*Required*)
       # @option arguments [String] :type The type of the document (*Required*)

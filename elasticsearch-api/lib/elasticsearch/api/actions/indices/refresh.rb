@@ -12,6 +12,10 @@ module Elasticsearch
         # in integration tests, or when you need to perform a manual "synchronization" of the index
         # with an external system at given moment.
         #
+        # @example Refresh an index named _myindex_
+        #
+        #     client.indices.refresh index: 'myindex'
+        #
         # @note The refresh operation can adversely affect indexing throughput when used too frequently.
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string

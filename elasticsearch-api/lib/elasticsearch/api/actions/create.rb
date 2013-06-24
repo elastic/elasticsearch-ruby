@@ -4,8 +4,21 @@ module Elasticsearch
 
       # Create a document.
       #
-      # Enforce the _create_ operation when indexing a document -- the operation will return an error
-      # when the document already exists.
+      # Enforce the _create_ operation when indexing a document --
+      # the operation will return an error when the document already exists.
+      #
+      # @example Create a document
+      #
+      #     client.create index: 'myindex',
+      #                   type: 'mytype',
+      #                   id: '1',
+      #                   body: {
+      #                    title: 'Test 1',
+      #                    tags: ['y', 'z'],
+      #                    published: true,
+      #                    published_at: Time.now.utc.iso8601,
+      #                    counter: 1
+      #                   }
       #
       # @option (see Actions#index)
       #

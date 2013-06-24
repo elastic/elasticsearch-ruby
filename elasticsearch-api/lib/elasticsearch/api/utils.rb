@@ -1,5 +1,8 @@
 module Elasticsearch
   module API
+
+    # Generic utility methods
+    #
     module Utils
 
       # Create a "list" of values from arguments, ignoring nil values

@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Return true if the specified alias exists, false otherwise.
         #
+        # @example Check whether index alias named _myalias_ exists
+        #
+        #     client.indices.exists_alias name: 'myalias'
+        #
         # @option arguments [List] :index A comma-separated list of index names to filter aliases
         # @option arguments [List] :name A comma-separated list of alias names to return (*Required*)
         # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones

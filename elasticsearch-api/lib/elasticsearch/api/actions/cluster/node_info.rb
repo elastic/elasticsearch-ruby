@@ -10,6 +10,10 @@ module Elasticsearch
         #
         # Use the `node_id` option to limit information to specific node(s).
         #
+        # @example Return information about JVM
+        #
+        #     client.cluster.node_info jvm: true
+        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
         #                                   use `_local` to return information from the node you're connecting to, leave
         #                                   empty to get information from all nodes

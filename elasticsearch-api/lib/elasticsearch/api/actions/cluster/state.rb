@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Get information about the cluster state (indices settings, allocations, etc)
         #
+        # @example
+        #
+        #     client.cluster.state
+        #
         # @option arguments [Boolean] :filter_blocks Do not return information about blocks
         # @option arguments [Boolean] :filter_index_templates Do not return information about index templates
         # @option arguments [List] :filter_indices Limit returned metadata information to specific indices

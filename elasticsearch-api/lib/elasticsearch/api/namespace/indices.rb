@@ -3,10 +3,14 @@ module Elasticsearch
     module Indices
       module Actions; end
 
+      # Client for the "indices" namespace (includes the {Indices::Actions} methods)
+      #
       class IndicesClient
-        include Common::Client, Actions
+        include Common::Client, Indices::Actions
       end
 
+      # Proxy method for {IndicesClient}, available in the receiving object
+      #
       def indices
         @indices ||= IndicesClient.new(self)
       end

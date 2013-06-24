@@ -4,6 +4,14 @@ module Elasticsearch
 
       # Get the number of documents for the cluster, index, type, or a query.
       #
+      # @example Get the number of all documents in the cluster
+      #
+      #     client.count
+      #
+      # @example Get the number of documents in a specified index
+      #
+      #     client.count index: 'myindex'
+      #
       # @option arguments [List] :index A comma-separated list of indices to restrict the results
       # @option arguments [List] :type A comma-separated list of types to restrict the results
       # @option arguments [Hash] :body A query to restrict the results (optional)

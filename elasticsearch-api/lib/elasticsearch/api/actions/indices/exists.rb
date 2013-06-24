@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Return true if the index (or all indices in a list) exists, false otherwise.
         #
+        # @example Check whether index named _myindex_ exists
+        #
+        #     client.indices.exists index: 'myindex'
+        #
         # @option arguments [List] :index A comma-separated list of indices to check (*Required*)
         # @return [true,false]
         #

@@ -10,12 +10,12 @@ module Elasticsearch
       # @example Perform three operations in a single request
       #
       #     client.bulk body: [
-      #       {index:  { _index: 'myindex', _type: 'mytype', _id: 1, data: { title: 'foo' } }},
-      #       {update: { _index: 'myindex', _type: 'mytype', _id: 2, data: { doc: { title: 'foo' } } }},
-      #       {delete: { _index: 'myindex', _type: 'mytype', _id: 3 },
+      #       { index:  { _index: 'myindex', _type: 'mytype', _id: 1, data: { title: 'foo' } } },
+      #       { update: { _index: 'myindex', _type: 'mytype', _id: 2, data: { doc: { title: 'foo' } } } },
+      #       { delete: { _index: 'myindex', _type: 'mytype', _id: 3  },
       #     ]
       #
-      # @example Performing a script-based batch updates
+      # @example Perform a script-based bulk update
       #
       #     client.bulk body: [
       #       { update: { _index: 'myindex', _type: 'mytype', _id: 1,

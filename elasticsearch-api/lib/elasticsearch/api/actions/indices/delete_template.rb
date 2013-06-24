@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Delete an index template.
         #
+        # @example Delete a template named _mytemplate_
+        #
+        #     client.indices.delete_template name: 'mytemplate'
+        #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
         #

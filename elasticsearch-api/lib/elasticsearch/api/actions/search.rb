@@ -14,7 +14,7 @@ module Elasticsearch
       #
       #     client.search index: 'myindex', q: 'title:test'
       #
-      # @example Search with a full request definition in the Elasticsearch's Query DSL
+      # @example Passing a full request definition in the Elasticsearch's Query DSL as a `Hash`
       #
       #     client.search index: 'myindex',
       #                   body: {
@@ -22,7 +22,7 @@ module Elasticsearch
       #                     facets: { tags: { terms: { field: 'tags' } } }
       #                   }
       #
-      # @example Passing the search definition as a JSON string
+      # @example Passing the search definition as a `String`, built with a JSON builder
       #
       #     require 'jbuilder'
       #

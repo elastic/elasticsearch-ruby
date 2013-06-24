@@ -5,6 +5,10 @@ module Elasticsearch
 
         # Update cluster settings.
         #
+        # @example Disable shard allocation in the cluster until restart
+        #
+        #     client.cluster.put_settings body: { transient: { 'cluster.routing.allocation.disable_allocation' => true } }
+        #
         # @option arguments [Hash] :body The settings to be updated. Can be either `transient` or `persistent`
         #                                (survives cluster restart).
         #
