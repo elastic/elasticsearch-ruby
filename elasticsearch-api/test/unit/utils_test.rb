@@ -52,14 +52,27 @@ module Elasticsearch
           should "convert the Array payload to string" do
             result = Elasticsearch::API::Utils.__bulkify [
               { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
-              { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } }
+              { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
+              { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } }
             ]
-            assert_equal <<-RESULT, result
-{"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
-{"title":"Test"}
-{"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
-{"doc":{"title":"Update"}}
-            RESULT
+
+            if RUBY_1_8
+              lines = result.split("\n")
+
+              assert_equal 5, lines.size
+              assert_match /\{"index"\:\{/, lines[0]
+              assert_match /\{"title"\:"Test"/, lines[1]
+              assert_match /\{"update"\:\{/, lines[2]
+              assert_match /\{"doc"\:\{"title"/, lines[3]
+            else
+              assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
+                {"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
+                {"title":"Test"}
+                {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
+                {"doc":{"title":"Update"}}
+                {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
+              PAYLOAD
+            end
           end
 
         end

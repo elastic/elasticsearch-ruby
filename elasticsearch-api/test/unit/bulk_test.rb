@@ -12,13 +12,24 @@ module Elasticsearch
             assert_equal 'POST', method
             assert_equal '_bulk', url
             assert_equal Hash.new, params
-            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
-            {"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
-            {"title":"Test"}
-            {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
-            {"doc":{"title":"Update"}}
-            {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
-            PAYLOAD
+
+            if RUBY_1_8
+              lines = body.split("\n")
+
+              assert_equal 5, lines.size
+              assert_match /\{"index"\:\{/, lines[0]
+              assert_match /\{"title"\:"Test"/, lines[1]
+              assert_match /\{"update"\:\{/, lines[2]
+              assert_match /\{"doc"\:\{"title"/, lines[3]
+            else
+              assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
+                {"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
+                {"title":"Test"}
+                {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
+                {"doc":{"title":"Update"}}
+                {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
+              PAYLOAD
+            end
             true
           end.returns(FakeResponse.new)
 
