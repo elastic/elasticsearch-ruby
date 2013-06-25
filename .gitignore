@@ -1,0 +1,7 @@
+.config
+.yardoc
+_yardoc
+coverage
+doc/
+rdoc/
+tmp
