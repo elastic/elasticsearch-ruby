@@ -1,0 +1,4 @@
+[submodule "elasticsearch-api/spec"]
+  path = elasticsearch-api/spec
+  url  = git@github.com:elasticsearch/elasticsearch-rest-api-spec.git
+  update = rebase
