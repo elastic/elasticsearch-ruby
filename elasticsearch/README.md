@@ -1,29 +1,85 @@
 # Elasticsearch
 
-TODO: Write a gem description
+The `elasticsearch` library provides a Ruby client and API for [Elasticsearch](http://elasticsearch.org).
+
+Features overview:
+
+* Pluggable logging and tracing
+* Plugabble connection selection strategies (round-robin, random, custom)
+* Pluggable transport implementation, customizable and extendable
+* Pluggable serializer implementation
+* Request retries and dead connections handling
+* Node reloading (based on cluster state) on errors or on demand
+* Consistent API support for the whole Elasticsearch API
+* Extensive documentation and examples
+* Emphasis on modularity and extendability of both the client and API libraries
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install the package from [Rubygems](https://rubygems.org):
 
-    gem 'elasticsearch'
+    gem install elasticsearch
 
-And then execute:
+To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    $ bundle
+    gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
-Or install it yourself as:
+or install it from a source code checkout:
 
-    $ gem install elasticsearch
+    git clone https://github.com/elasticsearch/elasticsearch-ruby.git
+    cd elasticsearch-ruby/elasticsearch
+    bundle install
+    rake install
 
 ## Usage
 
-TODO: Write usage instructions here
+This library is a wrapper for two separate libraries:
 
-## Contributing
+* [`elasticsearch-client`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-client),
+  which provides a Ruby client for connecting to an [Elasticsearch](http://elasticsearch.org) cluster
+* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
+  which provides a Ruby API for the Elasticsearch RESTful API
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+Install the `elasticsearch` package and use the API directly:
+
+```ruby
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new log: true
+
+client.cluster.health
+
+client.transport.reload_connections!
+
+client.search q: 'test'
+
+# etc.
+```
+
+Please refer to the specific library documentation for details:
+
+* **Client**:
+   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-client/README.md)
+   [[Documentation]](http://rubydoc.info/gems/elasticsearch-client/file/README.markdown)
+
+* **API**:
+   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
+   [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
+
+## License
+
+This software is licensed under the Apache 2 license, quoted below.
+
+    Copyright (c) 2013 Elasticsearch <http://www.elasticsearch.org>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

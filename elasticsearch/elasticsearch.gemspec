@@ -20,6 +20,9 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = [ "README.md", "LICENSE.txt" ]
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
+  s.add_dependency "elasticsearch-client", s.version
+  s.add_dependency "elasticsearch-api",    s.version
+
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 

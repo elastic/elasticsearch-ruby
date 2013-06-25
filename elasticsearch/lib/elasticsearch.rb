@@ -1,5 +1,12 @@
 require "elasticsearch/version"
 
+require 'elasticsearch/client'
+require 'elasticsearch/api'
+
 module Elasticsearch
-  # Your code goes here...
+  module Client
+    class Client
+      include Elasticsearch::API
+    end
+  end
 end
