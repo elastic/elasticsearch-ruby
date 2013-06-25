@@ -101,7 +101,7 @@ module Elasticsearch
         def __log(method, path, params, body, url, response, json, took, duration)
           logger.info  "#{method.to_s.upcase} #{url} " +
                        "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
-          logger.debug "> #{serializer.dump(body)}" if body
+          logger.debug "> #{__convert_to_json(body)}" if body
           logger.debug "< #{response.body}"
         end
 
@@ -118,7 +118,7 @@ module Elasticsearch
         def __trace(method, path, params, body, url, response, json, took, duration)
           trace_url  = "http://localhost:9200/#{path}?pretty" +
                        ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
-          trace_body = body ? " -d '#{serializer.dump(body, :pretty => true)}'" : ''
+          trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
           tracer.info  "curl -X #{method.to_s.upcase} '#{trace_url}'#{trace_body}\n"
           tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
           tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
@@ -135,8 +135,8 @@ module Elasticsearch
         # Converts any non-String object to JSON
         #
         # @api private
-        def __convert_to_json(o=nil)
-          o = o.is_a?(String) ? o : serializer.dump(o)
+        def __convert_to_json(o=nil, options={})
+          o = o.is_a?(String) ? o : serializer.dump(o, options)
         end
 
         # Performs a request to Elasticsearch, while handling logging, tracing, marking dead connections,
