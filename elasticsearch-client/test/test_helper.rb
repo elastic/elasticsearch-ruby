@@ -1,5 +1,10 @@
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 
+if RUBY_1_8
+  require 'rubygems'
+  gem 'test-unit'
+end
+
 require 'rubygems' if RUBY_1_8
 
 require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["COVERAGE"]
