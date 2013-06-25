@@ -7,7 +7,7 @@ module Elasticsearch
     class HashieTest < ::Test::Unit::TestCase
 
       context "Hashie" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "wrap the response" do
           json =<<-JSON

@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesCreateTest < ::Test::Unit::TestCase
 
       context "Indices: Create" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do

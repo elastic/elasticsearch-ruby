@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesGetSettingsTest < ::Test::Unit::TestCase
 
       context "Indices: Get settings" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|

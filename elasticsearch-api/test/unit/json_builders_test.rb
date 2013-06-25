@@ -8,7 +8,7 @@ module Elasticsearch
     class JsonBuildersTest < ::Test::Unit::TestCase
 
       context "JBuilder" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "build a JSON" do
           subject.expects(:perform_request).with do |method, url, params, body|
@@ -34,7 +34,7 @@ module Elasticsearch
       end
 
       context "Jsonify" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "build a JSON" do
           subject.expects(:perform_request).with do |method, url, params, body|

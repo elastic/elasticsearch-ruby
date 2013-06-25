@@ -15,7 +15,6 @@ module Elasticsearch
     def self.included(base)
       base.send :include,
                 Elasticsearch::API::Common,
-                Elasticsearch::API::Common::Client,
                 Elasticsearch::API::Actions,
                 Elasticsearch::API::Cluster,
                 Elasticsearch::API::Indices

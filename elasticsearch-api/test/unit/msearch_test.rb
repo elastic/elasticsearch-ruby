@@ -5,7 +5,7 @@ module Elasticsearch
     class MsearchTest < ::Test::Unit::TestCase
 
       context "Msearch" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :body argument" do
           assert_raise ArgumentError do

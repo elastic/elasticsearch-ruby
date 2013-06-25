@@ -5,7 +5,7 @@ module Elasticsearch
     class IndexDocumentTest < ::Test::Unit::TestCase
 
       context "Creating a document with the #create method" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform the create request" do
           subject.expects(:perform_request).with do |method, url, params, body|

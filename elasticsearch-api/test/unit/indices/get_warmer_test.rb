@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesGetWarmerTest < ::Test::Unit::TestCase
 
       context "Indices: Get warmer" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do

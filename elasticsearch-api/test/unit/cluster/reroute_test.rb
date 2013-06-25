@@ -5,7 +5,7 @@ module Elasticsearch
     class ClusterRerouteTest < ::Test::Unit::TestCase
 
       context "Cluster: Reroute" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|

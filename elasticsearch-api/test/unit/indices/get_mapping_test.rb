@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesGetMappingTest < ::Test::Unit::TestCase
 
       context "Indices: Get mapping" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|

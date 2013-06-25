@@ -5,7 +5,7 @@ module Elasticsearch
     class IndexDocumentTest < ::Test::Unit::TestCase
 
       context "Indexing a document" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do
@@ -44,7 +44,7 @@ module Elasticsearch
       end
 
       context "Creating a document" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform the create request" do
           subject.expects(:perform_request).with do |method, url, params, body|

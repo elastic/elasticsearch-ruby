@@ -5,7 +5,7 @@ module Elasticsearch
     class GetSourceTest < ::Test::Unit::TestCase
 
       context "Get document source" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do

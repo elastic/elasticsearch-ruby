@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesPutTemplateTest < ::Test::Unit::TestCase
 
       context "Indices: Put template" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :name argument" do
           assert_raise ArgumentError do

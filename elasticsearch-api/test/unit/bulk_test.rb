@@ -5,7 +5,7 @@ module Elasticsearch
     class BulkTest < ::Test::Unit::TestCase
 
       context "Bulk" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "post correct payload to the endpoint" do
           subject.expects(:perform_request).with do |method, url, params, body|

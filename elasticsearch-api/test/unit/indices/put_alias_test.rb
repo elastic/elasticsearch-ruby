@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesPutAliasTest < ::Test::Unit::TestCase
 
       context "Indices: Put alias" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do

@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesPutAliasesTest < ::Test::Unit::TestCase
 
       context "Indices: Update aliases" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :body argument" do
           assert_raise ArgumentError do

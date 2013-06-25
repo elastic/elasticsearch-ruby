@@ -3,13 +3,16 @@ module Elasticsearch
     module Common
       module Actions; end
 
-      # Base client wrapper
-      #
       module Client
-        attr_reader :client
 
-        def initialize(client)
-          @client = client
+        # Base client wrapper
+        #
+        module Base
+          attr_reader :client
+
+          def initialize(client)
+            @client = client
+          end
         end
 
         # Delegates the `perform_request` method to the wrapped client

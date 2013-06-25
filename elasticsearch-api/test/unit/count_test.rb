@@ -5,7 +5,7 @@ module Elasticsearch
     class CountTest < ::Test::Unit::TestCase
 
       context "Count" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|

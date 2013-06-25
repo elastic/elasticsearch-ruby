@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesPutSettingsTest < ::Test::Unit::TestCase
 
       context "Indices: Put settings" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :body argument" do
           assert_raise ArgumentError do

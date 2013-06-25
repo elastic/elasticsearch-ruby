@@ -5,7 +5,7 @@ module Elasticsearch
     class DeleteByQueryTest < ::Test::Unit::TestCase
 
       context "Delete by query" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do

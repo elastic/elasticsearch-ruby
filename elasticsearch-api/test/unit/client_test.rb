@@ -10,7 +10,7 @@ module Elasticsearch
           include Elasticsearch::API
         end
 
-        subject { MyDummyClient.new(nil) }
+        subject { MyDummyClient.new }
 
         should "have the cluster namespace" do
           assert_respond_to subject, :cluster

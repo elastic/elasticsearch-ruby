@@ -5,7 +5,7 @@ module Elasticsearch
     class IndicesGetAliasTest < ::Test::Unit::TestCase
 
       context "Indices: Get alias" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :name argument" do
           assert_raise ArgumentError do

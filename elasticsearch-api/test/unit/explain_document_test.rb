@@ -5,7 +5,7 @@ module Elasticsearch
     class ExplainTest < ::Test::Unit::TestCase
 
       context "Explain document" do
-        subject { FakeClient.new(nil) }
+        subject { FakeClient.new }
 
         should "require the :index argument" do
           assert_raise ArgumentError do
