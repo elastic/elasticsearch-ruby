@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
   s.summary       = "Ruby client for Elasticsearch."
-  s.homepage      = "http://github.com/elasticsearch/elasticsearch-ruby"
+  s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-client"
   s.license       = "Apache 2"
 
   s.files         = `git ls-files`.split($/)
@@ -47,6 +47,6 @@ Gem::Specification.new do |s|
   end
 
   s.description = <<-DESC.gsub(/^    /, '')
-    Ruby client for Elasticsearch.
+    Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
   DESC
 end

@@ -20,14 +20,26 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = [ "README.md", "LICENSE.txt" ]
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
-  s.add_dependency "elasticsearch-client", s.version
-  s.add_dependency "elasticsearch-api",    s.version
+  s.add_dependency "elasticsearch-client", '0.0.1'
+  s.add_dependency "elasticsearch-api",    '0.0.1'
 
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 
+  s.add_development_dependency "ansi"
+  s.add_development_dependency "shoulda-context"
+  s.add_development_dependency "mocha"
+  s.add_development_dependency "turn"
+  s.add_development_dependency "yard"
+  s.add_development_dependency "ruby-prof"
+
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    s.add_development_dependency "simplecov"
+    s.add_development_dependency "cane"
+    s.add_development_dependency "require-prof"
+  end
+
   s.description = <<-DESC.gsub(/^    /, '')
-    Ruby client, API/DSL and components for Elasticsearch.
-    A "meta-gem" wrapping `elasticsearch-client` and `elasticsearch-api`.
+    Ruby integrations for Elasticsearch (client, API, etc.)
   DESC
 end
