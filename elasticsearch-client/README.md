@@ -1,5 +1,10 @@
 # Elasticsearch::Client
 
+**This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
+please refer to it, unless you want to use this library standalone.**
+
+----
+
 The `elasticsearch-client` library provides a Ruby client for connecting
 to an [Elasticsearch](http://elasticsearch.org) cluster.
 
@@ -9,9 +14,18 @@ discovering nodes in the cluster, and provides an abstraction for
 data serialization and transport.
 
 It does not handle calling the Elasticsearch API;
-see the `elasticsearch-api` library.
+see the [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api) library.
 
 The library is compatible with Ruby 1.8.7 or higher.
+
+Features overview:
+
+* Pluggable logging and tracing
+* Plugabble connection selection strategies (round-robin, random, custom)
+* Pluggable transport implementation, customizable and extendable
+* Pluggable serializer implementation
+* Request retries and dead connections handling
+* Node reloading (based on cluster state) on errors or on demand
 
 ## Installation
 
