@@ -28,17 +28,17 @@ namespace :test do
   namespace :server do
     desc "Start Elasticsearch nodes for tests"
     task :start do
-      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/core'
-      require 'elasticsearch/core/extensions/test_cluster'
+      $LOAD_PATH << File.expand_path('../../elasticsearch-client/lib', __FILE__) << File.expand_path('../test', __FILE__)
+      require 'elasticsearch/client'
+      require 'elasticsearch/client/extensions/test_cluster'
       Elasticsearch::TestCluster.start
     end
 
     desc "Stop Elasticsearch nodes for tests"
     task :stop do
-      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/core'
-      require 'elasticsearch/core/extensions/test_cluster'
+      $LOAD_PATH << File.expand_path('../../elasticsearch-client/lib', __FILE__) << File.expand_path('../test', __FILE__)
+      require 'elasticsearch/client'
+      require 'elasticsearch/client/extensions/test_cluster'
       Elasticsearch::TestCluster.stop
     end
   end
