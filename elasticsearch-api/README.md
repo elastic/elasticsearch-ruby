@@ -54,7 +54,7 @@ client.search body: { query: { match: { title: 'test' } } }
 When you want to mix the library into you own client, it must conform to a following _contract_:
 
 * It responds to a `perform_request(method, path, params, body)` method,
-* the method returns an object with `status`, `body` a `headers` methods.
+* the method returns an object with `status`, `body` and `headers` methods.
 
 A simple client could look like this:
 
