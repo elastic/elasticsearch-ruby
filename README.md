@@ -54,7 +54,7 @@ Please refer to the specific library documentation for detailed information and 
 * [[Documentation]](http://rubydoc.info/gems/elasticsearch-client/file/README.markdown)
 * [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-client/test)
 
-## API
+### API
 
 * [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
 * [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
