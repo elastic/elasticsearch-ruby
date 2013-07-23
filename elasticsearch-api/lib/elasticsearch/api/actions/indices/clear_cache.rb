@@ -57,7 +57,9 @@ module Elasticsearch
           end
           # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
           params = Hash[params] unless params.is_a?(Hash)
-          body = nil
+          body   = nil
+
+          params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
           perform_request(method, path, params, body).body
         end

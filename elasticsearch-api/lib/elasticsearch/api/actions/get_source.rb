@@ -42,6 +42,8 @@ module Elasticsearch
         params = Hash[params] unless params.is_a?(Hash)
         body   = nil
 
+        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+
         perform_request(method, path, params, body).body
       end
     end
