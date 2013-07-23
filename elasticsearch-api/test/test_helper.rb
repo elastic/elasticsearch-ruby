@@ -16,7 +16,7 @@ unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
 
   if ENV['QUIET']
     Turn.config.format = :outline
-    Turn.config.trace = 0
+    Turn.config.trace = 1
   end
 end
 
