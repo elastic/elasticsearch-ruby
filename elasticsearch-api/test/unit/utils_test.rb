@@ -49,7 +49,7 @@ module Elasticsearch
 
         context "__bulkify" do
 
-          should "convert the Array payload to string" do
+          should "serialize array of hashes" do
             result = Elasticsearch::API::Utils.__bulkify [
               { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
               { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
@@ -73,6 +73,23 @@ module Elasticsearch
                 {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
               PAYLOAD
             end
+          end
+
+          should "serialize arrays of strings" do
+            result = Elasticsearch::API::Utils.__bulkify ['{"foo":"bar"}','{"moo":"bam"}']
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
+              {"foo":"bar"}
+              {"moo":"bam"}
+            PAYLOAD
+          end
+
+          should "serialize arrays of header/data pairs" do
+            result = Elasticsearch::API::Utils.__bulkify [{:foo => "bar"},{:moo => "bam"},{:foo => "baz"}]
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
+              {"foo":"bar"}
+              {"moo":"bam"}
+              {"foo":"baz"}
+            PAYLOAD
           end
 
         end

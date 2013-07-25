@@ -59,6 +59,15 @@ module Elasticsearch
           subject.bulk :body => "foo\nbar"
         end
 
+        should "post an array of strings payload" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal "foo\nbar\n", body
+            true
+          end.returns(FakeResponse.new)
+
+          subject.bulk :body => ["foo", "bar"]
+        end
+
         should "encode URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal '_bulk', url

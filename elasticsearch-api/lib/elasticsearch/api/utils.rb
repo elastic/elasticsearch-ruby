@@ -44,17 +44,31 @@ module Elasticsearch
       #     # => {"doc":{"title":"Update"}}
       #
       def __bulkify(payload)
-        payload = payload.
-        inject([]) do |sum, item|
-          operation, meta = item.to_a.first
-          data            = meta.delete(:data)
+        case
+        # Hashes with `:data`
+        when payload.any? { |d| d.is_a?(Hash) && d.values.first.is_a?(Hash) && (d.values.first[:data] || d.values.first['data']) }
+          payload = payload.
+          inject([]) do |sum, item|
+            operation, meta = item.to_a.first
+            data            = meta.delete(:data) || meta.delete('data')
 
-          sum << { operation => meta }
-          sum << data if data
-          sum
-        end.
-        map { |item| MultiJson.dump(item) }
-        payload << "" unless payload.empty?
+            sum << { operation => meta }
+            sum << data if data
+            sum
+          end.
+          map { |item| MultiJson.dump(item) }
+          payload << "" unless payload.empty?
+
+        # Array of strings
+        when payload.all? { |d| d.is_a? String }
+          payload << ''
+
+        # Header/Data pairs
+        else
+          payload = payload.map { |item| MultiJson.dump(item) }
+          payload << ''
+        end
+
         payload = payload.join("\n")
       end
 
