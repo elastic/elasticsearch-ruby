@@ -33,9 +33,13 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::Test::Integr
     should "handle paths and URL parameters" do
       @client.perform_request 'PUT', 'myindex/mydoc/1', {routing: 'XYZ'}, {foo: 'bar'}
       response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=XYZ'
+      assert_equal true, response.body['exists']
       assert_equal 'bar', response.body['_source']['foo']
-      response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=ABC'
-      assert_nil response.body['_source']
+      assert_raise Elasticsearch::Client::Transport::Errors::NotFound do
+        response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=ABC'
+        assert_nil response.body['_source']
+        assert_equal false, response.body['exists']
+      end
     end
 
     context "with round robin selector" do
