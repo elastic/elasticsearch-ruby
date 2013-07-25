@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'test_helper'
 
 module Elasticsearch
@@ -6,6 +8,18 @@ module Elasticsearch
       include Elasticsearch::API::Utils
 
       context "Utils" do
+
+        context "__escape" do
+
+          should "encode Unicode characters" do
+            assert_equal '%E4%B8%AD%E6%96%87', __escape('中文')
+          end
+
+          should "encode special characters" do
+            assert_equal 'foo%20bar', __escape('foo bar')
+          end
+
+        end
 
         context "__listify" do
 
@@ -43,6 +57,10 @@ module Elasticsearch
 
           should "ignore empty string values" do
             assert_equal 'foo/bar', __pathify(['foo', '', 'bar'])
+          end
+
+          should "encode special characters" do
+            assert_equal 'foo/bar%5Ebam', __pathify(['foo', 'bar^bam'])
           end
 
         end

@@ -5,6 +5,16 @@ module Elasticsearch
     #
     module Utils
 
+      # URL-escape a string
+      #
+      # @example
+      #     __escape('bar^bam') # => 'bar%5Ebam'
+      #
+      # @api private
+      def __escape(string)
+        URI.encode(string.to_s)
+      end
+
       # Create a "list" of values from arguments, ignoring nil values
       #
       # @example Create a list from array
@@ -18,7 +28,8 @@ module Elasticsearch
         Array(list).flatten.compact.join(',')
       end
 
-      # Create a path (URL part) from arguments, ignoring nil values and empty strings
+      # Create a path (URL part) from arguments, ignoring nil values and empty strings,
+      # and encoding special characters
       #
       # @example Create a path from array
       #     __pathify(['foo', '', nil, 'bar']) # => 'foo/bar'
@@ -26,9 +37,17 @@ module Elasticsearch
       # @example Create a path from arguments
       #     __pathify('foo', '', nil, 'bar') # => 'foo/bar'
       #
+      # # @example Encode special characters
+      #     __pathify(['foo', 'bar^bam']) # => 'foo/bar%5Ebam'
+      #
       # @api private
       def __pathify(*segments)
-        Array(segments).flatten.compact.reject { |s| s.to_s =~ /^\s*$/ }.join('/').squeeze('/')
+        Array(segments).flatten.
+          compact.
+          reject { |s| s.to_s =~ /^\s*$/ }.
+          map    { |s| __escape(s) }.
+          join('/').
+          squeeze('/')
       end
 
       # Convert an array of payloads into Elasticsearch `header\ndata` format
