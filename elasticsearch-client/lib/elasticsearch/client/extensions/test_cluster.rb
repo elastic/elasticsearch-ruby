@@ -17,22 +17,26 @@ module Elasticsearch
     #
     # Starts the desired number of nodes in test-suitable configuration (memory store, no persistence, etc).
     #
+    # @option arguments [String]  :command      Elasticsearch command (default: `elasticsearch`).
     # @option arguments [Integer] :count        Number of desired nodes (default: 2).
     # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch-ruby-test`).
-    # @option arguments [String]  :node_name    Starting node name; ill be auto-incremented (default: `test-{i}`).
     # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250).
     #
+    # You can also use environment variables to set these options.
+    #
     def start(arguments={})
-      unless system "which elasticsearch > /dev/null 2>&1"
+      arguments[:command] = ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
+
+      unless system "which #{arguments[:command]} > /dev/null 2>&1"
         STDERR.puts ANSI.red("[ERROR] Elasticsearch can't be started, is it installed? Run: $ which elasticsearch"), ''
         abort
       end
 
       @@number_of_nodes = arguments[:count] if arguments[:count]
 
-      arguments[:port]         ||= 9250
-      arguments[:cluster_name] ||= 'elasticsearch-ruby-test'
-      arguments[:node_name]    ||= 'test'
+      arguments[:port]         = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+      arguments[:cluster_name] = ENV['TEST_CLUSTER_NAME'] || 'elasticsearch-ruby-test'
+      arguments[:node_name]    = 'node'
 
       if running? :on => arguments[:port], :as => arguments[:cluster_name]
         print ANSI.red("Elasticsearch cluster already running")
@@ -46,8 +50,8 @@ module Elasticsearch
         n += 1
         pidfile = File.expand_path("tmp/elasticsearch-#{n}.pid", Dir.pwd)
         pid = Process.spawn <<-COMMAND
-          elasticsearch \
-            -D es.foreground=no \
+          #{arguments[:command]} \
+            -D es.foreground=yes \
             -D es.cluster.name=#{arguments[:cluster_name]} \
             -D es.node.name=#{arguments[:node_name]}-#{n} \
             -D es.http.port=#{arguments[:port].to_i + (n-1)} \

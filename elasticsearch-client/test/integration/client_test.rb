@@ -48,15 +48,15 @@ class Elasticsearch::Client::ClientIntegrationTest < Elasticsearch::Test::Integr
       should "rotate nodes" do
         # Hit node 1
         response = @client.perform_request 'GET', '_cluster/nodes/_local'
-        assert_equal 'test-1', response.body['nodes'].to_a[0][1]['name']
+        assert_equal 'node-1', response.body['nodes'].to_a[0][1]['name']
 
         # Hit node 2
         response = @client.perform_request 'GET', '_cluster/nodes/_local'
-        assert_equal 'test-2', response.body['nodes'].to_a[0][1]['name']
+        assert_equal 'node-2', response.body['nodes'].to_a[0][1]['name']
 
         # Hit node 1
         response = @client.perform_request 'GET', '_cluster/nodes/_local'
-        assert_equal 'test-1', response.body['nodes'].to_a[0][1]['name']
+        assert_equal 'node-1', response.body['nodes'].to_a[0][1]['name']
       end
     end
 
