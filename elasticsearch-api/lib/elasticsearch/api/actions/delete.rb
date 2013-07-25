@@ -32,7 +32,7 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         method = 'DELETE'
-        path   = "#{arguments[:index]}/#{arguments[:type]}/#{arguments[:id]}"
+        path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id] )
         params = arguments.select do |k,v|
           [ :consistency,
             :parent,

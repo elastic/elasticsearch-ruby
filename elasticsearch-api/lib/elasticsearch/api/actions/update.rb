@@ -65,7 +65,7 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         method = 'POST'
-        path   = "#{arguments[:index]}/#{arguments[:type]}/#{arguments[:id]}/_update"
+        path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id], '_update' )
         params = arguments.select do |k,v|
           [ :consistency,
             :fields,

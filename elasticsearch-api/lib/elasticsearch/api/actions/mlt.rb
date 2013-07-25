@@ -48,7 +48,7 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         method = 'GET'
-        path   = "#{arguments[:index]}/#{arguments[:type]}/#{arguments[:id]}/_mlt"
+        path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id], '_mlt' )
         params = arguments.select do |k,v|
           [ :boost_terms,
             :max_doc_freq,
