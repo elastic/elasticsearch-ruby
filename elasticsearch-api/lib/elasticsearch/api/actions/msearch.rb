@@ -4,15 +4,26 @@ module Elasticsearch
 
       # Perform multiple search operations in a single request.
       #
-      # Pass the search definitions as the `:body` argument
+      # Pass the search definitions in the `:body` argument
       #
-      # @example Perform multiple different searches
+      # @example Perform multiple different searches as `:search`
       #
       #     client.msearch \
       #       body: [
       #         { search: { query: { match_all: {} } } },
       #         { index: 'myindex', type: 'mytype', search: { query: { query_string: { query: '"Test 1"' } } } },
       #         { search_type: 'count', search: { facets: { published: { terms: { field: 'published' } } } } }
+      #       ]
+      #
+      # @example Perform multiple different searches as an array of meta/data pairs
+      #
+      #     client.msearch \
+      #       body: [
+      #         { query: { match_all: {} } },
+      #         { index: 'myindex', type: 'mytype' },
+      #         { query: { query_string: { query: '"Test 1"' } } }
+      #         { search_type: 'count' }
+      #         { facets: { published: { terms: { field: 'published' } } } }
       #       ]
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
@@ -35,7 +46,8 @@ module Elasticsearch
         params = Hash[params] unless params.is_a?(Hash)
         body   = arguments[:body]
 
-        if body.is_a? Array
+        case
+        when body.is_a?(Array) && body.any? { |d| d.has_key? :search }
           payload = body.
             inject([]) do |sum, item|
               meta = item
@@ -46,6 +58,10 @@ module Elasticsearch
               sum
             end.
             map { |item| MultiJson.dump(item) }
+          payload << "" unless payload.empty?
+          payload = payload.join("\n")
+        when body.is_a?(Array)
+          payload = body.map { |d| d.is_a?(String) ? d : MultiJson.dump(d) }
           payload << "" unless payload.empty?
           payload = payload.join("\n")
         else

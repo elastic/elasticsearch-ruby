@@ -38,11 +38,33 @@ module Elasticsearch
 
         should "post a string payload intact" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal "foo\nbar", body
+            assert_equal %Q|{"foo":"bar"}\n{"moo":"lam"}|, body
             true
           end.returns(FakeResponse.new)
 
-          subject.msearch :body => "foo\nbar"
+          subject.msearch :body => %Q|{"foo":"bar"}\n{"moo":"lam"}|
+        end
+
+        should "serialize and post header/data pairs" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'GET', method
+            assert_equal '_msearch', url
+            assert_equal Hash.new, params
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
+            {"index":"foo"}
+            {"query":{"match_all":{}}}
+            {"index":"bar"}
+            {"query":{"match":{"foo":"bar"}}}
+            PAYLOAD
+            true
+          end.returns(FakeResponse.new)
+
+          subject.msearch :body => [
+            { :index => 'foo' },
+            { :query => { :match_all => {}  } },
+            { :index => 'bar' },
+            { :query => { :match => { :foo => 'bar' } } }
+          ]
         end
 
         should "perform request against an index" do
