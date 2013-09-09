@@ -10,8 +10,7 @@ module Elasticsearch
       #
       # @option arguments [String] :id The document ID (*Required*)
       # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document (use `_all` to fetch the first document
-      #                                  matching the ID across all types) (*Required*)
+      # @option arguments [String] :type The type of the document (default: `_all`)
       # @option arguments [String] :parent The ID of the parent document
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on
       #                                        (default: random)
@@ -24,7 +23,8 @@ module Elasticsearch
       def exists(arguments={})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
+        arguments[:type] ||= '_all'
+
         method = 'HEAD'
         path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id] )
         params = arguments.select do |k,v|
