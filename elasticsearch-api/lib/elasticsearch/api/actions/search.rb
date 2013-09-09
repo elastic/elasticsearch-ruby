@@ -100,6 +100,8 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/search/request-body/
       #
       def search(arguments={})
+        arguments[:index] = '_all' if ! arguments[:index] && arguments[:type]
+
         method = 'GET'
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search' )
         params = arguments.select do |k,v|

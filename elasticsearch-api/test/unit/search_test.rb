@@ -19,6 +19,16 @@ module Elasticsearch
           subject.search
         end
 
+        should "have default value for index" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'GET', method
+            assert_equal '_all/foo/_search', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.search type: 'foo'
+        end
+
         should "post a request definition in body" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal :match, body[:query].keys.first
