@@ -26,8 +26,9 @@ module Elasticsearch
       #
       def get_source(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+        arguments[:type] ||= '_all'
+
         method = 'GET'
         path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id], '_source' )
         params = arguments.select do |k,v|

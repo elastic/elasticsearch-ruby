@@ -13,8 +13,8 @@ module Elasticsearch
           end
         end
 
-        should "require the :type argument" do
-          assert_raise ArgumentError do
+        should "NOT require the :type argument" do
+          assert_nothing_raised do
             subject.get_source :index => 'foo', :id => '1'
           end
         end
