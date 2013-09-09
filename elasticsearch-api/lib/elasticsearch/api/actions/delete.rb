@@ -13,6 +13,7 @@ module Elasticsearch
       #     client.delete index: 'myindex', type: 'mytype', id: '1', routing: 'abc123'
       #
       # @option arguments [String] :id The document ID (*Required*)
+      # @option arguments [Number,List] :ignore The list of HTTP errors to ignore; only `404` supported at the moment
       # @option arguments [String] :index The name of the index (*Required*)
       # @option arguments [String] :type The type of the document (*Required*)
       # @option arguments [String] :consistency Specific write consistency setting for the operation
@@ -48,6 +49,12 @@ module Elasticsearch
         body   = nil
 
         perform_request(method, path, params, body).body
+
+      rescue Exception => e
+        # NOTE: Use exception name, not full class in Elasticsearch::Client to allow client plugability
+        if arguments[:ignore] == 404 && e.class.to_s =~ /NotFound/; false
+        else raise(e)
+        end
       end
     end
   end
