@@ -46,5 +46,7 @@ module Elasticsearch
         values[2] || {}
       end
     end
+
+    class NotFound < StandardError; end
   end
 end
