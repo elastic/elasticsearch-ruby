@@ -32,6 +32,8 @@ end
 $client = Elasticsearch::Client.new host: 'localhost:9250', logger: (ENV['QUIET'] ? nil : logger)
 $es_version = $client.info['version']['number']
 
+puts '-'*80, "Elasticsearch #{ANSI.ansi($es_version, :bold)}", '-'*80
+
 require 'test_helper'
 require 'test/unit'
 require 'shoulda/context'
