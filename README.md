@@ -27,8 +27,8 @@ or install it from a source code checkout:
 The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
 library is a wrapper for two separate libraries:
 
-* [`elasticsearch-client`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-client),
-  which provides a Ruby client for connecting to an [Elasticsearch](http://elasticsearch.org) cluster
+* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport),
+  which provides a low-level Ruby client for connecting to an [Elasticsearch](http://elasticsearch.org) cluster
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
   which provides a Ruby API for the Elasticsearch RESTful API
 
@@ -48,11 +48,11 @@ client.search q: 'test'
 
 Please refer to the specific library documentation for detailed information and examples.
 
-### Client
+### Transport
 
-* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-client/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-client/file/README.markdown)
-* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-client/test)
+* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
+* [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport/file/README.markdown)
+* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test)
 
 ### API
 

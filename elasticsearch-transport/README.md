@@ -1,11 +1,11 @@
-# Elasticsearch::Client
+# Elasticsearch::Transport
 
 **This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
 please refer to it, unless you want to use this library standalone.**
 
 ----
 
-The `elasticsearch-client` library provides a Ruby client for connecting
+The `elasticsearch-transport` library provides a low-level Ruby client for connecting
 to an [Elasticsearch](http://elasticsearch.org) cluster.
 
 It handles connecting to multiple nodes in the cluster, rotating across connections,
@@ -31,16 +31,16 @@ Features overview:
 
 Install the package from [Rubygems](https://rubygems.org):
 
-    gem install elasticsearch-client
+    gem install elasticsearch-transport
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch-client', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+    gem 'elasticsearch-transport', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 or install it from a source code checkout:
 
     git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-    cd elasticsearch-ruby/elasticsearch-client
+    cd elasticsearch-ruby/elasticsearch-transport
     bundle install
     rake install
 
@@ -49,7 +49,7 @@ or install it from a source code checkout:
 In the simplest form, connect to Elasticsearch running on <http://localhost:9200>
 without any configuration:
 
-    require 'elasticsearch/client'
+    require 'elasticsearch/transport'
 
     client = Elasticsearch::Client.new
     response = client.perform_request 'GET', '_cluster/health'
