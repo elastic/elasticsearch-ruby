@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'elasticsearch/api/version'
+require 'elasticsearch/transport/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-api"
-  s.version       = Elasticsearch::API::VERSION
+  s.name          = "elasticsearch-transport"
+  s.version       = Elasticsearch::Transport::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
-  s.summary       = "Ruby API for Elasticsearch."
-  s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api"
+  s.summary       = "Ruby client for Elasticsearch."
+  s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport"
   s.license       = "Apache 2"
 
   s.files         = `git ls-files`.split($/)
@@ -21,11 +21,13 @@ Gem::Specification.new do |s|
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
   s.add_dependency "multi_json"
+  s.add_dependency "faraday"
 
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+    s.add_dependency "system_timer"
+  end
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
-
-  s.add_development_dependency "elasticsearch-transport"
 
   s.add_development_dependency "ansi"
   s.add_development_dependency "shoulda-context"
@@ -34,10 +36,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "yard"
   s.add_development_dependency "ruby-prof"
 
-  s.add_development_dependency "multi_json"
-  s.add_development_dependency "jbuilder"
-  s.add_development_dependency "jsonify"
-  s.add_development_dependency "hashie"
+  # Gems for testing integrations
+  s.add_development_dependency "curb"
+  s.add_development_dependency "typhoeus"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
@@ -46,6 +47,6 @@ Gem::Specification.new do |s|
   end
 
   s.description = <<-DESC.gsub(/^    /, '')
-    Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
+    Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
   DESC
 end

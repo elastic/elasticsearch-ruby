@@ -17,7 +17,7 @@ namespace :test do
 
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
+    test.test_files = FileList["test/integration/**/*_test.rb"]
   end
 
   Rake::TestTask.new(:all) do |test|
@@ -25,10 +25,15 @@ namespace :test do
     test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
   end
 
+  Rake::TestTask.new(:profile) do |test|
+    test.libs << 'lib' << 'test'
+    test.test_files = FileList["test/profile/**/*_test.rb"]
+  end
+
   namespace :server do
     desc "Start Elasticsearch nodes for tests"
     task :start do
-      $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
+      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/transport'
       require 'elasticsearch/transport/extensions/test_cluster'
       Elasticsearch::TestCluster.start
@@ -36,7 +41,7 @@ namespace :test do
 
     desc "Stop Elasticsearch nodes for tests"
     task :stop do
-      $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
+      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
       require 'elasticsearch/transport'
       require 'elasticsearch/transport/extensions/test_cluster'
       Elasticsearch::TestCluster.stop

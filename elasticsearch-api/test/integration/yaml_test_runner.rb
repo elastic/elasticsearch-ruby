@@ -4,7 +4,7 @@ require 'yaml'
 require 'pry'
 
 require 'elasticsearch'
-require 'elasticsearch/client/extensions/test_cluster'
+require 'elasticsearch/transport/extensions/test_cluster'
 
 # Launch test cluster
 #

@@ -35,7 +35,7 @@ or install it from a source code checkout:
 
 This library is a wrapper for two separate libraries:
 
-* [`elasticsearch-client`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-client),
+* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport),
   which provides a Ruby client for connecting to an [Elasticsearch](http://elasticsearch.org) cluster
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
   which provides a Ruby API for the Elasticsearch RESTful API
