@@ -27,11 +27,6 @@ module Elasticsearch
     def start(arguments={})
       arguments[:command] = ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
 
-      unless system "which #{arguments[:command]} > /dev/null 2>&1"
-        STDERR.puts ANSI.red("[ERROR] Elasticsearch can't be started, is it installed? Run: $ which elasticsearch"), ''
-        abort
-      end
-
       @@number_of_nodes = arguments[:count] if arguments[:count]
 
       arguments[:port]         = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i

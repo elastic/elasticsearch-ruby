@@ -19,7 +19,7 @@ namespace :test do
   desc "Run unit tests in all subprojects"
   task :unit do
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && bundle exec rake test:unit"
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
       puts '-'*80
     end
   end
@@ -27,7 +27,7 @@ namespace :test do
   desc "Run integration tests in all subprojects"
   task :integration do
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && SERVER=y bundle exec rake test:integration"
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:integration"
       puts '-'*80
     end
   end
@@ -35,7 +35,7 @@ namespace :test do
   desc "Run all tests in all subprojects"
   task :all do
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && SERVER=y bundle exec rake test:all"
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:all"
       puts '-'*80
     end
   end
@@ -43,17 +43,15 @@ namespace :test do
   namespace :server do
     desc "Start Elasticsearch nodes for tests"
     task :start do
-      $LOAD_PATH << File.expand_path('../../elasticsearch-transport/lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/transport'
-      require 'elasticsearch/transport/extensions/test_cluster'
+      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport', __FILE__)
+      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport/extensions/test_cluster', __FILE__)
       Elasticsearch::TestCluster.start
     end
 
     desc "Stop Elasticsearch nodes for tests"
     task :stop do
-      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/transport'
-      require 'elasticsearch/transport/extensions/test_cluster'
+      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport', __FILE__)
+      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport/extensions/test_cluster', __FILE__)
       Elasticsearch::TestCluster.stop
     end
   end
