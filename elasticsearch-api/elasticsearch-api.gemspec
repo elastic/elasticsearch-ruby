@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 
+  s.add_development_dependency "elasticsearch"
   s.add_development_dependency "elasticsearch-transport"
 
   s.add_development_dependency "ansi"
@@ -33,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "turn"
   s.add_development_dependency "yard"
   s.add_development_dependency "ruby-prof"
+  s.add_development_dependency "pry"
 
   s.add_development_dependency "multi_json"
   s.add_development_dependency "jbuilder"
