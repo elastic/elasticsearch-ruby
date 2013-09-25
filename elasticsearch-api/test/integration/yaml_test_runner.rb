@@ -8,7 +8,7 @@ require 'elasticsearch/transport/extensions/test_cluster'
 
 # Launch test cluster
 #
-Elasticsearch::TestCluster.start if ENV['SERVER']
+Elasticsearch::TestCluster.start if ENV['SERVER'] and not Elasticsearch::TestCluster.running?
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
