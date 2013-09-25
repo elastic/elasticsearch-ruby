@@ -19,7 +19,7 @@ require 'mocha/setup'
 require 'ansi/code'
 require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
 
-require 'test_extensions'
+require File.expand_path('../test_extensions', __FILE__)
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-transport'
