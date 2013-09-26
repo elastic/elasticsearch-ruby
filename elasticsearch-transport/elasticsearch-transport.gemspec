@@ -41,6 +41,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency "curb"
   s.add_development_dependency "typhoeus"
 
+  # Prevent unit test failures on Ruby 1.8
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+    s.add_development_dependency "test-unit", '~> 2'
+  end
+
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
     s.add_development_dependency "cane"

@@ -1,6 +1,6 @@
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 
-if RUBY_1_8
+if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
   require 'rubygems'
   gem 'test-unit'
 end

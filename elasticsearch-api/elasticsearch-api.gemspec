@@ -36,10 +36,17 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ruby-prof"
   s.add_development_dependency "pry"
 
+  # Gems for testing integrations
   s.add_development_dependency "multi_json"
   s.add_development_dependency "jbuilder"
   s.add_development_dependency "jsonify"
   s.add_development_dependency "hashie"
+
+  # Prevent unit test failures on Ruby 1.8
+  if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+    s.add_development_dependency "test-unit", '~> 2'
+    s.add_development_dependency "activesupport", '~> 3'
+  end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
