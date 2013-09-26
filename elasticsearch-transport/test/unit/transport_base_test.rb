@@ -260,7 +260,9 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "log the request and response" do
-      @transport.logger.expects(:info).  with "POST localhost:9200/_search?size=1 [status:200, request:0.000s, query:n/a]"
+      @transport.logger.expects(:info).  with do |line|
+        line =~ %r|POST localhost\:9200/_search\?size=1 \[status\:200, request:.*s, query:n/a\]|
+      end
       @transport.logger.expects(:debug). with '> {"foo":"bar"}'
       @transport.logger.expects(:debug). with '< {"foo":"bar"}'
 
