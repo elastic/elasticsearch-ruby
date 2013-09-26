@@ -51,7 +51,7 @@ module Elasticsearch
           subject.expects(:perform_request).raises(NotFound)
 
           assert_nothing_raised do
-            subject.get :index => 'foo', :type => 'bar', :id => 'XXX', ignore: 404
+            subject.get :index => 'foo', :type => 'bar', :id => 'XXX', :ignore => 404
           end
         end
 

@@ -26,7 +26,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.search type: 'foo'
+          subject.search :type => 'foo'
         end
 
         should "post a request definition in body" do
