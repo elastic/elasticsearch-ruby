@@ -1,4 +1,5 @@
-require "elasticsearch/extensions/version"
+require 'elasticsearch'
+require 'elasticsearch/extensions/version'
 
 module Elasticsearch
   module Extensions
