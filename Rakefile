@@ -23,7 +23,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
       puts '-'*80
     end
-    Rake::Task['test:coveralls'].invoke if ENV['CI']
+    Rake::Task['test:coveralls'].invoke if ENV['CI'] && defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
 
   desc "Run integration tests in all subprojects"
@@ -32,7 +32,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:integration"
       puts '-'*80
     end
-    Rake::Task['test:coveralls'].invoke if ENV['CI']
+    Rake::Task['test:coveralls'].invoke if ENV['CI'] && defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
 
   desc "Run all tests in all subprojects"
@@ -41,7 +41,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:all"
       puts '-'*80
     end
-    Rake::Task['test:coveralls'].invoke if ENV['CI']
+    Rake::Task['test:coveralls'].invoke if ENV['CI'] && defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
 
   task :coveralls do
