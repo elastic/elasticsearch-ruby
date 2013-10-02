@@ -5,6 +5,8 @@ This library provides a set of extensions to the
 
 ## Extensions
 
+* [ANSI](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/lib/elasticsearch/extensions/ansi.rb) - Colorize and format selected  Elasticsearch response parts in terminal
+
 ## Installation
 
 Install the package from [Rubygems](https://rubygems.org):

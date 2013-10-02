@@ -10,7 +10,19 @@ module Elasticsearch
         end
 
         # Return a [colorized and formatted](http://en.wikipedia.org/wiki/ANSI_escape_code)
-        # representation of the Elasticsearch response body
+        # representation of the Elasticsearch response for:
+        #
+        # * Search results (hits and highlights)
+        # * Facets (terms, statistical, date_histogram)
+        # * Analyze API output
+        # * Shard allocation
+        #
+        # @example Display formatted search results
+        #
+        #     require 'elasticsearch/extensions/ansi'
+        #     puts Elasticsearch::Client.new.search.to_ansi
+        #
+        # @todo Add all facets and handlers for remaining response parts / types
         #
         def to_ansi(options={})
           output = Actions.public_methods.select do |m|
