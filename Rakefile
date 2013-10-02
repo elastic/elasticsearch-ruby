@@ -1,5 +1,10 @@
 require 'pathname'
 
+if ENV['CI']
+  require 'coveralls/rake/task'
+  Coveralls::RakeTask.new
+end
+
 subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api |
 __current__ = Pathname( File.expand_path('..', __FILE__) )
 
@@ -22,6 +27,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
       puts '-'*80
     end
+    Rake::Task['coveralls:push'].invoke if ENV['CI']
   end
 
   desc "Run integration tests in all subprojects"
@@ -30,6 +36,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:integration"
       puts '-'*80
     end
+    Rake::Task['coveralls:push'].invoke if ENV['CI']
   end
 
   desc "Run all tests in all subprojects"
@@ -38,6 +45,7 @@ namespace :test do
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && SERVER=y bundle exec rake test:all"
       puts '-'*80
     end
+    Rake::Task['coveralls:push'].invoke if ENV['CI']
   end
 
   namespace :server do

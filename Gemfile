@@ -17,4 +17,5 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "simplecov"
   gem "cane"
   gem "require-prof"
+  gem "coveralls"
 end
