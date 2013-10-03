@@ -12,6 +12,7 @@ gem "mocha"
 gem "turn"
 gem "yard"
 gem "ruby-prof"
+gem "ci_reporter"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "simplecov"

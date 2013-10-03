@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "yard"
   s.add_development_dependency "ruby-prof"
   s.add_development_dependency "pry"
+  s.add_development_dependency "ci_reporter"
 
   # Prevent unit test failures on Ruby 1.8
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
