@@ -29,6 +29,12 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport.perform_request 'GET', '/', {}, '{"foo":"bar"}'
     end
 
+    should "set body for PUT request" do
+      @transport.connections.first.connection.expects(:put_data=)
+      @transport.connections.first.connection.expects(:http).with(:put).returns(stub_everything)
+      @transport.perform_request 'PUT', '/', {}, {:foo => 'bar'}
+    end
+
     should "serialize the request body" do
       @transport.connections.first.connection.expects(:http).with(:post).returns(stub_everything)
       @transport.serializer.expects(:dump)
