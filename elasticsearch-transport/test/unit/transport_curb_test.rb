@@ -23,23 +23,30 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport.perform_request 'GET', '/'
     end
 
+    should "set body for GET request" do
+      @transport.connections.first.connection.expects(:post_body=).with('{"foo":"bar"}')
+      @transport.connections.first.connection.expects(:http).with(:get).returns(stub_everything)
+      @transport.perform_request 'GET', '/', {}, '{"foo":"bar"}'
+    end
+
     should "serialize the request body" do
-      @transport.connections.first.connection.expects(:http_post).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:post).returns(stub_everything)
       @transport.serializer.expects(:dump)
       @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
     end
 
     should "not serialize a String request body" do
-      @transport.connections.first.connection.expects(:http_post).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:post).returns(stub_everything)
       @transport.serializer.expects(:dump).never
       @transport.perform_request 'POST', '/', {}, '{"foo":"bar"}'
     end
 
     should "handle HTTP methods" do
-      @transport.connections.first.connection.expects(:http).twice.returns(stub_everything)
-      @transport.connections.first.connection.expects(:http_put).returns(stub_everything)
-      @transport.connections.first.connection.expects(:http_post).returns(stub_everything)
-      @transport.connections.first.connection.expects(:http_delete).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:head).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:get).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:put).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:post).returns(stub_everything)
+      @transport.connections.first.connection.expects(:http).with(:delete).returns(stub_everything)
 
       %w| HEAD GET PUT POST DELETE |.each { |method| @transport.perform_request method, '/' }
 
