@@ -20,15 +20,13 @@ module Elasticsearch
               connection.connection.url = url
 
               case method
-                when 'PUT'
-                  connection.connection.put_data = serializer.dump(body)
-                when 'GET', 'POST'
-                  connection.connection.post_body = __convert_to_json(body) if body
-                when 'HEAD', 'DELETE'
+                when 'HEAD'
+                when 'GET', 'POST', 'PUT', 'DELETE'
+                  connection.connection.put_data = __convert_to_json(body) if body
                 else raise ArgumentError, "Unsupported HTTP method: #{method}"
               end
 
-              connection.connection.http method.downcase.to_sym
+              connection.connection.http(method.to_sym)
 
               Response.new connection.connection.response_code, connection.connection.body_str
             end
