@@ -4,6 +4,7 @@ This repository contains Ruby integrations for [Elasticsearch](http://elasticsea
 
 * A client for connecting to an Elasticsearch cluster
 * A Ruby API for the Elasticsearch's REST API
+* Various extensions and utilities
 
 ## Installation
 
@@ -51,14 +52,20 @@ Please refer to the specific library documentation for detailed information and 
 ### Transport
 
 * [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport/file/README.markdown)
+* [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport)
 * [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test)
 
 ### API
 
 * [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
+* [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/)
 * [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/test)
+
+### Extensions
+
+* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/README.md)
+* [[Documentation]](http://rubydoc.info/gems/elasticsearch-extensions/)
+* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/test)
 
 ## License
 

@@ -55,6 +55,8 @@ without any configuration:
     response = client.perform_request 'GET', '_cluster/health'
     # => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
 
+Full documentation is available at <http://rubydoc.info/gems/elasticsearch-transport>.
+
 ## Configuration
 
 The client supports many configurations options for setting up and managing connections,

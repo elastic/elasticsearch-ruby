@@ -36,6 +36,8 @@ or install it from a source code checkout:
 The library is designed as a group of standalone Ruby modules, which can be mixed into a class
 providing connection to Elasticsearch -- an Elasticsearch client.
 
+### Usage with the `elasticsearch` gem
+
 **When you use the client from the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package,
 the library modules have been already included**, so you just call the API methods:
 
@@ -50,6 +52,10 @@ client.index  index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' }
 client.search body: { query: { match: { title: 'test' } } }
 # => {"took"=>2, ..., "hits"=>{"total":5, ...}}
 ```
+
+Full documentation is available at <http://rubydoc.info/gems/elasticsearch-api>.
+
+### Usage with a custom client
 
 When you want to mix the library into you own client, it must conform to a following _contract_:
 
@@ -90,7 +96,7 @@ p client.index index: 'myindex', type: 'mytype', id: 'custom', body: { title: "I
 # => "{"ok":true, ... }"
 ```
 
-## Using JSON Builders
+### Using JSON Builders
 
 Instead of passing the `:body` argument as a Ruby _Hash_, you can pass it as a _String_, potentially
 taking advantage of JSON builders such as [JBuilder](https://github.com/rails/jbuilder) or
@@ -118,7 +124,7 @@ client.search index: 'myindex', body: json
 # => {"took"=>21, ..., "hits"=>{"total"=>1, "hits"=>[{ "_source"=>{"title"=>"Test 1", ...}}]}}
 ```
 
-## Using Hash Wrappers
+### Using Hash Wrappers
 
 For a more comfortable access to response properties, you may wrap it in one of the _Hash_ "object access"
 wrappers, such as [`Hashie::Mash`](https://github.com/intridea/hashie):

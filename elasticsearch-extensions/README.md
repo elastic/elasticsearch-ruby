@@ -5,7 +5,21 @@ This library provides a set of extensions to the
 
 ## Extensions
 
-* [ANSI](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/lib/elasticsearch/extensions/ansi.rb) - Colorize and format selected  Elasticsearch response parts in terminal
+### ANSI
+
+Colorize and format selected  Elasticsearch response parts in terminal:
+
+Display formatted search results:
+
+    require 'elasticsearch/extensions/ansi'
+    puts Elasticsearch::Client.new.search.to_ansi
+
+Display a table with the output of the `_analyze` API:
+
+    require 'elasticsearch/extensions/ansi'
+    puts Elasticsearch::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
+
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI).
 
 ## Installation
 
