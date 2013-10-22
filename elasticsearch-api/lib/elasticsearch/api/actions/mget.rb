@@ -36,6 +36,10 @@ module Elasticsearch
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
       # @option arguments [String] :routing Specific routing value
+      # @option arguments [String] :_source Specify whether the _source field should be returned,
+      #                                     or a list of fields to return
+      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
+      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       #
       # @see http://elasticsearch.org/guide/reference/api/multi-get/
       #
@@ -51,7 +55,10 @@ module Elasticsearch
             :preference,
             :realtime,
             :refresh,
-            :routing ].include?(k)
+            :routing,
+            :_source,
+            :_source_include,
+            :_source_exclude ].include?(k)
         end
         # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
         params = Hash[params] unless params.is_a?(Hash)

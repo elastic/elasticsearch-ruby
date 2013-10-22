@@ -86,6 +86,10 @@ module Elasticsearch
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
       # @option arguments [String] :source The URL-encoded request definition using the Query DSL
       #                                    (instead of using request body)
+      # @option arguments [String] :_source Specify whether the _source field should be returned,
+      #                                     or a list of fields to return
+      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
+      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [String] :suggest_field Specify which field to use for suggestions
       # @option arguments [String] :suggest_mode Specify suggest mode (options: missing, popular, always)
@@ -124,6 +128,9 @@ module Elasticsearch
             :size,
             :sort,
             :source,
+            :_source,
+            :_source_include,
+            :_source_exclude,
             :stats,
             :suggest_field,
             :suggest_mode,

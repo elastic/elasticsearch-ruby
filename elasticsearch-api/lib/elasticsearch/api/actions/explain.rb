@@ -35,6 +35,10 @@ module Elasticsearch
       # @option arguments [String] :q Query in the Lucene query string syntax
       # @option arguments [String] :routing Specific routing value
       # @option arguments [String] :source The URL-encoded query definition (instead of using the request body)
+      # @option arguments [String] :_source Specify whether the _source field should be returned,
+      #                                     or a list of fields to return
+      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
+      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       #
       # @see http://elasticsearch.org/guide/reference/api/explain/
       #
@@ -59,7 +63,10 @@ module Elasticsearch
             :preference,
             :q,
             :routing,
-            :source ].include?(k)
+            :source,
+            :_source,
+            :_source_include,
+            :_source_exclude ].include?(k)
         end
         # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
         params = Hash[params] unless params.is_a?(Hash)
