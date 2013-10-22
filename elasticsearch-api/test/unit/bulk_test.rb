@@ -78,6 +78,15 @@ module Elasticsearch
           subject.bulk :refresh => true, :body => []
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_bulk', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.bulk :index => 'foo^bar', :body => []
+        end
+
       end
 
     end

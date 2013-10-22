@@ -42,7 +42,9 @@ module Elasticsearch
         arguments[:type] ||= 'document'
 
         method = 'GET'
-        path   = "#{arguments[:index]}/#{arguments[:type]}/_percolate"
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 '_percolate'
         params = arguments.select do |k,v|
           [ :prefer_local ].include?(k)
         end

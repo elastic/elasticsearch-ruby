@@ -33,7 +33,7 @@ module Elasticsearch
         def put_settings(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           method = 'PUT'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_settings' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
           params = {}
           body   = arguments[:body]
 

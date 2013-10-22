@@ -24,6 +24,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           method = 'PUT'
           path   = "_template/#{arguments[:name]}"
+          path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
           params = arguments.select do |k,v|
             [ :order,
               :timeout ].include?(k)

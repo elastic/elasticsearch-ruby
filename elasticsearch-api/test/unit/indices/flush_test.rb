@@ -28,6 +28,15 @@ module Elasticsearch
           subject.indices.flush :index => ['foo','bar']
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_flush', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.flush :index => 'foo^bar'
+        end
+
         should "pass the URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo/_flush', url

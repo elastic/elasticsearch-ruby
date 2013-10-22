@@ -20,7 +20,7 @@ module Elasticsearch
         def delete_warmer(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'DELETE'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_warmer', Utils.__listify(arguments[:name]) )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_warmer', Utils.__listify(arguments[:name])
           params = {}
           body = nil
 

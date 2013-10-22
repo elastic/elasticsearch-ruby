@@ -16,7 +16,7 @@ module Elasticsearch
         #
         def get_aliases(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_aliases' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_aliases'
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

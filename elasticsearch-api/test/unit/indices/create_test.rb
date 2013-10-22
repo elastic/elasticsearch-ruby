@@ -35,6 +35,15 @@ module Elasticsearch
           subject.indices.create :index => 'foo', :timeout => '1s'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.create :index => 'foo^bar'
+        end
+
       end
 
     end

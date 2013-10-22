@@ -47,7 +47,7 @@ module Elasticsearch
       #
       def bulk(arguments={})
         method = 'POST'
-        path   = [arguments[:index], arguments[:type], '_bulk'].compact.join('/')
+        path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
         params = arguments.select do |k,v|
           [ :consistency,
             :refresh,

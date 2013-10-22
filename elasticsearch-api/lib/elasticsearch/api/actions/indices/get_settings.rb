@@ -20,7 +20,7 @@ module Elasticsearch
         #
         def get_settings(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_settings' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_settings'
           params = {}
           body   = nil
 

@@ -31,7 +31,10 @@ module Elasticsearch
         arguments[:type] ||= '_all'
 
         method = 'GET'
-        path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id], '_source' )
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id]),
+                                 '_source'
         params = arguments.select do |k,v|
           [ :fields,
             :parent,

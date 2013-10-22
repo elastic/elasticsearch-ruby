@@ -16,7 +16,7 @@ module Elasticsearch
         #
         def snapshot_index(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_gateway/snapshot' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_gateway/snapshot'
           params = arguments.select do |k,v|
             [ :ignore_indices ].include?(k)
           end

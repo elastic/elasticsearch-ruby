@@ -38,6 +38,15 @@ module Elasticsearch
           subject.indices.optimize :index => 'foo', :max_num_segments => 1
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_optimize', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.optimize :index => 'foo^bar'
+        end
+
       end
 
     end

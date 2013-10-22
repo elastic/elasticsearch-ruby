@@ -28,6 +28,15 @@ module Elasticsearch
           subject.indices.get_aliases :index => 'foo'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_aliases', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.get_aliases :index => 'foo^bar'
+        end
+
       end
 
     end

@@ -38,6 +38,15 @@ module Elasticsearch
           subject.suggest :index => 'foo', :routing => 'abc123', :body => {}
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_suggest', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.suggest :index => 'foo^bar', :body => {}
+        end
+
         should "pass the request definition in the body" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal '_suggest', url

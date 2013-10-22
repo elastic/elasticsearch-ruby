@@ -21,7 +21,7 @@ module Elasticsearch
         #
         def flush(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_flush' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_flush'
           params = arguments.select do |k,v|
             [ :force,
               :full,

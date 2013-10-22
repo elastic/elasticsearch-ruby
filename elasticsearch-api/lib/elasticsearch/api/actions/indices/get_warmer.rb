@@ -32,7 +32,7 @@ module Elasticsearch
         def get_warmer(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_warmer', arguments[:name] )
+          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_warmer', Utils.__escape(arguments[:name]) )
           params = {}
           body   = nil
 

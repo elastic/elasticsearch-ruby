@@ -37,7 +37,7 @@ module Elasticsearch
         #
         def analyze(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( arguments[:index], '_analyze' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
           params = arguments.select do |k,v|
             [ :analyzer,
               :field,

@@ -19,7 +19,7 @@ module Elasticsearch
         def exists_alias(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           method = 'HEAD'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_alias', arguments[:name] )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
           params = arguments.select do |k,v|
             [ :ignore_indices ].include?(k)
           end

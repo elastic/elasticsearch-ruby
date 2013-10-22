@@ -34,6 +34,15 @@ module Elasticsearch
           subject.indices.exists_alias :index => ['foo','bar'], :name => 'bam'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_alias/bar%2Fbam', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.exists_alias :index => 'foo^bar', :name => 'bar/bam'
+        end
+
         should "return true for successful response" do
           subject.expects(:perform_request).returns(FakeResponse.new 200, 'OK')
           assert_equal true, subject.indices.exists_alias(:name => 'foo')

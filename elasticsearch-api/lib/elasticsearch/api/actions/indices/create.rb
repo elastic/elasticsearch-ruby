@@ -67,7 +67,7 @@ module Elasticsearch
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'PUT'
-          path   = "#{arguments[:index]}"
+          path   = Utils.__pathify Utils.__escape(arguments[:index])
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

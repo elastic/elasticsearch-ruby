@@ -47,6 +47,15 @@ module Elasticsearch
           subject.get :index => 'foo', :type => 'bar', :id => '1', :routing => 'abc123'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/1', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.exists :index => 'foo^bar', :type => 'bar/bam', :id => '1'
+        end
+
         should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 

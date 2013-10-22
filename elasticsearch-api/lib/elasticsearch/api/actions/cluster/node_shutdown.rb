@@ -19,7 +19,7 @@ module Elasticsearch
         #
         def node_shutdown(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown' )
+          path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
           params = arguments.select do |k,v|
             [ :delay,
               :exit ].include?(k)

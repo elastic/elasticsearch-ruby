@@ -35,7 +35,7 @@ module Elasticsearch
         #
         def optimize(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_optimize' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
           params = arguments.select do |k,v|
             [ :flush,
               :ignore_indices,

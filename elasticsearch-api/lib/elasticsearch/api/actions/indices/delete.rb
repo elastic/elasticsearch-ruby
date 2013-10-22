@@ -32,7 +32,7 @@ module Elasticsearch
         #
         def delete(arguments={})
           method = 'DELETE'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]) )
+          path   = Utils.__pathify Utils.__listify(arguments[:index])
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

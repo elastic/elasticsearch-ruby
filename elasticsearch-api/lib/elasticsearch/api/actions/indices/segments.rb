@@ -17,7 +17,7 @@ module Elasticsearch
         #
         def segments(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_segments' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_segments'
           params = arguments.select do |k,v|
             [ :ignore_indices ].include?(k)
           end

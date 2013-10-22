@@ -32,7 +32,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
           method = 'PUT'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), arguments[:type], '_mapping' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__escape(arguments[:type]), '_mapping'
           params = arguments.select do |k,v|
             [ :ignore_conflicts,
               :timeout ].include?(k)

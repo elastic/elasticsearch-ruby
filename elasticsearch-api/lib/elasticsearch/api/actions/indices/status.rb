@@ -28,7 +28,7 @@ module Elasticsearch
         #
         def status(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_status' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_status'
           params = arguments.select do |k,v|
             [ :ignore_indices,
               :recovery,

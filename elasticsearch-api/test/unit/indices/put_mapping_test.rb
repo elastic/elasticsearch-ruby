@@ -50,6 +50,15 @@ module Elasticsearch
           subject.indices.put_mapping :index => 'foo', :type => 'bar', :body => {}, :ignore_conflicts => true
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/_mapping', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.put_mapping :index => 'foo^bar', :type => 'bar/bam', :body => {}
+        end
+
       end
 
     end

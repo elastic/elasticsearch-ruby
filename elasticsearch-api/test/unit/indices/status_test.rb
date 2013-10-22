@@ -48,6 +48,15 @@ module Elasticsearch
           subject.indices.status :index => 'foo', :recovery => true
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_status', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.status :index => 'foo^bar'
+        end
+
       end
 
     end

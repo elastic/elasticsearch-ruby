@@ -36,7 +36,7 @@ module Elasticsearch
           case
             # Field data metric for the `indices` metric family
             when arguments[:indices] && arguments[:metric] == 'fielddata'
-              path   = Utils.__pathify( '_nodes', Utils.__listify(arguments[:node_id]), 'stats/indices/fielddata' )
+              path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'stats/indices/fielddata'
               params = { :fields => Utils.__listify(arguments[:fields]) }
 
             # `indices` metric family incl. a metric

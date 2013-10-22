@@ -17,7 +17,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
           method = 'HEAD'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), arguments[:type] )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__escape(arguments[:type])
           params = arguments.select do |k,v|
             [ :ignore_indices ].include?(k)
           end

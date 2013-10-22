@@ -31,6 +31,15 @@ module Elasticsearch
 
           subject.create :index => 'foo', :type => 'bar', :id => '123', :body => {:foo => 'bar'}
         end
+
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/bar%2Fbam/123', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.create :index => 'foo', :type => 'bar/bam', :id => '123', :body => {}
+        end
       end
 
     end

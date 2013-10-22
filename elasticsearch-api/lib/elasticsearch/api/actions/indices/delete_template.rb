@@ -17,7 +17,7 @@ module Elasticsearch
         def delete_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           method = 'DELETE'
-          path   = "_template/#{arguments[:name]}"
+          path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

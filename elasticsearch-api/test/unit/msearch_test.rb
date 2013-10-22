@@ -103,6 +103,15 @@ module Elasticsearch
           subject.msearch :index => ['foo', 'bar'], :type => ['lam', 'bam'], :body => []
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/_msearch', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.msearch :index => 'foo^bar', :type => 'bar/bam', :body => []
+        end
+
         should "encode URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal '_msearch', url

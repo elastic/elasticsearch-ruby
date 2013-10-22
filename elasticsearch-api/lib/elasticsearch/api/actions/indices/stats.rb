@@ -61,7 +61,7 @@ module Elasticsearch
         #
         def stats(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_stats' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats'
           params = arguments.select do |k,v|
             [ :all,
               :clear,

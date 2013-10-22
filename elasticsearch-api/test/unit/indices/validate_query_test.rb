@@ -68,6 +68,15 @@ module Elasticsearch
           subject.indices.validate_query :body => { :filtered => {} }
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_validate/query', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.validate_query :index => 'foo^bar', :body => {}
+        end
+
       end
 
     end

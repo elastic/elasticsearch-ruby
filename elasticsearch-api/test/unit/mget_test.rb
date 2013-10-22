@@ -54,6 +54,15 @@ module Elasticsearch
           subject.mget :body => {}, :refresh => true
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/_mget', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.mget :index => 'foo^bar', :type => 'bar/bam', :body => { :ids => ['1','2'] }
+        end
+
         should "pass the fields parameter as a list" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo,bar', params[:fields]

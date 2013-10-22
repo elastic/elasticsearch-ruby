@@ -28,6 +28,7 @@ module Elasticsearch
         def node_hot_threads(arguments={})
           method = 'GET'
           path   = "_cluster/nodes/#{arguments[:node_id]}/hot_threads".squeeze('/')
+          path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
           params = arguments.select do |k,v|
             [ :interval,
               :snapshots,

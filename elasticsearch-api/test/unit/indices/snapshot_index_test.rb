@@ -48,6 +48,15 @@ module Elasticsearch
           subject.indices.snapshot_index :index => ['foo','bar'], :ignore_indices => 'missing'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_gateway/snapshot', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.snapshot_index :index => 'foo^bar'
+        end
+
       end
 
     end

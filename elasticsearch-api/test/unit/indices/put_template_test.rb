@@ -41,6 +41,15 @@ module Elasticsearch
           subject.indices.put_template :name => 'foo', :body => {}, :order => 3
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal '_template/foo%5Ebar', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.put_template :name => 'foo^bar', :body => {}
+        end
+
       end
 
     end

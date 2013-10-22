@@ -28,6 +28,15 @@ module Elasticsearch
           subject.cluster.node_hot_threads :node_id => 'foo'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal '_cluster/nodes/foo%5Ebar/hot_threads', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.cluster.node_hot_threads :node_id => 'foo^bar'
+        end
+
       end
 
     end

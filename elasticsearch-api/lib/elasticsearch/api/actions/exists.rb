@@ -26,7 +26,9 @@ module Elasticsearch
         arguments[:type] ||= '_all'
 
         method = 'HEAD'
-        path   = Utils.__pathify( arguments[:index], arguments[:type], arguments[:id] )
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id])
         params = arguments.select do |k,v|
           [ :parent,
             :preference,

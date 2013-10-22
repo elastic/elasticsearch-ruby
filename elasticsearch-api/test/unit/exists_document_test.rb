@@ -47,6 +47,15 @@ module Elasticsearch
           subject.exists :index => 'foo', :type => 'bar', :id => '1', :routing => 'abc123'
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/bar%2Fbam/1', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.exists :index => 'foo', :type => 'bar/bam', :id => '1'
+        end
+
         should "return true for successful response" do
           subject.expects(:perform_request).returns(FakeResponse.new 200, 'OK')
           assert_equal true, subject.exists(:index => 'foo', :type => 'bar', :id => '1')

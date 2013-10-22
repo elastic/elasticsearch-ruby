@@ -42,7 +42,9 @@ module Elasticsearch
       def mget(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         method = 'GET'
-        path   = Utils.__pathify( arguments[:index], arguments[:type], '_mget' )
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 '_mget'
         params = arguments.select do |k,v|
           [ :fields,
             :parent,

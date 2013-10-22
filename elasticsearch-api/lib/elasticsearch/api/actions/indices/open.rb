@@ -17,7 +17,7 @@ module Elasticsearch
         def open(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'POST'
-          path   = "#{arguments[:index]}/_open"
+          path   = Utils.__pathify Utils.__escape(arguments[:index]), '_open'
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

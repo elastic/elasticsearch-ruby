@@ -19,7 +19,7 @@ module Elasticsearch
         def close(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = 'POST'
-          path   = "#{arguments[:index]}/_close"
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_close'
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
           end

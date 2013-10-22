@@ -42,7 +42,7 @@ module Elasticsearch
         #
         def clear_cache(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_cache/clear' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
           params = arguments.select do |k,v|
             [ :field_data,
               :fielddata,

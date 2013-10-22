@@ -46,6 +46,15 @@ module Elasticsearch
           subject.indices.get_mapping :index => ['foo', 'bar'], :type => ['bam', 'baz']
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/_mapping', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.get_mapping :index => 'foo^bar', :type => 'bar/bam'
+        end
+
       end
 
     end

@@ -27,7 +27,7 @@ module Elasticsearch
         #
         def refresh(arguments={})
           method = 'POST'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_refresh' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_refresh'
           params = arguments.select do |k,v|
             [ :ignore_indices ].include?(k)
           end

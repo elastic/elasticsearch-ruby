@@ -38,6 +38,15 @@ module Elasticsearch
           subject.indices.clear_cache :field_data => true
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_cache/clear', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.clear_cache :index => 'foo^bar'
+        end
+
       end
 
     end

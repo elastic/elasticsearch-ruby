@@ -48,6 +48,15 @@ module Elasticsearch
           subject.indices.stats :index => 'foo', :fielddata => true
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_stats', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.stats :index => 'foo^bar'
+        end
+
         should "pass the fields parameter as a list" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo/_stats', url

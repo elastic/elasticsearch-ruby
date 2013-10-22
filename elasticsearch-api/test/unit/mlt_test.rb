@@ -47,6 +47,15 @@ module Elasticsearch
           subject.mlt :index => 'foo', :type => 'bar', :id => '1', :max_doc_freq => 1
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/1/_mlt', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.mlt :index => 'foo^bar', :type => 'bar/bam', :id => '1'
+        end
+
         should "pass the specific parameters as a list" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo,bar', params[:mlt_fields]

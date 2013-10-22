@@ -33,7 +33,7 @@ module Elasticsearch
         #
         def node_info(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( '_cluster/nodes', Utils.__listify(arguments[:node_id]) )
+          path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id])
           params = arguments.select do |k,v|
             [ :all,
               :clear,

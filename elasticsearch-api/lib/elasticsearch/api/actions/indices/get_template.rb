@@ -18,7 +18,7 @@ module Elasticsearch
         def get_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           method = 'GET'
-          path   = "_template/#{arguments[:name]}"
+          path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
           params = {}
           body = nil
 

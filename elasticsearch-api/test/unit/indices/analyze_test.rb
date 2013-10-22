@@ -60,6 +60,15 @@ module Elasticsearch
           subject.indices.analyze :text => 'Test', :tokenizer => 'whitespace', :filters => ['foo,bar']
         end
 
+        should "URL-escape the parts" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/_analyze', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.analyze :index => 'foo^bar', :text => 'Test'
+        end
+
       end
 
     end

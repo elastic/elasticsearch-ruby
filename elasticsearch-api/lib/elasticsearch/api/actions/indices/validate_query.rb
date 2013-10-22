@@ -49,7 +49,9 @@ module Elasticsearch
         #
         def validate_query(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_validate/query' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]),
+                                   Utils.__listify(arguments[:type]),
+                                   '_validate/query'
           params = arguments.select do |k,v|
             [ :q,
               :explain,

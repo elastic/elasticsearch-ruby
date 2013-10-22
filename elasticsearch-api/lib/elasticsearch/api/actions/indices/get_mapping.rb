@@ -24,7 +24,7 @@ module Elasticsearch
         #
         def get_mapping(arguments={})
           method = 'GET'
-          path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_mapping' )
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_mapping'
           params = {}
           body = nil
 
