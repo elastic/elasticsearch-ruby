@@ -21,7 +21,6 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           method = 'DELETE'
-          path   = "#{arguments[:index]}/_alias/#{arguments[:name]}"
           path   = Utils.__pathify Utils.__escape(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
           params = arguments.select do |k,v|
             [ :timeout ].include?(k)
