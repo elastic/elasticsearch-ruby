@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "jbuilder"
   s.add_development_dependency "jsonify"
   s.add_development_dependency "hashie"
+  s.add_development_dependency "escape_utils"
 
   # Prevent unit test failures on Ruby 1.8
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'

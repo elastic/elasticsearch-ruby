@@ -8,14 +8,15 @@ module Elasticsearch
       # URL-escape a string
       #
       # @example
+      #     __escape('foo/bar') # => 'foo%2Fbar'
       #     __escape('bar^bam') # => 'bar%5Ebam'
       #
       # @api private
       def __escape(string)
-        URI.encode(string.to_s)
+        defined?(EscapeUtils) ? EscapeUtils.escape_url(string.to_s) : CGI.escape(string.to_s)
       end
 
-      # Create a "list" of values from arguments, ignoring nil values
+      # Create a "list" of values from arguments, ignoring nil values and encoding special characters.
       #
       # @example Create a list from array
       #     __listify(['A','B']) # => 'A,B'
@@ -23,13 +24,22 @@ module Elasticsearch
       # @example Create a list from arguments
       #     __listify('A','B') # => 'A,B'
       #
+      # @example Escape values
+      #     __listify('foo','bar^bam') # => 'foo,bar%5Ebam'
+      #
       # @api private
       def __listify(*list)
-        Array(list).flatten.compact.join(',')
+        # require 'pry'
+        # binding.pry
+        Array(list).flatten.
+          map { |e| e.respond_to?(:split) ? e.split(',') : e }.
+          flatten.
+          compact.
+          map { |e| __escape(e) }.
+          join(',')
       end
 
-      # Create a path (URL part) from arguments, ignoring nil values and empty strings,
-      # and encoding special characters
+      # Create a path (URL part) from arguments, ignoring nil values and empty strings.
       #
       # @example Create a path from array
       #     __pathify(['foo', '', nil, 'bar']) # => 'foo/bar'
@@ -45,7 +55,6 @@ module Elasticsearch
         Array(segments).flatten.
           compact.
           reject { |s| s.to_s =~ /^\s*$/ }.
-          map    { |s| __escape(s) }.
           join('/').
           squeeze('/')
       end

@@ -1,3 +1,4 @@
+require "cgi"
 require "multi_json"
 
 require "elasticsearch/api/version"

@@ -16,7 +16,21 @@ module Elasticsearch
           end
 
           should "encode special characters" do
-            assert_equal 'foo%20bar', __escape('foo bar')
+            assert_equal 'foo+bar',   __escape('foo bar')
+            assert_equal 'foo%2Fbar', __escape('foo/bar')
+            assert_equal 'foo%5Ebar', __escape('foo^bar')
+          end
+
+          should "use CGI.escape by default" do
+            CGI.expects(:escape)
+            __escape('foo bar')
+          end
+
+          should "use the escape_utils gem when available" do
+            require 'escape_utils'
+            CGI.expects(:escape).never
+            EscapeUtils.expects(:escape_url)
+            __escape('foo bar')
           end
 
         end
@@ -39,6 +53,10 @@ module Elasticsearch
             assert_equal 'foo,bar', __listify(['foo', nil, 'bar'])
           end
 
+          should "encode special characters" do
+            assert_equal 'foo,bar%5Ebam', __listify(['foo', 'bar^bam'])
+          end
+
         end
 
         context "__pathify" do
@@ -57,10 +75,6 @@ module Elasticsearch
 
           should "ignore empty string values" do
             assert_equal 'foo/bar', __pathify(['foo', '', 'bar'])
-          end
-
-          should "encode special characters" do
-            assert_equal 'foo/bar%5Ebam', __pathify(['foo', 'bar^bam'])
           end
 
         end
