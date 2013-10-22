@@ -44,7 +44,7 @@ module Shoulda
   module Context
     class Context
       def create_test_from_should_hash(should)
-        test_name = ["test:", full_name, "--", "#{should[:name]}. "].flatten.join(' ').to_sym
+        test_name = ["test:", full_name, "|", "#{should[:name]}"].flatten.join(' ').to_sym
 
         if test_methods[test_unit_class][test_name.to_s] then
           raise DuplicateTestError, "'#{test_name}' is defined more than once."
@@ -76,7 +76,7 @@ module Elasticsearch
 
     module Utils
       def titleize(word)
-        word.to_s.gsub(/[^\w]+/, ' ').gsub(/\b('?[a-z])/) { $1.capitalize }
+        word.to_s.gsub(/[^\w]+/, ' ').gsub(/\b('?[a-z])/) { $1.capitalize }.tr('_', ' ')
       end
 
       def symbolize_keys(object)
@@ -206,7 +206,6 @@ suites.each do |suite|
 
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
-
       tests = YAML.load_documents File.new(file)
 
       # Extract setup actions
@@ -220,7 +219,7 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first
+          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{ANSI.ansi(file.gsub(PATH.to_s, ''), :bold)}")
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)
