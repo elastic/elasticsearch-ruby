@@ -27,6 +27,8 @@ module Elasticsearch
       # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
       # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       #
+      # @see http://elasticsearch.org/guide/reference/api/get/
+      #
       # @since 0.90.1
       #
       def get_source(arguments={})
