@@ -16,7 +16,6 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #
         def get_template(arguments={})
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           method = 'GET'
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
           params = {}
