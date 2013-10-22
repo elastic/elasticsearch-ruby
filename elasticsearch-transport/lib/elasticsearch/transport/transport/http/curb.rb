@@ -39,13 +39,19 @@ module Elasticsearch
           def __build_connections
             Connections::Collection.new \
               :connections => hosts.map { |host|
-                host[:protocol] ||= DEFAULT_PROTOCOL
+                host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
                 host[:port]     ||= DEFAULT_PORT
 
                 client = ::Curl::Easy.new
                 client.resolve_mode = :ipv4
-                client.headers      = {'Content-Type' => 'application/json'}
-                client.url          = "#{host[:protocol]}://#{host[:host]}:#{host[:port]}"
+                client.headers      = {'User-Agent' => "Curb #{Curl::CURB_VERSION}", 'Content-Type' => 'application/json' }
+                client.url          = __full_url(host)
+
+                if host[:user]
+                  client.http_auth_types = host[:auth_type] || :basic
+                  client.username = host[:user]
+                  client.password = host[:password]
+                end
 
                 client.instance_eval &@block if @block
 

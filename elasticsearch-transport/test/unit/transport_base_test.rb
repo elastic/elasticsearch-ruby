@@ -57,6 +57,25 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       transport = DummyTransport.new :options => { :sniffer_class => DummySniffer }
       assert_instance_of DummySniffer, transport.sniffer
     end
+
+    context "when combining the URL" do
+      setup do
+        @transport   = DummyTransport.new
+        @basic_parts = { :protocol => 'http', :host => 'myhost', :port => 8080 }
+      end
+
+      should "combine basic parts" do
+        assert_equal 'http://myhost:8080', @transport.__full_url(@basic_parts)
+      end
+
+      should "combine path" do
+        assert_equal 'http://myhost:8080/api', @transport.__full_url(@basic_parts.merge :path => '/api')
+      end
+
+      should "combine authentication credentials" do
+        assert_equal 'http://U:P@myhost:8080', @transport.__full_url(@basic_parts.merge :user => 'U', :password => 'P')
+      end
+    end
   end
 
   context "getting a connection" do

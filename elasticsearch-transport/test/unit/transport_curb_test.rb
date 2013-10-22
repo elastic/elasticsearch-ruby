@@ -14,7 +14,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_equal 1, @transport.hosts.size
       assert_equal 1, @transport.connections.size
 
-      assert_instance_of ::Curl::Easy, @transport.connections.first.connection
+      assert_instance_of ::Curl::Easy,   @transport.connections.first.connection
       assert_equal 'http://foobar:1234', @transport.connections.first.connection.url
     end
 
@@ -66,6 +66,12 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
 
       assert_equal( {"Content-Type"=>"application/json", "User-Agent"=>"myapp-0.0"},
                     transport.connections.first.connection.headers )
+    end
+
+    should "set the credentials if passed" do
+      transport = Curb.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' } ]
+      assert_equal 'foo', transport.connections.first.connection.username
+      assert_equal 'bar', transport.connections.first.connection.password
     end
   end
 

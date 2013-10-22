@@ -105,13 +105,19 @@ module Elasticsearch
         hosts = hosts_config.map do |host|
           case host
           when String
-            # TODO: Handle protocol?
-            host, port = host.split(':')
-            { :host => host, :port => port }
+            if host =~ /^[a-z]+\:\/\//
+              uri = URI.parse(host)
+              { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
+            else
+              host, port = host.split(':')
+              { :host => host, :port => port }
+            end
+          when URI
+            { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
           when Hash
             host
           else
-            raise ArgumentError, "Please pass host as a String or Hash, #{host.class} given."
+            raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
           end
         end
 

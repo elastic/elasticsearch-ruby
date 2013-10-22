@@ -36,7 +36,11 @@ module Elasticsearch
           # @return [String]
           #
           def full_url(path, params={})
-            "#{host[:protocol]}://#{host[:host]}:#{host[:port]}/#{full_path(path, params)}"
+            url  = "#{host[:protocol]}://"
+            url += "#{host[:user]}:#{host[:password]}@" if host[:user]
+            url += "#{host[:host]}:#{host[:port]}"
+            url += "#{host[:path]}" if host[:path]
+            url += "/#{full_path(path, params)}"
           end
 
           # Returns the complete endpoint path with serialized parameters.

@@ -17,7 +17,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_equal 1, @transport.connections.size
 
       assert_instance_of ::Faraday::Connection, @transport.connections.first.connection
-      assert_equal 'http://foobar:1234/', @transport.connections.first.connection.url_prefix.to_s
+      assert_equal 'http://foobar:1234/',       @transport.connections.first.connection.url_prefix.to_s
     end
 
     should "perform the request" do
@@ -67,6 +67,11 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
 
       handlers = transport.connections.first.connection.instance_variable_get(:@builder).instance_variable_get(:@handlers)
       assert handlers.include?(::Faraday::Response::Logger), "#{handlers.inspect} does not include <::Faraday::Adapter::Typhoeus>"
+    end
+
+    should "set the credentials if passed" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' } ]
+      assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
     end
   end
 

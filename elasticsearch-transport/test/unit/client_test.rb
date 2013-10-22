@@ -66,30 +66,83 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
     context "extracting hosts" do
       should "handle defaults" do
-        assert_equal [ {:host => 'localhost', :port => nil} ], @client.__extract_hosts
+        hosts = @client.__extract_hosts
+
+        assert_equal 'localhost', hosts[0][:host]
+        assert_nil                hosts[0][:port]
       end
 
       should "extract from string" do
-        assert_equal [ {:host => 'myhost', :port => nil} ], @client.__extract_hosts( 'myhost' )
+        hosts = @client.__extract_hosts 'myhost'
+
+        assert_equal 'myhost', hosts[0][:host]
+        assert_nil             hosts[0][:port]
       end
 
       should "extract from array" do
-        assert_equal [ {:host => 'myhost', :port => nil} ], @client.__extract_hosts( ['myhost'] )
+        hosts = @client.__extract_hosts ['myhost']
+
+        assert_equal 'myhost', hosts[0][:host]
       end
 
       should "extract from array with multiple hosts" do
-        assert_equal [ {:host => 'host1', :port => nil}, {:host => 'host2', :port => nil} ],
-                     @client.__extract_hosts( ['host1', 'host2'] )
+        hosts = @client.__extract_hosts ['host1', 'host2']
+
+        assert_equal 'host1', hosts[0][:host]
+        assert_equal 'host2', hosts[1][:host]
       end
 
       should "extract from array with ports" do
-        assert_equal [ {:host => 'host1', :port => '1000'}, {:host => 'host2', :port => '2000'} ],
-                     @client.__extract_hosts( ['host1:1000', 'host2:2000'] )
+        hosts = @client.__extract_hosts ['host1:1000', 'host2:2000']
+
+        assert_equal 'host1', hosts[0][:host]
+        assert_equal '1000',  hosts[0][:port]
+
+        assert_equal 'host2', hosts[1][:host]
+        assert_equal '2000',  hosts[1][:port]
+      end
+
+      should "extract path" do
+        hosts = @client.__extract_hosts 'https://myhost:8080/api'
+
+        assert_equal '/api',  hosts[0][:path]
+      end
+
+      should "extract scheme (protocol)" do
+        hosts = @client.__extract_hosts 'https://myhost:8080'
+
+        assert_equal 'https',  hosts[0][:scheme]
+        assert_equal 'myhost', hosts[0][:host]
+        assert_equal '8080',   hosts[0][:port]
+      end
+
+      should "extract credentials" do
+        hosts = @client.__extract_hosts 'http://USERNAME:PASSWORD@myhost:8080'
+
+        assert_equal 'http',     hosts[0][:scheme]
+        assert_equal 'USERNAME', hosts[0][:user]
+        assert_equal 'PASSWORD', hosts[0][:password]
+        assert_equal 'myhost',   hosts[0][:host]
+        assert_equal '8080',     hosts[0][:port]
       end
 
       should "pass Hashes over" do
-        assert_equal [ {:host => 'myhost', :port => '1000'} ],
-                     @client.__extract_hosts( [{:host => 'myhost', :port => '1000'}] )
+        hosts = @client.__extract_hosts [{:host => 'myhost', :port => '1000', :foo => 'bar'}]
+
+        assert_equal 'myhost', hosts[0][:host]
+        assert_equal '1000',   hosts[0][:port]
+        assert_equal 'bar',    hosts[0][:foo]
+      end
+
+      should "use URL instance" do
+        require 'uri'
+        hosts = @client.__extract_hosts URI.parse('https://USERNAME:PASSWORD@myhost:4430')
+
+        assert_equal 'https',    hosts[0][:scheme]
+        assert_equal 'USERNAME', hosts[0][:user]
+        assert_equal 'PASSWORD', hosts[0][:password]
+        assert_equal 'myhost',   hosts[0][:host]
+        assert_equal '4430',     hosts[0][:port]
       end
 
       should "raise error for incompatible argument" do

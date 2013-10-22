@@ -80,6 +80,10 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
     Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
+Scheme, HTTP authentication credentials and URL prefixes are handled automatically:
+
+    Elasticsearch::Client.new url: 'https://myserver:4430/search'
+
 ### Logging
 
 To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger}) class):
@@ -210,6 +214,17 @@ It's possible to customize the _Curb_ instance by passing a block to the constru
       &configuration
 
     client = Elasticsearch::Client.new transport: transport
+
+Instead of passing the transport to the constructor, you can inject it at run time:
+
+  faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+        hosts: [ { host: '33.33.33.10', port: '443', user: 'USERNAME', password: 'PASSWORD', scheme: 'https' } ],
+        & lambda { |f| f.instance_variable_set :@ssl, { verify: false }
+                       f.options[:ssl] = { verify: false }
+                       f.adapter :excon }
+
+  client = Elasticsearch::Client.new
+  client.transport = faraday_client
 
 You can write your own transport implementation easily, by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required contract,

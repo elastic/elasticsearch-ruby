@@ -139,6 +139,19 @@ module Elasticsearch
           o = o.is_a?(String) ? o : serializer.dump(o, options)
         end
 
+        # Returns a full URL based on information from host
+        #
+        # @param host [Hash] Host configuration passed in from {Client}
+        #
+        # @api private
+        def __full_url(host)
+          url  = "#{host[:protocol]}://"
+          url += "#{host[:user]}:#{host[:password]}@" if host[:user]
+          url += "#{host[:host]}:#{host[:port]}"
+          url += "#{host[:path]}" if host[:path]
+          url
+        end
+
         # Performs a request to Elasticsearch, while handling logging, tracing, marking dead connections,
         # retrying the request and reloading the connections.
         #

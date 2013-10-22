@@ -33,9 +33,9 @@ module Elasticsearch
           def __build_connections
             Connections::Collection.new \
               :connections => hosts.map { |host|
-                host[:protocol] ||= DEFAULT_PROTOCOL
+                host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
                 host[:port]     ||= DEFAULT_PORT
-                url               = "#{host[:protocol]}://#{host[:host]}:#{host[:port]}"
+                url               = __full_url(host)
 
                 Connections::Connection.new \
                   :host => host,
