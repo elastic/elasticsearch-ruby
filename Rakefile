@@ -92,3 +92,11 @@ task :doc do
     puts '-'*80
   end
 end
+
+desc "Release all subprojects to Rubygems"
+task :release do
+  subprojects.each do |project|
+    sh "cd #{__current__.join(project)} && rake release"
+    puts '-'*80
+  end
+end
