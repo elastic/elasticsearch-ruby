@@ -10,6 +10,13 @@ Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require
 
 module Elasticsearch
   module API
+    COMMON_PARAMS = [
+                      :ignore,                        # Client specific parameters
+                      :index, :type, :id,             # :index/:type/:id
+                      :node_id,                       # Cluster APIs
+                      :name,                          # Template, warmer APIs
+                      :pretty                         # Pretty-print the response
+                    ]
 
     # Auto-include all namespaces in the receiver
     #

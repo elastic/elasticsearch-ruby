@@ -126,6 +126,21 @@ module Elasticsearch
 
         end
 
+        context "__validate_and_extract_params" do
+
+          should "extract valid params from a Hash" do
+            assert_equal( {:foo => 'qux'},
+                         __validate_and_extract_params({ :foo => 'qux' }, [:foo, :bar]) )
+          end
+
+          should "raise an exception when invalid keys present" do
+            assert_raise ArgumentError do
+              __validate_and_extract_params({ :foo => 'qux', :bam => 'mux' }, [:foo, :bar])
+            end
+          end
+
+        end
+
       end
     end
   end

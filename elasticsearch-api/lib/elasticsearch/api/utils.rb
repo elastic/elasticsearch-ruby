@@ -100,6 +100,35 @@ module Elasticsearch
         payload = payload.join("\n")
       end
 
+      # Validates the argument Hash against common and valid API parameters
+      #
+      # @param arguments [Hash]             Hash of arguments to verify and extract, **with symbolized keys**
+      # @param valid_params [Array<Symbol>] An array of symbols with valid keys
+      #
+      # @return [Hash]         Return whitelisted Hash
+      # @raise [ArgumentError] If the arguments Hash contains invalid keys
+      #
+      # @example Extract parameters
+      #   __validate_and_extract_params { :foo => 'qux' }, [:foo, :bar]
+      #   # => { :foo => 'qux' }
+      #
+      # @example Raise an exception for invalid parameters
+      #   __validate_and_extract_params { :foo => 'qux', :bam => 'mux' }, [:foo, :bar]
+      #   # ArgumentError: "URL parameter 'bam' is not supported"
+      #
+      # @api private
+      #
+      def __validate_and_extract_params(arguments, valid_params=[])
+        arguments.each do |k,v|
+          raise ArgumentError, "URL parameter '#{k}' is not supported" \
+            unless valid_params.include?(k) || COMMON_PARAMS.include?(k)
+        end
+
+        params = arguments.select { |k,v| valid_params.include?(k) }
+        params = Hash[params] unless params.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+        params
+      end
+
       extend self
     end
   end
