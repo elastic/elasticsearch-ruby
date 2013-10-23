@@ -16,13 +16,12 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-indices-segments/
         #
         def segments(arguments={})
+          valid_params = [ :ignore_indices ]
+
           method = 'GET'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_segments'
-          params = arguments.select do |k,v|
-            [ :ignore_indices ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
           perform_request(method, path, params, body).body

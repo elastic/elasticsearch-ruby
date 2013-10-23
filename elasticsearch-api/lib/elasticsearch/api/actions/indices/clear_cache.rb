@@ -41,22 +41,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/
         #
         def clear_cache(arguments={})
+          valid_params = [
+            :field_data,
+            :fielddata,
+            :fields,
+            :filter,
+            :filter_cache,
+            :filter_keys,
+            :id,
+            :id_cache,
+            :ignore_indices,
+            :recycler ]
+
           method = 'POST'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
-          params = arguments.select do |k,v|
-            [ :field_data,
-              :fielddata,
-              :fields,
-              :filter,
-              :filter_cache,
-              :filter_keys,
-              :id,
-              :id_cache,
-              :ignore_indices,
-              :recycler ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
           params[:fields] = Utils.__listify(params[:fields]) if params[:fields]

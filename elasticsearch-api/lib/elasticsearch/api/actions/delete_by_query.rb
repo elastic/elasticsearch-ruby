@@ -37,22 +37,23 @@ module Elasticsearch
       #
       def delete_by_query(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+        valid_params = [
+          :analyzer,
+          :consistency,
+          :default_operator,
+          :df,
+          :ignore_indices,
+          :replication,
+          :q,
+          :routing,
+          :source,
+          :timeout ]
+
         method = 'DELETE'
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), '/_query' )
-        params = arguments.select do |k,v|
-          [ :analyzer,
-            :consistency,
-            :default_operator,
-            :df,
-            :ignore_indices,
-            :replication,
-            :q,
-            :routing,
-            :source,
-            :timeout ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body

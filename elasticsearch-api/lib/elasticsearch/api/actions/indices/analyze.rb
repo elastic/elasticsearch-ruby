@@ -36,21 +36,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
         #
         def analyze(arguments={})
+          valid_params = [
+            :analyzer,
+            :field,
+            :filters,
+            :index,
+            :prefer_local,
+            :text,
+            :tokenizer,
+            :format ]
+
           method = 'GET'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
-          params = arguments.select do |k,v|
-            [ :analyzer,
-              :field,
-              :filters,
-              :index,
-              :prefer_local,
-              :text,
-              :tokenizer,
-              :format ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
 
+          params = Utils.__validate_and_extract_params arguments, valid_params
           params[:filters] = Utils.__listify(params[:filters]) if params[:filters]
 
           body   = arguments[:body]

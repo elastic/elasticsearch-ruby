@@ -32,23 +32,23 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
         #
         def node_info(arguments={})
+          valid_params = [
+            :all,
+            :clear,
+            :http,
+            :jvm,
+            :network,
+            :os,
+            :plugin,
+            :process,
+            :settings,
+            :thread_pool,
+            :transport ]
+
           method = 'GET'
           path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id])
-          params = arguments.select do |k,v|
-            [ :all,
-              :clear,
-              :http,
-              :jvm,
-              :network,
-              :os,
-              :plugin,
-              :process,
-              :settings,
-              :thread_pool,
-              :transport ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).body

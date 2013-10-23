@@ -29,12 +29,11 @@ module Elasticsearch
       def scroll(arguments={})
         method = 'GET'
         path   = "_search/scroll"
-        params = arguments.select do |k,v|
-          [ :scroll,
-            :scroll_id ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+        valid_params = [
+          :scroll,
+          :scroll_id ]
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body

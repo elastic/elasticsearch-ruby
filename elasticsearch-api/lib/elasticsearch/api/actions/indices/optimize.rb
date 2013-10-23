@@ -34,19 +34,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/
         #
         def optimize(arguments={})
+          valid_params = [
+            :flush,
+            :ignore_indices,
+            :max_num_segments,
+            :only_expunge_deletes,
+            :operation_threading,
+            :refresh,
+            :wait_for_merge ]
+
           method = 'POST'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
-          params = arguments.select do |k,v|
-            [ :flush,
-              :ignore_indices,
-              :max_num_segments,
-              :only_expunge_deletes,
-              :operation_threading,
-              :refresh,
-              :wait_for_merge ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).body

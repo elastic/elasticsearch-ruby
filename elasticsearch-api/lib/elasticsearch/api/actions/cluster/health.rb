@@ -26,20 +26,20 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-health/
         #
         def health(arguments={})
+          valid_params = [
+            :level,
+            :local,
+            :master_timeout,
+            :timeout,
+            :wait_for_active_shards,
+            :wait_for_nodes,
+            :wait_for_relocating_shards,
+            :wait_for_status ]
+
           method = 'GET'
           path   = "_cluster/health"
-          params = arguments.select do |k,v|
-            [ :level,
-              :local,
-              :master_timeout,
-              :timeout,
-              :wait_for_active_shards,
-              :wait_for_nodes,
-              :wait_for_relocating_shards,
-              :wait_for_status ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).body

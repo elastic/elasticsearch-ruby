@@ -22,14 +22,12 @@ module Elasticsearch
         def put_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          valid_params = [ :order, :timeout ]
+
           method = 'PUT'
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
-          params = arguments.select do |k,v|
-            [ :order,
-              :timeout ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body

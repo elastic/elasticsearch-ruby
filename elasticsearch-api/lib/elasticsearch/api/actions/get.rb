@@ -34,23 +34,23 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= '_all'
 
+        valid_params = [
+          :fields,
+          :parent,
+          :preference,
+          :realtime,
+          :refresh,
+          :routing,
+          :_source,
+          :_source_include,
+          :_source_exclude ]
+
         method = 'GET'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
-        params = arguments.select do |k,v|
-          [ :fields,
-            :parent,
-            :preference,
-            :realtime,
-            :refresh,
-            :routing,
-            :_source,
-            :_source_include,
-            :_source_exclude ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = nil
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]

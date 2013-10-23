@@ -47,6 +47,12 @@ module Elasticsearch
           subject.delete :index => 'foo', :type => 'bar', :id => '1', :routing => 'abc123'
         end
 
+        should "validate URL parameters" do
+          assert_raise ArgumentError do
+            subject.delete :index => 'foo', :type => 'bar', :id => '1', :qwertypoiuy => 'asdflkjhg'
+          end
+        end
+
         should "URL-escape the parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo%5Ebar/bar%2Fbam/1', url

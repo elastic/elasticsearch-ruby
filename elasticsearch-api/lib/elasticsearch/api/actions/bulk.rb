@@ -46,16 +46,16 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/bulk/
       #
       def bulk(arguments={})
+        valid_params = [
+          :consistency,
+          :refresh,
+          :replication,
+          :type ]
+
         method = 'POST'
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
-        params = arguments.select do |k,v|
-          [ :consistency,
-            :refresh,
-            :replication,
-            :type ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         if body.is_a? Array

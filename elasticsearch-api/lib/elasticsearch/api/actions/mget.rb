@@ -45,23 +45,24 @@ module Elasticsearch
       #
       def mget(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        valid_params = [
+          :fields,
+          :parent,
+          :preference,
+          :realtime,
+          :refresh,
+          :routing,
+          :_source,
+          :_source_include,
+          :_source_exclude ]
+
         method = 'GET'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  '_mget'
-        params = arguments.select do |k,v|
-          [ :fields,
-            :parent,
-            :preference,
-            :realtime,
-            :refresh,
-            :routing,
-            :_source,
-            :_source_include,
-            :_source_exclude ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]

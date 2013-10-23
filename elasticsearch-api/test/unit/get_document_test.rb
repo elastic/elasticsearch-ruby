@@ -56,6 +56,12 @@ module Elasticsearch
           subject.exists :index => 'foo^bar', :type => 'bar/bam', :id => '1'
         end
 
+        should "validate URL parameters" do
+          assert_raise ArgumentError do
+            subject.get :index => 'foo', :type => 'bar', :id => '1', :qwertypoiuy => 'asdflkjhg'
+          end
+        end
+
         should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 

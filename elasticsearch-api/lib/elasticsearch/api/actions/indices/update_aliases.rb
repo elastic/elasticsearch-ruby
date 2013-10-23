@@ -32,13 +32,12 @@ module Elasticsearch
         #
         def update_aliases(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          valid_params = [ :timeout ]
+
           method = 'POST'
           path   = "_aliases"
-          params = arguments.select do |k,v|
-            [ :timeout ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body

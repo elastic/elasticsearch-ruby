@@ -106,41 +106,41 @@ module Elasticsearch
       def search(arguments={})
         arguments[:index] = '_all' if ! arguments[:index] && arguments[:type]
 
+        valid_params = [
+          :analyzer,
+          :analyze_wildcard,
+          :default_operator,
+          :df,
+          :explain,
+          :fields,
+          :from,
+          :ignore_indices,
+          :indices_boost,
+          :lenient,
+          :lowercase_expanded_terms,
+          :preference,
+          :q,
+          :routing,
+          :scroll,
+          :search_type,
+          :size,
+          :sort,
+          :source,
+          :_source,
+          :_source_include,
+          :_source_exclude,
+          :stats,
+          :suggest_field,
+          :suggest_mode,
+          :suggest_size,
+          :suggest_text,
+          :timeout,
+          :version ]
+
         method = 'GET'
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search' )
-        params = arguments.select do |k,v|
-          [ :analyzer,
-            :analyze_wildcard,
-            :default_operator,
-            :df,
-            :explain,
-            :fields,
-            :from,
-            :ignore_indices,
-            :indices_boost,
-            :lenient,
-            :lowercase_expanded_terms,
-            :preference,
-            :q,
-            :routing,
-            :scroll,
-            :search_type,
-            :size,
-            :sort,
-            :source,
-            :_source,
-            :_source_include,
-            :_source_exclude,
-            :stats,
-            :suggest_field,
-            :suggest_mode,
-            :suggest_size,
-            :suggest_text,
-            :timeout,
-            :version ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]

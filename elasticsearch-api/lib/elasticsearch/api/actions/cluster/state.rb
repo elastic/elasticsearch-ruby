@@ -23,20 +23,20 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-state/
         #
         def state(arguments={})
+          valid_params = [
+            :filter_blocks,
+            :filter_index_templates,
+            :filter_indices,
+            :filter_metadata,
+            :filter_nodes,
+            :filter_routing_table,
+            :local,
+            :master_timeout ]
+
           method = 'GET'
           path   = "_cluster/state"
-          params = arguments.select do |k,v|
-            [ :filter_blocks,
-              :filter_index_templates,
-              :filter_indices,
-              :filter_metadata,
-              :filter_nodes,
-              :filter_routing_table,
-              :local,
-              :master_timeout ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).body

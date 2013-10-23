@@ -60,33 +60,33 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-indices-stats/
         #
         def stats(arguments={})
+          valid_params = [
+            :all,
+            :clear,
+            :docs,
+            :fielddata,
+            :fields,
+            :filter_cache,
+            :flush,
+            :get,
+            :groups,
+            :id_cache,
+            :ignore_indices,
+            :indexing,
+            :merge,
+            :refresh,
+            :search,
+            :store,
+            :warmer ]
+
           method = 'GET'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats'
-          params = arguments.select do |k,v|
-            [ :all,
-              :clear,
-              :docs,
-              :fielddata,
-              :fields,
-              :filter_cache,
-              :flush,
-              :get,
-              :groups,
-              :id_cache,
-              :ignore_indices,
-              :indexing,
-              :merge,
-              :refresh,
-              :search,
-              :store,
-              :warmer ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
-          body   = nil
 
+          params = Utils.__validate_and_extract_params arguments, valid_params
           params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
           params[:groups] = Utils.__listify(params[:groups]) if params[:groups]
+
+          body   = nil
 
           perform_request(method, path, params, body).body
         end

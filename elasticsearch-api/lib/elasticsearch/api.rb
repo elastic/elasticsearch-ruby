@@ -13,6 +13,7 @@ module Elasticsearch
     COMMON_PARAMS = [
                       :ignore,                        # Client specific parameters
                       :index, :type, :id,             # :index/:type/:id
+                      :body,                          # Request body
                       :node_id,                       # Cluster APIs
                       :name,                          # Template, warmer APIs
                       :pretty                         # Pretty-print the response

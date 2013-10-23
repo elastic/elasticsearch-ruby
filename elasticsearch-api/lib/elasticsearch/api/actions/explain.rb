@@ -46,30 +46,31 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+
+        valid_params = [
+          :analyze_wildcard,
+          :analyzer,
+          :default_operator,
+          :df,
+          :fields,
+          :lenient,
+          :lowercase_expanded_terms,
+          :parent,
+          :preference,
+          :q,
+          :routing,
+          :source,
+          :_source,
+          :_source_include,
+          :_source_exclude ]
+
         method = 'GET'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id]),
                                  '_explain'
-        params = arguments.select do |k,v|
-          [ :analyze_wildcard,
-            :analyzer,
-            :default_operator,
-            :df,
-            :fields,
-            :lenient,
-            :lowercase_expanded_terms,
-            :parent,
-            :preference,
-            :q,
-            :routing,
-            :source,
-            :_source,
-            :_source_include,
-            :_source_exclude ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]

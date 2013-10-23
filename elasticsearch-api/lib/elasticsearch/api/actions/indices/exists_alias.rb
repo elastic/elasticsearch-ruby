@@ -18,13 +18,12 @@ module Elasticsearch
         #
         def exists_alias(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          valid_params = [ :ignore_indices ]
+
           method = 'HEAD'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
-          params = arguments.select do |k,v|
-            [ :ignore_indices ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).status == 200 ? true : false

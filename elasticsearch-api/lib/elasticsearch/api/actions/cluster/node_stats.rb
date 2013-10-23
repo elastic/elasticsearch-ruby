@@ -31,6 +31,20 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-stats/
         #
         def node_stats(arguments={})
+          valid_params = [
+            :all,
+            :clear,
+            :fields,
+            :fs,
+            :http,
+            :indices,
+            :jvm,
+            :network,
+            :os,
+            :process,
+            :thread_pool,
+            :transport ]
+
           method = 'GET'
 
           case
@@ -47,23 +61,7 @@ module Elasticsearch
             else
               path   = Utils.__pathify( '_nodes', Utils.__listify(arguments[:node_id]), 'stats' )
 
-              params = arguments.select do |k,v|
-                [ :all,
-                  :clear,
-                  :fields,
-                  :fs,
-                  :http,
-                  :indices,
-                  :jvm,
-                  :network,
-                  :os,
-                  :process,
-                  :thread_pool,
-                  :transport ].include?(k)
-              end
-              # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-              params = Hash[params] unless params.is_a?(Hash)
-
+              params = Utils.__validate_and_extract_params arguments, valid_params
               params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
           end
 

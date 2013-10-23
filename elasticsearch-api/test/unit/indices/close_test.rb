@@ -41,7 +41,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.indices.close :index => 'foo^bar', :text => 'Test'
+          subject.indices.close :index => 'foo^bar'
         end
 
       end

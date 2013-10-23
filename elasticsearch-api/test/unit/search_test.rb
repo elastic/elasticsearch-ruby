@@ -86,6 +86,12 @@ module Elasticsearch
           subject.search :search_type => 'count'
         end
 
+        should "validate URL parameters" do
+          assert_raise ArgumentError do
+            subject.search :search_type => 'count', :qwertypoiuy => 'asdflkjhg'
+          end
+        end
+
         should "URL-escape the parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo%5Ebar/bar%2Fbam/_search', url

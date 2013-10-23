@@ -50,6 +50,12 @@ module Elasticsearch
 
           subject.index :index => 'foo', :type => 'bar/bam', :id => '123', :body => {}
         end
+
+        should "validate URL parameters" do
+          assert_raise ArgumentError do
+            subject.index :index => 'foo', :type => 'bar/bam', :id => '123', :body => {}, :qwertypoiuy => 'asdflkjhg'
+          end
+        end
       end
 
       context "Creating a document" do

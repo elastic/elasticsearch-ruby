@@ -26,14 +26,12 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
         #
         def reroute(arguments={})
+          valid_params = [ :dry_run, :filter_metadata ]
+
           method = 'POST'
           path   = "_cluster/reroute"
-          params = arguments.select do |k,v|
-            [ :dry_run,
-              :filter_metadata ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body] || {}
 
           perform_request(method, path, params, body).body

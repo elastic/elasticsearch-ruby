@@ -27,16 +27,16 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/search/suggest/
       #
       def suggest(arguments={})
+        valid_params = [
+          :ignore_indices,
+          :preference,
+          :routing,
+          :source ]
+
         method = 'POST'
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_suggest' )
-        params = arguments.select do |k,v|
-          [ :ignore_indices,
-            :preference,
-            :routing,
-            :source ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body

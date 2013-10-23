@@ -32,22 +32,23 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+
+        valid_params = [
+          :consistency,
+          :parent,
+          :refresh,
+          :replication,
+          :routing,
+          :timeout,
+          :version,
+          :version_type ]
+
         method = 'DELETE'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
-        params = arguments.select do |k,v|
-          [ :consistency,
-            :parent,
-            :refresh,
-            :replication,
-            :routing,
-            :timeout,
-            :version,
-            :version_type ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = nil
 
         perform_request(method, path, params, body).body

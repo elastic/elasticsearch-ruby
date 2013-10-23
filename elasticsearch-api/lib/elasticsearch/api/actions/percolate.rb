@@ -41,15 +41,14 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
         arguments[:type] ||= 'document'
 
+        valid_params = [ :prefer_local ]
+
         method = 'GET'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  '_percolate'
-        params = arguments.select do |k,v|
-          [ :prefer_local ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body

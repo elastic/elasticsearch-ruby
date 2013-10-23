@@ -31,14 +31,12 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
+          valid_params = [ :ignore_conflicts, :timeout ]
+
           method = 'PUT'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__escape(arguments[:type]), '_mapping'
-          params = arguments.select do |k,v|
-            [ :ignore_conflicts,
-              :timeout ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body

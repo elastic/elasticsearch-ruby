@@ -26,17 +26,17 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/count/
       #
       def count(arguments={})
+        valid_params = [
+          :ignore_indices,
+          :min_score,
+          :preference,
+          :routing,
+          :source ]
+
         method = 'GET'
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
-        params = arguments.select do |k,v|
-          [ :ignore_indices,
-            :min_score,
-            :preference,
-            :routing,
-            :source ].include?(k)
-        end
-        # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params = Hash[params] unless params.is_a?(Hash)
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body

@@ -18,14 +18,14 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
         #
         def node_shutdown(arguments={})
+          valid_params = [
+            :delay,
+            :exit ]
+
           method = 'POST'
           path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
-          params = arguments.select do |k,v|
-            [ :delay,
-              :exit ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
           perform_request(method, path, params, body).body

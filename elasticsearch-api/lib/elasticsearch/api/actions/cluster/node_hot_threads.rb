@@ -26,16 +26,16 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
         #
         def node_hot_threads(arguments={})
+          valid_params = [
+            :interval,
+            :snapshots,
+            :threads,
+            :type ]
+
           method = 'GET'
           path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
-          params = arguments.select do |k,v|
-            [ :interval,
-              :snapshots,
-              :threads,
-              :type ].include?(k)
-          end
-          # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-          params = Hash[params] unless params.is_a?(Hash)
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil
 
           perform_request(method, path, params, body).body
