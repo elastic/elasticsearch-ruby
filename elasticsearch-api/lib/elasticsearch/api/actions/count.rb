@@ -12,6 +12,10 @@ module Elasticsearch
       #
       #     client.count index: 'myindex'
       #
+      # @example Get the number of documents matching a specific query
+      #
+      #     index: 'my_index', body: { filtered: { filter: { terms: { foo: ['bar'] } } } }
+      #
       # @option arguments [List] :index A comma-separated list of indices to restrict the results
       # @option arguments [List] :type A comma-separated list of types to restrict the results
       # @option arguments [Hash] :body A query to restrict the results (optional)

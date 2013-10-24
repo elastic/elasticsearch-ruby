@@ -32,11 +32,11 @@ module Elasticsearch
         should "take the query" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal( {:query => {:match => {:foo => 'bar'}}}, body)
+            assert_equal( {:match => {:foo => 'bar'}}, body)
             true
           end.returns(FakeResponse.new)
 
-          subject.count :body => { :query => { :match => { :foo => 'bar' } } }
+          subject.count :body => { :match => { :foo => 'bar' } }
         end
 
       end
