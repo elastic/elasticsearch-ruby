@@ -6,12 +6,16 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
   end
 
   context "Transport" do
+    setup do
+      @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+    end
+
     should "allow to customize the Faraday adapter" do
       require 'typhoeus'
       require 'typhoeus/adapters/faraday'
 
       transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-        :hosts => [ { :host => 'localhost', :port => '9250' } ] do |f|
+        :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
           f.response :logger
           f.adapter  :typhoeus
         end
@@ -25,7 +29,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'elasticsearch/transport/transport/http/curb'
 
       transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-        :hosts => [ { :host => 'localhost', :port => '9250' } ] do |curl|
+        :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
           curl.verbose = true
         end
 

@@ -29,7 +29,8 @@ logger.formatter = proc do |severity, datetime, progname, msg|
   ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
 end
 
-$client = Elasticsearch::Client.new host: 'localhost:9250', logger: (ENV['QUIET'] ? nil : logger)
+$client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}",
+                                    logger: (ENV['QUIET'] ? nil : logger)
 $es_version = $client.info['version']['number']
 
 puts '-'*80, "Elasticsearch #{ANSI.ansi($es_version, :bold)}", '-'*80

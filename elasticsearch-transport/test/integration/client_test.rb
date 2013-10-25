@@ -7,7 +7,8 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
   context "Elasticsearch client" do
     setup do
-      system "curl -X DELETE http://localhost:9250/_all > /dev/null 2>&1"
+      @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+      system "curl -X DELETE http://localhost:#{@port}/_all > /dev/null 2>&1"
 
       @logger =  Logger.new(STDERR)
       @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -20,7 +21,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
       end
 
-      @client = Elasticsearch::Client.new host: 'localhost:9250'
+      @client = Elasticsearch::Client.new host: "localhost:#{@port}"
     end
 
     should "connect to the cluster" do
@@ -45,7 +46,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with round robin selector" do
       setup do
         @client = Elasticsearch::Client.new \
-                    hosts: %w| localhost:9250 localhost:9251 |,
+                    hosts:  ["localhost:#{@port}", "localhost:#{@port+1}" ],
                     logger: @logger
       end
 
@@ -66,8 +67,9 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     context "with a sick node and retry on failure" do
       setup do
+        @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
         @client = Elasticsearch::Client.new \
-                    hosts: %w| localhost:9250 foobar1 |,
+                    hosts: ["localhost:#{@port}", "foobar1"],
                     logger: @logger,
                     retry_on_failure: true
       end
@@ -80,7 +82,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
       should "raise exception when it cannot get any healthy server" do
         @client = Elasticsearch::Client.new \
-                  hosts: %w| localhost:9250 foobar1 foobar2 foobar3 |,
+                  hosts: ["localhost:#{@port}", "foobar1", "foobar2", "foobar3"],
                   logger: @logger,
                   retry_on_failure: 1
 
@@ -99,7 +101,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with a sick node and reloading on failure" do
       setup do
         @client = Elasticsearch::Client.new \
-                  hosts: %w| localhost:9250 foobar1 foobar2 |,
+                  hosts: ["localhost:#{@port}", "foobar1", "foobar2"],
                   logger: @logger,
                   reload_on_failure: true
       end
