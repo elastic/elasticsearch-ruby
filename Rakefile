@@ -19,7 +19,8 @@ namespace :test do
 
   desc "Update the submodule with YAML tests to the latest master"
   task :update do
-    sh "git --git-dir=#{__current__.join('elasticsearch-api/spec/.git')} --work-tree=#{__current__.join('elasticsearch-api/spec/')} pull --rebase origin master"
+    sh "git submodule foreach git reset --hard"
+    sh "git --git-dir=#{__current__.join('elasticsearch-api/spec/.git')} --work-tree=#{__current__.join('elasticsearch-api/spec/')} pull origin master"
   end
 
   desc "Run unit tests in all subprojects"
