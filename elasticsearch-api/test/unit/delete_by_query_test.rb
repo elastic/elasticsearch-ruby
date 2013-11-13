@@ -25,6 +25,15 @@ module Elasticsearch
           subject.delete_by_query :index => 'foo', :body => { :term => {} }
         end
 
+        should "honor optional :type argument" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/tweet,post/_query', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.delete_by_query :index => 'foo', :type => ['tweet', 'post'], :body => { :term => {} }
+        end
+
         should "pass the query in URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo/_query', url
