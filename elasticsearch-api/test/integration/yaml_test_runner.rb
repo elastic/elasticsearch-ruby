@@ -212,6 +212,10 @@ suites.each do |suite|
       # Extract setup actions
       setup_actions = tests.select { |t| t['setup'] }.first['setup'] rescue []
 
+      # Skip all the tests when `skip` is part fo the `setup`
+      # TODO: Implement top-level `setup` expression
+      next if Runner.skip? setup_actions
+
       # Remove setup actions from tests
       tests = tests.reject { |t| t['setup'] }
 
@@ -231,6 +235,7 @@ suites.each do |suite|
           # --- Register test setup -------------------------------------------
           setup do
             actions.select { |a| a['setup'] }.first['setup'].each do |action|
+              next unless action['do']
               api, arguments = action['do'].to_a.first
               arguments      = Utils.symbolize_keys(arguments)
               Runner.perform_api_call((test.to_s + '___setup'), api, arguments)
