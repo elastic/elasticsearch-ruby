@@ -119,12 +119,12 @@ module Elasticsearch
       # @api private
       #
       def __validate_and_extract_params(arguments, valid_params=[])
-        arguments.each do |k,v|
+        arguments.symbolize_keys.each do |k,v|
           raise ArgumentError, "URL parameter '#{k}' is not supported" \
             unless valid_params.include?(k) || COMMON_PARAMS.include?(k)
         end
 
-        params = arguments.select { |k,v| valid_params.include?(k) }
+        params = arguments.symbolize_keys.select { |k,v| valid_params.include?(k) }
         params = Hash[params] unless params.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
         params
       end

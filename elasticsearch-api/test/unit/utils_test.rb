@@ -133,6 +133,11 @@ module Elasticsearch
                          __validate_and_extract_params({ :foo => 'qux' }, [:foo, :bar]) )
           end
 
+          should "extract valid params from a HashWithIndifferentAccess" do
+            assert_equal( {:foo => 'qux'},
+                         __validate_and_extract_params({ :foo => 'qux' }.with_indifferent_access, [:foo, :bar]) )
+          end
+
           should "raise an exception when invalid keys present" do
             assert_raise ArgumentError do
               __validate_and_extract_params({ :foo => 'qux', :bam => 'mux' }, [:foo, :bar])
