@@ -25,6 +25,7 @@ require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-transport'
 require 'elasticsearch/transport/extensions/test_cluster'
 require 'logger'
+require 'tempfile'
 
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 

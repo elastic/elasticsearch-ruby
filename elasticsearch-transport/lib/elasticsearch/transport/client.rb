@@ -8,17 +8,19 @@ module Elasticsearch
     class Client
       DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
 
-      DEFAULT_LOGGER = lambda do
+      DEFAULT_LOGGER = lambda do |spec|
+        log = spec == true ? STDERR : spec
         require 'logger'
-        logger = Logger.new(STDERR)
+        logger = Logger.new(log)
         logger.progname = 'elasticsearch'
         logger.formatter = proc { |severity, datetime, progname, msg| "#{datetime}: #{msg}\n" }
         logger
       end
 
-      DEFAULT_TRACER = lambda do
+      DEFAULT_TRACER = lambda do |spec|
+        log = spec == true ? STDERR : spec
         require 'logger'
-        logger = Logger.new(STDERR)
+        logger = Logger.new(log)
         logger.progname = 'elasticsearch.tracer'
         logger.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
         logger
@@ -72,8 +74,8 @@ module Elasticsearch
         transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
         hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
 
-        arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
-        arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
+        arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call(arguments[:log]  ) : nil
+        arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call(arguments[:trace]) : nil
         arguments[:reload_connections] ||= false
         arguments[:retry_on_failure]   ||= false
         arguments[:reload_on_failure]  ||= false

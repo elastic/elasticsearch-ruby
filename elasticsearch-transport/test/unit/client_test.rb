@@ -48,6 +48,24 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       assert_respond_to client.transport.tracer, :info
     end
 
+    context "when given log paths" do
+      should "use the given logger" do
+        Tempfile.open(['elasticsearch-test', '.log']) do |file|
+          File.delete(file.path)
+          client = Elasticsearch::Transport::Client.new(:log => file.path)
+          assert File.exist?(file.path)
+        end
+      end
+
+      should "use the given tracer" do
+        Tempfile.open(['elasticsearch-test', '.log']) do |file|
+          File.delete(file.path)
+          client = Elasticsearch::Transport::Client.new(:trace => file.path)
+          assert File.exist?(file.path)
+        end
+      end
+    end
+
     context "when passed hosts" do
       should "have localhost by default" do
         c = Elasticsearch::Transport::Client.new
