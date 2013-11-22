@@ -25,6 +25,12 @@ module Elasticsearch
           body = nil
 
           perform_request(method, path, params, body).body
+
+        rescue Exception => e
+          # NOTE: Use exception name, not full class in Elasticsearch::Client to allow client plugability
+          if arguments[:ignore] == 404 && e.class.to_s =~ /NotFound/; false
+          else raise(e)
+          end
         end
       end
     end

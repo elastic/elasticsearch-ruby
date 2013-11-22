@@ -28,6 +28,14 @@ module Elasticsearch
           subject.indices.delete_template :name => 'foo^bar'
         end
 
+        should "ignore 404s" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_nothing_raised do
+            assert ! subject.indices.delete_template(:name => 'foo^bar', :ignore => 404)
+          end
+        end
+
       end
 
     end
