@@ -105,7 +105,7 @@ taking advantage of JSON builders such as [JBuilder](https://github.com/rails/jb
 ```ruby
 require 'jbuilder'
 
-json = Jbuilder.encode do |json|
+query = Jbuilder.encode do |json|
   json.query do
     json.match do
       json.title do
@@ -116,7 +116,7 @@ json = Jbuilder.encode do |json|
   end
 end
 
-client.search index: 'myindex', body: json
+client.search index: 'myindex', body: query
 
 # 2013-06-25 09:56:05 +0200: GET http://localhost:9200/myindex/_search [status:200, request:0.015s, query:0.011s]
 # 2013-06-25 09:56:05 +0200: > {"query":{"match":{"title":{"query":"test 1","operator":"and"}}}}

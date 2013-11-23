@@ -82,11 +82,11 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
 Scheme, HTTP authentication credentials and URL prefixes are handled automatically:
 
-    Elasticsearch::Client.new url: 'https://myserver:4430/search'
+    Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
 
 ### Logging
 
-To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger}) class):
+To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class):
 
     Elasticsearch::Client.new log: true
 
@@ -169,7 +169,7 @@ and only when these are not be available, will use the rest:
       include Elasticsearch::Transport::Transport::Connections::Selector::Base
 
       def select(options={})
-        connections.reject do |c|
+        connections.select do |c|
           # Try selecting the nodes with a `rack_id:x1` attribute first
           c.host[:attributes] && c.host[:attributes][:rack_id] == 'x1'
         end.sample || connections.to_a.sample
@@ -207,7 +207,9 @@ You can also use a [_Curb_](https://rubygems.org/gems/curb) based transport impl
 
 It's possible to customize the _Curb_ instance by passing a block to the constructor as well:
 
-    configuration = lambda { |c| c.verbose = true }
+    configuration = lambda do |c|
+      c.verbose = true
+    end
 
     transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
       hosts: [ { host: 'localhost', port: '9200' } ],
@@ -217,14 +219,14 @@ It's possible to customize the _Curb_ instance by passing a block to the constru
 
 Instead of passing the transport to the constructor, you can inject it at run time:
 
-  faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-        hosts: [ { host: '33.33.33.10', port: '443', user: 'USERNAME', password: 'PASSWORD', scheme: 'https' } ],
-        & lambda { |f| f.instance_variable_set :@ssl, { verify: false }
-                       f.options[:ssl] = { verify: false }
-                       f.adapter :excon }
+    faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+          hosts: [ { host: '33.33.33.10', port: '443', user: 'USERNAME', password: 'PASSWORD', scheme: 'https' } ],
+          & lambda { |f| f.instance_variable_set :@ssl, { verify: false }
+                         f.options[:ssl] = { verify: false }
+                         f.adapter :excon }
 
-  client = Elasticsearch::Client.new
-  client.transport = faraday_client
+    client = Elasticsearch::Client.new
+    client.transport = faraday_client
 
 You can write your own transport implementation easily, by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required contract,
@@ -245,9 +247,9 @@ and passing it to the client as the `serializer_class` or `serializer` parameter
 For local development, clone the repository and run `bundle install`. See `rake -T` for a list of
 available Rake tasks for running tests, generating documentation, starting a testing cluster, etc.
 
-Bug fixes and features must be accompanying by unit tests. Integration tests are written in Ruby 1.9 syntax.
+Bug fixes and features must be covered by unit tests. Integration tests are written in Ruby 1.9 syntax.
 
-Github's pull requests and issues are used to send code contributions and bug reports.
+Github's pull requests and issues are used to communicate, send bug reports and code contributions.
 
 ## The Architecture
 
