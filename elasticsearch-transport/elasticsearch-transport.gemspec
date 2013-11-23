@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
 
   # Gems for testing integrations
   s.add_development_dependency "curb"
-  s.add_development_dependency "typhoeus"
+  s.add_development_dependency "typhoeus", '~> 0.6'
 
   # Prevent unit test failures on Ruby 1.8
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
