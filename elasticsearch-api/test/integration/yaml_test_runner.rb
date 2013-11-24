@@ -29,8 +29,17 @@ logger.formatter = proc do |severity, datetime, progname, msg|
   ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
 end
 
-$client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}",
-                                    logger: (ENV['QUIET'] ? nil : logger)
+# Set up the client for the test
+#
+# To set up your own client, just set the `$client` variable in a file, and then require it:
+#
+#     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
+#
+$client ||= Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}",
+                                      logger: (ENV['QUIET'] ? nil : logger)
+
+# Store Elasticsearch version
+#
 $es_version = $client.info['version']['number']
 
 puts '-'*80, "Elasticsearch #{ANSI.ansi($es_version, :bold)}", '-'*80
