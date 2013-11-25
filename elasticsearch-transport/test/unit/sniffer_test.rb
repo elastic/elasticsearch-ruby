@@ -135,10 +135,9 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
         }
       JSON
 
-      hosts = @sniffer.hosts
+      Array.any_instance.expects(:shuffle!)
 
-      assert_not_equal       ['Node 1', 'Node 2', 'Node 3', 'Node 4', 'Node 5'], hosts.map { |h| h['name'] }
-      assert_same_elements ['Node 1', 'Node 2', 'Node 3', 'Node 4', 'Node 5'], hosts.map { |h| h['name'] }
+      hosts = @sniffer.hosts
     end
 
   end
