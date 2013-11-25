@@ -33,13 +33,15 @@ module Elasticsearch
       #
       #     ]
       #
-      # @option arguments [String] :index Default index for items which don't provide one
-      # @option arguments [String] :type Default document type for items which don't provide one
+      # @option arguments [String]      :index Default index for items which don't provide one
+      # @option arguments [String]      :type Default document type for items which don't provide one
       # @option arguments [Array<Hash>] :body An array of operations to perform, each operation is a Hash
-      # @option arguments [String] :consistency Explicit write consistency setting for the operation (options: one, quorum, all)
+      # @option arguments [String]  :consistency Explicit write consistency setting for the operation
+      #                             (options: one, quorum, all)
       # @option arguments [Boolean] :refresh Refresh the index after performing the operation
-      # @option arguments [String] :replication Explicitely set the replication type (options: sync, async)
-      # @option arguments [String] :type Default document type for items which don't provide one
+      # @option arguments [String]  :replication Explicitely set the replication type (options: sync, async)
+      # @option arguments [String]  :type Default document type for items which don't provide one
+      # @option arguments [Time]    :timeout Explicit operation timeout
       #
       # @return [Hash] Deserialized Elasticsearch response
       #
@@ -50,7 +52,8 @@ module Elasticsearch
           :consistency,
           :refresh,
           :replication,
-          :type ]
+          :type,
+          :timeout ]
 
         method = 'POST'
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
