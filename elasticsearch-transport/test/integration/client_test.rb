@@ -33,6 +33,8 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     should "handle paths and URL parameters" do
       @client.perform_request 'PUT', 'myindex/mydoc/1', {routing: 'XYZ'}, {foo: 'bar'}
+      @client.perform_request 'GET', '_cluster/health?wait_for_status=green', {}
+
       response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=XYZ'
       assert_equal true, response.body['exists']
       assert_equal 'bar', response.body['_source']['foo']
