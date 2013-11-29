@@ -10,7 +10,6 @@ module Elasticsearch
     require 'net/http'
     require 'uri'
 
-    @@number_of_nodes = 2
     @@pids            = []
 
     # Start a cluster
@@ -27,7 +26,7 @@ module Elasticsearch
     def start(arguments={})
       arguments[:command] = ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
 
-      @@number_of_nodes = arguments[:count] if arguments[:count]
+      @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || arguments[:count] || 2).to_i
 
       arguments[:port]         = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
       arguments[:cluster_name] = ENV['TEST_CLUSTER_NAME'] || 'elasticsearch-ruby-test'
