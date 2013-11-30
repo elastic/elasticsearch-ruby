@@ -7,6 +7,15 @@ task :default do
   system "rake --tasks"
 end
 
+task :subprojects do
+  puts '-'*80
+  subprojects.each do |project|
+    commit  = `git log --pretty=format:'%h %ar: %s' -1 #{project}`
+    version =  Gem::Specification::load(__current__.join(project, "#{project}.gemspec").to_s).version.to_s
+    puts "[#{version}] \e[1m#{project.ljust(subprojects.map {|s| s.length}.max)}\e[0m | #{commit[ 0..80]}..."
+  end
+end
+
 namespace :test do
   desc "Run `bundle install` in all subprojects"
   task :bundle do
