@@ -1,6 +1,6 @@
 require 'pathname'
 
-subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api |
+subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api elasticsearch-extensions |
 __current__ = Pathname( File.expand_path('..', __FILE__) )
 
 task :default do
