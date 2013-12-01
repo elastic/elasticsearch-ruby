@@ -153,7 +153,10 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
       should "randomize hosts" do
         hosts = [ {:host => 'host1'}, {:host => 'host2'}, {:host => 'host3'}, {:host => 'host4'}, {:host => 'host5'}]
-        assert_not_equal     hosts, @client.__extract_hosts(hosts, :randomize_hosts => true)
+
+        Array.any_instance.expects(:shuffle!).twice
+
+        @client.__extract_hosts(hosts, :randomize_hosts => true)
         assert_same_elements hosts, @client.__extract_hosts(hosts, :randomize_hosts => true)
       end
     end
