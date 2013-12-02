@@ -31,7 +31,11 @@ module Elasticsearch
             Actions.send(m, self, options)
           end
 
-          output.compact.join("\n")
+          unless output.compact.empty?
+            output.compact.join("\n")
+          else
+            self.respond_to?(:awesome_inspect) ? self.awesome_inspect : self.inspect
+          end
         end
       end
 
