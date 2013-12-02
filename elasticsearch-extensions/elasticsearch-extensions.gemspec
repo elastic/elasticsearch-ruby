@@ -18,12 +18,13 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "elasticsearch", '~> 0.4.0'
+  s.add_dependency "elasticsearch", '~> 0.4'
   s.add_dependency "ansi"
-
 
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
+
+  s.add_development_dependency "awesome_print"
 
   s.add_development_dependency "shoulda-context"
   s.add_development_dependency "mocha"
@@ -32,10 +33,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ruby-prof"
   s.add_development_dependency "ci_reporter"
 
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "simplecov"
-    s.add_development_dependency "cane"
-    s.add_development_dependency "require-prof"
-    s.add_development_dependency "coveralls"
-  end
+  s.add_development_dependency "simplecov"
+  s.add_development_dependency "cane"
 end
