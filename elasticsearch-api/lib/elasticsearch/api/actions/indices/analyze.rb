@@ -13,7 +13,7 @@ module Elasticsearch
         #
         #     client.indices.analyze text: 'The Quick Brown Jumping Fox', analyzer: 'snowball'
         #
-        # @example Analyze text "Quick Brown Jumping Fox" with the _snowball_ analyzer
+        # @example Analyze text "Quick Brown Jumping Fox" with a custom tokenizer and filter chain
         #
         #     client.indices.analyze text: 'The Quick Brown Jumping Fox',
         #                            tokenizer: 'whitespace',
