@@ -49,7 +49,7 @@ client = Elasticsearch::Client.new log: true
 client.index  index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' }
 # => {"ok"=>true, "_index"=>"myindex", ...}
 
-client.search body: { query: { match: { title: 'test' } } }
+client.search index: 'myindex', body: { query: { match: { title: 'test' } } }
 # => {"took"=>2, ..., "hits"=>{"total":5, ...}}
 ```
 
