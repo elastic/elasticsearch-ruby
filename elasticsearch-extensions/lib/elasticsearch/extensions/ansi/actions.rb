@@ -157,6 +157,33 @@ module Elasticsearch
           output.join("\n")
         end
 
+        # Display histogram facets
+        #
+        def display_histogram_facets(json, options={})
+          return unless json['facets']
+
+          output = [] << ''
+
+          facets = json['facets'].select { |name, values| values['_type'] == 'histogram' }
+          facets.each do |name, values|
+            max     = values['entries'].map { |t| t['count'] }.max
+            padding = 27
+            ratio   = ((Helpers.width)-padding)/max.to_f
+
+            histogram = values['entries']
+            histogram.each_with_index do |segment, i|
+              key = (i == 0) ? "<#{histogram[1]['key']}ms" : "#{segment['key']}ms"
+
+              output << key.rjust(7) +
+                        ' ' +
+                        '█' * (segment['count']*ratio).ceil +
+                        " [#{segment['count']}]"
+            end
+          end
+
+          output.join("\n")
+        end
+
         # Display statistical facets
         #
         def display_statistical_facets(json, options={})

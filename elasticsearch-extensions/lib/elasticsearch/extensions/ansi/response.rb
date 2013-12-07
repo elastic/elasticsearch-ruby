@@ -13,7 +13,7 @@ module Elasticsearch
         # representation of the Elasticsearch response for:
         #
         # * Search results (hits and highlights)
-        # * Facets (terms, statistical, date_histogram)
+        # * Facets (terms, statistical, histogram, date_histogram)
         # * Analyze API output
         # * Shard allocation
         #
