@@ -21,6 +21,53 @@ Display a table with the output of the `_analyze` API:
 
 [Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI).
 
+### Test::Cluster
+
+Allows to programatically start and stop an Elasticsearch cluster suitable for isolating tests.
+
+HTTP service is running on ports `9250-*` by default, and the cluster runs in-memory only.
+
+Start and stop the default cluster:
+
+    require 'elasticsearch/extensions/test/cluster'
+
+    Elasticsearch::Extensions::Test::Cluster.start
+    Elasticsearch::Extensions::Test::Cluster.stop
+
+Start the cluster on specific port, with a specific Elasticsearch version, number of nodes and cluster name:
+
+    require 'elasticsearch/extensions/test/cluster'
+
+    Elasticsearch::Extensions::Test::Cluster.start \
+      cluster_name: "my-testing-cluster",
+      command:      "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch",
+      nodes:        3,
+      port:         9350
+
+    # Starting 3 Elasticsearch nodes.....................
+    # --------------------------------------------------------------------------------
+    # Cluster:            my-testing-cluster
+    # Status:             green
+    # Nodes:              3
+    #                     - node-1 | version: 1.0.0.Beta2, pid: 54469
+    #                     + node-2 | version: 1.0.0.Beta2, pid: 54470
+    #                     - node-3 | version: 1.0.0.Beta2, pid: 54468
+    # => true
+
+
+Stop this cluster:
+
+    require 'elasticsearch/extensions/test/cluster'
+
+    Elasticsearch::Extensions::Test::Cluster.stop \
+      command:      "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch",
+      port:         9350
+
+    # Stopping Elasticsearch nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
+    # # => [54469, 54470, 54468]
+
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster).
+
 ## Installation
 
 Install the package from [Rubygems](https://rubygems.org):
