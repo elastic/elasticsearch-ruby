@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "elasticsearch", '~> 0.4'
   s.add_dependency "ansi"
+  s.add_dependency "ruby-prof"
 
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
