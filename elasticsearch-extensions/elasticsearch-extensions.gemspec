@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "elasticsearch", '~> 0.4'
+  s.add_dependency "elasticsearch"
   s.add_dependency "ansi"
   s.add_dependency "ruby-prof"
 
