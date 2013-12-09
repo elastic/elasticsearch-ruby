@@ -28,6 +28,14 @@ namespace :bundle do
       puts '-'*80
     end
   end
+
+  desc "Remove Gemfile.lock in all subprojects"
+  task :clean do
+    sh "rm -f Gemfile.lock"
+    subprojects.each do |project|
+      sh "rm -f #{__current__.join(project)}/Gemfile.lock"
+    end
+  end
 end
 
 namespace :test do
