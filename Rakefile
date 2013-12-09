@@ -16,15 +16,22 @@ task :subprojects do
   end
 end
 
-namespace :test do
+desc "Alias for `bundle:install`"
+task :bundle => 'bundle:install'
+
+namespace :bundle do
   desc "Run `bundle install` in all subprojects"
-  task :bundle do
+  task :install do
     sh "bundle install --gemfile #{__current__}/Gemfile"
     subprojects.each do |project|
       sh "bundle install --gemfile #{__current__.join(project)}/Gemfile"
       puts '-'*80
     end
   end
+end
+
+namespace :test do
+  task :bundle => 'bundle:install'
 
   desc "Update the submodule with YAML tests to the latest master"
   task :update do
