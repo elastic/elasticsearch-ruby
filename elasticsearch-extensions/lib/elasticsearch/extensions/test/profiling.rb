@@ -6,7 +6,7 @@ module Elasticsearch
   module Extensions
     module Test
 
-      # Allows to run profiling tests during regular tests.
+      # Allows to define and execute profiling tests within [Shoulda](https://github.com/thoughtbot/shoulda) contexts.
       #
       # Measures operations and reports statistics, including code profile.
       #

@@ -19,7 +19,7 @@ Display a table with the output of the `_analyze` API:
     require 'elasticsearch/extensions/ansi'
     puts Elasticsearch::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI).
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI)
 
 ### Test::Cluster
 
@@ -66,7 +66,78 @@ Stop this cluster:
     # Stopping Elasticsearch nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
     # # => [54469, 54470, 54468]
 
-[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster).
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster)
+
+### Test::StartupShutdown
+
+Allows to register `startup` and `shutdown` hooks for Test::Unit, similarly to RSpec's `before(:all)`,
+compatible with the [Test::Unit 2](https://github.com/test-unit/test-unit/blob/master/lib/test/unit/testcase.rb) syntax.
+
+The extension is useful for e.g. starting the testing Elasticsearch cluster before the test suite is executed,
+and stopping it afterwards.
+
+** IMPORTANT NOTE ** You have to register the handler for `shutdown` hook before requiring 'test/unit':
+
+    # File: test_helper.rb
+    at_exit { MyTest.__run_at_exit_hooks }
+    require 'test/unit'
+
+Example of handler registration:
+
+    class MyTest < Test::Unit::TestCase
+      extend Elasticsearch::Extensions::Test::StartupShutdown
+
+      startup  { puts "Suite starting up..." }
+      shutdown { puts "Suite shutting down..." }
+    end
+
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/StartupShutdown)
+
+Examples in the Elasticsearch gem test suite: [1](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/integration/client_test.rb#L4-L6), [2](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/test_helper.rb#L44)
+
+### Test::Profiling
+
+Allows to define and execute profiling tests within [Shoulda](https://github.com/thoughtbot/shoulda) contexts.
+Measures operations and reports statistics, including code profile.
+
+Let's define a simple profiling test in a `profiling_test.rb` file:
+
+    require 'test/unit'
+    require 'shoulda/context'
+    require 'elasticsearch/extensions/test/profiling'
+
+    class ProfilingTest < Test::Unit::TestCase
+      extend Elasticsearch::Extensions::Test::Profiling
+
+      context "Mathematics" do
+        measure "divide numbers", count: 10_000 do
+          assert_nothing_raised { 1/2 }
+        end
+      end
+
+    end
+
+Let's run it:
+
+    $ QUIET=y ruby profiling_test.rb
+
+    ...
+    ProfilingTest
+
+    -------------------------------------------------------------------------------
+    Context: Mathematics should divide numbers (10000x)
+    mean: 0.03ms | avg: 0.03ms | max: 0.14ms
+    -------------------------------------------------------------------------------
+         PASS (0:00:00.490) test: Mathematics should divide numbers (10000x).
+    ...
+
+When using the `QUIET` option, only the statistics on operation throughput are printed.
+When omitted, the full code profile by [RubyProf](https://github.com/ruby-prof/ruby-prof) is printed.
+
+[Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/StartupShutdown)
+
+[Example in the Elasticsearch gem](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/profile/client_benchmark_test.rb)
+
 
 ## Installation
 
