@@ -4,16 +4,18 @@ require 'yaml'
 require 'pry'
 
 require 'elasticsearch'
-require 'elasticsearch/transport/extensions/test_cluster'
+require 'elasticsearch/extensions/test/cluster'
+require 'elasticsearch/extensions/test/startup_shutdown'
+require 'elasticsearch/extensions/test/profiling'
 
 # Launch test cluster
 #
-Elasticsearch::TestCluster.start if ENV['SERVER'] and not Elasticsearch::TestCluster.running?
+Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
 #
-at_exit { Elasticsearch::TestCluster.stop if ENV['SERVER'] }
+at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] }
 
 require 'logger'
 require 'ansi'

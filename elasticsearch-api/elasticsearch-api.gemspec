@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "elasticsearch"
   s.add_development_dependency "elasticsearch-transport"
+  s.add_development_dependency "elasticsearch-extensions"
 
   s.add_development_dependency "ansi"
   s.add_development_dependency "shoulda-context"

@@ -81,16 +81,14 @@ namespace :test do
   namespace :server do
     desc "Start Elasticsearch nodes for tests"
     task :start do
-      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport', __FILE__)
-      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport/extensions/test_cluster', __FILE__)
-      Elasticsearch::TestCluster.start
+      require 'elasticsearch/extensions/test/cluster'
+      Elasticsearch::Extensions::Test::Cluster.start
     end
 
     desc "Stop Elasticsearch nodes for tests"
     task :stop do
-      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport', __FILE__)
-      require File.expand_path('../elasticsearch-transport/lib/elasticsearch/transport/extensions/test_cluster', __FILE__)
-      Elasticsearch::TestCluster.stop
+      require 'elasticsearch/extensions/test/cluster'
+      Elasticsearch::Extensions::Test::Cluster.stop
     end
   end
 end

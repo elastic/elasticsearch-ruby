@@ -16,25 +16,26 @@ require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch'
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
-require '../elasticsearch-transport/lib/elasticsearch/transport/extensions/test_cluster'
-require '../elasticsearch-transport/test/test_extensions'
+require 'elasticsearch/extensions/test/cluster'
+require 'elasticsearch/extensions/test/startup_shutdown'
+require 'elasticsearch/extensions/test/profiling'
 
 module Elasticsearch
   module Test
     class IntegrationTestCase < ::Test::Unit::TestCase
-      extend IntegrationTestStartupShutdown
+      extend Elasticsearch::Extensions::Test::StartupShutdown
 
-      shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
+      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? }
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end
   end
 
   module Test
     class ProfilingTest < ::Test::Unit::TestCase
-      extend IntegrationTestStartupShutdown
-      extend ProfilingTestSupport
+      extend Elasticsearch::Extensions::Test::StartupShutdown
+      extend Elasticsearch::Extensions::Test::Profiling
 
-      shutdown { Elasticsearch::TestCluster.stop if ENV['SERVER'] && started? }
+      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? }
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end
   end

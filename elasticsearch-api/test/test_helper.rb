@@ -24,6 +24,10 @@ require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch/api'
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
+require 'elasticsearch/extensions/test/cluster'
+require 'elasticsearch/extensions/test/startup_shutdown'
+require 'elasticsearch/extensions/test/profiling'
+
 module Elasticsearch
   module Test
     class FakeClient
