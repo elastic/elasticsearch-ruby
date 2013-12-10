@@ -21,8 +21,8 @@ module Elasticsearch
       #       body: [
       #         { query: { match_all: {} } },
       #         { index: 'myindex', type: 'mytype' },
-      #         { query: { query_string: { query: '"Test 1"' } } }
-      #         { search_type: 'count' }
+      #         { query: { query_string: { query: '"Test 1"' } } },
+      #         { search_type: 'count' },
       #         { facets: { published: { terms: { field: 'published' } } } }
       #       ]
       #
