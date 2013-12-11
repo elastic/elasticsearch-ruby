@@ -4,6 +4,7 @@ gem "bundler", "> 1"
 gem "rake"
 
 gem 'elasticsearch', :path => File.expand_path("../elasticsearch", __FILE__), :require => false
+gem 'elasticsearch-extensions', :path => File.expand_path("../elasticsearch-extensions", __FILE__), :require => false
 
 gem "pry"
 gem "ansi"

@@ -85,6 +85,7 @@ module Elasticsearch
           @@number_of_nodes.times do |n|
             n += 1
             pidfile = File.expand_path("tmp/elasticsearch-#{n}.pid", Dir.pwd)
+            datapath = File.expand_path('tmp/elasticsearch/', Dir.pwd)
             pid = Process.spawn <<-COMMAND
               #{arguments[:command]} \
                 -D es.foreground=yes \
@@ -95,6 +96,7 @@ module Elasticsearch
                 -D es.index.store.type=memory \
                 -D es.network.host=0.0.0.0 \
                 -D es.discovery.zen.ping.multicast.enabled=true \
+                -D es.default.path.data=#{datapath} \
                 -D es.pidfile=#{pidfile} \
                 > /dev/null 2>&1
             COMMAND

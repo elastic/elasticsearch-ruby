@@ -6,3 +6,4 @@ doc/
 rdoc/
 tmp
 Gemfile.lock
+.rvmrc
