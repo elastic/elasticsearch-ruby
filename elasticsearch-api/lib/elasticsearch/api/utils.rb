@@ -78,6 +78,7 @@ module Elasticsearch
           payload = payload.
           inject([]) do |sum, item|
             operation, meta = item.to_a.first
+            meta            = meta.clone
             data            = meta.delete(:data) || meta.delete('data')
 
             sum << { operation => meta }
@@ -86,6 +87,7 @@ module Elasticsearch
           end.
           map { |item| MultiJson.dump(item) }
           payload << "" unless payload.empty?
+          return payload.join("\n")
 
         # Array of strings
         when payload.all? { |d| d.is_a? String }

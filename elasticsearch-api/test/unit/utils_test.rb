@@ -124,6 +124,16 @@ module Elasticsearch
             PAYLOAD
           end
 
+          should "not modify the original payload" do
+            original = [ { :index => {:foo => 'bar', :data => { :moo => 'bam' }} } ]
+            result = Elasticsearch::API::Utils.__bulkify original
+            assert_not_nil original.first[:index][:data], "Deleted :data from #{original}"
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
+              {"index":{"foo":"bar"}}
+              {"moo":"bam"}
+            PAYLOAD
+          end
+
         end
 
         context "__validate_and_extract_params" do
