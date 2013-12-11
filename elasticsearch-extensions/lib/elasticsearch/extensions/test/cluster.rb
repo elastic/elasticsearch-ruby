@@ -69,7 +69,10 @@ module Elasticsearch
           arguments[:command]      ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
           arguments[:port]         ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
           arguments[:cluster_name] ||= ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test'
+          arguments[:gateway_type] ||= 'none'
+          arguments[:index_store]  ||= 'memory'
           arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp'
+          arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
           arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
           arguments[:timeout]      ||= 30
@@ -88,16 +91,18 @@ module Elasticsearch
             n += 1
             pid = Process.spawn <<-COMMAND
               #{arguments[:command]} \
-                -D es.foreground=yes \
+                -D es.foreground=no \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{n} \
                 -D es.http.port=#{arguments[:port].to_i + (n-1)} \
-                -D es.gateway.type=none \
-                -D es.index.store.type=memory \
+                -D es.gateway.type=#{arguments[:gateway_type]} \
+                -D es.index.store.type=#{arguments[:index_store]} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.network.host=0.0.0.0 \
-                -D es.discovery.zen.ping.multicast.enabled=true
+                -D es.discovery.zen.ping.multicast.enabled=true \
+                -D es.node.test=true \
+                #{arguments[:es_params]} \
                 > /dev/null 2>&1
             COMMAND
             Process.detach pid
