@@ -69,6 +69,8 @@ module Elasticsearch
           arguments[:command]      ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
           arguments[:port]         ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
           arguments[:cluster_name] ||= ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test'
+          arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp'
+          arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
           arguments[:timeout]      ||= 30
 
@@ -92,6 +94,8 @@ module Elasticsearch
                 -D es.http.port=#{arguments[:port].to_i + (n-1)} \
                 -D es.gateway.type=none \
                 -D es.index.store.type=memory \
+                -D es.path.data=#{arguments[:path_data]} \
+                -D es.path.work=#{arguments[:path_work]} \
                 -D es.network.host=0.0.0.0 \
                 -D es.discovery.zen.ping.multicast.enabled=true
                 > /dev/null 2>&1
