@@ -42,9 +42,12 @@ $client ||= Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'
 
 # Store Elasticsearch version
 #
-$es_version = $client.info['version']['number']
+es_version_info = $client.info['version']
+$es_version = es_version_info['number']
 
-puts '-'*80, "Elasticsearch #{ANSI.ansi($es_version, :bold)}", '-'*80
+puts '-'*80,
+     "Elasticsearch #{ANSI.ansi($es_version, :bold)} [#{es_version_info['build_hash'].to_s[0...7]}]".center(80),
+     '-'*80
 
 require 'test_helper'
 require 'test/unit'
