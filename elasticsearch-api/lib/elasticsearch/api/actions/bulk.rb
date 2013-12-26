@@ -7,15 +7,26 @@ module Elasticsearch
       # Pass the operations in the `:body` option as an array of hashes, following Elasticsearch conventions.
       # For operations which take data, pass them as the `:data` option in the operation hash.
       #
-      # @example Perform three operations in a single request
+      # @example Perform three operations in a single request, passing actions and data as an array of hashes
+      #
+      #     client.bulk body: [
+      #       { index: { _index: 'myindex', _type: 'mytype', _id: 1 } },
+      #       { title: 'foo' },
+      #
+      #       { index: { _index: 'myindex', _type: 'mytype', _id: 2 } },
+      #       { title: 'foo' },
+      #
+      #       { delete: { _index: 'myindex', _type: 'mytype', _id: 3  } }
+      #     ]
+      # @example Perform three operations in a single request, passing data in the `:data` option
       #
       #     client.bulk body: [
       #       { index:  { _index: 'myindex', _type: 'mytype', _id: 1, data: { title: 'foo' } } },
       #       { update: { _index: 'myindex', _type: 'mytype', _id: 2, data: { doc: { title: 'foo' } } } },
-      #       { delete: { _index: 'myindex', _type: 'mytype', _id: 3  }
+      #       { delete: { _index: 'myindex', _type: 'mytype', _id: 3  } }
       #     ]
       #
-      # @example Perform a script-based bulk update
+      # @example Perform a script-based bulk update, passing scripts in the `:data` option
       #
       #     client.bulk body: [
       #       { update: { _index: 'myindex', _type: 'mytype', _id: 1,
