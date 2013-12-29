@@ -30,6 +30,7 @@ module Elasticsearch
       # @see Cluster#stop Cluster.stop
       #
       module Cluster
+        @@number_of_nodes = 0
 
         # Starts a cluster
         #
