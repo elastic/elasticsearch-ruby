@@ -180,7 +180,21 @@ module Elasticsearch
         skip = actions.select { |a| a['skip'] }.first
         if skip
           min, max = skip['skip']['version'].split('-').map(&:strip)
-          if min <= $es_version && max >= $es_version
+
+          min_normalized = sprintf "%03d-%03d-%03d",
+                           *min.split('.')
+                               .map(&:to_i)
+                               .fill(0, min.split('.').length, 3-min.split('.').length)
+
+          max_normalized = sprintf "%03d-%03d-%03d",
+                           *max.split('.')
+                               .map(&:to_i)
+                               .map(&:to_i)
+                               .fill(0, max.split('.').length, 3-max.split('.').length)
+
+          es_normalized  = sprintf "%03d-%03d-%03d", *$es_version.split('.').map(&:to_i)
+
+          if min_normalized <= es_normalized && max_normalized >= es_normalized
             return skip['skip']['reason'] ? skip['skip']['reason'] : true
           end
         end
