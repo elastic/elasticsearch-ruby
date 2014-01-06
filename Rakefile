@@ -38,14 +38,34 @@ namespace :bundle do
   end
 end
 
-namespace :test do
-  task :bundle => 'bundle:install'
-
-  desc "Update the submodule with YAML tests to the latest master"
+namespace :elasticsearch do
+  desc "Update the submodule with Elasticsearch core repository"
   task :update do
     sh "git submodule foreach git reset --hard"
-    sh "git --git-dir=#{__current__.join('elasticsearch-api/spec/.git')} --work-tree=#{__current__.join('elasticsearch-api/spec/')} pull origin master"
+    puts
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull origin master --verbose"
+    puts
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD", verbose: false
   end
+
+  desc "Display the last commit in all local branches"
+  task :status do
+    branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n")
+    branches.each do |branch|
+      puts "[\e[1m#{branch}\e[0m]"
+      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline -1 #{branch}", verbose: false
+      puts
+    end
+  end
+
+  desc "Display the history of the 'rest-api-spec' repo"
+  task :changes do
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec"
+  end
+end
+
+namespace :test do
+  task :bundle => 'bundle:install'
 
   desc "Run unit tests in all subprojects"
   task :unit do
