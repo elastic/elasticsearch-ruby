@@ -13,8 +13,15 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string for all indices
         # @option arguments [Boolean] :force TODO: ?
         # @option arguments [Boolean] :full TODO: ?
-        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
-        #                                            (options: none, missing)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
+        #                                               no concrete indices. (This includes `_all` string or when no
+        #                                               indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
+        #                                              are open, closed or both. (options: open, closed)
+        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
+        #                                            `missing` ones (options: none, missing) @until 1.0
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+        #                                                 unavailable (missing, closed, etc)
         # @option arguments [Boolean] :refresh Refresh the index after performing the operation
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/
@@ -24,6 +31,9 @@ module Elasticsearch
             :force,
             :full,
             :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
             :refresh ]
 
           method = 'POST'

@@ -25,8 +25,15 @@ module Elasticsearch
       # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
       #                                              (options: AND, OR)
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
-      # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
-      #                                            (options: none, missing)
+      # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
+      #                                               no concrete indices. (This includes `_all` string or when no
+      #                                               indices have been specified)
+      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
+      #                                              are open, closed or both. (options: open, closed)
+      # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
+      #                                            `missing` ones (options: none, missing) @until 1.0
+      # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+      #                                                 unavailable (missing, closed, etc)
       # @option arguments [String] :replication Specific replication type (options: sync, async)
       # @option arguments [String] :q Query in the Lucene query string syntax
       # @option arguments [String] :routing Specific routing value
@@ -44,6 +51,9 @@ module Elasticsearch
           :default_operator,
           :df,
           :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
           :replication,
           :q,
           :routing,

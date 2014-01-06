@@ -21,12 +21,27 @@ module Elasticsearch
         # @option arguments [List] :type  A comma-separated list of document types
         # @option arguments [List] :field A comma-separated list of fields (*Required*)
         # @option arguments [Boolean] :include_defaults Whether default mapping values should be returned as well
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
+        #                                               no concrete indices. (This includes `_all` string or when no
+        #                                               indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
+        #                                              are open, closed or both. (options: open, closed)
+        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
+        #                                            `missing` ones (options: none, missing) @until 1.0
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+        #                                                 unavailable (missing, closed, etc)
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments={})
           raise ArgumentError, "Required argument 'field' missing" unless arguments[:field]
-          valid_params = [ :include_defaults ]
+          valid_params = [
+            :include_defaults,
+            :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards
+          ]
 
           method = 'GET'
           path   = Utils.__pathify(
