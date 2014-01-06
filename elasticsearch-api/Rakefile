@@ -1,5 +1,7 @@
 require "bundler/gem_tasks"
 
+__current__ = Pathname( File.expand_path('..', __FILE__) )
+
 desc "Run unit tests"
 task :default => 'test:unit'
 task :test    => 'test:unit'
@@ -27,10 +29,45 @@ namespace :test do
     # test.warning = true
   end
 
-  Rake::TestTask.new(:integration) do |test|
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
+  desc "Run integration tests"
+  task :integration do
+    require 'elasticsearch'
+
+    current_branch = `git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
+
+    # Define the task
+    t = Rake::TestTask.new(:integration) do |test|
+      Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+      test.libs << 'lib' << 'test'
+      test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
+    end
+
+    client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+    es_version_info = client.info['version']
+    build_hash      = es_version_info['build_hash']
+
+    begin
+
+      # Checkout the branch corresponding to the build
+      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{build_hash} --force --quiet"
+
+      # Path to the API specs
+      ENV['TEST_REST_API_SPEC'] = __current__.join('../support/elasticsearch/rest-api-spec/test/').to_s
+
+      # Run the task
+      args = [t.ruby_opts_string, t.run_code, t.file_list_string, t.option_list].join(' ')
+
+      ruby args do |ok, status|
+        if !ok && status.respond_to?(:signaled?) && status.signaled?
+          raise SignalException.new(status.termsig)
+        elsif !ok
+          fail "Command failed with status (#{status.exitstatus}): " + "[ruby #{args}]"
+        end
+      end
+
+    ensure
+      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{current_branch}", verbose: false
+    end
   end
 
   Rake::TestTask.new(:all) do |test|
