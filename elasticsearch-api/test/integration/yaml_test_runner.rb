@@ -210,7 +210,7 @@ end
 
 include Elasticsearch::YamlTestSuite
 
-PATH    = Pathname(ENV['SPEC'] || File.expand_path('../../../spec/test', __FILE__))
+PATH    = Pathname(ENV['SPEC'] || File.expand_path('../../../../support/elasticsearch/rest-api-spec/test', __FILE__))
 suites  = Dir.glob(PATH.join('*')).map { |d| Pathname(d) }
 suites  = suites.select { |s| s.to_s =~ Regexp.new(ENV['FILTER']) } if ENV['FILTER']
 
