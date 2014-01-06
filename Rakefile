@@ -48,6 +48,27 @@ namespace :elasticsearch do
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD", verbose: false
   end
 
+  desc "Build Elasticsearch for the specified branch (master by default)"
+  task :build, :branch do |task, args|
+    branch = args[:branch] || 'master'
+    current_branch = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
+    begin
+      sh <<-CODE
+        mkdir -p #{__current__.join('tmp/builds')} && \
+        cd #{__current__.join('support/elasticsearch')} && \
+        git checkout #{branch} && \
+        mvn clean package -DskipTests && \
+        echo "Built: `ls target/releases/elasticsearch-*.tar.gz`" && \
+        tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')}
+      CODE
+
+      puts "", '-'*80, "", "Builds:"
+      Dir.entries(__current__.join('tmp/builds')).reject { |f| f =~ /^\./ }.each do |build|
+        puts "* #{build}"
+      end
+    end
+  end
+
   desc "Display the last commit in all local branches"
   task :status do
     branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n")
