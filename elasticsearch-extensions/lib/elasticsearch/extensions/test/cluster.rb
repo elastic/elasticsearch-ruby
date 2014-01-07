@@ -88,11 +88,13 @@ module Elasticsearch
                 @@number_of_nodes.to_s.ansi(:bold, :faint) +
                 " Elasticsearch nodes..".ansi(:faint)
 
+          pids = []
+
           @@number_of_nodes.times do |n|
             n += 1
             pid = Process.spawn <<-COMMAND
               #{arguments[:command]} \
-                -D es.foreground=no \
+                -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{n} \
                 -D es.http.port=#{arguments[:port].to_i + (n-1)} \
@@ -104,9 +106,16 @@ module Elasticsearch
                 -D es.discovery.zen.ping.multicast.enabled=true \
                 -D es.node.test=true \
                 #{arguments[:es_params]} \
-                > /dev/null 2>&1
+                > /dev/null
             COMMAND
             Process.detach pid
+            pids << pid
+          end
+
+          # Check for proceses running
+          if `ps -p #{pids.join(' ')}`.split("\n").size < @@number_of_nodes+1
+            STDERR.puts "", "[!!!] Process failed to start (see output above)".ansi(:red)
+            exit(1)
           end
 
           wait_for_green(arguments[:port], arguments[:timeout])
@@ -206,6 +215,8 @@ module Elasticsearch
                 puts e.inspect if ENV['DEBUG']
                 nil
               end
+
+              puts response.inspect if ENV['DEBUG']
 
               if response && response['status'] == status && ( @@number_of_nodes.nil? || @@number_of_nodes == response['number_of_nodes'].to_i  )
                 __print_cluster_info(port) and break
