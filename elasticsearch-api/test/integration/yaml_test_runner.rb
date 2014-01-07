@@ -10,7 +10,7 @@ require 'elasticsearch/extensions/test/profiling'
 
 # Launch test cluster
 #
-Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
