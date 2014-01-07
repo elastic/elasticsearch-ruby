@@ -30,7 +30,7 @@ module Elasticsearch
       # @see Cluster#stop Cluster.stop
       #
       module Cluster
-        @@number_of_nodes = 0
+        @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || 2).to_i
 
         # Starts a cluster
         #
