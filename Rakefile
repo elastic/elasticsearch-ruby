@@ -52,7 +52,7 @@ namespace :elasticsearch do
     puts
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull origin master --verbose"
     puts
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD", verbose: false
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD", :verbose => false
   end
 
   desc "Build Elasticsearch for the specified branch (master by default)"
@@ -81,7 +81,7 @@ namespace :elasticsearch do
     branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n").map { |s| s.strip }
     branches.each do |branch|
       puts "[\e[1m#{branch}\e[0m]"
-      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'\e[2m%h\e[0m \e[1m%cr\e[0m [%an %ar] %s' -1 #{branch}", verbose: false
+      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'\e[2m%h\e[0m \e[1m%cr\e[0m [%an %ar] %s' -1 #{branch}", :verbose => false
       puts
     end
   end
@@ -89,7 +89,7 @@ namespace :elasticsearch do
   desc "Display the history of the 'rest-api-spec' repo"
   task :changes do
     STDERR.puts "Log: #{__current__.join('support/elasticsearch')}/rest-api-spec", ""
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", verbose: false
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", :verbose => false
   end
 end
 
