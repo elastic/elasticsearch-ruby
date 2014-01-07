@@ -38,6 +38,12 @@ namespace :bundle do
   end
 end
 
+
+task 'es:update'  => 'elasticsearch:update'
+task 'es:build'   => 'elasticsearch:build'
+task 'es:status'  => 'elasticsearch:status'
+task 'es:changes' => 'elasticsearch:changes'
+
 namespace :elasticsearch do
   desc "Update the submodule with Elasticsearch core repository"
   task :update do
@@ -71,17 +77,18 @@ namespace :elasticsearch do
 
   desc "Display the last commit in all local branches"
   task :status do
-    branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n")
+    branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n").map { |s| s.strip }
     branches.each do |branch|
       puts "[\e[1m#{branch}\e[0m]"
-      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline -1 #{branch}", verbose: false
+      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'\e[2m%h\e[0m \e[1m%cr\e[0m [%an %ar] %s' -1 #{branch}", verbose: false
       puts
     end
   end
 
   desc "Display the history of the 'rest-api-spec' repo"
   task :changes do
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec"
+    STDERR.puts "Log: #{__current__.join('support/elasticsearch')}/rest-api-spec", ""
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", verbose: false
   end
 end
 
