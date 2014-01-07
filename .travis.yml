@@ -27,7 +27,7 @@ before_script:
   - git submodule update --init --recursive
   - rake test:update
   - rake test:bundle
-  - test $TEST_SUITE == 'integration' && TEST_CLUSTER_COMMAND="/tmp/elasticsearch-0.90.7/bin/elasticsearch" rake test:server:start || true
+  - test $TEST_SUITE == 'integration' && TEST_CLUSTER_COMMAND="/tmp/elasticsearch-0.90.7/bin/elasticsearch" rake test:cluster:start || true
 
 script:
   - "rake test:$TEST_SUITE"
