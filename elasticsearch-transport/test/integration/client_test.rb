@@ -36,12 +36,12 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       @client.perform_request 'GET', '_cluster/health?wait_for_status=green', {}
 
       response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=XYZ'
-      assert_equal true, response.body['exists']
+      assert_equal true, response.body['found']
       assert_equal 'bar', response.body['_source']['foo']
       assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
         response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=ABC'
         assert_nil response.body['_source']
-        assert_equal false, response.body['exists']
+        assert_equal false, response.body['found']
       end
     end
 
