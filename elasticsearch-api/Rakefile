@@ -42,14 +42,21 @@ namespace :test do
       test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
     end
 
-    client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
-    es_version_info = client.info['version']
-    build_hash      = es_version_info['build_hash']
+    begin
+      client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+      es_version_info = client.info['version']
+      build_hash      = es_version_info['build_hash']
+      cluster_running = true
+    rescue Faraday::Error::ConnectionFailed => e
+      STDERR.puts "[!] Test cluster not running?"
+      cluster_running = false
+    end
+
+    checkout_server_build = ENV['TEST_NO_SPEC_CHECKOUT'].nil? || true
 
     begin
-
       # Checkout the branch corresponding to the build
-      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{build_hash} --force --quiet"
+      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{build_hash} --force --quiet" if cluster_running && checkout_server_build
 
       # Path to the API specs
       ENV['TEST_REST_API_SPEC'] = __current__.join('../support/elasticsearch/rest-api-spec/test/').to_s
@@ -66,7 +73,7 @@ namespace :test do
       end
 
     ensure
-      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{current_branch}", verbose: false
+      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{current_branch}", verbose: false if cluster_running && checkout_server_build
     end
   end
 
