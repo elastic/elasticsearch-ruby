@@ -53,10 +53,11 @@ namespace :test do
     end
 
     checkout_server_build = ENV['TEST_NO_SPEC_CHECKOUT'].nil? || true
+    checkout_build_hash   = ENV['TEST_BUILD_HASH'] || build_hash
 
     begin
       # Checkout the branch corresponding to the build
-      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{build_hash} --force --quiet" if cluster_running && checkout_server_build
+      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{checkout_build_hash} --force --quiet" if cluster_running && checkout_server_build
 
       # Path to the API specs
       ENV['TEST_REST_API_SPEC'] = __current__.join('../support/elasticsearch/rest-api-spec/test/').to_s
