@@ -52,7 +52,7 @@ namespace :test do
       cluster_running = false
     end
 
-    checkout_server_build = ENV['TEST_NO_SPEC_CHECKOUT'].nil? || true
+    checkout_server_build = ENV['TEST_NO_SPEC_CHECKOUT'].nil? ? true : false
     checkout_build_hash   = ENV['TEST_BUILD_HASH'] || build_hash
 
     begin
