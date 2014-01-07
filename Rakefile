@@ -1,5 +1,4 @@
 require 'pathname'
-require 'ansi'
 
 subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api elasticsearch-extensions |
 __current__ = Pathname( File.expand_path('..', __FILE__) )
@@ -157,7 +156,7 @@ namespace :test do
 
     task :status do
       require 'elasticsearch/extensions/test/cluster'
-      (puts "[!] Test cluster not running".ansi(:red); exit(1)) unless Elasticsearch::Extensions::Test::Cluster.running?
+      (puts "\e[31m[!] Test cluster not running\e[0m"; exit(1)) unless Elasticsearch::Extensions::Test::Cluster.running?
       Elasticsearch::Extensions::Test::Cluster.__print_cluster_info(ENV['TEST_CLUSTER_PORT'] || 9250)
     end
   end
