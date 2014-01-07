@@ -25,8 +25,9 @@ install:
 
 before_script:
   - git submodule update --init --recursive
-  - rake test:update
-  - rake test:bundle
+  - rake elasticsearch:update
+  - rake bundle:clean
+  - rake bundle:install
   - test $TEST_SUITE == 'integration' && TEST_CLUSTER_COMMAND="/tmp/elasticsearch-0.90.9/bin/elasticsearch" rake test:cluster:start || true
 
 script:
