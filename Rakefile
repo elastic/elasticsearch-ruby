@@ -142,7 +142,7 @@ namespace :test do
     end
   end
 
-  namespace :server do
+  namespace :cluster do
     desc "Start Elasticsearch nodes for tests"
     task :start do
       require 'elasticsearch/extensions/test/cluster'

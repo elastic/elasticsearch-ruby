@@ -45,7 +45,7 @@ namespace :test do
     test.test_files = FileList["test/profile/**/*_test.rb"]
   end
 
-  namespace :server do
+  namespace :cluster do
     desc "Start Elasticsearch nodes for tests"
     task :start do
       $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
