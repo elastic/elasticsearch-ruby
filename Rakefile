@@ -106,7 +106,7 @@ namespace :test do
   end
 
   desc "Run integration tests in all subprojects"
-  task :integration => :update do
+  task :integration => 'elasticsearch:update' do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
