@@ -20,6 +20,10 @@ env:
   - TEST_SUITE=unit
   - TEST_SUITE=integration
 
+before_install:
+  - gem update --system
+  - gem --version
+
 install:
   - test $TEST_SUITE == 'integration' && curl -# https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.9.tar.gz | tar xz -C /tmp || true
 
