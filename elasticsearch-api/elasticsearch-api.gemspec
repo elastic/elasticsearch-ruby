@@ -38,7 +38,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ci_reporter"
 
   # Gems for testing integrations
-  s.add_development_dependency "multi_json"
   s.add_development_dependency "jbuilder"
   s.add_development_dependency "jsonify"
   s.add_development_dependency "hashie"
