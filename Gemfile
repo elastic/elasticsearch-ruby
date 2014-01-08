@@ -11,10 +11,10 @@ gem "shoulda-context"
 gem "mocha"
 gem "turn"
 gem "yard"
-gem "ruby-prof"
 gem "ci_reporter"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  gem "ruby-prof"
   gem "simplecov"
   gem "cane"
   gem "require-prof"

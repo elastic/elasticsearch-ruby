@@ -33,7 +33,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "mocha"
   s.add_development_dependency "turn"
   s.add_development_dependency "yard"
-  s.add_development_dependency "ruby-prof"
   s.add_development_dependency "pry"
   s.add_development_dependency "ci_reporter"
 
@@ -44,6 +43,7 @@ Gem::Specification.new do |s|
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    s.add_development_dependency "ruby-prof"
     s.add_development_dependency "simplecov"
     s.add_development_dependency "cane"
     s.add_development_dependency "require-prof"
