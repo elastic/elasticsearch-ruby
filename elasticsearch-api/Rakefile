@@ -1,15 +1,26 @@
 require "bundler/gem_tasks"
 
-__current__ = Pathname( File.expand_path('..', __FILE__) )
+def __current__
+  Pathname( File.expand_path('..', __FILE__) )
+end
 
-desc "Run unit tests"
-task :default => 'test:unit'
-task :test    => 'test:unit'
+def git_specs(command, options={})
+  sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} #{command}", options
+end
+
+task(:default) { system "rake --tasks" }
+task  :test    => 'test:unit'
 
 # ----- Test tasks ------------------------------------------------------------
 
 require 'rake/testtask'
 namespace :test do
+
+  desc "Update the repository with YAML tests"
+  task :update do
+    git_specs "fetch origin --verbose", :verbose => true
+  end
+
   task :ci_reporter do
     ENV['CI_REPORTS'] ||= 'tmp/reports'
     if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
@@ -33,7 +44,19 @@ namespace :test do
   task :integration do
     require 'elasticsearch'
 
-    current_branch = `git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
+    branches = `git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} branch --no-color`
+
+    current_branch = branches
+      .split("\n")
+      .select { |b| b =~ /^\*/ }
+      .reject { |b| b =~ /detached/ }
+      .map    { |b| b.gsub(/^\*\s*/, '') }
+      .first
+
+    unless current_branch
+      STDERR.puts "[!] Unable to determine current branch, defaulting to 'master'"
+      current_branch = 'master'
+    end
 
     # Define the task
     t = Rake::TestTask.new(:integration) do |test|
@@ -42,6 +65,7 @@ namespace :test do
       test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
     end
 
+    # Check if a test cluster is running
     begin
       client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
       es_version_info = client.info['version']
@@ -52,12 +76,24 @@ namespace :test do
       cluster_running = false
     end
 
-    checkout_server_build = ENV['TEST_NO_SPEC_CHECKOUT'].nil? ? true : false
-    checkout_build_hash   = ENV['TEST_BUILD_HASH'] || build_hash
+    checkout_specs_version = ENV['TEST_NO_CHECKOUT'].nil? ? true : false
+    checkout_build_hash    = ENV['TEST_BUILD_REF'] || build_hash
 
     begin
-      # Checkout the branch corresponding to the build
-      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{checkout_build_hash} --force --quiet" if cluster_running && checkout_server_build
+      unless checkout_specs_version
+        STDERR.puts '-'*80, "YAML tests: Not switching, TEST_NO_CHECKOUT=y", '-'*80
+      end
+
+      if checkout_specs_version && !checkout_build_hash
+        STDERR.puts "[!] Cannot determine checkout build hash -- server not running or TEST_BUILD_REF not specified"
+        exit(1)
+      end
+
+      if checkout_specs_version && checkout_build_hash
+        # Checkout the commit corresponding to the running server build, or passed TEST_BUILD_REF
+        STDERR.puts '-'*80, "YAML tests: Switching to [\e[1m#{checkout_build_hash}\e[0m]", '-'*80
+        git_specs "checkout #{checkout_build_hash} --force --quiet"
+      end
 
       # Path to the API specs
       ENV['TEST_REST_API_SPEC'] = __current__.join('../support/elasticsearch/rest-api-spec/test/').to_s
@@ -74,14 +110,15 @@ namespace :test do
       end
 
     ensure
-      sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} checkout #{current_branch}", :verbose => false if cluster_running && checkout_server_build
+      git_specs "checkout --force --quiet #{current_branch}" if checkout_specs_version
     end
   end
 
-  Rake::TestTask.new(:all) do |test|
+  desc "Run unit and integration tests"
+  task :all do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb", "test/integration/yaml_test_runner.rb"]
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
   end
 
   namespace :cluster do
