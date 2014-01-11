@@ -53,15 +53,15 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
       should "rotate nodes" do
         # Hit node 1
-        response = @client.perform_request 'GET', '_cluster/nodes/_local'
+        response = @client.perform_request 'GET', '_nodes/_local'
         assert_equal 'node-1', response.body['nodes'].to_a[0][1]['name']
 
         # Hit node 2
-        response = @client.perform_request 'GET', '_cluster/nodes/_local'
+        response = @client.perform_request 'GET', '_nodes/_local'
         assert_equal 'node-2', response.body['nodes'].to_a[0][1]['name']
 
         # Hit node 1
-        response = @client.perform_request 'GET', '_cluster/nodes/_local'
+        response = @client.perform_request 'GET', '_nodes/_local'
         assert_equal 'node-1', response.body['nodes'].to_a[0][1]['name']
       end
     end
@@ -77,7 +77,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
       should "retry the request with next server" do
         assert_nothing_raised do
-          5.times { @client.perform_request 'GET', '_cluster/nodes/_local' }
+          5.times { @client.perform_request 'GET', '_nodes/_local' }
         end
       end
 
@@ -89,12 +89,12 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
         assert_nothing_raised do
           # First hit is OK
-          @client.perform_request 'GET', '_cluster/nodes/_local'
+          @client.perform_request 'GET', '_nodes/_local'
         end
 
         assert_raise Faraday::Error::ConnectionFailed do
           # Second hit fails
-          @client.perform_request 'GET', '_cluster/nodes/_local'
+          @client.perform_request 'GET', '_nodes/_local'
         end
       end
     end
@@ -110,7 +110,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       should "reload the connections" do
         assert_equal 3, @client.transport.connections.size
         assert_nothing_raised do
-          5.times { @client.perform_request 'GET', '_cluster/nodes/_local' }
+          5.times { @client.perform_request 'GET', '_nodes/_local' }
         end
         assert_equal 2, @client.transport.connections.size
       end
