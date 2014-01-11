@@ -46,12 +46,12 @@ namespace :test do
 
     branches = `git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} branch --no-color`
 
-    current_branch = branches
-      .split("\n")
-      .select { |b| b =~ /^\*/ }
-      .reject { |b| b =~ /detached/ }
-      .map    { |b| b.gsub(/^\*\s*/, '') }
-      .first
+    current_branch = branches.
+      split("\n").
+      select { |b| b =~ /^\*/ }.
+      reject { |b| b =~ /detached/ }.
+      map    { |b| b.gsub(/^\*\s*/, '') }.
+      first
 
     unless current_branch
       STDERR.puts "[!] Unable to determine current branch, defaulting to 'master'"
@@ -67,7 +67,7 @@ namespace :test do
 
     # Check if a test cluster is running
     begin
-      client = Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+      client = Elasticsearch::Client.new :host => "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
       es_version_info = client.info['version']
       build_hash      = es_version_info['build_hash']
       cluster_running = true
