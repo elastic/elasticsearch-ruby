@@ -1,6 +1,6 @@
 require 'test_helper'
 
-require 'jbuilder'
+require 'jbuilder' if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
 require 'jsonify'
 
 module Elasticsearch
@@ -31,7 +31,7 @@ module Elasticsearch
 
           subject.search :body => json
         end
-      end
+      end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
 
       context "Jsonify" do
         subject { FakeClient.new }

@@ -41,7 +41,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ci_reporter"
 
   # Gems for testing integrations
-  s.add_development_dependency "jbuilder"
   s.add_development_dependency "jsonify"
   s.add_development_dependency "hashie"
 
@@ -54,6 +53,7 @@ Gem::Specification.new do |s|
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "ruby-prof"
+    s.add_development_dependency "jbuilder"
     s.add_development_dependency "escape_utils"
     s.add_development_dependency "simplecov"
     s.add_development_dependency "cane"
