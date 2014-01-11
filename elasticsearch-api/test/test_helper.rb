@@ -24,9 +24,11 @@ require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch/api'
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
-require 'elasticsearch/extensions/test/cluster'
-require 'elasticsearch/extensions/test/startup_shutdown'
-require 'elasticsearch/extensions/test/profiling'
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  require 'elasticsearch/extensions/test/cluster'
+  require 'elasticsearch/extensions/test/startup_shutdown'
+  require 'elasticsearch/extensions/test/profiling'
+end
 
 module Elasticsearch
   module Test

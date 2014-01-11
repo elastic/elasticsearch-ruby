@@ -26,7 +26,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", "> 1"
   s.add_development_dependency "rake"
 
-  s.add_development_dependency "elasticsearch-extensions"
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    s.add_development_dependency "elasticsearch-extensions"
+  end
 
   s.add_development_dependency "ansi"
   s.add_development_dependency "shoulda-context"
