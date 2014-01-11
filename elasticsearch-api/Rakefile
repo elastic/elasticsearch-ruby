@@ -49,7 +49,7 @@ namespace :test do
     current_branch = branches.
       split("\n").
       select { |b| b =~ /^\*/ }.
-      reject { |b| b =~ /detached/ }.
+      reject { |b| b =~ /no branch|detached/ }.
       map    { |b| b.gsub(/^\*\s*/, '') }.
       first
 
