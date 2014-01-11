@@ -48,7 +48,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       setup do
         @client = Elasticsearch::Client.new \
                     hosts:  ["localhost:#{@port}", "localhost:#{@port+1}" ],
-                    logger: @logger
+                    logger: (ENV['QUIET'] ? nil : @logger)
       end
 
       should "rotate nodes" do
@@ -71,7 +71,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
         @client = Elasticsearch::Client.new \
                     hosts: ["localhost:#{@port}", "foobar1"],
-                    logger: @logger,
+                    logger: (ENV['QUIET'] ? nil : @logger),
                     retry_on_failure: true
       end
 
@@ -84,7 +84,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       should "raise exception when it cannot get any healthy server" do
         @client = Elasticsearch::Client.new \
                   hosts: ["localhost:#{@port}", "foobar1", "foobar2", "foobar3"],
-                  logger: @logger,
+                  logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_failure: 1
 
         assert_nothing_raised do
@@ -103,7 +103,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       setup do
         @client = Elasticsearch::Client.new \
                   hosts: ["localhost:#{@port}", "foobar1", "foobar2"],
-                  logger: @logger,
+                  logger: (ENV['QUIET'] ? nil : @logger),
                   reload_on_failure: true
       end
 
