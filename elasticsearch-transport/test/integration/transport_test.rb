@@ -2,7 +2,7 @@ require 'test_helper'
 
 class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
   startup do
-    Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+    Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
   end
 
   context "Transport" do
