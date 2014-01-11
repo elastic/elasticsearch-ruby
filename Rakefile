@@ -53,7 +53,16 @@ namespace :elasticsearch do
     sh "git submodule foreach git reset --hard"
     puts
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} fetch origin --verbose"
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose"
+    begin
+      %x[git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose]
+    rescue Exception => @exception
+      @failed = true
+    end
+
+    if @failed || !$?.success?
+      STDERR.puts "", "[!] Error while pulling. #{@exception}"
+    end
+
     puts
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
