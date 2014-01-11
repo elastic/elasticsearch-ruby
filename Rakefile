@@ -3,6 +3,9 @@ require 'pathname'
 subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api elasticsearch-extensions |
 __current__ = Pathname( File.expand_path('..', __FILE__) )
 
+# TODO: Figure out "bundle exec or not"
+# subprojects.each { |project| $LOAD_PATH.unshift __current__.join(project, "lib").to_s }
+
 task :default do
   system "rake --tasks"
 end
@@ -49,7 +52,8 @@ namespace :elasticsearch do
   task :update do
     sh "git submodule foreach git reset --hard"
     puts
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull origin master --verbose"
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} fetch origin --verbose"
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose"
     puts
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
@@ -106,7 +110,8 @@ namespace :test do
   end
 
   desc "Run integration tests in all subprojects"
-  task :integration => 'elasticsearch:update' do
+  task :integration do
+    Rake::Task['elasticsearch:update'].invoke
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
