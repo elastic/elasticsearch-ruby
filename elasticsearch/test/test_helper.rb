@@ -7,6 +7,10 @@ end
 
 require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["COVERAGE"]
 
+# Register `at_exit` handler for integration tests shutdown.
+# MUST be called before requiring `test/unit`.
+at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
+
 require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'

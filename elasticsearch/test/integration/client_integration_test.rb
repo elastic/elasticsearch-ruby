@@ -5,7 +5,7 @@ module Elasticsearch
   module Test
     class ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
       startup do
-        Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+        Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
       end
 
       context "Elasticsearch client" do
@@ -24,7 +24,7 @@ module Elasticsearch
             ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
           end
 
-          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
         end
 
         should "perform the API methods" do
