@@ -10,7 +10,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'POST', method
-            assert_equal '_cluster/nodes/_shutdown', url
+            assert_equal '_nodes/_shutdown', url
             assert_equal Hash.new, params
             assert_nil   body
             true
@@ -21,7 +21,7 @@ module Elasticsearch
 
         should "send :node_id correctly" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_cluster/nodes/foo/_shutdown', url
+            assert_equal '_nodes/foo/_shutdown', url
             true
           end.returns(FakeResponse.new)
 
@@ -30,7 +30,7 @@ module Elasticsearch
 
         should "send multiple :node_id-s correctly" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_cluster/nodes/A,B,C/_shutdown', url
+            assert_equal '_nodes/A,B,C/_shutdown', url
             true
           end.returns(FakeResponse.new).twice
 

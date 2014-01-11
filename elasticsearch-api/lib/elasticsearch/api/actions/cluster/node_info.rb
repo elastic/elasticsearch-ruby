@@ -46,7 +46,7 @@ module Elasticsearch
             :transport ]
 
           method = 'GET'
-          path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id])
+          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id])
 
           params = Utils.__validate_and_extract_params arguments, valid_params
           body = nil

@@ -10,7 +10,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_cluster/nodes/hot_threads', url
+            assert_equal '_nodes/hot_threads', url
             assert_equal Hash.new, params
             assert_nil   body
             true
@@ -21,7 +21,7 @@ module Elasticsearch
 
         should "send :node_id correctly" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_cluster/nodes/foo/hot_threads', url
+            assert_equal '_nodes/foo/hot_threads', url
             true
           end.returns(FakeResponse.new)
 
@@ -30,7 +30,7 @@ module Elasticsearch
 
         should "URL-escape the parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_cluster/nodes/foo%5Ebar/hot_threads', url
+            assert_equal '_nodes/foo%5Ebar/hot_threads', url
             true
           end.returns(FakeResponse.new)
 
