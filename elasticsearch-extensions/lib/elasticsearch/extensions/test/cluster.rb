@@ -138,7 +138,7 @@ module Elasticsearch
         def stop(arguments={})
           arguments[:port] ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
 
-          nodes = JSON.parse(Net::HTTP.get(URI("http://localhost:#{arguments[:port]}/_cluster/nodes/?process"))) rescue nil
+          nodes = JSON.parse(Net::HTTP.get(URI("http://localhost:#{arguments[:port]}/_nodes/?process"))) rescue nil
 
           return false if nodes.nil? or nodes.empty?
 
@@ -236,7 +236,7 @@ module Elasticsearch
         #
         def __print_cluster_info(port)
           health = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/health")))
-          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/nodes/?process")))
+          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_nodes/?process")))
           master = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/state")))['master_node']
 
           puts "\n",
