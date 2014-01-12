@@ -78,6 +78,7 @@ namespace :test do
 
     checkout_specs_version = ENV['TEST_NO_CHECKOUT'].nil? ? true : false
     checkout_build_hash    = ENV['TEST_BUILD_REF'] || build_hash
+    ENV['TEST_BUILD_REF']  = checkout_build_hash
 
     begin
       unless checkout_specs_version
