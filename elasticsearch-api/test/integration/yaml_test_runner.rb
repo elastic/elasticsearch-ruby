@@ -38,6 +38,7 @@ end
 Logger.__send__ :include, CapturedLogger if ENV['CI']
 
 logger = Logger.new($stderr)
+logger.progname = 'elasticsearch'
 logger.formatter = proc do |severity, datetime, progname, msg|
   color = case severity
     when /INFO/ then :green
@@ -49,6 +50,8 @@ logger.formatter = proc do |severity, datetime, progname, msg|
 end
 
 tracer = Logger.new($stdout)
+tracer.progname = 'elasticsearch.tracer'
+tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 
 # Set up the client for the test
 #
@@ -294,6 +297,12 @@ suites.each do |suite|
 
           # --- Register test method ------------------------------------------
           should test_name do
+            if ENV['CI']
+              ref = ENV['TEST_BUILD_REF'].to_s.gsub(/origin\//, '') || 'master'
+              $stderr.puts "https://github.com/elasticsearch/elasticsearch/blob/#{ref}/rest-api-spec/test/" \
+                          + file.gsub(PATH.to_s, ''), ""
+              $stderr.puts YAML.dump(test)
+            end
             actions.each do |action|
               $stderr.puts "ACTION: #{action.inspect}" if ENV['DEBUG']
 
