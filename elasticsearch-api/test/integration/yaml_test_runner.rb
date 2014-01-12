@@ -27,8 +27,8 @@ module CapturedLogger
         alias_method "#{m}_without_capture", m
 
         define_method m do |*args|
-          $stderr.puts *args
-          __send__ "#{m}_without_capture", *args
+          @logdev.__send__ :puts, *args
+          self.__send__ "#{m}_without_capture", *args
         end
       end
     end
@@ -48,14 +48,18 @@ logger.formatter = proc do |severity, datetime, progname, msg|
   ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
 end
 
+tracer = Logger.new($stdout)
+
 # Set up the client for the test
 #
 # To set up your own client, just set the `$client` variable in a file, and then require it:
 #
 #     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
 #
-$client ||= Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}",
-                                      logger: (ENV['QUIET'] ? nil : logger)
+$client ||= Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+
+$client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
+$client.transport.tracer = tracer if ENV['CI']
 
 # Store Elasticsearch version
 #
