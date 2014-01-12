@@ -20,7 +20,24 @@ at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] }
 require 'logger'
 require 'ansi'
 
-logger = Logger.new(STDERR)
+module CapturedLogger
+  def self.included base
+    base.class_eval do
+      %w[ info error warn fatal debug ].each do |m|
+        alias_method "#{m}_without_capture", m
+
+        define_method m do |*args|
+          $stderr.puts *args
+          __send__ "#{m}_without_capture", *args
+        end
+      end
+    end
+  end
+end
+
+Logger.__send__ :include, CapturedLogger if ENV['CI']
+
+logger = Logger.new($stderr)
 logger.formatter = proc do |severity, datetime, progname, msg|
   color = case severity
     when /INFO/ then :green
@@ -136,7 +153,7 @@ module Elasticsearch
           end
         ]
 
-        STDERR.puts "ARGUMENTS: #{arguments.inspect}" if ENV['DEBUG']
+        $stderr.puts "ARGUMENTS: #{arguments.inspect}" if ENV['DEBUG']
 
         $results[test.hash] = namespace.reduce($client) do |memo, current|
           unless current == namespace.last
@@ -257,7 +274,7 @@ suites.each do |suite|
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)
-            STDOUT.puts "#{ANSI.ansi('SKIP', :yellow)}: [#{name}] #{test_name} (Reason: #{reason})"
+            $stdout.puts "#{ANSI.ansi('SKIP', :yellow)}: [#{name}] #{test_name} (Reason: #{reason})"
             next
           end
 
@@ -274,7 +291,7 @@ suites.each do |suite|
           # --- Register test method ------------------------------------------
           should test_name do
             actions.each do |action|
-              STDERR.puts "ACTION: #{action.inspect}" if ENV['DEBUG']
+              $stderr.puts "ACTION: #{action.inspect}" if ENV['DEBUG']
 
               case
 
@@ -289,7 +306,7 @@ suites.each do |suite|
                     $results[test.hash] = Runner.perform_api_call(test, api, arguments)
                   rescue Exception => e
                     if catch_exception
-                      STDERR.puts "CATCH '#{catch_exception}': #{e.inspect}" if ENV['DEBUG']
+                      $stderr.puts "CATCH '#{catch_exception}': #{e.inspect}" if ENV['DEBUG']
                       case e
                         when 'missing'
                           assert_match /\[404\]/, e.message
@@ -311,12 +328,12 @@ suites.each do |suite|
                 #
                 when property = action['is_true']
                   result = Runner.evaluate(test, property)
-                  STDERR.puts "CHECK: Expected '#{property}' to be true, is: #{result.inspect}" if ENV['DEBUG']
+                  $stderr.puts "CHECK: Expected '#{property}' to be true, is: #{result.inspect}" if ENV['DEBUG']
                   assert(result, "Property '#{property}' should be true, is: #{result.inspect}")
 
                 when property = action['is_false']
                   result = Runner.evaluate(test, property)
-                  STDERR.puts "CHECK: Expected '#{property}' to be false, is: #{result.inspect}" if ENV['DEBUG']
+                  $stderr.puts "CHECK: Expected '#{property}' to be false, is: #{result.inspect}" if ENV['DEBUG']
                   assert( !!! result, "Property '#{property}' should be false, is: #{result.inspect}")
 
                 when a = action['match']
@@ -324,7 +341,7 @@ suites.each do |suite|
 
                   value  = Runner.fetch_or_return(value)
                   result = Runner.evaluate(test, property)
-                  STDERR.puts "CHECK: Expected '#{property}' to be '#{value}', is: #{result.inspect}" if ENV['DEBUG']
+                  $stderr.puts "CHECK: Expected '#{property}' to be '#{value}', is: #{result.inspect}" if ENV['DEBUG']
                   assert_equal(value, result)
 
                 when a = action['length']
@@ -332,7 +349,7 @@ suites.each do |suite|
 
                   result = Runner.evaluate(test, property)
                   length = result.size
-                  STDERR.puts "CHECK: Expected '#{property}' to be #{value}, is: #{length.inspect}" if ENV['DEBUG']
+                  $stderr.puts "CHECK: Expected '#{property}' to be #{value}, is: #{length.inspect}" if ENV['DEBUG']
                   assert_equal(value, length)
 
                 when a = action['lt'] || action['gt']
@@ -343,14 +360,14 @@ suites.each do |suite|
                   result  = Runner.evaluate(test, property)
                   message = "Expected '#{property}' to be #{operator} #{value}, is: #{result.inspect}"
 
-                  STDERR.puts "CHECK: #{message}" if ENV['DEBUG']
+                  $stderr.puts "CHECK: #{message}" if ENV['DEBUG']
                   # operator == 'less than' ? assert(value.to_f < result.to_f, message) : assert(value.to_f > result.to_f, message)
                   assert_operator result, operator.to_sym, value.to_i
 
                 when stash = action['set']
                   property, variable = stash.to_a.first
                   result  = Runner.evaluate(test, property)
-                  STDERR.puts "STASH: '$#{variable}' => #{result.inspect}" if ENV['DEBUG']
+                  $stderr.puts "STASH: '$#{variable}' => #{result.inspect}" if ENV['DEBUG']
                   Runner.set variable, result
               end
             end
