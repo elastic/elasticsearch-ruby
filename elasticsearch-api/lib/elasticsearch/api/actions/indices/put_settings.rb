@@ -37,6 +37,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings/
         #
@@ -48,7 +49,8 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :master_timeout
+            :master_timeout,
+            :flat_settings
           ]
 
           method = 'PUT'
