@@ -92,7 +92,8 @@ namespace :test do
 
       if checkout_specs_version && checkout_build_hash
         # Checkout the commit corresponding to the running server build, or passed TEST_BUILD_REF
-        STDERR.puts '-'*80, "YAML tests: Switching to [\e[1m#{checkout_build_hash}\e[0m] from #{current_branch}", '-'*80
+        name = ENV['CI'] ? checkout_build_hash : "[\e[1m#{checkout_build_hash}\e[0m]"
+        STDERR.puts '-'*80, "YAML tests: Switching to #{name} from #{current_branch}", '-'*80
         git_specs "checkout #{checkout_build_hash} --force --quiet"
       end
 

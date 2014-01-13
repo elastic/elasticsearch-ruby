@@ -1,12 +1,18 @@
 require 'pathname'
-require 'active_support/inflector'
+require 'logger'
 require 'yaml'
-require 'pry'
+require 'active_support/inflector'
+require 'ansi'
+require 'turn'
 
 require 'elasticsearch'
 require 'elasticsearch/extensions/test/cluster'
 require 'elasticsearch/extensions/test/startup_shutdown'
 require 'elasticsearch/extensions/test/profiling'
+
+# Turn configuration
+ENV['ansi'] = 'false' if ENV['CI']
+Turn.config.format = :pretty
 
 # Launch test cluster
 #
@@ -17,8 +23,12 @@ Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and no
 #
 at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] }
 
-require 'logger'
-require 'ansi'
+class String
+  # Reset the `ansi` method on CI
+  def ansi(*args)
+    self
+  end
+end if ENV['CI']
 
 module CapturedLogger
   def self.included base
@@ -27,7 +37,7 @@ module CapturedLogger
         alias_method "#{m}_without_capture", m
 
         define_method m do |*args|
-          @logdev.__send__ :puts, *args
+          @logdev.__send__ :puts, *(args.join("\n") + "\n")
           self.__send__ "#{m}_without_capture", *args
         end
       end
@@ -46,7 +56,7 @@ logger.formatter = proc do |severity, datetime, progname, msg|
     when /DEBUG/ then :cyan
     else :white
   end
-  ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
+  "#{severity[0]} ".ansi(color, :faint) + msg.ansi(:white, :faint) + "\n"
 end
 
 tracer = Logger.new($stdout)
@@ -70,7 +80,7 @@ es_version_info = $client.info['version']
 $es_version = es_version_info['number']
 
 puts '-'*80,
-     "Elasticsearch #{ANSI.ansi($es_version, :bold)} [#{es_version_info['build_hash'].to_s[0...7]}]".center(80),
+     "Elasticsearch #{$es_version.ansi(:bold)} [#{es_version_info['build_hash'].to_s[0...7]}]".center(80),
      '-'*80
 
 require 'test_helper'
@@ -277,11 +287,11 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{ANSI.ansi(file.gsub(PATH.to_s, ''), :bold)}")
+          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{file.gsub(PATH.to_s, '').ansi(:bold)}")
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)
-            $stdout.puts "#{ANSI.ansi('SKIP', :yellow)}: [#{name}] #{test_name} (Reason: #{reason})"
+            $stdout.puts "#{'SKIP'.ansi(:yellow)} [#{name}] #{test_name} (Reason: #{reason})"
             next
           end
 

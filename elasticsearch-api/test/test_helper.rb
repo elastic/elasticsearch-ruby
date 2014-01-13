@@ -11,7 +11,7 @@ require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
 
-unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
+unless ENV["NOTURN"] || RUBY_1_8
   require 'turn'
 
   if ENV['QUIET']
