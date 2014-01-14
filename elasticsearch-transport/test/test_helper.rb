@@ -7,12 +7,12 @@ end
 
 require 'rubygems' if RUBY_1_8
 
-if ENV['COVERAGE'] && ENV['CI'].nil?
+if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'
   SimpleCov.start { add_filter "/test|test_/" }
 end
 
-if ENV['CI']
+if ENV['CI'] && !RUBY_1_8
   require 'simplecov'
   require 'simplecov-rcov'
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter

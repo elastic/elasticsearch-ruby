@@ -5,12 +5,12 @@ if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
   gem 'test-unit'
 end
 
-if ENV['COVERAGE'] && ENV['CI'].nil?
+if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'
   SimpleCov.start { add_filter "/test|test_/" }
 end
 
-if ENV['CI']
+if ENV['CI'] && !RUBY_1_8
   require 'simplecov'
   require 'simplecov-rcov'
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
