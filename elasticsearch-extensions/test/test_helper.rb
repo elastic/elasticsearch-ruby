@@ -11,7 +11,7 @@ if ENV['CI']
   require 'simplecov'
   require 'simplecov-rcov'
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  SimpleCov.start { add_filter "/test|test_" }
+  SimpleCov.start { add_filter "/test|test_|ansi" }
 end
 
 require 'test/unit'
