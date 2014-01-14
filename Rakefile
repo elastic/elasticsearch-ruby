@@ -57,7 +57,7 @@ namespace :elasticsearch do
     puts
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} fetch origin --verbose"
     begin
-      %x[git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose]
+      puts %x[git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose]
     rescue Exception => @exception
       @failed = true
     end
@@ -66,7 +66,7 @@ namespace :elasticsearch do
       STDERR.puts "", "[!] Error while pulling. #{@exception}"
     end
 
-    puts
+    puts "\n", "CHANGES:", '-'*80
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
 
@@ -115,8 +115,9 @@ namespace :test do
   task :unit do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
       puts '-'*80
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
+      puts "\n"
     end
     Rake::Task['test:coveralls'].invoke if ENV['CI'] && defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
@@ -126,8 +127,9 @@ namespace :test do
     Rake::Task['elasticsearch:update'].invoke
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
       puts '-'*80
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
+      puts "\n"
     end
     Rake::Task['test:coveralls'].invoke if ENV['CI'] && defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
@@ -136,8 +138,9 @@ namespace :test do
   task :all do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
-      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:all"
       puts '-'*80
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:all"
+      puts "\n"
     end
   end
 
