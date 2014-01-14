@@ -2,7 +2,17 @@ RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 
 exit(0) if RUBY_1_8
 
-require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["COVERAGE"]
+if ENV['COVERAGE'] && ENV['CI'].nil?
+  require 'simplecov'
+  SimpleCov.start { add_filter "/test|test_/" }
+end
+
+if ENV['CI']
+  require 'simplecov'
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  SimpleCov.start { add_filter "/test|test_" }
+end
 
 require 'test/unit'
 require 'shoulda-context'

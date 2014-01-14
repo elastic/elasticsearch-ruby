@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
+    s.add_development_dependency "simplecov-rcov"
     s.add_development_dependency "cane"
   end
 end

@@ -7,7 +7,17 @@ end
 
 require 'rubygems' if RUBY_1_8
 
-require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["COVERAGE"]
+if ENV['COVERAGE'] && ENV['CI'].nil?
+  require 'simplecov'
+  SimpleCov.start { add_filter "/test|test_/" }
+end
+
+if ENV['CI']
+  require 'simplecov'
+  require 'simplecov-rcov'
+  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  SimpleCov.start { add_filter "/test|test_" }
+end
 
 # Register `at_exit` handler for integration tests shutdown.
 # MUST be called before requiring `test/unit`.

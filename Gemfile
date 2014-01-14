@@ -19,6 +19,7 @@ gem "ci_reporter"
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "ruby-prof"
   gem "simplecov"
+  gem "simplecov-rcov"
   gem "cane"
   gem "require-prof"
   gem "coveralls"
