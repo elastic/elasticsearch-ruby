@@ -62,6 +62,9 @@ module Elasticsearch
       #
       # @option arguments [Object] :transport A specific transport instance
       #
+      # @option arguments [Hash] :transport_options A hash of transport options to be passed
+      #                                             through to the connection constructor
+      #
       # @option arguments [Constant] :serializer_class A specific serializer class to use, will be initialized by
       #                                               the transport and passed the transport instance
       #
@@ -78,6 +81,7 @@ module Elasticsearch
         arguments[:retry_on_failure]   ||= false
         arguments[:reload_on_failure]  ||= false
         arguments[:randomize_hosts]    ||= false
+        arguments[:transport_options]  ||= {}
 
         @transport = arguments[:transport] || \
                      transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
