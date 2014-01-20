@@ -13,6 +13,7 @@ module Elasticsearch
       #
       # @api private
       def __escape(string)
+        return string if string == '*'
         defined?(EscapeUtils) ? EscapeUtils.escape_url(string.to_s) : CGI.escape(string.to_s)
       end
 

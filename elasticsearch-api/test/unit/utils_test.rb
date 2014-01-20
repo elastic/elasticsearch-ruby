@@ -21,6 +21,10 @@ module Elasticsearch
             assert_equal 'foo%5Ebar', __escape('foo^bar')
           end
 
+          should "not encode asterisks" do
+            assert_equal '*', __escape('*')
+          end
+
           should "use CGI.escape by default" do
             CGI.expects(:escape)
             __escape('foo bar')
