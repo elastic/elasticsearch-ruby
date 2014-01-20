@@ -15,9 +15,11 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
         #
         def put_settings(arguments={})
+          valid_params = [ :flat_settings ]
+
           method = 'PUT'
           path   = "_cluster/settings"
-          params = {}
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body] || {}
 
           perform_request(method, path, params, body).body

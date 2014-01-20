@@ -25,6 +25,15 @@ module Elasticsearch
           subject.indices.put_settings :body => {}
         end
 
+        should "perform request with parameters" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal true, params[:flat_settings]
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.put_settings :index => 'foo', :flat_settings => true, :body => {}
+        end
+
         should "perform request against a specific indices" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo/_settings', url
