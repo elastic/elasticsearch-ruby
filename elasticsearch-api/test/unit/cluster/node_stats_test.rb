@@ -30,12 +30,12 @@ module Elasticsearch
 
         should "get specific metric families" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_nodes/stats', url
-            assert_equal( {:http => true, :fs => true}, params )
+            assert_equal '_nodes/stats/http,fs', url
+            assert_equal( {}, params )
             true
           end.returns(FakeResponse.new)
 
-          subject.cluster.node_stats :http => true, :fs => true
+          subject.cluster.node_stats :metric => [:http, :fs]
         end
 
         should "get specific metric for the indices family" do
@@ -44,7 +44,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.cluster.node_stats :indices => true, :metric => 'filter_cache'
+          subject.cluster.node_stats :metric => :indices, :index_metric => 'filter_cache'
         end
 
         should "get fielddata statistics for the indices family" do
@@ -54,8 +54,8 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new).twice
 
-          subject.cluster.node_stats :indices => true, :metric => 'fielddata', :fields => 'foo,bar'
-          subject.cluster.node_stats :indices => true, :metric => 'fielddata', :fields => ['foo','bar']
+          subject.cluster.node_stats :metric => 'indices', :index_metric => 'fielddata', :fields => 'foo,bar'
+          subject.cluster.node_stats :metric => 'indices', :index_metric => 'fielddata', :fields => ['foo','bar']
         end
 
       end

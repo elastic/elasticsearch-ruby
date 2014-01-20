@@ -30,8 +30,6 @@ module Elasticsearch
       #
       # @api private
       def __listify(*list)
-        # require 'pry'
-        # binding.pry
         Array(list).flatten.
           map { |e| e.respond_to?(:split) ? e.split(',') : e }.
           flatten.
