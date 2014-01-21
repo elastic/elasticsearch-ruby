@@ -37,6 +37,16 @@ module Elasticsearch
           subject.indices.get_settings :index => 'foo^bar'
         end
 
+        should "get specific settings" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/_settings/foo.bar', url
+            assert_equal Hash.new, params
+            true
+          end.returns(FakeResponse.new)
+
+          subject.indices.get_settings :index => 'foo', :name => 'foo.bar'
+        end
+
       end
 
     end

@@ -15,7 +15,7 @@ module Elasticsearch
                       :index, :type, :id,             # :index/:type/:id
                       :body,                          # Request body
                       :node_id,                       # Cluster APIs
-                      :name,                          # Template, warmer APIs
+                      :name,                          # Alias, template, settings, warmer APIs
                       :field,                         # Get field mapping
                       :pretty                         # Pretty-print the response
                     ]
