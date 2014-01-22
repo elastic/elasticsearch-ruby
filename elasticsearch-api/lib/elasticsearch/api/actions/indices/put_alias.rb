@@ -24,7 +24,6 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
         def put_alias(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           valid_params = [ :timeout ]
 
