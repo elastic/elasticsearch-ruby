@@ -19,6 +19,8 @@ module Elasticsearch
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
+        #                                    (default: false)
         #
         # @return [true,false]
         #
@@ -31,7 +33,8 @@ module Elasticsearch
             :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
-            :expand_wildcards
+            :expand_wildcards,
+            :local
           ]
 
           method = 'HEAD'
