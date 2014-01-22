@@ -7,12 +7,6 @@ module Elasticsearch
       context "Indices: Exists alias" do
         subject { FakeClient.new }
 
-        should "require the :name argument" do
-          assert_raise ArgumentError do
-            subject.indices.delete_mapping
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'HEAD', method
