@@ -7,12 +7,6 @@ module Elasticsearch
       context "Indices: Get warmer" do
         subject { FakeClient.new }
 
-        should "require the :index argument" do
-          assert_raise ArgumentError do
-            subject.indices.get_warmer :name => 'foo'
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method

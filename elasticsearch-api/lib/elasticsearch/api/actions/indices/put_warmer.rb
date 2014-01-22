@@ -38,7 +38,6 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/
         #
         def put_warmer(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
 

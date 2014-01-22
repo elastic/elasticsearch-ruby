@@ -39,8 +39,6 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/
         #
         def get_warmer(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-
           valid_params = [
             :ignore_indices,
             :ignore_unavailable,

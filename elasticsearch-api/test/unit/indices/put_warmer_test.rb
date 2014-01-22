@@ -7,12 +7,6 @@ module Elasticsearch
       context "Indices: Put warmer" do
         subject { FakeClient.new }
 
-        should "require the :index argument" do
-          assert_raise ArgumentError do
-            subject.indices.put_warmer :name => 'foo', :body => {}
-          end
-        end
-
         should "require the :name argument" do
           assert_raise ArgumentError do
             subject.indices.put_warmer :index => 'foo', :body => {}
