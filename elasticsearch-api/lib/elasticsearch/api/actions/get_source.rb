@@ -62,7 +62,7 @@ module Elasticsearch
 
       rescue Exception => e
         # NOTE: Use exception name, not full class in Elasticsearch::Client to allow client plugability
-        if arguments[:ignore] == 404 && e.class.to_s =~ /NotFound/; false
+        if Array(arguments[:ignore]).include?(404) && e.class.to_s =~ /NotFound/; false
         else raise(e)
         end
       end
