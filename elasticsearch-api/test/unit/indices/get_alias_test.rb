@@ -7,12 +7,6 @@ module Elasticsearch
       context "Indices: Get alias" do
         subject { FakeClient.new }
 
-        should "require the :name argument" do
-          assert_raise ArgumentError do
-            subject.indices.get_alias
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
