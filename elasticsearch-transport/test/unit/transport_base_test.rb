@@ -251,24 +251,26 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @block = Proc.new { |c, u| puts "UNREACHABLE" }
     end
 
-    should "retry DEFAULT_MAX_TRIES when host is unreachable" do
-      @block.expects(:call).times(3).
+    should "retry DEFAULT_MAX_RETRIES when host is unreachable" do
+      @block.expects(:call).times(4).
             raises(Errno::ECONNREFUSED).
+            then.raises(Errno::ECONNREFUSED).
             then.raises(Errno::ECONNREFUSED).
             then.returns(stub_everything :failures => 1)
 
       assert_nothing_raised do
         @transport.perform_request('GET', '/', &@block)
-        assert_equal 3, @transport.counter
+        assert_equal 4, @transport.counter
       end
     end
 
     should "raise an error after max tries" do
-      @block.expects(:call).times(3).
+      @block.expects(:call).times(4).
             raises(Errno::ECONNREFUSED).
             then.raises(Errno::ECONNREFUSED).
             then.raises(Errno::ECONNREFUSED).
-            then.raises(Errno::ECONNREFUSED)
+            then.raises(Errno::ECONNREFUSED).
+            then.returns(stub_everything :failures => 1)
 
       assert_raise Errno::ECONNREFUSED do
         @transport.perform_request('GET', '/', &@block)
