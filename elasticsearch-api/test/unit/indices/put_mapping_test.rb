@@ -7,22 +7,16 @@ module Elasticsearch
       context "Indices: Put mapping" do
         subject { FakeClient.new }
 
-        should "require the :index argument" do
-          assert_raise ArgumentError do
-            subject.indices.put_mapping :type => 'bar'
-          end
-        end
-
         should "require the :type argument" do
           assert_raise ArgumentError do
-            subject.indices.put_mapping :index => 'foo'
+            subject.indices.put_mapping :index => 'foo', :body => {}
           end
         end
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal 'foo/bar/_mapping', url
+            assert_equal 'foo/_mapping/bar', url
             assert_equal Hash.new, params
             assert_equal({ :foo => {} }, body)
             true
@@ -33,7 +27,7 @@ module Elasticsearch
 
         should "perform request against multiple indices" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo,bar/bam/_mapping', url
+            assert_equal 'foo,bar/_mapping/bam', url
             true
           end.returns(FakeResponse.new)
 
@@ -42,7 +36,7 @@ module Elasticsearch
 
         should "pass the URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo/bar/_mapping', url
+            assert_equal 'foo/_mapping/bar', url
             assert_equal true, params[:ignore_conflicts]
             true
           end.returns(FakeResponse.new)
@@ -52,7 +46,7 @@ module Elasticsearch
 
         should "URL-escape the parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo%5Ebar/bar%2Fbam/_mapping', url
+            assert_equal 'foo%5Ebar/_mapping/bar%2Fbam', url
             true
           end.returns(FakeResponse.new)
 
