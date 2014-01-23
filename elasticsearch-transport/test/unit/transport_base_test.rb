@@ -242,7 +242,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @block = Proc.new { |c, u| puts "UNREACHABLE" }
     end
 
-    should "retry DEFAULT_MAX_TRIES when host is unreachable" do
+    should "retry DEFAULT_MAX_RETRIES when host is unreachable" do
       @block.expects(:call).times(4).
             raises(Errno::ECONNREFUSED).
             then.raises(Errno::ECONNREFUSED).

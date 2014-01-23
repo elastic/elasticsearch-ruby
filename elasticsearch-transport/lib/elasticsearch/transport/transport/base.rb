@@ -9,11 +9,11 @@ module Elasticsearch
         DEFAULT_PROTOCOL         = 'http'
         DEFAULT_RELOAD_AFTER     = 10_000 # Requests
         DEFAULT_RESURRECT_AFTER  = 60     # Seconds
-        DEFAULT_MAX_TRIES        = 3      # Requests
+        DEFAULT_MAX_RETRIES      = 3      # Requests
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
 
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
-        attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :resurrect_after, :max_tries
+        attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :resurrect_after, :max_retries
 
         # Creates a new transport object.
         #
@@ -42,7 +42,7 @@ module Elasticsearch
           @last_request_at = Time.now
           @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
-          @max_tries       = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_TRIES
+          @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
         end
 
         # Returns a connection from the connection pool by delegating to {Connections::Collection#get_connection}.
@@ -194,7 +194,7 @@ module Elasticsearch
 
             if @options[:retry_on_failure]
               logger.warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}" if logger
-              if tries < max_tries
+              if tries <= max_retries
                 retry
               else
                 logger.fatal "[#{e.class}] Cannot connect to #{connection.host.inspect} after #{tries} tries" if logger
