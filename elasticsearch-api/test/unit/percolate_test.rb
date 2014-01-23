@@ -13,20 +13,9 @@ module Elasticsearch
           end
         end
 
-        should "require the :body argument" do
+        should "require the :type argument" do
           assert_raise ArgumentError do
-            subject.percolate :index => 'bar'
-          end
-        end
-
-        should "have default document type" do
-          assert_nothing_raised do
-            subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo/document/_percolate', url
-            true
-          end.returns(FakeResponse.new)
-
-            subject.percolate :index => 'foo', :body => {}
+            subject.percolate :index => 'bar', :body => {}
           end
         end
 

@@ -2,50 +2,96 @@ module Elasticsearch
   module API
     module Actions
 
-      # Return names of queries matching the passed document.
+      # Return names of queries matching a document.
       #
       # Percolator allows you to register queries and then evaluate a document against them:
       # the IDs of matching queries are returned in the response.
       #
-      # @example Register queries named "alert-1" and "alert-2" for the "myindex" index
+      # @example Register queries named "alert-1" and "alert-2" for the "my-index" index
       #
-      #     client.index index: '_percolator',
-      #                  type: 'myindex',
+      #     client.index index: 'my-index',
+      #                  type: '.percolator',
       #                  id: 'alert-1',
       #                  body: { query: { query_string: { query: 'foo' } } }
       #
-      #     client.index index: '_percolator',
-      #                  type: 'myindex',
+      #     client.index index: 'my-index',
+      #                  type: '.percolator',
       #                  id: 'alert-2',
       #                  body: { query: { query_string: { query: 'bar' } } }
       #
-      # @example Evaluate a document against the queries
+      # @example Evaluate a custom document (passed as `:doc`) against the queries
       #
-      #     client.percolate index: 'myindex', body: { doc: { title: "Foo" } }
-      #     # => {"ok":true,"matches":["alert-1"]}
+      #     client.percolate index: 'my-index', body: { doc: { title: "Foo" } }
+      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-1'} ]}
       #
-      #     client.percolate index: 'myindex', body: { doc: { title: "Foo Bar" } }
-      #     # => {"ok":true,"matches":["alert-1","alert-2"]}
+      #     client.percolate index: 'my-index', body: { doc: { title: "Foo Bar" } }
+      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-2'}, {_index: 'my-index', _id: 'alert-1'} ] }
       #
-      # @option arguments [String] :index The name of the index with a registered percolator query (*Required*)
-      # @option arguments [String] :type The document type
-      # @option arguments [Hash] :body The document (`doc`) to percolate against registered queries;
-      #                                optionally also a `query` to limit the percolation to specific registered queries
-      # @option arguments [Boolean] :prefer_local With `true`, specify that a local shard should be used if available,
-      #                                           with `false`, use a random shard (default: true)
+      # @example Evaluate an existing document against the queries
       #
-      # @see http://elasticsearch.org/guide/reference/api/percolate/
+      #     client.index index: 'my-index', type: 'my-type', id: 123, body: { title: "Foo Bar" }
+      #
+      #     client.percolate index: 'my-index', type: 'my-type', id: '123'
+      #     # => { ..., matches: [ {_index: 'my-index', _id: 'alert-2'}, { _index: 'my-index', _id: 'alert-1'} ] }
+      #
+      # @example Register a query with custom `priority` property
+      #
+      #     client.index index: 'my-index',
+      #                  type: '.percolator',
+      #                  id: 'alert-high-1',
+      #                  body: { query: { query_string: { query: 'foo' } },
+      #                          priority: 'high' }
+      #
+      # @example Evaluate a document against "high priority" percolator queries
+      #
+      #     client.percolate index: 'my-index', body: {
+      #         doc:    { title: "Foo" },
+      #         filter: { term: { priority: 'high' } }
+      #       }
+      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-high-1'} ]}
+      #
+      #
+      # @option arguments [String] :index The index of the document being percolated. (*Required*)
+      # @option arguments [String] :type The type of the document being percolated. (*Required*)
+      # @option arguments [String] :id Fetch the document specified by index/type/id and
+      #                                use it instead of the passed `doc`
+      # @option arguments [Hash] :body The percolator request definition using the percolate DSL
+      # @option arguments [List] :routing A comma-separated list of specific routing values
+      # @option arguments [String] :preference Specify the node or shard the operation should be performed on
+      #                                        (default: random)
+      # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+      #                                                 unavailable (missing or closed)
+      # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
+      #                                               no concrete indices. (This includes `_all` string or when no
+      #                                               indices have been specified)
+      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are
+      #                                              open, closed or both. (options: open, closed)
+      # @option arguments [String] :percolate_index The index to percolate the document into. Defaults to passed `index`.
+      # @option arguments [String] :percolate_type The type to percolate document into. Defaults to passed `type`.
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [String] :version_type Specific version type (options: internal, external)
+      #
+      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html
       #
       def percolate(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
-        arguments[:type] ||= 'document'
+        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
 
-        valid_params = [ :prefer_local ]
+        valid_params = [
+          :routing,
+          :preference,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :percolate_index,
+          :percolate_type,
+          :version,
+          :version_type ]
 
         method = 'GET'
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
+                                 arguments[:id],
                                  '_percolate'
 
         params = Utils.__validate_and_extract_params arguments, valid_params
