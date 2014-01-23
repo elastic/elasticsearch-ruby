@@ -30,7 +30,7 @@ module Elasticsearch
 
         should "perform request against an index and type" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo/bar/_mapping/field/bam', url
+            assert_equal 'foo/_mapping/bar/field/bam', url
             true
           end.returns(FakeResponse.new)
 
