@@ -1,6 +1,6 @@
 module Elasticsearch
   module API
-    module Cluster
+    module Nodes
       module Actions
 
         # Returns information about the hottest threads in the cluster or on a specific node as a String.
@@ -11,7 +11,7 @@ module Elasticsearch
         #
         # @example Return 10 hottest threads
         #
-        #     client.cluster.node_hot_threads threads: 10
+        #     client.nodes.hot_threads threads: 10
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
         #                                   use `_local` to return information from the node you're connecting to,
@@ -25,7 +25,7 @@ module Elasticsearch
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
         #
-        def node_hot_threads(arguments={})
+        def hot_threads(arguments={})
           valid_params = [
             :interval,
             :snapshots,

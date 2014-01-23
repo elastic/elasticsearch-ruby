@@ -1,17 +1,17 @@
 module Elasticsearch
   module API
-    module Cluster
+    module Nodes
       module Actions
 
         # Returns statistical information about nodes in the cluster.
         #
         # @example Return statistics about JVM
         #
-        #     client.cluster.node_stats metric: 'jvm'
+        #     client.nodes.stats metric: 'jvm'
         #
         # @example Return statistics about field data structures for all fields
         #
-        #     client.cluster.node_stats metric: 'indices', index_metric: 'fielddata', fields: '*', human: true
+        #     client.nodes.stats metric: 'indices', index_metric: 'fielddata', fields: '*', human: true
         #
         # @option arguments [List] :metric Limit the information returned to the specified metrics
         #                                  (options: _all, breaker, fs, http, indices, jvm, network,
@@ -40,7 +40,7 @@ module Elasticsearch
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
         #
-        def node_stats(arguments={})
+        def stats(arguments={})
           arguments = arguments.clone
 
           valid_params = [

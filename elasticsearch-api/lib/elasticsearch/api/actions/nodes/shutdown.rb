@@ -1,13 +1,13 @@
 module Elasticsearch
   module API
-    module Cluster
+    module Nodes
       module Actions
 
         # Shutdown one or all nodes
         #
         # @example Shut down node named _Bloke_
         #
-        #     client.cluster.node_shutdown node_id: 'Bloke'
+        #     client.nodes.shutdown node_id: 'Bloke'
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to perform the operation on; use
         #                                   `_local` to shutdown the node you're connected to, leave empty to
@@ -17,7 +17,7 @@ module Elasticsearch
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
         #
-        def node_shutdown(arguments={})
+        def shutdown(arguments={})
           valid_params = [
             :delay,
             :exit ]

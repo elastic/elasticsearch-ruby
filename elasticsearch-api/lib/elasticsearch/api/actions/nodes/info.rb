@@ -1,6 +1,6 @@
 module Elasticsearch
   module API
-    module Cluster
+    module Nodes
       module Actions
 
         # Returns information about nodes in the cluster (cluster settings, JVM version, etc).
@@ -12,7 +12,7 @@ module Elasticsearch
         #
         # @example Return information about JVM
         #
-        #     client.cluster.node_info jvm: true
+        #     client.nodes.info jvm: true
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
         #                                   use `_local` to return information from the node you're connecting to, leave
@@ -31,7 +31,7 @@ module Elasticsearch
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
         #
-        def node_info(arguments={})
+        def info(arguments={})
           valid_params = [
             :all,
             :clear,

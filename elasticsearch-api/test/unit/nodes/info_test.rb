@@ -2,9 +2,9 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ClusterNodeInfoTest < ::Test::Unit::TestCase
+    class NodesInfoTest < ::Test::Unit::TestCase
 
-      context "Cluster: Node info" do
+      context "Nodes: Info" do
         subject { FakeClient.new }
 
         should "perform correct request" do
@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.cluster.node_info
+          subject.nodes.info
         end
 
         should "send :node_id correctly" do
@@ -25,7 +25,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.cluster.node_info :node_id => 'foo'
+          subject.nodes.info :node_id => 'foo'
         end
 
         should "send multiple :node_id-s correctly" do
@@ -34,8 +34,8 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new).twice
 
-          subject.cluster.node_info :node_id => 'A,B,C'
-          subject.cluster.node_info :node_id => ['A', 'B', 'C']
+          subject.nodes.info :node_id => 'A,B,C'
+          subject.nodes.info :node_id => ['A', 'B', 'C']
         end
 
       end
