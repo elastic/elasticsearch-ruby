@@ -237,7 +237,7 @@ module Elasticsearch
         #
         def __print_cluster_info(port)
           health = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/health")))
-          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_nodes/?process")))
+          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_nodes/?process&http")))
           master = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/state")))['master_node']
 
           puts "\n",
@@ -249,7 +249,7 @@ module Elasticsearch
           nodes['nodes'].each do |id, info|
             m = id == master ? '+' : '-'
             puts ''.ljust(20) +
-                 "#{m} #{info['name'].ansi(:bold)} | version: #{info['version']}, pid: #{info['process']['id']}".ansi(:faint)
+                 "#{m} #{info['name'].ansi(:bold)} | version: #{info['version']}, pid: #{info['process']['id']}, address: #{info['http']['bound_address']}".ansi(:faint)
           end
         end
 
