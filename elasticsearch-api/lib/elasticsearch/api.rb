@@ -28,7 +28,8 @@ module Elasticsearch
                 Elasticsearch::API::Actions,
                 Elasticsearch::API::Cluster,
                 Elasticsearch::API::Nodes,
-                Elasticsearch::API::Indices
+                Elasticsearch::API::Indices,
+                Elasticsearch::API::Snapshot
     end
   end
 end
