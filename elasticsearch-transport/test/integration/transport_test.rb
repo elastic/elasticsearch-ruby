@@ -14,6 +14,14 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'typhoeus'
       require 'typhoeus/adapters/faraday'
 
+      # Fix for unreleased Typhoeus version (https://github.com/typhoeus/typhoeus/commit/00da90f)
+      #
+      class ::Faraday::Adapter::Typhoeus
+        def configure_ssl(req, env)
+          # noop
+        end
+      end
+
       transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
         :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
           f.response :logger
