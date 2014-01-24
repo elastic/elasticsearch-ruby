@@ -241,7 +241,7 @@ module Elasticsearch
         #
         def __print_cluster_info(port)
           health = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/health")))
-          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_nodes/?process&http")))
+          nodes  = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_nodes/process,http")))
           master = JSON.parse(Net::HTTP.get(URI("http://localhost:#{port}/_cluster/state")))['master_node']
 
           puts "\n",
