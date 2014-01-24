@@ -94,7 +94,6 @@ module Elasticsearch
             n += 1
             pid = Process.spawn <<-COMMAND
               #{arguments[:command]} \
-                -f \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{n} \
