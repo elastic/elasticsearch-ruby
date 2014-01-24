@@ -16,7 +16,7 @@ data serialization and transport.
 It does not handle calling the Elasticsearch API;
 see the [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api) library.
 
-The library is compatible with Ruby 1.8.7 or higher.
+The library is compatible with Ruby 1.8.7 or higher and with Elasticsearch 0.90 and 1.0.
 
 Features overview:
 
