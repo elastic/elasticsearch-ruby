@@ -44,12 +44,6 @@ namespace :bundle do
   end
 end
 
-
-task 'es:update'  => 'elasticsearch:update'
-task 'es:build'   => 'elasticsearch:build'
-task 'es:status'  => 'elasticsearch:status'
-task 'es:changes' => 'elasticsearch:changes'
-
 namespace :elasticsearch do
   desc "Update the submodule with Elasticsearch core repository"
   task :update do
@@ -70,35 +64,49 @@ namespace :elasticsearch do
     sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
 
-  desc "Build Elasticsearch for the specified branch (master by default)"
+  desc <<-DESC
+    Build Elasticsearch for the specified branch ('origin/master' by default)"
+
+    Build a specific branch:
+
+        $ rake elasticsearch:build[origin/1.x]
+
+    The task will execute `git fetch` to synchronize remote branches.
+  DESC
   task :build, :branch do |task, args|
-    branch = args[:branch] || 'master'
+    Rake::Task['elasticsearch:status'].invoke
+    puts '-'*80
+
+    branch = args[:branch] || 'origin/master'
     current_branch = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
     begin
       sh <<-CODE
         mkdir -p #{__current__.join('tmp/builds')} && \
         cd #{__current__.join('support/elasticsearch')} && \
+        git fetch origin --quiet && \
         git checkout #{branch} && \
         mvn clean package -DskipTests && \
-        echo "Built: `ls target/releases/elasticsearch-*.tar.gz`" && \
-        tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')}
+        build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
+        tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')} && \
+        echo && echo && echo "Built: $build"
       CODE
+    end
 
-      puts "", '-'*80, "", "Builds:"
+    puts "", '-'*80, ""
+    Rake::Task['elasticsearch:builds'].invoke
+  end
+
+  desc "Display the info for all branches in the Elasticsearch submodule"
+  task :status do
+    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch -v -v", :verbose => false
+  end
+
+  desc "Display the list of builds"
+  task :builds do
+    puts "Builds:"
       Dir.entries(__current__.join('tmp/builds')).reject { |f| f =~ /^\./ }.each do |build|
         puts "* #{build}"
       end
-    end
-  end
-
-  desc "Display the last commit in all local branches"
-  task :status do
-    branches = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.gsub(/\* /, '').split("\n").map { |s| s.strip }
-    branches.each do |branch|
-      puts "[\e[1m#{branch}\e[0m]"
-      sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'\e[2m%h\e[0m \e[1m%cr\e[0m [%an %ar] %s' -1 #{branch}", :verbose => false
-      puts
-    end
   end
 
   desc "Display the history of the 'rest-api-spec' repo"
