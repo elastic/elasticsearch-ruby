@@ -139,7 +139,12 @@ module Elasticsearch
         def stop(arguments={})
           arguments[:port] ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
 
-          nodes = JSON.parse(Net::HTTP.get(URI("http://localhost:#{arguments[:port]}/_nodes/?process"))) rescue nil
+          nodes = begin
+            JSON.parse(Net::HTTP.get(URI("http://localhost:#{arguments[:port]}/_nodes/?process")))
+          rescue Exception => e
+            STDERR.puts "[!] Exception raised when stopping the cluster: #{e.inspect}".ansi(:red)
+            nil
+          end
 
           return false if nodes.nil? or nodes.empty?
 
