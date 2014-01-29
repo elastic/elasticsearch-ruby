@@ -43,7 +43,7 @@ module Elasticsearch
     class IntegrationTestCase < ::Test::Unit::TestCase
       extend Elasticsearch::Extensions::Test::StartupShutdown
 
-      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? }
+      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
@@ -53,7 +53,7 @@ module Elasticsearch
       extend Elasticsearch::Extensions::Test::StartupShutdown
       extend Elasticsearch::Extensions::Test::Profiling
 
-      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? }
+      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   end
