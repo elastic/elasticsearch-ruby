@@ -6,7 +6,7 @@ language: ruby
 
 branches:
   only:
-    - master
+    - '0.4'
 
 rvm:
   - 1.8.7
