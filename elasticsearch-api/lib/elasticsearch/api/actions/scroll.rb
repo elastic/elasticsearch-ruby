@@ -22,12 +22,14 @@ module Elasticsearch
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index
       #                                      should be maintained for scrolled search
       # @option arguments [String] :scroll_id The scroll ID for scrolled search
+      # @option arguments [Boolean] :clear Whether to abort the scroll search by
+      #                                    deleting the scroll_id or not
       #
       # @see http://www.elasticsearch.org/guide/reference/api/search/scroll/
       # @see http://www.elasticsearch.org/guide/reference/api/search/search-type/
       #
       def scroll(arguments={})
-        method = 'GET'
+        method = arguments.delete(:clear) ? 'DELETE' : 'GET'
         path   = "_search/scroll"
         valid_params = [
           :scroll,
