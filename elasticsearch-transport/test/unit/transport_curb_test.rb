@@ -1,3 +1,9 @@
+if JRUBY
+  puts "'#{File.basename(__FILE__)}' not supported on JRuby #{RUBY_VERSION}"
+  exit(0)
+end
+
+
 require 'test_helper'
 require 'elasticsearch/transport/transport/http/curb'
 require 'curb'
