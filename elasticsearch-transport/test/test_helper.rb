@@ -1,4 +1,5 @@
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+JRUBY    = defined?(JRUBY_VERSION)
 
 if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
   require 'rubygems'
@@ -40,7 +41,7 @@ RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/cluster'
   require 'elasticsearch/extensions/test/startup_shutdown'
-  require 'elasticsearch/extensions/test/profiling'
+  require 'elasticsearch/extensions/test/profiling' unless JRUBY
 end
 
 class Test::Unit::TestCase
@@ -68,6 +69,6 @@ module Elasticsearch
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
-    end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    end unless RUBY_1_8 || JRUBY
   end
 end

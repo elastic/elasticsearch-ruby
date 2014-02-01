@@ -17,7 +17,7 @@ gem "yard"
 gem "ci_reporter"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  gem "ruby-prof"
+  gem "ruby-prof" unless defined? JRUBY_VERSION
   gem "simplecov"
   gem "simplecov-rcov"
   gem "cane"

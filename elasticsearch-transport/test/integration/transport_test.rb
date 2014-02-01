@@ -43,7 +43,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
       client = Elasticsearch::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
-    end
+    end unless JRUBY
   end
 
 end

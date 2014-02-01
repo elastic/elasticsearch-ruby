@@ -1,6 +1,10 @@
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
+JRUBY    = defined?(JRUBY_VERSION)
 
-exit(0) if RUBY_1_8
+if RUBY_1_8
+  puts "Tests for '#{File.expand_path('../..', __FILE__).split('/').last}' not supported on Ruby #{RUBY_VERSION}"
+  exit(0)
+end
 
 if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'

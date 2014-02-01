@@ -35,7 +35,7 @@ module Elasticsearch
             CGI.expects(:escape).never
             EscapeUtils.expects(:escape_url)
             __escape('foo bar')
-          end unless RUBY_1_8
+          end unless RUBY_1_8 || JRUBY
 
         end
 
