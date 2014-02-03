@@ -209,7 +209,7 @@ module Elasticsearch
             raise e
           end
 
-          json     = serializer.load(response.body) if response.body.to_s =~ /^\{/
+          json     = serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
           duration = Time.now-start if logger || tracer
 
