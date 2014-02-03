@@ -70,8 +70,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
         curl.headers["User-Agent"] = "myapp-0.0"
       end
 
-      assert_equal( {"Content-Type"=>"application/json", "User-Agent"=>"myapp-0.0"},
-                    transport.connections.first.connection.headers )
+      assert_equal "myapp-0.0", transport.connections.first.connection.headers["User-Agent"]
     end
 
     should "set the credentials if passed" do

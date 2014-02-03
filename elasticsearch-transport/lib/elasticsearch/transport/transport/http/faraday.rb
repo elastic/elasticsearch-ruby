@@ -22,7 +22,7 @@ module Elasticsearch
                 method.downcase.to_sym,
                 url,
                 ( body ? __convert_to_json(body) : nil ),
-                {'Content-Type' => 'application/json'}
+                {}
             end
           end
 

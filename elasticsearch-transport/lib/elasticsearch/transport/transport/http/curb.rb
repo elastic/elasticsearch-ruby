@@ -44,7 +44,7 @@ module Elasticsearch
 
                 client = ::Curl::Easy.new
                 client.resolve_mode = :ipv4
-                client.headers      = {'User-Agent' => "Curb #{Curl::CURB_VERSION}", 'Content-Type' => 'application/json' }
+                client.headers      = {'User-Agent' => "Curb #{Curl::CURB_VERSION}"}
                 client.url          = __full_url(host)
 
                 if host[:user]
