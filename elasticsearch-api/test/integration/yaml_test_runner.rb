@@ -13,6 +13,9 @@ require 'elasticsearch/extensions/test/cluster'
 require 'elasticsearch/extensions/test/startup_shutdown'
 require 'elasticsearch/extensions/test/profiling' unless JRUBY
 
+# Skip features
+SKIP_FEATURES = ENV['TEST_SKIP_FEATURES'] || 'regex'
+
 # Turn configuration
 ENV['ansi'] = 'false' if ENV['CI']
 Turn.config.format = :pretty
@@ -215,7 +218,9 @@ module Elasticsearch
 
       def skip?(actions)
         skip = actions.select { |a| a['skip'] }.first
-        if skip
+
+        # Skip version
+        if skip && skip['skip']['version']
           min, max = skip['skip']['version'].split('-').map(&:strip)
 
           min_normalized = sprintf "%03d-%03d-%03d",
@@ -234,7 +239,14 @@ module Elasticsearch
           if min_normalized <= es_normalized && max_normalized >= es_normalized
             return skip['skip']['reason'] ? skip['skip']['reason'] : true
           end
+
+        # Skip features
+        elsif skip && skip['skip']['features']
+          if (skip['skip']['features'].split(',') & SKIP_FEATURES.split(',') ).size > 0
+            return skip['skip']['features']
+          end
         end
+
         return false
       end
 
@@ -278,9 +290,11 @@ suites.each do |suite|
       # Extract setup actions
       setup_actions = tests.select { |t| t['setup'] }.first['setup'] rescue []
 
-      # Skip all the tests when `skip` is part fo the `setup`
-      # TODO: Implement top-level `setup` expression
-      next if Runner.skip? setup_actions
+      # Skip all the tests when `skip` is part of the `setup` part
+      if features = Runner.skip?(setup_actions)
+        $stdout.puts "#{'SKIP'.ansi(:yellow)} [#{name}] #{file.gsub(PATH.to_s, '').ansi(:bold)} (Feature not implemented: #{features})"
+        next
+      end
 
       # Remove setup actions from tests
       tests = tests.reject { |t| t['setup'] }
