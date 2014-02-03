@@ -142,7 +142,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.serializer.expects(:load).returns({'foo' => 'bar'})
 
       response = @transport.perform_request 'GET', '/' do
-                   Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}'
+                   Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}', {"content-type" => 'application/json'}
                  end
 
       assert_instance_of Elasticsearch::Transport::Transport::Response, response
@@ -153,7 +153,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       @transport.serializer.expects(:load).never
       response = @transport.perform_request 'GET', '/' do
-                   Elasticsearch::Transport::Transport::Response.new 200, 'FOOBAR'
+                   Elasticsearch::Transport::Transport::Response.new 200, 'FOOBAR', {"content-type" => 'text/plain'}
                  end
 
       assert_instance_of Elasticsearch::Transport::Transport::Response, response
