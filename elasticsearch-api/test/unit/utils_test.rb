@@ -153,6 +153,17 @@ module Elasticsearch
             end
           end
 
+          should "not raise an exception for COMMON_PARAMS" do
+            assert_nothing_raised do
+              __validate_and_extract_params({ :index => 'foo'}, [:foo])
+            end
+          end
+
+          should "extract COMMON_QUERY_PARAMS" do
+            assert_equal( { :format => 'yaml' },
+                          __validate_and_extract_params( { :format => 'yaml' } ) )
+          end
+
         end
 
       end
