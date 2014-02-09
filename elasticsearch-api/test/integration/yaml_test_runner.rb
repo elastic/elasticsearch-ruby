@@ -14,7 +14,7 @@ require 'elasticsearch/extensions/test/startup_shutdown'
 require 'elasticsearch/extensions/test/profiling' unless JRUBY
 
 # Skip features
-SKIP_FEATURES = ENV['TEST_SKIP_FEATURES'] || 'regex'
+SKIP_FEATURES = ENV['TEST_SKIP_FEATURES'] || ''
 
 # Turn configuration
 ENV['ansi'] = 'false' if ENV['CI']
@@ -379,10 +379,25 @@ suites.each do |suite|
                 when a = action['match']
                   property, value = a.to_a.first
 
-                  value  = Runner.fetch_or_return(value)
-                  result = Runner.evaluate(test, property)
-                  $stderr.puts "CHECK: Expected '#{property}' to be '#{value}', is: #{result.inspect}" if ENV['DEBUG']
-                  assert_equal(value, result)
+                  if value.is_a?(String) && value =~ %r{\s*^/\s*.*\s*/$\s*}mx # Begins and ends with /
+                    pattern = Regexp.new(value.strip[1..-2], Regexp::EXTENDED|Regexp::MULTILINE)
+                  else
+                    value  = Runner.fetch_or_return(value)
+                  end
+
+                  if property == '$body'
+                    result = $results[test.hash]
+                  else
+                    result = Runner.evaluate(test, property)
+                  end
+
+                  if pattern
+                    $stderr.puts "CHECK: Expected '#{property}' to match #{pattern}, is: #{result.inspect}" if ENV['DEBUG']
+                    assert_match(pattern, result)
+                  else
+                    $stderr.puts "CHECK: Expected '#{property}' to be '#{value}', is: #{result.inspect}" if ENV['DEBUG']
+                    assert_equal(value, result)
+                  end
 
                 when a = action['length']
                   property, value = a.to_a.first
