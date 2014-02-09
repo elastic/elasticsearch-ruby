@@ -6,3 +6,7 @@ gemspec
 if File.exists? File.expand_path("../../elasticsearch-extensions", __FILE__)
   gem 'elasticsearch-extensions', :path => File.expand_path("../../elasticsearch-extensions", __FILE__), :require => true
 end
+
+if File.exists? File.expand_path("../../elasticsearch-transport", __FILE__)
+  gem 'elasticsearch-transport', :path => File.expand_path("../../elasticsearch-transport", __FILE__), :require => true
+end
