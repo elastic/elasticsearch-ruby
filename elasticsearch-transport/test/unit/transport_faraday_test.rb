@@ -58,15 +58,35 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
                          @transport.connections.selector
     end
 
-    should "allow to set options for Faraday" do
+    should "pass a configuration block to the Faraday constructor" do
       config_block = lambda do |f|
         f.response :logger
+        f.path_prefix = '/moo'
       end
 
       transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ], &config_block
 
-      handlers = transport.connections.first.connection.instance_variable_get(:@builder).instance_variable_get(:@handlers)
-      assert handlers.include?(::Faraday::Response::Logger), "#{handlers.inspect} does not include <::Faraday::Adapter::Typhoeus>"
+      handlers = transport.connections.first.connection.builder.handlers
+
+      assert_equal 1, handlers.size
+      assert handlers.include?(::Faraday::Response::Logger), "#{handlers.inspect} does not include <::Faraday::Adapter::Logger>"
+
+      assert_equal '/moo',                   transport.connections.first.connection.path_prefix
+      assert_equal 'http://foobar:1234/moo', transport.connections.first.connection.url_prefix.to_s
+    end
+
+    should "pass transport_options to the Faraday constructor" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                              :options => { :transport_options => {
+                                              :request => { :open_timeout => 1 },
+                                              :headers => { :foo_bar => 'bar'  },
+                                              :ssl     => { :verify => false }
+                                            }
+                                          }
+
+      assert_equal 1,     transport.connections.first.connection.options.open_timeout
+      assert_equal 'bar', transport.connections.first.connection.headers['Foo-Bar']
+      assert_equal false, transport.connections.first.connection.ssl.verify?
     end
 
     should "set the credentials if passed" do
