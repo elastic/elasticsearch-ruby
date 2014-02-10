@@ -54,17 +54,18 @@ require 'elasticsearch'
 client = Elasticsearch::Client.new log: true
 
 client.index  index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' }
-# => {"ok"=>true, "_index"=>"myindex", ...}
+# => {"_index"=>"myindex", ... "created"=>true}
 
 client.search index: 'myindex', body: { query: { match: { title: 'test' } } }
 # => {"took"=>2, ..., "hits"=>{"total":5, ...}}
 ```
 
-Full documentation is available at <http://rubydoc.info/gems/elasticsearch-api>.
+Full documentation and examples are included as RDoc annotations in the source code
+and available online at <http://rubydoc.info/gems/elasticsearch-api>.
 
 ### Usage with a custom client
 
-When you want to mix the library into you own client, it must conform to a following _contract_:
+When you want to mix the library into your own client, it must conform to a following _contract_:
 
 * It responds to a `perform_request(method, path, params, body)` method,
 * the method returns an object with `status`, `body` and `headers` methods.
