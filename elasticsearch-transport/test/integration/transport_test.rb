@@ -44,6 +44,23 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       client = Elasticsearch::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
     end unless JRUBY
+
+    should "deserialize JSON responses in the Curb client" do
+      require 'curb'
+      require 'elasticsearch/transport/transport/http/curb'
+
+      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+        :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
+          curl.verbose = true
+        end
+
+      client = Elasticsearch::Transport::Client.new transport: transport
+      response = client.perform_request 'GET', ''
+
+      assert_respond_to(response.body, :to_hash)
+      assert_equal 200, response.body['status']
+      assert_equal 'application/json', response.headers['content-type']
+    end unless JRUBY
   end
 
 end
