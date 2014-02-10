@@ -28,7 +28,12 @@ module Elasticsearch
 
               connection.connection.http(method.to_sym)
 
-              Response.new connection.connection.response_code, connection.connection.body_str
+              headers = {}
+              headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
+
+              Response.new connection.connection.response_code,
+                           connection.connection.body_str,
+                           headers
             end
           end
 
