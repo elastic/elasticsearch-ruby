@@ -89,6 +89,42 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_equal false, transport.connections.first.connection.ssl.verify?
     end
 
+    should "merge in parameters defined in the Faraday connection parameters" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                              :options => { :transport_options => {
+                                              :params => { :format => 'yaml' }
+                                            }
+                                          }
+      # transport.logger = Logger.new(STDERR)
+
+      transport.connections.first.connection.expects(:run_request).
+        with do |method, url, params, body|
+          assert_match /\?format=yaml/, url
+          true
+        end.
+        returns(stub_everything)
+
+      transport.perform_request 'GET', ''
+    end
+
+    should "not overwrite request parameters with the Faraday connection parameters" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                              :options => { :transport_options => {
+                                              :params => { :format => 'yaml' }
+                                            }
+                                          }
+      # transport.logger = Logger.new(STDERR)
+
+      transport.connections.first.connection.expects(:run_request).
+        with do |method, url, params, body|
+          assert_match /\?format=json/, url
+          true
+        end.
+        returns(stub_everything)
+
+      transport.perform_request 'GET', '', { :format => 'json' }
+    end
+
     should "set the credentials if passed" do
       transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' } ]
       assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']

@@ -32,6 +32,20 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       client.perform_request 'GET', ''
     end
 
+    should "allow to define connection parameters and pass them" do
+      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+                    :hosts => [ { :host => 'localhost', :port => @port } ],
+                    :options => { :transport_options => {
+                                    :params => { :format => 'yaml' }
+                                  }
+                                }
+
+      client = Elasticsearch::Transport::Client.new transport: transport
+      response = client.perform_request 'GET', ''
+
+      assert response.body.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
+    end
+
     should "use the Curb client" do
       require 'curb'
       require 'elasticsearch/transport/transport/http/curb'

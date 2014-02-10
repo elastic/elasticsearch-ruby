@@ -270,10 +270,14 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
   context "logging" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :logger => Logger.new('/dev/null') }
-      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search?size=1',
-                                                      :host     => 'localhost',
-                                                      :failures  => 0,
-                                                      :healthy! => true
+
+      fake_connection = stub :full_url => 'localhost:9200/_search?size=1',
+                             :host     => 'localhost',
+                             :connection => stub_everything,
+                             :failures => 0,
+                             :healthy! => true
+
+      @transport.stubs(:get_connection).returns(fake_connection)
       @transport.serializer.stubs(:load).returns 'foo' => 'bar'
       @transport.serializer.stubs(:dump).returns '{"foo":"bar"}'
     end
@@ -314,10 +318,14 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
   context "tracing" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :tracer => Logger.new('/dev/null') }
-      @transport.stubs(:get_connection).returns  stub :full_url => 'localhost:9200/_search?size=1',
-                                                     :host      => 'localhost',
-                                                     :failures  => 0,
-                                                     :healthy!  => true
+
+      fake_connection = stub :full_url => 'localhost:9200/_search?size=1',
+                             :host     => 'localhost',
+                             :connection => stub_everything,
+                             :failures => 0,
+                             :healthy! => true
+
+      @transport.stubs(:get_connection).returns(fake_connection)
       @transport.serializer.stubs(:load).returns 'foo' => 'bar'
       @transport.serializer.stubs(:dump).returns <<-JSON.gsub(/^      /, '')
       {

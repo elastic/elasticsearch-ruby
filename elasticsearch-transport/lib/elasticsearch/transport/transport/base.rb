@@ -177,7 +177,13 @@ module Elasticsearch
           begin
             tries     += 1
             connection = get_connection or raise Error.new("Cannot get new connection from pool.")
+
+            if connection.connection.respond_to?(:params) && connection.connection.params.respond_to?(:to_hash)
+              params = connection.connection.params.merge(params.to_hash)
+            end
+
             url        = connection.full_url(path, params)
+
             response   = block.call(connection, url)
 
             connection.healthy! if connection.failures > 0
