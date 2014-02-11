@@ -48,6 +48,14 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       assert_respond_to client.transport.tracer, :info
     end
 
+    should "initialize the default transport class" do
+      Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
+        unstub(:__build_connections)
+
+      client = Elasticsearch::Client.new
+      assert_match /Faraday/, client.transport.connections.first.connection.headers['User-Agent']
+    end
+
     context "when passed hosts" do
       should "have localhost by default" do
         c = Elasticsearch::Transport::Client.new
