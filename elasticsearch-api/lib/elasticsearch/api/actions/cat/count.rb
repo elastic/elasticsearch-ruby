@@ -17,9 +17,13 @@ module Elasticsearch
         #
         #     puts client.cat.count index: ['index-a', 'index-b']
         #
+        # @example Display header names in the output
+        #
+        #     puts client.cat.count v: true
+        #
         # @example Return the information as Ruby objects
         #
-        #     client.cat.allocation format: 'json'
+        #     client.cat.count format: 'json'
         #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument

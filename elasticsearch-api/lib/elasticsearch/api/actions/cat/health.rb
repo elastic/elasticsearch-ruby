@@ -9,6 +9,14 @@ module Elasticsearch
         #
         #     puts client.cat.health
         #
+        # @example Display header names in the output
+        #
+        #     puts client.cat.health v: true
+        #
+        # @example Return the information as Ruby objects
+        #
+        #     client.cat.health format: 'json'
+        #
         # @option arguments [Boolean] :ts Whether to display timestamp information
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output

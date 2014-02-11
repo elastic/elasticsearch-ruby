@@ -9,6 +9,14 @@ module Elasticsearch
         #
         #     puts client.cat.pending_tasks
         #
+        # @example Display header names in the output
+        #
+        #     puts client.cat.pending_tasks v: true
+        #
+        # @example Return the information as Ruby objects
+        #
+        #     client.cat.pending_tasks format: 'json'
+        #
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
@@ -30,6 +38,7 @@ module Elasticsearch
           method = 'GET'
           path   = "_cat/pending_tasks"
           params = Utils.__validate_and_extract_params arguments, valid_params
+          params[:h] = Utils.__listify(params[:h]) if params[:h]
           body   = nil
 
           perform_request(method, path, params, body).body

@@ -10,6 +10,10 @@ module Elasticsearch
         #
         #     puts client.cat.thread_pool
         #
+        # @example Display header names in the output
+        #
+        #     puts client.cat.thread_pool v: true
+        #
         # @example Display information about the indexing thread pool
         #
         #     puts client.cat.thread_pool h: %w(h ip index.active index.size index.queue index.rejected), v: true

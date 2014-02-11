@@ -9,6 +9,14 @@ module Elasticsearch
         #
         #     puts client.cat.master
         #
+        # @example Display header names in the output
+        #
+        #     puts client.cat.master v: true
+        #
+        # @example Return the information as Ruby objects
+        #
+        #     client.cat.master format: 'json'
+        #
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
