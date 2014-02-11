@@ -39,7 +39,7 @@ module Elasticsearch
 
                 Connections::Connection.new \
                   :host => host,
-                  :connection => ::Faraday::Connection.new(url, options[:transport_options], &@block )
+                  :connection => ::Faraday::Connection.new(url, (options[:transport_options] || {}), &@block )
               },
               :selector_class => options[:selector_class],
               :selector => options[:selector]
