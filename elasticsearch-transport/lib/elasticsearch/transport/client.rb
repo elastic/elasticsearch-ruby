@@ -80,6 +80,7 @@ module Elasticsearch
         arguments[:retry_on_failure]   ||= false
         arguments[:reload_on_failure]  ||= false
         arguments[:randomize_hosts]    ||= false
+        arguments[:transport_options]  ||= {}
 
         @transport = arguments[:transport] || \
                      transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
