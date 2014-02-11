@@ -23,7 +23,7 @@ module Elasticsearch
             :exit ]
 
           method = 'POST'
-          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
+          path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
 
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
