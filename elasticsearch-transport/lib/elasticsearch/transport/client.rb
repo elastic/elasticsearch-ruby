@@ -97,6 +97,8 @@ module Elasticsearch
       # Arrayifies the `hosts_config` argument and extracts `host` and `port` info from strings.
       # Performs shuffling when the `randomize_hosts` option is set.
       #
+      # TODO: Refactor, so it's available in Elasticsearch::Transport::Base as well
+      #
       # @return [Array<Hash>]
       # @raise  [ArgumentError]
       #

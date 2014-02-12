@@ -27,6 +27,10 @@ Features overview:
 * Request retries and dead connections handling
 * Node reloading (based on cluster state) on errors or on demand
 
+For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections,
+e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or [Curb](https://github.com/taf2/curb/) --
+see example configurations [below](#transport-implementations).
+
 ## Installation
 
 Install the package from [Rubygems](https://rubygems.org):
@@ -80,17 +84,29 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
     Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
+    Elasticsearch::Client.new hosts: [
+      { host: 'my-protected-host',
+        port: '443',
+        user: 'USERNAME',
+        password: 'PASSWORD',
+        scheme: 'https'
+      } ]
+
 Scheme, HTTP authentication credentials and URL prefixes are handled automatically:
 
     Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
 
+The client will automatically round-robin across the hosts
+(unless you select or implement a different [connection selector](#connection-selector)).
+
 ### Logging
 
-To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class):
+To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
+set the `log` argument:
 
     Elasticsearch::Client.new log: true
 
-To trace requests and responses in the `curl` format:
+To trace requests and responses in the _Curl_ format, set the `trace` argument:
 
     Elasticsearch::Client.new trace: true
 
@@ -99,7 +115,7 @@ You can customize the default logger or tracer:
     client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
     client.transport.logger.level = Logger::INFO
 
-You can use a custom {::Logger} instance:
+Or, you can use a custom {::Logger} instance:
 
     Elasticsearch::Client.new logger: Logger.new(STDERR)
 
@@ -162,8 +178,9 @@ By default, the client will rotate the connections in a round-robin fashion, usi
 {Elasticsearch::Transport::Transport::Connections::Selector::RoundRobin} strategy.
 
 You can implement your own strategy to customize the behaviour. For example,
-let's have a "rack aware" strategy, which will prefer the nodes with a specific attribute,
-and only when these are not be available, will use the rest:
+let's have a "rack aware" strategy, which will prefer the nodes with a specific
+[attribute](https://github.com/elasticsearch/elasticsearch/blob/1.0/config/elasticsearch.yml#L81-L85).
+Only when these would be unavailable, the strategy will use the other nodes:
 
     class RackIdSelector
       include Elasticsearch::Transport::Transport::Connections::Selector::Base
@@ -182,7 +199,8 @@ and only when these are not be available, will use the rest:
 
 By default, the client will use the [_Faraday_](https://rubygems.org/gems/faraday) HTTP library
 as a transport implementation. You can configure the _Faraday_ instance, eg. to use a different
-HTTP adapter or custom middleware, by passing a configuration block to the client constructor:
+HTTP adapter (such as Typhoeus) or custom middleware, by passing a configuration block
+to the transport constructor:
 
     require 'typhoeus'
     require 'typhoeus/adapters/faraday'
@@ -196,36 +214,61 @@ HTTP adapter or custom middleware, by passing a configuration block to the clien
       hosts: [ { host: 'localhost', port: '9200' } ],
       &configuration
 
+    # Pass the transport to the client
+    #
     client = Elasticsearch::Client.new transport: transport
 
-You can also use a [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
+To pass options to the
+[`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb) constructor,
+use the `transport_options` key:
+
+    client = Elasticsearch::Client.new transport_options: {
+      request: { open_timeout: 1 },
+      headers: { user_agent:   'MyApp' },
+      params:  { :format => 'yaml' }
+    }
+
+You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
 
     require 'curb'
     require 'elasticsearch/transport/transport/http/curb'
 
+    # Use Curb as the HTTP client
     client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
 
-It's possible to customize the _Curb_ instance by passing a block to the constructor as well:
-
-    configuration = lambda do |c|
-      c.verbose = true
-    end
+It's possible to customize the _Curb_ instance by passing a block to the constructor as well
+(in this case, as an inline block):
 
     transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
       hosts: [ { host: 'localhost', port: '9200' } ],
-      &configuration
+      & lambda { |c| c.verbose = true }
 
     client = Elasticsearch::Client.new transport: transport
 
 Instead of passing the transport to the constructor, you can inject it at run time:
 
-    faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-          hosts: [ { host: '33.33.33.10', port: '443', user: 'USERNAME', password: 'PASSWORD', scheme: 'https' } ],
-          & lambda { |f| f.instance_variable_set :@ssl, { verify: false }
-                         f.options[:ssl] = { verify: false }
-                         f.adapter :excon }
+    # Set up the transport
+    #
+    faraday_configuration = lambda do |f|
+      f.instance_variable_set :@ssl, { verify: false }
+      f.adapter :excon
+    end
 
+    faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+      hosts: [ { host: 'my-protected-host',
+                 port: '443',
+                 user: 'USERNAME',
+                 password: 'PASSWORD',
+                 scheme: 'https'
+              }],
+      &faraday_configuration
+
+    # Create a default client
+    #
     client = Elasticsearch::Client.new
+
+    # Inject the transport to the client
+    #
     client.transport = faraday_client
 
 You can write your own transport implementation easily, by including the
