@@ -6,7 +6,7 @@ language: ruby
 
 branches:
   only:
-    - '0.4'
+    - master
     - travis
 
 rvm:
