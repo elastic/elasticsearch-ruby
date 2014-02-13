@@ -40,9 +40,9 @@ Start the cluster on specific port, with a specific Elasticsearch version, numbe
 
     Elasticsearch::Extensions::Test::Cluster.start \
       cluster_name: "my-testing-cluster",
-      command:      "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch",
-      nodes:        3,
-      port:         9350
+      command:      "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
+      port:         9350,
+      nodes:        3
 
     # Starting 3 Elasticsearch nodes.....................
     # --------------------------------------------------------------------------------
@@ -54,17 +54,22 @@ Start the cluster on specific port, with a specific Elasticsearch version, numbe
     #                     - node-3 | version: 1.0.0.Beta2, pid: 54468
     # => true
 
-
 Stop this cluster:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.stop \
-      command:      "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch",
-      port:         9350
+    Elasticsearch::Extensions::Test::Cluster.stop port: 9350
 
     # Stopping Elasticsearch nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
     # # => [54469, 54470, 54468]
+
+You can control the cluster configuration with environment variables as well:
+
+    TEST_CLUSTER_NAME=my-testing-cluster \
+    TEST_CLUSTER_COMMAND=/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch \
+    TEST_CLUSTER_PORT=9350 \
+    TEST_CLUSTER_NODES=3 \
+    ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; Elasticsearch::Extensions::Test::Cluster.start"
 
 [Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster)
 
