@@ -238,22 +238,22 @@ To configure the _Faraday_ instance, pass a configuration block to the transport
     require 'typhoeus'
     require 'typhoeus/adapters/faraday'
 
-    configuration = lambda do |f|
+    transport_configuration = lambda do |f|
       f.response :logger
       f.adapter  :typhoeus
     end
 
     transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
       hosts: [ { host: 'localhost', port: '9200' } ],
-      &configuration
+      &transport_configuration
 
     # Pass the transport to the client
     #
     client = Elasticsearch::Client.new transport: transport
 
 To pass options to the
-[`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb) constructor,
-use the `transport_options` key:
+[`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
+constructor, use the `transport_options` key:
 
     client = Elasticsearch::Client.new transport_options: {
       request: { open_timeout: 1 },
@@ -266,8 +266,10 @@ You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transp
     require 'curb'
     require 'elasticsearch/transport/transport/http/curb'
 
-    # Use Curb as the HTTP client
     client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+
+    client.transport.connections.first.connection
+    # => #<Curl::Easy http://localhost:9200/>
 
 It's possible to customize the _Curb_ instance by passing a block to the constructor as well
 (in this case, as an inline block):
@@ -306,8 +308,7 @@ Instead of passing the transport to the constructor, you can inject it at run ti
 
 You can write your own transport implementation easily, by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required contract,
-and passing it to the client as the `transport_class` parameter. All the arguments
-passed to client will be passed as the `:options` parameter to the transport constructor.
+and passing it to the client as the `transport_class` parameter -- or injecting it directly.
 
 ### Serializer Implementations
 

@@ -58,7 +58,9 @@ client.search q: 'test'
 # etc.
 ```
 
-Please refer to the specific library documentation for detailed information and examples.
+Both of these libraries are extensively documented.
+**Please read the [`elasticsearch-transport`](http://rubydoc.info/gems/elasticsearch-transport)
+and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
 
 Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or
