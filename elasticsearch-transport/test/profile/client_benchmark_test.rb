@@ -78,9 +78,12 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
     end
 
     context "with a single-node cluster and the Typhoeus client" do
+      require 'typhoeus'
+      require 'typhoeus/adapters/faraday'
+
       # Fix for incompatibility of the Typhoeus adapter
       # Related commit: elasticsearch/elasticsearch-ruby@adc4810227fad03ae5cabfbb2a0905fb75bfb331
-      # Related: lostisland/faraday/pull/323, lostisland/faraday/pull/335
+      # Related: lostisland/faraday/pull/323, lostisland/faraday/issues/333, lostisland/faraday/pull/335
       #
       class ::Faraday::Adapter::Typhoeus
         def configure_ssl(req, env)
@@ -89,9 +92,6 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       setup do
-        require 'typhoeus'
-        require 'typhoeus/adapters/faraday'
-
         transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
           :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
             f.adapter  :typhoeus
