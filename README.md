@@ -60,6 +60,10 @@ client.search q: 'test'
 
 Please refer to the specific library documentation for detailed information and examples.
 
+Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
+("keep-alive") connections, e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or
+[Patron](https://github.com/toland/patron). Just `require 'typhoeus'` or `require 'patron'` in your code.
+
 ### Transport
 
 * [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)

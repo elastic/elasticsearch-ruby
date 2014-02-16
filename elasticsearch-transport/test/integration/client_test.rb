@@ -6,6 +6,11 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
   end
 
   context "Elasticsearch client" do
+    teardown do
+      begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end
+      begin; Object.send(:remove_const, :Patron); rescue NameError; end
+    end
+
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
       system "curl -X DELETE http://localhost:#{@port}/_all > /dev/null 2>&1"
@@ -116,5 +121,14 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
     end
 
+    context "with Faraday adapters" do
+      should "automatically use the Patron client when loaded" do
+        require 'patron'
+        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}"
+
+        response = @client.perform_request 'GET', '_cluster/health'
+        assert_equal 200, response.status
+      end unless JRUBY
+    end
   end
 end

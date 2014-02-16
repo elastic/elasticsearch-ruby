@@ -8,6 +8,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
   context "Transport" do
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+      begin; Object.send(:remove_const, :Patron);   rescue NameError; end
     end
 
     should "allow to customize the Faraday adapter" do

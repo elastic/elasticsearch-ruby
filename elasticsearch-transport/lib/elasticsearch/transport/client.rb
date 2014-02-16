@@ -57,6 +57,8 @@ module Elasticsearch
       #
       # @option arguments [Boolean] :reload_on_failure Reload connections after failure (false by default)
       #
+      # @option arguments [Symbol] :adapter A specific adapter for Faraday (e.g. `:patron`)
+      #
       # @option arguments [Hash] :transport_options Options to be passed to the `Faraday::Connection` constructor
       #
       # @option arguments [Constant] :transport_class  A specific transport class to use, will be initialized by
@@ -71,7 +73,6 @@ module Elasticsearch
       #                                        {Elasticsearch::Transport::Transport::Connections::Selector::Base}.
       #
       def initialize(arguments={})
-        transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
         hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
 
         arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
@@ -82,8 +83,17 @@ module Elasticsearch
         arguments[:randomize_hosts]    ||= false
         arguments[:transport_options]  ||= {}
 
-        @transport = arguments[:transport] || \
-                     transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
+        transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
+
+        @transport       = arguments[:transport] || begin
+          if transport_class == Transport::HTTP::Faraday
+            transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
+              faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+            end
+          else
+            transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
+          end
+        end
       end
 
       # Performs a request through delegation to {#transport}.
@@ -128,6 +138,29 @@ module Elasticsearch
 
         hosts.shuffle! if options[:randomize_hosts]
         hosts
+      end
+
+      # Auto-detect the best adapter (HTTP "driver") available, based on libraries
+      # loaded by the user, preferring those with persistent connections
+      # ("keep-alive") by default
+      #
+      # @return [Symbol]
+      #
+      # @api private
+      #
+      def __auto_detect_adapter
+        case
+        when defined?(::Patron)
+          :patron
+        when defined?(::Typhoeus)
+          :typhoeus
+        when defined?(::HTTPClient)
+          :httpclient
+        when defined?(::Net::HTTP::Persistent)
+          :net_http_persistent
+        else
+          ::Faraday.default_adapter
+        end
       end
     end
   end

@@ -28,8 +28,9 @@ Features overview:
 * Node reloading (based on cluster state) on errors or on demand
 
 For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections,
-e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or [Curb](https://github.com/taf2/curb/) --
-see example configurations [below](#transport-implementations).
+e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or [Patron](https://github.com/toland/patron).
+Just `require 'typhoeus'` or `require 'patron'` in your code, and it will be used.
+For detailed information, see example configurations [below](#transport-implementations).
 
 ## Installation
 
@@ -198,9 +199,41 @@ Only when these would be unavailable, the strategy will use the other nodes:
 ### Transport Implementations
 
 By default, the client will use the [_Faraday_](https://rubygems.org/gems/faraday) HTTP library
-as a transport implementation. You can configure the _Faraday_ instance, eg. to use a different
-HTTP adapter (such as Typhoeus) or custom middleware, by passing a configuration block
-to the transport constructor:
+as a transport implementation.
+
+It will auto-detect and use an _adapter_ for _Faraday_ based on gems loaded in your code,
+preferring HTTP clients with support for persistent connections.
+
+To use the [_Patron_](https://github.com/toland/patron) HTTP, for example, just require it:
+
+    require 'patron'
+
+Then, create a new client, and the _Patron_  gem will be used as the "driver":
+
+    client = Elasticsearch::Client.new
+
+    client.transport.connections.first.connection.builder.handlers
+    # => [Faraday::Adapter::Patron]
+
+    10.times do
+      client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
+        puts "#{n['name']} : #{n['http']['total_opened']}"
+      end
+    end
+
+    # => Stiletoo : 24
+    # => Stiletoo : 24
+    # => Stiletoo : 24
+    # => ...
+
+To use a specific adapter for _Faraday_, pass it as the `adapter` argument:
+
+    client = Elasticsearch::Client.new adapter: :net_http_persistent
+
+    client.transport.connections.first.connection.builder.handlers
+    # => [Faraday::Adapter::NetHttpPersistent]
+
+To configure the _Faraday_ instance, pass a configuration block to the transport constructor:
 
     require 'typhoeus'
     require 'typhoeus/adapters/faraday'
