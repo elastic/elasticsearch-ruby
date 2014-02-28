@@ -151,7 +151,7 @@ mash = Hashie::Mash.new response
 mash.hits.hits.first._source.title
 # => 'Test'
 
-response.facets.tags.terms.first
+mash.facets.tags.terms.first
 # => #<Hashie::Mash count=3 term="z">
 ```
 
