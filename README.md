@@ -6,6 +6,9 @@ This repository contains Ruby integrations for [Elasticsearch](http://elasticsea
 * a Ruby API for the Elasticsearch's REST API,
 * various extensions and utilities.
 
+For integration with Ruby models and Rails applications,
+see the <https://github.com/elasticsearch/elasticsearch-rails> project.
+
 ## Compatibility
 
 The libraries are compatible with Ruby 1.8.7 and higher.

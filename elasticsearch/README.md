@@ -14,6 +14,9 @@ Features overview:
 * Extensive documentation and examples
 * Emphasis on modularity and extendability of both the client and API libraries
 
+(For integration with Ruby models and Rails applications,
+see the <https://github.com/elasticsearch/elasticsearch-rails> project.)
+
 ## Compatibility
 
 The library is compatible with Ruby 1.8.7 and higher.
