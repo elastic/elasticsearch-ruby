@@ -181,6 +181,15 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       end
     end
 
+    should "raise an error for HTTP status 404 with application/json content type" do
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
+      assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
+        @transport.perform_request 'GET', '/' do
+          Elasticsearch::Transport::Transport::Response.new 404, 'NOT FOUND', {"content-type" => 'application/json'}
+        end
+      end
+    end
+
     should "raise an error on server failure" do
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
