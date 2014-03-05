@@ -85,7 +85,8 @@ namespace :elasticsearch do
         cd #{__current__.join('support/elasticsearch')} && \
         git fetch origin --quiet && \
         git checkout #{branch} && \
-        mvn clean package -DskipTests && \
+        mvn clean && \
+        mvn package -DskipTests && \
         build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
         tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')} && \
         echo && echo && echo "Built: $build"
