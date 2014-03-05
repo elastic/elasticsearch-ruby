@@ -16,7 +16,6 @@ module Elasticsearch
       # By default, the document will be available for {Actions#get} immediately, for {Actions#search} only
       # after an index refresh operation has been performed (either automatically or manually).
       #
-      #
       # @example Create or update a document `myindex/mytype/1`
       #
       #     client.index index: 'myindex',
@@ -29,6 +28,27 @@ module Elasticsearch
       #                   published_at: Time.now.utc.iso8601,
       #                   counter: 1
       #                 }
+      #
+      # @example Refresh the index after the operation (useful e.g. in integration tests)
+      #
+      #     client.index index: 'myindex', type: 'mytype', id: '1', body: { title: 'TEST' }, refresh: true
+      #     client.search index: 'myindex', q: 'title:test'
+      #
+      # @example Create a document with a specific expiration time (TTL)
+      #
+      #     # Decrease the default housekeeping interval first:
+      #     client.cluster.put_settings body: { transient: { 'indices.ttl.interval' => '1s' } }
+      #
+      #     # Enable the `_ttl` property for all types within the index
+      #     client.indices.create index: 'myindex', body: { mappings: { mytype: { _ttl: { enabled: true } }  } }
+      #
+      #     client.index index: 'myindex', type: 'mytype', id: '1', body: { title: 'TEST' }, ttl: '5s'
+      #
+      #     sleep 3 and client.get index: 'myindex', type: 'mytype', id: '1'
+      #     # => {"_index"=>"myindex" ... "_source"=>{"title"=>"TEST"}}
+      #
+      #     sleep 3 and client.get index: 'myindex', type: 'mytype', id: '1'
+      #     # => Elasticsearch::Transport::Transport::Errors::NotFound: [404] ...
       #
       # @option arguments [String] :id Document ID (optional, will be auto-generated if missing)
       # @option arguments [String] :index The name of the index (*Required*)
