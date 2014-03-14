@@ -28,7 +28,7 @@ Install the `elasticsearch` package from [Rubygems](https://rubygems.org/gems/el
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+    gem 'elasticsearch', github: 'elasticsearch/elasticsearch-ruby'
 
 or install it from a source code checkout:
 
@@ -71,21 +71,21 @@ Keep in mind, that for optimal performance, you should use a HTTP library which 
 
 ### Transport
 
-* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport)
-* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test)
+* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
+* [Documentation](http://rubydoc.info/gems/elasticsearch-transport)
+* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test)
 
 ### API
 
-* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/)
-* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/test)
+* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
+* [Documentation](http://rubydoc.info/gems/elasticsearch-api/)
+* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/test)
 
 ### Extensions
 
-* [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/README.md)
-* [[Documentation]](http://rubydoc.info/gems/elasticsearch-extensions/)
-* [[Test Suite]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/test)
+* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/README.md)
+* [Documentation](http://rubydoc.info/gems/elasticsearch-extensions/)
+* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/test)
 
 ## License
 
