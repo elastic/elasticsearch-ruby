@@ -30,6 +30,7 @@ module Elasticsearch
       # @see Cluster#stop Cluster.stop
       #
       module Cluster
+        STATUSES = ['red', 'yellow', 'green']
         @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || 2).to_i
 
         # Starts a cluster
@@ -76,11 +77,15 @@ module Elasticsearch
           arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
           arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
-          arguments[:timeout]      ||= 30
+          arguments[:timeout]      ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
 
           if running? :on => arguments[:port], :as => arguments[:cluster_name]
             print "[!] Elasticsearch cluster already running".ansi(:red)
-            wait_for_green(arguments[:port], arguments[:timeout])
+            if @@number_of_nodes > 1
+              wait_for_green(arguments[:port], arguments[:timeout])
+            else
+              wait_for_yellow(arguments[:port], arguments[:timeout])
+            end
             return false
           end
 
@@ -118,7 +123,12 @@ module Elasticsearch
             exit(1)
           end
 
-          wait_for_green(arguments[:port], arguments[:timeout])
+          if @@number_of_nodes > 1
+            wait_for_green(arguments[:port], arguments[:timeout])
+          else
+            wait_for_yellow(arguments[:port], arguments[:timeout])
+          end
+
           return true
         end
 
@@ -197,6 +207,19 @@ module Elasticsearch
           __wait_for_status('green', port, timeout)
         end
 
+        # Waits until the cluster is yellow and prints information
+        #
+        # @example Print the information about the default cluster
+        #     Elasticsearch::Extensions::Test::Cluster.wait_for_yellow
+        #
+        # @param (see #__wait_for_status)
+        #
+        # @return Boolean
+        #
+        def wait_for_yellow(port=9250, timeout=60)
+          __wait_for_status('yellow', port, timeout)
+        end
+
         # Blocks the process and waits for the cluster to be in a "green" state.
         #
         # Prints information about the cluster on STDOUT if the cluster is available.
@@ -223,7 +246,7 @@ module Elasticsearch
 
               puts response.inspect if ENV['DEBUG']
 
-              if response && response['status'] == status && ( @@number_of_nodes.nil? || @@number_of_nodes == response['number_of_nodes'].to_i  )
+              if response && STATUSES.index(response['status']) >= STATUSES.index(status)
                 __print_cluster_info(port) and break
               end
 
