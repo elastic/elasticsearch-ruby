@@ -22,6 +22,16 @@ module Elasticsearch
       #                     facets: { tags: { terms: { field: 'tags' } } }
       #                   }
       #
+      #
+      # @example Basic pagination (5 documents, beginning from the 10th)
+      #
+      #     client.search index: 'myindex',
+      #                   body: {
+      #                     query: { match: { title: 'test' } },
+      #                     from: 10, 
+      #                     size: 5
+      #                   }
+      #
       # @example Passing the search definition as a `String`, built with a JSON builder
       #
       #     require 'jbuilder'
