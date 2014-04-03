@@ -1,3 +1,4 @@
+require "uri"
 require "time"
 require "timeout"
 require "multi_json"
