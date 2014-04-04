@@ -17,13 +17,12 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
         #                                   use `_local` to return information from the node you're connecting to, leave
         #                                   empty to get information from all nodes
-        # @option arguments [Boolean] :all Return all available information
-        # @option arguments [Boolean] :clear Reset the default settings
+        # @option arguments [Boolean] :_all Return all available information
         # @option arguments [Boolean] :http Return information about HTTP
         # @option arguments [Boolean] :jvm Return information about the JVM
         # @option arguments [Boolean] :network Return information about network
         # @option arguments [Boolean] :os Return information about the operating system
-        # @option arguments [Boolean] :plugin Return information about plugins
+        # @option arguments [Boolean] :plugins Return information about plugins
         # @option arguments [Boolean] :process Return information about the Elasticsearch process
         # @option arguments [Boolean] :settings Return information about node settings
         # @option arguments [Boolean] :thread_pool Return information about the thread pool
@@ -32,24 +31,28 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
         #
         def info(arguments={})
-          valid_params = [
-            :all,
-            :clear,
+          valid_parts = [
+            :_all,
             :http,
             :jvm,
             :network,
             :os,
-            :plugin,
+            :plugins,
             :process,
             :settings,
             :thread_pool,
             :transport ]
 
-          method = 'GET'
-          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id])
+          valid_params = []
 
+          method = 'GET'
+
+          parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
+          arguments.delete_if { |k,v| valid_parts.include? k }
+
+          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
           params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
+          body   = nil
 
           perform_request(method, path, params, body).body
         end
