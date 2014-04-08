@@ -215,14 +215,17 @@ module Elasticsearch
             raise e
           end
 
+          duration = Time.now-start if logger || tracer
+
           if response.status.to_i >= 300
+            __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
+            __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
             __log_failed response if logger
             __raise_transport_error response
           end
 
           json     = serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
-          duration = Time.now-start if logger || tracer
 
           __log   method, path, params, body, url, response, json, took, duration if logger
           __trace method, path, params, body, url, response, json, took, duration if tracer

@@ -305,10 +305,11 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
                  end
     end
 
-    should "log failed request" do
+    should "log a failed Elasticsearch request" do
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
+      @transport.expects(:__log)
       @transport.logger.expects(:fatal)
 
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
@@ -316,10 +317,11 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       end
     end unless RUBY_1_8
 
-    should "log and re-raise exception" do
+    should "log and re-raise a Ruby exception" do
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).raises(Exception)
 
+      @transport.expects(:__log).never
       @transport.logger.expects(:fatal)
 
       assert_raise(Exception) { @transport.perform_request('POST', '_search', &@block) }
@@ -367,6 +369,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
                    Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}'
                  end
     end
+
+    should "trace a failed Elasticsearch request" do
+      @block = Proc.new { |c, u| puts "ERROR" }
+      @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
+
+      @transport.expects(:__trace)
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+        @transport.perform_request('POST', '_search', &@block)
+      end
+    end unless RUBY_1_8
 
   end
 
