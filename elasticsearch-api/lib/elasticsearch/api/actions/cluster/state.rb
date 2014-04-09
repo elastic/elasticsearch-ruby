@@ -12,7 +12,8 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or omit to
         #                                 perform the operation on all indices
         # @option arguments [List] :metric Limit the information returned to the specified metrics
-        #                                 (options: _all, blocks, index_templates, metadata, nodes, routing_table)
+        #                                 (options: _all, blocks, index_templates, metadata, nodes, routing_table,
+        #                                  master_node, version)
         # @option arguments [List] :index_templates A comma separated list to return specific index templates when
         #                                           returning metadata
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
