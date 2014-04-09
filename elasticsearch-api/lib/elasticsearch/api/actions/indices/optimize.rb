@@ -25,6 +25,8 @@ module Elasticsearch
         #                                              are open, closed or both. (options: open, closed)
         # @option arguments [Boolean] :flush Specify whether the index should be flushed after performing the operation
         #                                    (default: true)
+        # @option arguments [Boolean] :force Force a merge operation to run, even when the index has a single segment
+        #                                    (default: true)
         # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
@@ -48,6 +50,7 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards,
             :flush,
+            :force,
             :master_timeout,
             :max_num_segments,
             :only_expunge_deletes,
