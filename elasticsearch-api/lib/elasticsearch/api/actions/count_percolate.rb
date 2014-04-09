@@ -44,7 +44,7 @@ module Elasticsearch
       # @option arguments [String] :percolate_index The index to percolate the document into. Defaults to passed `index`.
       # @option arguments [String] :percolate_type The type to percolate document into. Defaults to passed `type`.
       # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external)
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html
       #

@@ -24,7 +24,7 @@ module Elasticsearch
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external)
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
       # @see http://elasticsearch.org/guide/reference/api/delete/
       #
