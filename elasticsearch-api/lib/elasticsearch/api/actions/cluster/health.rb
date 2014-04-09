@@ -5,9 +5,13 @@ module Elasticsearch
 
         # Returns information about cluster "health".
         #
-        # @example
+        # @example Get the cluster health information
         #
         #     client.cluster.health
+        #
+        # @example Block the request until the cluster is in the "yellow" state
+        #
+        #     client.cluster.health wait_for_status: 'yellow'
         #
         # @option arguments [String] :index Limit the information returned to a specific index
         # @option arguments [String] :level Specify the level of detail for returned information
