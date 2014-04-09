@@ -191,7 +191,8 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
 
       should "detect the adapter" do
-        require 'patron'
+        require 'patron'; load 'patron.rb'
+
         c = Elasticsearch::Transport::Client.new
         handlers = c.transport.connections.all.first.connection.builder.handlers
 
