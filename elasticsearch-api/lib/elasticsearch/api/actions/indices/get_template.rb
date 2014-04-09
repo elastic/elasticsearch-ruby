@@ -5,13 +5,17 @@ module Elasticsearch
 
         # Get a single index template.
         #
+        # @example Get all templates
+        #
+        #     client.indices.get_template
+        #
         # @example Get a template named _mytemplate_
         #
         #     client.indices.get_template name: 'mytemplate'
         #
         # @note Use the {Cluster::Actions#state} API to get a list of all templates.
         #
-        # @option arguments [String] :name The name of the template (*Required*)
+        # @option arguments [String] :name The name of the template (supports wildcards)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #

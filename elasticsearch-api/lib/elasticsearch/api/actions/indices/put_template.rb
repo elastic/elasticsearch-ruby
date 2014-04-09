@@ -5,11 +5,10 @@ module Elasticsearch
 
         # Create or update an index template.
         #
-        #
         # @example Create a template for all indices starting with `logs-`
         #
-        #     client.indices.put_template :name => 'foo',
-        #                                 :body => { template: 'logs-*', settings: { 'index.number_of_shards' => 1 } }
+        #     client.indices.put_template name: 'foo',
+        #                                 body: { template: 'logs-*', settings: { 'index.number_of_shards' => 1 } }
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Hash] :body The template definition (*Required*)
