@@ -21,7 +21,8 @@ module Elasticsearch
 
     COMMON_QUERY_PARAMS = [
       :format,                        # Search, Cat, ...
-      :pretty                         # Pretty-print the response
+      :pretty,                        # Pretty-print the response
+      :human                          # Return numeric values in human readable format
     ]
 
     # Auto-include all namespaces in the receiver
