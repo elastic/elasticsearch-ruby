@@ -47,10 +47,9 @@ module Elasticsearch
 
           method = 'GET'
 
-          parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
-          arguments.delete_if { |k,v| valid_parts.include? k }
-
+          parts  = Utils.__extract_parts arguments, valid_parts
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
+
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
