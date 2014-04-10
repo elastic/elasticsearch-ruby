@@ -166,6 +166,14 @@ module Elasticsearch
 
         end
 
+        context "__extract_parts" do
+
+          should "extract valid parts from a Hash" do
+            assert_equal( ['foo'], __extract_parts({ :foo => 'qux' }, [:foo, :bar]) )
+          end
+
+        end
+
       end
     end
   end

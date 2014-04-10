@@ -103,7 +103,7 @@ module Elasticsearch
 
       # Validates the argument Hash against common and valid API parameters
       #
-      # @param arguments [Hash]             Hash of arguments to verify and extract, **with symbolized keys**
+      # @param arguments    [Hash]          Hash of arguments to verify and extract, **with symbolized keys**
       # @param valid_params [Array<Symbol>] An array of symbols with valid keys
       #
       # @return [Hash]         Return whitelisted Hash
@@ -128,6 +128,28 @@ module Elasticsearch
         params = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || valid_params.include?(k) }
         params = Hash[params] unless params.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
         params
+      end
+
+      # Extracts the valid parts of the URL from the arguments
+      #
+      # @note Mutates the `arguments` argument, to prevent failures in `__validate_and_extract_params`.
+      #
+      # @param arguments   [Hash]          Hash of arguments to verify and extract, **with symbolized keys**
+      # @param valid_parts [Array<Symbol>] An array of symbol with valid keys
+      #
+      # @return [Array<String>]            Valid parts of the URL as an array of strings
+      #
+      # @example Extract parts
+      #   __extract_parts { :foo => true }, [:foo, :bar]
+      #   # => [:foo]
+      #
+      #
+      # @api private
+      #
+      def __extract_parts(arguments, valid_parts=[])
+        parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
+        arguments.delete_if { |k,v| valid_parts.include? k }
+        return parts
       end
 
       extend self
