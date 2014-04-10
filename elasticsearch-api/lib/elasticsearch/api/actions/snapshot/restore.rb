@@ -12,7 +12,7 @@ module Elasticsearch
         # @example Restore a specific index under a different name
         #
         #     client.snapshot.restore repository: 'my-backups',
-        #                             snapshot: 'snapshot-5',
+        #                             snapshot: 'snapshot-1',
         #                             body: {
         #                               rename_pattern: "^(.*)$",
         #                               rename_replacement: "restored_$1"
