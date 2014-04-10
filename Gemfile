@@ -17,10 +17,10 @@ gem "yard"
 gem "ci_reporter"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  gem "ruby-prof" unless defined? JRUBY_VERSION
+  gem "ruby-prof"    unless defined? JRUBY_VERSION || Rubinius
+  gem "require-prof" unless defined? JRUBY_VERSION || Rubinius
   gem "simplecov"
   gem "simplecov-rcov"
   gem "cane"
-  gem "require-prof"
   gem "coveralls"
 end
