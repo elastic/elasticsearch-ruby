@@ -134,6 +134,18 @@ You can pass the client any conforming logger implementation:
 
     client = Elasticsearch::Client.new logger: log
 
+### Exception Handling
+
+`elasticsearch-transport` [defines](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb) a number of exceptions for various client and server errors.
+
+The highest-level exception is `Elasticsearch::Transport::Transport::Error`, and will be raised for any generic client *or* server errors.
+
+`Elasticsearch::Transport::Transport::ServerError` will be raised for server errors only. Additionally, each non-2XX HTTP status code the server may return has its own exception class, [as defined in this list](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb#L19-L63), inside an `Errors` submodule.
+
+For example, a 404 from the server will raise a `Elasticsearch::Transport::Transport::Errors::NotFound` exception.
+
+Finally, a `Elasticsearch::Transport::Transport::SnifferTimeoutError` may be raised if there is a timeout during connection reloading.
+
 ### Randomizing Hosts
 
 If you pass multiple hosts to the client, it rotates across them in a round-robin fashion, by default.
