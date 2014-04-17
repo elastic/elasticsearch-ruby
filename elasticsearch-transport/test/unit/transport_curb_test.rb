@@ -16,6 +16,10 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport = Curb.new :hosts => [ { :host => 'foobar', :port => 1234 } ]
     end
 
+    should "implement host_unreachable_exceptions" do
+      assert_instance_of Array, @transport.host_unreachable_exceptions
+    end
+
     should "implement __build_connections" do
       assert_equal 1, @transport.hosts.size
       assert_equal 1, @transport.connections.size
