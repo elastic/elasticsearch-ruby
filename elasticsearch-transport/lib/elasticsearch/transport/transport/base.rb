@@ -129,7 +129,7 @@ module Elasticsearch
         # @api private
         def __raise_transport_error(response)
           error = ERRORS[response.status] || ServerError
-          raise error.new "[#{response.status}] #{response.body}"
+          raise error.new "HTTP Transport Error: [#{response.status}] #{response.body}"
         end
 
         # Converts any non-String object to JSON
@@ -217,7 +217,7 @@ module Elasticsearch
 
           duration = Time.now-start if logger || tracer
 
-          if response.status.to_i >= 300
+          if !response.success?
             __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
             __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
             __log_failed response if logger
