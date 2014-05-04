@@ -54,11 +54,13 @@ or install it from a source code checkout:
 In the simplest form, connect to Elasticsearch running on <http://localhost:9200>
 without any configuration:
 
-    require 'elasticsearch/transport'
+~~~Ruby
+require 'elasticsearch/transport'
 
-    client = Elasticsearch::Client.new
-    response = client.perform_request 'GET', '_cluster/health'
-    # => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
+client = Elasticsearch::Client.new
+response = client.perform_request 'GET', '_cluster/health'
+# => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
+~~~
 
 Full documentation is available at <http://rubydoc.info/gems/elasticsearch-transport>.
 
@@ -71,31 +73,41 @@ configuring logging, customizing the transport library, etc.
 
 To connect to a specific Elasticsearch host:
 
-    Elasticsearch::Client.new host: 'search.myserver.com'
+~~~Ruby
+Elasticsearch::Client.new host: 'search.myserver.com'
+~~~
 
 To connect to a host with specific port:
 
-    Elasticsearch::Client.new host: 'myhost:8080'
+~~~Ruby
+Elasticsearch::Client.new host: 'myhost:8080'
+~~~
 
 To connect to multiple hosts:
 
-    Elasticsearch::Client.new hosts: ['myhost1', 'myhost2']
+~~~Ruby
+Elasticsearch::Client.new hosts: ['myhost1', 'myhost2']
+~~~
 
 Instead of Strings, you can pass host information as an array of Hashes:
 
-    Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
+~~~Ruby
+Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
-    Elasticsearch::Client.new hosts: [
-      { host: 'my-protected-host',
-        port: '443',
-        user: 'USERNAME',
-        password: 'PASSWORD',
-        scheme: 'https'
-      } ]
+Elasticsearch::Client.new hosts: [
+  { host: 'my-protected-host',
+    port: '443',
+    user: 'USERNAME',
+    password: 'PASSWORD',
+    scheme: 'https'
+  } ]
+~~~
 
 Scheme, HTTP authentication credentials and URL prefixes are handled automatically:
 
-    Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+~~~Ruby
+Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+~~~
 
 The client will automatically round-robin across the hosts
 (unless you select or implement a different [connection selector](#connection-selector)).
@@ -105,30 +117,40 @@ The client will automatically round-robin across the hosts
 To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
 set the `log` argument:
 
-    Elasticsearch::Client.new log: true
+~~~Ruby
+Elasticsearch::Client.new log: true
+~~~
 
 To trace requests and responses in the _Curl_ format, set the `trace` argument:
 
-    Elasticsearch::Client.new trace: true
+~~~Ruby
+Elasticsearch::Client.new trace: true
+~~~
 
 You can customize the default logger or tracer:
 
-    client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
-    client.transport.logger.level = Logger::INFO
+~~~Ruby
+client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
+client.transport.logger.level = Logger::INFO
+~~~
 
 Or, you can use a custom {::Logger} instance:
 
-    Elasticsearch::Client.new logger: Logger.new(STDERR)
+~~~Ruby
+Elasticsearch::Client.new logger: Logger.new(STDERR)
+~~~
 
 You can pass the client any conforming logger implementation:
 
-    require 'logging' # https://github.com/TwP/logging/
+~~~Ruby
+require 'logging' # https://github.com/TwP/logging/
 
-    log = Logging.logger['elasticsearch']
-    log.add_appenders Logging.appenders.stdout
-    log.level = :info
+log = Logging.logger['elasticsearch']
+log.add_appenders Logging.appenders.stdout
+log.level = :info
 
-    client = Elasticsearch::Client.new logger: log
+client = Elasticsearch::Client.new logger: log
+~~~
 
 ### Randomizing Hosts
 
@@ -137,18 +159,24 @@ When the same client would be running in multiple processes (eg. in a Ruby web s
 it might keep connecting to the same nodes "at once". To prevent this, you can randomize the hosts
 collection on initialization and reloading:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true
+~~~
 
 ### Retrying on Failures
 
 When the client is initialized with multiple hosts, it makes sense to retry a failed request
 on a different host:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
+~~~
 
 You can specify how many times should the client retry the request before it raises an exception:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+~~~
 
 ### Reloading Hosts
 
@@ -159,19 +187,27 @@ To retrieve and use the information from the
 [_Nodes Info API_](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/)
 on every 10,000th request:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
+~~~
 
 You can pass a specific number of requests after which the reloading should be performed:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000
+~~~
 
 To reload connections on failures, use:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true
+~~~
 
 The reloading will timeout if not finished under 1 second by default. To change the setting:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
+~~~Ruby
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
+~~~
 
 ### Connection Selector
 
@@ -183,18 +219,20 @@ let's have a "rack aware" strategy, which will prefer the nodes with a specific
 [attribute](https://github.com/elasticsearch/elasticsearch/blob/1.0/config/elasticsearch.yml#L81-L85).
 Only when these would be unavailable, the strategy will use the other nodes:
 
-    class RackIdSelector
-      include Elasticsearch::Transport::Transport::Connections::Selector::Base
+~~~Ruby
+class RackIdSelector
+  include Elasticsearch::Transport::Transport::Connections::Selector::Base
 
-      def select(options={})
-        connections.select do |c|
-          # Try selecting the nodes with a `rack_id:x1` attribute first
-          c.host[:attributes] && c.host[:attributes][:rack_id] == 'x1'
-        end.sample || connections.to_a.sample
-      end
-    end
+  def select(options={})
+    connections.select do |c|
+      # Try selecting the nodes with a `rack_id:x1` attribute first
+      c.host[:attributes] && c.host[:attributes][:rack_id] == 'x1'
+    end.sample || connections.to_a.sample
+  end
+end
 
-    Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_class: RackIdSelector
+Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_class: RackIdSelector
+~~~
 
 ### Transport Implementations
 
@@ -206,105 +244,121 @@ preferring HTTP clients with support for persistent connections.
 
 To use the [_Patron_](https://github.com/toland/patron) HTTP, for example, just require it:
 
-    require 'patron'
+~~~Ruby
+require 'patron'
+~~~
 
 Then, create a new client, and the _Patron_  gem will be used as the "driver":
 
-    client = Elasticsearch::Client.new
+~~~Ruby
+client = Elasticsearch::Client.new
 
-    client.transport.connections.first.connection.builder.handlers
-    # => [Faraday::Adapter::Patron]
+client.transport.connections.first.connection.builder.handlers
+# => [Faraday::Adapter::Patron]
 
-    10.times do
-      client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
-        puts "#{n['name']} : #{n['http']['total_opened']}"
-      end
-    end
+10.times do
+  client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
+    puts "#{n['name']} : #{n['http']['total_opened']}"
+  end
+end
 
-    # => Stiletoo : 24
-    # => Stiletoo : 24
-    # => Stiletoo : 24
-    # => ...
+# => Stiletoo : 24
+# => Stiletoo : 24
+# => Stiletoo : 24
+# => ...
+~~~
 
 To use a specific adapter for _Faraday_, pass it as the `adapter` argument:
 
-    client = Elasticsearch::Client.new adapter: :net_http_persistent
+~~~Ruby
+client = Elasticsearch::Client.new adapter: :net_http_persistent
 
-    client.transport.connections.first.connection.builder.handlers
-    # => [Faraday::Adapter::NetHttpPersistent]
+client.transport.connections.first.connection.builder.handlers
+# => [Faraday::Adapter::NetHttpPersistent]
+~~~
 
 To configure the _Faraday_ instance, pass a configuration block to the transport constructor:
 
-    require 'typhoeus'
-    require 'typhoeus/adapters/faraday'
+~~~Ruby
+require 'typhoeus'
+require 'typhoeus/adapters/faraday'
 
-    transport_configuration = lambda do |f|
-      f.response :logger
-      f.adapter  :typhoeus
-    end
+transport_configuration = lambda do |f|
+  f.response :logger
+  f.adapter  :typhoeus
+end
 
-    transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-      hosts: [ { host: 'localhost', port: '9200' } ],
-      &transport_configuration
+transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+  hosts: [ { host: 'localhost', port: '9200' } ],
+  &transport_configuration
 
-    # Pass the transport to the client
-    #
-    client = Elasticsearch::Client.new transport: transport
+# Pass the transport to the client
+#
+client = Elasticsearch::Client.new transport: transport
+~~~
 
 To pass options to the
 [`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
 constructor, use the `transport_options` key:
 
-    client = Elasticsearch::Client.new transport_options: {
-      request: { open_timeout: 1 },
-      headers: { user_agent:   'MyApp' },
-      params:  { :format => 'yaml' }
-    }
+~~~Ruby
+client = Elasticsearch::Client.new transport_options: {
+  request: { open_timeout: 1 },
+  headers: { user_agent:   'MyApp' },
+  params:  { :format => 'yaml' }
+}
+~~~
 
 You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
 
-    require 'curb'
-    require 'elasticsearch/transport/transport/http/curb'
+~~~Ruby
+  require 'curb'
+require 'elasticsearch/transport/transport/http/curb'
 
-    client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
 
-    client.transport.connections.first.connection
-    # => #<Curl::Easy http://localhost:9200/>
+client.transport.connections.first.connection
+# => #<Curl::Easy http://localhost:9200/>
+~~~
 
 It's possible to customize the _Curb_ instance by passing a block to the constructor as well
 (in this case, as an inline block):
 
-    transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-      hosts: [ { host: 'localhost', port: '9200' } ],
-      & lambda { |c| c.verbose = true }
+~~~Ruby
+transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+  hosts: [ { host: 'localhost', port: '9200' } ],
+  & lambda { |c| c.verbose = true }
 
-    client = Elasticsearch::Client.new transport: transport
+client = Elasticsearch::Client.new transport: transport
+~~~
 
 Instead of passing the transport to the constructor, you can inject it at run time:
 
-    # Set up the transport
-    #
-    faraday_configuration = lambda do |f|
-      f.instance_variable_set :@ssl, { verify: false }
-      f.adapter :excon
-    end
+~~~Ruby
+# Set up the transport
+#
+faraday_configuration = lambda do |f|
+  f.instance_variable_set :@ssl, { verify: false }
+  f.adapter :excon
+end
 
-    faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-      hosts: [ { host: 'my-protected-host',
-                 port: '443',
-                 user: 'USERNAME',
-                 password: 'PASSWORD',
-                 scheme: 'https'
-              }],
-      &faraday_configuration
+faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+  hosts: [ { host: 'my-protected-host',
+             port: '443',
+             user: 'USERNAME',
+             password: 'PASSWORD',
+             scheme: 'https'
+          }],
+  &faraday_configuration
 
-    # Create a default client
-    #
-    client = Elasticsearch::Client.new
+# Create a default client
+#
+client = Elasticsearch::Client.new
 
-    # Inject the transport to the client
-    #
-    client.transport = faraday_client
+# Inject the transport to the client
+#
+client.transport = faraday_client
+~~~
 
 You can write your own transport implementation easily, by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required contract,
