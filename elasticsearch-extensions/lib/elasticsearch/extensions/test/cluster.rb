@@ -105,6 +105,7 @@ module Elasticsearch
                 -D es.network.host=0.0.0.0 \
                 -D es.discovery.zen.ping.multicast.enabled=true \
                 -D es.node.test=true \
+                -D es.node.bench=true \
                 #{arguments[:es_params]} \
                 > /dev/null
             COMMAND
