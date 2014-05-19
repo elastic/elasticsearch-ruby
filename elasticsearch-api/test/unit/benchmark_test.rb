@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.benchmark body: { name: 'foo' }
+          subject.benchmark :body => { :name => 'foo' }
         end
 
       end

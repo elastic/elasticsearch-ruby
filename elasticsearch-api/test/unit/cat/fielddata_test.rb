@@ -28,7 +28,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.cat.fielddata fields: ['foo', 'bar']
+          subject.cat.fielddata :fields => ['foo', 'bar']
         end
 
       end

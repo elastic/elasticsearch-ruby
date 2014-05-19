@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.abort_benchmark name: 'foo'
+          subject.abort_benchmark :name => 'foo'
         end
 
       end
