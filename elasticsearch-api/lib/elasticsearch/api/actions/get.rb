@@ -22,6 +22,8 @@ module Elasticsearch
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
       # @option arguments [String] :routing Specific routing value
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       # @option arguments [String] :_source Specify whether the _source field should be returned,
       #                                     or a list of fields to return
       # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
@@ -41,6 +43,8 @@ module Elasticsearch
           :realtime,
           :refresh,
           :routing,
+          :version,
+          :version_type,
           :_source,
           :_source_include,
           :_source_exclude ]
