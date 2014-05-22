@@ -70,7 +70,6 @@ module Elasticsearch
       # @option arguments [Number] :from Starting offset (default: 0)
       # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
       #                                            (options: none, missing)
-      # @option arguments [List] :indices_boost Comma-separated list of index boosts
       # @option arguments [Boolean] :lenient Specify whether format-based query failures
       #                                      (such as providing text to a numeric field) should be ignored
       # @option arguments [Boolean] :lowercase_expanded_terms Specify whether query terms should be lowercased
@@ -118,7 +117,6 @@ module Elasticsearch
           :ignore_unavailable,
           :allow_no_indices,
           :expand_wildcards,
-          :indices_boost,
           :lenient,
           :lowercase_expanded_terms,
           :preference,
