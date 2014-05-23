@@ -67,6 +67,8 @@ module Elasticsearch
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are
       #                                              open, closed or both. (options: open, closed)
       # @option arguments [String] :percolate_index The index to percolate the document into. Defaults to passed `index`.
+      # @option arguments [String] :percolate_format Return an array of matching query IDs instead of objects.
+      #                                              (options: ids)
       # @option arguments [String] :percolate_type The type to percolate document into. Defaults to passed `type`.
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
@@ -85,6 +87,7 @@ module Elasticsearch
           :expand_wildcards,
           :percolate_index,
           :percolate_type,
+          :percolate_format,
           :version,
           :version_type ]
 
