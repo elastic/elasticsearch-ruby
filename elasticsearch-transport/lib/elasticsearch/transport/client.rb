@@ -73,7 +73,7 @@ module Elasticsearch
       #                                        {Elasticsearch::Transport::Transport::Connections::Selector::Base}.
       #
       def initialize(arguments={})
-        hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
+        hosts            = arguments[:hosts] || arguments[:host] || arguments[:url] || __environment_url
 
         arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
         arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
@@ -100,6 +100,10 @@ module Elasticsearch
       #
       def perform_request(method, path, params={}, body=nil)
         transport.perform_request method, path, params, body
+      end
+
+      def __environment_url
+        ENV['ELASTICSEARCH_URL']
       end
 
       # Normalizes and returns hosts configuration.
