@@ -8,6 +8,8 @@ module Elasticsearch
     class Client
       DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
 
+      DEFAULT_URL = "localhost:9200"
+
       DEFAULT_LOGGER = lambda do
         require 'logger'
         logger = Logger.new(STDERR)
@@ -103,7 +105,7 @@ module Elasticsearch
       end
 
       def __environment_url
-        ENV['ELASTICSEARCH_URL']
+        ENV.fetch('ELASTICSEARCH_URL', DEFAULT_URL)
       end
 
       # Normalizes and returns hosts configuration.
@@ -118,8 +120,8 @@ module Elasticsearch
       #
       # @api private
       #
-      def __extract_hosts(hosts_config=nil, options={})
-        hosts_config = hosts_config.nil? ? ['localhost'] : Array(hosts_config)
+      def __extract_hosts(hosts_config, options={})
+        hosts_config = Array(hosts_config)
 
         hosts = hosts_config.map do |host|
           case host

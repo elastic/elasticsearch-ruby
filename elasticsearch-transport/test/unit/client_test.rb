@@ -90,13 +90,6 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
     end
 
     context "extracting hosts" do
-      should "handle defaults" do
-        hosts = @client.__extract_hosts
-
-        assert_equal 'localhost', hosts[0][:host]
-        assert_nil                hosts[0][:port]
-      end
-
       should "extract from string" do
         hosts = @client.__extract_hosts 'myhost'
 
