@@ -70,16 +70,20 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'foobar', c2.transport.hosts.first[:host]
         assert_equal 'foobar', c3.transport.hosts.first[:host]
       end
+
+    end
+
+    context "when the URL is set in the environment variable" do
+      setup    { ENV['ELASTICSEARCH_URL'] = 'foobar' }
+      teardown { ENV.delete('ELASTICSEARCH_URL')     }
+
+      should "use it" do
+        c = Elasticsearch::Transport::Client.new
+        assert_equal 'foobar', c.transport.hosts.first[:host]
+      end
     end
 
     context "extracting hosts" do
-      should "handle defaults" do
-        hosts = @client.__extract_hosts
-
-        assert_equal 'localhost', hosts[0][:host]
-        assert_nil                hosts[0][:port]
-      end
-
       should "extract from string" do
         hosts = @client.__extract_hosts 'myhost'
 

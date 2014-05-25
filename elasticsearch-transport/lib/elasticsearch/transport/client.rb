@@ -33,6 +33,8 @@ module Elasticsearch
 
       # Create a client connected to an Elasticsearch cluster.
       #
+      # Specify the URL via arguments or set the `ELASTICSEARCH_URL` environment variable.
+      #
       # @option arguments [String,Array] :hosts Single host passed as a String or Hash, or multiple hosts
       #                                         passed as an Array; `host` or `url` keys are also valid
       #
@@ -73,7 +75,7 @@ module Elasticsearch
       #                                        {Elasticsearch::Transport::Transport::Connections::Selector::Base}.
       #
       def initialize(arguments={})
-        hosts            = arguments[:hosts] || arguments[:host] || arguments[:url]
+        hosts = arguments[:hosts] || arguments[:host] || arguments[:url] || ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
 
         arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
         arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
@@ -114,8 +116,8 @@ module Elasticsearch
       #
       # @api private
       #
-      def __extract_hosts(hosts_config=nil, options={})
-        hosts_config = hosts_config.nil? ? ['localhost'] : Array(hosts_config)
+      def __extract_hosts(hosts_config, options={})
+        hosts_config = Array(hosts_config)
 
         hosts = hosts_config.map do |host|
           case host
