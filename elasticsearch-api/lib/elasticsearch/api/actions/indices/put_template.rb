@@ -12,16 +12,19 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Hash] :body The template definition (*Required*)
+        # @option arguments [Boolean] :create Whether the index template should only be added for a new one, #                                     or can also replace an existing one (default: false)
         # @option arguments [Number] :order The order for this template when merging multiple matching ones
         #                                   (higher numbers are merged later, overriding the lower numbers)
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #
         def put_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [ :order, :timeout ]
+          valid_params = [ :create, :order, :timeout ]
 
           method = 'PUT'
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
