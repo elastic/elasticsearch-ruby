@@ -218,6 +218,7 @@ module Elasticsearch
 
       def skip?(actions)
         skip = actions.select { |a| a['skip'] }.first
+        $stderr.puts "SKIP: #{skip.inspect}" if ENV['DEBUG']
 
         # Skip version
         if skip && skip['skip']['version']
@@ -273,6 +274,7 @@ suites.each do |suite|
     #
     setup do
       $client.indices.delete index: '_all'
+      $client.indices.delete_template name: '*'
       $results = {}
       $stash   = {}
     end
