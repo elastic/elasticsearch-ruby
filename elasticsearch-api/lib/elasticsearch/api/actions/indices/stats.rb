@@ -48,8 +48,14 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string
         #                                 to perform the operation on all indices
         # @option arguments [Boolean] :indexing Return information about indexing operations
+        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level
+        #                                   (Options: cluster, indices, shards)
         # @option arguments [List] :types A comma-separated list of document types to include in the `indexing` info
         # @option arguments [Boolean] :merge Return information about merge operations
+        # @option arguments [List] :metric Limit the information returned the specific metrics
+        #                                  (_all, completion, docs, fielddata, filter_cache, flush, get,
+        #                                  id_cache, indexing, merge, percolate, refresh, search, segments,
+        #                                  store, warmer, suggest)
         # @option arguments [Boolean] :refresh Return information about refresh operations
         # @option arguments [Boolean] :search Return information about search operations; use the `groups` parameter to
         #                                     include information for specific search groups
@@ -76,6 +82,7 @@ module Elasticsearch
             :get,
             :indexing,
             :merge,
+            :metric,
             :refresh,
             :search,
             :suggest,
@@ -87,6 +94,7 @@ module Elasticsearch
             :completion_fields,
             :fielddata_fields,
             :groups,
+            :level,
             :types,
             :ignore_indices,
             :ignore_unavailable,
