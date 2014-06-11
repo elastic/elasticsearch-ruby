@@ -40,7 +40,7 @@ module Elasticsearch
 
         should "properly pass URL parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal '_nodes/http,jvm', url
+            assert_same_elements ['http','jvm'], url.split('/').last.split(',')
             assert_nil   params[:jvm]
             assert_nil   params[:http]
             true
