@@ -168,8 +168,12 @@ module Elasticsearch
 
         context "__extract_parts" do
 
-          should "extract valid parts from a Hash" do
-            assert_equal( ['foo'], __extract_parts({ :foo => 'qux' }, [:foo, :bar]) )
+          should "extract parts with true value from a Hash" do
+            assert_equal( ['foo'], __extract_parts({ :foo => true, :moo => 'blah' }, [:foo, :bar]) )
+          end
+
+          should "extract parts with string value from a Hash" do
+            assert_equal( ['qux'], __extract_parts({ :foo => 'qux', :moo => 'blah' }, [:foo, :bar]) )
           end
 
         end

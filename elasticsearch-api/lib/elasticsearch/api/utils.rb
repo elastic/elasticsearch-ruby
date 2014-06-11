@@ -147,7 +147,12 @@ module Elasticsearch
       # @api private
       #
       def __extract_parts(arguments, valid_parts=[])
-        parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
+        # require 'pry'; binding.pry;
+        # parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
+
+        parts = Hash[arguments.select { |k,v| valid_parts.include?(k) }]
+        parts = parts.reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v  }
+
         arguments.delete_if { |k,v| valid_parts.include? k }
         return parts
       end
