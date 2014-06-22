@@ -28,8 +28,12 @@ Features overview:
 * Node reloading (based on cluster state) on errors or on demand
 
 For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections,
-e.g. [Typhoeus](https://github.com/typhoeus/typhoeus) or [Patron](https://github.com/toland/patron).
-Just `require 'typhoeus'` or `require 'patron'` in your code, and it will be used.
+e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).
+Just `require 'patron'` or `require 'typhoeus'; require 'typhoeus/adapters/faraday'` in your code,
+and it will be automatically used; other automatically used libraries are
+[HTTPClient](https://rubygems.org/gems/httpclient) and
+[Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent).
+
 For detailed information, see example configurations [below](#transport-implementations).
 
 ## Installation
