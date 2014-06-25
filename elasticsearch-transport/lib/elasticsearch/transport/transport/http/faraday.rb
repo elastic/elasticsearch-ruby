@@ -18,11 +18,12 @@ module Elasticsearch
           #
           def perform_request(method, path, params={}, body=nil)
             super do |connection, url|
-              connection.connection.run_request \
+              response = connection.connection.run_request \
                 method.downcase.to_sym,
                 url,
                 ( body ? __convert_to_json(body) : nil ),
                 {}
+              Response.new response.status, response.body, response.headers
             end
           end
 

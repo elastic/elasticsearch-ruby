@@ -25,6 +25,12 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport.perform_request 'GET', '/'
     end
 
+    should "return a Response" do
+      @transport.connections.first.connection.expects(:run_request).returns(stub_everything)
+      response = @transport.perform_request 'GET', '/'
+      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+    end
+
     should "properly prepare the request" do
       @transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
         :post == method && '{"foo":"bar"}' == body
