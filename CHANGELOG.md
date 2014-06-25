@@ -1,3 +1,17 @@
+## 1.0.3
+
+### Client
+
+* Updated the parameters list for APIs (percolate, put index)
+* Updated the "Indices Stats" API
+* Improved the `__extract_parts` utility method
+
+### API
+
+* Fixed incorrect instructions for automatically using Typhoeus as the Faraday adapter
+* Fixed, that the Faraday adapter didn't return a correct <Response> object
+* Added, that the response body is automatically force-encoded to UTF-8
+
 ## 1.0.2
 
 * Improved the `elasticsearch:build` Rake task
