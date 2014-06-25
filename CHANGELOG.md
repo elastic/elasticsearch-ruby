@@ -1,4 +1,4 @@
-## 1.0.3
+## 1.0.4
 
 ### Client
 
@@ -11,6 +11,10 @@
 * Fixed incorrect instructions for automatically using Typhoeus as the Faraday adapter
 * Fixed, that the Faraday adapter didn't return a correct <Response> object
 * Added, that the response body is automatically force-encoded to UTF-8
+
+## 1.0.3
+
+[SKIP]
 
 ## 1.0.2
 
