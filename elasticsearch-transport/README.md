@@ -134,18 +134,6 @@ You can pass the client any conforming logger implementation:
 
     client = Elasticsearch::Client.new logger: log
 
-### Exception Handling
-
-`elasticsearch-transport` [defines](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb) a number of exceptions for various client and server errors.
-
-The highest-level exception is `Elasticsearch::Transport::Transport::Error`, and will be raised for any generic client *or* server errors.
-
-`Elasticsearch::Transport::Transport::ServerError` will be raised for server errors only. Additionally, each non-2XX HTTP status code the server may return has its own exception class, [as defined in this list](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb#L19-L63), inside an `Errors` submodule.
-
-For example, a 404 from the server will raise a `Elasticsearch::Transport::Transport::Errors::NotFound` exception.
-
-Finally, a `Elasticsearch::Transport::Transport::SnifferTimeoutError` may be raised if there is a timeout during connection reloading.
-
 ### Randomizing Hosts
 
 If you pass multiple hosts to the client, it rotates across them in a round-robin fashion, by default.
@@ -334,6 +322,23 @@ serializer implementation, and it will pick up the "right" adapter based on gems
 The serialization component is pluggable, though, so you can write your own by including the
 {Elasticsearch::Transport::Transport::Serializer::Base} module, implementing the required contract,
 and passing it to the client as the `serializer_class` or `serializer` parameter.
+
+### Exception Handling
+
+The library defines a [number of exception classes](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb)
+for various client and server errors, as well as unsuccessful HTTP responses,
+making it possible to `rescue` specific exceptions with desired granularity.
+
+The highest-level exception is {Elasticsearch::Transport::Transport::Error}
+and will be raised for any generic client *or* server errors.
+
+{Elasticsearch::Transport::Transport::ServerError} will be raised for server errors only.
+
+As an example for response-specific errors, a `404` response status will raise
+an {Elasticsearch::Transport::Transport::Errors::NotFound} exception.
+
+Finally, {Elasticsearch::Transport::Transport::SnifferTimeoutError} will be raised
+when connection reloading ("sniffing") times out.
 
 ## Development and Community
 
