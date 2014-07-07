@@ -16,14 +16,20 @@ module Elasticsearch
         # @note Use the {Cluster::Actions#state} API to get a list of all templates.
         #
         # @option arguments [String] :name The name of the template (supports wildcards)
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
+        #                                    (default: false)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #
         def get_template(arguments={})
+          valid_params = [ :flat_settings, :local ]
+
           method = 'GET'
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
-          params = {}
-          body = nil
+
+          params = Utils.__validate_and_extract_params arguments, valid_params
+          body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
