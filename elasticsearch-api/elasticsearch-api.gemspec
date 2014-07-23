@@ -60,7 +60,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency "simplecov-rcov"
     s.add_development_dependency "cane"
     s.add_development_dependency "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-    s.add_development_dependency "coveralls"
   end
 
   s.description = <<-DESC.gsub(/^    /, '')

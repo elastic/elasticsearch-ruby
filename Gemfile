@@ -22,5 +22,4 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "simplecov"
   gem "simplecov-rcov"
   gem "cane"
-  gem "coveralls"
 end
