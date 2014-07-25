@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "turn"
   s.add_development_dependency "yard"
   s.add_development_dependency "pry"
-  s.add_development_dependency "ci_reporter"
+  s.add_development_dependency "ci_reporter", "~> 1.9"
 
   # Gems for testing integrations
   s.add_development_dependency "jsonify"

@@ -14,7 +14,7 @@ gem "shoulda-context"
 gem "mocha"
 gem "turn"
 gem "yard"
-gem "ci_reporter"
+gem "ci_reporter", "~> 1.9"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "ruby-prof"    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
