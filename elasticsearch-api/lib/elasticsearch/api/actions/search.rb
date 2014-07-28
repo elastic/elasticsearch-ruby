@@ -19,7 +19,17 @@ module Elasticsearch
       #     client.search index: 'myindex',
       #                   body: {
       #                     query: { match: { title: 'test' } },
-      #                     facets: { tags: { terms: { field: 'tags' } } }
+      #                     facets: { tags: { terms: { field: 'tags' } } },
+      #                     from: 0, 
+      #                     size: 10
+      #                   }
+      #
+      # @example Basic pagination (5 documents, beginning from the 10th)
+      #
+      #     client.search index: 'myindex',
+      #                   body: {
+      #                     query: { match: { title: 'test' } },
+      
       #                   }
       #
       # @example Paginating results: return 10 documents, beginning from the 10th
