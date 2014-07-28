@@ -21,11 +21,10 @@ module Elasticsearch
         #
         # @example Delete all indices
         #
-        #     client.indices.delete
         #     client.indices.delete index: '_all'
         #
         # @option arguments [List] :index A comma-separated list of indices to delete;
-        #                                 use `_all` or leave empty to delete all indices
+        #                                 use `_all` to delete all indices
         # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/
