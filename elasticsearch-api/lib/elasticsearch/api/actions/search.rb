@@ -104,12 +104,14 @@ module Elasticsearch
       # @option arguments [Number] :suggest_size How many suggestions to return in response
       # @option arguments [Text] :suggest_text The source text for which the suggestions should be returned
       # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [String] :fuzzyness The level of fuzzyness. It is context dependent see API docs.
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       #
       # @return [Hash]
       #
       # @see http://www.elasticsearch.org/guide/reference/api/search/
       # @see http://www.elasticsearch.org/guide/reference/api/search/request-body/
+      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/common-options.html#fuzziness
       #
       def search(arguments={})
         arguments[:index] = '_all' if ! arguments[:index] && arguments[:type]
@@ -145,6 +147,7 @@ module Elasticsearch
           :suggest_size,
           :suggest_text,
           :timeout,
+          :fuzzyness,
           :version ]
 
         method = 'GET'
