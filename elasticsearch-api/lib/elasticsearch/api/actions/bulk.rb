@@ -51,7 +51,6 @@ module Elasticsearch
       #                             (options: one, quorum, all)
       # @option arguments [Boolean] :refresh Refresh the index after performing the operation
       # @option arguments [String]  :replication Explicitely set the replication type (options: sync, async)
-      # @option arguments [String]  :type Default document type for items which don't provide one
       # @option arguments [Time]    :timeout Explicit operation timeout
       #
       # @return [Hash] Deserialized Elasticsearch response

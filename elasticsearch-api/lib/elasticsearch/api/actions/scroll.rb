@@ -38,7 +38,6 @@ module Elasticsearch
       # @option arguments [Hash] :body The scroll ID if not passed by URL or query parameter.
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index
       #                                      should be maintained for scrolled search
-      # @option arguments [String] :scroll_id The scroll ID for scrolled search
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/scan-scroll.html#scan-scroll
       # @see http://www.elasticsearch.org/guide/reference/api/search/scroll/
