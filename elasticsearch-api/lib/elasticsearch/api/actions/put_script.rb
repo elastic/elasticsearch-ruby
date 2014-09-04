@@ -21,6 +21,9 @@ module Elasticsearch
       # @option arguments [String] :id Script ID (*Required*)
       # @option arguments [String] :lang Script language (*Required*)
       # @option arguments [Hash]   :body A JSON document containing the script (*Required*)
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
+      # @option arguments [String] :op_type Explicit operation type (options: index, create)
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
@@ -29,10 +32,15 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-        method = 'PUT'
-        path   = "_scripts/#{arguments[:lang]}/#{arguments[:id]}"
+        valid_params = [
+          :op_type,
+          :version,
+          :version_type ]
 
-        params = {}
+        method = 'PUT'
+        path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
 
         body   = arguments[:body]
 
