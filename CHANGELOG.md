@@ -1,3 +1,14 @@
+## 1.0.5
+
+### Client
+
+* Added support for automatically connecting to cluster set in the ELASTICSEARCH_URL environment variable
+* Improved documentation
+
+### API
+
+* Added the `flat_settings` and `local` parameters to the "Get Template" API
+
 ## 1.0.4
 
 ### Client
