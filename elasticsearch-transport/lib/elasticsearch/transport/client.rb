@@ -31,6 +31,8 @@ module Elasticsearch
       #
       attr_accessor :transport
 
+      attr_reader :send_get_body_as
+
       # Create a client connected to an Elasticsearch cluster.
       #
       # Specify the URL via arguments or set the `ELASTICSEARCH_URL` environment variable.
@@ -74,6 +76,8 @@ module Elasticsearch
       # @option arguments [Constant] :selector An instance of selector strategy implemented with
       #                                        {Elasticsearch::Transport::Transport::Connections::Selector::Base}.
       #
+      # @option arguments [String] :send_get_body_as HTTP Method to use for any GET requests with a body. ('GET' by default)
+      #
       def initialize(arguments={})
         hosts = arguments[:hosts] || arguments[:host] || arguments[:url] || ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
 
@@ -84,6 +88,8 @@ module Elasticsearch
         arguments[:reload_on_failure]  ||= false
         arguments[:randomize_hosts]    ||= false
         arguments[:transport_options]  ||= {}
+
+        @send_get_body_as = arguments[:send_get_body_as] || 'GET'
 
         transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
 
@@ -101,6 +107,10 @@ module Elasticsearch
       # Performs a request through delegation to {#transport}.
       #
       def perform_request(method, path, params={}, body=nil)
+        if method == 'GET' && body
+          method = send_get_body_as
+        end
+
         transport.perform_request method, path, params, body
       end
 
