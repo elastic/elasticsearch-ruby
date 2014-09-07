@@ -38,6 +38,13 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       @client.perform_request 'GET', '/'
     end
 
+    should "send GET body request as POST when option is set" do
+      transport = DummyTransport.new
+      client = Elasticsearch::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
+      transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}'
+      client.perform_request 'GET', '/', {}, '{"foo":"bar"}'
+    end
+
     should "have default logger for transport" do
       client = Elasticsearch::Transport::Client.new :log => true
       assert_respond_to client.transport.logger, :info
