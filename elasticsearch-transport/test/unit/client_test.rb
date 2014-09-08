@@ -38,7 +38,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       @client.perform_request 'GET', '/'
     end
 
-    should "send GET body request as POST when option is set" do
+    should "send GET request as POST with the send_get_body_as option" do
       transport = DummyTransport.new
       client = Elasticsearch::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
       transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}'
