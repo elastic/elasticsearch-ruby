@@ -66,8 +66,8 @@ Both of these libraries are extensively documented.
 and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
 
 Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
-("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron).
-Just `require 'patron'` in your code, and the library will automatically use it as the Faraday adapter.
+("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or
+[Typhoeus](https://github.com/typhoeus/typhoeus).
 
 ### Transport
 
