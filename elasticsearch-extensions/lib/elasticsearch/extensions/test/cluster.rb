@@ -76,7 +76,7 @@ module Elasticsearch
           arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
           arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
-          arguments[:timeout]      ||= 30
+          arguments[:timeout]      ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
 
           if running? :on => arguments[:port], :as => arguments[:cluster_name]
             print "[!] Elasticsearch cluster already running".ansi(:red)
