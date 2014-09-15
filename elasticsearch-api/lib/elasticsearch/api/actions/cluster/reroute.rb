@@ -22,12 +22,15 @@ module Elasticsearch
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)
         # @option arguments [Boolean] :dry_run Simulate the operation only and return the resulting state
         # @option arguments [Boolean] :explain Return an explanation for why the commands can or cannot be executed
-        # @option arguments [Boolean] :filter_metadata Don't return cluster state metadata (default: false)
+        # @option arguments [Boolean] :metric Limit the information returned to the specified metrics.
+        #                                     Defaults to all but metadata. (Options: _all, blocks, metadata,
+        #                                     nodes, routing_table, master_node, version)
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
         #
         def reroute(arguments={})
-          valid_params = [ :dry_run, :explain, :filter_metadata ]
+          valid_params = [ :dry_run, :explain, :metric, :master_timeout, :timeout ]
 
           method = 'POST'
           path   = "_cluster/reroute"
