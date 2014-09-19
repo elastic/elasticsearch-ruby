@@ -452,4 +452,9 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
   end
 
+  context "errors" do
+    should "raise highest-level Error exception for any ServerError" do
+      assert_kind_of Elasticsearch::Transport::Transport::Error, Elasticsearch::Transport::Transport::ServerError.new
+    end
+  end
 end
