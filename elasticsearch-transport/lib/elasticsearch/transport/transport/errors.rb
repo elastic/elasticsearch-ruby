@@ -12,7 +12,7 @@ module Elasticsearch
 
       # Elasticsearch server error (HTTP status 5xx)
       #
-      class ServerError < StandardError; end
+      class ServerError < Error; end
 
       module Errors; end
 
