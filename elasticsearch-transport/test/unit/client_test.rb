@@ -208,7 +208,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         handlers = c.transport.connections.all.first.connection.builder.handlers
 
         assert_includes handlers, Faraday::Adapter::Patron
-      end
+      end unless JRUBY
     end
 
   end
