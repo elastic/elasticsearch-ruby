@@ -13,7 +13,7 @@ module Elasticsearch
       #
       # @example Deleting documents using the Query DSL
       #
-      #     client.delete_by_query index: 'myindex', body: { term: { published: false } }
+      #     client.delete_by_query index: 'myindex', body: { query: { term: { published: false } } }
       #
       # @option arguments [List] :index A comma-separated list of indices to restrict the operation;
       #                                 use `_all`to perform the operation on all indices (*Required*)
