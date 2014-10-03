@@ -194,7 +194,7 @@ module Elasticsearch
             connection.dead!
 
             if @options[:reload_on_failure] and tries < connections.all.size
-              logger.warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.size})" if logger
+              logger.warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.all.size})" if logger
               reload_connections! and retry
             end
 
