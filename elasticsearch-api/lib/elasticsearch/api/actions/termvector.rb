@@ -39,6 +39,8 @@ module Elasticsearch
       # @option arguments [Boolean] :payloads Whether term payloads should be returned
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on
       #                                        (default: random)
+      # @option arguments [String] :realtime Specifies if requests are real-time as opposed to near-real-time
+      #                                      (default: true)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [String] :parent Parent ID of the documents
       #
@@ -57,6 +59,7 @@ module Elasticsearch
           :positions,
           :payloads,
           :preference,
+          :realtime,
           :routing,
           :parent ]
 
