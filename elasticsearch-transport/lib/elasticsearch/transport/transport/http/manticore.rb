@@ -46,7 +46,8 @@ module Elasticsearch
           #
           def __build_connections
             # TODO: not threadsafe
-            ssl_options = options[:transport_options][:ssl] || {}
+            transport_options = options[:transport_options] || {}
+            ssl_options = transport_options[:ssl] || {}
             if ssl_options[:truststore]
               java.lang.System.setProperty "javax.net.ssl.trustStore", ssl_options[:truststore]
             end
