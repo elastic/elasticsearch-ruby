@@ -77,8 +77,8 @@ else
       end
 
       should "allow to set options for Manticore" do
-        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ] do |curl|
-          curl.headers["User-Agent"] = "myapp-0.0"
+        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ] do |manticore|
+          manticore.headers["User-Agent"] = "myapp-0.0"
         end
 
         assert_equal "myapp-0.0", transport.connections.first.connection.headers["User-Agent"]
