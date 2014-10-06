@@ -54,10 +54,10 @@ module Elasticsearch
 
           def host_unreachable_exceptions
             [
-              Manticore::Timeout,
-              Manticore::SocketException,
-              Manticore::ClientProtocolException,
-              Manticore::ResolutionFailure
+              ::Manticore::Timeout,
+              ::Manticore::SocketException,
+              ::Manticore::ClientProtocolException,
+              ::Manticore::ResolutionFailure
             ]
           end
         end
