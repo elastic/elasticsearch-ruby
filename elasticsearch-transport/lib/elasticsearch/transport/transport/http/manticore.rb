@@ -4,8 +4,20 @@ module Elasticsearch
   module Transport
     module Transport
       module HTTP
+        # Alternative HTTP transport implementation, using the [_Manticore_](https://github.com/cheald/manticore) client.
+        #
+        # This transport works only on JRuby
+        #
+        # @see Transport::Base
+        #
         class Manticore
           include Base
+
+          # Performs the request by invoking {Transport::Base#perform_request} with a block.
+          #
+          # @return [Response]
+          # @see    Transport::Base#perform_request
+          #
           def perform_request(method, path, params={}, body=nil)
             super do |connection, url|
               params[:body] = __convert_to_json(body) if body
@@ -26,6 +38,12 @@ module Elasticsearch
               Response.new resp.code, resp.read_body, resp.headers
             end
           end
+
+          # Builds and returns a collection of connections.
+          # Each connection is a Manticore::Client
+          #
+          # @return [Connections::Collection]
+          #
           def __build_connections
             # TODO: not threadsafe
             ssl_options = options[:transport_options][:ssl] || {}
@@ -52,6 +70,10 @@ module Elasticsearch
               :selector => options[:selector]
           end
 
+          # Returns an array of implementation specific connection errors.
+          #
+          # @return [Array]
+          #
           def host_unreachable_exceptions
             [
               ::Manticore::Timeout,
