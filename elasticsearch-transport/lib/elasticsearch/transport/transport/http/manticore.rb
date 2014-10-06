@@ -54,7 +54,10 @@ module Elasticsearch
 
           def host_unreachable_exceptions
             [
-              # TODO: list HTTPClient exceptions
+              Manticore::Timeout,
+              Manticore::SocketException,
+              Manticore::ClientProtocolException,
+              Manticore::ResolutionFailure
             ]
           end
         end
