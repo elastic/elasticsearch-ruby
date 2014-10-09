@@ -56,12 +56,14 @@ else
       end
 
       should "set application/json header" do
-        @transport.connections.first.connection.stub("http://127.0.0.1:8080", body: '{"foo":"bar"}', headers: {"X-Content-Type" => "application/json"}, code: 200 )
-        #@transport.connections.first.connection.expects(:get).returns(stub_everything)
+        options = {
+          :headers => { "content-type" => "application/json"}
+        }
+        transport = Manticore.new :hosts => [ { :host => 'localhost', :port => 8080 } ], :options => options
+        transport.connections.first.connection.stub("http://localhost:8080//", body: "\"\"", headers: {"content-type" => "application/json"}, code: 200 )
+        response = transport.perform_request 'GET', '/', {}
+        assert_equal response.status, 200
 
-        response = @transport.perform_request 'GET', '/', { :headers => {"X-Content-Type" => "application/json"} } 
-
-        assert_equal 'application/json', response.headers['content-type']
       end
 
       should "handle HTTP methods" do
@@ -77,17 +79,27 @@ else
       end
 
       should "allow to set options for Manticore" do
-        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ] do |manticore|
-          manticore.headers["User-Agent"] = "myapp-0.0"
-        end
+        options = { :headers => {"User-Agent" => "myapp-0.0" }}
+        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
+        transport.connections.first.connection.expects(:get).
+          with('http://foobar:1234//', options).returns(stub_everything)
 
-        assert_equal "myapp-0.0", transport.connections.first.connection.headers["User-Agent"]
+        transport.perform_request 'GET', '/', {}
       end
 
-      should "set the credentials if passed" do
-        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' } ]
-        assert_equal 'foo', transport.connections.first.connection.username
-        assert_equal 'bar', transport.connections.first.connection.password
+      should "allow to set ssl options for Manticore" do
+        options = {
+          :ssl => {
+            :truststore => "test.jks",
+            :truststore_password => "test",
+            :verify => false
+          }
+        }
+
+        ::Manticore::Client.expects(:new).with(:options => {:ignore_ssl_validation => true})
+        transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
+        assert_equal java.lang.System.getProperty("javax.net.ssl.trustStore"), "test.jks"
+        assert_equal java.lang.System.getProperty("javax.net.ssl.trustStorePassword"), "test"
       end
     end
 
