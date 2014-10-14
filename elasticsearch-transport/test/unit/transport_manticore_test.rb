@@ -1,7 +1,8 @@
-require_relative '../test_helper'
+require 'test_helper'
 
 unless JRUBY
-  puts "SKIP: '#{File.basename(__FILE__)}' only supported on JRuby (you're running #{RUBY_ENGINE} #{RUBY_VERSION})"
+  version = ( defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'Ruby' ) + ' ' + RUBY_VERSION
+  puts "SKIP: '#{File.basename(__FILE__)}' only supported on JRuby (you're running #{version})"
 else
   require 'elasticsearch/transport/transport/http/manticore'
   require 'manticore'
@@ -62,7 +63,7 @@ else
 
         transport = Manticore.new :hosts => [ { :host => 'localhost', :port => 8080 } ], :options => options
 
-        transport.connections.first.connection.stub("http://localhost:8080//", body: "\"\"", headers: {"content-type" => "application/json"}, code: 200 )
+        transport.connections.first.connection.stub("http://localhost:8080//", :body => "\"\"", :headers => {"content-type" => "application/json"}, :code => 200 )
 
         response = transport.perform_request 'GET', '/', {}
         assert_equal response.status, 200
