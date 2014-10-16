@@ -15,12 +15,15 @@ module Elasticsearch
         #
         # @example Analyze text "Quick Brown Jumping Fox" with a custom tokenizer and filter chain
         #
-        #     client.indices.analyze text: 'The Quick Brown Jumping Fox',
+        #     client.indices.analyze body: 'The Quick Brown Jumping Fox',
         #                            tokenizer: 'whitespace',
         #                            filters: ['lowercase','stop']
         #
+        # If your text for analysis is longer than 4096 bytes then you should
+        # pass it using the :body argument to avoid HTTP transport errors
+        #
         # @option arguments [String] :index The name of the index to scope the operation
-        # @option arguments [Hash] :body The text on which the analysis should be performed
+        # @option arguments [String] :body The text on which the analysis should be performed
         # @option arguments [String] :analyzer The name of the analyzer to use
         # @option arguments [String] :field Use the analyzer configured for this field
         #                                   (instead of passing the analyzer name)
