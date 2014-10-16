@@ -152,10 +152,10 @@ module Elasticsearch
           pids  = nodes['nodes'].map { |id, info| info['process']['id'] }
 
           unless pids.empty?
-            print "Stopping Elasticsearch nodes... ".ansi(:faint)
+            print "\nStopping Elasticsearch nodes... ".ansi(:faint)
             pids.each_with_index do |pid, i|
               begin
-                print "stopped PID #{pid}. ".ansi(:green) if Process.kill 'KILL', pid
+                print "stopped PID #{pid}. ".ansi(:green) if Process.kill 'INT', pid
               rescue Exception => e
                 print "[#{e.class}] PID #{pid} not found. ".ansi(:red)
               end
