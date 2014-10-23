@@ -1,3 +1,30 @@
+## 1.0.6
+
+### Client
+
+* Added Manticore transport for JRuby platforms
+* Fixed, that `ServerError` inherits from `Transport::Error`
+* Fix problems with gems on JRuby
+* Added the `send_get_body_as` setting
+
+## API
+
+* Added the "Verify Snapshot" API
+* Added the "Upgrade Index" API
+* Added support for the `realtime` parameter to the Term Vectors APIs
+* Fixed `delete_by_query` example in documentation
+* Added the support for `metric` URL parameter to the "Reroute" API
+* Added the "Get Indices Info" API
+* Added support for versioning for the "Put Script" and "Delete Script" APIs
+
+### Extensions
+
+* Added, that `wait_for_green` timeout for test cluster is configurable with environment variable
+
+### Various
+
+* Added Ruby 2.0.0 and updated 2.1 build specification in the Travis configuration
+
 ## 1.0.5
 
 ### Client
