@@ -3,6 +3,19 @@ module Elasticsearch
     module Search
       module Queries
 
+        # Range query
+        #
+        # @example
+        #
+        #     query do
+        #       range :age do
+        #         gte 10
+        #         lte 20
+        #       end
+        #     end
+        #
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+        #
         class Range
           include BaseComponent
 

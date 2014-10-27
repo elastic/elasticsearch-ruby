@@ -8,7 +8,7 @@ module Elasticsearch
 
         subject { Term.new message: 'test' }
 
-        context "TermQuery" do
+        context "Term Query" do
           should "take a concrete value" do
             @subject = Term.new message: 'test'
 

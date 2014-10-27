@@ -6,7 +6,7 @@ module Elasticsearch
       class MatchTest < ::Test::Unit::TestCase
         include Elasticsearch::DSL::Search::Queries
 
-        context "MatchQuery" do
+        context "Match Query" do
           setup { @subject = Match.new message: 'test' }
 
           should "take a concrete value" do

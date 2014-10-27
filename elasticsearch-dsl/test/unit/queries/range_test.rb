@@ -6,7 +6,7 @@ module Elasticsearch
       class RangeTest < ::Test::Unit::TestCase
         include Elasticsearch::DSL::Search::Queries
 
-        context "RangeQuery" do
+        context "Range Query" do
 
           should "take a Hash" do
             @subject = Range.new age: { gte: 10, lte: 20 }
