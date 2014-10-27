@@ -1,5 +1,6 @@
 require 'elasticsearch/dsl/version'
 
+require 'elasticsearch/dsl/search/base_component'
 
 module Elasticsearch
   module DSL
