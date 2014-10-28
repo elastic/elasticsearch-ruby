@@ -28,7 +28,7 @@ module Elasticsearch
           valid_params = [ :timeout ]
 
           method = 'PUT'
-          path   = Utils.__pathify Utils.__escape(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
