@@ -50,13 +50,41 @@ module Elasticsearch
           self
         end
 
+        # DSL method for building the `filter` part of a search definition
+        #
+        # @return [self]
+        #
+        def filter(*args, &block)
+          if block
+            @filter = Filter.new(*args, &block)
+          else
+            @filter = args.first
+          end
+          self
+        end
+
+        # DSL method for building the `post_filter` part of a search definition
+        #
+        # @return [self]
+        #
+        def post_filter(*args, &block)
+          if block
+            @post_filter = Filter.new(*args, &block)
+          else
+            @post_filter = args.first
+          end
+          self
+        end
+
         # Converts the search definition to a Hash
         #
         # @return [Hash]
         #
         def to_hash
           hash = {}
-          hash.update(query: @query.to_hash) if @query
+          hash.update(query: @query.to_hash)   if @query
+          hash.update(filter: @filter.to_hash) if @filter
+          hash.update(post_filter: @post_filter.to_hash) if @post_filter
           hash
         end
       end

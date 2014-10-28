@@ -3,8 +3,10 @@ require 'elasticsearch/dsl/version'
 require 'elasticsearch/dsl/search'
 require 'elasticsearch/dsl/search/base_component'
 require 'elasticsearch/dsl/search/query'
+require 'elasticsearch/dsl/search/filter'
 
 Dir[ File.expand_path('../dsl/search/queries/**/*.rb', __FILE__) ].each   { |f| require f }
+Dir[ File.expand_path('../dsl/search/filters/**/*.rb', __FILE__) ].each   { |f| require f }
 
 module Elasticsearch
 
