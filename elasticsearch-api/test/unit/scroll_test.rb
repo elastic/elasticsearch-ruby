@@ -11,8 +11,7 @@ module Elasticsearch
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
             assert_equal '_search/scroll', url
-            assert_equal 'cXVlcn...', params[:scroll_id]
-            assert_nil   body
+            assert_equal 'cXVlcn...', body
             true
           end.returns(FakeResponse.new)
 

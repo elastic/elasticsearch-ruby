@@ -10,9 +10,9 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'DELETE', method
-            assert_equal '_search/scroll/abc123', url
+            assert_equal '_search/scroll', url
             assert_equal Hash.new, params
-            assert_nil   body
+            assert_equal 'abc123', body
             true
           end.returns(FakeResponse.new)
 
@@ -22,9 +22,9 @@ module Elasticsearch
         should "listify scroll IDs" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'DELETE', method
-            assert_equal '_search/scroll/abc123,def456', url
+            assert_equal '_search/scroll', url
             assert_equal Hash.new, params
-            assert_nil   body
+            assert_equal 'abc123,def456', body
             true
           end.returns(FakeResponse.new)
 

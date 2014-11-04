@@ -12,10 +12,19 @@ module Elasticsearch
       def clear_scroll(arguments={})
         raise ArgumentError, "Required argument 'scroll_id' missing" unless arguments[:scroll_id]
 
+        scroll_id = arguments.delete(:scroll_id)
+
+        scroll_ids = case scroll_id
+          when Array
+            scroll_id.join(',')
+          else
+            scroll_id
+        end
+
         method = 'DELETE'
-        path   = Utils.__pathify '_search/scroll', Utils.__listify(arguments[:scroll_id])
+        path   = Utils.__pathify '_search/scroll'
         params = {}
-        body   = nil
+        body   = scroll_ids
 
         perform_request(method, path, params, body).body
       end
