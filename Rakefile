@@ -10,13 +10,20 @@ task :default do
   system "rake --tasks"
 end
 
+desc "Display information about subprojects"
 task :subprojects do
   puts '-'*80
   subprojects.each do |project|
     commit  = `git log --pretty=format:'%h %ar: %s' -1 #{project}`
     version =  Gem::Specification::load(__current__.join(project, "#{project}.gemspec").to_s).version.to_s
-    puts "[#{version}] \e[1m#{project.ljust(subprojects.map {|s| s.length}.max)}\e[0m | #{commit[ 0..80]}..."
+    puts "#{version}".ljust(10) +
+         "| \e[1m#{project.ljust(subprojects.map {|s| s.length}.max)}\e[0m | #{commit[ 0..80]}..."
   end
+end
+
+desc "Setup the project"
+task :setup do
+  sh "git submodule update --init --recursive"
 end
 
 desc "Alias for `bundle:install`"
