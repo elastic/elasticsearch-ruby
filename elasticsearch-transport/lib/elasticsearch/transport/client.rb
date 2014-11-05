@@ -124,24 +124,26 @@ module Elasticsearch
       # @api private
       #
       def __extract_hosts(hosts_config, options={})
-        hosts_config = Array(hosts_config)
-
-        hosts = hosts_config.map do |host|
-          case host
-          when String
-            if host =~ /^[a-z]+\:\/\//
-              uri = URI.parse(host)
-              { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
+        if hosts_config.respond_to?(:to_hash)
+          hosts = [ hosts_config ]
+        else
+          hosts = Array(hosts_config).map do |host|
+            case host
+            when String
+              if host =~ /^[a-z]+\:\/\//
+                uri = URI.parse(host)
+                { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
+              else
+                host, port = host.split(':')
+                { :host => host, :port => port }
+              end
+            when URI
+              { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
+            when Hash
+              host
             else
-              host, port = host.split(':')
-              { :host => host, :port => port }
+              raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
             end
-          when URI
-            { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
-          when Hash
-            host
-          else
-            raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
           end
         end
 
@@ -174,4 +176,3 @@ module Elasticsearch
     end
   end
 end
-

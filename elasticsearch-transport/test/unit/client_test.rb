@@ -98,6 +98,13 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_nil             hosts[0][:port]
       end
 
+      should "extract from hash" do
+        hosts = @client.__extract_hosts( { :host => 'myhost', :scheme => 'https' } )
+
+        assert_equal 'myhost', hosts[0][:host]
+        assert_equal 'https',  hosts[0][:scheme]
+      end
+
       should "extract from array" do
         hosts = @client.__extract_hosts ['myhost']
 
@@ -145,7 +152,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal '8080',     hosts[0][:port]
       end
 
-      should "pass Hashes over" do
+      should "pass hashes over" do
         hosts = @client.__extract_hosts [{:host => 'myhost', :port => '1000', :foo => 'bar'}]
 
         assert_equal 'myhost', hosts[0][:host]
