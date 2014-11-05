@@ -23,7 +23,9 @@ end
 
 desc "Setup the project"
 task :setup do
-  sh "git submodule update --init --recursive"
+  unless File.exists?('./tmp/elasticsearch')
+    sh "git clone git@github.com:elasticsearch/elasticsearch.git tmp/elasticsearch"
+  end
 end
 
 desc "Alias for `bundle:install`"
@@ -54,21 +56,19 @@ end
 namespace :elasticsearch do
   desc "Update the submodule with Elasticsearch core repository"
   task :update do
-    sh "git submodule foreach git reset --hard"
-    puts
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} fetch origin --verbose"
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} fetch origin --verbose"
     begin
-      puts %x[git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} pull --verbose]
+      puts %x[git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} pull --verbose]
     rescue Exception => @exception
       @failed = true
     end
 
     if @failed || !$?.success?
-      STDERR.puts "", "[!] Error while pulling. #{@exception}"
+      STDERR.puts "", "[!] Error while pulling -- #{@exception}"
     end
 
     puts "\n", "CHANGES:", '-'*80
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
 
   desc <<-DESC
@@ -85,11 +85,11 @@ namespace :elasticsearch do
     puts '-'*80
 
     branch = args[:branch] || 'origin/master'
-    current_branch = `git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
+    current_branch = `git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
     begin
       sh <<-CODE
         mkdir -p #{__current__.join('tmp/builds')} && \
-        cd #{__current__.join('support/elasticsearch')} && \
+        cd #{__current__.join('tmp/elasticsearch')} && \
         git fetch origin --quiet && \
         git checkout #{branch} && \
         mvn clean && \
@@ -106,7 +106,7 @@ namespace :elasticsearch do
 
   desc "Display the info for all branches in the Elasticsearch submodule"
   task :status do
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} branch -v -v", :verbose => false
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} branch -v -v", :verbose => false
   end
 
   desc "Display the list of builds"
@@ -119,8 +119,8 @@ namespace :elasticsearch do
 
   desc "Display the history of the 'rest-api-spec' repo"
   task :changes do
-    STDERR.puts "Log: #{__current__.join('support/elasticsearch')}/rest-api-spec", ""
-    sh "git --git-dir=#{__current__.join('support/elasticsearch/.git')} --work-tree=#{__current__.join('support/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", :verbose => false
+    STDERR.puts "Log: #{__current__.join('tmp/elasticsearch')}/rest-api-spec", ""
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", :verbose => false
   end
 end
 

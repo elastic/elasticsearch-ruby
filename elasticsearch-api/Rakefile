@@ -5,7 +5,7 @@ def __current__
 end
 
 def git_specs(command, options={})
-  sh "git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} #{command}", options
+  sh "git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} #{command}", options
 end
 
 task(:default) { system "rake --tasks" }
@@ -44,7 +44,7 @@ namespace :test do
   task :integration do
     require 'elasticsearch'
 
-    branches = `git --git-dir=#{__current__.join('../support/elasticsearch/.git')} --work-tree=#{__current__.join('../support/elasticsearch')} branch --no-color`
+    branches = `git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} branch --no-color`
 
     current_branch = branches.
       split("\n").
@@ -98,7 +98,7 @@ namespace :test do
       end
 
       # Path to the API specs
-      ENV['TEST_REST_API_SPEC'] = __current__.join('../support/elasticsearch/rest-api-spec/test/').to_s
+      ENV['TEST_REST_API_SPEC'] = __current__.join('../tmp/elasticsearch/rest-api-spec/test/').to_s
 
       # Run the task
       args = [t.ruby_opts_string, t.run_code, t.file_list_string, t.option_list].join(' ')
