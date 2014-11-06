@@ -374,6 +374,22 @@ Github's pull requests and issues are used to communicate, send bug reports and 
 * The {Elasticsearch::Transport::Transport::Connections::Selector::Base} implementations allow to choose connections
   from the pool, eg. in a round-robin or random fashion. You can implement your own selector strategy.
 
+## Development
+
+To work on the code, clone and bootstrap the main repository first --
+please see instructions in the main [README](../README.md#development).
+
+To run tests, launch a testing cluster -- again, see instructions
+in the main [README](../README.md#development) -- and use the Rake tasks:
+
+```
+time rake test:unit
+time rake test:integration
+```
+
+Unit tests have to use Ruby 1.8 compatible syntax, integration tests
+can use Ruby 2.x syntax and features.
+
 ## License
 
 This software is licensed under the Apache 2 license, quoted below.

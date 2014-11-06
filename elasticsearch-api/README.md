@@ -155,6 +155,22 @@ mash.facets.tags.terms.first
 # => #<Hashie::Mash count=3 term="z">
 ```
 
+## Development
+
+To work on the code, clone and bootstrap the main repository first --
+please see instructions in the main [README](../README.md#development).
+
+To run tests, launch a testing cluster -- again, see instructions
+in the main [README](../README.md#development) -- and use the Rake tasks:
+
+```
+time rake test:unit
+time rake test:integration
+```
+
+Unit tests have to use Ruby 1.8 compatible syntax, integration tests
+can use Ruby 2.x syntax and features.
+
 ## License
 
 This software is licensed under the Apache 2 license, quoted below.
