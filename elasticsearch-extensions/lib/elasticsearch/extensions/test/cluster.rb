@@ -255,7 +255,7 @@ module Elasticsearch
                'Nodes:   '.ljust(20).ansi(:faint) + health['number_of_nodes'].to_s.ansi(:faint)
 
           nodes['nodes'].each do |id, info|
-            m = id == master ? '+' : '-'
+            m = id == master ? '*' : '+'
             puts ''.ljust(20) +
                  "#{m} #{info['name'].ansi(:bold)} | version: #{info['version']}, pid: #{info['process']['id']}, address: #{info['http']['bound_address']}".ansi(:faint)
           end
