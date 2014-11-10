@@ -107,6 +107,7 @@ module Elasticsearch
                 -D es.script.disable_dynamic=false \
                 -D es.node.test=true \
                 -D es.node.bench=true \
+                -D es.logger.level=DEBUG \
                 #{arguments[:es_params]} \
                 > /dev/null
             COMMAND
