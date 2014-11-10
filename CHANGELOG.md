@@ -1,3 +1,13 @@
+## EXT:0.0.16
+
+### Extensions
+
+* Disabled `allocation.disk.threshold_enabled` in the testing cluster
+  to prevent tests failing due to low disk space
+* Increased the default logging level for the testing cluster to `DEBUG`
+* Added basic integration with the Backup gem
+* Changed, that `wait_for_green` timeout is configurable with an environment variable
+
 ## 1.0.6
 
 ### Client
