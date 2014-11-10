@@ -102,6 +102,7 @@ module Elasticsearch
                 -D es.index.store.type=#{arguments[:index_store]} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
+                -D es.cluster.routing.allocation.disk.threshold_enabled=false \
                 -D es.network.host=0.0.0.0 \
                 -D es.discovery.zen.ping.multicast.enabled=true \
                 -D es.script.disable_dynamic=false \
