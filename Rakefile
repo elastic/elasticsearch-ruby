@@ -92,6 +92,7 @@ namespace :elasticsearch do
         cd #{__current__.join('tmp/elasticsearch')} && \
         git fetch origin --quiet && \
         git checkout #{branch} && \
+        rm -rf target/ && \
         mvn clean && \
         mvn package -DskipTests && \
         build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
