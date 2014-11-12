@@ -49,7 +49,7 @@ module Elasticsearch
       def termvector(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
-        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+        #raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
         valid_params = [
           :term_statistics,
