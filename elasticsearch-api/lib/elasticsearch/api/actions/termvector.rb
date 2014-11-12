@@ -4,7 +4,7 @@ module Elasticsearch
 
       # Return information and statistics about terms in the fields of a particular document
       #
-      # @example Get statistics for a specific document
+      # @example Get statistics for a specific document (indexed)
       #
       #     client.indices.create index: 'my_index',
       #                           body: {
@@ -25,9 +25,20 @@ module Elasticsearch
       #     client.termvector index: 'my_index', type: 'my_type', id: '1'
       #     # => { ..., "term_vectors" => { "text" => { "field_statistics" => { ... }, "terms" => { "bar" => ... } } }
       #
+      #
+      # @example Get statistics for an artificial document (not indexed)
+      #
+      #     client.termvector index: 'my_index', type: 'my_type',
+      #                       body: {
+      #                         doc: {
+      #                           text: 'Foo Bar Fox'
+      #                         }
+      #                       } 
+      #     # => { ..., "term_vectors" => { "text" => { "field_statistics" => { ... }, "terms" => { "bar" => ... } } }
+      #
       # @option arguments [String] :index The name of the index (*Required*)
       # @option arguments [String] :type The type of the document (*Required*)
-      # @option arguments [String] :id The document ID (*Required*)
+      # @option arguments [String] :id The document ID
       # @option arguments [Hash] :body The request definition
       # @option arguments [Boolean] :term_statistics Whether total term frequency and
       #                                              document frequency should be returned
@@ -49,7 +60,6 @@ module Elasticsearch
       def termvector(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
-        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
         valid_params = [
           :term_statistics,
