@@ -19,12 +19,6 @@ module Elasticsearch
           end
         end
 
-        should "require the :id argument" do
-          assert_raise ArgumentError do
-            subject.termvectors :index => 'foo', :type => 'bar'
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
