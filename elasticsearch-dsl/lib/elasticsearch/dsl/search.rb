@@ -33,6 +33,8 @@ module Elasticsearch
       # Wraps the whole search definition (queries, filters, aggregations, sorting, etc)
       #
       class Search
+        attr_reader :aggregations
+
         def initialize(*args, &block)
           instance_eval(&block) if block
         end
@@ -76,6 +78,22 @@ module Elasticsearch
           self
         end
 
+        # DSL method for building the `aggregations` part of a search definition
+        #
+        # @return [self]
+        #
+        def aggregation(*args, &block)
+          @aggregations ||= {}
+
+          if block
+            @aggregations.update args.first => Aggregation.new(*args, &block)
+          else
+            name = args.shift
+            @aggregations.update name => args.shift
+          end
+          self
+        end
+
         # Converts the search definition to a Hash
         #
         # @return [Hash]
@@ -85,6 +103,7 @@ module Elasticsearch
           hash.update(query: @query.to_hash)   if @query
           hash.update(filter: @filter.to_hash) if @filter
           hash.update(post_filter: @post_filter.to_hash) if @post_filter
+          hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.merge item.first => item.last.to_hash }) if @aggregations
           hash
         end
       end

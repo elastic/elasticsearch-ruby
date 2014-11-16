@@ -92,6 +92,31 @@ module Elasticsearch
           end
         end
 
+        context "with aggregations" do
+          should "take the aggregation as a literal value" do
+            subject.aggregation :foo, terms: 'bar'
+            assert_equal({aggregations: { foo: { terms: "bar" } } }, subject.to_hash)
+          end
+
+          should "take the aggregation as a block" do
+            Elasticsearch::DSL::Search::Aggregation.expects(:new).returns({tam: 'tam'})
+            subject.aggregation :foo do; end
+            assert_equal({aggregations: { foo: { tam: 'tam' } } }, subject.to_hash)
+          end
+
+          should "allow chaining" do
+            assert_instance_of Elasticsearch::DSL::Search::Search, subject.aggregation(:foo)
+            assert_instance_of Elasticsearch::DSL::Search::Search, subject.aggregation(:foo).aggregation(:bar)
+          end
+
+          should "be converted to hash" do
+            assert_equal({}, subject.to_hash)
+
+            subject.post_filter foo: 'bar'
+            assert_equal({post_filter: { foo: 'bar' }}, subject.to_hash)
+          end
+        end
+
       end
     end
   end
