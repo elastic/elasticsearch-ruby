@@ -257,7 +257,11 @@ module Elasticsearch
           nodes['nodes'].each do |id, info|
             m = id == master ? '*' : '+'
             puts ''.ljust(20) +
-                 "#{m} #{info['name'].ansi(:bold)} | version: #{info['version']}, pid: #{info['process']['id']}, address: #{info['http']['bound_address']}".ansi(:faint)
+                 "#{m} ".ansi(:faint) +
+                 "#{info['name'].ansi(:bold)} ".ansi(:faint) +
+                 "| version: #{info['version'] rescue 'N/A'}, ".ansi(:faint) +
+                 "pid: #{info['process']['id'] rescue 'N/A'}, ".ansi(:faint) +
+                 "address: #{info['http']['bound_address'] rescue 'N/A'}".ansi(:faint)
           end
         end
 
