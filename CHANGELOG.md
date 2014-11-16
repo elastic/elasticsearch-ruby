@@ -1,3 +1,10 @@
+## EXT:0.0.17
+
+### Extensions
+
+* Improved the aesthetics and robustness of the `Test::Cluster#__print_cluster_info` method
+* Removed the dependency on the "Backup" gem (using mocks in tests)
+
 ## EXT:0.0.16
 
 ### Extensions
