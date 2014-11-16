@@ -68,6 +68,14 @@ module Elasticsearch
 
           assert_equal 'bar', subject.instance_variable_get(:@hash)[:foo]
         end
+
+        should "execute the passed block" do
+          subject = DummyComponent.new(:foo) { @foo = 'BAR' }
+
+          assert_respond_to  subject, :call
+          assert_instance_of DummyComponent, subject.call
+          assert_equal       'BAR', subject.instance_variable_get(:@foo)
+        end
       end
     end
   end

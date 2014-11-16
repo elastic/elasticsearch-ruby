@@ -94,18 +94,31 @@ module Elasticsearch
 
           # Return the name for instance of the DSL class
           #
+          # @return [String]
+          #
           def name
             self.class.name
+          end
+
+          # Evaluates any block passed to the query
+          #
+          # @return [self]
+          #
+          def call
+            @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self) if @block
+            self
           end
 
           # Convert the query definition to a Hash
           #
           # A default implementation, DSL classes can overload it.
           #
+          # @return [Hash]
+          #
           def to_hash(options={})
             if @block
               @hash = { name => { @args => {} } }
-              @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self)
+              call
             else
               @hash[self.name.to_sym] && @hash[self.name.to_sym][@args] ? @hash : @hash = { name => @args }
             end
