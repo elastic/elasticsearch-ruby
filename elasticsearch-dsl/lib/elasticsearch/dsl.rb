@@ -6,6 +6,7 @@ require 'elasticsearch/dsl/search/base_aggregation_component'
 require 'elasticsearch/dsl/search/query'
 require 'elasticsearch/dsl/search/filter'
 require 'elasticsearch/dsl/search/aggregation'
+require 'elasticsearch/dsl/search/sort'
 
 Dir[ File.expand_path('../dsl/search/queries/**/*.rb', __FILE__) ].each        { |f| require f }
 Dir[ File.expand_path('../dsl/search/filters/**/*.rb', __FILE__) ].each        { |f| require f }

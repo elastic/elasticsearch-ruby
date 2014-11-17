@@ -117,6 +117,13 @@ module Elasticsearch
           end
         end
 
+        context "with sorting" do
+          should "be converted to hash" do
+            subject.sort :foo
+            assert_equal( { sort: [ :foo ] }, subject.to_hash )
+          end
+        end
+
       end
     end
   end

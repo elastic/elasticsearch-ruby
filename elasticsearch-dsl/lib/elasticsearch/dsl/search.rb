@@ -94,6 +94,15 @@ module Elasticsearch
           self
         end
 
+        # DSL method for building the `sort` part of a search definition
+        #
+        # @return [self]
+        #
+        def sort(*args, &block)
+          @sort = Sort.new(*args, &block)
+          self
+        end
+
         # Converts the search definition to a Hash
         #
         # @return [Hash]
@@ -104,6 +113,7 @@ module Elasticsearch
           hash.update(filter: @filter.to_hash) if @filter
           hash.update(post_filter: @post_filter.to_hash) if @post_filter
           hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.merge item.first => item.last.to_hash }) if @aggregations
+          hash.update(sort: @sort.to_hash) if @sort
           hash
         end
       end
