@@ -24,7 +24,7 @@ end
 desc "Setup the project"
 task :setup do
   unless File.exists?('./tmp/elasticsearch')
-    sh "git clone git@github.com:elasticsearch/elasticsearch.git tmp/elasticsearch"
+    sh "git clone https://github.com/elasticsearch/elasticsearch.git tmp/elasticsearch"
   end
 end
 

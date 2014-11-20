@@ -1,13 +1,47 @@
 require 'test_helper'
+require 'logger'
 
-require 'backup'
+# Mock the Backup modules and classes so we're not depending on the gem in the unit test
+#
+module Backup
+  class Error < StandardError; end
+
+  class Logger < ::Logger
+    def self.logger
+      self.new($stderr)
+    end
+  end
+
+  module Config
+    module DSL
+    end
+  end
+
+  module Database
+    class Base
+      def initialize(model, database_id = nil)
+      end
+
+      def dump_path;     'dump_path'; end
+      def dump_filename; 'dump_filename'; end
+
+      def log!(*args)
+        puts "LOGGING..." if ENV['DEBUG']
+      end
+
+      def perform!
+        puts "PERFORMING..." if ENV['DEBUG']
+      end
+    end
+  end
+end
 
 require 'elasticsearch/extensions/backup'
 
 class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
   context "The Backup gem extension" do
     setup do
-      @model = ::Backup::Model.new(:test_trigger, 'test label')
+      @model = stub trigger: true
       @subject = ::Backup::Database::Elasticsearch.new(@model)
     end
 
