@@ -8,6 +8,7 @@ require 'elasticsearch/dsl/search/filter'
 require 'elasticsearch/dsl/search/aggregation'
 require 'elasticsearch/dsl/search/sort'
 require 'elasticsearch/dsl/search/options'
+require 'elasticsearch/dsl/search/suggest'
 
 Dir[ File.expand_path('../dsl/search/queries/**/*.rb', __FILE__) ].each        { |f| require f }
 Dir[ File.expand_path('../dsl/search/filters/**/*.rb', __FILE__) ].each        { |f| require f }

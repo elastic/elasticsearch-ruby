@@ -103,6 +103,17 @@ module Elasticsearch
           self
         end
 
+        # DSL method for building the `suggest` part of a search definition
+        #
+        # @return [self]
+        #
+        def suggest(*args, &block)
+          @suggest ||= {}
+          key, options = args
+          @suggest.update key => Suggest.new(key, options, &block)
+          self
+        end
+
         # Converts the search definition to a Hash
         #
         # @return [Hash]
@@ -114,6 +125,7 @@ module Elasticsearch
           hash.update(post_filter: @post_filter.to_hash) if @post_filter
           hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.merge item.first => item.last.to_hash }) if @aggregations
           hash.update(sort: @sort.to_hash) if @sort
+          hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.merge item.last.to_hash }) if @suggest
           hash
         end
       end

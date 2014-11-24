@@ -124,6 +124,13 @@ module Elasticsearch
           end
         end
 
+        context "with suggest" do
+          should "be converted to hash" do
+            subject.suggest :foo, { bar: 'bam' }
+            assert_equal( { suggest: { foo: { bar: 'bam' } } }, subject.to_hash )
+          end
+        end
+
       end
     end
   end
