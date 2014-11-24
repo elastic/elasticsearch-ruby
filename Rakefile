@@ -96,6 +96,7 @@ namespace :elasticsearch do
         mvn clean && \
         mvn package -DskipTests && \
         build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
+        rm -rf #{__current__.join('tmp/builds')}/$build &&
         tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')} && \
         echo && echo && echo "Built: $build"
       CODE
