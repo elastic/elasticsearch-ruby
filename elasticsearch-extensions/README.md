@@ -25,7 +25,7 @@ Display a table with the output of the `_analyze` API:
 
 Allows to programatically start and stop an Elasticsearch cluster suitable for isolating tests.
 
-HTTP service is running on ports `9250-*` by default, and the cluster runs in-memory only.
+The HTTP service is running on ports `9250-*` by default.
 
 Start and stop the default cluster:
 
