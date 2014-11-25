@@ -1,5 +1,6 @@
 require 'timeout'
 require 'net/http'
+require 'fileutils'
 require 'uri'
 require 'json'
 require 'ansi'
@@ -76,11 +77,17 @@ module Elasticsearch
           arguments[:node_name]    ||= 'node'
           arguments[:timeout]      ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
 
+          # Make sure `cluster_name` is not empty
+          arguments[:cluster_name] = 'elasticsearch_test' if arguments[:cluster_name].empty?
+
           if running? :on => arguments[:port], :as => arguments[:cluster_name]
             print "[!] Elasticsearch cluster already running".ansi(:red)
             wait_for_green(arguments[:port], arguments[:timeout])
             return false
           end
+
+          # Wipe out data for this cluster name
+          FileUtils.rm_rf "#{arguments[:path_data]}/#{arguments[:cluster_name]}"
 
           print "Starting ".ansi(:faint) +
                 @@number_of_nodes.to_s.ansi(:bold, :faint) +
