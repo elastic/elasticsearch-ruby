@@ -22,7 +22,7 @@ module Elasticsearch
       #
       #     client.index index: 'my_index', type: 'my_type', id: '1', body: { text: 'Foo Bar Fox' }
       #
-      #     client.termvector index: 'my_index', type: 'my_type', id: '1'
+      #     client.termvectors index: 'my_index', type: 'my_type', id: '1'
       #     # => { ..., "term_vectors" => { "text" => { "field_statistics" => { ... }, "terms" => { "bar" => ... } } }
       #
       # @option arguments [String] :index The name of the index (*Required*)
@@ -46,7 +46,7 @@ module Elasticsearch
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html
       #
-      def termvector(arguments={})
+      def termvectors(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -68,7 +68,7 @@ module Elasticsearch
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  arguments[:id],
-                                 '_termvector'
+                                 '_termvectors'
 
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
