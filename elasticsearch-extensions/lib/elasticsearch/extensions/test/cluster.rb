@@ -70,15 +70,17 @@ module Elasticsearch
 
           arguments[:command]      ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
           arguments[:port]         ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          arguments[:cluster_name] ||= ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test'
+          arguments[:cluster_name] ||= (ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test').chomp
           arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp'
           arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
           arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
           arguments[:timeout]      ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
 
-          # Make sure `cluster_name` is not empty
-          arguments[:cluster_name] = 'elasticsearch_test' if arguments[:cluster_name].empty?
+          # Make sure `cluster_name` is not dangerous
+          if arguments[:cluster_name] =~ /^[\/\\]?$/
+            raise ArgumentError, "The `cluster_name` parameter cannot be empty string or a slash"
+          end
 
           if running? :on => arguments[:port], :as => arguments[:cluster_name]
             print "[!] Elasticsearch cluster already running".ansi(:red)
