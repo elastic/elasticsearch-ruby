@@ -57,7 +57,7 @@ module Elasticsearch
 
         def initialize(*args, &block)
           @hash  = { name => {} }
-          @args  = args.pop
+          @args  = args.pop || {}
           @block = block
         end
 

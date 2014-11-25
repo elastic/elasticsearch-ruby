@@ -42,6 +42,11 @@ module Elasticsearch
           assert_instance_of Hash, subject.to_hash
         end
 
+        should "have an empty Hash as args by default" do
+          subject = DummyComponentWithNewName.new
+          assert_equal({}, subject.instance_variable_get(:@args))
+        end
+
         should "have an option method" do
           class DummyComponentWithOptionMethod
             include Elasticsearch::DSL::Search::BaseComponent
