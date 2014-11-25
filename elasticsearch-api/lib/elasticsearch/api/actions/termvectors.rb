@@ -64,11 +64,12 @@ module Elasticsearch
           :parent ]
 
         method = 'GET'
+        endpoint = arguments.delete(:endpoint) || '_termvectors'
 
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  arguments[:id],
-                                 '_termvectors'
+                                 endpoint
 
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
@@ -79,7 +80,7 @@ module Elasticsearch
       # @deprecated Use the plural version, {#termvectors}
       #
       def termvector(arguments={})
-        termvectors(arguments)
+        termvectors(arguments.merge :endpoint => '_termvector')
       end
     end
   end

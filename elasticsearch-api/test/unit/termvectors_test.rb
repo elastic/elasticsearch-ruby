@@ -38,8 +38,12 @@ module Elasticsearch
         end
 
         should "be aliased to singular for older versions" do
-          subject.expects(:termvectors)
-          subject.termvector :index => 'foo', :type => 'bar', :id => '1'
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/bar/123/_termvector', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.termvector :index => 'foo', :type => 'bar', :id => '123'
         end
 
       end
