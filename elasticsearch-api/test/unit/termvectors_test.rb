@@ -37,6 +37,11 @@ module Elasticsearch
           subject.termvectors :index => 'foo', :type => 'bar', :id => '123', :body => {}
         end
 
+        should "be aliased to singular for older versions" do
+          subject.expects(:termvectors)
+          subject.termvector :index => 'foo', :type => 'bar', :id => '1'
+        end
+
       end
 
     end

@@ -75,6 +75,12 @@ module Elasticsearch
 
         perform_request(method, path, params, body).body
       end
+
+      # @deprecated Use the plural version, {#termvectors}
+      #
+      def termvector(arguments={})
+        termvectors(arguments)
+      end
     end
   end
 end
