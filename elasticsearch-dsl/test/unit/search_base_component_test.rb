@@ -47,7 +47,7 @@ module Elasticsearch
           assert_equal({}, subject.instance_variable_get(:@args))
         end
 
-        should "have an option method" do
+        should "have an option method with args" do
           class DummyComponentWithOptionMethod
             include Elasticsearch::DSL::Search::BaseComponent
             option_method :bar
@@ -56,10 +56,21 @@ module Elasticsearch
           subject = DummyComponentWithOptionMethod.new :foo
           assert_respond_to subject, :bar
 
-          subject.bar
+          subject.bar 'BAM'
+          assert_equal({ dummycomponentwithoptionmethod: { foo: { bar: 'BAM' } } }, subject.to_hash)
+        end
 
-          assert subject.to_hash[:dummycomponentwithoptionmethod][:foo].key?(:bar),
-                 "#{subject.to_hash.inspect} doesn't have the :bar key"
+        should "have an option method without args" do
+          class DummyComponentWithOptionMethod
+            include Elasticsearch::DSL::Search::BaseComponent
+            option_method :bar
+          end
+
+          subject = DummyComponentWithOptionMethod.new
+          assert_respond_to subject, :bar
+
+          subject.bar 'BAM'
+          assert_equal({ dummycomponentwithoptionmethod: { bar: 'BAM' } }, subject.to_hash)
         end
 
         should "define a custom option method" do
@@ -80,6 +91,52 @@ module Elasticsearch
           assert_respond_to  subject, :call
           assert_instance_of DummyComponent, subject.call
           assert_equal       'BAR', subject.instance_variable_get(:@foo)
+        end
+
+        context "to_hash conversion" do
+
+          should "build the hash with the block with args" do
+            subject = DummyComponent.new :foo do
+              @hash[:dummycomponent][:foo].update moo: 'xoo'
+            end
+
+            assert_equal({dummycomponent: { foo: { moo: 'xoo' } } }, subject.to_hash )
+          end
+
+          should "build the hash with the block without args" do
+            subject = DummyComponent.new do
+              @hash[:dummycomponent].update moo: 'xoo'
+            end
+
+            assert_equal({dummycomponent: { moo: 'xoo' } }, subject.to_hash )
+          end
+
+          should "build the hash with the option method" do
+            class DummyComponentWithOptionMethod
+              include Elasticsearch::DSL::Search::BaseComponent
+              option_method :foo
+            end
+
+            subject = DummyComponentWithOptionMethod.new do
+              subject.foo 'bar'
+            end
+
+            assert_equal({ dummycomponentwithoptionmethod: { foo: 'bar' } }, subject.to_hash)
+          end
+
+          should "build the hash with the passed args" do
+            subject = DummyComponent.new foo: 'bar'
+
+            assert_equal({ dummycomponent: { foo: 'bar' } }, subject.to_hash)
+          end
+
+          should "return the already built hash" do
+            subject = DummyComponent.new
+            subject.instance_variable_set(:@hash, { foo: 'bar' })
+
+            assert_equal({ foo: 'bar' }, subject.to_hash)
+          end
+
         end
       end
     end

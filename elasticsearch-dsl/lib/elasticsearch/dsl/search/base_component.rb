@@ -47,8 +47,14 @@ module Elasticsearch
                 self.__send__ :define_method, name, &block
               else
                 self.__send__ :define_method, name do |*args|
-                  @hash[self.name.to_sym] = { @args => {} } unless @hash[self.name.to_sym][@args]
-                  @hash[self.name.to_sym][@args].update name.to_sym => args.pop
+                  # 1. Component has empty @args (ie. no user supplied name or @hash value)
+                  if @args && @args.respond_to?(:to_hash) && @args.empty?
+                    @hash[self.name.to_sym].update name.to_sym => args.first
+                  # 2. Component user-supplied name or @hash value passed in @args
+                  else
+                    @hash[self.name.to_sym] = { @args => {} } unless @hash[self.name.to_sym][@args]
+                    @hash[self.name.to_sym][@args].update name.to_sym => args.first
+                  end
                 end
               end
             end
@@ -57,7 +63,7 @@ module Elasticsearch
 
         def initialize(*args, &block)
           @hash  = { name => {} }
-          @args  = args.pop || {}
+          @args  = args.first || {}
           @block = block
         end
 
@@ -116,13 +122,22 @@ module Elasticsearch
           # @return [Hash]
           #
           def to_hash(options={})
-            if @block
-              @hash = { name => { @args => {} } }
-              call
-            else
-              @hash[self.name.to_sym] && @hash[self.name.to_sym][@args] ? @hash : @hash = { name => @args }
+            case
+              # 1. Create hash from the block
+              when @block
+                @hash = (@args && ! @args.empty?) ? { name => { @args => {} } } : { name => {} }
+                call
+                @hash
+              # 2. Hash created with option methods
+              when @hash[self.name.to_sym] && ! @args.is_a?(Hash) && @hash[self.name.to_sym][@args]
+                @hash
+              # 3. Hash passsed as @args
+              when @hash[self.name.to_sym] && @args.respond_to?(:to_hash) && ! @args.empty?
+                { name => @args.to_hash }
+              # 4. Hash already built
+              else
+                @hash
             end
-            @hash
           end
         end
       end
