@@ -19,7 +19,7 @@ module Elasticsearch
           :version,
           :version_type ]
 
-        method = 'DELETE'
+        method = DELETE
         path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = nil

@@ -59,7 +59,7 @@ module Elasticsearch
             :timeout
           ]
 
-          method = 'PUT'
+          method = PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

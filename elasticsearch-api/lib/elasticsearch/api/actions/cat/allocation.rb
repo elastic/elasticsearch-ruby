@@ -52,7 +52,7 @@ module Elasticsearch
 
           node_id = arguments.delete(:node_id)
 
-          method = 'GET'
+          method = GET
 
           path   = Utils.__pathify '_cat/allocation', Utils.__listify(node_id)
 

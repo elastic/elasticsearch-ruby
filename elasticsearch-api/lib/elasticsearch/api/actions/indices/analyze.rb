@@ -46,7 +46,7 @@ module Elasticsearch
             :tokenizer,
             :format ]
 
-          method = 'GET'
+          method = GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

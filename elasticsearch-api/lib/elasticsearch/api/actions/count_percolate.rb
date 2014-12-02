@@ -62,7 +62,7 @@ module Elasticsearch
           :version,
           :version_type ]
 
-        method = 'GET'
+        method = GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  arguments[:id],

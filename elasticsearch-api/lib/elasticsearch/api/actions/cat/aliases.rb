@@ -50,7 +50,7 @@ module Elasticsearch
 
           name = arguments.delete(:name)
 
-          method = 'GET'
+          method = GET
 
           path   = Utils.__pathify '_cat/aliases', Utils.__listify(name)
 

@@ -32,7 +32,7 @@ module Elasticsearch
         def reroute(arguments={})
           valid_params = [ :dry_run, :explain, :metric, :master_timeout, :timeout ]
 
-          method = 'POST'
+          method = POST
           path   = "_cluster/reroute"
 
           params = Utils.__validate_and_extract_params arguments, valid_params

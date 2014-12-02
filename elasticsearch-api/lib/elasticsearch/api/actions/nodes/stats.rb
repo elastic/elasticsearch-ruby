@@ -55,7 +55,7 @@ module Elasticsearch
             :level,
             :types ]
 
-          method = 'GET'
+          method = GET
 
           path   = Utils.__pathify '_nodes',
                                    Utils.__listify(arguments[:node_id]),

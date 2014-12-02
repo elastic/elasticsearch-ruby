@@ -83,7 +83,7 @@ module Elasticsearch
           :version,
           :version_type ]
 
-        method = 'POST'
+        method = POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id]),

@@ -9,7 +9,7 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
       #
       def delete_template(arguments={})
-        method = 'DELETE'
+        method = DELETE
         path   = "_search/template/#{arguments[:id]}"
         params = {}
         body   = nil

@@ -60,7 +60,7 @@ module Elasticsearch
           :source,
           :timeout ]
 
-        method = 'DELETE'
+        method = DELETE
         path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                  Utils.__listify(arguments[:type]),
                                  '/_query'

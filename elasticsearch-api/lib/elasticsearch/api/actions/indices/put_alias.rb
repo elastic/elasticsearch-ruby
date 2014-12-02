@@ -27,7 +27,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           valid_params = [ :timeout ]
 
-          method = 'PUT'
+          method = PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

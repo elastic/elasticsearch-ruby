@@ -58,7 +58,7 @@ module Elasticsearch
             :refresh,
             :wait_for_merge ]
 
-          method = 'POST'
+          method = POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

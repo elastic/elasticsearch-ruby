@@ -32,7 +32,7 @@ module Elasticsearch
         def delete(arguments={})
           valid_params = [ :timeout ]
 
-          method = 'DELETE'
+          method = DELETE
           path   = Utils.__pathify Utils.__listify(arguments[:index])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

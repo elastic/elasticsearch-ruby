@@ -17,7 +17,7 @@ module Elasticsearch
         def put_settings(arguments={})
           valid_params = [ :flat_settings ]
 
-          method = 'PUT'
+          method = PUT
           path   = "_cluster/settings"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body] || {}

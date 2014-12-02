@@ -18,7 +18,7 @@ module Elasticsearch
             :flat_settings
           ]
 
-          method = 'GET'
+          method = GET
           path   = "_cluster/settings"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

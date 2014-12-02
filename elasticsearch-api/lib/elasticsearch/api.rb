@@ -25,6 +25,15 @@ module Elasticsearch
       :human                          # Return numeric values in human readable format
     ]
 
+    GET = 'GET'.freeze
+    HEAD = 'HEAD'.freeze
+    POST = 'POST'.freeze
+    PUT = 'PUT'.freeze
+    DELETE = 'DELETE'.freeze
+    UNDERSCORE_SEARCH = '_search'.freeze
+    UNDERSCORE_ALL = '_all'.freeze
+
+
     # Auto-include all namespaces in the receiver
     #
     def self.included(base)

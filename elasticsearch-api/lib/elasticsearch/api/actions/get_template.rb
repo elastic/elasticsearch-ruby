@@ -11,7 +11,7 @@ module Elasticsearch
       #
       def get_template(arguments={})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
-        method = 'GET'
+        method = GET
         path   = "_search/template/#{arguments[:id]}"
         params = {}
         body   = arguments[:body]

@@ -21,7 +21,7 @@ module Elasticsearch
             scroll_id
         end
 
-        method = 'DELETE'
+        method = DELETE
         path   = Utils.__pathify '_search/scroll'
         params = {}
         body   = scroll_ids

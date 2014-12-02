@@ -37,7 +37,7 @@ module Elasticsearch
             :local
           ]
 
-          method = 'HEAD'
+          method = HEAD
           path   = Utils.__listify(arguments[:index])
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

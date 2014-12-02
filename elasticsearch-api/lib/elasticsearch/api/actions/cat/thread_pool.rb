@@ -42,7 +42,7 @@ module Elasticsearch
             :help,
             :v ]
 
-          method = 'GET'
+          method = GET
           path   = "_cat/thread_pool"
           params = Utils.__validate_and_extract_params arguments, valid_params
           params[:h] = Utils.__listify(params[:h]) if params[:h]

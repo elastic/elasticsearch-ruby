@@ -46,7 +46,7 @@ module Elasticsearch
 
           index = arguments.delete(:index)
 
-          method = 'GET'
+          method = GET
 
           path   = Utils.__pathify '_cat/count', Utils.__listify(index)
 

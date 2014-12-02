@@ -17,7 +17,7 @@ module Elasticsearch
       def list_benchmarks(arguments={})
         valid_params = [
            ]
-        method = 'GET'
+        method = GET
         path   = "_bench"
         params = {}
         body   = nil

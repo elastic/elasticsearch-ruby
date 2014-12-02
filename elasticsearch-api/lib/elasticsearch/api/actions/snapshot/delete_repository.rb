@@ -24,7 +24,7 @@ module Elasticsearch
 
           repository = arguments.delete(:repository)
 
-          method = 'DELETE'
+          method = DELETE
           path   = Utils.__pathify( '_snapshot', Utils.__listify(repository) )
 
           params = Utils.__validate_and_extract_params arguments, valid_params

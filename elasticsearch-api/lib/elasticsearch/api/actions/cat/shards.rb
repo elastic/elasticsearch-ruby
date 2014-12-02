@@ -55,7 +55,7 @@ module Elasticsearch
 
           index = arguments.delete(:index)
 
-          method = 'GET'
+          method = GET
 
           path   = Utils.__pathify '_cat/shards', Utils.__listify(index)
 

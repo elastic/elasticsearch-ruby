@@ -43,7 +43,7 @@ module Elasticsearch
             :expand_wildcards
           ]
 
-          method = 'GET'
+          method = GET
           path   = Utils.__pathify(
                      Utils.__listify(arguments[:index]),
                      '_mapping',

@@ -68,7 +68,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           valid_params = [ :timeout ]
 
-          method = 'PUT'
+          method = PUT
           path   = Utils.__pathify Utils.__escape(arguments[:index])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

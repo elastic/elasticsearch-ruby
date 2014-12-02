@@ -112,7 +112,7 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/search/request-body/
       #
       def search(arguments={})
-        arguments[:index] = '_all' if ! arguments[:index] && arguments[:type]
+        arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
 
         valid_params = [
           :analyzer,
@@ -147,8 +147,8 @@ module Elasticsearch
           :timeout,
           :version ]
 
-        method = 'GET'
-        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search' )
+        method = GET
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
 
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]

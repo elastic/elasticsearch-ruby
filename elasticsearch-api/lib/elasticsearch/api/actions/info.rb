@@ -7,7 +7,7 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/
       #
       def info(arguments={})
-        method = 'GET'
+        method = GET
         path   = ""
         params = {}
         body   = nil

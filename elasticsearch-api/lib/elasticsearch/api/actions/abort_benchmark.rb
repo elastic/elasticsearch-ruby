@@ -15,7 +15,7 @@ module Elasticsearch
       def abort_benchmark(arguments={})
         valid_params = [
            ]
-        method = 'POST'
+        method = POST
         path   = "_bench/abort/#{arguments[:name]}"
         params = {}
         body   = nil
