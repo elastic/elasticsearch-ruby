@@ -116,7 +116,7 @@ namespace :generate do
 
     name = options[:name].downcase
 
-    class_name = options[:name].capitalize
+    class_name = options[:name].split('_').map(&:capitalize).join
 
     option_methods = options[:option_methods].to_s.split('/').reduce('') do |sum, item|
       sum << "                "
