@@ -21,7 +21,7 @@ module Elasticsearch
         subject { DummyComponent.new :foo }
 
         should "have a name" do
-          assert_equal :dummycomponent, subject.name
+          assert_equal :dummy_component, DummyComponent.new.name
         end
 
         should "have a custom name" do
@@ -57,7 +57,7 @@ module Elasticsearch
           assert_respond_to subject, :bar
 
           subject.bar 'BAM'
-          assert_equal({ dummycomponentwithoptionmethod: { foo: { bar: 'BAM' } } }, subject.to_hash)
+          assert_equal({ dummy_component_with_option_method: { foo: { bar: 'BAM' } } }, subject.to_hash)
         end
 
         should "have an option method without args" do
@@ -70,7 +70,7 @@ module Elasticsearch
           assert_respond_to subject, :bar
 
           subject.bar 'BAM'
-          assert_equal({ dummycomponentwithoptionmethod: { bar: 'BAM' } }, subject.to_hash)
+          assert_equal({ dummy_component_with_option_method: { bar: 'BAM' } }, subject.to_hash)
         end
 
         should "define a custom option method" do
@@ -97,18 +97,18 @@ module Elasticsearch
 
           should "build the hash with the block with args" do
             subject = DummyComponent.new :foo do
-              @hash[:dummycomponent][:foo].update moo: 'xoo'
+              @hash[:dummy_component][:foo].update moo: 'xoo'
             end
 
-            assert_equal({dummycomponent: { foo: { moo: 'xoo' } } }, subject.to_hash )
+            assert_equal({dummy_component: { foo: { moo: 'xoo' } } }, subject.to_hash )
           end
 
           should "build the hash with the block without args" do
             subject = DummyComponent.new do
-              @hash[:dummycomponent].update moo: 'xoo'
+              @hash[:dummy_component].update moo: 'xoo'
             end
 
-            assert_equal({dummycomponent: { moo: 'xoo' } }, subject.to_hash )
+            assert_equal({dummy_component: { moo: 'xoo' } }, subject.to_hash )
           end
 
           should "build the hash with the option method" do
@@ -121,13 +121,13 @@ module Elasticsearch
               subject.foo 'bar'
             end
 
-            assert_equal({ dummycomponentwithoptionmethod: { foo: 'bar' } }, subject.to_hash)
+            assert_equal({ dummy_component_with_option_method: { foo: 'bar' } }, subject.to_hash)
           end
 
           should "build the hash with the passed args" do
             subject = DummyComponent.new foo: 'bar'
 
-            assert_equal({ dummycomponent: { foo: 'bar' } }, subject.to_hash)
+            assert_equal({ dummy_component: { foo: 'bar' } }, subject.to_hash)
           end
 
           should "return the already built hash" do

@@ -85,7 +85,14 @@ module Elasticsearch
             if value
               @name = value.to_sym
             else
-              @name ||= self.to_s.split('::').last.downcase.to_sym
+              @name ||= begin
+                value = self.to_s.split('::').last
+                value.gsub!(/([A-Z\d]+)([A-Z][a-z])/,'\1_\2')
+                value.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+                value.tr!("-", "_")
+                value.downcase!
+                value.to_sym
+              end
             end
           end
 
