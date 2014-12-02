@@ -33,7 +33,7 @@ module Elasticsearch
           repository = arguments.delete(:repository)
           snapshot   = arguments.delete(:snapshot)
 
-          method = 'GET'
+          method = HTTP_GET
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__listify(snapshot) )
 
           params = Utils.__validate_and_extract_params arguments, valid_params

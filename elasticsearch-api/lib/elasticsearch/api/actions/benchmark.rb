@@ -50,7 +50,7 @@ module Elasticsearch
       def benchmark(arguments={})
         valid_params = [
           :verbose ]
-        method = 'PUT'
+        method = HTTP_PUT
         path   = "_bench"
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]

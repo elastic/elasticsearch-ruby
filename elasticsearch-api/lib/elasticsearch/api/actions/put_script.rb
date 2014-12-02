@@ -37,7 +37,7 @@ module Elasticsearch
           :version,
           :version_type ]
 
-        method = 'PUT'
+        method = HTTP_PUT
         path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
 
         params = Utils.__validate_and_extract_params arguments, valid_params

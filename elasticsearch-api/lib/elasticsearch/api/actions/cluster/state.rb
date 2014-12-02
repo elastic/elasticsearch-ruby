@@ -34,7 +34,7 @@ module Elasticsearch
             :master_timeout,
             :flat_settings ]
 
-          method = 'GET'
+          method = HTTP_GET
           path   = "_cluster/state"
 
           path   = Utils.__pathify '_cluster/state',

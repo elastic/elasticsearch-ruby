@@ -20,7 +20,7 @@ module Elasticsearch
             :timeout ]
 
           repository = arguments.delete(:repository)
-          method = 'POST'
+          method = HTTP_POST
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), '_verify' )
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

@@ -35,7 +35,7 @@ module Elasticsearch
             :help,
             :v ]
 
-          method = 'GET'
+          method = HTTP_GET
           path   = "_cat/pending_tasks"
           params = Utils.__validate_and_extract_params arguments, valid_params
           params[:h] = Utils.__listify(params[:h]) if params[:h]

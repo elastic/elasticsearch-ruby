@@ -29,7 +29,7 @@ module Elasticsearch
           :ignore_unavailable,
           :allow_no_indices,
           :expand_wildcards ]
-        method = 'GET'
+        method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search_shards' )
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = nil
