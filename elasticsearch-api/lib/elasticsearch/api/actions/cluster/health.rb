@@ -40,7 +40,7 @@ module Elasticsearch
             :wait_for_relocating_shards,
             :wait_for_status ]
 
-          method = GET
+          method = HTTP_GET
           path   = "_cluster/health"
 
           params = Utils.__validate_and_extract_params arguments, valid_params

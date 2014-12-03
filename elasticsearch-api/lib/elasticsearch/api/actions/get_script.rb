@@ -12,7 +12,7 @@ module Elasticsearch
       def get_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
-        method = GET
+        method = HTTP_GET
         path   = "_scripts/#{arguments[:lang]}/#{arguments[:id]}"
         params = {}
         body   = nil

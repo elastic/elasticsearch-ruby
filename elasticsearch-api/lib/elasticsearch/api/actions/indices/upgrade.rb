@@ -25,7 +25,7 @@ module Elasticsearch
             :expand_wildcards,
             :wait_for_completion ]
 
-          method = POST
+          method = HTTP_POST
           path   = "_upgrade"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

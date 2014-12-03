@@ -101,7 +101,7 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards ]
 
-          method = GET
+          method = HTTP_GET
 
           parts  = Utils.__extract_parts arguments, valid_parts
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)

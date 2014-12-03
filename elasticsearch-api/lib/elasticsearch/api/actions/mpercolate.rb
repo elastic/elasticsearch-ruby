@@ -36,7 +36,7 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards ]
 
-        method = GET
+        method = HTTP_GET
         path   = "_mpercolate"
 
         params = Utils.__validate_and_extract_params arguments, valid_params

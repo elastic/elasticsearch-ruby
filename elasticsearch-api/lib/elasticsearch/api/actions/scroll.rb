@@ -44,7 +44,7 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/search/search-type/
       #
       def scroll(arguments={})
-        method = GET
+        method = HTTP_GET
         path   = "_search/scroll"
         valid_params = [
           :scroll,

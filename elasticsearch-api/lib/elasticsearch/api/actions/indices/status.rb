@@ -42,7 +42,7 @@ module Elasticsearch
             :recovery,
             :snapshot ]
 
-          method = GET
+          method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_status'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

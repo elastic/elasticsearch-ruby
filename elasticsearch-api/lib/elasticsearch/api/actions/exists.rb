@@ -32,7 +32,7 @@ module Elasticsearch
           :refresh,
           :routing ]
 
-        method = HEAD
+        method = HTTP_HEAD
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])

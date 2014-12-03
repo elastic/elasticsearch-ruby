@@ -26,7 +26,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           valid_params = [ :create, :order, :timeout ]
 
-          method = PUT
+          method = HTTP_PUT
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

@@ -63,7 +63,7 @@ module Elasticsearch
             :expand_wildcards,
             :recycler ]
 
-          method = POST
+          method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

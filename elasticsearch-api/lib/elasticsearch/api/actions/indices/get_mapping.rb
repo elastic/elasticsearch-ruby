@@ -42,7 +42,7 @@ module Elasticsearch
             :local
           ]
 
-          method = GET
+          method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                    '_mapping',
                                    Utils.__listify(arguments[:type])

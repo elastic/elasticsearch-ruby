@@ -48,7 +48,7 @@ module Elasticsearch
             :expand_wildcards
           ]
 
-          method = PUT
+          method = HTTP_PUT
           path   = Utils.__pathify( Utils.__listify(arguments[:index]),
                                     Utils.__listify(arguments[:type]),
                                     '_warmer',

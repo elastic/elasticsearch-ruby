@@ -11,7 +11,7 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/
       #
       def ping(arguments={})
-        method = HEAD
+        method = HTTP_HEAD
         path   = ""
         params = {}
         body   = nil

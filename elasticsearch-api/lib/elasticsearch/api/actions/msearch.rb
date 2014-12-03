@@ -39,7 +39,7 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         valid_params = [ :search_type ]
 
-        method = GET
+        method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_msearch' )
 
         params = Utils.__validate_and_extract_params arguments, valid_params

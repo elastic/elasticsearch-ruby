@@ -43,7 +43,7 @@ module Elasticsearch
             :help,
             :v ]
 
-          method = GET
+          method = HTTP_GET
           path   = "_cat/nodes"
 
           params = Utils.__validate_and_extract_params arguments, valid_params

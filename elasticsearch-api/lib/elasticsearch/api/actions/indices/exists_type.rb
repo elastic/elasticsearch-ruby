@@ -33,7 +33,7 @@ module Elasticsearch
             :local
           ]
 
-          method = HEAD
+          method = HTTP_HEAD
           path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__escape(arguments[:type])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

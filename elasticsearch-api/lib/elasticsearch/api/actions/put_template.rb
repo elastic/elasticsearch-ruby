@@ -13,7 +13,7 @@ module Elasticsearch
       def put_template(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        method = PUT
+        method = HTTP_PUT
         path   = "_search/template/#{arguments[:id]}"
         params = {}
         body   = arguments[:body]

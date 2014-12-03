@@ -14,7 +14,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           valid_params = [ :local ]
 
-          method = HEAD
+          method = HTTP_HEAD
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

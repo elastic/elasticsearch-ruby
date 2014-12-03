@@ -30,7 +30,7 @@ module Elasticsearch
             :expand_wildcards
           ]
 
-          method = GET
+          method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_segments'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

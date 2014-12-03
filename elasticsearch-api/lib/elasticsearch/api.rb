@@ -25,11 +25,11 @@ module Elasticsearch
       :human                          # Return numeric values in human readable format
     ]
 
-    GET = 'GET'.freeze
-    HEAD = 'HEAD'.freeze
-    POST = 'POST'.freeze
-    PUT = 'PUT'.freeze
-    DELETE = 'DELETE'.freeze
+    HTTP_GET = 'GET'.freeze
+    HTTP_HEAD = 'HEAD'.freeze
+    HTTP_POST = 'POST'.freeze
+    HTTP_PUT = 'PUT'.freeze
+    HTTP_DELETE = 'DELETE'.freeze
     UNDERSCORE_SEARCH = '_search'.freeze
     UNDERSCORE_ALL = '_all'.freeze
 

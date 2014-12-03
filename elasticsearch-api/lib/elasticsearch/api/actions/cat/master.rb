@@ -35,7 +35,7 @@ module Elasticsearch
             :help,
             :v ]
 
-          method = GET
+          method = HTTP_GET
           path   = "_cat/master"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

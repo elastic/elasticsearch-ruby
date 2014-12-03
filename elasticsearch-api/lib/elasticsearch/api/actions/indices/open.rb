@@ -34,7 +34,7 @@ module Elasticsearch
             :timeout
           ]
 
-          method = POST
+          method = HTTP_POST
           path   = Utils.__pathify Utils.__escape(arguments[:index]), '_open'
 
           params = Utils.__validate_and_extract_params arguments, valid_params
