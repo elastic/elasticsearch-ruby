@@ -60,6 +60,11 @@ class Elasticsearch::Transport::Transport::Connections::CollectionTest < Test::U
         assert_equal ['BAR'], @collection.dead.map { |c| c.host.upcase }
       end
 
+      should "not return dead connections, when alive connections exist" do
+        assert_equal 1, @collection.size
+        @collection.all.size.times { refute @collection.get_connection.dead? }
+      end
+
       should "resurrect dead connection with least failures when no alive is available" do
         c1 = Connection.new(:host => 'foo').dead!.dead!
         c2 = Connection.new(:host => 'bar').dead!

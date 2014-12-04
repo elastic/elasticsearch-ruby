@@ -23,7 +23,7 @@ module Elasticsearch
           def initialize(arguments={})
             selector_class = arguments[:selector_class] || DEFAULT_SELECTOR
             @connections   = arguments[:connections]    || []
-            @selector      = arguments[:selector]       || selector_class.new(arguments)
+            @selector      = arguments[:selector]       || selector_class.new(arguments.merge(:connections => self))
           end
 
           # Returns an Array of hosts information in this collection as Hashes.
