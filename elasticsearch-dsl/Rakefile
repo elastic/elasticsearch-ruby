@@ -169,7 +169,7 @@ namespace :generate do
           subject = #{class_name}.new :foo do
             #{options[:option_methods].to_s.split('/').first} 'bar'
           end
-          assert_equal 'bar', subject.to_hash[:#{name}][:foo][:#{options[:option_methods].to_s.split('/').first}]
+          assert_equal({#{name}: { foo: { #{options[:option_methods].to_s.split('/').first}: 'bar' } }}, subject.to_hash)
         end
       RUBY
     end
