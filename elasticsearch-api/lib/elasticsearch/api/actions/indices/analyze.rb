@@ -25,6 +25,9 @@ module Elasticsearch
         # @option arguments [String] :field Use the analyzer configured for this field
         #                                   (instead of passing the analyzer name)
         # @option arguments [List] :filters A comma-separated list of filters to use for the analysis
+        # @option arguments [List] :token_filters A comma-separated list of token filters to use for the analysis,
+        #                                         you can use the shorter filters parameter name
+        # @option arguments [List] :char_filters A comma-separated list of char filters to use for the analysis
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Boolean] :prefer_local With `true`, specify that a local shard should be used if available,
         #                                           with `false`, use a random shard (default: true)
@@ -38,12 +41,14 @@ module Elasticsearch
         def analyze(arguments={})
           valid_params = [
             :analyzer,
+            :char_filters,
             :field,
             :filters,
             :index,
             :prefer_local,
             :text,
             :tokenizer,
+            :token_filters,
             :format ]
 
           method = 'GET'
