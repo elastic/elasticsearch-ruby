@@ -2,6 +2,7 @@ require 'elasticsearch/dsl/version'
 
 require 'elasticsearch/dsl/search'
 require 'elasticsearch/dsl/search/base_component'
+require 'elasticsearch/dsl/search/base_compound_filter_component'
 require 'elasticsearch/dsl/search/base_aggregation_component'
 require 'elasticsearch/dsl/search/query'
 require 'elasticsearch/dsl/search/filter'
