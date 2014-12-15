@@ -62,6 +62,7 @@ module Elasticsearch
 
                 Connections::Connection.new :host => host, :connection => client
               },
+              :selector_class => options[:selector_class],
               :selector => options[:selector]
           end
 
