@@ -70,7 +70,7 @@ module Elasticsearch
           # @return [Array]
           #
           def host_unreachable_exceptions
-            [::Curl::Err::HostResolutionError, ::Curl::Err::ConnectionFailedError, ::Curl::Err::GotNothingError, ::Curl::Err::RecvError, ::Curl::Err::SendError]
+            [::Curl::Err::HostResolutionError, ::Curl::Err::ConnectionFailedError, ::Curl::Err::GotNothingError, ::Curl::Err::RecvError, ::Curl::Err::SendError, ::Curl::Err::TimeoutError]
           end
         end
 
