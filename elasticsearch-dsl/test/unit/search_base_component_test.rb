@@ -118,7 +118,7 @@ module Elasticsearch
             end
 
             subject = DummyComponentWithOptionMethod.new do
-              subject.foo 'bar'
+              foo 'bar'
             end
 
             assert_equal({ dummy_component_with_option_method: { foo: 'bar' } }, subject.to_hash)
@@ -128,6 +128,19 @@ module Elasticsearch
             subject = DummyComponent.new foo: 'bar'
 
             assert_equal({ dummy_component: { foo: 'bar' } }, subject.to_hash)
+          end
+
+          should "merge the top-level options to the hash" do
+            class DummyComponentWithOptionMethod
+              include Elasticsearch::DSL::Search::BaseComponent
+              option_method :bar
+            end
+
+            subject = DummyComponentWithOptionMethod.new :foo, xoo: 'X' do
+              bar 'B'
+            end
+
+            assert_equal({ dummy_component_with_option_method: { xoo: 'X', foo: { bar: 'B' } } }, subject.to_hash)
           end
 
           should "return the already built hash" do

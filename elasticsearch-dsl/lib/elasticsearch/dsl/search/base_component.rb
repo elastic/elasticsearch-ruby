@@ -62,9 +62,10 @@ module Elasticsearch
         end
 
         def initialize(*args, &block)
-          @hash  = { name => {} }
-          @args  = args.first || {}
-          @block = block
+          @hash    = { name => {} }
+          @args    = args.first || {}
+          @options = args.size > 1 ? args.last : {}
+          @block   = block
         end
 
         module ClassMethods
@@ -134,9 +135,11 @@ module Elasticsearch
               when @block
                 @hash = (@args && ! @args.empty?) ? { name => { @args => {} } } : { name => {} }
                 call
+                @hash[self.name.to_sym].update @options unless @options.empty?
                 @hash
               # 2. Hash created with option methods
               when @hash[self.name.to_sym] && ! @args.is_a?(Hash) && @hash[self.name.to_sym][@args]
+                @hash[self.name.to_sym].update @options unless @options.empty?
                 @hash
               # 3. Hash passsed as @args
               when @hash[self.name.to_sym] && @args.respond_to?(:to_hash) && ! @args.empty?
