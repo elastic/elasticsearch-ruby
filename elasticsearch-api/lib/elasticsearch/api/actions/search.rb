@@ -130,6 +130,7 @@ module Elasticsearch
           :lowercase_expanded_terms,
           :preference,
           :q,
+          :query_cache,
           :routing,
           :scroll,
           :search_type,
