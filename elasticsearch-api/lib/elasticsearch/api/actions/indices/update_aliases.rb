@@ -34,7 +34,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           valid_params = [ :timeout ]
 
-          method = 'POST'
+          method = HTTP_POST
           path   = "_aliases"
 
           params = Utils.__validate_and_extract_params arguments, valid_params

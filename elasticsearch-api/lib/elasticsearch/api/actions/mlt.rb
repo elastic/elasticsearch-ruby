@@ -107,7 +107,7 @@ module Elasticsearch
           :search_types,
           :stop_words ]
 
-        method = 'GET'
+        method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id]),

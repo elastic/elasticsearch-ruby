@@ -63,7 +63,7 @@ module Elasticsearch
           :routing,
           :parent ]
 
-        method = 'GET'
+        method = HTTP_GET
         endpoint = arguments.delete(:endpoint) || '_termvectors'
 
         path   = Utils.__pathify Utils.__escape(arguments[:index]),

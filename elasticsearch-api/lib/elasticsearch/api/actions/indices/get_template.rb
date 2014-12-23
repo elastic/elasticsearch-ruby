@@ -25,7 +25,7 @@ module Elasticsearch
         def get_template(arguments={})
           valid_params = [ :flat_settings, :local ]
 
-          method = 'GET'
+          method = HTTP_GET
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

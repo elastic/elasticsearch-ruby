@@ -29,7 +29,7 @@ module Elasticsearch
             :detailed,
             :active_only,
             :human ]
-          method = 'GET'
+          method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_recovery'
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

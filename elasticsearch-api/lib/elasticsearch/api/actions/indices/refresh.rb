@@ -40,7 +40,7 @@ module Elasticsearch
             :expand_wildcards
           ]
 
-          method = 'POST'
+          method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_refresh'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

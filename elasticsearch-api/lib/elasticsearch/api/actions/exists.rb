@@ -23,7 +23,7 @@ module Elasticsearch
       def exists(arguments={})
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        arguments[:type] ||= '_all'
+        arguments[:type] ||= UNDERSCORE_ALL
 
         valid_params = [
           :parent,
@@ -32,7 +32,7 @@ module Elasticsearch
           :refresh,
           :routing ]
 
-        method = 'HEAD'
+        method = HTTP_HEAD
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])

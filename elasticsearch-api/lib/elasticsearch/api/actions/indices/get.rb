@@ -26,7 +26,7 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards ]
 
-          method = 'GET'
+          method = HTTP_GET
 
           path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments.delete(:feature))
 

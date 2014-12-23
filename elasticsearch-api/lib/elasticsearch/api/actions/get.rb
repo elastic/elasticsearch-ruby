@@ -34,7 +34,7 @@ module Elasticsearch
       def get(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-        arguments[:type] ||= '_all'
+        arguments[:type] ||= UNDERSCORE_ALL
 
         valid_params = [
           :fields,
@@ -49,7 +49,7 @@ module Elasticsearch
           :_source_include,
           :_source_exclude ]
 
-        method = 'GET'
+        method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])

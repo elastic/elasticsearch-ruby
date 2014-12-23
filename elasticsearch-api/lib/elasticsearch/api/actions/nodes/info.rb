@@ -45,7 +45,7 @@ module Elasticsearch
 
           valid_params = []
 
-          method = 'GET'
+          method = HTTP_GET
 
           parts  = Utils.__extract_parts arguments, valid_parts
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)

@@ -32,7 +32,7 @@ module Elasticsearch
             :threads,
             :type ]
 
-          method = 'GET'
+          method = HTTP_GET
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
 
           params = Utils.__validate_and_extract_params arguments, valid_params

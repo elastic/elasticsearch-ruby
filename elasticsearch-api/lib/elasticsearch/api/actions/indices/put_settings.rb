@@ -53,7 +53,7 @@ module Elasticsearch
             :flat_settings
           ]
 
-          method = 'PUT'
+          method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]

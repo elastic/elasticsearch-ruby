@@ -45,7 +45,7 @@ module Elasticsearch
           :routing,
           :source ]
 
-        method = 'GET'
+        method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
 
         params = Utils.__validate_and_extract_params arguments, valid_params
