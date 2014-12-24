@@ -19,8 +19,7 @@ module Elasticsearch
         #                            tokenizer: 'whitespace',
         #                            filters: ['lowercase','stop']
         #
-        # If your text for analysis is longer than 4096 bytes then you should
-        # pass it using the :body argument to avoid HTTP transport errors
+        # @note If your text for analysis is longer than 4096 bytes then you should use the :body argument, rather than :text, to avoid HTTP transport errors
         #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [String] :body The text on which the analysis should be performed
