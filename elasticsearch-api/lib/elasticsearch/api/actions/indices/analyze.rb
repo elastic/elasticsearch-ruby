@@ -19,6 +19,13 @@ module Elasticsearch
         #                            tokenizer: 'whitespace',
         #                            filters: ['lowercase','stop']
         #
+        # @example Analyze text "Quick <b>Brown</b> Jumping Fox" with custom tokenizer, token and character filters
+        #
+        #     client.indices.analyze text: 'The Quick <b>Brown</b> Jumping Fox',
+        #                            tokenizer: 'standard',
+        #                            token_filters: 'lowercase,stop',
+        #                            char_filters: 'html_strip'
+        #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Hash] :body The text on which the analysis should be performed
         # @option arguments [String] :analyzer The name of the analyzer to use
