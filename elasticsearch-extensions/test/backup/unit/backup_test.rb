@@ -89,6 +89,7 @@ class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
         .expects(:search)
         .with do |params|
           assert_equal 'test', params[:index]
+          true # Thanks, Ruby 2.2
         end
         .returns({"_scroll_id" => "abc123"})
 
