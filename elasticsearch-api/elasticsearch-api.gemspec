@@ -48,7 +48,6 @@ Gem::Specification.new do |s|
   # Prevent unit test failures on Ruby 1.8
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_development_dependency "test-unit", '~> 2'
-    s.add_development_dependency "activesupport", '~> 3'
     s.add_development_dependency "json"
   end
 
