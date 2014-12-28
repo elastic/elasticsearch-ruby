@@ -23,3 +23,7 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "simplecov-rcov"
   gem "cane"
 end
+
+if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+  gem "test-unit", '~> 2'
+end

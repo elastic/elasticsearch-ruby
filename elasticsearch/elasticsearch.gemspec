@@ -53,6 +53,10 @@ Gem::Specification.new do |s|
     s.add_development_dependency "cane"
   end
 
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+    s.add_development_dependency "test-unit", '~> 2'
+  end
+
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby integrations for Elasticsearch (client, API, etc.)
   DESC

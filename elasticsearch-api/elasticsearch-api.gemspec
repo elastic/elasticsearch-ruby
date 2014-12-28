@@ -62,6 +62,10 @@ Gem::Specification.new do |s|
     s.add_development_dependency "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   end
 
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+    s.add_development_dependency "test-unit", '~> 2'
+  end
+
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
   DESC

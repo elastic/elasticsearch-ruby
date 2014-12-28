@@ -51,6 +51,10 @@ Gem::Specification.new do |s|
     s.add_development_dependency "cane"
   end
 
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+    s.add_development_dependency "test-unit", '~> 2'
+  end
+
   # Gems for testing integrations
   s.add_development_dependency "patron"
   s.add_development_dependency "oj"
