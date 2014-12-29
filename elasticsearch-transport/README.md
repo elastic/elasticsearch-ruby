@@ -89,6 +89,17 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
     Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
+Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -- are handled automatically:
+
+    Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+
+The client will automatically round-robin across the hosts
+(unless you select or implement a different [connection selector](#connection-selector)).
+
+### Authentication
+
+You can pass the authentication credentials, scheme and port in the host configuration hash:
+
     Elasticsearch::Client.new hosts: [
       { host: 'my-protected-host',
         port: '443',
@@ -97,12 +108,15 @@ Instead of Strings, you can pass host information as an array of Hashes:
         scheme: 'https'
       } ]
 
-Scheme, HTTP authentication credentials and URL prefixes are handled automatically:
+... or simply use the common URL format:
 
-    Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+    Elasticsearch::Client.new url: 'https://username:password@example.com:9200'
 
-The client will automatically round-robin across the hosts
-(unless you select or implement a different [connection selector](#connection-selector)).
+To pass a custom certificate for SSL peer verification to Faraday-based clients,
+use the `transport_options` option:
+
+    Elasticsearch::Client.new url: 'https://username:password@example.com:9200',
+                              transport_options: { ssl: { ca_file: '/path/to/cacert.pem' } }
 
 ### Logging
 
@@ -262,7 +276,8 @@ constructor, use the `transport_options` key:
     client = Elasticsearch::Client.new transport_options: {
       request: { open_timeout: 1 },
       headers: { user_agent:   'MyApp' },
-      params:  { :format => 'yaml' }
+      params:  { :format => 'yaml' },
+      ssl:     { verify: false }
     }
 
 You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
