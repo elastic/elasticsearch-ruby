@@ -93,6 +93,8 @@ Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -
 
     Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
 
+Another way to configure the URL is to export the `ELASTICSEARCH_URL` variable.
+
 The client will automatically round-robin across the hosts
 (unless you select or implement a different [connection selector](#connection-selector)).
 
