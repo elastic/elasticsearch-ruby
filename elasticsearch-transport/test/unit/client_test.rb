@@ -69,13 +69,17 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'localhost', c.transport.hosts.first[:host]
       end
 
-      should "take :hosts, :host or :url" do
+      should "take :hosts, :host, :url or :urls" do
         c1 = Elasticsearch::Transport::Client.new :hosts => ['foobar']
         c2 = Elasticsearch::Transport::Client.new :host  => 'foobar'
         c3 = Elasticsearch::Transport::Client.new :url   => 'foobar'
-        assert_equal 'foobar', c1.transport.hosts.first[:host]
-        assert_equal 'foobar', c2.transport.hosts.first[:host]
-        assert_equal 'foobar', c3.transport.hosts.first[:host]
+        c4 = Elasticsearch::Transport::Client.new :urls  => 'foo,bar'
+
+        assert_equal 'foobar', c1.transport.hosts[0][:host]
+        assert_equal 'foobar', c2.transport.hosts[0][:host]
+        assert_equal 'foobar', c3.transport.hosts[0][:host]
+        assert_equal 'foo',    c4.transport.hosts[0][:host]
+        assert_equal 'bar',    c4.transport.hosts[1][:host]
       end
 
     end
@@ -84,9 +88,20 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       setup    { ENV['ELASTICSEARCH_URL'] = 'foobar' }
       teardown { ENV.delete('ELASTICSEARCH_URL')     }
 
-      should "use it" do
+      should "use a single host" do
         c = Elasticsearch::Transport::Client.new
+
+        assert_equal 1,     c.transport.hosts.size
         assert_equal 'foobar', c.transport.hosts.first[:host]
+      end
+
+      should "use multiple hosts" do
+        ENV['ELASTICSEARCH_URL'] = 'foo, bar'
+        c = Elasticsearch::Transport::Client.new
+
+        assert_equal 2,     c.transport.hosts.size
+        assert_equal 'foo', c.transport.hosts[0][:host]
+        assert_equal 'bar', c.transport.hosts[1][:host]
       end
     end
 
@@ -120,6 +135,8 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
       should "extract from array with ports" do
         hosts = @client.__extract_hosts ['host1:1000', 'host2:2000']
+
+        assert_equal 2, hosts.size
 
         assert_equal 'host1', hosts[0][:host]
         assert_equal '1000',  hosts[0][:port]
@@ -169,6 +186,15 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'PASSWORD', hosts[0][:password]
         assert_equal 'myhost',   hosts[0][:host]
         assert_equal '4430',     hosts[0][:port]
+      end
+
+      should "split comma-separated URLs" do
+        hosts = @client.__extract_hosts 'foo, bar'
+
+        assert_equal 2, hosts.size
+
+        assert_equal 'foo', hosts[0][:host]
+        assert_equal 'bar', hosts[1][:host]
       end
 
       should "raise error for incompatible argument" do

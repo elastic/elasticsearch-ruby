@@ -78,7 +78,11 @@ module Elasticsearch
       #                                              (Default: GET)
       #
       def initialize(arguments={})
-        hosts = arguments[:hosts] || arguments[:host] || arguments[:url] || ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
+        hosts = arguments[:hosts] || \
+                arguments[:host]  || \
+                arguments[:url]   || \
+                arguments[:urls]  || \
+                ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
 
         arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
         arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
@@ -127,7 +131,13 @@ module Elasticsearch
         if hosts_config.respond_to?(:to_hash)
           hosts = [ hosts_config ]
         else
-          hosts = Array(hosts_config).map do |host|
+          if hosts_config.is_a?(String) && hosts_config.include?(',')
+            hosts = hosts_config.split(/\s*,\s*/)
+          else
+            hosts = Array(hosts_config)
+          end
+
+          hosts.map! do |host|
             case host
             when String
               if host =~ /^[a-z]+\:\/\//

@@ -93,7 +93,11 @@ Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -
 
     Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
 
-Another way to configure the URL is to export the `ELASTICSEARCH_URL` variable.
+You can pass multiple URLs separated by a comma:
+
+    Elasticsearch::Client.new urls: 'http://localhost:9200,http://localhost:9201'
+
+Another way to configure the URL(s) is to export the `ELASTICSEARCH_URL` variable.
 
 The client will automatically round-robin across the hosts
 (unless you select or implement a different [connection selector](#connection-selector)).
