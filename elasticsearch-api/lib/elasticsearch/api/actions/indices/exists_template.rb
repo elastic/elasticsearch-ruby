@@ -11,21 +11,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def exists_template(arguments={})
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
-          valid_params = [ :local ]
+          Utils.__rescue_from_not_found do
+            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+            valid_params = [ :local ]
 
-          method = HTTP_HEAD
-          path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
+            method = HTTP_HEAD
+            path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
+            params = Utils.__validate_and_extract_params arguments, valid_params
+            body = nil
 
-          perform_request(method, path, params, body).status == 200 ? true : false
-        rescue Exception => e
-          if e.class.to_s =~ /NotFound/ || e.message =~ /Not\s*Found|404/i
-            false
-          else
-            raise e
+            perform_request(method, path, params, body).status == 200 ? true : false
           end
         end
       end

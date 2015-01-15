@@ -178,6 +178,28 @@ module Elasticsearch
 
         end
 
+        context "__rescue_from_not_found" do
+
+          should "return false if exception class name contains 'NotFound'" do
+            assert_equal( false, __rescue_from_not_found { raise NotFound })
+          end
+
+          should "return false if exception message contains 'Not Found'" do
+            assert_equal( false, __rescue_from_not_found { raise Exception.new "Not Found" })
+          end
+
+          should "return false if exception message contains '404'" do
+            assert_equal( false, __rescue_from_not_found { raise Exception.new "404" })
+          end
+
+          should "raise exception if exception class name and message do not contain NotFound/404" do
+            assert_raise Exception do
+              __rescue_from_not_found { raise Exception.new "Any other exception" }
+            end
+          end
+
+        end
+
       end
     end
   end
