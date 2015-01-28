@@ -90,9 +90,9 @@ namespace :elasticsearch do
       sh <<-CODE
         mkdir -p #{__current__.join('tmp/builds')} && \
         cd #{__current__.join('tmp/elasticsearch')} && \
+        rm -rf target/ && \
         git fetch origin --quiet && \
         git checkout #{branch} && \
-        rm -rf target/ && \
         mvn clean && \
         mvn package -DskipTests && \
         build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
