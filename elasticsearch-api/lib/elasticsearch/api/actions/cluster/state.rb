@@ -32,7 +32,9 @@ module Elasticsearch
             :index_templates,
             :local,
             :master_timeout,
-            :flat_settings ]
+            :flat_settings,
+            :expand_wildcards,
+            :ignore_unavailable ]
 
           method = HTTP_GET
           path   = "_cluster/state"
