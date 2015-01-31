@@ -21,10 +21,10 @@ module Elasticsearch
       #
       # @example Evaluate a custom document (passed as `:doc`) against the queries
       #
-      #     client.percolate index: 'my-index', body: { doc: { title: "Foo" } }
+      #     client.percolate index: 'my-index', type: 'my-type', body: { doc: { title: "Foo" } }
       #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-1'} ]}
       #
-      #     client.percolate index: 'my-index', body: { doc: { title: "Foo Bar" } }
+      #     client.percolate index: 'my-index', type: 'my-type', body: { doc: { title: "Foo Bar" } }
       #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-2'}, {_index: 'my-index', _id: 'alert-1'} ] }
       #
       # @example Evaluate an existing document against the queries
@@ -44,12 +44,11 @@ module Elasticsearch
       #
       # @example Evaluate a document against "high priority" percolator queries
       #
-      #     client.percolate index: 'my-index', body: {
+      #     client.percolate index: 'my-index', type: 'my-type', body: {
       #         doc:    { title: "Foo" },
       #         filter: { term: { priority: 'high' } }
       #       }
       #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-high-1'} ]}
-      #
       #
       # @option arguments [String] :index The index of the document being percolated. (*Required*)
       # @option arguments [String] :type The type of the document being percolated. (*Required*)
