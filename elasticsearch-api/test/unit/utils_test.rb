@@ -141,6 +141,9 @@ module Elasticsearch
         end
 
         context "__validate_and_extract_params" do
+          teardown do
+            Elasticsearch::API.settings.clear
+          end
 
           should "extract valid params from a Hash" do
             assert_equal( {:foo => 'qux'},
@@ -162,6 +165,21 @@ module Elasticsearch
           should "extract COMMON_QUERY_PARAMS" do
             assert_equal( { :format => 'yaml' },
                           __validate_and_extract_params( { :format => 'yaml' } ) )
+          end
+
+          should "not validate parameters when the option is set" do
+            assert_nothing_raised do
+              result = __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar], { skip_parameter_validation: true } )
+              assert_equal( { :foo => 'q', :bam => 'm' }, result )
+            end
+          end
+
+          should "not validate parameters when the module setting is set" do
+            assert_nothing_raised do
+              Elasticsearch::API.settings[:skip_parameter_validation] = true
+              result = __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar] )
+              assert_equal( { :foo => 'q', :bam => 'm' }, result )
+            end
           end
 
         end

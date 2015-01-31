@@ -110,24 +110,44 @@ module Elasticsearch
       # @raise [ArgumentError] If the arguments Hash contains invalid keys
       #
       # @example Extract parameters
-      #   __validate_and_extract_params { :foo => 'qux' }, [:foo, :bar]
+      #   __validate_and_extract_params( { :foo => 'qux' }, [:foo, :bar] )
       #   # => { :foo => 'qux' }
       #
       # @example Raise an exception for invalid parameters
-      #   __validate_and_extract_params { :foo => 'qux', :bam => 'mux' }, [:foo, :bar]
+      #   __validate_and_extract_params( { :foo => 'qux', :bam => 'mux' }, [:foo, :bar] )
       #   # ArgumentError: "URL parameter 'bam' is not supported"
+      #
+      # @example Skip validating parameters
+      #   __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar], { skip_parameter_validation: true } )
+      #   # => { :foo => "q", :bam => "m" }
+      #
+      # @example Skip validating parameters when the module setting is set
+      #   Elasticsearch::API.settings[:skip_parameter_validation] = true
+      #   __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar] )
+      #   # => { :foo => "q", :bam => "m" }
       #
       # @api private
       #
-      def __validate_and_extract_params(arguments, valid_params=[])
+      def __validate_and_extract_params(arguments, params=[], options={})
+        if options[:skip_parameter_validation] || Elasticsearch::API.settings[:skip_parameter_validation]
+          arguments
+        else
+          __validate_params(arguments, params)
+          __extract_params(arguments, params)
+        end
+      end
+
+      def __validate_params(arguments, valid_params=[])
         arguments.each do |k,v|
           raise ArgumentError, "URL parameter '#{k}' is not supported" \
             unless COMMON_PARAMS.include?(k) || COMMON_QUERY_PARAMS.include?(k) || valid_params.include?(k)
         end
+      end
 
-        params = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || valid_params.include?(k) }
-        params = Hash[params] unless params.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        params
+      def __extract_params(arguments, params=[])
+        result = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || params.include?(k) }
+        result = Hash[result] unless result.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+        result
       end
 
       # Extracts the valid parts of the URL from the arguments
