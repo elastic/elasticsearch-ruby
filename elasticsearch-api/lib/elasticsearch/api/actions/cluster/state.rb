@@ -19,6 +19,10 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression for inidices
+        #                                              (options: open, closed)
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+        #                                                 unavailable (missing, closed, etc)
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-state/
         #
