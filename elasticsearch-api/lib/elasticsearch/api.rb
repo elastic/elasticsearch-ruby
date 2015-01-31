@@ -45,5 +45,16 @@ module Elasticsearch
                 Elasticsearch::API::Snapshot,
                 Elasticsearch::API::Cat
     end
+
+    module ClassMethods
+
+      # Access the module settings
+      #
+      def settings
+        @settings ||= {}
+      end
+    end
+
+    extend ClassMethods
   end
 end
