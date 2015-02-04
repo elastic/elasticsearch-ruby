@@ -13,7 +13,7 @@ module Elasticsearch
             assert_equal({ terms: {} }, subject.to_hash)
           end
 
-          should "be take a Hash" do
+          should "take a Hash" do
             subject = Terms.new foo: ['abc', 'xyz']
             assert_equal({ terms: { foo: ['abc', 'xyz'] } }, subject.to_hash)
           end
