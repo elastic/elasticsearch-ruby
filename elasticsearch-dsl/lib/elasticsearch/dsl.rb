@@ -1,5 +1,6 @@
 require 'elasticsearch/dsl/version'
 
+require 'elasticsearch/dsl/utils'
 require 'elasticsearch/dsl/search'
 require 'elasticsearch/dsl/search/base_component'
 require 'elasticsearch/dsl/search/base_compound_filter_component'
