@@ -20,7 +20,7 @@ module Elasticsearch
         # @raise [NoMethodError] When the corresponding class cannot be found
         #
         def method_missing(name, *args, &block)
-          klass = name.capitalize
+          klass = Utils.__camelize(name)
           if Queries.const_defined? klass
             @value = Queries.const_get(klass).new *args, &block
           else

@@ -46,6 +46,14 @@ module Elasticsearch
           end
         end
 
+        context "for query_string query" do
+          should "find the document" do
+            response = @client.search index: 'test', body: search { query { query_string { query 'te*' } } }.to_hash
+
+            assert_equal 1, response['hits']['total']
+          end
+        end
+
       end
     end
   end

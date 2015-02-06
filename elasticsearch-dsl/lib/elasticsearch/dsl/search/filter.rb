@@ -20,7 +20,7 @@ module Elasticsearch
         # @raise [NoMethodError] When the corresponding class cannot be found
         #
         def method_missing(name, *args, &block)
-          klass = name.capitalize
+          klass = Utils.__camelize(name)
           if Filters.const_defined? klass
             if @value
               @value = [ @value ] unless @value.is_a?(Array)
