@@ -99,7 +99,9 @@ module Elasticsearch
         @transport       = arguments[:transport] || begin
           if transport_class == Transport::HTTP::Faraday
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
-              faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+              adapter = arguments[:adapter] || __auto_detect_adapter
+              require "typhoeus/adapters/faraday" if adapter == :typhoeus
+              faraday.adapter(adapter)
             end
           else
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)

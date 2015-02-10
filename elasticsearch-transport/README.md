@@ -29,7 +29,7 @@ Features overview:
 
 For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections,
 e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).
-Just `require 'patron'` or `require 'typhoeus'; require 'typhoeus/adapters/faraday'` in your code,
+Just `require 'patron'` or `require 'typhoeus'` in your code,
 and it will be automatically used; other automatically used libraries are
 [HTTPClient](https://rubygems.org/gems/httpclient) and
 [Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent).
