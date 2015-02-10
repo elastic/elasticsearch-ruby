@@ -170,7 +170,8 @@ on a different host:
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
 
-You can specify how many times should the client retry the request before it raises an exception:
+You can specify how many times should the client retry the request before it raises an exception (the
+default is 3):
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
 
