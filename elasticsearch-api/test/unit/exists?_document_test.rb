@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ExistsTest < ::Test::Unit::TestCase
+    class ExistsQuestionTest < ::Test::Unit::TestCase
 
       context "Exists document" do
         subject { FakeClient.new }
