@@ -47,6 +47,8 @@ module Elasticsearch
             raise e
           end
         end
+
+        alias_method :exists_type?, :exists_type
       end
     end
   end
