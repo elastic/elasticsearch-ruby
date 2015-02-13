@@ -19,11 +19,12 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
         #                                    (default: false)
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #
         def get_template(arguments={})
-          valid_params = [ :flat_settings, :local ]
+          valid_params = [ :flat_settings, :local, :master_timeout ]
 
           method = HTTP_GET
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
