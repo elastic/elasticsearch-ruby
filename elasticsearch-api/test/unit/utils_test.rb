@@ -169,7 +169,7 @@ module Elasticsearch
 
           should "not validate parameters when the option is set" do
             assert_nothing_raised do
-              result = __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar], { skip_parameter_validation: true } )
+              result = __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar], { :skip_parameter_validation => true } )
               assert_equal( { :foo => 'q', :bam => 'm' }, result )
             end
           end
