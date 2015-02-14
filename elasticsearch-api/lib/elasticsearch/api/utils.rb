@@ -147,6 +147,7 @@ module Elasticsearch
       def __extract_params(arguments, params=[])
         result = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || params.include?(k) }
         result = Hash[result] unless result.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
+        result = Hash[result.map { |k,v| v.is_a?(Array) ? [k, __listify(v)] : [k,v]  }] # Listify Arrays
         result
       end
 

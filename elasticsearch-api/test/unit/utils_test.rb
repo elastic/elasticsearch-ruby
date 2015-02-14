@@ -182,6 +182,10 @@ module Elasticsearch
             end
           end
 
+          should "listify Arrays" do
+            result = __validate_and_extract_params( { :foo => ['a', 'b'] }, [:foo] )
+            assert_equal( { :foo => 'a,b'}, result )
+          end
         end
 
         context "__extract_parts" do
