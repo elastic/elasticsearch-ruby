@@ -66,7 +66,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.nodes.info metric: ['http', 'network']
+          subject.nodes.info :metric => ['http', 'network']
         end
       end
 
