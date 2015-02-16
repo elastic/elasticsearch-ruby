@@ -14,7 +14,8 @@ require 'elasticsearch/extensions/test/startup_shutdown'
 require 'elasticsearch/extensions/test/profiling' unless JRUBY
 
 # Skip features
-SKIP_FEATURES = ENV['TEST_SKIP_FEATURES'] || ''
+skip_features = 'stash_in_path,requires_replica'
+SKIP_FEATURES = ENV.fetch('TEST_SKIP_FEATURES', skip_features)
 
 # Turn configuration
 ENV['ansi'] = 'false' if ENV['CI']
