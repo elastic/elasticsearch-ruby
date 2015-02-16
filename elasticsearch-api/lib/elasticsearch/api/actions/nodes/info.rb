@@ -14,6 +14,14 @@ module Elasticsearch
         #
         #     client.nodes.info jvm: true
         #
+        # @example Return information about HTTP and network
+        #
+        #     client.nodes.info http: true, network: true
+        #
+        # @example Pass a list of metrics
+        #
+        #     client.nodes.info metric: ['http', 'network']
+        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
         #                                   use `_local` to return information from the node you're connecting to, leave
         #                                   empty to get information from all nodes
@@ -31,6 +39,9 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
         #
         def info(arguments={})
+          arguments = arguments.clone
+          metric    = arguments.delete(:metric)
+
           valid_parts = [
             :_all,
             :http,
@@ -47,7 +58,12 @@ module Elasticsearch
 
           method = HTTP_GET
 
-          parts  = Utils.__extract_parts arguments, valid_parts
+          if metric
+            parts = metric
+          else
+            parts = Utils.__extract_parts arguments, valid_parts
+          end
+
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
 
           params = Utils.__validate_and_extract_params arguments, valid_params

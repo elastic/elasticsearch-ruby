@@ -59,6 +59,15 @@ module Elasticsearch
           subject.nodes.info :format => 'yaml'
         end
 
+        should "encode metrics" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal '_nodes/http,network', url
+            assert_nil   params[:metric]
+            true
+          end.returns(FakeResponse.new)
+
+          subject.nodes.info metric: ['http', 'network']
+        end
       end
 
     end
