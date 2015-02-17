@@ -5,6 +5,8 @@ module Elasticsearch
 
         # Return true if the specified type exists, false otherwise.
         #
+        #     client.indices.exists_type? type: 'mytype'
+        #
         # @option arguments [List] :index A comma-separated list of index names; use `_all`
         #                                 to check the types across all indices (*Required*)
         # @option arguments [List] :type A comma-separated list of document types to check (*Required*)

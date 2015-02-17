@@ -6,7 +6,7 @@ module Elasticsearch
       #
       # @example
       #
-      #     client.exists index: 'myindex', type: 'mytype', id: '1'
+      #     client.exists? index: 'myindex', type: 'mytype', id: '1'
       #
       # @option arguments [String] :id The document ID (*Required*)
       # @option arguments [String] :index The name of the index (*Required*)
