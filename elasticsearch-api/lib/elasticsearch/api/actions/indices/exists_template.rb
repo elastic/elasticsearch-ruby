@@ -3,7 +3,9 @@ module Elasticsearch
     module Indices
       module Actions
 
-        # TODO: Description
+        # Return true if the specified index template exists, false otherwise.
+        #
+        #     client.indices.exists_template? name: 'mytemplate'
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
@@ -29,6 +31,8 @@ module Elasticsearch
             raise e
           end
         end
+
+        alias_method :exists_template?, :exists_template
       end
     end
   end

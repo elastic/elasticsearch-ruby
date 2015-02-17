@@ -7,7 +7,7 @@ module Elasticsearch
         #
         # @example Check whether index named _myindex_ exists
         #
-        #     client.indices.exists index: 'myindex'
+        #     client.indices.exists? index: 'myindex'
         #
         # @option arguments [List] :index A comma-separated list of indices to check (*Required*)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
