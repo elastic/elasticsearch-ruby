@@ -61,6 +61,11 @@ module Elasticsearch
           end
         end
 
+        should "be aliased as predicate method" do
+          assert_nothing_raised do
+            subject.indices.exists_alias?(:name => 'foo') == subject.indices.exists_alias(:name => 'foo')
+          end
+        end
       end
 
     end
