@@ -105,12 +105,15 @@ namespace :generate do
       when /query/
         module_name = 'Queries'
         path_name   = 'queries'
+        include_module = 'BaseComponent'
       when /filter/
         module_name = 'Filters'
         path_name   = 'filters'
+        include_module = 'BaseComponent'
       when /agg/
         module_name = 'Aggregations'
         path_name   = 'aggregations'
+        include_module = 'BaseAggregationComponent'
       else raise ArgumentError, "Unknown DSL type [#{options[:type]}]"
     end
 
@@ -140,7 +143,7 @@ namespace :generate do
               # @see #{doc_url}
               #
               class #{class_name}
-                include BaseComponent#{option_methods}
+                include #{include_module}#{option_methods}
               end
 
             end
