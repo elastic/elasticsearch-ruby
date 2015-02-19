@@ -88,7 +88,7 @@ module Elasticsearch
                   key :mid, from: 10, to: 20
 
                   aggregation :tags do
-                    terms field: 'tags'
+                    terms { field 'tags' }
                   end
                 end
               end
@@ -161,7 +161,10 @@ module Elasticsearch
           should "return top hits per tag" do
             response = @client.search index: 'test', body: search {
               aggregation :tags do
-                terms field: 'tags' do
+                terms do
+                  field 'tags'
+                  size  5
+
                   aggregation :top_hits do
                     top_hits sort: [ clicks: { order: 'desc' } ], _source: { include: 'title' }
                   end
