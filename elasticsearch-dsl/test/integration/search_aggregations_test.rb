@@ -223,6 +223,34 @@ module Elasticsearch
           assert_equal 15, response['aggregations']['avg_clicks_per_tag']['buckets']['two']['avg']['value'].to_i
         end
 
+        should "return a histogram on clicks" do
+          response = @client.search index: 'test', body: search {
+            aggregation :clicks_histogram do
+              histogram do
+                field   'clicks'
+                interval 10
+              end
+            end
+          }.to_hash
+
+          assert_equal 3,  response['aggregations']['clicks_histogram']['buckets'].size
+          assert_equal 10, response['aggregations']['clicks_histogram']['buckets'][1]['key']
+          assert_equal 1,  response['aggregations']['clicks_histogram']['buckets'][1]['doc_count']
+        end
+
+        should "return a histogram with empty buckets on clicks" do
+          response = @client.search index: 'test', body: search {
+            aggregation :clicks_histogram do
+              histogram do
+                field   'clicks'
+                interval 2
+                min_doc_count 0
+              end
+            end
+          }.to_hash
+
+          assert_equal 9, response['aggregations']['clicks_histogram']['buckets'].size
+        end
       end
     end
   end
