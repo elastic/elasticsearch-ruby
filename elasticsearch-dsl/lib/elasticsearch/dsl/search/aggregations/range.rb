@@ -9,6 +9,10 @@ module Elasticsearch
         class Range
           include BaseAggregationComponent
 
+          option_method :field
+          option_method :script
+          option_method :params
+
           def key(key, value)
             @hash[name].update(@args) if @args
             @hash[name][:keyed]  ||= true
