@@ -1,7 +1,6 @@
 require 'elasticsearch/dsl/version'
 
 require 'elasticsearch/dsl/utils'
-require 'elasticsearch/dsl/search'
 require 'elasticsearch/dsl/search/base_component'
 require 'elasticsearch/dsl/search/base_compound_filter_component'
 require 'elasticsearch/dsl/search/base_aggregation_component'
@@ -16,6 +15,8 @@ Dir[ File.expand_path('../dsl/search/queries/**/*.rb', __FILE__) ].each        {
 Dir[ File.expand_path('../dsl/search/filters/**/*.rb', __FILE__) ].each        { |f| require f }
 Dir[ File.expand_path('../dsl/search/aggregations/**/*.rb', __FILE__) ].each   { |f| require f }
 
+require 'elasticsearch/dsl/search'
+
 module Elasticsearch
 
   # The main module, which can be included into your own class or namespace,
@@ -23,6 +24,7 @@ module Elasticsearch
   #
   # @example
   #     include Elasticsearch::DSL
+  #
   #     definition = search do
   #       query do
   #         match title: 'test'

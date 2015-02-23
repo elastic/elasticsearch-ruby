@@ -131,6 +131,14 @@ module Elasticsearch
           end
         end
 
+        context "with options" do
+          should "encode options" do
+            subject.explain true
+            subject.fields [:foo, :bar]
+            assert_equal( { explain: true, fields: [:foo, :bar] }, subject.to_hash )
+          end
+        end
+
       end
     end
   end

@@ -36,6 +36,7 @@ module Elasticsearch
         attr_reader :aggregations
 
         def initialize(*args, &block)
+          @options = Options.new
           instance_eval(&block) if block
         end
 
@@ -132,6 +133,17 @@ module Elasticsearch
           self
         end
 
+        # Delegates to the methods provided by the {Options} class
+        #
+        def method_missing(name, *args, &block)
+          if @options.respond_to? name
+            @options.__send__ name, *args, &block
+            self
+          else
+            super
+          end
+        end
+
         # Converts the search definition to a Hash
         #
         # @return [Hash]
@@ -146,6 +158,7 @@ module Elasticsearch
           hash.update(size: @size) if @size
           hash.update(from: @from) if @from
           hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.merge item.last.to_hash }) if @suggest
+          hash.update(@options) unless @options.empty?
           hash
         end
       end

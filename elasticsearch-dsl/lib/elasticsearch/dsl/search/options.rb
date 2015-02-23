@@ -7,8 +7,6 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html
       #
       class Options
-        include BaseComponent
-
         DSL_METHODS = [
           :_source,
           :fields,
@@ -37,6 +35,12 @@ module Elasticsearch
           define_method name.to_s.gsub(/^_(.*)/, '\1') do |*args, &block|
             @hash[name] = args.pop
           end
+        end
+
+        # Returns true when there are no search options defined
+        #
+        def empty?
+          @hash.empty?
         end
 
         # Convert the definition to a Hash

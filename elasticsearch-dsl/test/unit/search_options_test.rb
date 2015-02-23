@@ -10,7 +10,7 @@ module Elasticsearch
           subject.version true
           subject.highlight foo: 'bar'
 
-          assert_equal({from: 10, size: 20, version: true, highlight: { foo: 'bar' }}, subject.to_hash)
+          assert_equal({version: true, highlight: { foo: 'bar' }}, subject.to_hash)
         end
 
         should "encode _source" do
