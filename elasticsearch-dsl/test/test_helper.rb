@@ -23,9 +23,40 @@ require 'elasticsearch/dsl'
 module Elasticsearch
   module Test
     class IntegrationTestCase < ::Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::StartupShutdown
+      include Elasticsearch::Extensions::Test
+      extend  StartupShutdown
 
-      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
+      startup do
+        Cluster.start(nodes: 1) if ENV['SERVER'] \
+                                && ! Elasticsearch::Extensions::Test::Cluster.running?
+      end
+
+      shutdown do
+        Cluster.stop if ENV['SERVER'] \
+                     && started?      \
+                     && Elasticsearch::Extensions::Test::Cluster.running?
+      end
+
+      def setup
+        @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+
+        @logger =  Logger.new(STDERR)
+        @logger.formatter = proc do |severity, datetime, progname, msg|
+          color = case severity
+            when /INFO/ then :green
+            when /ERROR|WARN|FATAL/ then :red
+            when /DEBUG/ then :cyan
+            else :white
+          end
+          ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
+        end
+
+        @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+      end
+
+      def teardown
+        @client.indices.delete index: '_all'
+      end
     end
   end
 end

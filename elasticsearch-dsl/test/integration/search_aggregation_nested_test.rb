@@ -11,21 +11,6 @@ module Elasticsearch
         end
 
         setup do
-          @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-
-          @logger =  Logger.new(STDERR)
-          @logger.formatter = proc do |severity, datetime, progname, msg|
-            color = case severity
-              when /INFO/ then :green
-              when /ERROR|WARN|FATAL/ then :red
-              when /DEBUG/ then :cyan
-              else :white
-            end
-            ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
-          end
-
-          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
-          @client.indices.delete index: 'products-test' rescue Elasticsearch::Transport::Transport::Errors::NotFound; nil
           @client.indices.create index: 'products-test', body: {
             mappings: {
               product: {
@@ -54,10 +39,6 @@ module Elasticsearch
                                 category: 'video',
                                 offers: [ { name: 'C1', price: 300 }, { name: 'C2', price: 350 } ] }
           @client.indices.refresh index: 'products-test'
-        end
-
-        teardown do
-          @client.indices.delete index: 'products-test', ignore: [404]
         end
 
         should "return the minimal price from offers" do

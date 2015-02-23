@@ -11,21 +11,6 @@ module Elasticsearch
         end
 
         setup do
-          @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-
-          @logger =  Logger.new(STDERR)
-          @logger.formatter = proc do |severity, datetime, progname, msg|
-            color = case severity
-              when /INFO/ then :green
-              when /ERROR|WARN|FATAL/ then :red
-              when /DEBUG/ then :cyan
-              else :white
-            end
-            ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
-          end
-
-          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
-          @client.indices.delete index: 'venues-test', ignore: 404
           @client.indices.create index: 'venues-test', body: {
             mappings: {
               venue: {
@@ -46,10 +31,6 @@ module Elasticsearch
           @client.index index: 'venues-test', type: 'venue',
                         body: { name: 'Es Paradis', location: "38.979071,1.307394" }
           @client.indices.refresh index: 'venues-test'
-        end
-
-        teardown do
-          @client.indices.delete index: 'venues-test', ignore: 404
         end
 
         should "return the geo distances from a location" do
