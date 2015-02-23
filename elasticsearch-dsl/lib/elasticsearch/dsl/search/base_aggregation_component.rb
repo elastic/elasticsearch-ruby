@@ -2,7 +2,7 @@ module Elasticsearch
   module DSL
     module Search
 
-      # Module containing common functionality for DSL classes
+      # Module containing common functionality for aggregation DSL classes
       #
       module BaseAggregationComponent
 

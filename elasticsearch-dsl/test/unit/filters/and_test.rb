@@ -21,8 +21,10 @@ module Elasticsearch
           should "behave like an Enumerable" do
             subject = And.new
             subject << { term: { foo: 'bar' } }
+            subject << { term: { moo: 'mam' } }
 
-            assert_equal 1, subject.size
+            assert_equal 2,    subject.size
+            assert_equal 'bar', subject[0][:term][:foo]
             assert subject.any? { |d| d[:term] == { foo: 'bar' } }
           end
 

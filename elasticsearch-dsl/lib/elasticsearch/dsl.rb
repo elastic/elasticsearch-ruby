@@ -20,9 +20,10 @@ require 'elasticsearch/dsl/search'
 module Elasticsearch
 
   # The main module, which can be included into your own class or namespace,
-  # to provide the builder methods.
+  # to provide the DSL methods.
   #
   # @example
+  #
   #     include Elasticsearch::DSL
   #
   #     definition = search do

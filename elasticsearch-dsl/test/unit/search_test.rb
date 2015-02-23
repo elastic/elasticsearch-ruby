@@ -137,6 +137,10 @@ module Elasticsearch
             subject.fields [:foo, :bar]
             assert_equal( { explain: true, fields: [:foo, :bar] }, subject.to_hash )
           end
+
+          should "raise an exception for unknown method" do
+            assert_raise(NoMethodError) { subject.foobar true }
+          end
         end
 
       end

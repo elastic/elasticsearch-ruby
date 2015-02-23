@@ -2,7 +2,7 @@ module Elasticsearch
   module DSL
     module Search
 
-      # Module containing common functionality for DSL classes
+      # Module containing common functionality for a "compound" (wrapping) filters, such as `and`, `or`, `not`
       #
       module BaseCompoundFilterComponent
         include Enumerable
@@ -16,6 +16,8 @@ module Elasticsearch
           base.__send__ :include, InstanceMethods
         end
 
+        # Implements the {Enumerable} methods
+        #
         module InstanceMethods
           def each(&block)
             @value.each(&block)
