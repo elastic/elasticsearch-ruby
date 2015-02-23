@@ -103,6 +103,24 @@ module Elasticsearch
           self
         end
 
+        # DSL method for building the `size` part of a search definition
+        #
+        # @return [self]
+        #
+        def size(value)
+          @size = value
+          self
+        end
+
+        # DSL method for building the `from` part of a search definition
+        #
+        # @return [self]
+        #
+        def from(value)
+          @from = value
+          self
+        end
+
         # DSL method for building the `suggest` part of a search definition
         #
         # @return [self]
@@ -125,6 +143,8 @@ module Elasticsearch
           hash.update(post_filter: @post_filter.to_hash) if @post_filter
           hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.merge item.first => item.last.to_hash }) if @aggregations
           hash.update(sort: @sort.to_hash) if @sort
+          hash.update(size: @size) if @size
+          hash.update(from: @from) if @from
           hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.merge item.last.to_hash }) if @suggest
           hash
         end

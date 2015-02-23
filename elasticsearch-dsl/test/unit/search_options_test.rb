@@ -7,22 +7,10 @@ module Elasticsearch
 
       context "Search options" do
         should "combine different options" do
-          subject.from 10
-          subject.size 20
           subject.version true
           subject.highlight foo: 'bar'
 
           assert_equal({from: 10, size: 20, version: true, highlight: { foo: 'bar' }}, subject.to_hash)
-        end
-
-        should "encode from" do
-          subject.from 10
-          assert_equal({from: 10}, subject.to_hash)
-        end
-
-        should "encode size" do
-          subject.size 20
-          assert_equal({size: 20}, subject.to_hash)
         end
 
         should "encode _source" do

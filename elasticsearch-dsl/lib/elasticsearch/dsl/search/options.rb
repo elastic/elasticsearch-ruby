@@ -10,8 +10,6 @@ module Elasticsearch
         include BaseComponent
 
         DSL_METHODS = [
-          :from,
-          :size,
           :_source,
           :fields,
           :script_fields,
