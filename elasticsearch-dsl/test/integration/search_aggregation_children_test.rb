@@ -2,10 +2,10 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class NestedAggregationIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
+    class ChildrenAggregationIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
       include Elasticsearch::DSL::Search
 
-      context "A nested aggregation" do
+      context "A children aggregation" do
         startup do
           Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
         end

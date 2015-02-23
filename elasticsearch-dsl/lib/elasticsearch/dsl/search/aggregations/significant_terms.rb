@@ -3,9 +3,23 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # SignificantTerms aggregation
+        # A multi-bucket aggregation that returns interesting or unusual occurrences of terms in a set
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         match :title do
+        #           query 'fink'
+        #         end
+        #       end
+        #
+        #       aggregation :interesting_terms do
+        #         significant_terms do
+        #           field :body
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-significantterms-aggregation.html
         #

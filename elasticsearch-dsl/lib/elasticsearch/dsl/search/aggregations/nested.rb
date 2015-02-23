@@ -3,9 +3,22 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Nested agg
+        # A single-bucket aggregation which allows to aggregate on nested fields
         #
         # @example
+        #
+        #    search do
+        #      aggregation :offers do
+        #        nested do
+        #          path 'offers'
+        #          aggregation :min_price do
+        #            min field: 'offers.price'
+        #          end
+        #        end
+        #      end
+        #    end
+        #
+        # See the integration test for a full example.
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-nested-aggregation.html
         #

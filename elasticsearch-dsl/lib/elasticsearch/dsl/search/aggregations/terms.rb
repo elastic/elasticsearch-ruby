@@ -3,9 +3,13 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Terms aggregation
+        # A multi-bucket aggregation which returns the collection of terms and their document counts
         #
         # @example
+        #
+        #     aggregation :tags do
+        #       terms field: 'tags'
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
         #

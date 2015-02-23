@@ -3,9 +3,18 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Histogram aggregation
+        # A multi-bucket aggregation which returns document counts for a defined numerical interval
         #
         # @example
+        #
+        #    search do
+        #      aggregation :age do
+        #        histogram do
+        #          field   'age'
+        #          interval 5
+        #        end
+        #      end
+        #    end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html
         #

@@ -3,9 +3,16 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Cardinality agg
+        # A single-value metric aggregation which returns the approximate count of distinct values
         #
         # @example
+        #
+        #     search do
+        #       aggregation :authors do
+        #         cardinality do
+        #           field 'author'
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html
         #

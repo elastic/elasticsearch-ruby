@@ -3,9 +3,21 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # TopHits agg
+        # A metric aggregator which returns the most relevant documents per bucket
         #
         # @example
+        #
+        #     search do
+        #       aggregation :tags do
+        #         terms do
+        #           field 'tags'
+        #
+        #           aggregation :top_hits do
+        #             top_hits sort: [ clicks: { order: 'desc' } ], _source: { include: 'title' }
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-top-hits-aggregation.html
         #

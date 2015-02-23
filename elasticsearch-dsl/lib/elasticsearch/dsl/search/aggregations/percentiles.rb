@@ -3,9 +3,17 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Percentiles agg
+        # A multi-value metrics aggregation which calculates percentiles on numeric values
         #
         # @example
+        #
+        #     search do
+        #       aggregation :load_time_outliers do
+        #         percentiles do
+        #           field 'load_time'
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-percentile-aggregation.html
         #

@@ -3,9 +3,17 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # DateHistogram aggregation
+        # A multi-bucket aggregation which returns a histogram for date fields
         #
         # @example
+        #
+        #     search do
+        #       aggregation :daily do
+        #         field    'published_at'
+        #         interval 'day'
+        #         format   'yyyy-MM-dd'
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-datehistogram-aggregation.html
         #

@@ -3,9 +3,15 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Global agg
+        # Defines a single bucket of all the documents matching a query
         #
         # @example
+        #
+        #     search do
+        #       aggregation :all_documents do
+        #         global
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-global-aggregation.html
         #

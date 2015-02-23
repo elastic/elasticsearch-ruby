@@ -3,9 +3,15 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # Sum agg
+        # A single-value metric aggregation which returns the sum of numeric values
         #
         # @example
+        #
+        #     search do
+        #       aggregation :sum_clicks do
+        #         sum field: 'clicks'
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-sum-aggregation.html
         #
