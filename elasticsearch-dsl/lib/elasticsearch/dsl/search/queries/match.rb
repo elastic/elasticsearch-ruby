@@ -11,6 +11,7 @@ module Elasticsearch
         #       match :message do
         #         query    'test'
         #         operator 'and'
+        #         type     'phrase_prefix'
         #         boost    2
         #       end
         #     end
@@ -22,6 +23,7 @@ module Elasticsearch
 
           option_method :query
           option_method :operator
+          option_method :type
           option_method :boost
         end
 
