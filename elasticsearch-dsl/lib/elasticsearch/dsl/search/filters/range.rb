@@ -24,6 +24,7 @@ module Elasticsearch
           option_method :lte
           option_method :lt
           option_method :boost
+          option_method :time_zone
         end
 
       end
