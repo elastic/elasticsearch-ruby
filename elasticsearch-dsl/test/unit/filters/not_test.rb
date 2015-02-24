@@ -21,30 +21,12 @@ module Elasticsearch
           should "take a block" do
             subject = Not.new do
               term foo: 'bar'
-              term moo: 'mam'
             end
-            assert_equal({not: [ {term: { foo: 'bar'}}, {term: { moo: 'mam'}} ]}, subject.to_hash)
+            assert_equal({not: {term: { foo: 'bar'}} }, subject.to_hash)
           end
 
-          should "behave like an Enumerable" do
-            subject = Not.new
-            subject << { term: { foo: 'bar' } }
-
-            assert_equal 1, subject.size
-            assert subject.any? { |d| d[:term] == { foo: 'bar' } }
-          end
-
-          should "behave like an Array" do
-            subject = Not.new
-
-            assert subject.empty?
-
-            subject << { term: { foo: 'bar' } }
-            subject << { term: { moo: 'xam' } }
-
-            assert ! subject.empty?
-
-            assert_equal({ not: [ { term: { foo: 'bar' } }, { term: { moo: 'xam' } } ] }, subject.to_hash)
+          should "raise an exception for unknown DSL method" do
+            assert_raise(NoMethodError) { subject.foofoo }
           end
         end
       end
