@@ -18,6 +18,10 @@ module Elasticsearch
           include Elasticsearch::DSL::Search::BaseComponent
         end
 
+        class DummyCompoundFilter
+          include Elasticsearch::DSL::Search::BaseCompoundFilterComponent
+        end
+
         subject { DummyComponent.new :foo }
 
         should "have a name" do
@@ -149,7 +153,14 @@ module Elasticsearch
 
             assert_equal({ foo: 'bar' }, subject.to_hash)
           end
+        end
 
+        context "compound filter" do
+          subject { DummyCompoundFilter.new }
+
+          should "raise an exception for unknown DSL method" do
+            assert_raise(NoMethodError) { subject.foofoo }
+          end
         end
       end
     end

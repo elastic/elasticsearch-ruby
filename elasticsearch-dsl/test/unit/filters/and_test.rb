@@ -18,6 +18,14 @@ module Elasticsearch
             assert_equal({ and: { filters: [ { term: { foo: 'bar' } } ] } }, subject.to_hash)
           end
 
+          should "take a block" do
+            subject = And.new do
+              term foo: 'bar'
+              term moo: 'mam'
+            end
+            assert_equal({and: [ {term: { foo: 'bar'}}, {term: { moo: 'mam'}} ]}, subject.to_hash)
+          end
+
           should "behave like an Enumerable" do
             subject = And.new
             subject << { term: { foo: 'bar' } }
@@ -26,6 +34,20 @@ module Elasticsearch
             assert_equal 2,    subject.size
             assert_equal 'bar', subject[0][:term][:foo]
             assert subject.any? { |d| d[:term] == { foo: 'bar' } }
+          end
+
+          should "behave like an Enumerable with a block" do
+            subject = And.new do
+              term foo: 'bar'
+              term moo: 'mam'
+            end
+
+            subject.call
+            assert_equal 2,     subject.size
+
+            hash = subject.to_hash
+            assert_equal 'bar', hash[:and][0][:term][:foo]
+            assert hash[:and].any? { |d| d[:term] == { foo: 'bar' } }
           end
 
           should "behave like an Array" do

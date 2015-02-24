@@ -42,9 +42,11 @@ module Elasticsearch
           @value.__send__ :aggregations
         end
 
-        # Evaluates any block passed to the query
+        # Evaluates the block passed to initializer, ensuring it is called just once
         #
         # @return [self]
+        #
+        # @api private
         #
         def call
           @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self) if @block && ! @_block_called

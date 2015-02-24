@@ -18,6 +18,14 @@ module Elasticsearch
             assert_equal({ not: { filters: [ { term: { foo: 'bar' } } ] } }, subject.to_hash)
           end
 
+          should "take a block" do
+            subject = Not.new do
+              term foo: 'bar'
+              term moo: 'mam'
+            end
+            assert_equal({not: [ {term: { foo: 'bar'}}, {term: { moo: 'mam'}} ]}, subject.to_hash)
+          end
+
           should "behave like an Enumerable" do
             subject = Not.new
             subject << { term: { foo: 'bar' } }
