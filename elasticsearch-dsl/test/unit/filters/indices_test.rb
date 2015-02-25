@@ -32,14 +32,18 @@ module Elasticsearch
             assert_equal({indices: { indices: 'bar' } }, subject.to_hash)
           end
 
-          should "take a block for option method" do
-            subject = HasChild.new do
-              type 'bar'
+          should "take a block for methods" do
+            subject = Indices.new do
+              indices 'bar'
+
               filter do
                 term foo: 'bar'
               end
+              no_match_filter do
+                term foo: 'bam'
+              end
             end
-            assert_equal({ has_child: { type: 'bar', filter: { term: { foo: 'bar' } } } }, subject.to_hash)
+            assert_equal({ indices: { indices: 'bar', filter: { term: { foo: 'bar' } }, no_match_filter: { term: { foo: 'bar' } } } }, subject.to_hash)
           end
         end
       end

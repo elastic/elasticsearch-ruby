@@ -3,9 +3,24 @@ module Elasticsearch
     module Search
       module Filters
 
-        # HasChild filter
+        # A filter which returns parent documents for children documents matching a query or a filter
         #
-        # @example
+        # @example Return articles where John has commented
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             has_child do
+        #               type 'comment'
+        #               query do
+        #                 match author: 'John'
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-has-child-filter.html
         #

@@ -3,9 +3,34 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Not filter
+        # A filter which takes out documents matching a filter from the results
         #
-        # @example
+        # @note Since `not` is a keyword in Ruby, use the `_not` method in DSL definitions
+        #
+        # @example Pass the filter as a Hash
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             _not term: { color: 'red' }
+        #           end
+        #         end
+        #       end
+        #     end
+        #
+        # @example Define the filter with a block
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             _not do
+        #               term color: 'red'
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-not-filter.html
         #

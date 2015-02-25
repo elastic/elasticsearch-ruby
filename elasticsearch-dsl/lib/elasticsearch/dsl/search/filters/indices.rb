@@ -3,9 +3,30 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Indices filter
+        # A filter which executes a custom filter only for documents in specified indices,
+        # and optionally another filter for documents in other indices
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             indices do
+        #               indices ['audio', 'video']
+        #
+        #               filter do
+        #                 terms tags: ['music']
+        #               end
+        #
+        #               no_match_filter do
+        #                 terms tags: ['music', 'audio', 'video']
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-indices-filter.html
         #

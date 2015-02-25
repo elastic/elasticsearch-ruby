@@ -3,9 +3,37 @@ module Elasticsearch
     module Search
       module Filters
 
-        # GeoDistance filter
+        # A filter which returns documents which fall into a specified geographical distance
         #
-        # @example
+        # @example Define the filter with a hash
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             geo_distance location: '50.090223,14.399590', distance: '5km'
+        #           end
+        #         end
+        #       end
+        #     end
+        #
+        # @example Define the filter with a block
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             geo_distance :location do
+        #               lat '50.090223'
+        #               lon '14.399590'
+        #               distance '5km'
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
+        #
+        # See the integration test for a working example.
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geo-distance.html
         #

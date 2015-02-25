@@ -3,14 +3,20 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Range filter
+        # A filter which returns documents that have terms in a specified range
         #
         # @example
         #
-        #     filter do
-        #       range :age do
-        #         gte 10
-        #         lte 20
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             range :age do
+        #               gte 10
+        #               lte 20
+        #             end
+        #           end
+        #         end
         #       end
         #     end
         #

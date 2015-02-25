@@ -3,9 +3,26 @@ module Elasticsearch
     module Search
       module Filters
 
-        # GeoBoundingBox filter
+        # A filter which returns documents which fall into a "box" of the specified geographical coordinates
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             geo_bounding_box :location do
+        #               top_right   "50.1815123678,14.7149200439"
+        #               bottom_left "49.9415476869,14.2162566185"
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
+        #
+        # See the integration test for a working example.
+        #
+        # Use eg. <http://boundingbox.klokantech.com> to visually define the bounding box.
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geo-bounding-box.html
         #

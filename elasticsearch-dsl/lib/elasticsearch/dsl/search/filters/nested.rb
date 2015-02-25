@@ -3,9 +3,24 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Nested filter
+        # A filter which executes another filter in the context of a nested document
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             nested do
+        #               path 'comments'
+        #               filter do
+        #                 term 'comments.title' => 'Ruby'
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-nested-filter.html
         #

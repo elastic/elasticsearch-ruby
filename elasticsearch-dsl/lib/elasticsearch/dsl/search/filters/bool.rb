@@ -3,25 +3,34 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Bool filter
+        # A compound filter which matches documents based on combinations of filters
         #
         # @example
         #
-        #     filter do
-        #       bool do
-        #         must do
-        #           term message: 'test'
-        #         end
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             bool do
+        #               must do
+        #                 term category: 'men'
+        #                 term size:  'xxl'
+        #               end
         #
-        #         should do
-        #           term color: 'red'
-        #         end
+        #               should do
+        #                 term color: 'red'
+        #               end
         #
-        #         must_not do
-        #           term manufacturer: 'foobar'
+        #               must_not do
+        #                 term manufacturer: 'evil'
+        #               end
+        #             end
+        #           end
         #         end
         #       end
         #     end
+        #
+        # See the integration test for a working example.
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-bool-filter.html
         #

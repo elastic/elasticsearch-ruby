@@ -3,9 +3,23 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Query filter
+        # A filter which wraps a query so it can be used as a filter
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             query do
+        #               query_string :title do
+        #                 query 'Ruby OR Python'
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-filter.html
         #

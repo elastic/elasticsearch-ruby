@@ -3,9 +3,24 @@ module Elasticsearch
     module Search
       module Filters
 
-        # HasParent filter
+         # A filter which returns children documents for parent documents matching a query or a filter
         #
-        # @example
+        # @example Return comments for articles about Ruby
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             has_parent do
+        #               type 'article'
+        #               query do
+        #                 match title: 'Ruby'
+        #               end
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-has-parent-filter.html
         #

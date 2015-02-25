@@ -3,9 +3,20 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Missing filter
+        # A filter which returns documents which have a `null` value in the specified field
+        # (ie. the reverse of the `exists` filter)
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             missing field: 'occupation'
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-missing-filter.html
         #

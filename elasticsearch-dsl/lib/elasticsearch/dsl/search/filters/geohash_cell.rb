@@ -3,9 +3,27 @@ module Elasticsearch
     module Search
       module Filters
 
-        # GeohashCell filter
+        # A filter which translates lat/lon values into a geohash with the specified precision
+        # and returns all documents which fall into it
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             geohash_cell :location do
+        #               lat '50.090223'
+        #               lon '14.399590'
+        #               precision '5km'
+        #               neighbors true
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
+        #
+        # See the integration test for a working example.
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geohash-cell-filter.html
         #

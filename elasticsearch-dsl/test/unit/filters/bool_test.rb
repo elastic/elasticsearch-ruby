@@ -7,24 +7,28 @@ module Elasticsearch
         include Elasticsearch::DSL::Search::Filters
 
         context "Bool Filter" do
-          should "take a Hash" do
-            @subject = Bool.new must: [ {term: { foo: 'bar' } } ]
+          subject { Bool.new }
 
-            assert_equal( { bool: { must: [ {term: { foo: 'bar' } } ] } }, @subject.to_hash )
+          should "be converted to a Hash" do
+            assert_equal({ bool: {} }, subject.to_hash)
+          end
+
+          should "take a Hash" do
+            subject = Bool.new must: [ {term: { foo: 'bar' } } ]
+
+            assert_equal( { bool: { must: [ {term: { foo: 'bar' } } ] } }, subject.to_hash )
           end
 
           should "take a block" do
-            @subject = Bool.new do
-              must do
-                term foo: 'bar'
-              end
+            subject = Bool.new do
+              must { term foo: 'bar' }
             end
 
-            assert_equal( { bool: { must: [ {term: { foo: 'bar' }} ] } }, @subject.to_hash )
+            assert_equal( { bool: { must: [ {term: { foo: 'bar' }} ] } }, subject.to_hash )
           end
 
           should "take a block with multiple methods" do
-            @subject = Bool.new do
+            subject = Bool.new do
               must     { term foo: 'bar' }
               must_not { term moo: 'bam' }
               should   { term xoo: 'bax' }
@@ -36,34 +40,55 @@ module Elasticsearch
                               should:   [ {term: { xoo: 'bax' }} ]
                             }
                           },
-                          @subject.to_hash )
+                          subject.to_hash )
+          end
+
+          should "take a block with multiple conditions" do
+            subject = Bool.new do
+              must do
+                term foo: 'bar'
+                term moo: 'bam'
+              end
+
+              should do
+                term xoo: 'bax'
+                term zoo: 'baz'
+              end
+            end
+
+            assert_equal( { bool:
+                            { must:     [ {term: { foo: 'bar' }}, {term: { moo: 'bam' }} ],
+                              should:   [ {term: { xoo: 'bax' }}, {term: { zoo: 'baz' }} ]
+                            }
+                          },
+                          subject.to_hash )
           end
 
           should "take method calls" do
-            @subject = Bool.new
+            subject = Bool.new
 
-            @subject.must { term foo: 'bar' }
-            assert_equal( { bool: { must: [ {term: { foo: 'bar' }} ] } }, @subject.to_hash )
+            subject.must { term foo: 'bar' }
+            assert_equal( { bool: { must: [ {term: { foo: 'bar' }} ] } }, subject.to_hash )
 
-            @subject.must { term moo: 'bam' }
+            subject.must { term moo: 'bam' }
             assert_equal( { bool: { must: [ {term: { foo: 'bar' }}, {term: { moo: 'bam' }} ]} },
-                          @subject.to_hash )
+                          subject.to_hash )
 
-            @subject.should { term xoo: 'bax' }
+            subject.should { term xoo: 'bax' }
             assert_equal( { bool:
                             { must:   [ {term: { foo: 'bar' }}, {term: { moo: 'bam' }} ],
                               should: [ {term: { xoo: 'bax' }} ] }
                           },
-                          @subject.to_hash )
+                          subject.to_hash )
           end
 
           should "be chainable" do
-            @subject = Bool.new
+            subject = Bool.new
 
-            assert_instance_of Bool, @subject.must     { term foo: 'bar' }
-            assert_instance_of Bool, @subject.must     { term foo: 'bar' }.must { term moo: 'bam' }
-            assert_instance_of Bool, @subject.must_not { term foo: 'bar' }
-            assert_instance_of Bool, @subject.should   { term foo: 'bar' }
+            assert_instance_of Bool, subject.must     { term foo: 'bar' }
+            assert_instance_of Bool, subject.must     { term foo: 'bar' }.must { term moo: 'bam' }
+            assert_instance_of Bool, subject.must_not { term foo: 'bar' }
+            assert_instance_of Bool, subject.should   { term foo: 'bar' }
           end
 
         end

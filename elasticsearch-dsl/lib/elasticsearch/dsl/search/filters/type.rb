@@ -3,9 +3,22 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Type filter
+        # A filter which returns documents matching the specified type
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             type do
+        #               value 'article'
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
+        #
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-type-filter.html
         #

@@ -3,13 +3,22 @@ module Elasticsearch
     module Search
       module Filters
 
-        # Term filter
+        # A filter which returns documents matching the specified terms
         #
         # @example
         #
-        #     filter do
-        #       term message: 'test'
+        #     search do
+        #       query do
+        #         filtered do
+        #           filter do
+        #             term color: 'red'
+        #           end
+        #         end
+        #       end
         #     end
+        #
+        # @note The specified terms are *not analyzed* (lowercased, stemmed, etc),
+        #       so they must match the indexed terms.
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-term-filter.html
         #
