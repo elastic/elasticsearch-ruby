@@ -3,16 +3,17 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Match query
+        # A simple to use, yet sophisticated query which returns documents matching the specified terms,
+        # taking into account field types, analyzers, etc. and allowing to search in phrase, prefix, fuzzy modes
         #
         # @example
         #
-        #     query do
-        #       match :message do
-        #         query    'test'
-        #         operator 'and'
-        #         type     'phrase_prefix'
-        #         boost    2
+        #     search do
+        #       query do
+        #         match :content do
+        #           query    'how to fix my printer'
+        #           operator 'and'
+        #         end
         #       end
         #     end
         #

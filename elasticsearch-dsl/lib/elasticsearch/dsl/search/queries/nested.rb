@@ -3,9 +3,20 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Nested query
+        # A query which returns the root documents for nested documents matching the specified query
         #
-        # @example
+        # @example Return articles where John has commented
+        #
+        #     search do
+        #       query do
+        #         nested do
+        #           path 'comments'
+        #           query do
+        #             match user: 'John'
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-nested-query.html
         #

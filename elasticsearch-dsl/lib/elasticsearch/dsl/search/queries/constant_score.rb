@@ -3,17 +3,25 @@ module Elasticsearch
     module Search
       module Queries
 
-        # ConstantScore query
+        # A query which wraps another query or filter and returns a constant score for matching documents
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         constant_score do
+        #           query do
+        #             match content: 'Twitter'
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/ignoring-tfidf.html
         #
         class ConstantScore
           include BaseComponent
 
-          # option_method :query
-          option_method :filter
           option_method :boost
 
           # DSL method for building the `query` part of the query definition

@@ -3,7 +3,7 @@ module Elasticsearch
     module Search
       module Filters
 
-         # A filter which returns children documents for parent documents matching a query or a filter
+        # A filter which returns children documents for parent documents matching a query or a filter
         #
         # @example Return comments for articles about Ruby
         #

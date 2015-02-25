@@ -3,11 +3,21 @@ module Elasticsearch
     module Search
       module Queries
 
-        # QueryString query
+        # A query which returns documents matching a specified expression in the Lucene Query String syntax
         #
         # @example
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+        #     search do
+        #       query do
+        #         query_string do
+        #           query '(mortgage OR (bank AND loan)) AND published_on:[2013-01-01 TO 2013-12-31]'
+        #           fields [:title, :content]
+        #         end
+        #       end
+        #     end
+        #
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+        # @see http://lucene.apache.org/core/2_9_4/queryparsersyntax.html
         #
         class QueryString
           include BaseComponent

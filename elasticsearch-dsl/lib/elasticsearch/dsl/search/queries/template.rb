@@ -3,9 +3,18 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Template query
+        # A query which allows to use Mustache templates for query definitions
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         template do
+        #           query  match: { content: '{query_string}' }
+        #           params query_string: 'twitter'
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-template-query.html
         #

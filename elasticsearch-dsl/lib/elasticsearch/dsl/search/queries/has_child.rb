@@ -3,9 +3,20 @@ module Elasticsearch
     module Search
       module Queries
 
-        # HasChild query
+        # A query which returns parent documents for children documents matching a query
         #
-        # @example
+        # @example Return articles where John has commented
+        #
+        #     search do
+        #       query do
+        #         has_child do
+        #           type 'comment'
+        #           query do
+        #             match author: 'John'
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-has-child-query.html
         #

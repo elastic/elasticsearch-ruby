@@ -3,9 +3,17 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Wildcard query
+        # A query which returns documents matching a wildcard expression
+        #
+        # @note The expression is *not analyzed* (lowercased, stemmed, etc)
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #        wildcard title: 'tw*'
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-wildcard-query.html
         #

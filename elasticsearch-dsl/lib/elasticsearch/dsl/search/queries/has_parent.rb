@@ -3,7 +3,20 @@ module Elasticsearch
     module Search
       module Queries
 
-        # HasParent query
+        # A query which returns children documents for parent documents matching a query
+        #
+        # @example Return comments for articles about Ruby
+        #
+        #     search do
+        #       query do
+        #         has_parent do
+        #           type 'article'
+        #           query do
+        #             match title: 'Ruby'
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @example
         #

@@ -3,9 +3,17 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Regexp query
+        # A query which matches documents matching a regular expression
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         regexp :path do
+        #           value '^/usr/?.*/var'
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html
         #

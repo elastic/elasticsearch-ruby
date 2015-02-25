@@ -3,9 +3,20 @@ module Elasticsearch
     module Search
       module Queries
 
-        # TopChildren query
+        # A filter which returns parent documents for children documents matching a query
         #
-        # @example
+        # @example Return articles with comments mentioning 'twitter', summing the score
+        #
+        #     search do
+        #       query do
+        #         top_children do
+        #           type  'comment'
+        #           query match: { body: 'twitter' }
+        #           score 'sum'
+        #         end
+        #       end
+        #     end
+        #
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-top-children-query.html
         #

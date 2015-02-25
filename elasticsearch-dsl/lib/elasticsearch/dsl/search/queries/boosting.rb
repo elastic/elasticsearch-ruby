@@ -3,15 +3,17 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Boosting query
+        # A query which will decrease the score of documents matching the `negative` query
         #
         # @example
         #
-        #     query do
-        #       boosting do
-        #         positive term: { title: 'john' }
-        #         negative term: { title: 'dave' }
-        #         negative_boost 0.2
+        #     search do
+        #       query do
+        #         boosting do
+        #           positive terms: { amenities: ['wifi', 'pets'] }
+        #           negative terms: { amenities: ['pool'] }
+        #           negative_boost 0.5
+        #         end
         #       end
         #     end
         #

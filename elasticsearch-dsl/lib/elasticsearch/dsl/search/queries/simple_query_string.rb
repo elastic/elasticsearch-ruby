@@ -3,9 +3,19 @@ module Elasticsearch
     module Search
       module Queries
 
-        # SimpleQueryString query
+        # A query which returns documents matching a simplified query string syntax
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         simple_query_string do
+        #           query  'disaster -health'
+        #           fields ['title^5', 'abstract', 'content']
+        #           default_operator 'and'
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
         #

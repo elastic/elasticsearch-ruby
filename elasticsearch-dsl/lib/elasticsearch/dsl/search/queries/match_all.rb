@@ -3,11 +3,17 @@ module Elasticsearch
     module Search
       module Queries
 
-        # MatchAll query
+        # A query which matches all documents
         #
         # @example
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/_most_important_queries_and_filters.html
+        #     search do
+        #       query do
+        #         match_all
+        #       end
+        #     end
+        #
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html
         #
         class MatchAll
           include BaseComponent

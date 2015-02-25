@@ -3,9 +3,30 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Filtered query
+        # A query which allows to combine a query with a filter
         #
-        # @example
+        # @note It's possible and common to define just the `filter` part of the search definition,
+        #       for a structured search use case.
+        #
+        # @example Find documents about Twitter published last month
+        #
+        #     search do
+        #       query do
+        #         filtered do
+        #           query do
+        #             multi_match do
+        #               query 'twitter'
+        #               fields [ :title, :abstract, :content ]
+        #             end
+        #           end
+        #           filter do
+        #             range :published_on do
+        #               gte 'now-1M/M'
+        #             end
+        #           end
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filtered-query.html
         #

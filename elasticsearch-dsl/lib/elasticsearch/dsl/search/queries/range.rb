@@ -3,14 +3,28 @@ module Elasticsearch
     module Search
       module Queries
 
-        # Range query
+        # A query which returns documents matching the specified range
         #
-        # @example
+        # @example Find documents within a numeric range
         #
-        #     query do
-        #       range :age do
-        #         gte 10
-        #         lte 20
+        #     search do
+        #       query do
+        #         range :age do
+        #           gte 10
+        #           lte 20
+        #         end
+        #       end
+        #     end
+        #
+        # @example Find documents published within a date range
+        #
+        #     search do
+        #       query do
+        #         range :published_on do
+        #           gte '2013-01-01'
+        #           lte 'now'
+        #           time_zone '+1:00'
+        #         end
         #       end
         #     end
         #
@@ -24,6 +38,7 @@ module Elasticsearch
           option_method :lte
           option_method :lt
           option_method :boost
+          option_method :time_zone
         end
 
       end

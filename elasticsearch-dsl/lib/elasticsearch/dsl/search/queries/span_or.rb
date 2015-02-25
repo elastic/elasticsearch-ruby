@@ -3,11 +3,18 @@ module Elasticsearch
     module Search
       module Queries
 
-        # SpanOr query
+        # A query which returns documents matching the union of provided queries
         #
         # @example
         #
+        #     search do
+        #       query do
+        #         span_or clauses: [ { span_term: { title: 'disaster' } }, { span_term: { title: 'health' } } ]
+        #       end
+        #     end
+        #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-span-or-query.html
+        # @see https://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/spans/package-summary.html
         #
         class SpanOr
           include BaseComponent

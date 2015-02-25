@@ -3,9 +3,23 @@ module Elasticsearch
     module Search
       module Queries
 
-        # FunctionScore query
+        # A query which allows to modify the score of documents matching the query,
+        # either via built-in functions or a custom script
         #
-        # @example
+        # @example Find documents with specific amenities, boosting documents within a certain
+        #          price range and geogprahical location
+        #
+        #     search do
+        #       query do
+        #         function_score do
+        #           filter do
+        #             terms amenities: ['wifi', 'pets']
+        #           end
+        #           functions << { gauss: { price:    { origin: 100, scale: 200 } } }
+        #           functions << { gauss: { location: { origin: '50.090223,14.399590', scale: '5km' } } }
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/function-score-query.html
         #

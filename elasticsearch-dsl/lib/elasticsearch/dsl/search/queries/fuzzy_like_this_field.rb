@@ -3,9 +3,18 @@ module Elasticsearch
     module Search
       module Queries
 
-        # FuzzyLikeThisField query
+        # A query which returns documents which are similar to the specified text,
+        # executed on a single field
         #
         # @example
+        #
+        #     search do
+        #       query do
+        #         fuzzy_like_this_field :content do
+        #           like_text 'Eyjafjallajökull'
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-flt-field-query.html
         #

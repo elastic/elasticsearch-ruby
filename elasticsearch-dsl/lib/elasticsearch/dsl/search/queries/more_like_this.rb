@@ -3,9 +3,30 @@ module Elasticsearch
     module Search
       module Queries
 
-        # MoreLikeThis query
+        # A query which returns documents which are similar to the specified text or documents
         #
-        # @example
+        # @example Find documents similar to the provided text
+        #
+        #     search do
+        #       query do
+        #         more_like_this do
+        #           like_text 'Eyjafjallajökull'
+        #           fields [:title, :abstract, :content]
+        #         end
+        #       end
+        #     end
+        #
+        #
+        # @example Find documents similar to the specified documents
+        #
+        #     search do
+        #       query do
+        #         more_like_this do
+        #           ids    [1, 2, 3]
+        #           fields [:title, :abstract]
+        #         end
+        #       end
+        #     end
         #
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html
         #
