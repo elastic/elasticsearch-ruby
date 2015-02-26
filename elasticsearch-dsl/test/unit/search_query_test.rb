@@ -31,6 +31,24 @@ module Elasticsearch
           assert_instance_of Elasticsearch::DSL::Search::Query, subject.call
         end
 
+        should "define the value with query methods" do
+          assert_nothing_raised do
+            subject.match foo: 'bar'
+            assert_instance_of Hash, subject.to_hash
+            assert_equal( { match: { foo: 'bar' } }, subject.to_hash )
+          end
+        end
+
+        should "add query to the value with query methods" do
+          assert_nothing_raised do
+            subject.match foo: 'bar'
+            subject.match foo: 'bar'
+            subject.to_hash
+            assert_instance_of Array, subject.to_hash
+            assert_equal([ { match: { foo: 'bar' } }, { match: { foo: 'bar' } } ], subject.to_hash)
+          end
+        end
+
         should "have the query methods" do
           assert_nothing_raised { subject.match foo: 'bar' }
         end
