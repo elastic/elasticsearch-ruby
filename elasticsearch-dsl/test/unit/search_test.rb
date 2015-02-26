@@ -40,6 +40,12 @@ module Elasticsearch
             subject.query foo: 'bar'
             assert_equal({query: { foo: 'bar' }}, subject.to_hash)
           end
+
+          should "have a getter/setter method" do
+            assert_nil subject.query
+            subject.query = Object.new
+            assert_not_nil subject.query
+          end
         end
 
         context "with filter" do
@@ -64,6 +70,12 @@ module Elasticsearch
 
             subject.filter foo: 'bar'
             assert_equal({filter: { foo: 'bar' }}, subject.to_hash)
+          end
+
+          should "have a getter/setter method" do
+            assert_nil subject.filter
+            subject.filter = Object.new
+            assert_not_nil subject.filter
           end
         end
 
@@ -90,6 +102,12 @@ module Elasticsearch
             subject.post_filter foo: 'bar'
             assert_equal({post_filter: { foo: 'bar' }}, subject.to_hash)
           end
+
+          should "have a getter/setter method" do
+            assert_nil subject.post_filter
+            subject.post_filter = Object.new
+            assert_not_nil subject.post_filter
+          end
         end
 
         context "with aggregations" do
@@ -115,6 +133,12 @@ module Elasticsearch
             subject.post_filter foo: 'bar'
             assert_equal({post_filter: { foo: 'bar' }}, subject.to_hash)
           end
+
+          should "have a getter/setter method" do
+            assert_nil subject.aggregations
+            subject.aggregations = { foo: Object.new }
+            assert_not_nil subject.aggregations
+          end
         end
 
         context "with sorting" do
@@ -122,12 +146,24 @@ module Elasticsearch
             subject.sort :foo
             assert_equal( { sort: [ :foo ] }, subject.to_hash )
           end
+
+          should "have a getter method" do
+            assert_nil subject.sort
+            subject.sort :foo
+            assert_instance_of Elasticsearch::DSL::Search::Sort, subject.sort
+          end
         end
 
         context "with suggest" do
           should "be converted to hash" do
             subject.suggest :foo, { bar: 'bam' }
             assert_equal( { suggest: { foo: { bar: 'bam' } } }, subject.to_hash )
+          end
+
+          should "have a getter/setter method" do
+            assert_nil subject.suggest
+            subject.suggest = Object.new
+            assert_not_nil subject.suggest
           end
         end
 

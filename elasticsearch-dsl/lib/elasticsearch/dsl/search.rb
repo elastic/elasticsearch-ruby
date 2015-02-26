@@ -40,17 +40,27 @@ module Elasticsearch
           instance_eval(&block) if block
         end
 
-        # DSL method for building the `query` part of a search definition
+        # DSL method for building or accessing the `query` part of a search definition
         #
-        # @return [self]
+        # @return [self, {Query}]
         #
         def query(*args, &block)
-          if block
-            @query = Query.new(*args, &block)
-          else
-            @query = args.first
+          case
+            when block
+              @query = Query.new(*args, &block)
+              self
+            when !args.empty?
+              @query = args.first
+              self
+            else
+              @query
           end
-          self
+        end
+
+        # Set the query part of a search definition
+        #
+        def query=(value)
+          query value
         end
 
         # DSL method for building the `filter` part of a search definition
@@ -58,12 +68,22 @@ module Elasticsearch
         # @return [self]
         #
         def filter(*args, &block)
-          if block
-            @filter = Filter.new(*args, &block)
-          else
-            @filter = args.first
+          case
+            when block
+              @filter = Filter.new(*args, &block)
+              self
+            when !args.empty?
+              @filter = args.first
+              self
+            else
+              @filter
           end
-          self
+        end
+
+        # Set the filter part of a search definition
+        #
+        def filter=(value)
+          filter value
         end
 
         # DSL method for building the `post_filter` part of a search definition
@@ -71,12 +91,22 @@ module Elasticsearch
         # @return [self]
         #
         def post_filter(*args, &block)
-          if block
-            @post_filter = Filter.new(*args, &block)
-          else
-            @post_filter = args.first
+          case
+            when block
+              @post_filter = Filter.new(*args, &block)
+              self
+            when !args.empty?
+              @post_filter = args.first
+              self
+            else
+              @post_filter
           end
-          self
+        end
+
+        # Set the post_filter part of a search definition
+        #
+        def post_filter=(value)
+          post_filter value
         end
 
         # DSL method for building the `aggregations` part of a search definition
@@ -95,42 +125,70 @@ module Elasticsearch
           self
         end
 
+        # Set the aggregations part of a search definition
+        #
+        def aggregations=(value)
+          @aggregations = value
+        end
+
         # DSL method for building the `sort` part of a search definition
         #
         # @return [self]
         #
         def sort(*args, &block)
-          @sort = Sort.new(*args, &block)
-          self
+          if !args.empty? || block
+            @sort = Sort.new(*args, &block)
+            self
+          else
+            @sort
+          end
         end
 
         # DSL method for building the `size` part of a search definition
         #
         # @return [self]
         #
-        def size(value)
-          @size = value
-          self
-        end
+        def size(value=nil)
+          if value
+            @size = value
+            self
+          else
+            @size
+          end
+        end; alias_method :size=, :size
 
         # DSL method for building the `from` part of a search definition
         #
         # @return [self]
         #
-        def from(value)
-          @from = value
-          self
-        end
+        def from(value=nil)
+          if value
+            @from = value
+            self
+          else
+            @from
+          end
+        end; alias_method :from=, :from
 
         # DSL method for building the `suggest` part of a search definition
         #
         # @return [self]
         #
         def suggest(*args, &block)
-          @suggest ||= {}
-          key, options = args
-          @suggest.update key => Suggest.new(key, options, &block)
-          self
+          if !args.empty? || block
+            @suggest ||= {}
+            key, options = args
+            @suggest.update key => Suggest.new(key, options, &block)
+            self
+          else
+            @suggest
+          end
+        end
+
+        # Set the suggest part of a search definition
+        #
+        def suggest=(value)
+          @suggest = value
         end
 
         # Delegates to the methods provided by the {Options} class
