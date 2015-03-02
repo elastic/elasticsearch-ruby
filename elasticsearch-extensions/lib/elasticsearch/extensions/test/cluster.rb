@@ -68,14 +68,15 @@ module Elasticsearch
         def start(arguments={})
           @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || arguments[:nodes] || 2).to_i
 
-          arguments[:command]      ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
-          arguments[:port]         ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          arguments[:cluster_name] ||= (ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test').chomp
-          arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp/elasticsearch_test'
-          arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
-          arguments[:path_work]    ||= '/tmp'
-          arguments[:node_name]    ||= 'node'
-          arguments[:timeout]      ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
+          arguments[:command]           ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
+          arguments[:port]              ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+          arguments[:cluster_name]      ||= (ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test').chomp
+          arguments[:path_data]         ||= ENV['TEST_CLUSTER_DATA'] || '/tmp/elasticsearch_test'
+          arguments[:es_params]         ||= ENV['TEST_CLUSTER_PARAMS'] || ''
+          arguments[:path_work]         ||= '/tmp'
+          arguments[:node_name]         ||= 'node'
+          arguments[:multicast_enabled] ||= ENV['TEST_CLUSTER_MULTICAST'] || 'true'
+          arguments[:timeout]           ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
 
           # Make sure `cluster_name` is not dangerous
           if arguments[:cluster_name] =~ /^[\/\\]?$/
@@ -109,7 +110,7 @@ module Elasticsearch
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.cluster.routing.allocation.disk.threshold_enabled=false \
                 -D es.network.host=0.0.0.0 \
-                -D es.discovery.zen.ping.multicast.enabled=true \
+                -D es.discovery.zen.ping.multicast.enabled=#{arguments[:multicast_enabled]} \
                 -D es.script.inline=on \
                 -D es.script.indexed=on \
                 -D es.node.test=true \
