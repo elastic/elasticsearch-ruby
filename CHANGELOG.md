@@ -1,3 +1,10 @@
+## EXT:0.0.18
+
+* Removed the deprecated options for launching the test cluster
+* Added removing the data folder for `cluster_name` to make sure the testing cluster starts green
+* Make sure the `cluster_name` argument is not empty/dangerous in test cluster launcher
+* Changed, that test cluster is stopped with `INT` rather than `KILL` signal
+
 ## 1.0.7
 
 ### Client
