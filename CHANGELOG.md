@@ -1,3 +1,7 @@
+## 1.0.7
+
+* Fixed incorrect dependency specification in the "elasticsearch" wrapper gem
+
 ## EXT:0.0.18
 
 * Removed the deprecated options for launching the test cluster
