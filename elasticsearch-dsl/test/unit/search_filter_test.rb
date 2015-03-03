@@ -13,10 +13,6 @@ module Elasticsearch
           subject = Elasticsearch::DSL::Search::Filter.new
           subject.instance_variable_set(:@value, { foo: 'bar' })
           assert_equal( { foo: 'bar' }, subject.to_hash )
-
-          subject = Elasticsearch::DSL::Search::Filter.new
-          subject.instance_variable_set(:@value, [ { foo: 'bar' }, { moo: 'mam' } ])
-          assert_equal( [{ foo: 'bar' }, { moo: 'mam' }], subject.to_hash )
         end
 
         should "evaluate the block and return itself" do
@@ -43,13 +39,14 @@ module Elasticsearch
           end
         end
 
-        should "add filter to the value with filter methods" do
+        should "redefine the value with filter methods" do
           assert_nothing_raised do
             subject.term foo: 'bar'
-            subject.term foo: 'bar'
+            subject.term foo: 'bam'
             subject.to_hash
-            assert_instance_of Array, subject.to_hash
-            assert_equal([ { term: { foo: 'bar' } }, { term: { foo: 'bar' } } ], subject.to_hash)
+            subject.to_hash
+            assert_instance_of Hash, subject.to_hash
+            assert_equal({ term: { foo: 'bam' } }, subject.to_hash)
           end
         end
 

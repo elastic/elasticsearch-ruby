@@ -39,13 +39,14 @@ module Elasticsearch
           end
         end
 
-        should "add query to the value with query methods" do
+        should "redefine the value with query methods" do
           assert_nothing_raised do
             subject.match foo: 'bar'
-            subject.match foo: 'bar'
+            subject.match foo: 'bam'
             subject.to_hash
-            assert_instance_of Array, subject.to_hash
-            assert_equal([ { match: { foo: 'bar' } }, { match: { foo: 'bar' } } ], subject.to_hash)
+            subject.to_hash
+            assert_instance_of Hash, subject.to_hash
+            assert_equal({ match: { foo: 'bam' } }, subject.to_hash)
           end
         end
 

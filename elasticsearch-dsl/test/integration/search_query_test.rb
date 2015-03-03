@@ -5,7 +5,7 @@ module Elasticsearch
     class QueryIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
       include Elasticsearch::DSL::Search
 
-      context "Query integration" do
+      context "Queries integration" do
         startup do
           Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
         end

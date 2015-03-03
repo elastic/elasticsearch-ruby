@@ -47,14 +47,24 @@ module Elasticsearch
             subject = Bool.new do
               must do
                 match foo: 'bar'
+              end
+
+              must do
                 match moo: 'bam'
               end
 
               should do
                 match xoo: 'bax'
+              end
+
+              should do
                 match zoo: 'baz'
               end
             end
+
+            # Make sure we're not additive
+            subject.to_hash
+            subject.to_hash
 
             assert_equal( { bool:
                             { must:     [ {match: { foo: 'bar' }}, {match: { moo: 'bam' }} ],

@@ -22,12 +22,7 @@ module Elasticsearch
         def method_missing(name, *args, &block)
           klass = Utils.__camelize(name)
           if Queries.const_defined? klass
-            if @value
-              @value = [ @value ] unless @value.is_a?(Array)
-              @value << Queries.const_get(klass).new(*args, &block)
-            else
-              @value = Queries.const_get(klass).new *args, &block
-            end
+            @value = Queries.const_get(klass).new *args, &block
           else
             raise NoMethodError, "undefined method '#{name}' for #{self}"
           end
@@ -49,7 +44,7 @@ module Elasticsearch
         def to_hash(options={})
           call
           if @value
-            @value.respond_to?(:to_hash) ? @value.to_hash : @value.map { |f| f.to_hash }
+            @value.to_hash
           else
             {}
           end

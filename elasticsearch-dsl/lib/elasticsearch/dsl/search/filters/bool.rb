@@ -5,7 +5,7 @@ module Elasticsearch
 
         # A compound filter which matches documents based on combinations of filters
         #
-        # @example
+        # @example Defining a bool filter with multiple conditions
         #
         #     search do
         #       query do
@@ -14,6 +14,9 @@ module Elasticsearch
         #             bool do
         #               must do
         #                 term category: 'men'
+        #               end
+        #
+        #               must do
         #                 term size:  'xxl'
         #               end
         #
@@ -39,19 +42,22 @@ module Elasticsearch
 
           def must(*args, &block)
             @hash[name][:must] ||= []
-            @hash[name][:must].push(Filter.new(*args, &block).to_hash).flatten!
+            value = Filter.new(*args, &block).to_hash
+            @hash[name][:must].push(value).flatten! unless @hash[name][:must].include?(value)
             self
           end
 
           def must_not(*args, &block)
             @hash[name][:must_not] ||= []
-            @hash[name][:must_not].push(Filter.new(*args, &block).to_hash).flatten!
+            value = Filter.new(*args, &block).to_hash
+            @hash[name][:must_not].push(value).flatten! unless @hash[name][:must_not].include?(value)
             self
           end
 
           def should(*args, &block)
             @hash[name][:should] ||= []
-            @hash[name][:should].push(Filter.new(*args, &block).to_hash).flatten!
+            value = Filter.new(*args, &block).to_hash
+            @hash[name][:should].push(value).flatten! unless @hash[name][:should].include?(value)
             self
           end
 
@@ -59,7 +65,7 @@ module Elasticsearch
             @hash[name].update(@args.to_hash) if @args.respond_to?(:to_hash)
 
             if @block
-              @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self)
+              call
             else
               @hash[name] = @args unless @args.nil? || @args.empty?
             end

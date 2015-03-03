@@ -45,16 +45,16 @@ module Elasticsearch
 
           should "take a block with multiple conditions" do
             subject = Bool.new do
-              must do
-                term foo: 'bar'
-                term moo: 'bam'
-              end
+              must { term foo: 'bar' }
+              must { term moo: 'bam' }
 
-              should do
-                term xoo: 'bax'
-                term zoo: 'baz'
-              end
+              should { term xoo: 'bax' }
+              should { term zoo: 'baz' }
             end
+
+            # Make sure we're not additive
+            subject.to_hash
+            subject.to_hash
 
             assert_equal( { bool:
                             { must:     [ {term: { foo: 'bar' }}, {term: { moo: 'bam' }} ],
