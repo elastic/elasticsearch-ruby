@@ -1,3 +1,43 @@
+## 1.0.7
+
+### Client
+
+* Fixed, that the Curb transport passes the `selector_class` option
+* Added handling the `::Curl::Err::TimeoutError` exception for Curb transport
+* Reworded information about authentication and added example for using SSL certificates
+* Added information about the `ELASTICSEARCH_URL` environment variable to the README
+* Allow passing multiple URLs separated by a comma to the client
+* Fixed an error where passing `host: { ... }` resulted in error in Client#__extract_hosts
+
+### API
+
+* Fixed incorrect escaping of multiple indices in the "Put Alias" API
+* Changed the "Scroll" and "Clear Scroll" APIs to send `scroll_id` in the body
+* Updated and fixed the `termvectors` API
+* Added the `query_cache` URL parameter to the Search API
+* Changed frequently used strings into constants
+* Removed the "activesupport" development dependency to prevent test error on Ruby 1.8
+* Added the "Cat Segments" API
+* Updated the code and documentation for the "Cluster State" API
+* Fixed incorrect examples for the "Percolate" API
+* Added a `Elasticsearch::API.settings` method for accessing module settings
+* Added a `Elasticsearch::API.settings[:skip_parameter_validation]` setting support into `__validate_and_extract_params`
+* Added `master_timeout` parameters to the "Template Exists" and "Get Template" APIs
+* Fixed incorrect encoding of Array parameters
+* Added support for the `metric` parameter in the "Nodes Info" API
+* Added the skip features to the YAML test runner (stash_in_path,requires_replica)
+* Fixed the Ruby 1.8-incompatible syntax in the "Nodes Info" API
+* Added question mark versions for predicate methods
+* Added, that `indices.delete` accepts the `:ignore` parameter
+
+### Various
+
+* Changed the way elasticsearch/elasticsearch repository is embedded
+* Added the `setup` Rake task
+* Added chapter about development to the READMEs
+* Added the "test-unit" gem for Ruby 2.2
+* Fixed the `elasticsearch:build` Rake task
+
 ## EXT:0.0.17
 
 ### Extensions
@@ -24,7 +64,7 @@
 * Fix problems with gems on JRuby
 * Added the `send_get_body_as` setting
 
-## API
+### API
 
 * Added the "Verify Snapshot" API
 * Added the "Upgrade Index" API
