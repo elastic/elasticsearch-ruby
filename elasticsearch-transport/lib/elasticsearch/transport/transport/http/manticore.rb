@@ -11,10 +11,29 @@ module Elasticsearch
         #
         #     require 'elasticsearch/transport/transport/http/manticore'
         #
+        #     # HTTP
+        #
         #     client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore
         #
         #     client.transport.connections.first.connection
         #     => #<Manticore::Client:0x56bf7ca6 ...>
+        #
+        #     client.info['status']
+        #     => 200
+        #
+        #     # HTTPS (All SSL settings are optional, see http://www.rubydoc.info/gems/manticore/Manticore/Client:initialize)
+        #
+        #     client = Elasticsearch::Client.new url: 'https://elasticsearch.example.com' \
+        #       transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore,
+        #       ssl: {
+        #         truststore: '/tmp/truststore.jks',
+        #         truststore_password: 'password',
+        #         keystore: '/tmp/keystore.jks',
+        #         keystore_password: 'secret',
+        #       }
+        #
+        #     client.transport.connections.first.connection
+        #     => #<Manticore::Client:0xdeadbeef ...>
         #
         #     client.info['status']
         #     => 200
@@ -63,7 +82,7 @@ module Elasticsearch
               @request_options[:headers] = options[:headers]
             end
 
-            client_options = setup_ssl(options[:ssl] || {})
+            client_options = {:ssl => options[:ssl] || {}}
 
             Connections::Collection.new \
               :connections => hosts.map { |host|
@@ -77,7 +96,7 @@ module Elasticsearch
 
                 Connections::Connection.new \
                   :host => host,
-                  :connection => ::Manticore::Client.new(:options => client_options)
+                  :connection => ::Manticore::Client.new(client_options)
               },
               :selector_class => options[:selector_class],
               :selector => options[:selector]
@@ -94,22 +113,6 @@ module Elasticsearch
               ::Manticore::ClientProtocolException,
               ::Manticore::ResolutionFailure
             ]
-          end
-
-          private
-          # TODO: not threadsafe
-          def setup_ssl(ssl_options)
-            if ssl_options[:truststore]
-              java.lang.System.setProperty "javax.net.ssl.trustStore", ssl_options[:truststore]
-            end
-            if ssl_options[:truststore_password]
-              java.lang.System.setProperty "javax.net.ssl.trustStorePassword", ssl_options[:truststore_password]
-            end
-            if ssl_options[:verify] == false then
-              { :ignore_ssl_validation => true }
-            else
-              {}
-            end
           end
         end
       end
