@@ -30,6 +30,8 @@ module Elasticsearch
         Search.new(*args, &block)
       end
 
+      extend self
+
       # Wraps the whole search definition (queries, filters, aggregations, sorting, etc)
       #
       class Search

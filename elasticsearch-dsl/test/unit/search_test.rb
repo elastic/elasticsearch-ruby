@@ -6,12 +6,20 @@ module Elasticsearch
       subject { Elasticsearch::DSL::Search::Search.new }
 
       context "The Search module" do
-        should "have the search method" do
+        should "have the search method on instance" do
           class DummySearchReceiver
             include Elasticsearch::DSL::Search
           end
 
           assert_instance_of Elasticsearch::DSL::Search::Search, DummySearchReceiver.new.search
+        end
+
+        should "have the search method on module" do
+          class DummySearchReceiver
+            include Elasticsearch::DSL::Search
+          end
+
+          assert_instance_of Elasticsearch::DSL::Search::Search, Elasticsearch::DSL::Search.search
         end
       end
 
