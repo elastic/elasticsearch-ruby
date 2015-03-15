@@ -133,6 +133,19 @@ module Elasticsearch
           @aggregations = value
         end
 
+        # DSL method for building the `highlight` part of a search definition
+        #
+        # @return [self]
+        #
+        def highlight(*args, &block)
+          if !args.empty? || block
+            @highlight = Highlight.new(*args, &block)
+            self
+          else
+            @highlight
+          end
+        end
+
         # DSL method for building the `sort` part of a search definition
         #
         # @return [self]
@@ -213,11 +226,12 @@ module Elasticsearch
           hash.update(query: @query.to_hash)   if @query
           hash.update(filter: @filter.to_hash) if @filter
           hash.update(post_filter: @post_filter.to_hash) if @post_filter
-          hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.merge item.first => item.last.to_hash }) if @aggregations
+          hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.update item.first => item.last.to_hash }) if @aggregations
           hash.update(sort: @sort.to_hash) if @sort
           hash.update(size: @size) if @size
           hash.update(from: @from) if @from
-          hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.merge item.last.to_hash }) if @suggest
+          hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.update item.last.to_hash }) if @suggest
+          hash.update(highlight: @highlight.to_hash) if @highlight
           hash.update(@options) unless @options.empty?
           hash
         end

@@ -175,6 +175,14 @@ module Elasticsearch
           end
         end
 
+        context "with highlighting" do
+          should "be converted to a hash" do
+            subject.highlight foo: 'bar'
+            assert_not_nil subject.highlight
+            assert_equal( { highlight: { foo: 'bar' } }, subject.to_hash )
+          end
+        end
+
         context "with options" do
           should "encode options" do
             subject.explain true

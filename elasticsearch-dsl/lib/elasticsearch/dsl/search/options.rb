@@ -12,7 +12,6 @@ module Elasticsearch
           :fields,
           :script_fields,
           :fielddata_fields,
-          :highlight,
           :rescore,
           :explain,
           :version,

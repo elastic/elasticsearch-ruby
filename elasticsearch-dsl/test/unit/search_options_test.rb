@@ -8,9 +8,9 @@ module Elasticsearch
       context "Search options" do
         should "combine different options" do
           subject.version true
-          subject.highlight foo: 'bar'
+          subject.min_score 0.5
 
-          assert_equal({version: true, highlight: { foo: 'bar' }}, subject.to_hash)
+          assert_equal({version: true, min_score: 0.5}, subject.to_hash)
         end
 
         should "encode _source" do
@@ -43,11 +43,6 @@ module Elasticsearch
         should "encode fielddata_fields" do
           subject.fielddata_fields ['foo']
           assert_equal( { fielddata_fields: ['foo'] }, subject.to_hash )
-        end
-
-        should "encode highlight" do
-          subject.highlight foo: 'bar'
-          assert_equal( { highlight: { foo: 'bar' } }, subject.to_hash )
         end
 
         should "encode rescore" do
