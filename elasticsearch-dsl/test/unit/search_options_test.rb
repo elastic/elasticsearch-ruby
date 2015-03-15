@@ -70,6 +70,11 @@ module Elasticsearch
           assert_equal( { indices_boost: { foo: 'bar' } }, subject.to_hash )
         end
 
+        should "encode track_scores" do
+          subject.track_scores true
+          assert_equal( { track_scores: true }, subject.to_hash )
+        end
+
         should "encode min_score" do
           subject.min_score 0.5
           assert_equal( { min_score: 0.5 }, subject.to_hash )

@@ -17,6 +17,7 @@ module Elasticsearch
           :explain,
           :version,
           :indices_boost,
+          :track_scores,
           :min_score
         ]
 
