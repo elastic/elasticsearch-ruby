@@ -97,6 +97,14 @@ module Elasticsearch
           assert_equal       'BAR', subject.instance_variable_get(:@foo)
         end
 
+        should "respond to empty?" do
+          assert DummyComponent.new.empty?
+          assert DummyComponent.new(:foo).empty?
+
+          subject = DummyComponent.new(:foo) { @hash = { foo: 'bar' } }
+          assert ! subject.empty?
+        end
+
         context "to_hash conversion" do
 
           should "build the hash with the block with args" do

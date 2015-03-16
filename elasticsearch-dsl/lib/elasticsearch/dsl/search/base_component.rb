@@ -123,6 +123,12 @@ module Elasticsearch
             self
           end
 
+          # Return true when the component definition is empty
+          #
+          def empty?
+            to_hash[name].respond_to?(:empty?) && to_hash[name].empty?
+          end
+
           # Convert the query definition to a Hash
           #
           # A default implementation, DSL classes can overload it.
