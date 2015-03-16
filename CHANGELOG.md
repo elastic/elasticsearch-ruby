@@ -1,4 +1,4 @@
-## 1.0.7
+## 1.0.8
 
 * Fixed incorrect dependency specification in the "elasticsearch" wrapper gem
 
