@@ -217,6 +217,9 @@ puts "\nSearch results #{'-'*66}\n".gray
 ap   response
 ```
 
+NOTE: You have to enable dynamic scripting to be able to execute the `function_score` query, either
+      by adding `script.disable_dynamic: false` to your elasticsearch.yml or command line parameters.
+
 **Please see the extensive RDoc examples in the source code and the integration tests.**
 
 ## Development
