@@ -8,7 +8,7 @@ module Elasticsearch
         # By default, Elasticsearch has a delay of 1 second until changes to an index are
         # available for search; the delay is configurable, see {Indices::Actions#put_settings}.
         #
-        # You can trigger this operation explicitely, for example when performing a sequence of commands
+        # You can trigger this operation explicitly, for example when performing a sequence of commands
         # in integration tests, or when you need to perform a manual "synchronization" of the index
         # with an external system at given moment.
         #

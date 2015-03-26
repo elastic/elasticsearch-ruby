@@ -3,7 +3,7 @@ module Elasticsearch
     module Snapshot
       module Actions
 
-        # Explicitely perform the verification of a repository
+        # Explicitly perform the verification of a repository
         #
         # @option arguments [String] :repository A repository name (*Required*)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
