@@ -16,7 +16,7 @@ module Elasticsearch
         #       ]
         #     }
         #
-        # @note If you want to explicitely set the shard allocation to a certain node, you might
+        # @note If you want to explicitly set the shard allocation to a certain node, you might
         #       want to look at the `allocation.*` cluster settings.
         #
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)

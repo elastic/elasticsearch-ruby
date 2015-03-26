@@ -50,7 +50,7 @@ module Elasticsearch
       # @option arguments [String]  :consistency Explicit write consistency setting for the operation
       #                             (options: one, quorum, all)
       # @option arguments [Boolean] :refresh Refresh the index after performing the operation
-      # @option arguments [String]  :replication Explicitely set the replication type (options: sync, async)
+      # @option arguments [String]  :replication Explicitly set the replication type (options: sync, async)
       # @option arguments [Time]    :timeout Explicit operation timeout
       #
       # @return [Hash] Deserialized Elasticsearch response
