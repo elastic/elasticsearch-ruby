@@ -181,7 +181,7 @@ Elasticsearch by default dynamically discovers new nodes in the cluster. You can
 in the client, and periodically check for new nodes to spread the load.
 
 To retrieve and use the information from the
-[_Nodes Info API_](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/)
+[_Nodes Info API_](http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html)
 on every 10,000th request:
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
