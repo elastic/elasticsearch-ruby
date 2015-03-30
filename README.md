@@ -89,6 +89,8 @@ Keep in mind, that for optimal performance, you should use a HTTP library which 
 
 ## Development
 
+[![Build Status](https://travis-ci.org/elastic/elasticsearch-ruby.svg?branch=master)](https://travis-ci.org/elastic/elasticsearch-ruby) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+
 To work on the code, clone and bootstrap the project first:
 
 ```
