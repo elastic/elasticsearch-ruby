@@ -26,6 +26,8 @@ module Elasticsearch
           option_method :fields
           option_method :operator
           option_method :type
+          option_method :slop
+          option_method :fuzziness
           option_method :use_dis_max
         end
 
