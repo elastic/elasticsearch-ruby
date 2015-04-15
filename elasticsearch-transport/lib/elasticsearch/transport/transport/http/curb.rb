@@ -48,7 +48,6 @@ module Elasticsearch
                 host[:port]     ||= DEFAULT_PORT
 
                 client = ::Curl::Easy.new
-                client.resolve_mode = :ipv4
                 client.headers      = {'User-Agent' => "Curb #{Curl::CURB_VERSION}"}
                 client.url          = __full_url(host)
 
