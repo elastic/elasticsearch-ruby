@@ -99,12 +99,8 @@ else
           }
         }
 
-        ::Manticore::Client.expects(:new).with(:options => {:ignore_ssl_validation => true})
-
+        ::Manticore::Client.expects(:new).with(options)
         transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
-
-        assert_equal java.lang.System.getProperty("javax.net.ssl.trustStore"), "test.jks"
-        assert_equal java.lang.System.getProperty("javax.net.ssl.trustStorePassword"), "test"
       end
     end
 
