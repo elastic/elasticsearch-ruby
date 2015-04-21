@@ -110,7 +110,8 @@ module Elasticsearch
                 -D es.cluster.routing.allocation.disk.threshold_enabled=false \
                 -D es.network.host=0.0.0.0 \
                 -D es.discovery.zen.ping.multicast.enabled=true \
-                -D es.script.disable_dynamic=false \
+                -D es.script.inline=on \
+                -D es.script.indexed=on \
                 -D es.node.test=true \
                 -D es.node.bench=true \
                 -D es.logger.level=DEBUG \
