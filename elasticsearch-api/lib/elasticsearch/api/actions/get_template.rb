@@ -17,6 +17,11 @@ module Elasticsearch
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body
+      rescue Exception => e
+        # NOTE: Use exception name, not full class in Elasticsearch::Client to allow client plugability
+        if Array(arguments[:ignore]).include?(404) && e.class.to_s =~ /NotFound/; false
+        else raise(e)
+        end
       end
     end
   end

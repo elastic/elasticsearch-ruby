@@ -28,6 +28,13 @@ module Elasticsearch
           subject.indices.get_template :name => 'foo^bar'
         end
 
+        should "catch a NotFound exception with the ignore parameter" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_nothing_raised do
+            subject.get_template :id => 1, :ignore => 404
+          end
+        end
 
       end
 
