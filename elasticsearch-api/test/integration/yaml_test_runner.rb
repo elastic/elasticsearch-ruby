@@ -348,8 +348,14 @@ suites.each do |suite|
                   begin
                     $results[test.hash] = Runner.perform_api_call(test, api, arguments)
                   rescue Exception => e
+                    begin
+                      $results[test.hash] = MultiJson.load(e.message.match(/{.+}/, 1).to_s)
+                    rescue MultiJson::ParseError
+                      $stderr.puts "RESPONSE: Cannot parse JSON from error message: '#{e.message}'" if ENV['DEBUG']
+                    end
+
                     if catch_exception
-                      $stderr.puts "CATCH '#{catch_exception}': #{e.inspect}" if ENV['DEBUG']
+                      $stderr.puts "CATCH: '#{catch_exception}': #{e.inspect}" if ENV['DEBUG']
                       case e
                         when 'missing'
                           assert_match /\[404\]/, e.message
@@ -400,6 +406,7 @@ suites.each do |suite|
                   else
                     value = value.reduce({}) { |memo, (k,v)| memo[k] =  Runner.fetch_or_return(v); memo  } if value.is_a? Hash
                     $stderr.puts "CHECK: Expected '#{property}' to be '#{value}', is: #{result.inspect}" if ENV['DEBUG']
+
                     assert_equal(value, result)
                   end
 
