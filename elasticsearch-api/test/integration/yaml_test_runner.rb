@@ -238,7 +238,7 @@ module Elasticsearch
 
           es_normalized  = sprintf "%03d-%03d-%03d", *$es_version.split('.').map(&:to_i)
 
-          if min_normalized <= es_normalized && max_normalized >= es_normalized
+          if ( min.empty? || min_normalized <= es_normalized ) && ( max.empty? || max_normalized >= es_normalized )
             return skip['skip']['reason'] ? skip['skip']['reason'] : true
           end
 
