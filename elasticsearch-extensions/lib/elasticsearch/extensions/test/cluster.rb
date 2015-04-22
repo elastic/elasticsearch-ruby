@@ -99,7 +99,7 @@ module Elasticsearch
 
           @@number_of_nodes.times do |n|
             n += 1
-            pid = Process.spawn <<-COMMAND
+            command = <<-COMMAND
               #{arguments[:command]} \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
@@ -118,6 +118,9 @@ module Elasticsearch
                 #{arguments[:es_params]} \
                 > /dev/null
             COMMAND
+            STDERR.puts command.gsub(/ {1,}/, ' ') if ENV['DEBUG']
+
+            pid = Process.spawn(command)
             Process.detach pid
             pids << pid
           end
@@ -227,11 +230,11 @@ module Elasticsearch
               response = begin
                 JSON.parse(Net::HTTP.get(uri))
               rescue Exception => e
-                puts e.inspect if ENV['DEBUG']
+                STDERR.puts e.inspect if ENV['DEBUG']
                 nil
               end
 
-              puts response.inspect if ENV['DEBUG']
+              STDERR.puts response.inspect if response && ENV['DEBUG']
 
               if response && response['status'] == status && ( @@number_of_nodes.nil? || @@number_of_nodes == response['number_of_nodes'].to_i  )
                 __print_cluster_info(port) and break
