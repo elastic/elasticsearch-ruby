@@ -90,7 +90,7 @@ namespace :elasticsearch do
       sh <<-CODE
         mkdir -p #{__current__.join('tmp/builds')} && \
         cd #{__current__.join('tmp/elasticsearch')} && \
-        rm -rf target/ && \
+        rm -rf #{__current__.join('tmp/elasticsearch/target')} && \
         git fetch origin --quiet && \
         git checkout #{branch} && \
         mvn clean && \
