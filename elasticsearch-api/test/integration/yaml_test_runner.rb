@@ -223,6 +223,9 @@ module Elasticsearch
 
         # Skip version
         if skip && skip['skip']['version']
+
+          return skip['skip']['reason'] ? skip['skip']['reason'] : true if skip['skip']['version'] == 'all'
+
           min, max = skip['skip']['version'].split('-').map(&:strip)
 
           min_normalized = sprintf "%03d-%03d-%03d",
