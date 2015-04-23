@@ -65,7 +65,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       response = client.perform_request 'GET', ''
 
       assert_respond_to(response.body, :to_hash)
-      assert_not_nil response.body['cluster_name']
+      assert_not_nil response.body['name']
       assert_equal 'application/json', response.headers['content-type']
     end unless JRUBY
   end
