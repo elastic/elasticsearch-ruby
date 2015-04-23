@@ -51,7 +51,7 @@ module Elasticsearch
           :scroll_id ]
 
         params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = params.delete(:scroll_id) || arguments[:body]
+        body   = arguments[:body] || params.delete(:scroll_id)
 
         perform_request(method, path, params, body).body
       end

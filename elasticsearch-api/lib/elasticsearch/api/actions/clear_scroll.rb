@@ -12,7 +12,7 @@ module Elasticsearch
       def clear_scroll(arguments={})
         raise ArgumentError, "Required argument 'scroll_id' missing" unless arguments[:scroll_id]
 
-        scroll_id = arguments.delete(:scroll_id)
+        scroll_id = arguments[:body] || arguments.delete(:scroll_id)
 
         scroll_ids = case scroll_id
           when Array
