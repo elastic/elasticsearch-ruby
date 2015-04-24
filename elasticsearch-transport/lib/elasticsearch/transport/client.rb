@@ -136,29 +136,29 @@ module Elasticsearch
           else
             hosts = Array(hosts_config)
           end
+        end
 
-          hosts.map! do |host|
-            case host
-            when String
-              if host =~ /^[a-z]+\:\/\//
-                uri = URI.parse(host)
-                { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
-              else
-                host, port = host.split(':')
-                { :host => host, :port => port }
-              end
-            when URI
-              { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
-            when Hash
-              host
+        result = hosts.map do |host|
+          case host
+          when String
+            if host =~ /^[a-z]+\:\/\//
+              uri = URI.parse(host)
+              { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
             else
-              raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
+              host, port = host.split(':')
+              { :host => host, :port => port }
             end
+          when URI
+            { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
+          when Hash
+            host
+          else
+            raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
           end
         end
 
-        hosts.shuffle! if options[:randomize_hosts]
-        hosts
+        result.shuffle! if options[:randomize_hosts]
+        result
       end
 
       # Auto-detect the best adapter (HTTP "driver") available, based on libraries

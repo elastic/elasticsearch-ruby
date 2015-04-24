@@ -115,7 +115,6 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
       should "extract from hash" do
         hosts = @client.__extract_hosts( { :host => 'myhost', :scheme => 'https' } )
-
         assert_equal 'myhost', hosts[0][:host]
         assert_equal 'https',  hosts[0][:scheme]
       end
