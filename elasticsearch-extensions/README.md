@@ -3,6 +3,24 @@
 This library provides a set of extensions to the
 [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
 
+## Installation
+
+Install the package from [Rubygems](https://rubygems.org):
+
+    gem install elasticsearch-extensions
+
+To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
+
+    gem 'elasticsearch-extensions', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+
+or install it from a source code checkout:
+
+    git clone https://github.com/elasticsearch/elasticsearch-ruby.git
+    cd elasticsearch-ruby/elasticsearch-extensions
+    bundle install
+    rake install
+
+
 ## Extensions
 
 ### ANSI
@@ -143,23 +161,6 @@ When omitted, the full code profile by [RubyProf](https://github.com/ruby-prof/r
 
 [Example in the Elasticsearch gem](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test/profile/client_benchmark_test.rb)
 
-
-## Installation
-
-Install the package from [Rubygems](https://rubygems.org):
-
-    gem install elasticsearch-extensions
-
-To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
-
-    gem 'elasticsearch-extensions', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
-
-or install it from a source code checkout:
-
-    git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-    cd elasticsearch-ruby/elasticsearch-extensions
-    bundle install
-    rake install
 
 ## Development
 
