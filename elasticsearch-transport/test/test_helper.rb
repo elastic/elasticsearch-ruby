@@ -36,6 +36,8 @@ require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-transport'
 require 'logger'
 
+require 'hashie'
+
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'

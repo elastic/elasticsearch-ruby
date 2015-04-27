@@ -128,7 +128,7 @@ module Elasticsearch
       # @api private
       #
       def __extract_hosts(hosts_config, options={})
-        if hosts_config.respond_to?(:to_hash)
+        if hosts_config.is_a?(Hash)
           hosts = [ hosts_config ]
         else
           if hosts_config.is_a?(String) && hosts_config.include?(',')

@@ -119,6 +119,12 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'https',  hosts[0][:scheme]
       end
 
+      should "extract from Hashie::Mash" do
+        hosts = @client.__extract_hosts( Hashie::Mash.new(:host => 'myhost', :scheme => 'https') )
+        assert_equal 'myhost', hosts[0][:host]
+        assert_equal 'https',  hosts[0][:scheme]
+      end
+
       should "extract from array" do
         hosts = @client.__extract_hosts ['myhost']
 
