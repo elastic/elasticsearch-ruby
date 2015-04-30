@@ -21,26 +21,26 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/get/
       #
       def exists(arguments={})
+        raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+        arguments[:type] ||= UNDERSCORE_ALL
+
+        valid_params = [
+          :parent,
+          :preference,
+          :realtime,
+          :refresh,
+          :routing ]
+
+        method = HTTP_HEAD
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id])
+
+        params = Utils.__validate_and_extract_params arguments, valid_params
+        body   = nil
+
         Utils.__rescue_from_not_found do
-          raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-          arguments[:type] ||= UNDERSCORE_ALL
-
-          valid_params = [
-            :parent,
-            :preference,
-            :realtime,
-            :refresh,
-            :routing ]
-
-          method = HTTP_HEAD
-          path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                   Utils.__escape(arguments[:type]),
-                                   Utils.__escape(arguments[:id])
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
           perform_request(method, path, params, body).status == 200 ? true : false
         end
       end

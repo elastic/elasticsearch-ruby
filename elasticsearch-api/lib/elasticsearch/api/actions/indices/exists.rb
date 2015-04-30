@@ -27,22 +27,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/
         #
         def exists(arguments={})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+          valid_params = [
+            :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
+            :local
+          ]
+
+          method = HTTP_HEAD
+          path   = Utils.__listify(arguments[:index])
+          params = Utils.__validate_and_extract_params arguments, valid_params
+          body   = nil
+
           Utils.__rescue_from_not_found do
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-
-            valid_params = [
-              :ignore_indices,
-              :ignore_unavailable,
-              :allow_no_indices,
-              :expand_wildcards,
-              :local
-            ]
-
-            method = HTTP_HEAD
-            path   = Utils.__listify(arguments[:index])
-            params = Utils.__validate_and_extract_params arguments, valid_params
-            body   = nil
-
             perform_request(method, path, params, body).status == 200 ? true : false
           end
         end
