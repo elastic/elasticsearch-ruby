@@ -76,7 +76,8 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #
 #     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
 #
-$client ||= Elasticsearch::Client.new host: "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
+$client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
 $client.transport.tracer = tracer if ENV['CI']
