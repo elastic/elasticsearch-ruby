@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
+  s.add_dependency "elasticsearch-api"
+
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency "rake"
 
@@ -25,12 +27,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency "elasticsearch-extensions"
 
   s.add_development_dependency 'shoulda-context'
+  s.add_development_dependency 'activesupport'
+  s.add_development_dependency 'turn'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'minitest', '~> 4.0'
   s.add_development_dependency 'minitest-reporters'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'simplecov-rcov'
-  s.add_development_dependency 'ci_reporter', '~> 1.9'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'
   s.add_development_dependency 'pry'
