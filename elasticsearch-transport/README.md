@@ -27,10 +27,11 @@ Features overview:
 * Request retries and dead connections handling
 * Node reloading (based on cluster state) on errors or on demand
 
-For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections,
-e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).
-Just `require 'patron'` or `require 'typhoeus'; require 'typhoeus/adapters/faraday'` in your code,
-and it will be automatically used; other automatically used libraries are
+For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections,
+such as [Typhoeus](https://github.com/typhoeus/typhoeus).
+Just require the library (`require 'typhoeus'; require 'typhoeus/adapters/faraday'`) in your code,
+and it will be automatically used; currently these libraries will be automatically detected and used:
+[Patron](https://github.com/toland/patron),
 [HTTPClient](https://rubygems.org/gems/httpclient) and
 [Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent).
 
