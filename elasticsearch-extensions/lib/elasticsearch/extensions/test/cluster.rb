@@ -71,7 +71,7 @@ module Elasticsearch
           arguments[:command]      ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
           arguments[:port]         ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
           arguments[:cluster_name] ||= (ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test').chomp
-          arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp'
+          arguments[:path_data]    ||= ENV['TEST_CLUSTER_DATA'] || '/tmp/elasticsearch_test'
           arguments[:es_params]    ||= ENV['TEST_CLUSTER_PARAMS'] || ''
           arguments[:path_work]    ||= '/tmp'
           arguments[:node_name]    ||= 'node'
