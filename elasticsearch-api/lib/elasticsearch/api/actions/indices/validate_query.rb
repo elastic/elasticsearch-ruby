@@ -38,31 +38,44 @@ module Elasticsearch
         #                                 use `_all` or empty string to perform the operation on all indices
         # @option arguments [List] :type A comma-separated list of document types to restrict the operation;
         #                                leave empty to perform the operation on all types
-        # @option arguments [Hash] :body The query definition (*without* the top-level `query` element)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
-        #                                               no concrete indices. (This includes `_all` string or when no
-        #                                               indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
-        #                                              are open, closed or both. (options: open, closed)
+        # @option arguments [Hash] :body The query definition specified with the Query DSL
         # @option arguments [Boolean] :explain Return detailed information about the error
-        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
-        #                                            `missing` ones (options: none, missing) @until 1.0
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
-        #                                                 unavailable (missing, closed, etc)
-        # @option arguments [String] :source The URL-encoded query definition (instead of using the request body)
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored
+        #                                                 when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression
+        #                                               resolves into no concrete indices.
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices
+        #                                              that are open, closed or both.
+        #                                              (options: open, closed, none, all)
+        # @option arguments [String] :operation_threading TODO: ?
         # @option arguments [String] :q Query in the Lucene query string syntax
+        # @option arguments [String] :analyzer The analyzer to use for the query string
+        # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be
+        #                                               analyzed (default: false)
+        # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
+        #                                              (options: AND, OR)
+        # @option arguments [String] :df The field to use as default where no field prefix is given in
+        #                                the query string
+        # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing
+        #                                      text to a numeric field) should be ignored
+        # @option arguments [Boolean] :lowercase_expanded_terms Specify whether query terms should be lowercased
         #
         # @see http://www.elasticsearch.org/guide/reference/api/validate/
         #
         def validate_query(arguments={})
           valid_params = [
-            :q,
             :explain,
-            :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :source ]
+            :operation_threading,
+            :q,
+            :analyzer,
+            :analyze_wildcard,
+            :default_operator,
+            :df,
+            :lenient,
+            :lowercase_expanded_terms ]
 
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]),
