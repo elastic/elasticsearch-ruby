@@ -1,3 +1,34 @@
+## 1.0.9
+
+* Improved the `elasticsearch::build` task in the main Rakefile
+* Merged the 'elasticsearch-dsl' gem into the main repository
+
+### Client
+
+* Changed the argument compatibility check in `__extract_hosts()` from `respond_to?` to `is_a?`
+* Document the DEFAULT_MAX_RETRIES value for `retry_on_failure`
+* Leave only Typhoeus as the primary example of automatically detected & used HTTP library in README
+* Make sure the `connections` object is an instance of Collection
+* Prevent mutating the parameter passed to __extract_hosts() method
+* Removed the `ipv4` resolve mode setting in the Curb adapter
+* Update Manticore to utilize new SSL settings
+* Updated the Curb integration test to not fail on older Elasticsearch versions
+
+### API
+
+* Added `_source_transform` to the list of permitted parameters
+* Added extra valid arguments to "Count" and "Validate Query" APIs
+* Improved and extended the YAML integration test suite runner
+* Added extra valida parameters to various APIs
+* Added the "Cat Plugins", "Field Stats" and "Search Exists" APIs
+* Changed, that `:body` parameter is preferred in the "Scroll" and "Clear Scroll" APIs
+* Changed, that predicate method variants are used in RDoc code examples
+* Fixed spelling mistakes in the documentation
+
+### DSL
+
+* Added the `elasticsearch-dsl` gem
+
 ## 1.0.8
 
 * Fixed incorrect dependency specification in the "elasticsearch" wrapper gem
