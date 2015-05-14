@@ -40,11 +40,15 @@ module Elasticsearch
         #
         # Use the {Cluster#stop Cluster.stop} command with the same arguments to stop this cluster.
         #
-        # @option arguments [String]  :command      Elasticsearch command (default: `elasticsearch`).
-        # @option arguments [Integer] :nodes        Number of desired nodes (default: 2).
-        # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch_test`).
-        # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250).
-        # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30).
+        # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch_test`)
+        # @option arguments [Integer] :nodes        Number of desired nodes (default: 2)
+        # @option arguments [String]  :command      Elasticsearch command (default: `elasticsearch`)
+        # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250)
+        # @option arguments [String]  :node_name    The node name (will be appended with a number)
+        # @option arguments [String]  :path_data    Path to the directory to store data in
+        # @option arguments [String]  :path_work    Path to the directory with auxiliary files
+        # @option arguments [Boolean] :multicast_enabled Whether multicast is enabled (default: true)
+        # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
         #
         # You can also use environment variables to set these options.
         #
@@ -71,10 +75,10 @@ module Elasticsearch
           arguments[:command]           ||= ENV.fetch('TEST_CLUSTER_COMMAND',   'elasticsearch')
           arguments[:port]              ||= (ENV.fetch('TEST_CLUSTER_PORT',     9250).to_i)
           arguments[:cluster_name]      ||= (ENV.fetch('TEST_CLUSTER_NAME',     'elasticsearch_test').chomp)
+          arguments[:node_name]         ||= ENV.fetch('TEST_CLUSTER_NODE_NAME', 'node')
           arguments[:path_data]         ||= ENV.fetch('TEST_CLUSTER_DATA',      '/tmp/elasticsearch_test')
+          arguments[:path_work]         ||= ENV.fetch('TEST_CLUSTER_TMP',       '/tmp')
           arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
-          arguments[:path_work]         ||= '/tmp'
-          arguments[:node_name]         ||= 'node'
           arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
           arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
 
