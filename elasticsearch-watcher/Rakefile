@@ -1,4 +1,7 @@
-require "bundler/gem_tasks"
+require 'pathname'
+require 'bundler/gem_tasks'
+
+__current__ = Pathname( File.expand_path('..', __FILE__) )
 
 task(:default) { system "rake --tasks" }
 task  :test    => 'test:unit'
@@ -44,6 +47,23 @@ namespace :test do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
+  end
+
+  desc "Initialize or update the repository with integration tests"
+  task :update do
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch-watcher/.git')} --work-tree=#{__current__.join('tmp/elasticsearch-watcher')} fetch origin --verbose"
+    begin
+      puts %x[git --git-dir=#{__current__.join('tmp/elasticsearch-watcher/.git')} --work-tree=#{__current__.join('tmp/elasticsearch-watcher')} pull --verbose]
+    rescue Exception => @exception
+      @failed = true
+    end
+
+    if @failed || !$?.success?
+      STDERR.puts "", "[!] Error while pulling -- #{@exception}"
+    end
+
+    puts "\n", "CHANGES:", '-'*80
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch-watcher/.git')} --work-tree=#{__current__.join('tmp/elasticsearch-watcher')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
 
   namespace :cluster do
