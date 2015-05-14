@@ -9,7 +9,6 @@ require 'rake/testtask'
 namespace :test do
 
   Rake::TestTask.new(:unit) do |test|
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/unit/**/*_test.rb"]
     # test.verbose = true
@@ -17,14 +16,12 @@ namespace :test do
   end
 
   Rake::TestTask.new(:integration) do |test|
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
   end
 
   desc "Run unit and integration tests"
   task :all do
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
   end
