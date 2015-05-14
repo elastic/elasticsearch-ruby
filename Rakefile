@@ -88,17 +88,15 @@ namespace :elasticsearch do
     current_branch = `git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} branch --no-color`.split("\n").select { |b| b =~ /^\*/ }.first.gsub(/^\*\s*/, '')
     begin
       sh <<-CODE
-        mkdir -p #{__current__.join('tmp/builds')} && \
-        cd #{__current__.join('tmp/elasticsearch')} && \
-        rm -rf #{__current__.join('tmp/elasticsearch/target')} && \
-        git fetch origin --quiet && \
-        git checkout #{branch} && \
-        mvn clean && \
-        mvn package -DskipTests && \
-        build=`ls target/releases/elasticsearch-*.tar.gz | xargs -0 basename` && \
-        rm -rf #{__current__.join('tmp/builds')}/$build &&
-        tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')} && \
-        echo && echo && echo "Built: $build"
+        mkdir -p #{__current__.join('tmp/builds')};
+        rm -rf '#{__current__.join('tmp/elasticsearch/target')}';
+        cd #{__current__.join('tmp/elasticsearch')} && git fetch origin --quiet;
+        cd #{__current__.join('tmp/elasticsearch')} && git checkout #{branch};
+        cd #{__current__.join('tmp/elasticsearch')} && mvn clean package -DskipTests;
+        build=`ls #{__current__.join('tmp/elasticsearch/target/releases/elasticsearch-*.tar.gz')} | xargs -0 basename | sed s/\.tar\.gz//` && \
+        rm -rf "#{__current__.join('tmp/builds')}/$build";
+        tar xvf target/releases/elasticsearch-*.tar.gz -C #{__current__.join('tmp/builds')};
+        echo; echo; echo "Built: $build"
       CODE
     end
 
