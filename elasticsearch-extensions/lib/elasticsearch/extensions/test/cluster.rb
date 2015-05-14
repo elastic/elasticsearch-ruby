@@ -66,17 +66,17 @@ module Elasticsearch
         # @see Cluster#stop Cluster.stop
         #
         def start(arguments={})
-          @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || arguments[:nodes] || 2).to_i
+          @@number_of_nodes = ( ENV.fetch('TEST_CLUSTER_NODES', arguments[:nodes] || 2) ).to_i
 
-          arguments[:command]           ||= ENV['TEST_CLUSTER_COMMAND'] || 'elasticsearch'
-          arguments[:port]              ||= (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          arguments[:cluster_name]      ||= (ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test').chomp
-          arguments[:path_data]         ||= ENV['TEST_CLUSTER_DATA'] || '/tmp/elasticsearch_test'
-          arguments[:es_params]         ||= ENV['TEST_CLUSTER_PARAMS'] || ''
+          arguments[:command]           ||= ENV.fetch('TEST_CLUSTER_COMMAND',   'elasticsearch')
+          arguments[:port]              ||= (ENV.fetch('TEST_CLUSTER_PORT',     9250).to_i)
+          arguments[:cluster_name]      ||= (ENV.fetch('TEST_CLUSTER_NAME',     'elasticsearch_test').chomp)
+          arguments[:path_data]         ||= ENV.fetch('TEST_CLUSTER_DATA',      '/tmp/elasticsearch_test')
+          arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
           arguments[:path_work]         ||= '/tmp'
           arguments[:node_name]         ||= 'node'
-          arguments[:multicast_enabled] ||= ENV['TEST_CLUSTER_MULTICAST'] || 'true'
-          arguments[:timeout]           ||= (ENV['TEST_CLUSTER_TIMEOUT'] || 30).to_i
+          arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
+          arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
 
           # Make sure `cluster_name` is not dangerous
           if arguments[:cluster_name] =~ /^[\/\\]?$/
