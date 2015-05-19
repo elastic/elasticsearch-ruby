@@ -130,7 +130,7 @@ end; puts "\n"
 # Display information about watch execution
 #
 puts '='*80, ""
-client.search(index: '.watch_history*', q: 'watch_id:error_500', sort: 'timestamp:asc')['hits']['hits'].each do |r|
+client.search(index: '.watch_history*', q: 'watch_id:error_500', sort: 'trigger_event.schedule.triggered_time:asc')['hits']['hits'].each do |r|
   puts "#{r['_id']} : #{r['_source']['state']}"
 end
 
