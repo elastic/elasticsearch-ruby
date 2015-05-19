@@ -94,12 +94,8 @@ module Elasticsearch
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        perform_request(method, path, params, body).body
-
-      rescue Exception => e
-        # NOTE: Use exception name, not full class in Elasticsearch::Client to allow client plugability
-        if Array(arguments[:ignore]).include?(404) && e.class.to_s =~ /NotFound/; false
-        else raise(e)
+        Utils.__rescue_from_not_found do
+          perform_request(method, path, params, body).body
         end
       end
     end
