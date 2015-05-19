@@ -214,7 +214,7 @@ module Elasticsearch
             end
 
           rescue Exception => e
-            logger.fatal "[#{e.class}] #{e.message} (#{connection.host.inspect})" if logger
+            logger.fatal "[#{e.class}] #{e.message} (#{connection.host.inspect if connection})" if logger
             raise e
           end
 
