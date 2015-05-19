@@ -1,6 +1,7 @@
 require 'timeout'
 require 'net/http'
 require 'fileutils'
+require 'socket'
 require 'uri'
 require 'json'
 require 'ansi'
@@ -32,6 +33,7 @@ module Elasticsearch
       #
       module Cluster
         @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || 2).to_i
+        @@default_cluster_name = "elasticsearch-test-#{Socket.gethostname.downcase}"
 
         # Starts a cluster
         #
@@ -74,7 +76,7 @@ module Elasticsearch
 
           arguments[:command]           ||= ENV.fetch('TEST_CLUSTER_COMMAND',   'elasticsearch')
           arguments[:port]              ||= (ENV.fetch('TEST_CLUSTER_PORT',     9250).to_i)
-          arguments[:cluster_name]      ||= (ENV.fetch('TEST_CLUSTER_NAME',     'elasticsearch_test').chomp)
+          arguments[:cluster_name]      ||= (ENV.fetch('TEST_CLUSTER_NAME',     @@default_cluster_name).chomp)
           arguments[:node_name]         ||= ENV.fetch('TEST_CLUSTER_NODE_NAME', 'node')
           arguments[:path_data]         ||= ENV.fetch('TEST_CLUSTER_DATA',      '/tmp/elasticsearch_test')
           arguments[:path_work]         ||= ENV.fetch('TEST_CLUSTER_TMP',       '/tmp')
