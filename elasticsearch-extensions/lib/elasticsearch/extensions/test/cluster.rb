@@ -172,10 +172,28 @@ module Elasticsearch
           unless pids.empty?
             print "\nStopping Elasticsearch nodes... ".ansi(:faint)
             pids.each_with_index do |pid, i|
-              begin
-                print "stopped PID #{pid}. ".ansi(:green) if Process.kill 'INT', pid
-              rescue Exception => e
-                print "[#{e.class}] PID #{pid} not found. ".ansi(:red)
+              ['INT','KILL'].each do |signal|
+                begin
+                  #puts "Attempting shutdown of #{pid} with #{signal} signal"
+                  Process.kill signal, pid
+                rescue Exception => e
+                  print "[#{e.class}] PID #{pid} not found. ".ansi(:red)
+                end
+               
+                # give system some breathing space to finish
+                sleep 1
+ 
+                # check that pid really is dead
+                begin
+                  Process.getpgid( pid )
+                  # getpgid will raise error if pid is dead, 
+                  # so if we get here, try next signal.
+                  #puts "Found live pid #{pid}"
+                  next
+                rescue Errno::ESRCH
+                  print "stopped PID #{pid} with #{signal} signal. ".ansi(:green)
+                  break # pid is dead
+                end
               end
             end
             puts
