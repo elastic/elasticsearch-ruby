@@ -100,6 +100,24 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       12.times { @transport.get_connection }
       assert_equal 12, @transport.counter
     end
+
+    should "not reload connections by default" do
+      @transport = DummyTransportPerformer.new
+      @transport.stubs(:connections).returns(stub :get_connection => Object.new)
+      @transport.expects(:reload_connections!).never
+
+      10_010.times { @transport.get_connection }
+      assert_equal 10_010, @transport.counter
+    end
+
+    should "not reload connections when the option is set to false" do
+      @transport = DummyTransportPerformer.new :options => { :reload_connections => false }
+      @transport.stubs(:connections).returns(stub :get_connection => Object.new)
+      @transport.expects(:reload_connections!).never
+
+      10_010.times { @transport.get_connection }
+      assert_equal 10_010, @transport.counter
+    end
   end
 
   context "performing a request" do

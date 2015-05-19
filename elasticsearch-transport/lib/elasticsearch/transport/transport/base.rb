@@ -13,7 +13,9 @@ module Elasticsearch
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
 
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
-        attr_accessor :serializer, :sniffer, :logger, :tracer, :reload_after, :resurrect_after, :max_retries
+        attr_accessor :serializer, :sniffer, :logger, :tracer,
+                      :reload_connections, :reload_after,
+                      :resurrect_after, :max_retries
 
         # Creates a new transport object.
         #
@@ -40,6 +42,7 @@ module Elasticsearch
           @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
           @counter     = 0
           @last_request_at = Time.now
+          @reload_connections = options[:reload_connections]
           @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
           @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
@@ -59,7 +62,7 @@ module Elasticsearch
           connection = connections.get_connection(options)
           @counter  += 1
 
-          reload_connections!         if @options[:reload_connections] && counter % reload_after == 0
+          reload_connections!         if reload_connections && counter % reload_after == 0
           connection
         end
 
