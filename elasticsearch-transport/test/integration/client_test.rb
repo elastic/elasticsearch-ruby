@@ -49,6 +49,16 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
     end
 
+    should "pass options to the transport" do
+      @client = Elasticsearch::Client.new \
+        host: "localhost:#{@port}",
+        logger: (ENV['QUIET'] ? nil : @logger),
+        transport_options: { headers: { content_type: 'application/yaml' } }
+
+      response = @client.perform_request 'GET', '_cluster/health'
+      assert_match /---\ncluster_name:/, response.body.to_s
+    end
+
     context "with round robin selector" do
       setup do
         @client = Elasticsearch::Client.new \

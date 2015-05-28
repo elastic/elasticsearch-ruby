@@ -59,6 +59,8 @@ module Elasticsearch
       #
       # @option arguments [Boolean] :reload_on_failure Reload connections after failure (false by default)
       #
+      # @option arguments [Integer] :request_timeout The request timeout to be passed to transport in options
+      #
       # @option arguments [Symbol] :adapter A specific adapter for Faraday (e.g. `:patron`)
       #
       # @option arguments [Hash] :transport_options Options to be passed to the `Faraday::Connection` constructor
@@ -91,6 +93,8 @@ module Elasticsearch
         arguments[:reload_on_failure]  ||= false
         arguments[:randomize_hosts]    ||= false
         arguments[:transport_options]  ||= {}
+
+        arguments[:transport_options].update(request: { timeout: arguments[:request_timeout] } ) if arguments[:request_timeout]
 
         @send_get_body_as = arguments[:send_get_body_as] || 'GET'
 

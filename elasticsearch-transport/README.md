@@ -155,6 +155,15 @@ You can pass the client any conforming logger implementation:
 
     client = Elasticsearch::Client.new logger: log
 
+### Setting Timeouts
+
+For many operations in Elasticsearch, the default timeouts of HTTP libraries are too low.
+To increase the timeout, you can use the `request_timeout` parameter:
+
+    Elasticsearch::Client.new request_timeout: 5*60
+
+You can also use the `transport_options` argument documented below.
+
 ### Randomizing Hosts
 
 If you pass multiple hosts to the client, it rotates across them in a round-robin fashion, by default.

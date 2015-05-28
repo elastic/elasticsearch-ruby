@@ -63,6 +63,16 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       assert_match /Faraday/, client.transport.connections.first.connection.headers['User-Agent']
     end
 
+    should "pass options to the transport" do
+      client = Elasticsearch::Transport::Client.new :transport_options => { :foo => 'bar' }
+      assert_equal 'bar', client.transport.options[:transport_options][:foo]
+    end
+
+    should "merge request_timeout to the transport options" do
+      client = Elasticsearch::Transport::Client.new :request_timeout => 120
+      assert_equal 120, client.transport.options[:transport_options][:request][:timeout]
+    end
+
     context "when passed hosts" do
       should "have localhost by default" do
         c = Elasticsearch::Transport::Client.new
