@@ -84,7 +84,8 @@ module Elasticsearch
               @request_options[:headers] = options[:headers]
             end
 
-            client_options = {:ssl => options[:ssl] || {}}
+            client_options = options[:transport_options] || {}
+            client_options[:ssl] = options[:ssl] || {}
 
             Connections::Collection.new \
               :connections => hosts.map { |host|
