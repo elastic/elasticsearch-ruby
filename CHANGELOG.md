@@ -1,3 +1,21 @@
+## 1.0.10
+
+### Client
+
+* Cleaned up handling the `reload_connections` option for transport
+* Be more defensive when logging exception
+* Added, that the Manticore transport respects the `transport_options` argument
+* Added a top level `request_timeout` argument
+
+### API
+
+* Added the "Indices Seal" API
+* Added unified/centralized `NotFound` error handling
+
+### Watcher
+
+* Added the integration with Elasticsearch Watcher plugin
+
 ## 1.0.9
 
 * Improved the `elasticsearch::build` task in the main Rakefile
