@@ -94,7 +94,7 @@ module Elasticsearch
         arguments[:randomize_hosts]    ||= false
         arguments[:transport_options]  ||= {}
 
-        arguments[:transport_options].update(request: { timeout: arguments[:request_timeout] } ) if arguments[:request_timeout]
+        arguments[:transport_options].update(:request => { :timeout => arguments[:request_timeout] } ) if arguments[:request_timeout]
 
         @send_get_body_as = arguments[:send_get_body_as] || 'GET'
 
