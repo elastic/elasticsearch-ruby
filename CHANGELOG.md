@@ -1,3 +1,7 @@
+## 1.0.11
+
+* Fixed incorrect Hash syntax for Ruby 1.8 in client.rb
+
 ## 1.0.10
 
 ### Client
