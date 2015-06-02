@@ -212,7 +212,7 @@ module Elasticsearch
         #
         def running?(arguments={})
           port         = arguments[:on] || (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          cluster_name = arguments[:as] ||  ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test'
+          cluster_name = arguments[:as] || (ENV.fetch('TEST_CLUSTER_NAME', @@default_cluster_name).chomp)
 
           if cluster_health = Timeout::timeout(0.25) { __get_cluster_health(port) } rescue nil
             return cluster_health['cluster_name']    == cluster_name && \
