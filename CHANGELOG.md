@@ -1,3 +1,9 @@
+## 1.0.12
+
+### API
+
+* Fixed a regression when rescuing NotFound errors
+
 ## 1.0.11
 
 * Fixed incorrect Hash syntax for Ruby 1.8 in client.rb
