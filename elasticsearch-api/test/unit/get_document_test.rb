@@ -62,6 +62,14 @@ module Elasticsearch
           end
         end
 
+        should "raise a NotFound exception" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_raise NotFound do
+            subject.get :index => 'foo', :type => 'bar', :id => 'XXX'
+          end
+        end
+
         should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 

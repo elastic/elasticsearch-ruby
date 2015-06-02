@@ -28,11 +28,19 @@ module Elasticsearch
           subject.indices.delete_template :name => 'foo^bar'
         end
 
-        should "ignore 404s" do
+        should "raise a NotFound exception" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_raise NotFound do
+            assert ! subject.indices.delete_template(:name => 'foo')
+          end
+        end
+
+        should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 
           assert_nothing_raised do
-            assert ! subject.indices.delete_template(:name => 'foo^bar', :ignore => 404)
+            assert ! subject.indices.delete_template(:name => 'foo', :ignore => 404)
           end
         end
 

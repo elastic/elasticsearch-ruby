@@ -16,7 +16,9 @@ module Elasticsearch
         params = {}
         body   = arguments[:body]
 
-        Utils.__rescue_from_not_found do
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+        else
           perform_request(method, path, params, body).body
         end
       end

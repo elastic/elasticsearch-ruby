@@ -19,6 +19,21 @@ module Elasticsearch
           subject.get_template :id => "foo"
         end
 
+        should "raise a NotFound exception" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_raise NotFound do
+            subject.get_template :id => "foo"
+          end
+        end
+
+        should "catch a NotFound exception with the ignore parameter" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_nothing_raised do
+            subject.get_template :id => "foo", :ignore => 404
+          end
+        end
       end
 
     end

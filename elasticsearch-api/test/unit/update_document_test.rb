@@ -62,11 +62,19 @@ module Elasticsearch
           subject.update :index => 'foo^bar', :type => 'bar/bam', :id => '1', :body => {}
         end
 
+        should "raise a NotFound exception" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_raise NotFound do
+            subject.update :index => 'foo', :type => 'bar', :id => 'XXX'
+          end
+        end
+
         should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 
           assert_nothing_raised do
-            subject.get :index => 'foo', :type => 'bar', :id => 'XXX', :ignore => 404
+            subject.update :index => 'foo', :type => 'bar', :id => 'XXX', :ignore => 404
           end
         end
 

@@ -47,6 +47,14 @@ module Elasticsearch
           subject.indices.delete :index => 'foo^bar'
         end
 
+        should "raise a NotFound exception" do
+          subject.expects(:perform_request).raises(NotFound)
+
+          assert_raise NotFound do
+            subject.indices.delete :index => 'foo'
+          end
+        end
+
         should "catch a NotFound exception with the ignore parameter" do
           subject.expects(:perform_request).raises(NotFound)
 
