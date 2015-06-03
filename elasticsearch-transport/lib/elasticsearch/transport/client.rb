@@ -143,22 +143,25 @@ module Elasticsearch
         end
 
         result = hosts.map do |host|
-          case host
-          when String
-            if host =~ /^[a-z]+\:\/\//
-              uri = URI.parse(host)
-              { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port.to_s }
+          host_parts = case host
+            when String
+              if host =~ /^[a-z]+\:\/\//
+                uri = URI.parse(host)
+                { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port }
+              else
+                host, port = host.split(':')
+                { :host => host, :port => port }
+              end
+            when URI
+              { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port }
+            when Hash
+              host
             else
-              host, port = host.split(':')
-              { :host => host, :port => port }
+              raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
             end
-          when URI
-            { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port.to_s }
-          when Hash
-            host
-          else
-            raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
-          end
+
+          host_parts[:port] = host_parts[:port].to_i unless host_parts[:port].nil?
+          host_parts
         end
 
         result.shuffle! if options[:randomize_hosts]

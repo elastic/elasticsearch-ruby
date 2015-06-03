@@ -127,6 +127,17 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         hosts = @client.__extract_hosts( { :host => 'myhost', :scheme => 'https' } )
         assert_equal 'myhost', hosts[0][:host]
         assert_equal 'https',  hosts[0][:scheme]
+        assert_nil             hosts[0][:port]
+      end
+
+      should "extract from hash with a port passed as a string" do
+        hosts = @client.__extract_hosts( { :host => 'myhost', :scheme => 'https', :port => '443' } )
+        assert_equal 443, hosts[0][:port]
+      end
+
+      should "extract from hash with a port passed as an integer" do
+        hosts = @client.__extract_hosts( { :host => 'myhost', :scheme => 'https', :port => 443 } )
+        assert_equal 443, hosts[0][:port]
       end
 
       should "extract from Hashie::Mash" do
@@ -154,10 +165,10 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 2, hosts.size
 
         assert_equal 'host1', hosts[0][:host]
-        assert_equal '1000',  hosts[0][:port]
+        assert_equal 1000,    hosts[0][:port]
 
         assert_equal 'host2', hosts[1][:host]
-        assert_equal '2000',  hosts[1][:port]
+        assert_equal 2000,    hosts[1][:port]
       end
 
       should "extract path" do
@@ -171,7 +182,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
         assert_equal 'https',  hosts[0][:scheme]
         assert_equal 'myhost', hosts[0][:host]
-        assert_equal '8080',   hosts[0][:port]
+        assert_equal 8080,     hosts[0][:port]
       end
 
       should "extract credentials" do
@@ -181,14 +192,14 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'USERNAME', hosts[0][:user]
         assert_equal 'PASSWORD', hosts[0][:password]
         assert_equal 'myhost',   hosts[0][:host]
-        assert_equal '8080',     hosts[0][:port]
+        assert_equal 8080,       hosts[0][:port]
       end
 
       should "pass hashes over" do
         hosts = @client.__extract_hosts [{:host => 'myhost', :port => '1000', :foo => 'bar'}]
 
         assert_equal 'myhost', hosts[0][:host]
-        assert_equal '1000',   hosts[0][:port]
+        assert_equal 1000,     hosts[0][:port]
         assert_equal 'bar',    hosts[0][:foo]
       end
 
@@ -200,7 +211,7 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'USERNAME', hosts[0][:user]
         assert_equal 'PASSWORD', hosts[0][:password]
         assert_equal 'myhost',   hosts[0][:host]
-        assert_equal '4430',     hosts[0][:port]
+        assert_equal 4430,       hosts[0][:port]
       end
 
       should "split comma-separated URLs" do
