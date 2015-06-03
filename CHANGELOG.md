@@ -1,3 +1,7 @@
+## DSL:1.0.1
+
+* Added additional option methods to the "Multi Match" query
+
 ## 1.0.12
 
 ### API
