@@ -61,6 +61,10 @@ module Elasticsearch
             assert_equal 'foo,bar%5Ebam', __listify(['foo', 'bar^bam'])
           end
 
+          should "not encode special characters when the :escape option is set" do
+            assert_equal 'foo,bar^bam', __listify(['foo', 'bar^bam'], :escape => false)
+          end
+
         end
 
         context "__pathify" do
@@ -185,6 +189,11 @@ module Elasticsearch
           should "listify Arrays" do
             result = __validate_and_extract_params( { :foo => ['a', 'b'] }, [:foo] )
             assert_equal( { :foo => 'a,b'}, result )
+          end
+
+          should "not escape the parameters" do
+            result = __validate_and_extract_params( { :foo => ['a.*', 'b.*'] }, [:foo] )
+            assert_equal( { :foo => 'a.*,b.*'}, result )
           end
         end
 

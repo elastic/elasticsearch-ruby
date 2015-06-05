@@ -28,13 +28,18 @@ module Elasticsearch
       # @example Escape values
       #     __listify('foo','bar^bam') # => 'foo,bar%5Ebam'
       #
+      # @example Do not escape the values
+      #     __listify('foo','bar^bam', escape: false) # => 'foo,bar^bam'
+      #
       # @api private
       def __listify(*list)
+        options = list.last.is_a?(Hash) ? list.pop : {}
+
         Array(list).flatten.
           map { |e| e.respond_to?(:split) ? e.split(',') : e }.
           flatten.
           compact.
-          map { |e| __escape(e) }.
+          map { |e| options[:escape] == false ? e : __escape(e) }.
           join(',')
       end
 
@@ -133,7 +138,7 @@ module Elasticsearch
           arguments
         else
           __validate_params(arguments, params)
-          __extract_params(arguments, params)
+          __extract_params(arguments, params, options.merge(:escape => false))
         end
       end
 
@@ -144,10 +149,10 @@ module Elasticsearch
         end
       end
 
-      def __extract_params(arguments, params=[])
+      def __extract_params(arguments, params=[], options={})
         result = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || params.include?(k) }
         result = Hash[result] unless result.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        result = Hash[result.map { |k,v| v.is_a?(Array) ? [k, __listify(v)] : [k,v]  }] # Listify Arrays
+        result = Hash[result.map { |k,v| v.is_a?(Array) ? [k, __listify(v, options)] : [k,v]  }] # Listify Arrays
         result
       end
 
@@ -168,9 +173,6 @@ module Elasticsearch
       # @api private
       #
       def __extract_parts(arguments, valid_parts=[])
-        # require 'pry'; binding.pry;
-        # parts  = arguments.keys.select { |a| valid_parts.include?(a) }.map { |a| a.to_s }.sort
-
         parts = Hash[arguments.select { |k,v| valid_parts.include?(k) }]
         parts = parts.reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v  }
 
