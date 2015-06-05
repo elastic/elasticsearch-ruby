@@ -155,10 +155,14 @@ module Elasticsearch
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
 
         params = Utils.__validate_and_extract_params arguments, valid_params
+
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
         params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields]) if params[:fielddata_fields]
+
+        # FIX: Unescape the `filter_path` parameter due to __listify default behavior. Investigate.
+        params[:filter_path] =  defined?(EscapeUtils) ? EscapeUtils.unescape_url(params[:filter_path]) : CGI.unescape(params[:filter_path]) if params[:filter_path]
 
         perform_request(method, path, params, body).body
       end
