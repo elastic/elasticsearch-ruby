@@ -76,6 +76,8 @@ module Elasticsearch
       # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation
       #                                      as part of a hit
       # @option arguments [List] :fields A comma-separated list of fields to return as part of a hit
+      # @option arguments [List] :fielddata_fields A comma-separated list of fields to return as the field data
+      #                                            representation of a field for each hit
       # @option arguments [Number] :from Starting offset (default: 0)
       # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
       #                                            (options: none, missing)
@@ -120,6 +122,7 @@ module Elasticsearch
           :default_operator,
           :df,
           :explain,
+          :fielddata_fields,
           :fields,
           :from,
           :ignore_indices,
@@ -155,6 +158,7 @@ module Elasticsearch
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+        params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields]) if params[:fielddata_fields]
 
         perform_request(method, path, params, body).body
       end
