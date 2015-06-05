@@ -22,7 +22,8 @@ module Elasticsearch
     COMMON_QUERY_PARAMS = [
       :format,                        # Search, Cat, ...
       :pretty,                        # Pretty-print the response
-      :human                          # Return numeric values in human readable format
+      :human,                         # Return numeric values in human readable format
+      :filter_path                    # Filter the JSON response
     ]
 
     HTTP_GET          = 'GET'.freeze
