@@ -47,7 +47,7 @@ module Elasticsearch
           path   = "_cat/nodes"
 
           params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          params[:h] = Utils.__listify(params[:h], :escape => false) if params[:h]
 
           body   = nil
 
