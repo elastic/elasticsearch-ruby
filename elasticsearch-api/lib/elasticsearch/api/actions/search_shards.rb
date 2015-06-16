@@ -2,6 +2,15 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SEARCH_SHARDS_PARAMS = [
+        :preference,
+        :routing,
+        :local,
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards
+      ].freeze
+
       # Returns the names of indices and shards on which a search request would be executed
       #
       # @option arguments [String] :index The name of the index
@@ -22,19 +31,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html
       #
       def search_shards(arguments={})
-        valid_params = [
-          :preference,
-          :routing,
-          :local,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards ]
+        search_shards_request_for(arguments).body
+      end
+
+      def search_shards_request_for(arguments={})
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search_shards' )
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SEARCH_SHARDS_PARAMS
         body   = nil
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

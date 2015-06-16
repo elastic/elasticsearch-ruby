@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_EXISTS_ALIAS_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :local
+        ].freeze
+
         # Return true if the specified alias exists, false otherwise.
         #
         # @example Check whether index alias named _myalias_ exists
@@ -26,23 +34,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
         def exists_alias(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :local
-          ]
+          Utils.__rescue_from_not_found do
+            exists_alias_request_for(arguments).status == 200
+          end
+        end
 
+        def exists_alias_request_for(arguments={})
           method = HTTP_HEAD
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_EXISTS_ALIAS_PARAMS
           body = nil
 
-          Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
-          end
+          perform_request(method, path, params, body)
         end
 
         alias_method :exists_alias?, :exists_alias

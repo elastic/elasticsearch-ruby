@@ -3,6 +3,13 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_REFRESH_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze
+
         # Refresh the index and to make the changes (creates, updates, deletes) searchable.
         #
         # By default, Elasticsearch has a delay of 1 second until changes to an index are
@@ -33,20 +40,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-refresh/
         #
         def refresh(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-          ]
+          refresh_request_for(arguments).body
+        end
 
+        def refresh_request_for(arguments={})
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_refresh'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_REFRESH_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -3,6 +3,8 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_DELETE_PARAMS = [ :timeout ].freeze
+
         # Delete an index, list of indices, or all indices in the cluster.
         #
         # @example Delete an index
@@ -30,19 +32,21 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/
         #
         def delete(arguments={})
-          valid_params = [ :timeout ]
+          if Array(arguments[:ignore]).include?(404)
+            Utils.__rescue_from_not_found { delete_request_for(arguments).body }
+          else
+            delete_request_for(arguments).body
+          end
+        end
 
+        def delete_request_for(arguments={})
           method = HTTP_DELETE
           path   = Utils.__pathify Utils.__listify(arguments[:index])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_DELETE_PARAMS
           body   = nil
 
-          if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-          else
-            perform_request(method, path, params, body).body
-          end
+          perform_request(method, path, params, body)
         end
       end
     end

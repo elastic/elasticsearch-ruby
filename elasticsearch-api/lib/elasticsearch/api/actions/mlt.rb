@@ -2,6 +2,28 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_MLT_PARAMS = [
+        :boost_terms,
+        :max_doc_freq,
+        :max_query_terms,
+        :max_word_len,
+        :min_doc_freq,
+        :min_term_freq,
+        :min_word_len,
+        :mlt_fields,
+        :percent_terms_to_match,
+        :routing,
+        :search_from,
+        :search_indices,
+        :search_query_hint,
+        :search_scroll,
+        :search_size,
+        :search_source,
+        :search_type,
+        :search_types,
+        :stop_words
+      ].freeze
+
       # Return documents similar to the specified one.
       #
       # Performs a `more_like_this` query with the specified document as the input.
@@ -82,30 +104,13 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/more-like-this/
       #
       def mlt(arguments={})
+        mlt_request_for(arguments).body
+      end
+
+      def mlt_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-
-        valid_params = [
-          :boost_terms,
-          :max_doc_freq,
-          :max_query_terms,
-          :max_word_len,
-          :min_doc_freq,
-          :min_term_freq,
-          :min_word_len,
-          :mlt_fields,
-          :percent_terms_to_match,
-          :routing,
-          :search_from,
-          :search_indices,
-          :search_query_hint,
-          :search_scroll,
-          :search_size,
-          :search_source,
-          :search_type,
-          :search_types,
-          :stop_words ]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
@@ -113,7 +118,7 @@ module Elasticsearch
                                  Utils.__escape(arguments[:id]),
                                  '_mlt'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_MLT_PARAMS
 
         [:mlt_fields, :search_indices, :search_types, :stop_words].each do |name|
           params[name] = Utils.__listify(params[name]) if params[name]
@@ -121,7 +126,7 @@ module Elasticsearch
 
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

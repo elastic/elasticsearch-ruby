@@ -3,6 +3,21 @@ module Elasticsearch
     module Nodes
       module Actions
 
+        VALID_INFO_PARTS = [
+          :_all,
+          :http,
+          :jvm,
+          :network,
+          :os,
+          :plugins,
+          :process,
+          :settings,
+          :thread_pool,
+          :transport
+        ].freeze
+
+        VALID_INFO_PARAMS = [].freeze
+
         # Returns information about nodes in the cluster (cluster settings, JVM version, etc).
         #
         # Use the `all` option to return all available settings, or limit the information returned
@@ -39,37 +54,27 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
         #
         def info(arguments={})
+          info_request_for(arguments).body
+        end
+
+        def info_request_for(arguments={})
           arguments = arguments.clone
           metric    = arguments.delete(:metric)
-
-          valid_parts = [
-            :_all,
-            :http,
-            :jvm,
-            :network,
-            :os,
-            :plugins,
-            :process,
-            :settings,
-            :thread_pool,
-            :transport ]
-
-          valid_params = []
 
           method = HTTP_GET
 
           if metric
             parts = metric
           else
-            parts = Utils.__extract_parts arguments, valid_parts
+            parts = Utils.__extract_parts arguments, VALID_INFO_PARTS
           end
 
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_INFO_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

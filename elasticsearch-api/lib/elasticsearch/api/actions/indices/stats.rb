@@ -3,6 +3,35 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_STATS_PARTS = [
+          :docs,
+          :fielddata,
+          :filter_cache,
+          :flush,
+          :get,
+          :indexing,
+          :merge,
+          :metric,
+          :refresh,
+          :search,
+          :suggest,
+          :store,
+          :warmer
+        ].freeze
+
+        VALID_STATS_PARAMS = [
+          :fields,
+          :completion_fields,
+          :fielddata_fields,
+          :groups,
+          :level,
+          :types,
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze
+
         # Return statistical information about one or more indices.
         #
         # The response contains comprehensive statistical information about metrics related to index:
@@ -74,45 +103,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
         #
         def stats(arguments={})
-          valid_parts = [
-            :docs,
-            :fielddata,
-            :filter_cache,
-            :flush,
-            :get,
-            :indexing,
-            :merge,
-            :metric,
-            :refresh,
-            :search,
-            :suggest,
-            :store,
-            :warmer ]
+          stats_request_for(arguments).body
+        end
 
-          valid_params = [
-            :fields,
-            :completion_fields,
-            :fielddata_fields,
-            :groups,
-            :level,
-            :types,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards ]
-
+        def stats_request_for(arguments={})
           method = HTTP_GET
 
-          parts  = Utils.__extract_parts arguments, valid_parts
+          parts  = Utils.__extract_parts arguments, VALID_STATS_PARTS
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_STATS_PARAMS
           params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
           params[:groups] = Utils.__listify(params[:groups]) if params[:groups]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

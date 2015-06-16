@@ -3,6 +3,16 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_INDICES_PARAMS = [
+          :bytes,
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :pri,
+          :v
+        ].freeze
+
         # Return the most important statistics about indices, across the cluster nodes
         #
         # Use the `help` parameter to display available statistics.
@@ -49,27 +59,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html
         #
         def indices(arguments={})
-          valid_params = [
-            :bytes,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :pri,
-            :v ]
+          indices_request_for(arguments).body
+        end
 
+        def indices_request_for(arguments={})
           index = arguments.delete(:index)
 
           method = HTTP_GET
 
           path   = Utils.__pathify '_cat/indices', Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_INDICES_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

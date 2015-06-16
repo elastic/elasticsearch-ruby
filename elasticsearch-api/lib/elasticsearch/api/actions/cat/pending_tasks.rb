@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_PENDING_TASKS_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display the information from the {Cluster::Actions#pending_tasks} API in a tabular format
         #
         # @example
@@ -28,20 +36,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-pending-tasks.html
         #
         def pending_tasks(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          pending_tasks_request_for(arguments).body
+        end
 
+        def pending_tasks_request_for(arguments={})
           method = HTTP_GET
           path   = "_cat/pending_tasks"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PENDING_TASKS_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

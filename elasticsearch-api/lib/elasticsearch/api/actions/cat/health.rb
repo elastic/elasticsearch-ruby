@@ -3,6 +3,15 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_HEALTH_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :ts,
+          :v
+        ].freeze
+
         # Display a terse version of the {Elasticsearch::API::Cluster::Actions#health} API output
         #
         # @example Display cluster health
@@ -29,21 +38,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-health.html
         #
         def health(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :ts,
-            :v ]
+          health_request_for(arguments).body
+        end
 
+        def health_request_for(arguments={})
           method = HTTP_GET
           path   = "_cat/health"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_HEALTH_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

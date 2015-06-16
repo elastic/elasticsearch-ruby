@@ -3,6 +3,12 @@ module Elasticsearch
     module Snapshot
       module Actions
 
+        VALID_CREATE_REPOSITORY_PARAMS = [
+          :repository,
+          :master_timeout,
+          :timeout
+        ].freeze
+
         # Create a repository for storing snapshots
         #
         # @example Create a repository at `/tmp/backup`
@@ -21,22 +27,21 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_repositories
         #
         def create_repository(arguments={})
+          create_repository_request_for(arguments).body
+        end
+
+        def create_repository_request_for(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'body' missing"       unless arguments[:body]
-          valid_params = [
-            :repository,
-            :master_timeout,
-            :timeout ]
-
           repository = arguments.delete(:repository)
 
           method = HTTP_PUT
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_CREATE_REPOSITORY_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -3,6 +3,14 @@ module Elasticsearch
     module Cluster
       module Actions
 
+        VALID_REROUTE_PARAMS = [
+          :dry_run,
+          :explain,
+          :metric,
+          :master_timeout,
+          :timeout
+        ].freeze
+
         # Perform manual shard allocation in the cluster.
         #
         # Pass the operations you want to perform in the `:body` option. Use the `dry_run` option to
@@ -30,15 +38,17 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
         #
         def reroute(arguments={})
-          valid_params = [ :dry_run, :explain, :metric, :master_timeout, :timeout ]
+          reroute_request_for(arguments).body
+        end
 
+        def reroute_request_for(arguments={})
           method = HTTP_POST
           path   = "_cluster/reroute"
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_REROUTE_PARAMS
           body   = arguments[:body] || {}
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

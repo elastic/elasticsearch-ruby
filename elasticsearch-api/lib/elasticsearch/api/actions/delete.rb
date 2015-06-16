@@ -2,6 +2,17 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_DELETE_PARAMS = [
+        :consistency,
+        :parent,
+        :refresh,
+        :replication,
+        :routing,
+        :timeout,
+        :version,
+        :version_type
+      ].freeze
+
       # Delete a single document.
       #
       # @example Delete a document
@@ -28,34 +39,29 @@ module Elasticsearch
       #
       # @see http://elasticsearch.org/guide/reference/api/delete/
       #
+
       def delete(arguments={})
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { delete_request_for(arguments).body }
+        else
+          delete_request_for(arguments).body
+        end
+      end
+
+      def delete_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-
-        valid_params = [
-          :consistency,
-          :parent,
-          :refresh,
-          :replication,
-          :routing,
-          :timeout,
-          :version,
-          :version_type ]
 
         method = HTTP_DELETE
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_DELETE_PARAMS
         body   = nil
 
-        if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-        else
-          perform_request(method, path, params, body).body
-        end
+        perform_request(method, path, params, body)
       end
     end
   end

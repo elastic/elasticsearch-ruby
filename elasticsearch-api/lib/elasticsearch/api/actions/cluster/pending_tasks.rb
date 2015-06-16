@@ -3,6 +3,11 @@ module Elasticsearch
     module Cluster
       module Actions
 
+        VALID_PENDINGS_TASKS_PARAMS = [
+          :local,
+          :master_timeout
+        ].freeze
+
         # Returns a list of any cluster-level changes (e.g. create index, update mapping, allocate or fail shard)
         # which have not yet been executed and are queued up.
         #
@@ -17,15 +22,16 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-pending.html
         #
         def pending_tasks(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout ]
+          pending_tasks_request_for(arguments).body
+        end
+
+        def pending_tasks_request_for(arguments={})
           method = HTTP_GET
           path   = "/_cluster/pending_tasks"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PENDINGS_TASKS_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

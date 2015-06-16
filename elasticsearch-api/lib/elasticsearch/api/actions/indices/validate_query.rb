@@ -3,6 +3,21 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_VALIDATE_QUERY_PARAMS = [
+          :explain,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :operation_threading,
+          :q,
+          :analyzer,
+          :analyze_wildcard,
+          :default_operator,
+          :df,
+          :lenient,
+          :lowercase_expanded_terms
+        ].freeze
+
         # Validate a query
         #
         # @example Validate a simple query string query
@@ -63,29 +78,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/validate/
         #
         def validate_query(arguments={})
-          valid_params = [
-            :explain,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :operation_threading,
-            :q,
-            :analyzer,
-            :analyze_wildcard,
-            :default_operator,
-            :df,
-            :lenient,
-            :lowercase_expanded_terms ]
+          validate_query_request_for(arguments).body
+        end
 
+        def validate_query_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                    Utils.__listify(arguments[:type]),
                                    '_validate/query'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_VALIDATE_QUERY_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -10,6 +10,10 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
       def get_script(arguments={})
+        get_script_request_for(arguments).body
+      end
+
+      def get_script_request_for(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
         method = HTTP_GET
@@ -17,7 +21,7 @@ module Elasticsearch
         params = {}
         body   = nil
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

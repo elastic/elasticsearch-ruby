@@ -15,14 +15,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def list_benchmarks(arguments={})
-        valid_params = [
-           ]
+        list_benchmarks_request_for(arguments).body
+      end
+
+      def list_benchmarks_request_for(arguments={})
         method = HTTP_GET
         path   = "_bench"
         params = {}
         body   = nil
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

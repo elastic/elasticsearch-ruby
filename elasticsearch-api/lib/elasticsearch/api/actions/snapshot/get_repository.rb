@@ -3,6 +3,11 @@ module Elasticsearch
     module Snapshot
       module Actions
 
+        VALID_GET_REPOSITORY_PARAMS = [
+          :master_timeout,
+          :local
+        ].freeze
+
         # Get information about snapshot repositories or a specific repository
         #
         # @example Get all repositories
@@ -22,19 +27,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get_repository(arguments={})
-          valid_params = [
-            :master_timeout,
-            :local ]
+          get_repository_request_for(arguments).body
+        end
 
+        def get_repository_request_for(arguments={})
           repository = arguments.delete(:repository)
 
           method = HTTP_GET
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_GET_REPOSITORY_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

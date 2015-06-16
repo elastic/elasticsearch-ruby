@@ -2,6 +2,12 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_MPERCOPATE_PARAMS = [
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards
+      ].freeze
+
       # Perform multiple percolate operations in a single request, similar to the {#msearch} API
       #
       # Pass the percolate definitions as header-body pairs in the `:body` argument, as an Array of Hashes.
@@ -30,16 +36,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html
       #
       def mpercolate(arguments={})
+        mpercolate_request_for(arguments).body
+      end
+
+      def mpercolate_request_for(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        valid_params = [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards ]
 
         method = HTTP_GET
         path   = "_mpercolate"
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_MPERCOPATE_PARAMS
         body   = arguments[:body]
 
         case
@@ -51,7 +57,7 @@ module Elasticsearch
           payload = body
         end
 
-        perform_request(method, path, params, payload).body
+        perform_request(method, path, params, payload)
       end
     end
   end

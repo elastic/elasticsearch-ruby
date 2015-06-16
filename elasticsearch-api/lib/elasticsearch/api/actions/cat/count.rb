@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_COUNT_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Return document counts for the entire cluster or specific indices
         #
         # @example Display number of documents in the cluster
@@ -37,25 +45,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html
         #
         def count(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          count_request_for(arguments).body
+        end
 
+        def count_request_for(arguments={})
           index = arguments.delete(:index)
 
           method = HTTP_GET
 
           path   = Utils.__pathify '_cat/count', Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_COUNT_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

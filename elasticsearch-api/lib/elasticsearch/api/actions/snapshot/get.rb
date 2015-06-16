@@ -3,6 +3,8 @@ module Elasticsearch
     module Snapshot
       module Actions
 
+        VALID_GET_PARAMS = [ :master_timeout ].freeze
+
         # Return information about specific (or all) snapshots
         #
         # @example Return information about the `snapshot-2` snapshot
@@ -24,11 +26,12 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get(arguments={})
+          get_request_for(arguments).body
+        end
+
+        def get_request_for(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing"   unless arguments[:snapshot]
-
-          valid_params = [
-            :master_timeout ]
 
           repository = arguments.delete(:repository)
           snapshot   = arguments.delete(:snapshot)
@@ -36,10 +39,10 @@ module Elasticsearch
           method = HTTP_GET
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__listify(snapshot) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_GET_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

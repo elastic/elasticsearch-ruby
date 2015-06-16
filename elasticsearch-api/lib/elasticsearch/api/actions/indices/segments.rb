@@ -3,6 +3,13 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_SEGMENTS_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze
+
         # Return information about segments for one or more indices.
         #
         # The response contains information about segment size, number of documents, deleted documents, etc.
@@ -23,20 +30,17 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-indices-segments/
         #
         def segments(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-          ]
+          segments_request_for(arguments).body
+        end
 
+        def segments_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_segments'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_SEGMENTS_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

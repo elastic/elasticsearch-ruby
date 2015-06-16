@@ -3,6 +3,19 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_ANALYZE_PARAMS = [
+          :analyzer,
+          :char_filters,
+          :field,
+          :filters,
+          :index,
+          :prefer_local,
+          :text,
+          :tokenizer,
+          :token_filters,
+          :format
+        ].freeze
+
         # Return the result of the analysis process (tokens)
         #
         # Allows to "test-drive" the Elasticsearch analysis process by performing the analysis on the
@@ -47,27 +60,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
         #
         def analyze(arguments={})
-          valid_params = [
-            :analyzer,
-            :char_filters,
-            :field,
-            :filters,
-            :index,
-            :prefer_local,
-            :text,
-            :tokenizer,
-            :token_filters,
-            :format ]
+          analyze_request_for(arguments).body
+        end
 
+        def analyze_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_ANALYZE_PARAMS
           params[:filters] = Utils.__listify(params[:filters]) if params[:filters]
 
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

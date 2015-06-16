@@ -10,6 +10,10 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-search-type.html#clear-scroll
       #
       def clear_scroll(arguments={})
+        clear_scroll_request_for(arguments).body
+      end
+
+      def clear_scroll_request_for(arguments={})
         raise ArgumentError, "Required argument 'scroll_id' missing" unless arguments[:scroll_id]
 
         scroll_id = arguments[:body] || arguments.delete(:scroll_id)
@@ -26,7 +30,7 @@ module Elasticsearch
         params = {}
         body   = scroll_ids
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

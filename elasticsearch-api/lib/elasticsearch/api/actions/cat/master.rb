@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_MASTER_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display basic information about the master node
         #
         # @example
@@ -28,19 +36,16 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html
         #
         def master(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          master_request_for(arguments).body
+        end
 
+        def master_request_for(arguments={})
           method = HTTP_GET
           path   = "_cat/master"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_MASTER_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

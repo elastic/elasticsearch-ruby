@@ -18,13 +18,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/
         #
         def delete_warmer(arguments={})
+          delete_warmer_request_for(arguments).body
+        end
+
+        def delete_warmer_request_for(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = HTTP_DELETE
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_warmer', Utils.__listify(arguments[:name])
           params = {}
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

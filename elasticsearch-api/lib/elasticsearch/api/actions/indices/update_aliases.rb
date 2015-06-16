@@ -3,6 +3,8 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_UPDATE_ALIASES_PARAMS = [ :timeout ].freeze
+
         # Perform multiple operation on index aliases in a single request.
         #
         # Pass the `actions` (add, remove) in the `body` argument.
@@ -31,16 +33,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
         def update_aliases(arguments={})
+          update_aliases_request_for(arguments).body
+        end
+
+        def update_aliases_request_for(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [ :timeout ]
 
           method = HTTP_POST
           path   = "_aliases"
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_UPDATE_ALIASES_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

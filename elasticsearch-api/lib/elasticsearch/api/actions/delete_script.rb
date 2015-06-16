@@ -2,6 +2,11 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_DELETE_SCRIPT_PARAMS = [
+        :version,
+        :version_type
+      ].freeze
+
       # Remove an indexed script from Elasticsearch
       #
       # @option arguments [String] :id Script ID (*Required*)
@@ -12,19 +17,19 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html
       #
       def delete_script(arguments={})
+        delete_script_request_for(arguments).body
+      end
+
+      def delete_script_request_for(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
 
-        valid_params = [
-          :version,
-          :version_type ]
-
         method = HTTP_DELETE
         path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_DELETE_SCRIPT_PARAMS
         body   = nil
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

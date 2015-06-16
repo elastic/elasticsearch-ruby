@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_EXISTS_TYPE_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :local
+        ].freeze
+
         # Return true if the specified type exists, false otherwise.
         #
         #     client.indices.exists_type? type: 'mytype'
@@ -25,25 +33,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-types-exists/
         #
         def exists_type(arguments={})
+          Utils.__rescue_from_not_found do
+            exists_type_request_for(arguments).status == 200
+          end
+        end
+        def exists_type_request_for(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :local
-          ]
-
           method = HTTP_HEAD
           path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__escape(arguments[:type])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_EXISTS_TYPE_PARAMS
           body = nil
 
-          Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
-          end
+          perform_request(method, path, params, body)
         end
 
         alias_method :exists_type?, :exists_type

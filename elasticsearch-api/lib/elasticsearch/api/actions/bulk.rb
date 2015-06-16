@@ -2,6 +2,14 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_BULK_PARAMS = [
+        :consistency,
+        :refresh,
+        :replication,
+        :type,
+        :timeout
+      ].freeze
+
       # Perform multiple index, delete or update operations in a single request.
       #
       # Pass the operations in the `:body` option as an array of hashes, following Elasticsearch conventions.
@@ -58,17 +66,14 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/bulk/
       #
       def bulk(arguments={})
-        valid_params = [
-          :consistency,
-          :refresh,
-          :replication,
-          :type,
-          :timeout ]
+        bulk_request_for(arguments).body
+      end
 
+      def bulk_request_for(arguments={})
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_BULK_PARAMS
         body   = arguments[:body]
 
         if body.is_a? Array
@@ -77,7 +82,7 @@ module Elasticsearch
           payload = body
         end
 
-        perform_request(method, path, params, payload).body
+        perform_request(method, path, params, payload)
       end
     end
   end

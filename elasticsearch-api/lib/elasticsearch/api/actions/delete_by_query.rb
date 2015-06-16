@@ -2,6 +2,22 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_DELETE_BY_QUERY_PARAMS = [
+        :analyzer,
+        :consistency,
+        :default_operator,
+        :df,
+        :ignore_indices,
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :replication,
+        :q,
+        :routing,
+        :source,
+        :timeout
+      ].freeze
+
       # Delete documents which match specified query.
       #
       # Provide the query either as a "query string" query in the `:q` argument, or using the Elasticsearch's
@@ -43,32 +59,21 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/delete-by-query/
       #
       def delete_by_query(arguments={})
-        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+        delete_by_query_request_for(arguments).body
+      end
 
-        valid_params = [
-          :analyzer,
-          :consistency,
-          :default_operator,
-          :df,
-          :ignore_indices,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :replication,
-          :q,
-          :routing,
-          :source,
-          :timeout ]
+      def delete_by_query_request_for(arguments={})
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
         method = HTTP_DELETE
         path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                  Utils.__listify(arguments[:type]),
                                  '/_query'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_DELETE_BY_QUERY_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

@@ -2,6 +2,16 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SEARCH_TEMPLATE_PARAMS = [
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :preference,
+        :routing,
+        :scroll,
+        :search_type
+      ].freeze
+
       # Configure the search definition witha template in Mustache and parameters
       #
       # @example Insert the start and end values for the `range` query
@@ -41,20 +51,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html
       #
       def search_template(arguments={})
-        valid_params = [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :preference,
-          :routing,
-          :scroll,
-          :search_type ]
+        search_template_request_for(arguments).body
+      end
+
+      def search_template_request_for(arguments={})
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search/template' )
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SEARCH_TEMPLATE_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

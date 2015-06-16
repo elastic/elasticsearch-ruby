@@ -2,6 +2,12 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_PUT_SCRIPT_PARAMS = [
+        :op_type,
+        :version,
+        :version_type
+      ].freeze
+
       # Store a script in an internal index (`.scripts`), to be able to reference them
       # in search definitions (with dynamic scripting disabled)
       #
@@ -28,23 +34,22 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
       def put_script(arguments={})
+        put_script_request_for(arguments).body
+      end
+
+      def put_script_request_for(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-        valid_params = [
-          :op_type,
-          :version,
-          :version_type ]
-
         method = HTTP_PUT
         path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_PUT_SCRIPT_PARAMS
 
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

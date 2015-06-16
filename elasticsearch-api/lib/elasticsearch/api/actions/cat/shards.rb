@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_SHARDS_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display shard allocation across nodes
         #
         # @example Display information for all indices
@@ -46,25 +54,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html
         #
         def shards(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          shards_request_for(arguments).body
+        end
 
+        def shards_request_for(arguments={})
           index = arguments.delete(:index)
 
           method = HTTP_GET
 
           path   = Utils.__pathify '_cat/shards', Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_SHARDS_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

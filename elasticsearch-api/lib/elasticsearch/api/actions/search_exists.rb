@@ -2,6 +2,22 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SEARCH_EXISTS_PARAMS = [
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :min_score,
+        :preference,
+        :routing,
+        :q,
+        :analyzer,
+        :analyze_wildcard,
+        :default_operator,
+        :df,
+        :lenient,
+        :lowercase_expanded_terms
+      ].freeze
+
       # Return whether documents exists for a particular query
       #
       # @option arguments [List] :index A comma-separated list of indices to restrict the results
@@ -33,26 +49,16 @@ module Elasticsearch
       # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-exists.html
       #
       def search_exists(arguments={})
-        valid_params = [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :min_score,
-          :preference,
-          :routing,
-          :q,
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :lenient,
-          :lowercase_expanded_terms ]
+        search_exists_request_for(arguments).body
+      end
+
+      def search_exists_request_for(arguments={})
         method = 'POST'
         path   = "_search/exists"
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SEARCH_EXISTS_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

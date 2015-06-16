@@ -3,6 +3,13 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_PUT_WARMER_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze
+
         # Create or update an index warmer.
         #
         # An index warmer will run before an index is refreshed, ie. available for search.
@@ -38,25 +45,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-warmers/
         #
         def put_warmer(arguments={})
+          put_warmer_request_for(arguments).body
+        end
+
+        def put_warmer_request_for(arguments={})
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
-
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-          ]
 
           method = HTTP_PUT
           path   = Utils.__pathify( Utils.__listify(arguments[:index]),
                                     Utils.__listify(arguments[:type]),
                                     '_warmer',
                                     Utils.__listify(arguments[:name]) )
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PUT_WARMER_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -2,6 +2,19 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_TERMVECTORS_PARAMS = [
+        :term_statistics,
+        :field_statistics,
+        :fields,
+        :offsets,
+        :positions,
+        :payloads,
+        :preference,
+        :realtime,
+        :routing,
+        :parent
+      ].freeze
+
       # Return information and statistics about terms in the fields of a particular document
       #
       # @example Get statistics for an indexed document
@@ -58,20 +71,12 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html
       #
       def termvectors(arguments={})
+        termvectors_request_for(arguments).body
+      end
+
+      def termvectors_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
-
-        valid_params = [
-          :term_statistics,
-          :field_statistics,
-          :fields,
-          :offsets,
-          :positions,
-          :payloads,
-          :preference,
-          :realtime,
-          :routing,
-          :parent ]
 
         method = HTTP_GET
         endpoint = arguments.delete(:endpoint) || '_termvectors'
@@ -81,10 +86,10 @@ module Elasticsearch
                                  arguments[:id],
                                  endpoint
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_TERMVECTORS_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
 
       # @deprecated Use the plural version, {#termvectors}

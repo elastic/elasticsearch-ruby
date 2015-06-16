@@ -11,6 +11,10 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-mapping/
         #
         def delete_mapping(arguments={})
+          delete_mapping_request_for(arguments).body
+        end
+
+        def delete_mapping_request_for(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           method = HTTP_DELETE
@@ -18,7 +22,7 @@ module Elasticsearch
           params = {}
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

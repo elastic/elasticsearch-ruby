@@ -3,6 +3,8 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_DELETE_ALIAS_PARAMS = [ :timeout ].freeze
+
         # Delete a single index alias.
         #
         # @example Delete an alias
@@ -18,17 +20,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
         def delete_alias(arguments={})
+          delete_alias_request_for(arguments).body
+        end
+
+        def delete_alias_request_for(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
-          valid_params = [ :timeout ]
-
           method = HTTP_DELETE
           path   = Utils.__pathify Utils.__escape(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_DELETE_ALIAS_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -3,6 +3,11 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_GET_ALIASES_PARAMS = [
+          :timeout,
+          :local
+        ].freeze
+
         # Get a list of all aliases, or aliases for a specific index.
         #
         # @example Get a list of all aliases
@@ -18,15 +23,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html
         #
         def get_aliases(arguments={})
-          valid_params = [ :timeout, :local ]
+          get_aliases_request_for(arguments).body
+        end
 
+        def get_aliases_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_aliases', Utils.__listify(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_GET_ALIASES_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

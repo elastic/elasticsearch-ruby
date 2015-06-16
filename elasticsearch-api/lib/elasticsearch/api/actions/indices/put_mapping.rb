@@ -3,6 +3,16 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_PUT_MAPPING_PARAMS = [
+          :ignore_conflicts,
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :master_timeout,
+          :timeout
+        ].freeze
+
         # Create or update mapping.
         #
         # Pass the mapping definition(s) in the `:body` argument.
@@ -46,26 +56,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/
         #
         def put_mapping(arguments={})
+          put_mapping_request_for(arguments).body
+        end
+
+        def put_mapping_request_for(arguments={})
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
-
-          valid_params = [
-            :ignore_conflicts,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :master_timeout,
-            :timeout
-          ]
 
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PUT_MAPPING_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

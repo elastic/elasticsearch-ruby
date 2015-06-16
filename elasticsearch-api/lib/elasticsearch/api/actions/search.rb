@@ -2,6 +2,42 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SEARCH_PARAMS = [
+        :analyzer,
+        :analyze_wildcard,
+        :default_operator,
+        :df,
+        :explain,
+        :fielddata_fields,
+        :fields,
+        :from,
+        :ignore_indices,
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :lenient,
+        :lowercase_expanded_terms,
+        :preference,
+        :q,
+        :query_cache,
+        :routing,
+        :scroll,
+        :search_type,
+        :size,
+        :sort,
+        :source,
+        :_source,
+        :_source_include,
+        :_source_exclude,
+        :stats,
+        :suggest_field,
+        :suggest_mode,
+        :suggest_size,
+        :suggest_text,
+        :timeout,
+        :version
+      ].freeze
+
       # Return documents matching a query, as well as aggregations (facets), highlighted snippets, suggestions, etc.
       #
       # The search API is used to query one or more indices either using simple
@@ -114,47 +150,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/search/request-body/
       #
       def search(arguments={})
-        arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
+        search_request_for(arguments).body
+      end
 
-        valid_params = [
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :explain,
-          :fielddata_fields,
-          :fields,
-          :from,
-          :ignore_indices,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :lenient,
-          :lowercase_expanded_terms,
-          :preference,
-          :q,
-          :query_cache,
-          :routing,
-          :scroll,
-          :search_type,
-          :size,
-          :sort,
-          :source,
-          :_source,
-          :_source_include,
-          :_source_exclude,
-          :stats,
-          :suggest_field,
-          :suggest_mode,
-          :suggest_size,
-          :suggest_text,
-          :timeout,
-          :version ]
+      def search_request_for(arguments)
+        arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SEARCH_PARAMS
 
         body   = arguments[:body]
 
@@ -164,7 +169,7 @@ module Elasticsearch
         # FIX: Unescape the `filter_path` parameter due to __listify default behavior. Investigate.
         params[:filter_path] =  defined?(EscapeUtils) ? EscapeUtils.unescape_url(params[:filter_path]) : CGI.unescape(params[:filter_path]) if params[:filter_path]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

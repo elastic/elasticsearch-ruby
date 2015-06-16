@@ -3,6 +3,22 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_CLEAR_CACHE_PARAMS = [
+          :field_data,
+          :fielddata,
+          :fields,
+          :filter,
+          :filter_cache,
+          :filter_keys,
+          :id,
+          :id_cache,
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :recycler
+        ].freeze
+
         # Clear caches and other auxiliary data structures.
         #
         # Can be performed against a specific index, or against all indices.
@@ -48,30 +64,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/
         #
         def clear_cache(arguments={})
-          valid_params = [
-            :field_data,
-            :fielddata,
-            :fields,
-            :filter,
-            :filter_cache,
-            :filter_keys,
-            :id,
-            :id_cache,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :recycler ]
+          clear_cache_request_for(arguments).body
+        end
 
+        def clear_cache_request_for(arguments={})
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_CLEAR_CACHE_PARAMS
           body   = nil
 
           params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

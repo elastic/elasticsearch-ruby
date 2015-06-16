@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_CLOSE_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :timeout
+        ].freeze
+
         # Close an index (keep the data on disk, but deny operations with the index).
         #
         # A closed index can be opened again with the {Indices::Actions#close} API.
@@ -26,23 +34,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
         #
         def close(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          close_request_for(arguments).body
+        end
 
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :timeout
-          ]
+        def close_request_for(arguments={})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_close'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_CLOSE_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end
