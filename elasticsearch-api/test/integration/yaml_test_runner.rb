@@ -128,6 +128,7 @@ end
 
 module Elasticsearch
   module YamlTestSuite
+    $last_response = ''
     $results = {}
     $stash   = {}
 
@@ -180,7 +181,7 @@ module Elasticsearch
 
         $stderr.puts "ARGUMENTS: #{arguments.inspect}" if ENV['DEBUG']
 
-        $results[test.hash] = namespace.reduce($client) do |memo, current|
+        $last_response = namespace.reduce($client) do |memo, current|
           unless current == namespace.last
             memo = memo.send(current)
           else
@@ -188,12 +189,18 @@ module Elasticsearch
           end
           memo
         end
+
+        $results[test.hash] = $last_response
       end
 
-      def evaluate(test, property)
-        property.gsub(/\\\./, '_____').split('.').reduce($results[test.hash]) do |memo, attr|
+      def evaluate(test, property, response=nil)
+        response ||= $results[test.hash]
+        property.gsub(/\\\./, '_____').split('.').reduce(response) do |memo, attr|
           if memo
-            attr = attr.gsub(/_____/, '.') if attr
+            if attr
+              attr = attr.gsub(/_____/, '.')
+              attr = $stash[attr] if attr.start_with? '$'
+            end
             memo = memo.is_a?(Hash) ? memo[attr] : memo[attr.to_i]
           end
           memo
@@ -322,10 +329,18 @@ suites.each do |suite|
           # --- Register test setup -------------------------------------------
           setup do
             actions.select { |a| a['setup'] }.first['setup'].each do |action|
-              next unless action['do']
-              api, arguments = action['do'].to_a.first
-              arguments      = Utils.symbolize_keys(arguments)
-              Runner.perform_api_call((test.to_s + '___setup'), api, arguments)
+              if action['do']
+                api, arguments = action['do'].to_a.first
+                arguments      = Utils.symbolize_keys(arguments)
+                Runner.perform_api_call((test.to_s + '___setup'), api, arguments)
+              end
+              if action['set']
+                stash = action['set']
+                property, variable = stash.to_a.first
+                result  = Runner.evaluate(test, property, $last_response)
+                $stderr.puts "STASH: '$#{variable}' => #{result.inspect}" if ENV['DEBUG']
+                Runner.set variable, result
+              end
             end
           end
 
