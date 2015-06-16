@@ -386,8 +386,10 @@ suites.each do |suite|
 
                 when property = action['is_false']
                   result = Runner.evaluate(test, property)
-                  $stderr.puts "CHECK: Expected '#{property}' to be false, is: #{result.inspect}" if ENV['DEBUG']
-                  assert( !!! result, "Property '#{property}' should be false, is: #{result.inspect}")
+                  $stderr.puts "CHECK: Expected '#{property}' to be nil, false, 0 or empty string, is: #{result.inspect}" if ENV['DEBUG']
+                  assert_block "Property '#{property}' should be nil, false, 0 or empty string, but is: #{result.inspect}" do
+                    result.nil? || result == false || result == 0 || result == ''
+                  end
 
                 when a = action['match']
                   property, value = a.to_a.first
