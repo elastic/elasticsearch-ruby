@@ -51,6 +51,7 @@ module Elasticsearch
         # @option arguments [String]  :path_work    Path to the directory with auxiliary files
         # @option arguments [Boolean] :multicast_enabled Whether multicast is enabled (default: true)
         # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
+        # @option arguments [String]  :network_host The host that nodes will bind on and publish to
         #
         # You can also use environment variables to set these options.
         #
@@ -83,6 +84,7 @@ module Elasticsearch
           arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
           arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
           arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
+          arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', '0.0.0.0')
 
           # Make sure `cluster_name` is not dangerous
           if arguments[:cluster_name] =~ /^[\/\\]?$/
@@ -115,7 +117,7 @@ module Elasticsearch
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.cluster.routing.allocation.disk.threshold_enabled=false \
-                -D es.network.host=0.0.0.0 \
+                -D es.network.host=#{arguments[:network_host]} \
                 -D es.discovery.zen.ping.multicast.enabled=#{arguments[:multicast_enabled]} \
                 -D es.script.inline=on \
                 -D es.script.indexed=on \
@@ -210,7 +212,7 @@ module Elasticsearch
         #
         def running?(arguments={})
           port         = arguments[:on] || (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          cluster_name = arguments[:as] ||  ENV['TEST_CLUSTER_NAME'] || 'elasticsearch_test'
+          cluster_name = arguments[:as] || (ENV.fetch('TEST_CLUSTER_NAME', @@default_cluster_name).chomp)
 
           if cluster_health = Timeout::timeout(0.25) { __get_cluster_health(port) } rescue nil
             return cluster_health['cluster_name']    == cluster_name && \
