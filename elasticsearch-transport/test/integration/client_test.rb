@@ -5,6 +5,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
   end
 
+  shutdown do
+    Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+  end
+
   context "Elasticsearch client" do
     teardown do
       begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end

@@ -5,6 +5,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
   end
 
+  shutdown do
+    Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+  end
+
   context "Transport" do
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i

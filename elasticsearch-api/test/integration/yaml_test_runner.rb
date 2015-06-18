@@ -28,7 +28,7 @@ Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and no
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
 #
-at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] }
+at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running? }
 
 class String
   # Reset the `ansi` method on CI

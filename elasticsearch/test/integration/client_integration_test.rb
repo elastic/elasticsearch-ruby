@@ -8,6 +8,10 @@ module Elasticsearch
         Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
       end
 
+      shutdown do
+        Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+      end
+
       context "Elasticsearch client" do
         setup do
           @port  = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
