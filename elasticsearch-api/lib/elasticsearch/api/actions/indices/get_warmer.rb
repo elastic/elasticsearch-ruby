@@ -48,7 +48,7 @@ module Elasticsearch
 
           method = HTTP_GET
           path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_warmer', Utils.__escape(arguments[:name]) )
-          params = {}
+          params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
           perform_request(method, path, params, body).body
