@@ -15,8 +15,6 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def list_benchmarks(arguments={})
-        valid_params = [
-           ]
         method = HTTP_GET
         path   = "_bench"
         params = {}
