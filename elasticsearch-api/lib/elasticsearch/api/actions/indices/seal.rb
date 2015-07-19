@@ -11,8 +11,6 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-seal.html
         #
         def seal(arguments={})
-          valid_params = [
-             ]
           method = 'POST'
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_seal'
           params = {}

@@ -13,8 +13,6 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def abort_benchmark(arguments={})
-        valid_params = [
-           ]
         method = HTTP_POST
         path   = "_bench/abort/#{arguments[:name]}"
         params = {}
