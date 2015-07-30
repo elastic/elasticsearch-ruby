@@ -53,6 +53,7 @@ module Elasticsearch
         # @option arguments [Boolean] :multicast_enabled Whether multicast is enabled (default: true)
         # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
         # @option arguments [String]  :network_host The host that nodes will bind on and publish to
+        # @option arguments [Boolean] :clear        Wipe out cluster content on startup (default: true)
         #
         # You can also use environment variables to set these options.
         #
@@ -86,6 +87,7 @@ module Elasticsearch
           arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
           arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
           arguments[:network_host]      ||= @@network_host
+          arguments[:clear]             ||= true
 
           # Make sure `cluster_name` is not dangerous
           if arguments[:cluster_name] =~ /^[\/\\]?$/
@@ -98,8 +100,8 @@ module Elasticsearch
             return false
           end
 
-          # Wipe out data for this cluster name
-          FileUtils.rm_rf "#{arguments[:path_data]}/#{arguments[:cluster_name]}"
+          # Wipe out data for this cluster name if requested
+          FileUtils.rm_rf "#{arguments[:path_data]}/#{arguments[:cluster_name]}" if arguments[:clear]
 
           print "Starting ".ansi(:faint) +
                 @@number_of_nodes.to_s.ansi(:bold, :faint) +
