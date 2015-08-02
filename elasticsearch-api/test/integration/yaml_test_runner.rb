@@ -23,7 +23,9 @@ Turn.config.format = :pretty
 
 # Launch test cluster
 #
-Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+  Elasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: "-D es.repositories.url.allowed_urls=http://snapshot.test*")
+end
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
