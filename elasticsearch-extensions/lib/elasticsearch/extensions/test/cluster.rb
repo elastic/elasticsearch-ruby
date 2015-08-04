@@ -50,6 +50,7 @@ module Elasticsearch
         # @option arguments [String]  :node_name    The node name (will be appended with a number)
         # @option arguments [String]  :path_data    Path to the directory to store data in
         # @option arguments [String]  :path_work    Path to the directory with auxiliary files
+        # @option arguments [String]  :path_logs    Path to the directory with log files
         # @option arguments [Boolean] :multicast_enabled Whether multicast is enabled (default: true)
         # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
         # @option arguments [String]  :network_host The host that nodes will bind on and publish to
@@ -83,6 +84,7 @@ module Elasticsearch
           arguments[:node_name]         ||= ENV.fetch('TEST_CLUSTER_NODE_NAME', 'node')
           arguments[:path_data]         ||= ENV.fetch('TEST_CLUSTER_DATA',      '/tmp/elasticsearch_test')
           arguments[:path_work]         ||= ENV.fetch('TEST_CLUSTER_TMP',       '/tmp')
+          arguments[:path_logs]         ||= ENV.fetch('TEST_CLUSTER_LOGS',      '/var/log/elasticsearch')
           arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
           arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
           arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
@@ -119,6 +121,7 @@ module Elasticsearch
                 -D es.http.port=#{arguments[:port].to_i + (n-1)} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
+                -D es.path.logs=#{arguments[:path_logs]} \
                 -D es.cluster.routing.allocation.disk.threshold_enabled=false \
                 -D es.network.host=#{@@network_host} \
                 -D es.discovery.zen.ping.multicast.enabled=#{arguments[:multicast_enabled]} \
