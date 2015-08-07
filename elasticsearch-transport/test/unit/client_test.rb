@@ -73,6 +73,31 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       assert_equal 120, client.transport.options[:transport_options][:request][:timeout]
     end
 
+    context "when passed custom request/response handlers" do
+      setup do
+        @builder = stub('Faraday::RackBuilder')
+        @builder.stubs(:adapter)
+        @handler = :custom
+        @handler_options = { :foo => 'bar' }
+        @opts = {
+          :request_builder => @handler,
+          :response_builder => @handler,
+          :request_builder_options => @handler_options,
+          :response_builder_options => @handler_options,
+        }
+      end
+
+      teardown do
+        client = Elasticsearch::Transport::Client.new @opts
+        client.transport.instance_variable_get('@block').call @builder
+      end
+
+      should "sets Faraday builder properly" do
+        @builder.expects(:request).with(@handler, @handler_options)
+        @builder.expects(:response).with(@handler, @handler_options)
+      end
+    end
+
     context "when passed hosts" do
       should "have localhost by default" do
         c = Elasticsearch::Transport::Client.new
