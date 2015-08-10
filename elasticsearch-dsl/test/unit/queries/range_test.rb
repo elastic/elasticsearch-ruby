@@ -19,17 +19,19 @@ module Elasticsearch
               gte   10
               lte   20
               boost 2
+              format 'mm/dd/yyyy'
             end
 
-            assert_equal({:range=>{:age=>{:gte=>10, :lte=>20, :boost=>2}}}, @subject.to_hash)
+            assert_equal({:range=>{:age=>{:gte=>10, :lte=>20, :boost=>2, :format=>'mm/dd/yyyy'}}}, @subject.to_hash)
           end
 
           should "take a method call" do
             @subject = Range.new :age
             @subject.gte 10
             @subject.lte 20
+            @subject.format 'mm/dd/yyyy'
 
-            assert_equal({:range=>{:age=>{:gte=>10, :lte=>20}}}, @subject.to_hash)
+            assert_equal({:range=>{:age=>{:gte=>10, :lte=>20, :format=>'mm/dd/yyyy'}}}, @subject.to_hash)
           end
 
         end

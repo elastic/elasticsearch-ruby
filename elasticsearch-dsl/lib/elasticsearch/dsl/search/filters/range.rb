@@ -31,6 +31,7 @@ module Elasticsearch
           option_method :lt
           option_method :boost
           option_method :time_zone
+          option_method :format
         end
 
       end
