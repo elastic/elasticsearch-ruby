@@ -19,8 +19,9 @@ module Elasticsearch
             subject.gte 'bar'
             subject.lte 'bar'
             subject.time_zone 'bar'
+            subject.format 'bar'
 
-            assert_equal %w[ gte lte time_zone ],
+            assert_equal %w[ format gte lte time_zone ],
                          subject.to_hash[:range][:foo].keys.map(&:to_s).sort
 
             assert_equal 'bar', subject.to_hash[:range][:foo][:gte]
