@@ -34,7 +34,7 @@ module Elasticsearch
         #                                  `field_data` parameter(default: all)
         # @option arguments [Boolean] :filter Clear filter caches
         # @option arguments [Boolean] :filter_cache Clear filter caches
-        # @option arguments [Boolean] :filter_keys A comma-separated list of keys to clear when using the
+        # @option arguments [List] :filter_keys A comma-separated list of keys to clear when using the
         #                                          `filter_cache` parameter (default: all)
         # @option arguments [Boolean] :id Clear ID caches for parent/child
         # @option arguments [Boolean] :id_cache Clear ID caches for parent/child
@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index name to limit the operation
         # @option arguments [Boolean] :recycler Clear the recycler cache
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
         #
         def clear_cache(arguments={})
           valid_params = [
