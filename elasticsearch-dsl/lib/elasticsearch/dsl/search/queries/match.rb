@@ -26,6 +26,7 @@ module Elasticsearch
           option_method :operator
           option_method :type
           option_method :boost
+          option_method :fuzziness
         end
 
       end
