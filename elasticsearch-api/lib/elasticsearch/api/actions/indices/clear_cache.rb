@@ -34,7 +34,7 @@ module Elasticsearch
         #                                  `field_data` parameter(default: all)
         # @option arguments [Boolean] :filter Clear filter caches
         # @option arguments [Boolean] :filter_cache Clear filter caches
-        # @option arguments [Boolean] :filter_keys A comma-separated list of keys to clear when using the
+        # @option arguments [List] :filter_keys A comma-separated list of keys to clear when using the
         #                                          `filter_cache` parameter (default: all)
         # @option arguments [Boolean] :id Clear ID caches for parent/child
         # @option arguments [Boolean] :id_cache Clear ID caches for parent/child
