@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index name to limit the operation
         # @option arguments [Boolean] :recycler Clear the recycler cache
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-clearcache/
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
         #
         def clear_cache(arguments={})
           valid_params = [
