@@ -39,13 +39,14 @@ module Elasticsearch
 
           should "take a block" do
             subject = Match.new :message do
-              query    'test'
-              operator 'and'
-              type     'phrase_prefix'
-              boost    2
+              query     'test'
+              operator  'and'
+              type      'phrase_prefix'
+              boost     2
+              fuzziness 'AUTO'
             end
 
-            assert_equal({match: {message: {query: "test", operator: "and", type: 'phrase_prefix', boost: 2}}},
+            assert_equal({match: {message: {query: "test", operator: "and", type: 'phrase_prefix', boost: 2, fuzziness: 'AUTO'}}},
                          subject.to_hash)
           end
 
