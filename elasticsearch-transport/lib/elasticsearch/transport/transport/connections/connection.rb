@@ -26,6 +26,7 @@ module Elasticsearch
             @host       = arguments[:host]
             @connection = arguments[:connection]
             @options    = arguments[:options] || {}
+            @state_mutex = Mutex.new
 
             @options[:resurrect_timeout] ||= DEFAULT_RESURRECT_TIMEOUT
             @failures = 0
@@ -65,9 +66,11 @@ module Elasticsearch
           # @return [self]
           #
           def dead!
-            @dead       = true
-            @failures  += 1
-            @dead_since = Time.now
+            @state_mutex.synchronize do
+              @dead       = true
+              @failures  += 1
+              @dead_since = Time.now
+            end
             self
           end
 
@@ -76,7 +79,9 @@ module Elasticsearch
           # @return [self]
           #
           def alive!
-            @dead     = false
+            @state_mutex.synchronize do
+              @dead     = false
+            end
             self
           end
 
@@ -85,8 +90,10 @@ module Elasticsearch
           # @return [self]
           #
           def healthy!
-            @dead     = false
-            @failures = 0
+            @state_mutex.synchronize do
+              @dead     = false
+              @failures = 0
+            end
             self
           end
 
@@ -105,7 +112,9 @@ module Elasticsearch
           # @return [Boolean]
           #
           def resurrectable?
-            Time.now > @dead_since + ( @options[:resurrect_timeout] * 2 ** (@failures-1) )
+            @state_mutex.synchronize {
+              Time.now > @dead_since + ( @options[:resurrect_timeout] * 2 ** (@failures-1) )
+            }
           end
 
           # @return [String]

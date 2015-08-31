@@ -41,6 +41,7 @@ module Elasticsearch
 
           @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
           @counter     = 0
+          @counter_mtx = Mutex.new
           @last_request_at = Time.now
           @reload_connections = options[:reload_connections]
           @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
@@ -60,7 +61,7 @@ module Elasticsearch
           resurrect_dead_connections! if Time.now > @last_request_at + @resurrect_after
 
           connection = connections.get_connection(options)
-          @counter  += 1
+          @counter_mtx.synchronize { @counter += 1 }
 
           reload_connections!         if reload_connections && counter % reload_after == 0
           connection
