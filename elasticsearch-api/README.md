@@ -143,7 +143,7 @@ require 'hashie'
 response = client.search index: 'myindex',
                          body: {
                            query: { match: { title: 'test' } },
-                           facets: { tags: { terms: { field: 'tags' } } }
+                           aggregations: { tags: { terms: { field: 'tags' } } }
                          }
 
 mash = Hashie::Mash.new response
@@ -151,7 +151,7 @@ mash = Hashie::Mash.new response
 mash.hits.hits.first._source.title
 # => 'Test'
 
-mash.facets.tags.terms.first
+mash.aggregations.tags.terms.first
 # => #<Hashie::Mash count=3 term="z">
 ```
 

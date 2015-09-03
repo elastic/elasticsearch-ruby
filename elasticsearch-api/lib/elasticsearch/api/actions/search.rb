@@ -19,7 +19,7 @@ module Elasticsearch
       #     client.search index: 'myindex',
       #                   body: {
       #                     query: { match: { title: 'test' } },
-      #                     facets: { tags: { terms: { field: 'tags' } } }
+      #                     aggregations: { tags: { terms: { field: 'tags' } } }
       #                   }
       #
       # @example Paginating results: return 10 documents, beginning from the 10th
@@ -53,14 +53,14 @@ module Elasticsearch
       #     response = client.search index: 'myindex',
       #                              body: {
       #                                query:  { match: { title: 'test' } },
-      #                                facets: { tags:  { terms: { field: 'tags' } } }
+      #                                aggregations: { tags:  { terms: { field: 'tags' } } }
       #                              }
       #
       #     response = Hashie::Mash.new response
       #
       #     response.hits.hits.first._source.title
       #
-      #     response.facets.tags.terms.to_a.map { |f| "#{f.term} [#{f.count}]" }.join(', ')
+      #     response.aggregations.tags.terms.to_a.map { |f| "#{f.term} [#{f.count}]" }.join(', ')
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all`
       #                                 or empty string to perform the operation on all indices
