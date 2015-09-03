@@ -13,7 +13,7 @@ see the <https://github.com/elasticsearch/elasticsearch-rails> project.
 
 The libraries are compatible with Ruby 1.8.7 and higher.
 
-The library is compatible with Elasticsearch 0.90 and 1.0 -- you have to install and use a matching version, though.
+The library is compatible with Elasticsearch 0.90 and 1.x -- you have to install and use a matching version, though.
 
 The 1.x versions and the master branch are compatible with **Elasticsearch 1.x** API.
 
