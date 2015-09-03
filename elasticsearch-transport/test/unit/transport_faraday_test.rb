@@ -135,6 +135,43 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' } ]
       assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
     end
+
+    should "set the credentials if exist in options" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                              :options => { :user => 'foo', :password => 'bar' }
+      assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
+    end
+
+    should "override options credentials if passed explicitly" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :user => 'foo', :password => 'bar' },
+                                          { :host => 'foobar2', :port => 1234 } ],
+                              :options => { :user => 'foo2', :password => 'bar2' }
+      assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
+      assert_equal 'Basic Zm9vMjpiYXIy', transport.connections[1].connection.headers['Authorization']
+    end
+
+    should "set connection scheme to https if passed" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :scheme => 'https' } ]
+
+      assert_instance_of ::Faraday::Connection, transport.connections.first.connection
+      assert_equal 'https://foobar:1234/',       transport.connections.first.connection.url_prefix.to_s
+    end
+
+    should "set connection scheme to https if exist in options" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234} ],
+                              :options => { :scheme => 'https' }
+
+      assert_instance_of ::Faraday::Connection, transport.connections.first.connection
+      assert_equal 'https://foobar:1234/',       transport.connections.first.connection.url_prefix.to_s
+    end
+
+    should "override options scheme if passed explicitly" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234, :scheme => 'http'} ],
+                              :options => { :scheme => 'https' }
+
+      assert_instance_of ::Faraday::Connection, transport.connections.first.connection
+      assert_equal 'http://foobar:1234/',       transport.connections.first.connection.url_prefix.to_s
+    end
   end
 
 end

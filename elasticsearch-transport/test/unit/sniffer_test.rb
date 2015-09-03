@@ -75,6 +75,33 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
       assert_equal 'Node 1',       hosts.first['name']
     end
 
+    should "return an array of hosts as hashes when hostname exists" do
+      @transport.expects(:perform_request).returns __nodes_info <<-JSON
+        {
+          "ok" : true,
+          "cluster_name" : "elasticsearch_test",
+          "nodes" : {
+            "N1" : {
+              "name" : "Node 1",
+              "transport_address" : "inet[/192.168.1.23:9300]",
+              "hostname" : "testhost1",
+              "version" : "0.20.6",
+              "http_address" : "inet[testhost1.com/192.168.1.23:9200]",
+              "thrift_address" : "/192.168.1.23:9500",
+              "memcached_address" : "inet[/192.168.1.23:11211]"
+            }
+          }
+        }
+      JSON
+
+      hosts = @sniffer.hosts
+
+      assert_equal 1, hosts.size
+      assert_equal 'testhost1.com', hosts.first[:host]
+      assert_equal '9200',         hosts.first[:port]
+      assert_equal 'Node 1',       hosts.first['name']
+    end
+
     should "skip hosts without a matching transport protocol" do
       @transport = DummyTransport.new :options => { :protocol => 'memcached' }
       @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
