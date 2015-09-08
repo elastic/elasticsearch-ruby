@@ -5,7 +5,7 @@ module Elasticsearch
       # Handles node discovery ("sniffing").
       #
       class Sniffer
-        RE_URL  = /\/([^:]*):([0-9]+)\]/ # Use named groups on Ruby 1.9: /\/(?<host>[^:]*):(?<port>[0-9]+)\]/
+        RE_URL  = /\[([^\/]*)\/([^:]*):([0-9]+)\]/ # Use named groups on Ruby 1.9: /\/(?<host>[^:]*):(?<port>[0-9]+)\]/
 
         attr_reader   :transport
         attr_accessor :timeout
@@ -32,7 +32,8 @@ module Elasticsearch
             hosts = nodes['nodes'].map do |id,info|
               if matches = info["#{transport.protocol}_address"].to_s.match(RE_URL)
                 # TODO: Implement lightweight "indifferent access" here
-                info.merge :host => matches[1], :port => matches[2], :id => id
+                host = (matches[1].nil? || matches[1].empty?) ? matches[2] : matches[1]
+                info.merge :host => host, :port => matches[3], :id => id
               end
             end.compact
 
