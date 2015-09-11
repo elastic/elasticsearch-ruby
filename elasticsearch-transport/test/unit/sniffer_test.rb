@@ -21,7 +21,7 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
       assert_equal @transport, @sniffer.transport
     end
 
-    should "return an array of hosts as hashes" do
+    should "return an array of hosts as hashes with ES1.x syntax" do
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {
           "ok" : true,
@@ -35,6 +35,33 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
               "http_address" : "inet[/192.168.1.23:9200]",
               "thrift_address" : "/192.168.1.23:9500",
               "memcached_address" : "inet[/192.168.1.23:11211]"
+            }
+          }
+        }
+      JSON
+
+      hosts = @sniffer.hosts
+
+      assert_equal 1, hosts.size
+      assert_equal '192.168.1.23', hosts.first[:host]
+      assert_equal '9200',         hosts.first[:port]
+      assert_equal 'Node 1',       hosts.first['name']
+    end
+
+    should "return an array of hosts as hashes with ES2.0 syntax" do
+      @transport.expects(:perform_request).returns __nodes_info <<-JSON
+        {
+          "ok" : true,
+          "cluster_name" : "elasticsearch_test",
+          "nodes" : {
+            "N1" : {
+              "name" : "Node 1",
+              "transport_address" : "192.168.1.23:9300",
+              "hostname" : "testhost1",
+              "version" : "0.20.6",
+              "http_address" : "192.168.1.23:9200",
+              "thrift_address" : "192.168.1.23:9500",
+              "memcached_address" : "192.168.1.23:11211"
             }
           }
         }
