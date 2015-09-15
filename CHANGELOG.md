@@ -1,3 +1,10 @@
+## 1.0.13
+
+### Client
+
+* Added, that connection reloading supports Elasticsearch 2.0 output
+* Improved thread safety in parts of connection handling code
+
 ## DSL:1.0.1
 
 * Added additional option methods to the "Multi Match" query
