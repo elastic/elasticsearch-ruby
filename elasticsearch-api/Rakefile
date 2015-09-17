@@ -97,9 +97,6 @@ namespace :test do
         git_specs "checkout #{checkout_build_hash} --force --quiet"
       end
 
-      # Path to the API specs
-      ENV['TEST_REST_API_SPEC'] = __current__.join('../tmp/elasticsearch/rest-api-spec/test/').to_s
-
       # Run the task
       args = [t.ruby_opts_string, t.run_code, t.file_list_string, t.option_list].join(' ')
 

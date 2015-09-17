@@ -274,8 +274,9 @@ end
 
 include Elasticsearch::YamlTestSuite
 
-PATH    = Pathname(ENV['TEST_REST_API_SPEC'] || \
-          File.expand_path('../../../../tmp/elasticsearch/rest-api-spec/test', __FILE__))
+rest_api_test_source = $client.info['version']['number'] < '2' ? '../../../../tmp/elasticsearch/rest-api-spec/test' : '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
+PATH    = Pathname(ENV.fetch('TEST_REST_API_SPEC', File.expand_path(rest_api_test_source, __FILE__)))
+
 suites  = Dir.glob(PATH.join('*')).map { |d| Pathname(d) }
 suites  = suites.select { |s| s.to_s =~ Regexp.new(ENV['FILTER']) } if ENV['FILTER']
 
