@@ -32,7 +32,7 @@ module Elasticsearch
       # @see Cluster#stop Cluster.stop
       #
       module Cluster
-        @@network_host    = ENV.fetch('TEST_CLUSTER_NETWORK_HOST', '0.0.0.0')
+        @@network_host    = ENV.fetch('TEST_CLUSTER_NETWORK_HOST', 'localhost')
         @@number_of_nodes = (ENV['TEST_CLUSTER_NODES'] || 2).to_i
         @@default_cluster_name = "elasticsearch-test-#{Socket.gethostname.downcase}"
 
