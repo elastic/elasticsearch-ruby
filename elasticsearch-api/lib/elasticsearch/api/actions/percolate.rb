@@ -93,7 +93,7 @@ module Elasticsearch
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
-                                 arguments[:id],
+                                 Utils.__escape(arguments[:id]),
                                  '_percolate'
 
         params = Utils.__validate_and_extract_params arguments, valid_params
