@@ -40,6 +40,15 @@ module Elasticsearch
           subject.percolate :index => 'foo^bar', :type => 'bar/bam', :body => { :doc => { :foo => 'bar' } }
         end
 
+        should "URL-escape the parts (including document id)" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo%5Ebar/bar%2Fbam/some%2Fid/_percolate', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.percolate :index => 'foo^bar', :type => 'bar/bam', :id => 'some/id'
+        end
+
       end
 
     end
