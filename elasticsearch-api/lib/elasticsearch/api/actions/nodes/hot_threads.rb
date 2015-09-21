@@ -3,6 +3,13 @@ module Elasticsearch
     module Nodes
       module Actions
 
+        VALID_HOT_THREADS_PARAMS = [
+          :interval,
+          :snapshots,
+          :threads,
+          :type
+        ].freeze
+
         # Returns information about the hottest threads in the cluster or on a specific node as a String.
         #
         #
@@ -26,19 +33,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
         #
         def hot_threads(arguments={})
-          valid_params = [
-            :interval,
-            :snapshots,
-            :threads,
-            :type ]
+          hot_threads_request_for(arguments).body
+        end
 
+        def hot_threads_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_HOT_THREADS_PARAMS
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

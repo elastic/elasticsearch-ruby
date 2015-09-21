@@ -2,6 +2,18 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_GET_SOURCE_PARAMS = [
+        :fields,
+        :parent,
+        :preference,
+        :realtime,
+        :refresh,
+        :routing,
+        :_source,
+        :_source_include,
+        :_source_exclude
+      ].freeze
+
       # Return a specified document's `_source`.
       #
       # The response contains just the original document, as passed to Elasticsearch during indexing.
@@ -32,20 +44,15 @@ module Elasticsearch
       # @since 0.90.1
       #
       def get_source(arguments={})
+        Utils.__rescue_from_not_found do
+          get_source_request_for(arguments).body
+        end
+      end
+
+      def get_source_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= UNDERSCORE_ALL
-
-        valid_params = [
-          :fields,
-          :parent,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing,
-          :_source,
-          :_source_include,
-          :_source_exclude ]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
@@ -53,14 +60,12 @@ module Elasticsearch
                                  Utils.__escape(arguments[:id]),
                                  '_source'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_GET_SOURCE_PARAMS
         body   = nil
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body).body
-        end
+        perform_request(method, path, params, body)
       end
     end
   end

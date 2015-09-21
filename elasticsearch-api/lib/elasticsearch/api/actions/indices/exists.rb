@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_EXISTS_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :local
+        ].freeze
+
         # Return true if the index (or all indices in a list) exists, false otherwise.
         #
         # @example Check whether index named _myindex_ exists
@@ -27,24 +35,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/
         #
         def exists(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          Utils.__rescue_from_not_found do
+            exists_request_for(arguments).status == 200
+          end
+        end
 
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :local
-          ]
+        def exists_request_for(arguments={})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           method = HTTP_HEAD
           path   = Utils.__listify(arguments[:index])
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_EXISTS_PARAMS
           body   = nil
 
-          Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
-          end
+          perform_request(method, path, params, body)
         end
 
         alias_method :exists?, :exists

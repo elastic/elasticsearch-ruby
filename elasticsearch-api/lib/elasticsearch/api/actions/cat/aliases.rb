@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_ALIASES_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Returns information about aliases, including associated routing values and filters.
         #
         # @example Display all aliases in the cluster
@@ -41,12 +49,10 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html
         #
         def aliases(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          aliases_request_for(arguments).body
+        end
+
+        def aliases_request_for(arguments={})
 
           name = arguments.delete(:name)
 
@@ -54,12 +60,12 @@ module Elasticsearch
 
           path   = Utils.__pathify '_cat/aliases', Utils.__listify(name)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_ALIASES_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

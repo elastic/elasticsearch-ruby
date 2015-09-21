@@ -2,6 +2,14 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_FIELD_STATS_PARAMS = [
+        :fields,
+        :level,
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards
+      ].freeze
+
       # Returns statistical information about a field without executing a search.
       #
       # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
@@ -14,18 +22,16 @@ module Elasticsearch
       # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-stats.html
       #
       def field_stats(arguments={})
-        valid_params = [
-          :fields,
-          :level,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards ]
+        field_stats_request_for(arguments).body
+      end
+
+      def field_stats_request_for(arguments={})
         method = 'GET'
         path   = "_field_stats"
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_FIELD_STATS_PARAMS
         body   = nil
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

@@ -2,6 +2,13 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SUGGEST_PARAMS = [
+        :ignore_indices,
+        :preference,
+        :routing,
+        :source
+      ].freeze
+
       # Return query terms suggestions based on provided text and configuration.
       #
       # Pass the request definition in the `:body` argument.
@@ -27,19 +34,17 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/search/suggest/
       #
       def suggest(arguments={})
-        valid_params = [
-          :ignore_indices,
-          :preference,
-          :routing,
-          :source ]
+        suggest_request_for(arguments).body
+      end
 
+      def suggest_request_for(arguments={})
         method = HTTP_POST
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_suggest' )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SUGGEST_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

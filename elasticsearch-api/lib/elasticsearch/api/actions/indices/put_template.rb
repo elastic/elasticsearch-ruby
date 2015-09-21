@@ -3,6 +3,12 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_PUT_TEMPLATE_PARAMS = [
+          :create,
+          :order,
+          :timeout
+        ].freeze
+
         # Create or update an index template.
         #
         # @example Create a template for all indices starting with `logs-`
@@ -22,17 +28,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
         #
         def put_template(arguments={})
+          put_template_request_for(arguments).body
+        end
+
+        def put_template_request_for(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [ :create, :order, :timeout ]
 
           method = HTTP_PUT
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PUT_TEMPLATE_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

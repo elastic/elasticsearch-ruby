@@ -3,6 +3,11 @@ module Elasticsearch
     module Snapshot
       module Actions
 
+        VALID_RESTORE_PARAMS = [
+          :master_timeout,
+          :wait_for_completion
+        ].freeze
+
         # Restore the state from a snapshot
         #
         # @example Restore from the `snapshot-1` snapshot
@@ -29,12 +34,12 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def restore(arguments={})
+          restore_request_for(arguments).body
+        end
+
+        def restore_request_for(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing"   unless arguments[:snapshot]
-
-          valid_params = [
-            :master_timeout,
-            :wait_for_completion ]
 
           repository = arguments.delete(:repository)
           snapshot   = arguments.delete(:snapshot)
@@ -42,10 +47,10 @@ module Elasticsearch
           method = HTTP_POST
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__escape(snapshot), '_restore' )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_RESTORE_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

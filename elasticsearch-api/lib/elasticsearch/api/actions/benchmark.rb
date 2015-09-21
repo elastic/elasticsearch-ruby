@@ -2,6 +2,8 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_BENCHMARK_PARAMS = [ :verbose ].freeze
+
       # Run a single query, or a set of queries, and return statistics on their performance
       #
       # @example Return statistics for a single query
@@ -48,14 +50,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def benchmark(arguments={})
-        valid_params = [
-          :verbose ]
+        benchmark_request_for(arguments).body
+      end
+
+      def benchmark_request_for(arguments={})
         method = HTTP_PUT
         path   = "_bench"
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_BENCHMARK_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

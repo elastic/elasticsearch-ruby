@@ -3,6 +3,11 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_EXISTS_TEMPLATE_PARAMS = [
+          :local,
+          :master_timeout
+        ].freeze
+
         # Return true if the specified index template exists, false otherwise.
         #
         #     client.indices.exists_template? name: 'mytemplate'
@@ -14,18 +19,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def exists_template(arguments={})
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
-          valid_params = [ :local, :master_timeout ]
+          Utils.__rescue_from_not_found do
+            exists_template_request_for(arguments).status == 200
+          end
+        end
 
+        def exists_template_request_for(arguments={})
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
           method = HTTP_HEAD
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_EXISTS_TEMPLATE_PARAMS
           body = nil
 
-          Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
-          end
+          perform_request(method, path, params, body)
         end
 
         alias_method :exists_template?, :exists_template

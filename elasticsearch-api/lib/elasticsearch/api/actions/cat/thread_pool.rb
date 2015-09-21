@@ -3,6 +3,15 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_THREAD_POOL_PARAMS = [
+          :full_id,
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display thread pool statistics across nodes (use the `help` parameter to display a list
         # of avaialable thread pools)
         #
@@ -34,21 +43,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html
         #
         def thread_pool(arguments={})
-          valid_params = [
-            :full_id,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          thread_pool_request_for(arguments).body
+        end
 
+        def thread_pool_request_for(arguments={})
           method = HTTP_GET
           path   = "_cat/thread_pool"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_THREAD_POOL_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

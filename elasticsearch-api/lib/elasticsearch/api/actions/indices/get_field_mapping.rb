@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_GET_FIELD_MAPPING_PARAMS = [
+          :include_defaults,
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze
+
         # Return the mapping definition for specific field (or fields)
         #
         # @example Get mapping for a specific field across all indices
@@ -34,14 +42,11 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments={})
+          get_field_mapping_request_for(arguments).body
+        end
+
+        def get_field_mapping_request_for(arguments={})
           raise ArgumentError, "Required argument 'field' missing" unless arguments[:field]
-          valid_params = [
-            :include_defaults,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-          ]
 
           method = HTTP_GET
           path   = Utils.__pathify(
@@ -51,10 +56,10 @@ module Elasticsearch
                      'field',
                      Utils.__listify(arguments[:field])
                    )
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_GET_FIELD_MAPPING_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

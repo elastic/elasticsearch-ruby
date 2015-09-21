@@ -3,6 +3,8 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_CREATE_PARAMS = [ :timeout ].freeze
+
         # Create an index.
         #
         # Pass the index `settings` and `mappings` in the `:body` attribute.
@@ -65,16 +67,18 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/
         #
         def create(arguments={})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-          valid_params = [ :timeout ]
+          create_request_for(arguments).body
+        end
 
+        def create_request_for(arguments={})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__escape(arguments[:index])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_CREATE_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

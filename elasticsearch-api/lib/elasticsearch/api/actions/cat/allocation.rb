@@ -3,6 +3,15 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_ALLOCATION_PARAMS = [
+          :bytes,
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+          ].freeze
+
         # Return shard allocation information
         #
         # @example Display allocation for all nodes in the cluster
@@ -42,26 +51,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html
         #
         def allocation(arguments={})
-          valid_params = [
-            :bytes,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          allocation_request_for(arguments).body
+        end
 
+        def allocation_request_for(arguments={})
           node_id = arguments.delete(:node_id)
 
           method = HTTP_GET
 
           path   = Utils.__pathify '_cat/allocation', Utils.__listify(node_id)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_ALLOCATION_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

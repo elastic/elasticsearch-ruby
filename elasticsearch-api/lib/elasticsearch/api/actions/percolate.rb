@@ -2,6 +2,19 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_PERCOLATE_PARAMS = [
+        :routing,
+        :preference,
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :percolate_index,
+        :percolate_type,
+        :percolate_format,
+        :version,
+        :version_type
+      ].freeze
+
       # Return names of queries matching a document.
       #
       # Percolator allows you to register queries and then evaluate a document against them:
@@ -75,20 +88,12 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html
       #
       def percolate(arguments={})
+        percolate_request_for(arguments).body
+      end
+
+      def percolate_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
-
-        valid_params = [
-          :routing,
-          :preference,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :percolate_index,
-          :percolate_type,
-          :percolate_format,
-          :version,
-          :version_type ]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
@@ -96,10 +101,10 @@ module Elasticsearch
                                  arguments[:id],
                                  '_percolate'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_PERCOLATE_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

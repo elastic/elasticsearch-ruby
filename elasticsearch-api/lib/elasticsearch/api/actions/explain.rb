@@ -2,6 +2,24 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_EXPLAIN_PARAMS = [
+        :analyze_wildcard,
+        :analyzer,
+        :default_operator,
+        :df,
+        :fields,
+        :lenient,
+        :lowercase_expanded_terms,
+        :parent,
+        :preference,
+        :q,
+        :routing,
+        :source,
+        :_source,
+        :_source_include,
+        :_source_exclude
+      ].freeze
+
       # Return information if and how well a document matches a query.
       #
       # The returned information contains a `_score` and its explanation, if the document matches the query.
@@ -43,26 +61,13 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/explain/
       #
       def explain(arguments={})
+        explain_request_for(arguments).body
+      end
+
+      def explain_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-
-        valid_params = [
-          :analyze_wildcard,
-          :analyzer,
-          :default_operator,
-          :df,
-          :fields,
-          :lenient,
-          :lowercase_expanded_terms,
-          :parent,
-          :preference,
-          :q,
-          :routing,
-          :source,
-          :_source,
-          :_source_include,
-          :_source_exclude ]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
@@ -70,12 +75,12 @@ module Elasticsearch
                                  Utils.__escape(arguments[:id]),
                                  '_explain'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_EXPLAIN_PARAMS
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

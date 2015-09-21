@@ -2,6 +2,8 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_MSEARCH_PARAMS = [ :search_type ].freeze
+
       # Perform multiple search operations in a single request.
       #
       # Pass the search definitions in the `:body` argument
@@ -36,13 +38,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/multi-search/
       #
       def msearch(arguments={})
+        msearch_request_for(arguments).body
+      end
+
+      def msearch_request_for(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        valid_params = [ :search_type ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_msearch' )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_MSEARCH_PARAMS
         body   = arguments[:body]
 
         case
@@ -67,7 +72,7 @@ module Elasticsearch
           payload = body
         end
 
-        perform_request(method, path, params, payload).body
+        perform_request(method, path, params, payload)
       end
     end
   end

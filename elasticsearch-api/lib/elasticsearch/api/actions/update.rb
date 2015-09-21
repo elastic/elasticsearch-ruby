@@ -2,6 +2,24 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_UPDATE_PARAMS = [
+        :consistency,
+        :fields,
+        :lang,
+        :parent,
+        :percolate,
+        :refresh,
+        :replication,
+        :retry_on_conflict,
+        :routing,
+        :script,
+        :timeout,
+        :timestamp,
+        :ttl,
+        :version,
+        :version_type
+      ].freeze
+
       # Update a document without sending the whole document in the request ("partial update").
       #
       # Send either a partial document (`doc` ) which will be deeply merged into an existing document,
@@ -62,26 +80,17 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/update/
       #
       def update(arguments={})
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { update_request_for(arguments).body }
+        else
+          update_request_for(arguments).body
+        end
+      end
+
+      def update_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-
-        valid_params = [
-          :consistency,
-          :fields,
-          :lang,
-          :parent,
-          :percolate,
-          :refresh,
-          :replication,
-          :retry_on_conflict,
-          :routing,
-          :script,
-          :timeout,
-          :timestamp,
-          :ttl,
-          :version,
-          :version_type ]
 
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
@@ -89,16 +98,12 @@ module Elasticsearch
                                  Utils.__escape(arguments[:id]),
                                  '_update'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_UPDATE_PARAMS
         body   = arguments[:body]
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-        else
-          perform_request(method, path, params, body).body
-        end
+        perform_request(method, path, params, body)
       end
     end
   end

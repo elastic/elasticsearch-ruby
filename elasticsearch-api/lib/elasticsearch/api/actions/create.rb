@@ -29,6 +29,10 @@ module Elasticsearch
       def create(arguments={})
         index arguments.update :op_type => 'create'
       end
+
+      def create_request_for(arguments={})
+        index_request_for arguments.update :op_type => 'create'
+      end
     end
   end
 end

@@ -2,6 +2,11 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_SCROLL_PARAMS = [
+        :scroll,
+        :scroll_id
+      ].freeze
+
       # Efficiently iterate over a large result set.
       #
       # When using `from` and `size` to return a large result sets, performance drops as you "paginate" in the set,
@@ -44,16 +49,16 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/search/search-type/
       #
       def scroll(arguments={})
+        scroll_request_for(arguments).body
+      end
+
+      def scroll_request_for(arguments={})
         method = HTTP_GET
         path   = "_search/scroll"
-        valid_params = [
-          :scroll,
-          :scroll_id ]
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_SCROLL_PARAMS
         body   = arguments[:body] || params.delete(:scroll_id)
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

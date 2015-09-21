@@ -3,6 +3,16 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_FLUSH_PARAMS = [
+          :force,
+          :full,
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :refresh
+        ].freeze
+
         # "Flush" the index or indices.
         #
         # The "flush" operation clears the transaction log and memory and writes data to disk.
@@ -29,22 +39,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/
         #
         def flush(arguments={})
-          valid_params = [
-            :force,
-            :full,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :refresh ]
+          flush_request_for(arguments).body
+        end
 
+        def flush_request_for(arguments={})
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_flush'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_FLUSH_PARAMS
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

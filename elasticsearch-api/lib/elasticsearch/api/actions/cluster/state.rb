@@ -3,6 +3,16 @@ module Elasticsearch
     module Cluster
       module Actions
 
+        VALID_STATE_PARAMS = [
+          :metric,
+          :index_templates,
+          :local,
+          :master_timeout,
+          :flat_settings,
+          :expand_wildcards,
+          :ignore_unavailable
+        ].freeze
+
         # Get information about the cluster state (indices settings, allocations, etc)
         #
         # @example
@@ -27,18 +37,13 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-state/
         #
         def state(arguments={})
+          state_request_for(arguments).body
+        end
+
+        def state_request_for(arguments={})
           arguments = arguments.clone
           index     = arguments.delete(:index)
           metric    = arguments.delete(:metric)
-
-          valid_params = [
-            :metric,
-            :index_templates,
-            :local,
-            :master_timeout,
-            :flat_settings,
-            :expand_wildcards,
-            :ignore_unavailable ]
 
           method = HTTP_GET
           path   = "_cluster/state"
@@ -47,7 +52,7 @@ module Elasticsearch
                                    Utils.__listify(metric),
                                    Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_STATE_PARAMS
 
           [:index_templates].each do |key|
             params[key] = Utils.__listify(params[key]) if params[key]
@@ -55,7 +60,7 @@ module Elasticsearch
 
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

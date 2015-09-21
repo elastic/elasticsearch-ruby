@@ -3,6 +3,14 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_NODES_PARAMS = [
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display information about cluster topology and nodes statistics
         #
         # @example Display basic information about nodes in the cluster (host, node name, memory usage, master, etc.)
@@ -36,22 +44,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html
         #
         def nodes(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          nodes_request_for(arguments).body
+        end
 
+        def nodes_request_for(arguments={})
           method = HTTP_GET
           path   = "_cat/nodes"
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_NODES_PARAMS
           params[:h] = Utils.__listify(params[:h], :escape => false) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

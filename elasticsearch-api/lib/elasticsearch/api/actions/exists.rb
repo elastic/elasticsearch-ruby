@@ -2,6 +2,14 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_EXISTS_PARAMS = [
+        :parent,
+        :preference,
+        :realtime,
+        :refresh,
+        :routing
+      ].freeze
+
       # Return true if the specified document exists, false otherwise.
       #
       # @example
@@ -21,28 +29,25 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/get/
       #
       def exists(arguments={})
+        Utils.__rescue_from_not_found do
+          exists_request_for(arguments).status == 200
+        end
+      end
+
+      def exists_request_for(arguments={})
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         arguments[:type] ||= UNDERSCORE_ALL
-
-        valid_params = [
-          :parent,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing ]
 
         method = HTTP_HEAD
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_EXISTS_PARAMS
         body   = nil
 
-        Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body).status == 200 ? true : false
-        end
+        perform_request(method, path, params, body)
       end
 
       alias_method :exists?, :exists

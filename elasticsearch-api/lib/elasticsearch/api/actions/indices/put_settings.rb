@@ -3,6 +3,15 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_PUT_SETTINGS_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :master_timeout,
+          :flat_settings
+        ].freeze
+
         # Update the settings for one or multiple indices.
         #
         # @example Change the number of replicas for all indices
@@ -42,23 +51,18 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-update-settings/
         #
         def put_settings(arguments={})
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          put_settings_request_for(arguments).body
+        end
 
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :master_timeout,
-            :flat_settings
-          ]
+        def put_settings_request_for(arguments={})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_PUT_SETTINGS_PARAMS
           body   = arguments[:body]
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

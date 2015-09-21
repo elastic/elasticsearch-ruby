@@ -3,6 +3,12 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_RECOVERY_PARAMS = [
+          :detailed,
+          :active_only,
+          :human
+        ].freeze
+
         # Return information about shard recovery for one or more indices
         #
         # @example Get recovery information for a single index
@@ -25,16 +31,16 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html
         #
         def recovery(arguments={})
-          valid_params = [
-            :detailed,
-            :active_only,
-            :human ]
+          recovery_request_for(arguments).body
+        end
+
+        def recovery_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_recovery'
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_RECOVERY_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

@@ -3,6 +3,19 @@ module Elasticsearch
     module Nodes
       module Actions
 
+        VALID_STATS_PARAMS = [
+          :metric,
+          :index_metric,
+          :node_id,
+          :completion_fields,
+          :fielddata_fields,
+          :fields,
+          :groups,
+          :human,
+          :level,
+          :types
+        ].freeze
+
         # Returns statistical information about nodes in the cluster.
         #
         # @example Return statistics about JVM
@@ -41,19 +54,11 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
         #
         def stats(arguments={})
-          arguments = arguments.clone
+          stats_request_for(arguments).body
+        end
 
-          valid_params = [
-            :metric,
-            :index_metric,
-            :node_id,
-            :completion_fields,
-            :fielddata_fields,
-            :fields,
-            :groups,
-            :human,
-            :level,
-            :types ]
+        def stats_request_for(arguments={})
+          arguments = arguments.clone
 
           method = HTTP_GET
 
@@ -63,7 +68,7 @@ module Elasticsearch
                                    Utils.__listify(arguments.delete(:metric)),
                                    Utils.__listify(arguments.delete(:index_metric))
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_STATS_PARAMS
 
           [:completion_fields, :fielddata_fields, :fields, :groups, :types].each do |key|
             params[key] = Utils.__listify(params[key]) if params[key]
@@ -71,7 +76,7 @@ module Elasticsearch
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

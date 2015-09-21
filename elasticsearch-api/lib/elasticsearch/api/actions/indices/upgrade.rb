@@ -3,6 +3,13 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_UPGRADE_PARAMS = [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :wait_for_completion
+        ].freeze
+
         # Upgrade the index or indices to the latest Lucene format.
         #
         # @option arguments [List] :index A comma-separated list of index names;
@@ -19,18 +26,16 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html
         #
         def upgrade(arguments={})
-          valid_params = [
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :wait_for_completion ]
+          upgrade_request_for(arguments).body
+        end
 
+        def upgrade_request_for(arguments={})
           method = HTTP_POST
           path   = "_upgrade"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_UPGRADE_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

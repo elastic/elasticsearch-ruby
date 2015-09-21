@@ -3,6 +3,8 @@ module Elasticsearch
     module Snapshot
       module Actions
 
+        VALID_STATUS_PARAMS = [ :master_timeout ].freeze
+
         # Return information about a running snapshot
         #
         # @example Return information about all currently running snapshots
@@ -20,19 +22,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_snapshot_status
         #
         def status(arguments={})
-          valid_params = [
-            :master_timeout ]
+          status_request_for(arguments).body
+        end
 
+        def status_request_for(arguments={})
           repository = arguments.delete(:repository)
           snapshot   = arguments.delete(:snapshot)
 
           method = HTTP_GET
 
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__escape(snapshot), '_status')
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_STATUS_PARAMS
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

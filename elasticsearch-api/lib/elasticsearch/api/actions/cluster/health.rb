@@ -3,6 +3,17 @@ module Elasticsearch
     module Cluster
       module Actions
 
+        VALID_HEALTH_PARAMS = [
+          :level,
+          :local,
+          :master_timeout,
+          :timeout,
+          :wait_for_active_shards,
+          :wait_for_nodes,
+          :wait_for_relocating_shards,
+          :wait_for_status
+        ].freeze
+
         # Returns information about cluster "health".
         #
         # @example Get the cluster health information
@@ -30,23 +41,17 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-health/
         #
         def health(arguments={})
-          valid_params = [
-            :level,
-            :local,
-            :master_timeout,
-            :timeout,
-            :wait_for_active_shards,
-            :wait_for_nodes,
-            :wait_for_relocating_shards,
-            :wait_for_status ]
+          health_request_for(arguments).body
+        end
 
+        def health_request_for(arguments={})
           method = HTTP_GET
           path   = "_cluster/health"
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_HEALTH_PARAMS
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

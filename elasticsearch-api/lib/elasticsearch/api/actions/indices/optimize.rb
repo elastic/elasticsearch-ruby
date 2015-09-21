@@ -3,6 +3,21 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_OPTIMIZE_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :flush,
+          :force,
+          :master_timeout,
+          :max_num_segments,
+          :only_expunge_deletes,
+          :operation_threading,
+          :refresh,
+          :wait_for_merge
+        ].freeze
+
         # Perform an index optimization.
         #
         # The "optimize" operation merges the index segments, increasing search performance.
@@ -44,27 +59,17 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/
         #
         def optimize(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :flush,
-            :force,
-            :master_timeout,
-            :max_num_segments,
-            :only_expunge_deletes,
-            :operation_threading,
-            :refresh,
-            :wait_for_merge ]
+          optimize_request_for(arguments).body
+        end
 
+        def optimize_request_for(arguments={})
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_OPTIMIZE_PARAMS
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

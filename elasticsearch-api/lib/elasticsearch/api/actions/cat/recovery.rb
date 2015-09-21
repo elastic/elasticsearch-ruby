@@ -3,6 +3,15 @@ module Elasticsearch
     module Cat
       module Actions
 
+        VALID_RECOVERY_PARAMS = [
+          :bytes,
+          :local,
+          :master_timeout,
+          :h,
+          :help,
+          :v
+        ].freeze
+
         # Display information about the recovery process (allocating shards)
         #
         # @example Display information for all indices
@@ -46,26 +55,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html
         #
         def recovery(arguments={})
-          valid_params = [
-            :bytes,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v ]
+          recovery_request_for(arguments).body
+        end
 
+        def recovery_request_for(arguments={})
           index = arguments.delete(:index)
 
           method = HTTP_GET
 
           path   = Utils.__pathify '_cat/recovery', Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_RECOVERY_PARAMS
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

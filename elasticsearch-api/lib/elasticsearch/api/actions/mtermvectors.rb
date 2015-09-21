@@ -2,6 +2,20 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_MTERMVECTORS_PARAMS = [
+        :ids,
+        :term_statistics,
+        :field_statistics,
+        :fields,
+        :offsets,
+        :positions,
+        :payloads,
+        :preference,
+        :realtime,
+        :routing,
+        :parent
+      ].freeze
+
       # Returns information and statistics about terms in the fields of multiple documents
       # in a single request/response. The semantics are similar to the {#mget} API.
       #
@@ -35,19 +49,10 @@ module Elasticsearch
       # @see #termvector
       #
       def mtermvectors(arguments={})
-        valid_params = [
-          :ids,
-          :term_statistics,
-          :field_statistics,
-          :fields,
-          :offsets,
-          :positions,
-          :payloads,
-          :preference,
-          :realtime,
-          :routing,
-          :parent ]
+        mtermvectors_request_for(arguments).body
+      end
 
+      def mtermvectors_request_for(arguments={})
         ids = arguments.delete(:ids)
 
         method = HTTP_GET
@@ -55,7 +60,7 @@ module Elasticsearch
                                  Utils.__escape(arguments[:type]),
                                  '_mtermvectors'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_MTERMVECTORS_PARAMS
 
         if ids
           body = { :ids => ids }
@@ -63,7 +68,7 @@ module Elasticsearch
           body = arguments[:body]
         end
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

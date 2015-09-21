@@ -3,6 +3,14 @@ module Elasticsearch
     module Indices
       module Actions
 
+        VALID_GET_MAPPING_PARAMS = [
+          :ignore_indices,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :local
+        ].freeze
+
         # Return the mapping definitions for all indices, or specific indices/types.
         #
         # @example Get all mappings in the cluster
@@ -34,22 +42,18 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html
         #
         def get_mapping(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :local
-          ]
+          get_mapping_request_for(arguments).body
+        end
 
+        def get_mapping_request_for(arguments={})
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                    '_mapping',
                                    Utils.__listify(arguments[:type])
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, VALID_GET_MAPPING_PARAMS
           body = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body)
         end
       end
     end

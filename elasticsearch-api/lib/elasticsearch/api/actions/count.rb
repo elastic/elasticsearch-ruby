@@ -2,6 +2,22 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_COUNT_PARAMS = [
+        :ignore_unavailable,
+        :allow_no_indices,
+        :expand_wildcards,
+        :min_score,
+        :preference,
+        :routing,
+        :q,
+        :analyzer,
+        :analyze_wildcard,
+        :default_operator,
+        :df,
+        :lenient,
+        :lowercase_expanded_terms
+      ].freeze
+
       # Get the number of documents for the cluster, index, type, or a query.
       #
       # @example Get the number of all documents in the cluster
@@ -45,28 +61,17 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/count/
       #
       def count(arguments={})
-        valid_params = [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :min_score,
-          :preference,
-          :routing,
-          :q,
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :lenient,
-          :lowercase_expanded_terms ]
+        count_request_for(arguments).body
+      end
 
+      def count_request_for(arguments={})
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_COUNT_PARAMS
         body   = arguments[:body]
 
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body)
       end
     end
   end

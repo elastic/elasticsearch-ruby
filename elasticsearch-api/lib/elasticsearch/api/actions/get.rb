@@ -2,6 +2,21 @@ module Elasticsearch
   module API
     module Actions
 
+      VALID_GET_PARAMS = [
+        :fields,
+        :parent,
+        :preference,
+        :realtime,
+        :refresh,
+        :routing,
+        :version,
+        :version_type,
+        :_source,
+        :_source_include,
+        :_source_exclude,
+        :_source_transform
+      ].freeze
+
       # Return a specified document.
       #
       # The response contains full document, as stored in Elasticsearch, incl. `_source`, `_version`, etc.
@@ -33,39 +48,29 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/get/
       #
       def get(arguments={})
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { get_request_for(arguments).body }
+        else
+          get_request_for(arguments).body
+        end
+      end
+
+      def get_request_for(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= UNDERSCORE_ALL
-
-        valid_params = [
-          :fields,
-          :parent,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing,
-          :version,
-          :version_type,
-          :_source,
-          :_source_include,
-          :_source_exclude,
-          :_source_transform]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, VALID_GET_PARAMS
         body   = nil
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-        else
-          perform_request(method, path, params, body).body
-        end
+        perform_request(method, path, params, body)
       end
     end
   end
