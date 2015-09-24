@@ -52,6 +52,8 @@ module Elasticsearch
       # @option arguments [Boolean] :refresh Refresh the index after performing the operation
       # @option arguments [String]  :replication Explicitly set the replication type (options: sync, async)
       # @option arguments [Time]    :timeout Explicit operation timeout
+      # @option arguments [String]  :fields Default comma-separated list of fields to return
+      #                             in the response for updates
       #
       # @return [Hash] Deserialized Elasticsearch response
       #
@@ -63,7 +65,8 @@ module Elasticsearch
           :refresh,
           :replication,
           :type,
-          :timeout ]
+          :timeout,
+          :fields ]
 
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
