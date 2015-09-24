@@ -21,9 +21,9 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards ]
         method = 'GET'
-        path   = "_field_stats"
+        path   = Utils.__pathify Utils.__escape(arguments[:index]), "_field_stats"
         params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = nil
+        body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
