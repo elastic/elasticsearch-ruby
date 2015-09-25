@@ -24,7 +24,7 @@ Turn.config.format = :pretty
 # Launch test cluster
 #
 if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
-  Elasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: "-D es.repositories.url.allowed_urls=http://snapshot.test*")
+  Elasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: "-D es.repositories.url.allowed_urls=http://snapshot.test* -D es.path.repo=/tmp")
 end
 
 # Register `at_exit` handler for server shutdown.
@@ -290,6 +290,14 @@ suites.each do |suite|
     setup do
       $client.indices.delete index: '_all'
       $client.indices.delete_template name: '*'
+      $client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
+      $client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_repo_create_1', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_repo_restore_1', ignore: 404
+      # FIXME: This shouldn't be needed -------------
+      FileUtils.rm_rf('/tmp/test_repo_create_1_loc')
+      FileUtils.rm_rf('/tmp/test_repo_restore_1_loc')
+      # ---------------------------------------------
       $results = {}
       $stash   = {}
     end
