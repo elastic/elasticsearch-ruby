@@ -124,6 +124,8 @@ module Elasticsearch
                 -D es.script.indexed=on \
                 -D es.node.test=true \
                 -D es.node.bench=true \
+                -D es.path.repo=/tmp \
+                -D es.repositories.url.allowed_urls=http://snapshot.test* \
                 -D es.logger.level=DEBUG \
                 #{arguments[:es_params]} \
                 > /dev/null
