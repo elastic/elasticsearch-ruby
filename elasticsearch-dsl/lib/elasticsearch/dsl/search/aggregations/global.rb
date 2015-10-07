@@ -16,7 +16,7 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-global-aggregation.html
         #
         class Global
-          include BaseComponent
+          include BaseAggregationComponent
         end
 
       end
