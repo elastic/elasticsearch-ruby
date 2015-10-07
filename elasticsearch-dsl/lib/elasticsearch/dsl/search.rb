@@ -38,7 +38,7 @@ module Elasticsearch
         attr_reader :aggregations
 
         def initialize(*args, &block)
-          @options = Options.new
+          @options = Options.new *args
           instance_eval(&block) if block
         end
 
