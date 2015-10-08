@@ -60,6 +60,10 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/bulk/
       #
       def bulk(arguments={})
+        arguments = arguments.clone
+
+        type      = arguments.delete(:type)
+
         valid_params = [
           :consistency,
           :refresh,
@@ -69,7 +73,7 @@ module Elasticsearch
           :fields ]
 
         method = HTTP_POST
-        path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(arguments[:type]), '_bulk'
+        path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(type), '_bulk'
 
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]

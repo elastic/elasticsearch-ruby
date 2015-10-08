@@ -87,6 +87,16 @@ module Elasticsearch
           subject.bulk :index => 'foo^bar', :body => []
         end
 
+        should "not duplicate the type" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'myindex/mytype/_bulk', url
+            assert_empty params
+            true
+          end.returns(FakeResponse.new)
+
+          subject.bulk :index => 'myindex', :type => 'mytype', :body => []
+        end
+
       end
 
     end
