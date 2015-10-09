@@ -75,7 +75,7 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
       assert_equal 'Node 1',       hosts.first['name']
     end
 
-    should "return an array of hosts as hashes when hostname exists" do
+    should "return an array of hosts as hostnames when a hostname is returned" do
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {
           "ok" : true,

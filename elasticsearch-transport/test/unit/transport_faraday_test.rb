@@ -136,7 +136,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
     end
 
-    should "set the credentials if exist in options" do
+    should "set the credentials if they exist in options" do
       transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
                               :options => { :user => 'foo', :password => 'bar' }
       assert_equal 'Basic Zm9vOmJhcg==', transport.connections.first.connection.headers['Authorization']
@@ -157,7 +157,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_equal 'https://foobar:1234/',       transport.connections.first.connection.url_prefix.to_s
     end
 
-    should "set connection scheme to https if exist in options" do
+    should "set connection scheme to https if it exist in options" do
       transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234} ],
                               :options => { :scheme => 'https' }
 

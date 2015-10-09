@@ -2,16 +2,16 @@ module Elasticsearch
   module Transport
     module Transport
 
-      # Handles node discovery ("sniffing").
+      # Handles node discovery ("sniffing")
       #
       class Sniffer
-        ES1_RE_URL  = /\[([^\/]*)\/([^:]*):([0-9]+)\]/
-        ES2_RE_URL  = /([^:]*):([0-9]+)/
+        ES1_RE_URL  = /\[([^\/]*)?\/?([^:]*):([0-9]+)\]/
+        ES2_RE_URL  = /([^\/]*)?\/?([^:]*):([0-9]+)/
 
         attr_reader   :transport
         attr_accessor :timeout
 
-        # @param transport [Object] A transport instance.
+        # @param transport [Object] A transport instance
         #
         def initialize(transport)
           @transport = transport
@@ -34,9 +34,9 @@ module Elasticsearch
               addr_str = info["#{transport.protocol}_address"].to_s
               matches = addr_str.match(ES1_RE_URL) || addr_str.match(ES2_RE_URL)
               if matches
-                # TODO: Implement lightweight "indifferent access" here
-                host = (matches[1].nil? || matches[1].empty?) ? matches[2] : matches[1]
-                info.merge :host => host, :port => matches[3], :id => id
+                host = matches[1].empty? ? matches[2] : matches[1]
+                port = matches[3]
+                info.merge :host => host, :port => port, :id => id
               end
             end.compact
 
