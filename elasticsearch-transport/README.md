@@ -90,6 +90,9 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
     Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
+**NOTE:** When specifying multiple hosts, you probably want to enable the `retry_on_failure` option to
+          perform a failed request on another node (see the _Retrying on Failures_ chapter).
+
 Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -- are handled automatically:
 
     Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
