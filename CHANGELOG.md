@@ -26,6 +26,12 @@
 * Added an argument to control clearing out the testing cluster
 * Fixed, that reloading connections works with SSL, authentication and proxy/Shield
 * Highlight the need to set `retry_on_failure` option with multiple hosts in documentation
+
+## DSL:0.1.2
+
+* Added fuzziness option to the "Match" query
+* Added the `format` option to range filter and query
+* Added, that `*args` are passed to the Options initializer
 ## 1.0.13
 
 ### Client
