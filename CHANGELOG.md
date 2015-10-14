@@ -1,3 +1,31 @@
+## 1.0.14
+
+* Clarified version support of Elasticsearch
+* Improved the `elasticsearch:build` Rake task to work with branch names
+
+### API
+
+* Added support for the `:ignore` option to the "Snapshot and Restore" API
+* Added support for the `:ignore` option to the Status API
+* Added the "Cat Nodeattrs" API
+* Added the "fields" parameter to the Bulk API
+* Added the "Render Search Template" API
+* Added the "Shard Stores" API
+* Added, that document ID is URL-escaped when percolating an existing document
+* Allow passing TEST_CLUSTER_PARAMS to the test cluster
+* Define the path to core REST tests dynamically based on Elasticsearch version
+* Fixed example in "Get Warmer" API
+* Fixed incorrect documentation and link in the "Clear Cache" API
+* Fixed integration tests for the "Snapshot and Restore" API
+* Fixed the incorrect path in "Field Stats" API and added support for the `body` argument
+* Fixed, that `type` is not added both to path and URL parameters in the Bulk API
+* Updated the examples in README and documentation (facets -> aggregations)
+
+### Client
+
+* Added an argument to control clearing out the testing cluster
+* Fixed, that reloading connections works with SSL, authentication and proxy/Shield
+* Highlight the need to set `retry_on_failure` option with multiple hosts in documentation
 ## 1.0.13
 
 ### Client
