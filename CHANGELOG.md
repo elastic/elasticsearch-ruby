@@ -32,6 +32,14 @@
 * Added fuzziness option to the "Match" query
 * Added the `format` option to range filter and query
 * Added, that `*args` are passed to the Options initializer
+
+## EXT:0.0.19
+
+* Added `es.path.repo` to the testing cluster
+* Added `path_logs` option to test cluster
+* Added the `testattr` attribute to the testing cluster
+* Changed the default network host for the testing cluster to "localhost", to enable new "multicast"
+
 ## 1.0.13
 
 ### Client
