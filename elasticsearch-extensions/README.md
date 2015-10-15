@@ -90,6 +90,9 @@ You can control the cluster configuration with environment variables as well:
     TEST_CLUSTER_NAME=my_testing_cluster \
     ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; Elasticsearch::Extensions::Test::Cluster.start"
 
+To prevent deleting data and configurations when the cluster is started, for example in a development environment,
+use the `clear_cluster: false` option or the `TEST_CLUSTER_CLEAR=false` environment variable.
+
 [Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster)
 
 ### Test::StartupShutdown
