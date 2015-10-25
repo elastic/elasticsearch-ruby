@@ -83,7 +83,7 @@ url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT']
 $client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
-$client.transport.tracer = tracer if ENV['CI']
+# $client.transport.tracer = tracer if ENV['CI']
 
 # Store Elasticsearch version
 #
