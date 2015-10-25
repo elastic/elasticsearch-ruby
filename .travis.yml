@@ -2,6 +2,8 @@
 # Configuration file for http://travis-ci.org/#!/elasticsearch/elasticsearch-ruby
 # -------------------------------------------------------------------------------
 
+sudo: false
+
 language: ruby
 
 branches:
