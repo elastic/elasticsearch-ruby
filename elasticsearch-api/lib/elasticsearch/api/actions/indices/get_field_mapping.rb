@@ -34,7 +34,11 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments={})
-          raise ArgumentError, "Required argument 'field' missing" unless arguments[:field]
+          arguments = arguments.clone
+
+          fields = arguments.delete(:field) || arguments.delete(:fields)
+          raise ArgumentError, "Required argument 'field' missing" unless fields
+
           valid_params = [
             :include_defaults,
             :ignore_indices,
@@ -49,7 +53,7 @@ module Elasticsearch
                      '_mapping',
                      Utils.__listify(arguments[:type]),
                      'field',
-                     Utils.__listify(arguments[:field])
+                     Utils.__listify(fields)
                    )
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
