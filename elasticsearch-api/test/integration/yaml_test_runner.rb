@@ -24,7 +24,7 @@ Turn.config.format = :pretty
 # Launch test cluster
 #
 if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
-  es_params = "-D es.repositories.url.allowed_urls=http://snapshot.test* -D es.path.repo=/tmp -D es.node.testattr=test " + ENV['TEST_CLUSTER_PARAMS']
+  es_params = "-D es.repositories.url.allowed_urls=http://snapshot.test* -D es.path.repo=/tmp -D es.node.testattr=test " + ENV['TEST_CLUSTER_PARAMS'].to_s
   Elasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: es_params )
 end
 
