@@ -65,6 +65,14 @@ module Elasticsearch
       #
       # @option arguments [Hash] :transport_options Options to be passed to the `Faraday::Connection` constructor
       #
+      # @option arguments [Symbol] :request_builder Type of request to be built by the `Faraday::Request` builder
+      #
+      # @option arguments [Hash] :request_builder_options Options to be passed to the `Faraday::Request` builder
+      #
+      # @option arguments [Symbol] :response_builder Type of response to be built by the `Faraday::Response` builder
+      #
+      # @option arguments [Hash] :response_builder_options Options to be passed to the `Faraday::Response` builder
+      #
       # @option arguments [Constant] :transport_class  A specific transport class to use, will be initialized by
       #                                                the client and passed hosts and all arguments
       #
@@ -103,6 +111,8 @@ module Elasticsearch
         @transport       = arguments[:transport] || begin
           if transport_class == Transport::HTTP::Faraday
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
+              faraday.request(arguments[:request_builder], arguments[:request_builder_options]) if arguments[:request_builder]
+              faraday.response(arguments[:response_builder], arguments[:response_builder_options]) if arguments[:response_builder]
               faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
             end
           else
