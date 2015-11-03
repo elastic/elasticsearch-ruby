@@ -79,7 +79,9 @@ module Elasticsearch
       # @option arguments [String] :send_get_body_as Specify the HTTP method to use for GET requests with a body.
       #                                              (Default: GET)
       #
-      def initialize(arguments={})
+      # @yield [faraday] Gives `Faraday::Connection` instance. You can configure it directly in this block.
+      #
+      def initialize(arguments={}, &block)
         hosts = arguments[:hosts] || \
                 arguments[:host]  || \
                 arguments[:url]   || \
@@ -103,7 +105,11 @@ module Elasticsearch
         @transport       = arguments[:transport] || begin
           if transport_class == Transport::HTTP::Faraday
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
-              faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+              if block
+                block.call faraday
+              else
+                faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+              end
             end
           else
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)

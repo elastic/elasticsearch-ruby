@@ -22,8 +22,8 @@ module Elasticsearch
 
     # A convenience wrapper for {::Elasticsearch::Transport::Client#initialize}.
     #
-    def new(arguments={})
-      Elasticsearch::Transport::Client.new(arguments)
+    def new(arguments={}, &block)
+      Elasticsearch::Transport::Client.new(arguments, &block)
     end
     extend self
   end
