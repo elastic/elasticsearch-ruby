@@ -270,5 +270,30 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end unless JRUBY
     end
 
+    context "configuring Faraday" do
+      setup do
+        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
+        begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end
+      end
+
+      should "apply faraday adapter" do
+        c = Elasticsearch::Transport::Client.new do |faraday|
+          faraday.adapter :typhoeus
+        end
+        handlers = c.transport.connections.all.first.connection.builder.handlers
+
+        assert_includes handlers, Faraday::Adapter::Typhoeus
+      end
+
+      should "apply faraday response logger" do
+        c = Elasticsearch::Transport::Client.new do |faraday|
+          faraday.response :logger
+        end
+        handlers = c.transport.connections.all.first.connection.builder.handlers
+
+        assert_includes handlers, Faraday::Response::Logger
+      end
+    end
+
   end
 end
