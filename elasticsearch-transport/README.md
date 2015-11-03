@@ -289,6 +289,16 @@ To configure the _Faraday_ instance, pass a configuration block to the transport
     #
     client = Elasticsearch::Client.new transport: transport
 
+And you can also configure the _Faraday_ instance directly by using block:
+
+    require 'typhoeus'
+    require 'typhoeus/adapters/faraday'
+
+    client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
+      f.response :logger
+      f.adapter  :typhoeus
+    end
+
 To pass options to the
 [`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
 constructor, use the `transport_options` key:
