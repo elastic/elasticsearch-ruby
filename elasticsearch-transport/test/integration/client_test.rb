@@ -11,8 +11,9 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
   context "Elasticsearch client" do
     teardown do
-      begin; Object.send(:remove_const, :Typhoeus); rescue NameError; end
-      begin; Object.send(:remove_const, :Patron); rescue NameError; end
+      begin; Object.send(:remove_const, :Typhoeus);                rescue NameError; end
+      begin; Object.send(:remove_const, :Patron);                  rescue NameError; end
+      begin; Net::HTTP.send(:remove_const, :Persistent); rescue NameError; end
     end
 
     setup do
@@ -69,11 +70,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         logger: (ENV['QUIET'] ? nil : @logger)
       ) do |client|
         client.headers['Content-Type'] = 'application/yaml'
-        client.adapter Faraday.default_adapter
       end
-      @client.perform_request 'PUT', 'myindex/mydoc/1', {}, {foo: 'bar'}
 
-      response = @client.perform_request 'GET', 'myindex/_search'
+      response = @client.perform_request 'GET', '_cluster/health'
+
       assert response.body.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
       assert_equal 'application/yaml', response.headers['content-type']
     end
@@ -151,9 +151,26 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     end
 
     context "with Faraday adapters" do
+      should "set the adapter with a block" do
+        require 'net/http/persistent'
+
+        client = Elasticsearch::Transport::Client.new url: "localhost:#{@port}" do |f|
+          f.adapter :net_http_persistent
+        end
+
+        assert_equal 'Faraday::Adapter::NetHttpPersistent',
+                     client.transport.connections.first.connection.builder.handlers.first.name
+
+        response = @client.perform_request 'GET', '_cluster/health'
+        assert_equal 200, response.status
+      end
+
       should "automatically use the Patron client when loaded" do
         require 'patron'
         client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}"
+
+        assert_equal 'Faraday::Adapter::Patron',
+                      client.transport.connections.first.connection.builder.handlers.first.name
 
         response = @client.perform_request 'GET', '_cluster/health'
         assert_equal 200, response.status
