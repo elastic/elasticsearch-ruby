@@ -271,7 +271,29 @@ To use a specific adapter for _Faraday_, pass it as the `adapter` argument:
     client.transport.connections.first.connection.builder.handlers
     # => [Faraday::Adapter::NetHttpPersistent]
 
-To configure the _Faraday_ instance, pass a configuration block to the transport constructor:
+To pass options to the
+[`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
+constructor, use the `transport_options` key:
+
+    client = Elasticsearch::Client.new transport_options: {
+      request: { open_timeout: 1 },
+      headers: { user_agent:   'MyApp' },
+      params:  { :format => 'yaml' },
+      ssl:     { verify: false }
+    }
+
+To configure the _Faraday_ instance directly, use a block:
+
+    require 'typhoeus'
+    require 'typhoeus/adapters/faraday'
+
+    client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
+      f.response :logger
+      f.adapter  :typhoeus
+    end
+
+You can also initialize the transport class yourself, and pass it to the client constructor
+as the `transport` argument:
 
     require 'typhoeus'
     require 'typhoeus/adapters/faraday'
@@ -287,46 +309,6 @@ To configure the _Faraday_ instance, pass a configuration block to the transport
 
     # Pass the transport to the client
     #
-    client = Elasticsearch::Client.new transport: transport
-
-And you can also configure the _Faraday_ instance directly by using block:
-
-    require 'typhoeus'
-    require 'typhoeus/adapters/faraday'
-
-    client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
-      f.response :logger
-      f.adapter  :typhoeus
-    end
-
-To pass options to the
-[`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
-constructor, use the `transport_options` key:
-
-    client = Elasticsearch::Client.new transport_options: {
-      request: { open_timeout: 1 },
-      headers: { user_agent:   'MyApp' },
-      params:  { :format => 'yaml' },
-      ssl:     { verify: false }
-    }
-
-You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
-
-    require 'curb'
-    require 'elasticsearch/transport/transport/http/curb'
-
-    client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
-
-    client.transport.connections.first.connection
-    # => #<Curl::Easy http://localhost:9200/>
-
-It's possible to customize the _Curb_ instance by passing a block to the constructor as well
-(in this case, as an inline block):
-
-    transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-      hosts: [ { host: 'localhost', port: '9200' } ],
-      & lambda { |c| c.verbose = true }
-
     client = Elasticsearch::Client.new transport: transport
 
 Instead of passing the transport to the constructor, you can inject it at run time:
@@ -354,6 +336,25 @@ Instead of passing the transport to the constructor, you can inject it at run ti
     # Inject the transport to the client
     #
     client.transport = faraday_client
+
+You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transport implementation:
+
+    require 'curb'
+    require 'elasticsearch/transport/transport/http/curb'
+
+    client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+
+    client.transport.connections.first.connection
+    # => #<Curl::Easy http://localhost:9200/>
+
+It's possible to customize the _Curb_ instance by passing a block to the constructor as well
+(in this case, as an inline block):
+
+    transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+      hosts: [ { host: 'localhost', port: '9200' } ],
+      & lambda { |c| c.verbose = true }
+
+    client = Elasticsearch::Client.new transport: transport
 
 You can write your own transport implementation easily, by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required contract,

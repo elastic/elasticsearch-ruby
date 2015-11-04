@@ -63,7 +63,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_match /---\ncluster_name:/, response.body.to_s
     end
 
-    should "pass options to the transport faraday by block" do
+    should "pass options to the Faraday::Connection with a block" do
       @client = Elasticsearch::Client.new(
         host: "localhost:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger)
@@ -71,7 +71,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         client.headers['Content-Type'] = 'application/yaml'
         client.adapter Faraday.default_adapter
       end
-      @client.perform_request 'PUT', 'myindex/mydoc/1', {routing: 'XYZ'}, {foo: 'bar'}
+      @client.perform_request 'PUT', 'myindex/mydoc/1', {}, {foo: 'bar'}
 
       response = @client.perform_request 'GET', 'myindex/_search'
       assert response.body.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
