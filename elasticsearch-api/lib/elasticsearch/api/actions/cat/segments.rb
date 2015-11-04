@@ -10,6 +10,7 @@ module Elasticsearch
         #     puts client.cat.segments
         #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, m, g)
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [Boolean] :v Verbose mode. Display column headers
@@ -18,6 +19,7 @@ module Elasticsearch
         #
         def segments(arguments={})
           valid_params = [
+            :bytes,
             :h,
             :help,
             :v ]

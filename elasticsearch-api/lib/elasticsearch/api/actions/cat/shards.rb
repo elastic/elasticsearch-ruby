@@ -21,6 +21,10 @@ module Elasticsearch
         #
         #     puts client.cat.shards v: true
         #
+        # @example Display shard size in choice of units
+        #
+        #     puts client.cat.shards bytes: 'b'
+        #
         # @example Display only specific columns in the output (see the `help` parameter)
         #
         #     puts client.cat.shards h: ['node', 'index', 'shard', 'prirep', 'docs', 'store', 'merges.total']
@@ -49,6 +53,7 @@ module Elasticsearch
           valid_params = [
             :local,
             :master_timeout,
+            :bytes,
             :h,
             :help,
             :v ]
