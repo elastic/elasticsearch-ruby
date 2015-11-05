@@ -303,7 +303,6 @@ for example sign the requests for the [AWS Elasticsearch service](https://aws.am
                 credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_ACCESS_KEY']),
                 service_name: 'es',
                 region: 'us-east-1'
-      f.adapter :patron
     end
 
 You can also initialize the transport class yourself, and pass it to the client constructor
