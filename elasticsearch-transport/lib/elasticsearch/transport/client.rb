@@ -105,8 +105,10 @@ module Elasticsearch
         @transport       = arguments[:transport] || begin
           if transport_class == Transport::HTTP::Faraday
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
-              faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
-              block.call(faraday) if block
+              block.call faraday if block
+              unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
+                faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+              end
             end
           else
             transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
