@@ -158,8 +158,8 @@ module Elasticsearch
 
         body   = arguments[:body]
 
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-        params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields]) if params[:fielddata_fields]
+        params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
+        params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields], :escape => false) if params[:fielddata_fields]
 
         # FIX: Unescape the `filter_path` parameter due to __listify default behavior. Investigate.
         params[:filter_path] =  defined?(EscapeUtils) ? EscapeUtils.unescape_url(params[:filter_path]) : CGI.unescape(params[:filter_path]) if params[:filter_path]
