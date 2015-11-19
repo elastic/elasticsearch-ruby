@@ -47,6 +47,7 @@ module Elasticsearch
           @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
           @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
+          @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
         end
 
         # Returns a connection from the connection pool by delegating to {Connections::Collection#get_connection}.
@@ -192,6 +193,23 @@ module Elasticsearch
 
             connection.healthy! if connection.failures > 0
 
+            # Raise an exception so we can catch it for `retry_on_status`
+            __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
+
+          rescue Elasticsearch::Transport::Transport::ServerError => e
+            if @retry_on_status.include?(response.status)
+              logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
+              logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
+              if tries <= max_retries
+                retry
+              else
+                logger.fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries" if logger
+                raise e
+              end
+            else
+              raise e
+            end
+
           rescue *host_unreachable_exceptions => e
             logger.error "[#{e.class}] #{e.message} #{connection.host.inspect}" if logger
 
@@ -217,7 +235,8 @@ module Elasticsearch
           rescue Exception => e
             logger.fatal "[#{e.class}] #{e.message} (#{connection.host.inspect if connection})" if logger
             raise e
-          end
+
+          end #/begin
 
           duration = Time.now-start if logger || tracer
 

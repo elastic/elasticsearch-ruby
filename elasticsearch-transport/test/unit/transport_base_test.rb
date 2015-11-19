@@ -296,6 +296,53 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
   end unless RUBY_1_8
 
+  context "performing a request with retry on status" do
+    setup do
+      DummyTransportPerformer.any_instance.stubs(:connections).returns(stub :get_connection => stub_everything(:failures => 1))
+
+      logger = Logger.new(STDERR)
+      logger.level = Logger::DEBUG
+      DummyTransportPerformer.any_instance.stubs(:logger).returns(logger)
+      @block = Proc.new { |c, u| puts "ERROR" }
+    end
+
+    should "not retry when the status code does not match" do
+      @transport = DummyTransportPerformer.new :options => { :retry_on_status => 500 }
+      assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
+
+      @block.expects(:call).
+             returns(Elasticsearch::Transport::Transport::Response.new 400, 'Bad Request').
+             times(1)
+
+      @transport.logger.
+          expects(:warn).
+          with( regexp_matches(/Attempt \d to get response/) ).
+          never
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
+        @transport.perform_request('GET', '/', &@block)
+      end
+    end
+
+    should "retry when the status code does match" do
+      @transport = DummyTransportPerformer.new :options => { :retry_on_status => 500 }
+      assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
+
+      @block.expects(:call).
+             returns(Elasticsearch::Transport::Transport::Response.new 500, 'Internal Error').
+             times(4)
+
+      @transport.logger.
+          expects(:warn).
+          with( regexp_matches(/Attempt \d to get response/) ).
+          times(4)
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+        @transport.perform_request('GET', '/', &@block)
+      end
+    end
+  end  unless RUBY_1_8
+
   context "logging" do
     setup do
       @transport = DummyTransportPerformer.new :options => { :logger => Logger.new('/dev/null') }

@@ -150,6 +150,24 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
     end
 
+    context "with retrying on status" do
+      should "retry when the status does match" do
+        @client = Elasticsearch::Client.new \
+                  hosts: ["localhost:#{@port}"],
+                  logger: (ENV['QUIET'] ? nil : @logger),
+                  retry_on_status: 400
+
+        @client.transport.logger
+          .expects(:debug)
+          .with( regexp_matches(/Attempt \d to get response/) )
+          .times(4)
+
+        assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
+          @client.perform_request 'GET', '_foobar'
+        end
+      end
+    end
+
     context "with Faraday adapters" do
       should "set the adapter with a block" do
         require 'net/http/persistent'

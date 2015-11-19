@@ -56,6 +56,7 @@ module Elasticsearch
       #
       # @option arguments [Boolean,Number] :retry_on_failure   Retry X times when request fails before raising and
       #                                                        exception (false by default)
+      # @option arguments Array<Number> :retry_on_status Retry when specific status codes are returned
       #
       # @option arguments [Boolean] :reload_on_failure Reload connections after failure (false by default)
       #
