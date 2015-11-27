@@ -105,6 +105,16 @@ module Elasticsearch
               :selector => options[:selector]
           end
 
+          # Closes all connections by marking them as dead
+          # and closing the underlying HttpClient instances
+          #
+          # @return [Connections::Collection]
+          #
+          def __close_connections
+            @connections.each {|c| c.dead! }
+            @connections.all.each {|c| c.connection.close }
+          end
+
           # Returns an array of implementation specific connection errors.
           #
           # @return [Array]
