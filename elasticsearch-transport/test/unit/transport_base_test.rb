@@ -473,10 +473,26 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport = DummyTransport.new
     end
 
+    should "close connections" do
+      @transport.expects(:__close_connections)
+      @transport.__rebuild_connections :hosts => ['foo']
+    end
+
     should "should replace the connections" do
       assert_equal [], @transport.connections
       @transport.__rebuild_connections :hosts => ['foo', 'bar']
       assert_equal ['foo', 'bar'], @transport.connections
+    end
+  end
+
+  context "closing connections" do
+    setup do
+      @transport = DummyTransport.new
+    end
+
+    should "close connections" do
+      @transport.__close_connections
+      assert_equal @transport.connections, []
     end
   end
 
