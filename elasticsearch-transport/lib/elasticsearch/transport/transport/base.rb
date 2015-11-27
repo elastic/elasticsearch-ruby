@@ -96,17 +96,16 @@ module Elasticsearch
         def __rebuild_connections(arguments={})
           @hosts       = arguments[:hosts]    || []
           @options     = arguments[:options]  || {}
-          old_connections = @connections # set aside old connections
+          __close_connections # close old connections
           @connections = __build_connections
-          __close_connections(old_connections) # close old connections
         end
 
         # Closes the connections collection.
         #
         # @api private
         #
-        def __close_connections(connections)
-          # to be implemented by the transport
+        def __close_connections
+          @connections.each {|c| c.dead! }
         end
 
         # Log request and response information.

@@ -485,6 +485,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
   end
 
+  context "closing connections" do
+    setup do
+      @transport = DummyTransport.new
+    end
+
+    should "close connections" do
+      @transport.__close_connections
+      assert_equal @transport.connections, []
+    end
+  end
+
   context "resurrecting connections" do
     setup do
       @transport = DummyTransportPerformer.new
