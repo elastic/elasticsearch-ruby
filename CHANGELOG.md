@@ -1,3 +1,23 @@
+## 1.0.15
+
+* Updated the Travis CI configuration
+
+### API
+
+* Added `bytes` as a valid parameter to "Shards" and "Segments" Cat API
+* Added support for the `local` argument in the "Get Warmer" API
+* Added support for `fields` argument in the "Get Field Mapping" API
+* Fixed an error in the YAML runner handling of ENV['TEST_CLUSTER_PARAMS']
+* Validate and extract params from indices.get_warmer arguments
+
+### Client
+
+* Added the option to configure the Faraday adapter using a block and the relevant documentation
+* Added information about configuring the client for the Amazon Elasticsearch Service
+* Added the `retry_on_status` option to retry on specific HTTP response statuses
+* Changed, that transports can close connections during `__rebuild_connections`
+* Added, that the Manticore adapter closes connections during reload ("sniffing")
+
 ## 1.0.14
 
 * Clarified version support of Elasticsearch
