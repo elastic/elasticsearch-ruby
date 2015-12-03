@@ -1,3 +1,32 @@
+## 1.0.15
+
+### API
+
+* Added `bytes` as a valid parameter to "Shards" and "Segments" Cat API
+* Added support for the `local` argument in the "Get Warmer" API
+* Added support for `fields` argument in the "Get Field Mapping" API
+* Eliminate some assigned but never used `valid_params` Arrays
+* Fixed and error in the YAML runner handling of ENV['TEST_CLUSTER_PARAMS']
+* Validate and extract params from indices.get_warmer arguments
+
+### Client
+
+* Added information about configuring the client for the Amazon Elasticsearch Service
+* Added the option to configure the Faraday adapter using a block
+* Added the `retry_on_status` option
+* Changed, allow transports to close connections during `__rebuild_connections`
+* Changed, that adapter doesn not have to be set explicitly when configuring Faraday with a block
+* Fixed, that `adapter` middleware is added as last in Faraday
+* Updated the documentation for configuring Faraday instance with a block
+
+### Various
+
+* Added Elasticsearch 2.0.0-rc1 to the Travis test matrix
+* Disable tracing for YAML tests on Travis
+* Switch Travis environment to the container-based architecture
+* Use the --silent option for Curl when downloading Elasticsearch in Travis' install step
+* Update Elasticsearch in the Travis configuration to 1.7.3
+
 ## 1.0.14
 
 * Clarified version support of Elasticsearch
