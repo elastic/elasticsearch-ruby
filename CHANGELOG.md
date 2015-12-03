@@ -1,3 +1,7 @@
+## EXT:0.0.20
+
+* Fixed the implementation of keeping the test cluster data and state around between restarts
+
 ## 1.0.14
 
 * Clarified version support of Elasticsearch
