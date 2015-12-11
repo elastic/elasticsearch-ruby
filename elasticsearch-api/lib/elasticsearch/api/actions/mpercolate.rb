@@ -34,7 +34,8 @@ module Elasticsearch
         valid_params = [
           :ignore_unavailable,
           :allow_no_indices,
-          :expand_wildcards ]
+          :expand_wildcards,
+          :percolate_format ]
 
         method = HTTP_GET
         path   = "_mpercolate"
