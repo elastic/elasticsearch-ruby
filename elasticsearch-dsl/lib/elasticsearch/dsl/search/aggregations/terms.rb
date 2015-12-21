@@ -5,13 +5,23 @@ module Elasticsearch
 
         # A multi-bucket aggregation which returns the collection of terms and their document counts
         #
-        # @example
+        # @example Passing the options as a Hash
         #
         #     aggregation :tags do
         #       terms field: 'tags'
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
+        # @example Passing the options as a block
+        #
+        #     search do
+        #       aggregation :tags do
+        #         terms do
+        #           field 'tags'
+        #         end
+        #       end
+        #     end
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
         #
         class Terms
           include BaseAggregationComponent

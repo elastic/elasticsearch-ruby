@@ -5,7 +5,7 @@ module Elasticsearch
 
         # A multi-value metrics aggregation which returns statistical information on numeric values
         #
-        # @example
+        # @example Passing the options as a Hash
         #
         #     search do
         #       aggregation :clicks_stats do
@@ -13,10 +13,23 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-metrics-stats-aggregation.html
+        # @example Passing the options as a block
+        #
+        #     search do
+        #       aggregation :clicks_stats do
+        #         stats do
+        #           field 'clicks'
+        #         end
+        #       end
+        #     end
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-stats-aggregation.html
         #
         class Stats
           include BaseComponent
+
+          option_method :field
+          option_method :script
         end
 
       end

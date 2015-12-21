@@ -17,6 +17,14 @@ module Elasticsearch
             subject = Stats.new foo: 'bar'
             assert_equal({ stats: { foo: 'bar' } }, subject.to_hash)
           end
+
+          should "take a block" do
+            subject = Stats.new do
+              field 'bar'
+            end
+
+            assert_equal({stats: { field: 'bar' } }, subject.to_hash)
+          end
         end
       end
     end
