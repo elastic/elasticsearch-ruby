@@ -95,6 +95,29 @@ module Elasticsearch
             assert_equal 13, response['aggregations']['avg_clicks']['value'].to_i
           end
 
+          should "define a global aggregation" do
+            response = @client.search index: 'test', body: search {
+                query do
+                  filtered filter: { terms: { tags: ['two'] } }
+                end
+
+                aggregation :avg_clicks do
+                  avg field: 'clicks'
+                end
+
+                aggregation :all_documents do
+                  global do
+                    aggregation :avg_clicks do
+                      avg field: 'clicks'
+                    end
+                  end
+                end
+            }.to_hash
+
+            assert_equal 15, response['aggregations']['avg_clicks']['value'].to_i
+            assert_equal 13, response['aggregations']['all_documents']['avg_clicks']['value'].to_i
+          end
+
           should "return statistics on clicks" do
             response = @client.search index: 'test', body: search {
               aggregation :stats_clicks do

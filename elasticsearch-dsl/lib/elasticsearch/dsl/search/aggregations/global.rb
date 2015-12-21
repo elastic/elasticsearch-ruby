@@ -9,11 +9,15 @@ module Elasticsearch
         #
         #     search do
         #       aggregation :all_documents do
-        #         global
+        #         global do
+        #           aggregation :avg_clicks do
+        #             avg field: 'clicks'
+        #           end
+        #         end
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-global-aggregation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-global-aggregation.html
         #
         class Global
           include BaseAggregationComponent
