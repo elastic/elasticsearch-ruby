@@ -15,7 +15,7 @@ module Elasticsearch
             mappings: {
               venue: {
                 properties: {
-                  location: { type: 'geo_point', normalize: false, validate: true }
+                  location: { type: 'geo_point' }
                 }
               }
             }
