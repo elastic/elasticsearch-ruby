@@ -178,6 +178,12 @@ definition = search {
   aggregation :tags do
     terms do
       field 'tags'
+
+      # Calculate average view count per tag (inner aggregation)
+      #
+      aggregation :avg_view_count do
+        avg field: 'view_count'
+      end
     end
   end
 
@@ -188,6 +194,12 @@ definition = search {
       field    'creation_date'
       interval 'month'
       format   'yyyy-MM'
+
+      # Calculate the statistics on comment count per day (inner aggregation)
+      #
+      aggregation :comments do
+        stats field: 'comment_count'
+      end
     end
   end
 

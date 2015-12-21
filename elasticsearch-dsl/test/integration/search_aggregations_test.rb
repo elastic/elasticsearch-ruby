@@ -36,7 +36,7 @@ module Elasticsearch
             assert_equal 3, response['aggregations']['tags']['value']
           end
 
-          should "return tag counts per clicks range" do
+          should "return tag counts per clicks range as an inner (nested) aggregation" do
             response = @client.search index: 'test', body: search {
               aggregation :clicks do
                 range field: 'clicks' do

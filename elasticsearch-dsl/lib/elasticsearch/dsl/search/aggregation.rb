@@ -28,7 +28,7 @@ module Elasticsearch
           end
         end
 
-        # Defines a nested aggregation
+        # Defines an aggregation nested in another one
         #
         def aggregation(*args, &block)
           call
