@@ -1,3 +1,10 @@
+## DSL:0.1.3
+
+* Changed, that `global` aggregation takes a block
+* Updated the README example to work with Elasticsearch 2.x
+* Improved the documentation and integration tests for inner (nested) aggregaation
+* Added the option method `field` and `script` to the "stats" aggregation
+
 ## EXT:0.0.20
 
 * Fixed the implementation of keeping the test cluster data and state around between restarts
