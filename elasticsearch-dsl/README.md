@@ -108,7 +108,11 @@ All Elasticsearch DSL features are supported, namely:
 * [Pagination](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-from-size.html)
 * [Options](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html) (source filtering, highlighting, etc)
 
-An example of a complex search definition would look like this:
+An example of a complex search definition is below.
+
+**NOTE:** In order to run the example, you have to allow restoring from the `data.elasticsearch.org`
+         repository by adding this configuration to your `elasticsearch.yml`:
+         `repositories.url.allowed_urls: ["https://s3.amazonaws.com/data.elasticsearch.org/*"]`
 
 ```ruby
 require 'awesome_print'
@@ -120,18 +124,17 @@ include Elasticsearch::DSL
 
 client = Elasticsearch::Client.new transport_options: { request: { timeout: 3600, open_timeout: 3600 } }
 
-# Restore an index from a snapshot
-#
+puts "Recovering the 'bicycles.stackexchange.com' index...".yellow
+
 client.indices.delete index: 'bicycles.stackexchange.com', ignore: 404
 
-puts "Recovering the 'bicycles.stackexchange.com' index...".gray
 client.snapshot.create_repository repository: 'data.elasticsearch.org', body: { type: 'url', settings: { url: 'https://s3.amazonaws.com/data.elasticsearch.org/bicycles.stackexchange.com/' } }
 client.snapshot.restore repository: 'data.elasticsearch.org', snapshot: 'bicycles.stackexchange.com', body: { indices: 'bicycles.stackexchange.com' }
 until client.cluster.health(level: 'indices')['indices']['bicycles.stackexchange.com']['status'] == 'green'
-  r = client.indices.status(index: 'bicycles.stackexchange.com', human: true, recovery: true)['indices']['bicycles.stackexchange.com']['shards']['0'][0]
-  print "\r#{r['index']['size']} of #{r['gateway_recovery']['index']['expected_recovered_size']}".ljust(52).gray
+  r = client.indices.recovery(index: 'bicycles.stackexchange.com', human: true)['bicycles.stackexchange.com']['shards'][0] rescue nil
+  print "\r#{r['index']['size']['recovered'] rescue '0b'} of #{r['index']['size']['total'] rescue 'N/A'}".ljust(52).gray
   sleep 1
-end
+end; puts
 
 # The search definition
 #
@@ -164,9 +167,9 @@ definition = search {
         end
       end
 
-      # Multiply the default `_score` by a (slightly normalized) document rating
+      # Multiply the default `_score` by the document rating
       #
-      functions << { script_score: { script: '_score * log10( doc["rating"].value )' } }
+      functions << { script_score: { script: '_score * doc["rating"].value' } }
     end
   end
 
@@ -206,14 +209,14 @@ definition = search {
   source ['title', 'tags', 'creation_date', 'rating', 'user.location', 'user.display_name']
 }
 
-puts "Search definition #{'-'*63}\n".gray
+puts "Search definition #{'-'*63}\n".yellow
 ap   definition.to_hash
 
 # Execute the search request
 #
 response = client.search index: 'bicycles.stackexchange.com', type: ['question','answer'], body: definition
 
-puts "\nSearch results #{'-'*66}\n".gray
+puts "\nSearch results #{'-'*66}\n".yellow
 ap   response
 ```
 
