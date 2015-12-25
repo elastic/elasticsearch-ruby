@@ -37,7 +37,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'
   s.add_development_dependency 'pry'
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
-    s.add_development_dependency "test-unit", '~> 2'
-  end
+
+  # if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
+  #   s.add_development_dependency "test-unit", '~> 2'
+  # end
 end
