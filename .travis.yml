@@ -34,6 +34,7 @@ install:
   - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.0.0-rc1/elasticsearch-2.0.0-rc1.tar.gz | tar xz -C /tmp || true
 
 before_script:
+  - gem install bundler -v 1.11.2
   - rake setup
   - rake elasticsearch:update
   - rake bundle:clean
