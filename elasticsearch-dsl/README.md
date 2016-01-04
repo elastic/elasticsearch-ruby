@@ -110,9 +110,11 @@ All Elasticsearch DSL features are supported, namely:
 
 An example of a complex search definition is below.
 
-**NOTE:** In order to run the example, you have to allow restoring from the `data.elasticsearch.org`
-         repository by adding this configuration to your `elasticsearch.yml`:
-         `repositories.url.allowed_urls: ["https://s3.amazonaws.com/data.elasticsearch.org/*"]`
+**NOTE:** In order to run the example, you have to allow restoring from the `data.elasticsearch.org` repository by adding the following configuration line to your `elasticsearch.yml`:
+
+```yaml
+repositories.url.allowed_urls: ["https://s3.amazonaws.com/data.elasticsearch.org/*"]
+```
 
 ```ruby
 require 'awesome_print'
