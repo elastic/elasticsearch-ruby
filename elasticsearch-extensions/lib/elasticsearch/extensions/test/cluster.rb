@@ -84,7 +84,7 @@ module Elasticsearch
           arguments[:node_name]         ||= ENV.fetch('TEST_CLUSTER_NODE_NAME', 'node')
           arguments[:path_data]         ||= ENV.fetch('TEST_CLUSTER_DATA',      '/tmp/elasticsearch_test')
           arguments[:path_work]         ||= ENV.fetch('TEST_CLUSTER_TMP',       '/tmp')
-          arguments[:path_logs]         ||= ENV.fetch('TEST_CLUSTER_LOGS',      '/var/log/elasticsearch')
+          arguments[:path_logs]         ||= ENV.fetch('TEST_CLUSTER_LOGS',      '/tmp/log/elasticsearch')
           arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
           arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
           arguments[:timeout]           ||= (ENV.fetch('TEST_CLUSTER_TIMEOUT', 30).to_i)
