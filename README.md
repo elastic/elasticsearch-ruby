@@ -128,6 +128,10 @@ To run tests against unreleased Elasticsearch versions, you can use the `rake el
 Rake task to build Elasticsearch from the cloned source
 (use `rake elasticsearch:update` to update the repository):
 
+**Note**. If you have gems from elasticsearch family installed system-wide, you must make sure to
+prepend the rake command with `bundle exec`. Otherwise, whenever required, system gems will take
+presedence over local (development) ones.
+
 ```
 rake elasticsearch:build
 ```
