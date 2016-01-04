@@ -23,7 +23,7 @@ jdk:
 
 env:
   - TEST_SUITE=unit
-  - TEST_SUITE=integration ES_VERSION=1.7.3
+  - TEST_SUITE=integration ES_VERSION=1.7.4
   - TEST_SUITE=integration ES_VERSION=2.1.1
 
 before_install:
@@ -31,7 +31,7 @@ before_install:
   - gem --version
 
 install:
-  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.3.tar.gz | tar xz -C /tmp || true
+  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.4.tar.gz | tar xz -C /tmp || true
   - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.1.1/elasticsearch-2.1.1.tar.gz | tar xz -C /tmp || true
 
 before_script:
