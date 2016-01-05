@@ -48,10 +48,10 @@ matrix:
   exclude:
     - rvm: 1.8.7
       jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=1.7.3
+      env: TEST_SUITE=integration ES_VERSION=1.7.4
     - rvm: 1.8.7
       jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=2.0.0-rc1
+      env: TEST_SUITE=integration ES_VERSION=2.1.1
 
 notifications:
   disable: true
