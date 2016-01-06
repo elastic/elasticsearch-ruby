@@ -37,6 +37,7 @@ module Elasticsearch
 <%# Method, path, params, body  -%>
       <%= '  '*@namespace_depth %>  valid_params = [
       <%= '  '*(@namespace_depth+2) %><%= @spec['url']['params'].keys.map { |k| ":#{k}" }.join(",\n#{'  '*(@namespace_depth+5)}") %> ]
+      <%=  "\n" -%>
       <%= '  '*@namespace_depth %>  method = <%= 'HTTP_' + @spec['methods'].first %>
       <%- unless @spec['url']['parts'].empty?  -%>
       <%= '  '*@namespace_depth %>  path   = "<%= @spec['url']['path'].split('/').compact.reject {|p| p =~ /^\s*$/}.map do |p|
