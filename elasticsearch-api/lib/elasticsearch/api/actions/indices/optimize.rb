@@ -8,6 +8,8 @@ module Elasticsearch
         # The "optimize" operation merges the index segments, increasing search performance.
         # It corresponds to a Lucene "merge" operation.
         #
+        # @deprecated The "optimize" action has been deprecated in favor of forcemerge [https://github.com/elastic/elasticsearch/pull/13778]
+        #
         # @example Fully optimize an index (merge to one segment)
         #
         #     client.indices.optimize index: 'foo', max_num_segments: 1, wait_for_merge: false

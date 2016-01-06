@@ -293,8 +293,15 @@ suites.each do |suite|
       $client.indices.delete_template name: '*'
       $client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
       $client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
+      $client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
+      $client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap2', ignore: 404
       $client.snapshot.delete_repository repository: 'test_repo_create_1', ignore: 404
       $client.snapshot.delete_repository repository: 'test_repo_restore_1', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_repo_get_1', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_repo_get_2', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_cat_repo_1', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_cat_repo_2', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_cat_snapshots_1', ignore: 404
       # FIXME: This shouldn't be needed -------------
       FileUtils.rm_rf('/tmp/test_repo_create_1_loc')
       FileUtils.rm_rf('/tmp/test_repo_restore_1_loc')
