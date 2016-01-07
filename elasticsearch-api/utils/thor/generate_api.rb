@@ -35,7 +35,7 @@ module Elasticsearch
       #
       def __parse_java_source(path)
         path  += '/' unless path =~ /\/$/ # Add trailing slash if missing
-        prefix = "src/main/java/org/elasticsearch/rest/action"
+        prefix = "core/src/main/java/org/elasticsearch/rest/action"
 
         java_rest_files = Dir["#{path}#{prefix}/**/*.java"]
 
