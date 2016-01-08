@@ -14,7 +14,7 @@ module Elasticsearch
       # controller.registerHandler(RestRequest.Method.GET, "/_cluster/health", this);
       PATTERN_REST = /.*controller.registerHandler\(.*(?<method>GET|POST|PUT|DELETE|HEAD|OPTIONS|PATCH)\s*,\s*"(?<url>.*)"\s*,\s*.+\);/
       # request.param("index"), request.paramAsBoolean("docs", indicesStatsRequest.docs()), etc
-      PATTERN_URL_PARAMS = /request.param.*\("(?<param>[a-z_]+)".*/
+      PATTERN_URL_PARAMS = /.*request\.(param.*)\("(.*)"/
       # controller.registerHandler(GET, "/{index}/_refresh", this)
       PATTERN_URL_PARTS  = /\{(?<part>[a-zA-Z0-9\_\-]+)\}/
       # request.hasContent()
@@ -50,7 +50,7 @@ module Elasticsearch
           name.gsub! /admin\./, ''
 
           # Extract params
-          url_params = content.scan(PATTERN_URL_PARAMS).map { |n| n.first }.sort
+          url_params = content.scan(PATTERN_URL_PARAMS).map { |type, param| [param, type] }.sort
 
           # Extract parts
           url_parts = content.scan(PATTERN_URL_PARTS).map { |n| n.first }.sort
@@ -70,6 +70,15 @@ module Elasticsearch
         end
 
         map
+      end
+
+      def __humanize_java_type(param_string)
+        case param_string
+        when 'param'          then 'string'
+        when 'paramAsInt'     then 'number'
+        when 'paramAsTime'    then 'time'
+        when 'paramAsBoolean' then 'boolean'
+        end
       end
 
       extend self
@@ -132,7 +141,7 @@ module Elasticsearch
         rest_actions.each do |name, info|
           doc_url  = ""
           parts    = info.reduce([]) { |sum, n| sum |= n['parts']; sum }.reduce({}) { |sum, n| sum[n] = {}; sum }
-          params   = info.reduce([]) { |sum, n| sum |= n['params']; sum }.reduce({}) { |sum, n| sum[n] = {}; sum }
+          params   = info.reduce([]) { |sum, n| sum |= n['params']; sum }.map { |param, type| Hash[param, { 'type' => Utils.__humanize_java_type(type), 'description' => '' }] }
 
           if options[:crawl]
             begin
