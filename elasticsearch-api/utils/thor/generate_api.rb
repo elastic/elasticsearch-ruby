@@ -37,7 +37,7 @@ module Elasticsearch
         path  += '/' unless path =~ /\/$/ # Add trailing slash if missing
         prefix = "core/src/main/java/org/elasticsearch/rest/action"
 
-        java_rest_files = Dir["#{path}#{prefix}/**/*.java"]
+        java_rest_files = Dir["#{path}#{prefix}/**/Rest*Action.java"]
 
         map = {}
 
