@@ -14,7 +14,7 @@ module Elasticsearch
       # controller.registerHandler(RestRequest.Method.GET, "/_cluster/health", this);
       PATTERN_REST = /.*controller.registerHandler\(.*(?<method>GET|POST|PUT|DELETE|HEAD|OPTIONS|PATCH)\s*,\s*"(?<url>.*)"\s*,\s*.+\);/
       # request.param("index"), request.paramAsBoolean("docs", indicesStatsRequest.docs()), etc
-      PATTERN_URL_PARAMS = /.*request\.(param.*)\("(.*)"/
+      PATTERN_URL_PARAMS = /request\.(param[A-Za-z_]*?)\("(.+)"/
       # controller.registerHandler(GET, "/{index}/_refresh", this)
       PATTERN_URL_PARTS  = /\{(?<part>[a-zA-Z0-9\_\-]+)\}/
       # request.hasContent()
