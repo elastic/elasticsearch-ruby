@@ -44,7 +44,7 @@ module Elasticsearch
         java_rest_files.sort.each do |file|
           content = File.read(file)
           parts   = file.gsub(path+prefix, '').split('/')
-          name    = parts[0, parts.size-1].reject { |p| p =~ /^\s*$/ }.join('.')
+          name    = parts[-1].scan(/Rest(.+?)[A-Z]*Action\.java/).first.first.downcase + '_' + parts[-2]
 
           # Remove the `admin` namespace
           name.gsub! /admin\./, ''
