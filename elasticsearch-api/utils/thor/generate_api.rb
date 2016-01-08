@@ -166,7 +166,7 @@ module Elasticsearch
             }
           }
 
-          json = JSON.pretty_generate(spec, indent: '  ', array_nl: '', object_nl: "\n", space: ' ', space_before: ' ')
+          json = JSON.pretty_generate(spec, indent: '  ', object_nl: "\n", space: ' ', space_before: ' ')
 
           # Fix JSON array formatting
           json.gsub!(/\[\s+/, '[')
