@@ -71,7 +71,7 @@ namespace :test do
       es_version_info = client.info['version']
       build_hash      = es_version_info['build_hash']
       cluster_running = true
-    rescue Faraday::Error::ConnectionFailed => e
+    rescue Faraday::Error::ConnectionFailed
       STDERR.puts "[!] Test cluster not running?"
       cluster_running = false
     end
