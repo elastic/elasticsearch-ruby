@@ -57,7 +57,7 @@ module Elasticsearch
                   client.password = host[:password]
                 end
 
-                client.instance_eval &@block if @block
+                client.instance_eval(&@block) if @block
 
                 Connections::Connection.new :host => host, :connection => client
               },
