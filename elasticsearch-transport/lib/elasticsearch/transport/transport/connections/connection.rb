@@ -29,6 +29,7 @@ module Elasticsearch
             @state_mutex = Mutex.new
 
             @options[:resurrect_timeout] ||= DEFAULT_RESURRECT_TIMEOUT
+            @dead = false
             @failures = 0
           end
 
