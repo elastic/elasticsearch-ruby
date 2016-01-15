@@ -50,7 +50,7 @@ module Elasticsearch
             #
             def select(options={})
               # On Ruby 1.9, Array#rotate could be used instead
-              @current = @current.nil? ? 0 : @current+1
+              @current = !defined?(@current) || @current.nil? ? 0 : @current+1
               @current = 0 if @current >= connections.size
               connections[@current]
             end
