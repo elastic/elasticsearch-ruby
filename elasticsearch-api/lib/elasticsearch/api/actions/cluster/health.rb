@@ -31,6 +31,7 @@ module Elasticsearch
         #
         def health(arguments={})
           valid_params = [
+            :index,
             :level,
             :local,
             :master_timeout,
