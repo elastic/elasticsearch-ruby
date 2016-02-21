@@ -28,6 +28,8 @@ module Elasticsearch
                 {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
                 {"doc":{"title":"Update"}}
                 {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
+                {"index":{"_index":"myindexD","_type":"mytype","_id":"1"}}
+                {"data":"MYDATA"}
               PAYLOAD
             end
             true
@@ -36,7 +38,8 @@ module Elasticsearch
           subject.bulk :body => [
             { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
             { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
-            { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } }
+            { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } },
+            { :index =>  { :_index => 'myindexD', :_type => 'mytype', :_id => '1', :data => { :data => 'MYDATA' } } },
           ]
         end
 
