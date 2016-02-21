@@ -295,7 +295,6 @@ To configure the _Faraday_ instance directly, use a block:
 You can use any standard Faraday middleware and plugins in the configuration block,
 for example sign the requests for the [AWS Elasticsearch service](https://aws.amazon.com/elasticsearch-service/):
 
-    require 'patron'
     require 'faraday_middleware/aws_signers_v4'
 
     client = Elasticsearch::Client.new url: 'https://search-my-cluster-abc123....es.amazonaws.com' do |f|
