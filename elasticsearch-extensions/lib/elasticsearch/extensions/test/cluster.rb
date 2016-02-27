@@ -218,16 +218,18 @@ module Elasticsearch
         #
         # @option arguments [Integer] :on The port on which the node is running.
         # @option arguments [String]  :as The cluster name.
+        # @option arguments [Integer] :num Number of nodes in the cluster.
         #
         # @return Boolean
         #
         def running?(arguments={})
-          port         = arguments[:on] || (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          cluster_name = arguments[:as] || (ENV.fetch('TEST_CLUSTER_NAME', @@default_cluster_name).chomp)
+          port            = arguments[:on] || (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+          cluster_name    = arguments[:as] || (ENV.fetch('TEST_CLUSTER_NAME', @@default_cluster_name).chomp)
+          number_of_nodes = arguments[:num] || (ENV.fetch('TEST_CLUSTER_NODES', @@number_of_nodes)).to_i
 
           if cluster_health = Timeout::timeout(0.25) { __get_cluster_health(port) } rescue nil
             return cluster_health['cluster_name']    == cluster_name && \
-                   cluster_health['number_of_nodes'] == @@number_of_nodes
+                   cluster_health['number_of_nodes'] == number_of_nodes
           end
           return false
         end
