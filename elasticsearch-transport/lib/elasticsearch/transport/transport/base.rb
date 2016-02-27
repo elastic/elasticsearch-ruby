@@ -28,6 +28,8 @@ module Elasticsearch
         # @see Client#initialize
         #
         def initialize(arguments={}, &block)
+          @state_mutex = Mutex.new
+
           @hosts       = arguments[:hosts]   || []
           @options     = arguments[:options] || {}
           @block       = block
@@ -94,10 +96,12 @@ module Elasticsearch
         # @api private
         #
         def __rebuild_connections(arguments={})
-          @hosts       = arguments[:hosts]    || []
-          @options     = arguments[:options]  || {}
-          __close_connections
-          @connections = __build_connections
+          @state_mutex.synchronize do
+            @hosts       = arguments[:hosts]    || []
+            @options     = arguments[:options]  || {}
+            __close_connections
+            @connections = __build_connections
+          end
         end
 
         # Closes the connections collection.
