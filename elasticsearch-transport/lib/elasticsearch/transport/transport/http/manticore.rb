@@ -45,6 +45,19 @@ module Elasticsearch
         class Manticore
           include Base
 
+          def initialize(arguments={}, &block)
+            @manticore = build_client(arguments[:options] || {})
+            super()
+          end
+
+          # Should just be run once at startup
+          def build_client(options={})
+            client_options = options[:transport_options] || {}
+            client_options[:ssl] = options[:ssl] || {}
+
+            @manticore = ::Manticore::Client.new(client_options)
+          end
+
           # Performs the request by invoking {Transport::Base#perform_request} with a block.
           #
           # @return [Response]
@@ -84,9 +97,6 @@ module Elasticsearch
               @request_options[:headers] = options[:headers]
             end
 
-            client_options = options[:transport_options] || {}
-            client_options[:ssl] = options[:ssl] || {}
-
             Connections::Collection.new \
               :connections => hosts.map { |host|
                 host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
@@ -95,11 +105,9 @@ module Elasticsearch
                 host.delete(:user)     # auth is not supported here.
                 host.delete(:password) # use the headers
 
-                url               = __full_url(host)
-
                 Connections::Connection.new \
                   :host => host,
-                  :connection => ::Manticore::Client.new(client_options)
+                  :connection => @manticore
               },
               :selector_class => options[:selector_class],
               :selector => options[:selector]
