@@ -16,7 +16,7 @@ module Elasticsearch
             if RUBY_1_8
               lines = body.split("\n")
 
-              assert_equal 5, lines.size
+              assert_equal 7, lines.size
               assert_match /\{"index"\:\{/, lines[0]
               assert_match /\{"title"\:"Test"/, lines[1]
               assert_match /\{"update"\:\{/, lines[2]
