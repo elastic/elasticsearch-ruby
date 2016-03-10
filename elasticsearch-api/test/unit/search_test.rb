@@ -101,6 +101,14 @@ module Elasticsearch
           subject.search :index => 'foo^bar', :type => 'bar/bam'
         end
 
+        should "not URL-escape the fields parameters" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo^bar', params[:fields]
+            true
+          end.returns(FakeResponse.new)
+
+          subject.search :index => 'foo', :type => 'bar', :fields => 'foo^bar'
+        end
       end
 
     end
