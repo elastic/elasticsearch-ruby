@@ -54,3 +54,5 @@ matrix:
 
 notifications:
   disable: true
+
+sudo: false
