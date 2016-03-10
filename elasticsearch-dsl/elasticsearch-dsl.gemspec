@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
   s.add_development_dependency "bundler", "~> 1.3"
-  s.add_development_dependency "rake"
+  s.add_development_dependency "rake", "< 11.0"
 
   s.add_development_dependency "elasticsearch"
   s.add_development_dependency "elasticsearch-extensions"

@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   end
 
   s.add_development_dependency "bundler", "> 1"
-  s.add_development_dependency "rake"
+  s.add_development_dependency "rake", "< 11.0"
 
   s.add_development_dependency "awesome_print"
 
