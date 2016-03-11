@@ -75,6 +75,11 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       should "combine authentication credentials" do
         assert_equal 'http://U:P@myhost:8080', @transport.__full_url(@basic_parts.merge :user => 'U', :password => 'P')
       end
+
+      should "escape the username and password" do
+        assert_equal 'http://user%40domain:foo%2Fbar@myhost:8080',
+                     @transport.__full_url(@basic_parts.merge :user => 'user@domain', :password => 'foo/bar')
+      end
     end
   end
 
