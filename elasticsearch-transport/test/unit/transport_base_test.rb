@@ -375,6 +375,23 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
                  end
     end
 
+    should "sanitize password in the URL" do
+      fake_connection = stub :full_url => 'http://user:password@localhost:9200/_search?size=1',
+                             :host     => 'localhost',
+                             :connection => stub_everything,
+                             :failures => 0,
+                             :healthy! => true
+      @transport.stubs(:get_connection).returns(fake_connection)
+
+      @transport.logger.expects(:info).with do |message|
+        assert_match /user:\*{1,15}@localhost/, message
+        true
+      end
+
+
+      @transport.perform_request('GET', '/') {Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}' }
+    end
+
     should "log a failed Elasticsearch request" do
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')

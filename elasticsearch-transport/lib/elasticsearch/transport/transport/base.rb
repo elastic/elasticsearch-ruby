@@ -11,6 +11,7 @@ module Elasticsearch
         DEFAULT_RESURRECT_AFTER  = 60     # Seconds
         DEFAULT_MAX_RETRIES      = 3      # Requests
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
+        SANITIZED_PASSWORD       = '*'*rand(15)
 
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
         attr_accessor :serializer, :sniffer, :logger, :tracer,
@@ -117,7 +118,8 @@ module Elasticsearch
         # @api private
         #
         def __log(method, path, params, body, url, response, json, took, duration)
-          logger.info  "#{method.to_s.upcase} #{url} " +
+          sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '\1:' + SANITIZED_PASSWORD +  '@')
+          logger.info  "#{method.to_s.upcase} #{sanitized_url} " +
                        "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
           logger.debug "> #{__convert_to_json(body)}" if body
           logger.debug "< #{response.body}"
