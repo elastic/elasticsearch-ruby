@@ -65,6 +65,10 @@ module Elasticsearch
 
       # Convert an array of payloads into Elasticsearch `header\ndata` format
       #
+      # Supports various different formats of the payload: Array of Strings, Header/Data pairs,
+      # or the conveniency "combined" format where data is passed along with the header
+      # in a single item.
+      #
       #     Elasticsearch::API::Utils.__bulkify [
       #       { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
       #       { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } }
@@ -76,22 +80,24 @@ module Elasticsearch
       #     # => {"doc":{"title":"Update"}}
       #
       def __bulkify(payload)
-        case
-        # Hashes with `:data`
-        when payload.any? { |d| d.is_a?(Hash) && d.values.first.is_a?(Hash) && (d.values.first[:data] || d.values.first['data']) }
-          payload = payload.
-          inject([]) do |sum, item|
-            operation, meta = item.to_a.first
-            meta            = meta.clone
-            data            = meta.delete(:data) || meta.delete('data')
+        operations = %w[index create delete update]
 
-            sum << { operation => meta }
-            sum << data if data
-            sum
-          end.
-          map { |item| MultiJson.dump(item) }
-          payload << "" unless payload.empty?
-          return payload.join("\n")
+        case
+
+        # Hashes with `:data`
+        when payload.any? { |d| d.is_a?(Hash) && d.values.first.is_a?(Hash) && operations.include?(d.keys.first.to_s) && (d.values.first[:data] || d.values.first['data']) }
+          payload = payload.
+            inject([]) do |sum, item|
+              operation, meta = item.to_a.first
+              meta            = meta.clone
+              data            = meta.delete(:data) || meta.delete('data')
+
+              sum << { operation => meta }
+              sum << data if data
+              sum
+            end.
+            map { |item| MultiJson.dump(item) }
+          payload << '' unless payload.empty?
 
         # Array of strings
         when payload.all? { |d| d.is_a? String }

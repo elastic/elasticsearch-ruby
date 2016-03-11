@@ -53,6 +53,20 @@ module Elasticsearch
           subject.bulk :index => 'myindex', :body => []
         end
 
+        should "handle `:data` keys correctly in header/data payloads" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
+              {"update":{"_index":"myindex","_type":"mytype","_id":"1"}}
+              {"doc":{"data":{"title":"Update"}}}
+            PAYLOAD
+          end.returns(FakeResponse.new)
+
+          subject.bulk :body => [
+            { :update => { :_index => 'myindex', :_type => 'mytype', :_id => '1' } },
+            { :doc => { :data => { :title => 'Update' } } }
+          ]
+        end
+
         should "post a string payload" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal "foo\nbar", body

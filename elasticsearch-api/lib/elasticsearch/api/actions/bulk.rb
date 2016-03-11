@@ -4,8 +4,9 @@ module Elasticsearch
 
       # Perform multiple index, delete or update operations in a single request.
       #
-      # Pass the operations in the `:body` option as an array of hashes, following Elasticsearch conventions.
-      # For operations which take data, pass them as the `:data` option in the operation hash.
+      # Supports various different formats of the payload: Array of Strings, Header/Data pairs,
+      # or the conveniency "combined" format where data is passed along with the header
+      # in a single item in a custom `:data` key.
       #
       # @example Perform three operations in a single request, passing actions and data as an array of hashes
       #

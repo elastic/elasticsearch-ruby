@@ -132,8 +132,8 @@ module Elasticsearch
             PAYLOAD
           end
 
-          should "not modify the original payload" do
-            original = [ { :index => {:foo => 'bar', :data => { :moo => 'bam' }} } ]
+          should "not modify the original payload with the data option" do
+            original = [ { :index => {:foo => 'bar', :data => {:moo => 'bam'} } } ]
             result = Elasticsearch::API::Utils.__bulkify original
             assert_not_nil original.first[:index][:data], "Deleted :data from #{original}"
             assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
@@ -142,6 +142,16 @@ module Elasticsearch
             PAYLOAD
           end
 
+          should "not modify the original payload with meta/data pairs" do
+            original = [ { :index => {:foo => 'bar'} }, { :data => {:a => 'b', :data => {:c => 'd'} } } ]
+            result = Elasticsearch::API::Utils.__bulkify original
+            assert_not_nil original.last[:data], "Deleted :data from #{original}"
+            assert_not_nil original.last[:data][:data], "Deleted :data from #{original}"
+            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
+              {"index":{"foo":"bar"}}
+              {"data":{"a":"b","data":{"c":"d"}}}
+            PAYLOAD
+          end
         end
 
         context "__validate_and_extract_params" do
