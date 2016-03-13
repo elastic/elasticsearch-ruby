@@ -3,7 +3,7 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # A multi-bucket aggregation which returns the collection of terms and their document counts
+        # A multi-bucket aggregation which returns the collection of terms that are missing a field value
         #
         # @example Passing the options as a Hash
         #
