@@ -118,7 +118,7 @@ module Elasticsearch
         # @api private
         #
         def __log(method, path, params, body, url, response, json, took, duration)
-          sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '\1:' + SANITIZED_PASSWORD +  '@')
+          sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD +  '@')
           logger.info  "#{method.to_s.upcase} #{sanitized_url} " +
                        "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
           logger.debug "> #{__convert_to_json(body)}" if body

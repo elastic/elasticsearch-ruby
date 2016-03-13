@@ -384,7 +384,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.stubs(:get_connection).returns(fake_connection)
 
       @transport.logger.expects(:info).with do |message|
-        assert_match /user:\*{1,15}@localhost/, message
+        assert_match /http:\/\/user:\*{1,15}@localhost\:9200/, message
         true
       end
 
