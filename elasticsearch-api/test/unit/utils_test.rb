@@ -145,12 +145,19 @@ module Elasticsearch
           should "not modify the original payload with meta/data pairs" do
             original = [ { :index => {:foo => 'bar'} }, { :data => {:a => 'b', :data => {:c => 'd'} } } ]
             result = Elasticsearch::API::Utils.__bulkify original
+
             assert_not_nil original.last[:data], "Deleted :data from #{original}"
             assert_not_nil original.last[:data][:data], "Deleted :data from #{original}"
-            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), result
-              {"index":{"foo":"bar"}}
-              {"data":{"a":"b","data":{"c":"d"}}}
-            PAYLOAD
+
+            lines = result.split("\n")
+            assert_equal 2, lines.size
+
+            header = MultiJson.load(lines.first)
+            data   = MultiJson.load(lines.last)
+
+            assert_equal 'bar', header['index']['foo']
+            assert_equal 'b',   data['data']['a']
+            assert_equal 'd',   data['data']['data']['c']
           end
         end
 

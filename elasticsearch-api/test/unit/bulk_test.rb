@@ -55,10 +55,22 @@ module Elasticsearch
 
         should "handle `:data` keys correctly in header/data payloads" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
-              {"update":{"_index":"myindex","_type":"mytype","_id":"1"}}
-              {"doc":{"data":{"title":"Update"}}}
-            PAYLOAD
+            lines = body.split("\n")
+            assert_equal 2, lines.size
+
+            header = MultiJson.load(lines.first)
+            data   = MultiJson.load(lines.last)
+
+            assert_equal 'myindex', header['update']['_index']
+            assert_equal 'mytype',  header['update']['_type']
+            assert_equal '1',       header['update']['_id']
+
+            assert_equal({'data' => { 'title' => 'Update' }}, data['doc'])
+            # assert_equal <<-PAYLOAD.gsub(/^\s+/, ''), body
+            #   {"update":{"_index":"myindex","_type":"mytype","_id":"1"}}
+            #   {"doc":{"data":{"title":"Update"}}}
+            # PAYLOAD
+            true
           end.returns(FakeResponse.new)
 
           subject.bulk :body => [
