@@ -3,18 +3,19 @@ module Elasticsearch
     module Search
       module Aggregations
 
-        # A multi-bucket aggregation which returns the collection of terms and their document counts
+        # A single bucket aggregation that creates a bucket of all documents
+        # which are missing a value for the field
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
+        #     aggregation :articles_without_tags do
         #       missing field: 'tags'
         #     end
         #
         # @example Passing the options as a block
         #
         #     search do
-        #       aggregation :tags do
+        #       aggregation :articles_without_tags do
         #         missing do
         #           field 'tags'
         #         end

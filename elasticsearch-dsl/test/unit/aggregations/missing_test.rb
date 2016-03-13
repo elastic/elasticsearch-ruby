@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class RangeTest < ::Test::Unit::TestCase
+      class MissingTest < ::Test::Unit::TestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Missing aggregation" do
@@ -14,8 +14,8 @@ module Elasticsearch
           end
 
           should "take a Hash" do
-            subject = Missing.new( { field: 'test' } )
-            assert_equal({ missing: { field: "test" } }, subject.to_hash)
+            subject = Missing.new( { field: 'foo' } )
+            assert_equal({ missing: { field: "foo" } }, subject.to_hash)
           end
 
           should "have option methods" do
