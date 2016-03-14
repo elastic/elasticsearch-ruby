@@ -47,7 +47,7 @@ module Elasticsearch
 
           def initialize(arguments={}, &block)
             @manticore = build_client(arguments[:options] || {})
-            super()
+            super(arguments, &block)
           end
 
           # Should just be run once at startup
