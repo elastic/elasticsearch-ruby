@@ -17,6 +17,10 @@ module Elasticsearch
           assert_equal 'bar', Elasticsearch::API.settings[:foo]
         end
 
+        should "have default serializer" do
+          assert_equal MultiJson, Elasticsearch::API.serializer
+        end
+
       end
 
     end

@@ -10,6 +10,8 @@ Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require
 
 module Elasticsearch
   module API
+    DEFAULT_SERIALIZER = MultiJson
+
     COMMON_PARAMS = [
       :ignore,                        # Client specific parameters
       :index, :type, :id,             # :index/:type/:id
@@ -47,15 +49,16 @@ module Elasticsearch
                 Elasticsearch::API::Cat
     end
 
-    module ClassMethods
-
-      # Access the module settings
-      #
-      def settings
-        @settings ||= {}
-      end
+    # The serializer class
+    #
+    def self.serializer
+      settings[:serializer] || DEFAULT_SERIALIZER
     end
 
-    extend ClassMethods
+    # Access the module settings
+    #
+    def self.settings
+      @settings ||= {}
+    end
   end
 end

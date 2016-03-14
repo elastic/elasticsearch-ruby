@@ -155,6 +155,18 @@ mash.aggregations.tags.terms.first
 # => #<Hashie::Mash count=3 term="z">
 ```
 
+### Using a Custom JSON Serializer
+
+The library uses the [MultiJson](https://rubygems.org/gems/multi_json/) gem by default,
+but allows you to set a custom JSON library, provided it uses the standard `load/dump`
+interface:
+
+```ruby
+Elasticsearch::API.settings[:serializer] = JrJackson::Json
+Elasticsearch::API.serializer.dump({foo: 'bar'})
+# => {"foo":"bar"}
+```
+
 ## Development
 
 To work on the code, clone and bootstrap the main repository first --

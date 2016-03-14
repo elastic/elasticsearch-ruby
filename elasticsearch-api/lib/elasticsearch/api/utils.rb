@@ -96,7 +96,7 @@ module Elasticsearch
               sum << data if data
               sum
             end.
-            map { |item| MultiJson.dump(item) }
+            map { |item| Elasticsearch::API.serializer.dump(item) }
           payload << '' unless payload.empty?
 
         # Array of strings
@@ -105,7 +105,7 @@ module Elasticsearch
 
         # Header/Data pairs
         else
-          payload = payload.map { |item| MultiJson.dump(item) }
+          payload = payload.map { |item| Elasticsearch::API.serializer.dump(item) }
           payload << ''
         end
 
