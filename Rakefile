@@ -92,7 +92,7 @@ namespace :elasticsearch do
     STDOUT.puts "Building version [#{es_version}] from [#{gitref}]:", ""
 
     case es_version
-      when 0.0, 2.3..1000
+      when 0.0, 5..1000
         path_to_build   = __current__.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
         build_command   = "cd #{__current__.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
         extract_command = <<-CODE.gsub(/          /, '')
@@ -105,7 +105,7 @@ namespace :elasticsearch do
           fi
           tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')};
         CODE
-      when 1.8..2.2
+      when 1.8..4
         path_to_build   = __current__.join('tmp/elasticsearch/distribution/tar/target/releases/elasticsearch-*.tar.gz')
         build_command = "cd #{__current__.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn --projects core,distribution/tar clean package -DskipTests -Dskip.integ.tests;"
         extract_command = <<-CODE.gsub(/          /, '')
