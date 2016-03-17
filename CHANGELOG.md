@@ -1,3 +1,25 @@
+## 1.0.16.pre
+
+* Added notes about ES 2.x compatibility
+* Fixes and updates to the Travis CI configuration
+* Updated the `elasticsearch:build` Rake task
+
+### API
+
+* Added the ability to set a custom JSON serializer
+* Added, that`fields` and `fielddata_fields` in the Search API are not escaped
+* Fixed the incorrect handling of `:data` keys in the Utils#__bulkify method
+* Added fixes to suppress warnings in the verbose mode
+* Added support for new Cat API calls
+
+### Client
+
+* Added, that username and password is automatically escaped in the URL
+* Changed, that the password is replaced with `*` characters in the log
+* Bumped the "manticore" gem dependency to 0.5
+* Improved the thread-safety of reloading connections
+* Improved the Manticore HTTP client
+
 ## DSL:0.1.3
 
 * Changed, that `global` aggregation takes a block
