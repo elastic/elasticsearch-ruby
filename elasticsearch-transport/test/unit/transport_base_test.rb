@@ -367,7 +367,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "log the request and response" do
       @transport.logger.expects(:info).  with do |line|
-        line =~ %r|POST localhost\:9200/_search\?size=1 \[status\:200, request:.*s, query:n/a\]|
+        line =~ %r|POST localhost\:9200/_search\?size=1 \[status\:200, request:[0-9\.]+s, query:n/a\]|
       end
       @transport.logger.expects(:debug). with '> {"foo":"bar"}'
       @transport.logger.expects(:debug). with '< {"foo":"bar"}'
@@ -565,7 +565,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
   context "errors" do
     should "raise highest-level Error exception for any ServerError" do
-      assert_kind_of Elasticsearch::Transport::Transport::Error, Elasticsearch::Transport::Transport::ServerError.new
+      assert_kind_of Elasticsearch::Transport::Transport::Error, Elasticsearch::Transport::Transport::ServerError.new(mock("foo"))
     end
   end
 end

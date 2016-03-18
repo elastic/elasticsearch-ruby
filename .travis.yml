@@ -14,13 +14,10 @@ branches:
     - travis
 
 rvm:
-  - 1.8.7
   - 1.9.3
   - 2.1
   - 2.2
-
-jdk:
-  - openjdk7
+  - jruby-1.7.24
 
 env:
   - TEST_SUITE=unit
