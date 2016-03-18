@@ -63,8 +63,11 @@ else
 
         transport = Manticore.new :hosts => [ { :host => 'localhost', :port => 8080 } ], :options => options
 
-
-        transport.adapter.manticore.expects(:get).with("http://localhost:8080/", :headers => {"content-type" => "application/json"}).returns(::Elasticsearch::Transport::Transport::Response.new(200, nil))
+        resp = mock()
+        resp.stubs(:code).returns(200)
+        resp.stubs(:read_body).returns(nil)
+        resp.stubs(:headers).returns({})
+        transport.adapter.manticore.expects(:get).with("http://localhost:8080/", :headers => {"content-type" => "application/json"}).returns(resp)
 
 
         response = transport.perform_request 'GET', '/', {}

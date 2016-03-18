@@ -112,6 +112,10 @@ module Elasticsearch
             body = __convert_to_json(body) if body
             @pool.perform_request(method, path, params, body)
           end
+
+          def __close_connections
+            @adapter.manticore.close
+          end
         end
       end
     end
