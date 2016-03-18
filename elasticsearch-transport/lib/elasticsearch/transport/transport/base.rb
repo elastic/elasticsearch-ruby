@@ -273,6 +273,10 @@ module Elasticsearch
           @last_request_at = Time.now
         end
 
+        def perform_with_retry
+
+        end
+
         # @abstract Returns an Array of connection errors specific to the transport implementation.
         #           See {HTTP::Faraday#host_unreachable_exceptions} for an example.
         #
