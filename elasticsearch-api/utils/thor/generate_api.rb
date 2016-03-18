@@ -14,7 +14,7 @@ module Elasticsearch
       # controller.registerHandler(RestRequest.Method.GET, "/_cluster/health", this);
       PATTERN_REST = /.*controller.registerHandler\(.*(?<method>GET|POST|PUT|DELETE|HEAD|OPTIONS|PATCH)\s*,\s*"(?<url>.*)"\s*,\s*.+\);/
       # request.param("index"), request.paramAsBoolean("docs", indicesStatsRequest.docs()), etc
-      PATTERN_URL_PARAMS = /request.param.*\("(?<param>[a-z_]+)".*/
+      PATTERN_URL_PARAMS = /request\.(param[A-Za-z_]*?)\("(.+)"/
       # controller.registerHandler(GET, "/{index}/_refresh", this)
       PATTERN_URL_PARTS  = /\{(?<part>[a-zA-Z0-9\_\-]+)\}/
       # request.hasContent()
@@ -35,22 +35,22 @@ module Elasticsearch
       #
       def __parse_java_source(path)
         path  += '/' unless path =~ /\/$/ # Add trailing slash if missing
-        prefix = "src/main/java/org/elasticsearch/rest/action"
+        prefix = "core/src/main/java/org/elasticsearch/rest/action"
 
-        java_rest_files = Dir["#{path}#{prefix}/**/*.java"]
+        java_rest_files = Dir["#{path}#{prefix}/**/Rest*Action.java"]
 
         map = {}
 
         java_rest_files.sort.each do |file|
           content = File.read(file)
           parts   = file.gsub(path+prefix, '').split('/')
-          name    = parts[0, parts.size-1].reject { |p| p =~ /^\s*$/ }.join('.')
+          name    = parts[-1].scan(/Rest(.+?)[A-Z]*Action\.java/).first.first.downcase + '_' + parts[-2]
 
           # Remove the `admin` namespace
           name.gsub! /admin\./, ''
 
           # Extract params
-          url_params = content.scan(PATTERN_URL_PARAMS).map { |n| n.first }.sort
+          url_params = content.scan(PATTERN_URL_PARAMS).map { |type, param| [param, type] }.sort
 
           # Extract parts
           url_parts = content.scan(PATTERN_URL_PARTS).map { |n| n.first }.sort
@@ -70,6 +70,15 @@ module Elasticsearch
         end
 
         map
+      end
+
+      def __humanize_java_type(param_string)
+        case param_string
+        when 'param'          then 'string'
+        when 'paramAsInt'     then 'number'
+        when 'paramAsTime'    then 'time'
+        when 'paramAsBoolean' then 'boolean'
+        end
       end
 
       extend self
@@ -132,7 +141,7 @@ module Elasticsearch
         rest_actions.each do |name, info|
           doc_url  = ""
           parts    = info.reduce([]) { |sum, n| sum |= n['parts']; sum }.reduce({}) { |sum, n| sum[n] = {}; sum }
-          params   = info.reduce([]) { |sum, n| sum |= n['params']; sum }.reduce({}) { |sum, n| sum[n] = {}; sum }
+          params   = info.reduce([]) { |sum, n| sum |= n['params']; sum }.map { |param, type| Hash[param, { 'type' => Utils.__humanize_java_type(type), 'description' => '' }] }
 
           if options[:crawl]
             begin
@@ -166,7 +175,7 @@ module Elasticsearch
             }
           }
 
-          json = JSON.pretty_generate(spec, indent: '  ', array_nl: '', object_nl: "\n", space: ' ', space_before: ' ')
+          json = JSON.pretty_generate(spec, indent: '  ', object_nl: "\n", space: ' ', space_before: ' ')
 
           # Fix JSON array formatting
           json.gsub!(/\[\s+/, '[')
