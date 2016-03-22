@@ -1,4 +1,6 @@
 require 'manticore'
+require "elasticsearch/transport/transport/http/manticore/pool"
+require "elasticsearch/transport/transport/http/manticore/adapter"
 
 module Elasticsearch
   module Transport
@@ -43,97 +45,46 @@ module Elasticsearch
         # @see Transport::Base
         #
         class Manticore
+          attr_reader :pool, :adapter, :options
           include Base
 
           def initialize(arguments={}, &block)
-            @manticore = build_client(arguments[:options] || {})
-            super(arguments, &block)
-          end
+            @options = arguments[:options]
+            @logger = options[:logger]
+            @adapter = Adapter.new(logger, options)
+            # TODO handle HTTPS
+            @pool = Manticore::Pool.new(logger, @adapter, arguments[:hosts].map {|h| URI::HTTP.build(h).to_s})
+            @protocol    = options[:protocol] || DEFAULT_PROTOCOL
+            @serializer = options[:serializer] || ( options[:serializer_class] ? options[:serializer_class].new(self) : DEFAULT_SERIALIZER_CLASS.new(self) )
+            @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
 
-          # Should just be run once at startup
-          def build_client(options={})
-            client_options = options[:transport_options] || {}
-            client_options[:ssl] = options[:ssl] || {}
-
-            @manticore = ::Manticore::Client.new(client_options)
-          end
-
-          # Performs the request by invoking {Transport::Base#perform_request} with a block.
-          #
-          # @return [Response]
-          # @see    Transport::Base#perform_request
-          #
-          def perform_request(method, path, params={}, body=nil)
-            super do |connection, url|
-              params[:body] = __convert_to_json(body) if body
-              params = params.merge @request_options
-              case method
-              when "GET"
-                resp = connection.connection.get(url, params)
-              when "HEAD"
-                resp = connection.connection.head(url, params)
-              when "PUT"
-                resp = connection.connection.put(url, params)
-              when "POST"
-                resp = connection.connection.post(url, params)
-              when "DELETE"
-                resp = connection.connection.delete(url, params)
-              else
-                raise ArgumentError.new "Method #{method} not supported"
+            if options[:sniffing]
+              # We don't support sniffers that aren't threadsafe with timers here!
+              sniffer_class = options[:sniffer_class] ? options[:sniffer_class] : ManticoreSniffer
+              raise ArgumentError, "Sniffer class #{sniffer_class} must be a ManticoreSniffer!" if sniffer_class.nil? || !sniffer_class.ancestors.include?(ManticoreSniffer)
+              @sniffer = sniffer_class.new(self, logger)
+              @sniffer.sniff_every(options[:sniffer_delay] || 5) do |urls|
+                logger.info("Will update internal host pool with #{urls.inspect}")
+                @pool.update_urls(urls)
               end
-              Response.new resp.code, resp.read_body, resp.headers
             end
           end
 
-          # Builds and returns a collection of connections.
-          # Each connection is a Manticore::Client
-          #
-          # @return [Connections::Collection]
-          #
-          def __build_connections
-            @request_options = {}
+          def perform_request(method, path, params={}, body=nil)
+            with_request_retries do
+              body = __convert_to_json(body) if body
+              enriching_response(method, path, params, body) do
+                url, response = @pool.perform_request(method, path, params, body)
 
-            if options.key?(:headers)
-              @request_options[:headers] = options[:headers]
+                # Raise an exception so we can catch it for `retry_on_status`
+                __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
+                [url, response]
+              end
             end
-
-            Connections::Collection.new \
-              :connections => hosts.map { |host|
-                host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
-                host[:port]     ||= DEFAULT_PORT
-
-                host.delete(:user)     # auth is not supported here.
-                host.delete(:password) # use the headers
-
-                Connections::Connection.new \
-                  :host => host,
-                  :connection => @manticore
-              },
-              :selector_class => options[:selector_class],
-              :selector => options[:selector]
           end
 
-          # Closes all connections by marking them as dead
-          # and closing the underlying HttpClient instances
-          #
-          # @return [Connections::Collection]
-          #
           def __close_connections
-            @connections.each {|c| c.dead! }
-            @connections.all.each {|c| c.connection.close }
-          end
-
-          # Returns an array of implementation specific connection errors.
-          #
-          # @return [Array]
-          #
-          def host_unreachable_exceptions
-            [
-              ::Manticore::Timeout,
-              ::Manticore::SocketException,
-              ::Manticore::ClientProtocolException,
-              ::Manticore::ResolutionFailure
-            ]
+            @adapter.manticore.close
           end
         end
       end

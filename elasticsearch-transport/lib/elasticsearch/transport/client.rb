@@ -125,6 +125,11 @@ module Elasticsearch
         transport.perform_request method, path, params, body
       end
 
+      # Shuts down the client
+      def close
+        @transport.__close_connections
+      end
+
       # Normalizes and returns hosts configuration.
       #
       # Arrayifies the `hosts_config` argument and extracts `host` and `port` info from strings.

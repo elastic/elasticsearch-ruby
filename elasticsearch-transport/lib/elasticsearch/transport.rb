@@ -6,6 +6,7 @@ require "faraday"
 
 require "elasticsearch/transport/transport/serializer/multi_json"
 require "elasticsearch/transport/transport/sniffer"
+require "elasticsearch/transport/transport/manticore_sniffer"
 require "elasticsearch/transport/transport/response"
 require "elasticsearch/transport/transport/errors"
 require "elasticsearch/transport/transport/base"

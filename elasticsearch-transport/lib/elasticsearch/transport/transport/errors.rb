@@ -12,7 +12,13 @@ module Elasticsearch
 
       # Elasticsearch server error (HTTP status 5xx)
       #
-      class ServerError < Error; end
+      class ServerError < Error;
+        attr_reader :response
+
+        def initialize(response)
+          @response = response
+        end
+      end
 
       module Errors; end
 
