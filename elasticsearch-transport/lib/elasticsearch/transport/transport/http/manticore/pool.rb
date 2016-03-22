@@ -4,12 +4,15 @@ module Elasticsearch
       module HTTP
         class Manticore
           class Pool
+            attr_reader :logger
+
             class FatalURLError < StandardError; end
 
-            def initialize(client_wrapper, urls=[], resurrect_interval=5)
+            def initialize(logger, adapter, urls=[], resurrect_interval=5)
+              @logger = logger
               @state_mutex = Mutex.new
               @url_info = {}
-              @client = client_wrapper
+              @adapter = adapter
               @stopping = false
               @resurrect_interval = resurrect_interval
               @resurrectionist = start_resurrectionist
@@ -19,7 +22,7 @@ module Elasticsearch
             def close
               stop_resurrectionist
               wait_for_open_connections
-              @client.close
+              @adapter.close
             end
 
             def wait_for_open_connections
@@ -51,13 +54,14 @@ module Elasticsearch
 
             def resurrect_dead!
               # Try to keep locking granularity low such that we don't affect IO...
-              @state_mutex.synchronize { @url_info.select {|u,m| m[:dead] } }.each do |url,meta|
+              @state_mutex.synchronize { @url_info.select {|url,meta| meta[:dead] } }.each do |url,meta|
                 begin
-                  @client.perform_request(url, :get, "/")
+                  perform_request_to_url(url, "GET", "/")
                   # If no exception was raised it must have succeeded!
-                  @state_mutex.synchronize { m[:dead] = false }
+                  logger.info("Resurrected connection to dead ES instance at #{url}, got an error")
+                  @state_mutex.synchronize { meta[:dead] = false }
                 rescue FatalURLError => e
-                  # NOOP, we'll just try this another time...
+                  logger.debug("Attempted to resurrect connection to dead ES instance at #{url}, got an error [#{e.class}] #{e.message}")
                 end
               end
             end
@@ -69,25 +73,35 @@ module Elasticsearch
 
             def perform_request(method, path, params={}, body=nil)
               with_connection do |url|
-                begin
-                  [url, @client.perform_request(url, method, path, params, body)]
-                rescue ::Manticore::Timeout,::Manticore::SocketException, ::Manticore::ClientProtocolException, ::Manticore::ResolutionFailure => e
-                  logger.error "[#{e.class}] #{e.message} #{url}" if logger
-                  raise FatalURLError, "Could not reach host #{e.class}: #{e.message}"
-                end
+                [url, perform_request_to_url(url, method, path, params, body)]
               end
+            end
+
+            def perform_request_to_url(url, method, path, params={}, body=nil)
+              raise ArgumentError, "No URL specified!" unless url
+
+              @adapter.perform_request(url, method, path, params, body)
+            rescue ::Manticore::Timeout,::Manticore::SocketException, ::Manticore::ClientProtocolException, ::Manticore::ResolutionFailure => e
+              logger.error "[#{e.class}] #{e.message} #{url}" if logger
+              raise FatalURLError, "Could not reach host #{e.class}: #{e.message}"
             end
 
             def update_urls(new_urls)
               @state_mutex.synchronize do
                 # Add new connections
                 new_urls.each do |url|
-                  add_url(url)
+                  unless @url_info[url]
+                    logger.info("Elasticsearch pool adding node @ URL #{url}") if logger
+                    add_url(url)
+                  end
                 end
 
                 # Delete connections not in the new list
                 @url_info.each do |url,_|
-                  remove_url(url) unless new_urls.include?(url)
+                  unless new_urls.include?(url)
+                    logger.info("Elasticsearch pool removing node @ URL #{url}") if logger
+                    remove_url(url)
+                  end
                 end
               end
             end
@@ -109,12 +123,15 @@ module Elasticsearch
 
             def with_connection
               url, url_meta = get_connection
+
+              raise Error, "No Available connections!" unless url
               yield url
             rescue FatalURLError => e
               @state_mutex.synchronize do
                 url_meta[:dead] = true
                 url_meta[:last_error] = e
               end
+              raise e
             ensure
               return_connection(url)
             end

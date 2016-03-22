@@ -15,19 +15,25 @@ module Elasticsearch
         #
         def initialize(*args)
           @state_mutex = Mutex.new
+          @stopping = false
           super
         end
 
         def sniff_every(interval_seconds, &block)
+          logger.info("Will sniff every #{interval_seconds} seconds for new Elasticsearch hosts!")
           @state_mutex.synchronize do
             return if @sniffer_thread
             @sniffer_thread = Thread.new do
-              loop do
+              last_sniff = Time.now
+              until @state_mutex.synchronize { @stopping }
                 sleep 1
                 begin
-                  yield hosts
-                rescue StandardError => e
-
+                  if (Time.now - last_sniff) > interval_seconds
+                    yield hosts if block_given?
+                    last_sniff = Time.now
+                  end
+                rescue Exception => e
+                  logger.warn("Error while sniffing Elasticsearch Nodes! [#{e.class.name}][#{e.message}][#{e.backtrace.to_a}]") if logger
                 end
               end
             end
@@ -36,7 +42,16 @@ module Elasticsearch
 
         def hosts
           nodes = transport.perform_request('GET', '_nodes/http', :timeout => timeout).body
-          hosts_from_nodes(nodes)
+          urls = hosts_from_nodes(nodes).map {|n| "#{transport.protocol}://#{n["http_address"]}"}
+          puts "URLS ARE #{urls}"
+          urls
+        end
+
+        def stop
+          @state_mutex.synchronize do
+            @stopping = true
+            @sniffer_thread.join if @sniffer_thread
+          end
         end
       end
     end

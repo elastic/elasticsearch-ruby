@@ -4,9 +4,10 @@ module Elasticsearch
       module HTTP
         class Manticore
           class Adapter
-            attr_reader :manticore
+            attr_reader :manticore, :logger
 
-            def initialize(options, logger)
+            def initialize(logger, options)
+              @logger = logger
               build_client(options || {})
               sniffer_options = [logger, options[:sniffer_timeout], options[:randomize_hosts]]
             end
@@ -28,7 +29,9 @@ module Elasticsearch
             def perform_request(url, method, path, params={}, body=nil)
               params = params.merge @request_options
               params[:body] = body if body
+              path = "/#{path}" unless path.start_with?("/")
               url_and_path = url + path
+              @logger.info("URL AND PATH #{url_and_path}")
               case method
                 when "GET"
                   resp = @manticore.get(url_and_path, params)

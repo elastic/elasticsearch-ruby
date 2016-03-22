@@ -29,8 +29,6 @@ module Elasticsearch
         # @see Client#initialize
         #
         def initialize(arguments={}, &block)
-          require 'pry'; binding.pry
-
           @state_mutex = Mutex.new
 
           @hosts       = arguments[:hosts]   || []
@@ -151,8 +149,9 @@ module Elasticsearch
         #
         # @api private
         def __raise_transport_error(response)
-          error = ERRORS[response.status] || ServerError
-          raise error.new "[#{response.status}] #{response.body}"
+          puts "SET SERVER ERROR TO #{response}"
+          error = ERRORS[response.status].new(response) || ServerError.new(response)
+          raise error, "[#{response.status}] #{response.body}"
         end
 
         # Converts any non-String object to JSON
@@ -206,12 +205,14 @@ module Elasticsearch
             __raise_transport_error response
           end
 
+          json = deserialize_response(response)
+
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
 
           __log   method, path, params, body, url, response, json, took, duration if logger
           __trace method, path, params, body, url, response, json, took, duration if tracer
 
-          json = deserialize_response(response)
+
           ::Elasticsearch::Transport::Transport::Response.new response.status, json || response.body, response.headers
         end
 
@@ -282,7 +283,7 @@ module Elasticsearch
           begin
             yield
           rescue Elasticsearch::Transport::Transport::ServerError => e
-            if @retry_on_status.include?(response.status)
+            if @retry_on_status.include?(e.response.status)
               logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
               logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
               if tries <= max_retries
