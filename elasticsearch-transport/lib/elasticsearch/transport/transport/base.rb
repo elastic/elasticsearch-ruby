@@ -29,6 +29,8 @@ module Elasticsearch
         # @see Client#initialize
         #
         def initialize(arguments={}, &block)
+          require 'pry'; binding.pry
+
           @state_mutex = Mutex.new
 
           @hosts       = arguments[:hosts]   || []
@@ -39,18 +41,19 @@ module Elasticsearch
           @serializer  = options[:serializer] || ( options[:serializer_class] ? options[:serializer_class].new(self) : DEFAULT_SERIALIZER_CLASS.new(self) )
           @protocol    = options[:protocol] || DEFAULT_PROTOCOL
 
-          @logger      = options[:logger]
-          @tracer      = options[:tracer]
+            @logger      = options[:logger]
+            @tracer      = options[:tracer]
 
-          @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
-          @counter     = 0
-          @counter_mtx = Mutex.new
-          @last_request_at = Time.now
-          @reload_connections = options[:reload_connections]
-          @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
-          @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
-          @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
-          @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
+            sniffer_options = [logger, ]
+            @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
+            @counter     = 0
+            @counter_mtx = Mutex.new
+            @last_request_at = Time.now
+            @reload_connections = options[:reload_connections]
+            @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
+            @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
+            @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
+            @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
         end
 
         # Returns a connection from the connection pool by delegating to {Connections::Collection#get_connection}.
@@ -189,42 +192,54 @@ module Elasticsearch
         # @raise  [ServerError]   If request failed on server
         # @raise  [Error]         If no connection is available
         #
+        def enriching_response(method, path, params, body)
+          start = Time.now if logger || tracer
+
+          url, response = yield
+
+          duration = Time.now-start if logger || tracer
+
+          if response.status.to_i >= 300
+            __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
+            __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
+            __log_failed response if logger
+            __raise_transport_error response
+          end
+
+          took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
+
+          __log   method, path, params, body, url, response, json, took, duration if logger
+          __trace method, path, params, body, url, response, json, took, duration if tracer
+
+          json = deserialize_response(response)
+          ::Elasticsearch::Transport::Transport::Response.new response.status, json || response.body, response.headers
+        end
+
         def perform_request(method, path, params={}, body=nil, &block)
           raise NoMethodError, "Implement this method in your transport class" unless block_given?
-          start = Time.now if logger || tracer
-          tries = 0
+
 
           begin
-            tries     += 1
-            connection = get_connection or raise Error.new("Cannot get new connection from pool.")
+            with_request_retries do
+              response = enriching_response(method, path, params, body) do
+                connection = get_connection or raise Error.new("Cannot get new connection from pool.")
 
-            if connection.connection.respond_to?(:params) && connection.connection.params.respond_to?(:to_hash)
-              params = connection.connection.params.merge(params.to_hash)
-            end
+                if connection.connection.respond_to?(:params) && connection.connection.params.respond_to?(:to_hash)
+                  params = connection.connection.params.merge(params.to_hash)
+                end
 
-            url        = connection.full_url(path, params)
+                url        = connection.full_url(path, params)
 
-            response   = block.call(connection, url)
+                block_response   = block.call(connection, url)
 
-            connection.healthy! if connection.failures > 0
+                connection.healthy! if connection.failures > 0
 
-            # Raise an exception so we can catch it for `retry_on_status`
-            __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
-
-          rescue Elasticsearch::Transport::Transport::ServerError => e
-            if @retry_on_status.include?(response.status)
-              logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
-              logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
-              if tries <= max_retries
-                retry
-              else
-                logger.fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries" if logger
-                raise e
+                [url, block_response]
               end
-            else
-              raise e
-            end
 
+              # Raise an exception so we can catch it for `retry_on_status`
+              __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
+            end
           rescue *host_unreachable_exceptions => e
             logger.error "[#{e.class}] #{e.message} #{connection.host.inspect}" if logger
 
@@ -253,28 +268,33 @@ module Elasticsearch
 
           end #/begin
 
-          duration = Time.now-start if logger || tracer
-
-          if response.status.to_i >= 300
-            __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
-            __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
-            __log_failed response if logger
-            __raise_transport_error response
-          end
-
-          json     = serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
-          took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
-
-          __log   method, path, params, body, url, response, json, took, duration if logger
-          __trace method, path, params, body, url, response, json, took, duration if tracer
-
-          Response.new response.status, json || response.body, response.headers
+          response
         ensure
           @last_request_at = Time.now
         end
 
-        def perform_with_retry
+        def deserialize_response(response)
+          json = serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
+        end
 
+        def with_request_retries
+          tries = 0
+          begin
+            yield
+          rescue Elasticsearch::Transport::Transport::ServerError => e
+            if @retry_on_status.include?(response.status)
+              logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
+              logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
+              if tries <= max_retries
+                retry
+              else
+                logger.fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries" if logger
+                raise e
+              end
+            else
+              raise e
+            end
+          end
         end
 
         # @abstract Returns an Array of connection errors specific to the transport implementation.

@@ -70,7 +70,7 @@ module Elasticsearch
             def perform_request(method, path, params={}, body=nil)
               with_connection do |url|
                 begin
-                @client.perform_request(url, method, path, params, body)
+                  [url, @client.perform_request(url, method, path, params, body)]
                 rescue ::Manticore::Timeout,::Manticore::SocketException, ::Manticore::ClientProtocolException, ::Manticore::ResolutionFailure => e
                   logger.error "[#{e.class}] #{e.message} #{url}" if logger
                   raise FatalURLError, "Could not reach host #{e.class}: #{e.message}"
@@ -93,12 +93,10 @@ module Elasticsearch
             end
 
             def add_url(url)
-              @client.add_url(url)
               @url_info[url] ||= empty_url_meta
             end
 
             def remove_url(url)
-              @client.remove_url(url)
               @url_info.delete(url)
             end
 
