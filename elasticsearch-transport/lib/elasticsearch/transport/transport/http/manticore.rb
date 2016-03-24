@@ -119,8 +119,8 @@ module Elasticsearch
           # @return [Connections::Collection]
           #
           def __close_connections
-            @connections.each {|c| c.dead! }
-            @connections.all.each {|c| c.connection.close }
+            # The Manticore adapter uses a single long-lived instance
+            # of Manticore::Client, so we don't close the connections.
           end
 
           # Returns an array of implementation specific connection errors.

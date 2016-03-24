@@ -26,19 +26,6 @@ else
         assert_instance_of ::Manticore::Client,   @transport.connections.first.connection
       end
 
-      should "implement __close_connections" do
-        assert_equal 1, @transport.connections.size
-        @transport.__close_connections
-        assert_equal 0, @transport.connections.size
-      end
-
-      should "prevent requests after __close_connections" do
-        @transport.__close_connections
-        assert_raises ::Manticore::ClientStoppedException do
-          @transport.perform_request 'GET', '/'
-        end
-      end
-
       should "perform the request" do
         @transport.connections.first.connection.expects(:get).returns(stub_everything)
         @transport.perform_request 'GET', '/'
