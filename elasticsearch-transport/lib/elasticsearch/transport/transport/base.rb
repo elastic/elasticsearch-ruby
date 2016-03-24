@@ -64,11 +64,9 @@ module Elasticsearch
         def get_connection(options={})
           resurrect_dead_connections! if Time.now > @last_request_at + @resurrect_after
 
-          connection = connections.get_connection(options)
           @counter_mtx.synchronize { @counter += 1 }
-
           reload_connections!         if reload_connections && counter % reload_after == 0
-          connection
+          connections.get_connection(options)
         end
 
         # Reloads and replaces the connection collection based on cluster information.
