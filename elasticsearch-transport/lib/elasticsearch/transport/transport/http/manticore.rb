@@ -119,8 +119,9 @@ module Elasticsearch
           # @return [Connections::Collection]
           #
           def __close_connections
-            @connections.each {|c| c.dead! }
-            @connections.all.each {|c| c.connection.close }
+            # this transport uses a single, long lived instance of
+            # Manticore::Client that controls the connection pool
+            # so we don't need to close the client
           end
 
           # Returns an array of implementation specific connection errors.
