@@ -46,6 +46,7 @@ module Elasticsearch
                 Elasticsearch::API::Nodes,
                 Elasticsearch::API::Indices,
                 Elasticsearch::API::Snapshot,
+                Elasticsearch::API::Tasks,
                 Elasticsearch::API::Cat
     end
 
