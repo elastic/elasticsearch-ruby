@@ -22,16 +22,16 @@ jdk:
 
 env:
   - TEST_SUITE=unit
-  - TEST_SUITE=integration ES_VERSION=1.7.4
-  - TEST_SUITE=integration ES_VERSION=2.1.1
+  - TEST_SUITE=integration ES_VERSION=1.7.5
+  - TEST_SUITE=integration ES_VERSION=2.3.0
 
 before_install:
   - gem update --system
   - gem --version
 
 install:
-  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.4.tar.gz | tar xz -C /tmp || true
-  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.1.1/elasticsearch-2.1.1.tar.gz | tar xz -C /tmp || true
+  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.7.5.tar.gz | tar xz -C /tmp || true
+  - test $TEST_SUITE == 'integration' && curl -s https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.0/elasticsearch-2.3.0.tar.gz | tar xz -C /tmp || true
 
 before_script:
   - gem install bundler -v 1.11.2
@@ -47,10 +47,10 @@ matrix:
   exclude:
     - rvm: 1.8.7
       jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=1.7.4
+      env: TEST_SUITE=integration ES_VERSION=1.7.5
     - rvm: 1.8.7
       jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=2.1.1
+      env: TEST_SUITE=integration ES_VERSION=2.3.0
 
 notifications:
   disable: true
