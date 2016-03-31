@@ -6,6 +6,8 @@ sudo: false
 
 language: ruby
 
+cache: bundler
+
 branches:
   only:
     - master
