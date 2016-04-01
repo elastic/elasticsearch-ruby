@@ -26,6 +26,12 @@ else
         assert_instance_of ::Manticore::Client,   @transport.connections.first.connection
       end
 
+      should "not close connections in __close_connections" do
+        assert_equal 1, @transport.connections.size
+        @transport.__close_connections
+        assert_equal 1, @transport.connections.size
+      end
+
       should "perform the request" do
         @transport.connections.first.connection.expects(:get).returns(stub_everything)
         @transport.perform_request 'GET', '/'
