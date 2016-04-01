@@ -1,4 +1,4 @@
-## 1.0.16.pre
+## 1.0.16.pre2
 
 * Added notes about ES 2.x compatibility
 * Fixes and updates to the Travis CI configuration
