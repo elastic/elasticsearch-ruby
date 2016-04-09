@@ -295,5 +295,36 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       end
     end
 
+    context "when passed options" do
+      setup do
+        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.unstub(:__build_connections)
+      end
+
+      should "configure the HTTP scheme" do
+        c = Elasticsearch::Transport::Client.new \
+          :hosts => ['node1', 'node2'],
+          :port => 1234, :scheme => 'https', :user => 'USERNAME', :password => 'PASSWORD'
+
+        assert_equal 'https://USERNAME:PASSWORD@node1:1234/', c.transport.connections[0].full_url('')
+        assert_equal 'https://USERNAME:PASSWORD@node2:1234/', c.transport.connections[1].full_url('')
+      end
+
+      should "keep the credentials after reloading" do
+        Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS.any_instance.
+          stubs(:sniffer).
+          returns( mock(:hosts => [ {:host => 'foobar', :port => 4567, :id => 'foobar4567'} ]) )
+
+        c = Elasticsearch::Transport::Client.new \
+          :url => 'http://foo:1234',
+          :user => 'USERNAME', :password => 'PASSWORD'
+
+        assert_equal 'http://USERNAME:PASSWORD@foo:1234/', c.transport.connections.first.full_url('')
+
+        c.transport.reload_connections!
+
+        assert_equal 'http://USERNAME:PASSWORD@foobar:4567/', c.transport.connections.first.full_url('')
+      end
+    end
+
   end
 end
