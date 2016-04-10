@@ -172,6 +172,13 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       assert_instance_of ::Faraday::Connection, transport.connections.first.connection
       assert_equal 'http://foobar:1234/',       transport.connections.first.connection.url_prefix.to_s
     end
+
+    should "use global http configuration" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                              :options => { :http => { :scheme => 'https', :user => 'U', :password => 'P' } }
+
+      assert_equal 'https://U:P@foobar:1234/', transport.connections.first.full_url('')
+    end
   end
 
 end

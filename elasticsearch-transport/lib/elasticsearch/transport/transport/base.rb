@@ -33,6 +33,8 @@ module Elasticsearch
 
           @hosts       = arguments[:hosts]   || []
           @options     = arguments[:options] || {}
+          @options[:http] ||= {}
+
           @block       = block
           @connections = __build_connections
 

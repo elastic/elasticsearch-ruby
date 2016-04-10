@@ -324,6 +324,29 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
 
         assert_equal 'http://USERNAME:PASSWORD@foobar:4567/', c.transport.connections.first.full_url('')
       end
+
+      should "transfer selected host parts into the 'http' options" do
+        c = Elasticsearch::Transport::Client.new \
+          :host => { :scheme => 'https', :port => '8080', :host => 'node1', :user => 'U', :password => 'P' }
+
+        assert_equal 'https://U:P@node1:8080/', c.transport.connections.first.full_url('')
+
+        assert_equal 'https', c.transport.options[:http][:scheme]
+        assert_equal 8080,    c.transport.options[:http][:port]
+        assert_equal 'U',     c.transport.options[:http][:user]
+        assert_equal 'P',     c.transport.options[:http][:password]
+      end
+
+      should "transfer selected host parts from URL into the 'http' options" do
+        c = Elasticsearch::Transport::Client.new :url => 'https://U:P@node1:8080'
+
+        assert_equal 'https://U:P@node1:8080/', c.transport.connections.first.full_url('')
+
+        assert_equal 'https', c.transport.options[:http][:scheme]
+        assert_equal 8080,    c.transport.options[:http][:port]
+        assert_equal 'U',     c.transport.options[:http][:user]
+        assert_equal 'P',     c.transport.options[:http][:password]
+      end
     end
 
   end

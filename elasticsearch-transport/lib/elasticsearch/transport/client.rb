@@ -83,36 +83,39 @@ module Elasticsearch
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
       def initialize(arguments={}, &block)
-        hosts = arguments[:hosts] || \
-                arguments[:host]  || \
-                arguments[:url]   || \
-                arguments[:urls]  || \
+        @arguments = arguments
+
+        hosts = @arguments[:hosts] || \
+                @arguments[:host]  || \
+                @arguments[:url]   || \
+                @arguments[:urls]  || \
                 ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
 
-        arguments[:logger] ||= arguments[:log]   ? DEFAULT_LOGGER.call() : nil
-        arguments[:tracer] ||= arguments[:trace] ? DEFAULT_TRACER.call() : nil
-        arguments[:reload_connections] ||= false
-        arguments[:retry_on_failure]   ||= false
-        arguments[:reload_on_failure]  ||= false
-        arguments[:randomize_hosts]    ||= false
-        arguments[:transport_options]  ||= {}
+        @arguments[:logger] ||= @arguments[:log]   ? DEFAULT_LOGGER.call() : nil
+        @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
+        @arguments[:reload_connections] ||= false
+        @arguments[:retry_on_failure]   ||= false
+        @arguments[:reload_on_failure]  ||= false
+        @arguments[:randomize_hosts]    ||= false
+        @arguments[:transport_options]  ||= {}
+        @arguments[:http]               ||= {}
 
-        arguments[:transport_options].update(:request => { :timeout => arguments[:request_timeout] } ) if arguments[:request_timeout]
+        @arguments[:transport_options].update(:request => { :timeout => @arguments[:request_timeout] } ) if @arguments[:request_timeout]
 
-        @send_get_body_as = arguments[:send_get_body_as] || 'GET'
+        @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
 
-        transport_class  = arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
+        transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
 
-        @transport       = arguments[:transport] || begin
+        @transport       = @arguments[:transport] || begin
           if transport_class == Transport::HTTP::Faraday
-            transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments) do |faraday|
+            transport_class.new(:hosts => __extract_hosts(hosts, @arguments), :options => @arguments) do |faraday|
               block.call faraday if block
               unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
-                faraday.adapter(arguments[:adapter] || __auto_detect_adapter)
+                faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
               end
             end
           else
-            transport_class.new(:hosts => __extract_hosts(hosts, arguments), :options => arguments)
+            transport_class.new(:hosts => __extract_hosts(hosts, @arguments), :options => @arguments)
           end
         end
       end
@@ -167,6 +170,14 @@ module Elasticsearch
             end
 
           host_parts[:port] = host_parts[:port].to_i unless host_parts[:port].nil?
+
+          # Transfer the selected host parts such as authentication credentials to `options`,
+          # so we can re-use them when reloading connections
+          #
+          host_parts.select { |k,v| [:scheme, :port, :user, :password].include?(k) }.each do |k,v|
+            @arguments[:http][k] ||= v
+          end
+
           host_parts
         end
 

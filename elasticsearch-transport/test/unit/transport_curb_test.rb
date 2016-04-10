@@ -90,6 +90,13 @@ else
         assert_equal 'foo', transport.connections.first.connection.username
         assert_equal 'bar', transport.connections.first.connection.password
       end
+
+      should "use global http configuration" do
+        transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ],
+                                :options => { :http => { :scheme => 'https', :user => 'U', :password => 'P' } }
+
+        assert_equal 'https://U:P@foobar:1234/', transport.connections.first.full_url('')
+      end
     end
 
   end

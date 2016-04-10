@@ -211,6 +211,14 @@ The reloading will timeout if not finished under 1 second by default. To change 
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
 
+**NOTE:** When using reloading hosts ("sniffing") together with authentication, just pass the scheme,
+          user and password with the host info -- or, for more clarity, in the `http` options:
+
+    Elasticsearch::Client.new host: 'localhost:9200',
+                              http: { scheme: 'https', user: 'U', password: 'P' },
+                              reload_connections: true,
+                              reload_on_failure: true
+
 ### Connection Selector
 
 By default, the client will rotate the connections in a round-robin fashion, using the
