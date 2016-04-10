@@ -11,7 +11,7 @@ module Elasticsearch
         DEFAULT_RESURRECT_AFTER  = 60     # Seconds
         DEFAULT_MAX_RETRIES      = 3      # Requests
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
-        SANITIZED_PASSWORD       = '*'*rand(15)
+        SANITIZED_PASSWORD       = '*' * (rand(14)+1)
 
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
         attr_accessor :serializer, :sniffer, :logger, :tracer,
