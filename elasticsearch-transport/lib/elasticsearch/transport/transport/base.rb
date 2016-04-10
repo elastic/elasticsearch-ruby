@@ -18,7 +18,7 @@ module Elasticsearch
                       :reload_connections, :reload_after,
                       :resurrect_after, :max_retries
 
-        # Creates a new transport object.
+        # Creates a new transport object
         #
         # @param arguments [Hash] Settings and options for the transport
         # @param block     [Proc] Lambda or Proc which can be evaluated in the context of the "session" object
@@ -71,7 +71,7 @@ module Elasticsearch
           connections.get_connection(options)
         end
 
-        # Reloads and replaces the connection collection based on cluster information.
+        # Reloads and replaces the connection collection based on cluster information
         #
         # @see Sniffer#hosts
         #
@@ -84,7 +84,7 @@ module Elasticsearch
           self
         end
 
-        # Tries to "resurrect" all eligible dead connections.
+        # Tries to "resurrect" all eligible dead connections
         #
         # @see Connections::Connection#resurrect!
         #
@@ -92,7 +92,7 @@ module Elasticsearch
           connections.dead.each { |c| c.resurrect! }
         end
 
-        # Replaces the connections collection.
+        # Replaces the connections collection
         #
         # @api private
         #
@@ -111,6 +111,7 @@ module Elasticsearch
         #
         # @return [Connections::Collection]
         # @api    private
+        #
         def __build_connections
           Connections::Collection.new \
             :connections => hosts.map { |host|
@@ -133,11 +134,12 @@ module Elasticsearch
         #
         # @return [Connections::Connection]
         # @api    private
+        #
         def __build_connection(host, options={}, block=nil)
           raise NoMethodError, "Implement this method in your class"
         end
 
-        # Closes the connections collection.
+        # Closes the connections collection
         #
         # @api private
         #
@@ -145,7 +147,7 @@ module Elasticsearch
           # A hook point for specific adapters when they need to close connections
         end
 
-        # Log request and response information.
+        # Log request and response information
         #
         # @api private
         #
@@ -157,16 +159,18 @@ module Elasticsearch
           logger.debug "< #{response.body}"
         end
 
-        # Log failed request.
+        # Log failed request
         #
         # @api private
+        #
         def __log_failed(response)
           logger.fatal "[#{response.status}] #{response.body}"
         end
 
-        # Trace the request in the `curl` format.
+        # Trace the request in the `curl` format
         #
         # @api private
+        #
         def __trace(method, path, params, body, url, response, json, took, duration)
           trace_url  = "http://localhost:9200/#{path}?pretty" +
                        ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
@@ -179,6 +183,7 @@ module Elasticsearch
         # Raise error specific for the HTTP response status or a generic server error
         #
         # @api private
+        #
         def __raise_transport_error(response)
           error = ERRORS[response.status] || ServerError
           raise error.new "[#{response.status}] #{response.body}"
@@ -187,6 +192,7 @@ module Elasticsearch
         # Converts any non-String object to JSON
         #
         # @api private
+        #
         def __convert_to_json(o=nil, options={})
           o = o.is_a?(String) ? o : serializer.dump(o, options)
         end
