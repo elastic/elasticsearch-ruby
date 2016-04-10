@@ -8,7 +8,10 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
   class DummyTransport
     include Elasticsearch::Transport::Transport::Base
-    def __build_connections; hosts; end
+    # def __build_connections; hosts; end
+    def __build_connection(host, options={}, block=nil)
+      Elasticsearch::Transport::Transport::Connections::Connection.new :host => host, :connection => Object.new
+    end
   end
 
   class DummyTransportPerformer < DummyTransport
@@ -24,9 +27,9 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
   end
 
   context "Transport::Base" do
-    should "raise exception when it doesn't implement __build_connections" do
+    should "raise exception when it doesn't implement __build_connection" do
       assert_raise NoMethodError do
-        EmptyTransport.new.__build_connections
+        EmptyTransport.new.__build_connection({ :host => 'foo'}, {})
       end
     end
 
@@ -497,13 +500,16 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
     should "close connections" do
       @transport.expects(:__close_connections)
-      @transport.__rebuild_connections :hosts => ['foo']
+      @transport.__rebuild_connections :hosts => [ { :scheme => 'http', :host => 'foo', :port => 1 } ], :options => { :http => {} }
     end
 
     should "should replace the connections" do
-      assert_equal [], @transport.connections
-      @transport.__rebuild_connections :hosts => ['foo', 'bar']
-      assert_equal ['foo', 'bar'], @transport.connections
+      assert_equal 0, @transport.connections.size
+
+      @transport.__rebuild_connections :hosts => [{ :scheme => 'http', :host => 'foo', :port => 1 }],
+                                       :options => { :http => {} }
+
+      assert_equal 1, @transport.connections.size
     end
   end
 

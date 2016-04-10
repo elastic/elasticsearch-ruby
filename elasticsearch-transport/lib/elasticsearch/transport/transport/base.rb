@@ -282,12 +282,35 @@ module Elasticsearch
           [Errno::ECONNREFUSED]
         end
 
-        # @abstract A transport implementation must implement this method.
-        #           See {HTTP::Faraday#__build_connections} for an example.
+        # Builds and returns a collection of connections
+        #
+        # The adapters have to implement the {Base#__build_connection} method.
         #
         # @return [Connections::Collection]
         # @api    private
         def __build_connections
+          Connections::Collection.new \
+            :connections => hosts.map { |host|
+              host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
+              host[:port] ||= options[:port] || options[:http][:scheme] || DEFAULT_PORT
+              if (options[:user] || options[:http][:user]) && !host[:user]
+                host[:user] ||= options[:user] || options[:http][:user]
+                host[:password] ||= options[:password] || options[:http][:password]
+              end
+
+              __build_connection(host, (options[:transport_options] || {}), @block)
+            },
+            :selector_class => options[:selector_class],
+            :selector => options[:selector]
+        end
+
+        # @abstract Build and return a connection.
+        #           A transport implementation *must* implement this method.
+        #           See {HTTP::Faraday#__build_connection} for an example.
+        #
+        # @return [Connections::Connection]
+        # @api    private
+        def __build_connection(host, options={}, block=nil)
           raise NoMethodError, "Implement this method in your class"
         end
       end

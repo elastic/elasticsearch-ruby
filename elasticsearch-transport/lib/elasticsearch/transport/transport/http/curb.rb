@@ -37,32 +37,24 @@ module Elasticsearch
             end
           end
 
-          # Builds and returns a collection of connections.
+          # Builds and returns a connection
           #
-          # @return [Connections::Collection]
+          # @return [Connections::Connection]
           #
-          def __build_connections
-            Connections::Collection.new \
-              :connections => hosts.map { |host|
-                host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
-                host[:port]     ||= DEFAULT_PORT
+          def __build_connection(host, options={}, block=nil)
+            client = ::Curl::Easy.new
+            client.headers = {'User-Agent' => "Curb #{Curl::CURB_VERSION}"}
+            client.url     = __full_url(host)
 
-                client = ::Curl::Easy.new
-                client.headers      = {'User-Agent' => "Curb #{Curl::CURB_VERSION}"}
-                client.url          = __full_url(host)
+            if host[:user]
+              client.http_auth_types = host[:auth_type] || :basic
+              client.username = host[:user]
+              client.password = host[:password]
+            end
 
-                if host[:user]
-                  client.http_auth_types = host[:auth_type] || :basic
-                  client.username = host[:user]
-                  client.password = host[:password]
-                end
+            client.instance_eval(&block) if block
 
-                client.instance_eval(&@block) if @block
-
-                Connections::Connection.new :host => host, :connection => client
-              },
-              :selector_class => options[:selector_class],
-              :selector => options[:selector]
+            Connections::Connection.new :host => host, :connection => client
           end
 
           # Returns an array of implementation specific connection errors.

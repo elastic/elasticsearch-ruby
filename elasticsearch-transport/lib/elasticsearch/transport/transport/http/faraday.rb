@@ -27,28 +27,13 @@ module Elasticsearch
             end
           end
 
-          # Builds and returns a collection of connections.
+          # Builds and returns a connection
           #
-          # @return [Connections::Collection]
+          # @return [Connections::Connection]
           #
-          def __build_connections
-            Connections::Collection.new \
-              :connections => hosts.map { |host|
-                host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
-                host[:port] ||= options[:port] || options[:http][:scheme] || DEFAULT_PORT
-                if (options[:user] || options[:http][:user]) && !host[:user]
-                  host[:user] ||= options[:user] || options[:http][:user]
-                  host[:password] ||= options[:password] || options[:http][:password]
-                end
-
-                url = __full_url(host)
-
-                Connections::Connection.new \
-                  :host => host,
-                  :connection => ::Faraday::Connection.new(url, (options[:transport_options] || {}), &@block )
-              },
-              :selector_class => options[:selector_class],
-              :selector => options[:selector]
+          def __build_connection(host, options={}, block=nil)
+            client = ::Faraday::Connection.new(__full_url(host), options, &block)
+            Connections::Connection.new :host => host, :connection => client
           end
 
           # Returns an array of implementation specific connection errors.
