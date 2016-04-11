@@ -79,6 +79,7 @@ module Elasticsearch
           :op_type,
           :parent,
           :percolate,
+          :pipeline,
           :refresh,
           :replication,
           :routing,

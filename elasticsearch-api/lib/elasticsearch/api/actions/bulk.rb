@@ -55,6 +55,7 @@ module Elasticsearch
       # @option arguments [Time]    :timeout Explicit operation timeout
       # @option arguments [String]  :fields Default comma-separated list of fields to return
       #                             in the response for updates
+      # @options arguments [String] :pipeline The pipeline ID to use for preprocessing incoming documents
       #
       # @return [Hash] Deserialized Elasticsearch response
       #
@@ -71,7 +72,8 @@ module Elasticsearch
           :replication,
           :type,
           :timeout,
-          :fields ]
+          :fields,
+          :pipeline ]
 
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(type), '_bulk'
