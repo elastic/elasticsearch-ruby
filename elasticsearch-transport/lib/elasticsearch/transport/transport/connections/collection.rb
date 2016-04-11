@@ -85,6 +85,26 @@ module Elasticsearch
           def size
             connections.size
           end
+
+          # Add connection(s) to the collection
+          #
+          # @param connections [Connection,Array] A connection or an array of connections to add
+          # @return [self]
+          #
+          def add(connections)
+            @connections += Array(connections).to_a
+            self
+          end
+
+          # Remove connection(s) from the collection
+          #
+          # @param connections [Connection,Array] A connection or an array of connections to remove
+          # @return [self]
+          #
+          def remove(connections)
+            @connections -= Array(connections).to_a
+            self
+          end
         end
 
       end

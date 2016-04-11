@@ -43,6 +43,48 @@ class Elasticsearch::Transport::Transport::Connections::CollectionTest < Test::U
       assert_equal  2,             c.size
     end
 
+    should "add connections" do
+      c = Collection.new :connections => [ Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 1}) ]
+      assert_equal 1, c.size
+
+      c.add([ Connection.new(:host => { :protocol => 'http', :host => 'bar', :port => 1 }),
+              Connection.new(:host => { :protocol => 'http', :host => 'bam', :port => 1 }) ])
+      assert_equal 3, c.size
+    end
+
+    should "add connection" do
+      c = Collection.new :connections => [ Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 1}) ]
+      assert_equal 1, c.size
+
+      c.add(Connection.new(:host => { :protocol => 'http', :host => 'bar', :port => 1 }))
+      assert_equal 2, c.size
+    end
+
+    should "remove connections" do
+      c = Collection.new :connections => [
+        Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 1 }),
+        Connection.new(:host => { :protocol => 'http', :host => 'bar', :port => 1 })
+      ]
+      assert_equal 2, c.size
+
+      c.remove([c.first])
+      assert_equal 1, c.size
+
+      c.remove(c)
+      assert_equal 0, c.size
+    end
+
+    should "remove connection" do
+      c = Collection.new :connections => [
+        Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 1 }),
+        Connection.new(:host => { :protocol => 'http', :host => 'bar', :port => 1 })
+      ]
+      assert_equal 2, c.size
+
+      c.remove(c.first)
+      assert_equal 1, c.size
+    end
+
     context "with the dead pool" do
       setup do
         @collection = Collection.new :connections => [ Connection.new(:host => 'foo'), Connection.new(:host => 'bar') ]
@@ -66,8 +108,8 @@ class Elasticsearch::Transport::Transport::Connections::CollectionTest < Test::U
       end
 
       should "resurrect dead connection with least failures when no alive is available" do
-        c1 = Connection.new(:host => 'foo').dead!.dead!
-        c2 = Connection.new(:host => 'bar').dead!
+        c1 = Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 123 }).dead!.dead!
+        c2 = Connection.new(:host => { :protocol => 'http', :host => 'bar', :port => 123 }).dead!
 
         @collection = Collection.new :connections => [ c1, c2 ]
 
