@@ -1,3 +1,9 @@
+## 1.0.17
+
+### Client
+
+* Fixed, that existing connections are not re-initialized during reloading ("sniffing")
+
 ## 1.0.16
 
 * Added notes about ES 2.x compatibility
@@ -20,6 +26,7 @@
 * Improved the thread-safety of reloading connections
 * Improved the Manticore HTTP client
 * Fixed, that connections are reloaded _before_ getting a connection
+* Added a better interface for configuring global HTTP settings such as protocol or authentication
 
 ## DSL:0.1.3
 
