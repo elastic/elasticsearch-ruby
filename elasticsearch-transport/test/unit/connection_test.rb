@@ -95,6 +95,15 @@ class Elasticsearch::Transport::Transport::Connections::ConnectionTest < Test::U
       assert ! c.dead?,      c.inspect
     end
 
+    should "implement the equality operator" do
+      c1 = Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 123 })
+      c2 = Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 123 })
+      c3 = Connection.new(:host => { :protocol => 'http', :host => 'foo', :port => 456 })
+
+      assert c1 == c2, "Connection #{c1} should be equal to #{c2}"
+      assert c2 != c3, "Connection #{c2} should NOT be equal to #{c3}"
+    end
+
   end
 
 end
