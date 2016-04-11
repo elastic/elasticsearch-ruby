@@ -1,4 +1,4 @@
-## 1.0.16.pre2
+## 1.0.16
 
 * Added notes about ES 2.x compatibility
 * Fixes and updates to the Travis CI configuration
@@ -19,6 +19,7 @@
 * Bumped the "manticore" gem dependency to 0.5
 * Improved the thread-safety of reloading connections
 * Improved the Manticore HTTP client
+* Fixed, that connections are reloaded _before_ getting a connection
 
 ## DSL:0.1.3
 
