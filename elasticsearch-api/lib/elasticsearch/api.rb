@@ -45,6 +45,7 @@ module Elasticsearch
                 Elasticsearch::API::Cluster,
                 Elasticsearch::API::Nodes,
                 Elasticsearch::API::Indices,
+                Elasticsearch::API::Ingest,
                 Elasticsearch::API::Snapshot,
                 Elasticsearch::API::Tasks,
                 Elasticsearch::API::Cat
