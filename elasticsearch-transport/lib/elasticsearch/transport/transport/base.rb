@@ -92,16 +92,28 @@ module Elasticsearch
           connections.dead.each { |c| c.resurrect! }
         end
 
-        # Replaces the connections collection
+        # Rebuilds the connections collection in the transport.
         #
+        # The methods *adds* new connections from the passed hosts to the collection,
+        # and *removes* all connections not contained in the passed hosts.
+        #
+        # @return [Connections::Collection]
         # @api private
         #
         def __rebuild_connections(arguments={})
           @state_mutex.synchronize do
             @hosts       = arguments[:hosts]    || []
             @options     = arguments[:options]  || {}
+
             __close_connections
-            @connections = __build_connections
+
+            new_connections = __build_connections
+            stale_connections = @connections.select  { |c| ! new_connections.include?(c) }
+            new_connections = new_connections.reject { |c| @connections.include?(c) }
+
+            @connections.remove(stale_connections)
+            @connections.add(new_connections)
+            @connections
           end
         end
 

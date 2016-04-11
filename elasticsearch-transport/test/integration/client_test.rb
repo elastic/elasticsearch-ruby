@@ -12,7 +12,6 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
   context "Elasticsearch client" do
     teardown do
       begin; Object.send(:remove_const, :Typhoeus);                rescue NameError; end
-      begin; Object.send(:remove_const, :Patron);                  rescue NameError; end
       begin; Net::HTTP.send(:remove_const, :Persistent); rescue NameError; end
     end
 
@@ -168,6 +167,27 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
     end
 
+    context "when reloading connections" do
+      should "keep existing connections" do
+        require 'patron' # We need a client with keep-alive
+        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}", adapter: :patron, logger: @logger
+
+        assert_equal 'Faraday::Adapter::Patron',
+                      client.transport.connections.first.connection.builder.handlers.first.name
+
+        response = client.perform_request 'GET', '_nodes/stats/http'
+
+        a = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+
+        client.transport.reload_connections!
+
+        response = client.perform_request 'GET', '_nodes/stats/http'
+        b = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+
+        assert_equal a, b
+      end unless JRUBY
+    end
+
     context "with Faraday adapters" do
       should "set the adapter with a block" do
         require 'net/http/persistent'
@@ -184,6 +204,8 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
 
       should "automatically use the Patron client when loaded" do
+        teardown { begin; Object.send(:remove_const, :Patron); rescue NameError; end }
+
         require 'patron'
         client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}"
 

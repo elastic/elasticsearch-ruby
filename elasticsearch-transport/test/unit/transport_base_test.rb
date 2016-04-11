@@ -8,7 +8,6 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
 
   class DummyTransport
     include Elasticsearch::Transport::Transport::Base
-    # def __build_connections; hosts; end
     def __build_connection(host, options={}, block=nil)
       Elasticsearch::Transport::Transport::Connections::Connection.new :host => host, :connection => Object.new
     end
@@ -490,6 +489,20 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_nothing_raised do
         @transport.reload_connections!
       end
+    end
+
+    should "keep existing connections" do
+      @transport.__rebuild_connections :hosts => [ { :host => 'node1', :port => 1 } ], :options => { :http => {} }
+      assert_equal 1, @transport.connections.size
+
+      old_connection_id = @transport.connections.first.object_id
+
+      @transport.__rebuild_connections :hosts => [ { :host => 'node1', :port => 1 },
+                                                   { :host => 'node2', :port => 2 } ],
+                                       :options => { :http => {} }
+
+      assert_equal 2, @transport.connections.size
+      assert_equal old_connection_id, @transport.connections.first.object_id
     end
   end
 
