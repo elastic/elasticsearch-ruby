@@ -34,6 +34,7 @@ module Elasticsearch
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
         #                                    (default: false)
@@ -45,6 +46,7 @@ module Elasticsearch
             :prefix,
             :ignore_indices,
             :ignore_unavailable,
+            :include_defaults,
             :allow_no_indices,
             :expand_wildcards,
             :flat_settings,
