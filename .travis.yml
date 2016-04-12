@@ -6,8 +6,6 @@ sudo: false
 
 language: ruby
 
-cache: bundler
-
 branches:
   only:
     - master
@@ -18,7 +16,7 @@ rvm:
   - 1.9.3
   - 2.1
   - 2.2
-  - jruby-1.7.24
+  - jruby-1.7.23
 
 env:
   - TEST_SUITE=unit
