@@ -51,38 +51,17 @@ module Elasticsearch
 
           def initialize(arguments={}, &block)
             @options = arguments[:options] || {}
+            @options[:http] ||= {}
             @logger = options[:logger]
             @adapter = Adapter.new(logger, options)
             @healthcheck_path = options[:healthcheck_path] || "/"
-            normalized_hosts = (arguments[:hosts] || []).map {|h| normalize_host(h)}
-            @pool = Manticore::Pool.new(logger, @adapter, @healthcheck_path, normalized_hosts)
+            @pool = Manticore::Pool.new(logger, @adapter, @healthcheck_path, (arguments[:hosts] || []), 5, self.host_unreachable_exceptions, options)
             @protocol    = options[:protocol] || DEFAULT_PROTOCOL
             @serializer = options[:serializer] || ( options[:serializer_class] ? options[:serializer_class].new(self) : DEFAULT_SERIALIZER_CLASS.new(self) )
             @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
             @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
 
             setup_sniffing!
-          end
-
-          def normalize_host(host)
-            case host
-            when URI
-              host
-            when String
-              URI.parse(host)
-            when Hash
-              host = host.clone
-              host[:scheme] ||= (host[:scheme] || host[:protocol] || "http").to_s
-              if host[:scheme] == 'http'
-                URI::HTTP.build(host)
-              elsif scheme == 'https'
-                URI::HTTPS.build(host)
-              else
-                raise ArgumentError, "Unrecognized scheme for host #{host}"
-              end
-            else
-              raise ArgumentError, "Host parameter #{host} is not valid! Try something like 'http://localhost:9200'!"
-            end
           end
 
           def setup_sniffing!

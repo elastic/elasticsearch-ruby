@@ -3,12 +3,18 @@ module Elasticsearch
     module Transport
       module HTTP
         class Manticore
+          # Threadsafe connection pool
           class Pool
+            # If this class ever becomes the default thing for all transports these constants should
+            # live here
+            DEFAULT_PROTOCOL = Elasticsearch::Transport::Transport::Base::DEFAULT_PROTOCOL
+            DEFAULT_PORT = Elasticsearch::Transport::Transport::Base::DEFAULT_PORT
+
             class NoConnectionAvailableError < Error; end
 
             attr_reader :logger
 
-            def initialize(logger, adapter, healthcheck_path="/", urls=[], resurrect_interval=5, host_unreachable_exceptions=[])
+            def initialize(logger, adapter, healthcheck_path="/", urls=[], resurrect_interval=5, host_unreachable_exceptions=[], transport_options={})
               @logger = logger
               @state_mutex = Mutex.new
               @url_info = {}
@@ -18,6 +24,8 @@ module Elasticsearch
               @resurrect_interval = resurrect_interval
               @resurrectionist = start_resurrectionist
               @host_unreachable_exceptions = host_unreachable_exceptions
+              @transport_options = transport_options
+              @transport_options[:http] ||= {} # This must be defined!
               update_urls(urls)
             end
 
@@ -90,9 +98,41 @@ module Elasticsearch
               raise ::Elasticsearch::Transport::Transport::HostUnreachableError.new(e, url), "Could not reach host #{e.class}: #{e.message}"
             end
 
+            def normalize_url(arg)
+              arg = arg.clone # Make a copy, we don't need to mutate stuff here
+              options = @transport_options # Use a shorthand here
+
+              uri = case arg
+                      when URI
+                        arg
+                      when String
+                        URI.parse(arg)
+                      when Hash
+                        arg[:scheme] ||= (arg[:protocol] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL).to_s
+                        arg[:port] ||= options[:port] || options[:http][:scheme] || DEFAULT_PORT
+                        if arg[:scheme] == 'http'
+                          URI::HTTP.build(arg)
+                        elsif scheme == 'https'
+                          URI::HTTPS.build(arg)
+                        else
+                          raise ArgumentError, "Unrecognized scheme for url options #{arg}"
+                        end
+                      else
+                        raise ArgumentError, "Host parameter #{arg} is not valid! Try something like 'http://localhost:9200'!"
+                    end
+
+              # Set credentials if need be
+              if (options[:user] || options[:http][:user]) && !uri.user
+                uri.user ||= options[:user] || options[:http][:user]
+                uri.password ||= options[:password] || options[:http][:password]
+              end
+
+              uri
+            end
+
             def update_urls(new_urls)
               # Normalize URLs
-              new_urls = new_urls.map {|u| u.is_a?(URI) ? u : URI.parse(u) }
+              new_urls = new_urls.map(&method(:normalize_url))
 
               @state_mutex.synchronize do
                 # Add new connections

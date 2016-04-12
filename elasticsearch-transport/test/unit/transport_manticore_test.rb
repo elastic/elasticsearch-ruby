@@ -90,7 +90,7 @@ else
         options = { :headers => {"User-Agent" => "myapp-0.0" }}
         transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
         transport.adapter.manticore.expects(:get).
-          with('http://foobar:1234/', options).returns(stub_everything)
+          with('http://foobar:1234/', :headers => options[:headers]).returns(stub_everything)
 
         transport.perform_request 'GET', '/', {}
       end
@@ -104,7 +104,7 @@ else
           }
         }
 
-        ::Manticore::Client.expects(:new).with(options)
+        ::Manticore::Client.expects(:new).with(:ssl => {:truststore => 'test.jks', :truststore_password => 'test', :verify => false})
         Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
       end
 

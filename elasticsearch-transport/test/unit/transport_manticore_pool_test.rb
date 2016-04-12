@@ -10,8 +10,7 @@ else
   class Elasticsearch::Transport::Transport::HTTP::ManticorePoolTest < Test::Unit::TestCase
     include Elasticsearch::Transport::Transport::HTTP
 
-    context "Manticore transport" do
-      setup do
+      def setup
         @logger = Logger.new(StringIO.new)
         @adapter = mock()
         @healthcheck_path = "/healthcheck"
@@ -19,51 +18,50 @@ else
         @url_uris = @urls.map {|u| URI.parse(u) }
         @resurrect_interval = 3
         @pool = ::Elasticsearch::Transport::Transport::HTTP::Manticore::Pool.new(@logger, @adapter, @healthcheck_path, @urls, @resurrect_interval)
+      rescue Exception => e
+        require 'pry'; binding.pry if !@pool
       end
 
-      teardown do
+      def teardown
         @adapter.expects(:close)
         @pool.close
       end
 
-      should "close cleanly" do
+      def test_clean_close
         @adapter.expects(:close)
         @pool.close
       end
 
-      context "#with_connection" do
-        should "correctly get an URL from the list of open URLs" do
-          @pool.with_connection do |c|
-            assert(@url_uris.include?(c))
-          end
-        end
-
-        should "minimize the number of connections to a given URL" do
-          connected_urls = []
-          (@urls.size*2).times do
-            c,meta = @pool.get_connection
-            connected_urls << c
-          end
-          connected_urls.each {|u| @pool.return_connection(u) }
-          @urls.each do |url|
-            assert_equal(2, connected_urls.select {|u| u == URI.parse(url)}.size)
-          end
-        end
-
-        should "resurrect dead connections" do
-          u,m = @pool.get_connection
-
-          # The resurrectionist will call this to check on the backend
-          @adapter.expects(:perform_request).with(u, 'GET', @healthcheck_path, {}, nil).returns(::Elasticsearch::Transport::Transport::Response.new(200, "", {}))
-
-          @pool.return_connection(u)
-          @pool.mark_dead(u, Exception.new)
-          assert(@pool.url_meta(u)[:dead])
-          sleep @resurrect_interval + 1
-          assert(!@pool.url_meta(u)[:dead])
-        end
-
+    def test_connection_correctly_get_url_from_list_of_open_urls
+      @pool.with_connection do |c|
+        assert(@url_uris.include?(c))
       end
     end
+
+    def test_connection_minimize_number_of_connections_to_url
+      connected_urls = []
+      (@urls.size*2).times do
+        c,meta = @pool.get_connection
+        connected_urls << c
+      end
+      connected_urls.each {|u| @pool.return_connection(u) }
+      @urls.each do |url|
+        assert_equal(2, connected_urls.select {|u| u == URI.parse(url)}.size)
+      end
+    end
+
+    def test_resurrection_of_dead
+      u,m = @pool.get_connection
+
+      # The resurrectionist will call this to check on the backend
+      @adapter.expects(:perform_request).with(u, 'GET', @healthcheck_path, {}, nil).returns(::Elasticsearch::Transport::Transport::Response.new(200, "", {}))
+
+      @pool.return_connection(u)
+      @pool.mark_dead(u, Exception.new)
+      assert(@pool.url_meta(u)[:dead])
+      sleep @resurrect_interval + 1
+      assert(!@pool.url_meta(u)[:dead])
+    end
+
   end
 end
