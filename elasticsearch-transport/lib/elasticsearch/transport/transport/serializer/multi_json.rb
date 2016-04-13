@@ -21,13 +21,21 @@ module Elasticsearch
           # De-serialize a Hash from JSON string
           #
           def load(string, options={})
-            ::MultiJson.load(string, options)
+            if Gem.loaded_specs['multi_json'].version < Gem::Version.create('1.3.0')
+              ::MultiJson.decode(string, options)
+            else
+              ::MultiJson.load(string, options)
+            end
           end
 
           # Serialize a Hash to JSON string
           #
           def dump(object, options={})
-            ::MultiJson.dump(object, options)
+            if Gem.loaded_specs['multi_json'].version < Gem::Version.create('1.3.0')
+              ::MultiJson.encode(object, options)
+            else
+              ::MultiJson.dump(object, options)
+            end
           end
         end
       end
