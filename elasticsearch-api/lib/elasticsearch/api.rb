@@ -10,7 +10,34 @@ Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require
 
 module Elasticsearch
   module API
-    DEFAULT_SERIALIZER = MultiJson
+
+    # A wrapper around MultiJson to handle older versions of the gem.
+    # Inspired by a similar class in elasticsearch-transport/lib/elasticsearch/transport/transport/serializer/multi_json.rb
+    module MultiJson
+      # De-serialize a Hash from JSON string
+      #
+      def load(string, options={})
+        if Gem.loaded_specs['multi_json'].version < Gem::Version.create('1.3.0')
+          ::MultiJson.decode(string, options)
+        else
+          ::MultiJson.load(string, options)
+        end
+      end
+      module_function :load
+
+      # Serialize a Hash to JSON string
+      #
+      def dump(object, options={})
+        if Gem.loaded_specs['multi_json'].version < Gem::Version.create('1.3.0')
+          ::MultiJson.encode(object, options)
+        else
+          ::MultiJson.dump(object, options)
+        end
+      end
+      module_function :dump
+    end
+
+    DEFAULT_SERIALIZER = Elasticsearch::API::MultiJson
 
     COMMON_PARAMS = [
       :ignore,                        # Client specific parameters

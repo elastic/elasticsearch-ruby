@@ -18,7 +18,7 @@ module Elasticsearch
         end
 
         should "have default serializer" do
-          assert_equal MultiJson, Elasticsearch::API.serializer
+          assert_equal Elasticsearch::API::MultiJson, Elasticsearch::API.serializer
         end
 
       end
