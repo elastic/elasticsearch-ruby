@@ -37,6 +37,9 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting
+        # @option arguments [Boolean] :preserve_existing Whether to update existing settings.
+        #                                                If set to `true` existing settings on an index remain
+        #                                                unchanged, the default is `false`
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
@@ -51,6 +54,7 @@ module Elasticsearch
             :include_defaults,
             :allow_no_indices,
             :expand_wildcards,
+            :preserve_existing,
             :master_timeout,
             :flat_settings
           ]
