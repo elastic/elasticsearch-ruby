@@ -114,7 +114,7 @@ module Elasticsearch
           #
           def resurrectable?
             @state_mutex.synchronize {
-              Time.now > @dead_since + ( @options[:resurrect_timeout] * 2 ** (@failures-1) )
+              Time.now >= @dead_since + ( @options[:resurrect_timeout] * 2 ** (@failures-1) )
             }
           end
 

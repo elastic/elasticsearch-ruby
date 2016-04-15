@@ -12,7 +12,26 @@ module Elasticsearch
 
       # Elasticsearch server error (HTTP status 5xx)
       #
-      class ServerError < Error; end
+      class ServerError < Error;
+        attr_reader :response
+
+        def initialize(response)
+          @response = response
+        end
+      end
+
+      class HostUnreachableError < Error;
+        attr_reader :original_error, :url
+
+        def initialize(original_error, url)
+          @original_error = original_error
+          @url = url
+        end
+
+        def message
+          "[#{original_error.class}] #{original_error.message}"
+        end
+      end
 
       module Errors; end
 

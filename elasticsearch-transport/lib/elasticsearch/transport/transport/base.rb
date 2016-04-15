@@ -44,7 +44,8 @@ module Elasticsearch
           @logger      = options[:logger]
           @tracer      = options[:tracer]
 
-          @sniffer     = options[:sniffer_class] ? options[:sniffer_class].new(self) : Sniffer.new(self)
+          sniffer_class = options.fetch(:sniffer_class, Sniffer)
+          @sniffer     = sniffer_class.new(self, @logger)
           @counter     = 0
           @counter_mtx = Mutex.new
           @last_request_at = Time.now
@@ -165,8 +166,10 @@ module Elasticsearch
         #
         def __log(method, path, params, body, url, response, json, took, duration)
           sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD +  '@')
+
           logger.info  "#{method.to_s.upcase} #{sanitized_url} " +
                        "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
+
           logger.debug "> #{__convert_to_json(body)}" if body
           logger.debug "< #{response.body}"
         end
@@ -197,8 +200,8 @@ module Elasticsearch
         # @api private
         #
         def __raise_transport_error(response)
-          error = ERRORS[response.status] || ServerError
-          raise error.new "[#{response.status}] #{response.body}"
+          error_class = ERRORS.fetch(response.status, ServerError)
+          raise error_class.new(response), "[#{response.status}] #{response.body}"
         end
 
         # Converts any non-String object to JSON
@@ -260,8 +263,7 @@ module Elasticsearch
 
             # Raise an exception so we can catch it for `retry_on_status`
             __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
-
-          rescue Elasticsearch::Transport::Transport::ServerError => e
+          rescue ::Elasticsearch::Transport::Transport::ServerError => e
             if @retry_on_status.include?(response.status)
               logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
               logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
@@ -321,6 +323,11 @@ module Elasticsearch
           Response.new response.status, json || response.body, response.headers
         ensure
           @last_request_at = Time.now
+        end
+
+        def __deserialize_response(response)
+          serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
+
         end
 
         # @abstract Returns an Array of connection errors specific to the transport implementation.
