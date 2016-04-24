@@ -252,7 +252,7 @@ module Elasticsearch
               params = connection.connection.params.merge(params.to_hash)
             end
 
-            url        = connection.full_url(path, params)
+            url        = connection.full_path(path, params)
 
             response   = block.call(connection, url)
 
