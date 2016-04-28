@@ -354,7 +354,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     setup do
       @transport = DummyTransportPerformer.new :options => { :logger => Logger.new('/dev/null') }
 
-      fake_connection = stub :full_url => 'localhost:9200/_search?size=1',
+      fake_connection = stub :full_path => 'localhost:9200/_search?size=1',
                              :host     => 'localhost',
                              :connection => stub_everything,
                              :failures => 0,
@@ -378,7 +378,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     end
 
     should "sanitize password in the URL" do
-      fake_connection = stub :full_url => 'http://user:password@localhost:9200/_search?size=1',
+      fake_connection = stub :full_path => 'http://user:password@localhost:9200/_search?size=1',
                              :host     => 'localhost',
                              :connection => stub_everything,
                              :failures => 0,
@@ -421,7 +421,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
     setup do
       @transport = DummyTransportPerformer.new :options => { :tracer => Logger.new('/dev/null') }
 
-      fake_connection = stub :full_url => 'localhost:9200/_search?size=1',
+      fake_connection = stub :full_path => 'localhost:9200/_search?size=1',
                              :host     => 'localhost',
                              :connection => stub_everything,
                              :failures => 0,
