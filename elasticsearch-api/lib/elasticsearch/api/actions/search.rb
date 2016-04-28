@@ -87,6 +87,8 @@ module Elasticsearch
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on
       #                                        (default: random)
       # @option arguments [String] :q Query in the Lucene query string syntax
+      # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request
+      #                                            (defaults to index level setting)
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index should be maintained
       #                                      for scrolled search
@@ -134,6 +136,7 @@ module Elasticsearch
           :preference,
           :q,
           :query_cache,
+          :request_cache,
           :routing,
           :scroll,
           :search_type,
