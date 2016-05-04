@@ -23,6 +23,8 @@ module Elasticsearch
         #     puts client.cat.thread_pool h: 'host,ia,is,iq,ir,sa,ss,sq,sr', v: true
         #
         # @option arguments [Boolean] :full_id Display the complete node ID
+        # @option arguments [String] :size The multiplier in which to display values
+        #                                  (Options: k, m, g, t, p)
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
@@ -36,6 +38,7 @@ module Elasticsearch
         def thread_pool(arguments={})
           valid_params = [
             :full_id,
+            :size,
             :local,
             :master_timeout,
             :h,
