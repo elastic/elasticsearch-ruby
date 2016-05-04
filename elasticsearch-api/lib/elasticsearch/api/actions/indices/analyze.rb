@@ -52,6 +52,7 @@ module Elasticsearch
             :char_filters,
             :field,
             :filters,
+            :filter,
             :index,
             :prefer_local,
             :text,
