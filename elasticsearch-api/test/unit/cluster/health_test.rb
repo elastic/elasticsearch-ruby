@@ -31,6 +31,15 @@ module Elasticsearch
           subject.cluster.health :level => 'indices'
         end
 
+        should "return health for a specific index" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal '_cluster/health/foo', url
+            true
+          end.returns(FakeResponse.new)
+
+          subject.cluster.health :index => 'foo'
+        end
+
       end
 
     end
