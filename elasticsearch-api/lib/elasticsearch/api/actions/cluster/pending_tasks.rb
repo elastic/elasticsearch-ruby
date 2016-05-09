@@ -21,7 +21,7 @@ module Elasticsearch
             :local,
             :master_timeout ]
           method = HTTP_GET
-          path   = "/_cluster/pending_tasks"
+          path   = "_cluster/pending_tasks"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 

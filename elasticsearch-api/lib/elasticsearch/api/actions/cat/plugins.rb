@@ -22,7 +22,7 @@ module Elasticsearch
             :help,
             :v ]
           method = 'GET'
-          path   = "/_cat/plugins"
+          path   = "_cat/plugins"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
 
