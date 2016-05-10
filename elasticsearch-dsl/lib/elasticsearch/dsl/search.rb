@@ -39,7 +39,7 @@ module Elasticsearch
 
         def initialize(*args, &block)
           @options = Options.new *args
-          instance_eval(&block) if block
+          block.arity < 1 ? self.instance_eval(&block) : block.call(self) if block
         end
 
         # DSL method for building or accessing the `query` part of a search definition
