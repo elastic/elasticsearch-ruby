@@ -60,13 +60,20 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index (*Required*)
         # @option arguments [Hash] :body Optional configuration for the index (`settings` and `mappings`)
+        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
+        #                                               with the same name across all types
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :master_timeout Timeout for connection to master
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-          valid_params = [ :timeout ]
+          valid_params = [
+            :timeout,
+            :master_timeout,
+            :update_all_types
+          ]
 
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__escape(arguments[:index])

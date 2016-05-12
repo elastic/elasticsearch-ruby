@@ -40,8 +40,10 @@ module Elasticsearch
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
+        #                                               with the same name across all types
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :master_timeout Timeout for connection to master
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/
         #
@@ -55,6 +57,7 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
+            :update_all_types,
             :master_timeout,
             :timeout
           ]
