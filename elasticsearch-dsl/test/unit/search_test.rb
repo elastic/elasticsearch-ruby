@@ -21,6 +21,42 @@ module Elasticsearch
 
           assert_instance_of Elasticsearch::DSL::Search::Search, Elasticsearch::DSL::Search.search
         end
+
+        context 'search has access to methods defined in calling context' do
+          class DummySearchReceiver
+            include Elasticsearch::DSL::Search
+
+            def initialize
+              @other_value = 'thing'
+            end
+
+            def values
+              5
+            end
+
+            def search_query
+              search do |q|
+                q.from values
+                q.size @other_value
+
+                q.filter do |q|
+                  q._and do |q|
+                    q.term thang: @other_value
+                    q.terms attributes: values
+                  end
+                end
+              end
+            end
+          end
+
+          should 'forward missing values to calling context' do
+            assert_equal({from: 5,
+                          size: 'thing',
+                          filter: { and: [ { term:  { thang: 'thing' } },
+                                           { terms: { attributes: 5 } }]}},
+            DummySearchReceiver.new.search_query.to_hash)
+          end
+        end
       end
 
       context "The Search class" do
