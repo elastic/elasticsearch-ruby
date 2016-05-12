@@ -57,6 +57,11 @@ module Elasticsearch
             self
           end
 
+          def filter(*args, &block)
+            @filter = block ? Filter.new(*args, &block) : args.first
+            self
+          end
+
           def to_hash
             @hash[name].update(@args.to_hash) if @args.respond_to?(:to_hash)
 
@@ -64,6 +69,11 @@ module Elasticsearch
               call
             else
               @hash[name] = @args unless @args.nil? || @args.empty?
+            end
+
+            if @filter
+              _filter = @filter.respond_to?(:to_hash) ? @filter.to_hash : @filter
+              @hash[name].update(filter: _filter)
             end
 
             @hash

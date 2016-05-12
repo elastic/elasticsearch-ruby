@@ -92,6 +92,15 @@ module Elasticsearch
                           subject.to_hash )
           end
 
+          should "allow adding a filter" do
+            subject = Bool.new
+            subject.filter do
+              term foo: 'bar'
+            end
+
+            assert_equal( { bool: { filter: { term: { foo: "bar" } } } }, subject.to_hash)
+          end
+
           should "be chainable" do
             subject = Bool.new
 
