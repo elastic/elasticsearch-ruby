@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 
 gem "bundler", "> 1"
-gem "rake", "< 11.0"
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  gem "rake", "~> 11.1"
+else
+  gem "rake", "< 11.0"
+end
 
 gem 'elasticsearch-api',        :path => File.expand_path("../elasticsearch-api", __FILE__),        :require => false
 gem 'elasticsearch-transport',  :path => File.expand_path("../elasticsearch-transport", __FILE__),  :require => false

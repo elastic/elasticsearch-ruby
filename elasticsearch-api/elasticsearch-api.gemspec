@@ -23,7 +23,12 @@ Gem::Specification.new do |s|
   s.add_dependency "multi_json"
 
   s.add_development_dependency "bundler", "> 1"
-  s.add_development_dependency "rake", "~> 11.1"
+
+  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    s.add_development_dependency "rake", "~> 11.1"
+  else
+    s.add_development_dependency "rake", "< 11.0"
+  end
 
   s.add_development_dependency "elasticsearch"
   s.add_development_dependency "elasticsearch-transport"
