@@ -1,34 +1,105 @@
-require 'elasticsearch'
 require 'test_helper'
+require 'elasticsearch/extensions/reindex'
 
 class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
-  context "reindex" do
-    should "scroll and bulk insert" do
-      @subject = Elasticsearch::Client.new
-      search_opts = { index: 'foo-index',
-                      search_type: 'scan',
-                      scroll: '5m',
-                      size: 500 }
-      scroll_opts = { scroll_id: 'bar-id',
-                      scroll: '5m' }
-      doc = { '_id' => 'quux',
-              '_type' => 'foo-type',
-              '_source' => { 'field1' => 'foobar' } }
-      scroll_rsp = { 'hits' => { 'hits' => [doc] } }
-      empty_scroll_rsp = { 'hits' => { 'hits' => [] } }
-      bulk_body = [{ index: { '_index' => 'bar-index',
-                              '_type' => doc['_type'],
-                              '_id' => doc['_id'],
-                              'data' => doc['_source'] } }]
+  context "The Reindex extension module" do
+    DEFAULT_OPTIONS = { source: { index: 'foo', client: Object.new }, target: { index: 'bar' } }
 
-      @subject.expects(:search).with(search_opts).returns({ '_scroll_id' => 'bar-id' })
-      @subject.expects(:scroll).with(scroll_opts).returns(scroll_rsp)
-      @subject.expects(:scroll).with({ scroll_id: nil, scroll: '5m' }).returns(empty_scroll_rsp)
-      @subject.expects(:bulk).with(body: bulk_body).returns([])
-
-      Elasticsearch::Extensions::Reindex.new(client: @subject,
-                                             src_index: 'foo-index',
-                                             target_index: 'bar-index')
+    should "require options" do
+      assert_raise ArgumentError do
+        Elasticsearch::Extensions::Reindex.new
+      end
     end
+
+    should "allow to initialize the class" do
+      assert_instance_of Elasticsearch::Extensions::Reindex::Reindex,
+                         Elasticsearch::Extensions::Reindex.new(DEFAULT_OPTIONS)
+    end
+
+    should "add the reindex to the API and client" do
+      assert_includes Elasticsearch::API::Actions.public_instance_methods.sort, :reindex
+      assert_respond_to Elasticsearch::Client.new, :reindex
+    end
+
+    should "pass the client when used in API mode" do
+      client = Elasticsearch::Client.new
+
+      Elasticsearch::Extensions::Reindex::Reindex
+        .expects(:new)
+        .with({source: { client: client }})
+        .returns(stub perform: {})
+
+      client.reindex
+    end
+
+    context "when performing the operation" do
+      setup do
+        d = { '_id' => 'foo', '_type' => 'type', '_source' => { 'foo' => 'bar' } }
+        @default_response = { 'hits' => { 'hits' => [d] } }
+        @empty_response   = { 'hits' => { 'hits' => [] } }
+        @bulk_request     = [{ index: {
+                                '_index' => 'bar',
+                                '_type'  => d['_type'],
+                                '_id'    => d['_id'],
+                                'data'   => d['_source']
+                               } }]
+        @bulk_response    = {'errors'=>false, 'items' => [{'index' => {}}]}
+        @bulk_response_error = {'errors'=>true, 'items' => [{'index' => {}},{'index' => {'error' => 'FOOBAR'}}]}
+      end
+
+      should "scroll through the index and save batches in bulk" do
+        client  = mock()
+        subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
+                                                         target: { index: 'bar' }
+
+        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
+        client.expects(:scroll).returns(@default_response)
+              .then.returns(@empty_response)
+              .times(2)
+        client.expects(:bulk).with(body: @bulk_request).returns(@bulk_response)
+
+        result = subject.perform
+
+        assert_equal 0, result[:errors]
+      end
+
+      should "return the number of errors" do
+        client  = mock()
+        subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
+                                                         target: { index: 'bar' }
+
+        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
+        client.expects(:scroll).returns(@default_response)
+              .then.returns(@empty_response)
+              .times(2)
+        client.expects(:bulk).with(body: @bulk_request).returns(@bulk_response_error)
+
+        result = subject.perform
+
+        assert_equal 1, result[:errors]
+      end
+
+      should "transform the documents with a lambda" do
+        client  = mock()
+        subject = Elasticsearch::Extensions::Reindex.new \
+          source: { index: 'foo', client: client },
+          target: { index: 'bar', transform: lambda { |d| d['_source']['foo'].upcase!; d } }
+
+        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
+        client.expects(:scroll).returns(@default_response)
+              .then.returns(@empty_response)
+              .times(2)
+        client.expects(:bulk).with do |arguments|
+                assert_equal 'BAR', arguments[:body][0][:index]['data']['foo']
+                true
+              end
+              .returns(@bulk_response)
+
+        result = subject.perform
+
+        assert_equal 0, result[:errors]
+      end
+    end
+
   end
 end

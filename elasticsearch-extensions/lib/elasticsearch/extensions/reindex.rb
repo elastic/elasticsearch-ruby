@@ -1,65 +1,158 @@
+# encoding: utf-8
+
 module Elasticsearch
   module Extensions
-    # Reindex using the scroll api. This moves data (not mappings) from one index
-    # to another. The target index can be on a different cluster.
-    #
-    # This is useful when updating mappings on existing fields in an index (eg with
-    # new analyzers).
-    #
-    # @example Reindex all documents under a new index name
-    #
-    # Elasticsearch::Extensions::Reindex.new client: client, src_index: 'foo', target_index: 'bar'
-    #
-    # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/reindex.html
-    #
-    # @option arguments [Client] :client (*Required*)
-    # @option arguments [String] :src_index (*Required*)
-    # @option arguments [String] :target_index (*Required*)
-    # @option arguments [Client] :target_client
-    # @option arguments [Int] :chunk_size
-    # @option arguments [String] :period period to ask es to keep scroll buffer open '5m'
-    #
-    class Reindex
-      def initialize(opts = {})
-        raise ArgumentError, "Required argument 'client' missing"  unless opts[:client]
-        raise ArgumentError, "Required argument 'src_index' missing"  unless opts[:src_index]
-        raise ArgumentError, "Required argument 'target_index' missing" unless opts[:target_index]
 
-        valid_params = [
-          :client,
-          :src_index,
-          :target_index,
-          :target_client,
-          :chunk_size,
-          :period
-        ]
+    # This module allows copying documents from one index/cluster to another one
+    #
+    # When required together with the client, it will add the `reindex` method
+    #
+    # @see Reindex::Reindex.initialize
+    # @see Reindex::Reindex#perform
+    #
+    # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method
+    #
+    module Reindex
 
-        default_params = {
-          chunk_size: 500,
-          period: '5m'
-        }
+      # Initialize a new instance of the Reindex class (shortcut)
+      #
+      # @see Reindex::Reindex.initialize
+      #
+      def new(arguments={})
+        Reindex.new(arguments)
+      end; extend self
 
-        opts.each { |k, v| raise ArgumentError unless valid_params.include?(k) }
-        params = default_params.merge(opts)
-        client = params[:client]
-        target_client = params[:target_client] || client
+      module API
+        # Copy documents from one index into another and refresh the target index
+        #
+        # @example
+        #     client.reindex source: { index: 'test1' }, target: { index: 'test2' }, refresh: true
+        #
+        # The method allows all the options as {Reindex::Reindex.new}.
+        #
+        # This method will be mixed into the Elasticsearch client's API, if available.
+        #
+        def reindex(arguments={})
+          arguments[:source] ||= {}
+          arguments[:source][:client] = self
+          Reindex.new(arguments).perform
+        end
+      end
 
-        r = client.search(index: params[:src_index],
-                          search_type: 'scan',
-                          scroll: params[:period],
-                          size: params[:chunk_size])
+      # Include the `reindex` method in the API and client, if available
+      Elasticsearch::API::Actions.__send__ :include, API if defined?(Elasticsearch::API::Actions)
+      Elasticsearch::Transport::Client.__send__ :include, API if defined?(Elasticsearch::Transport::Client) && defined?(Elasticsearch::API)
 
-        while r = client.scroll(scroll_id: r['_scroll_id'], scroll: params[:period]) do
-          docs = r['hits']['hits']
-          break if docs.empty?
-          body = docs.map do |doc|
-            doc['_index'] = params[:target_index]
-            doc['data'] = doc['_source']
-            doc.delete('_score')
-            doc.delete('_source')
-            { index: doc }
+      # Copy documents from one index into another
+      #
+      # @example Copy documents to another index
+      #
+      #   client  = Elasticsearch::Client.new
+      #   reindex = Elasticsearch::Extensions::Reindex.new \
+      #               source: { index: 'test1', client: client },
+      #               target: { index: 'test2' }
+      #
+      #   reindex.perform
+      #
+      # @example Copy documents to a different cluster
+      #
+      #     source_client  = Elasticsearch::Client.new url: 'http://localhost:9200'
+      #     target_client  = Elasticsearch::Client.new url: 'http://localhost:9250'
+      #
+      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #                 source: { index: 'test', client: source_client },
+      #                 target: { index: 'test', client: target_client }
+      #     reindex.perform
+      #
+      # @example Transform the documents during re-indexing
+      #
+      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #                 source: { index: 'test1', client: client },
+      #                 target: { index: 'test2' },
+      #                 transform: lambda { |doc| doc['_source']['category'].upcase! }
+      #
+      # The reindexing process works by "scrolling" an index and sending
+      # batches via the "Bulk" API to the target index/cluster
+      #
+      # @option arguments [String] :source The source index/cluster definition (*Required*)
+      # @option arguments [String] :target The target index/cluster definition (*Required*)
+      # @option arguments [Integer] :batch_size The size of the batch for scroll operation (Default: 1000)
+      # @option arguments [String] :scroll The timeout for the scroll operation (Default: 5min)
+      # @option arguments [Boolean] :refresh Whether to refresh the target index after
+      #                                      the operation is completed (Default: false)
+      # @option arguments [Proc] :transform A block which will be executed for each document
+      #
+      # Be aware, that if you want to change the target index settings and/or mappings,
+      # you have to do so in advance by using the "Indices Create" API.
+      #
+      # Note, that there is a native "Reindex" API in Elasticsearch 2.3.x and higer versions,
+      # which will be more performant than the Ruby version.
+      #
+      # @see http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method
+      #
+      class Reindex
+        attr_reader :arguments
+
+        def initialize(arguments={})
+          [
+            [:source, :index],
+            [:source, :client],
+            [:target, :index]
+          ].each do |required_option|
+            value = required_option.reduce(arguments) { |sum, o| sum = sum[o] ? sum[o] : {}  }
+
+            raise ArgumentError,
+                  "Required argument '#{Hash[*required_option]}' missing" if \
+                  value.respond_to?(:empty?) ? value.empty? : value.nil?
           end
-          target_client.bulk body: body
+
+          @arguments = {
+            batch_size: 1000,
+            scroll: '5m',
+            refresh: false
+          }.merge(arguments)
+
+          arguments[:target][:client] ||= arguments[:source][:client]
+        end
+
+        # Performs the operation
+        #
+        # @return [Hash] A Hash with the information about the operation outcome
+        #
+        def perform
+          output = { errors: 0 }
+
+          response = arguments[:source][:client].search(
+            index: arguments[:source][:index],
+            scroll: arguments[:scroll],
+            size: arguments[:batch_size],
+            search_type: 'scan',
+            fields: ['_source', '_parent', '_routing', '_timestamp']
+          )
+
+          while response = arguments[:source][:client].scroll(scroll_id: response['_scroll_id'], scroll: arguments[:scroll]) do
+            documents = response['hits']['hits']
+            break if documents.empty?
+
+            bulk = documents.map do |doc|
+              doc['_index'] = arguments[:target][:index]
+
+              arguments[:target][:transform].call(doc) if arguments[:target][:transform]
+
+              doc['data'] = doc['_source']
+              doc.delete('_score')
+              doc.delete('_source')
+
+              { index: doc }
+            end
+
+            bulk_response = arguments[:target][:client].bulk body: bulk
+            output[:errors] += bulk_response['items'].select { |k, v| k.values.first['error'] }.size
+          end
+
+          arguments[:target][:client].indices.refresh index: arguments[:target][:index] if arguments[:refresh]
+
+          output
         end
       end
     end

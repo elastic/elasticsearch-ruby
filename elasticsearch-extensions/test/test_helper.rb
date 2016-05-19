@@ -23,12 +23,24 @@ require 'shoulda-context'
 require 'mocha/setup'
 require 'ansi/code'
 require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
+require 'logger'
 
 require 'elasticsearch/extensions'
+require 'elasticsearch/extensions/test/startup_shutdown'
+require 'elasticsearch/extensions/test/cluster'
 
 module Elasticsearch
   module Test
     class IntegrationTestCase < ::Test::Unit::TestCase
+      extend Elasticsearch::Extensions::Test::StartupShutdown
+
+      startup do
+        Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+      end
+
+      shutdown do
+        Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+      end
     end
   end
 end
