@@ -68,19 +68,19 @@ module Elasticsearch
       #
       #     reindex = Elasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test1', client: client },
-      #                 target: { index: 'test2' },
-      #                 transform: lambda { |doc| doc['_source']['category'].upcase! }
+      #                 target: { index: 'test2', transform: lambda { |doc| doc['_source']['category'].upcase! } }
+      #
       #
       # The reindexing process works by "scrolling" an index and sending
       # batches via the "Bulk" API to the target index/cluster
       #
       # @option arguments [String] :source The source index/cluster definition (*Required*)
       # @option arguments [String] :target The target index/cluster definition (*Required*)
+      # @option arguments [Proc] :transform A block which will be executed for each document
       # @option arguments [Integer] :batch_size The size of the batch for scroll operation (Default: 1000)
       # @option arguments [String] :scroll The timeout for the scroll operation (Default: 5min)
       # @option arguments [Boolean] :refresh Whether to refresh the target index after
       #                                      the operation is completed (Default: false)
-      # @option arguments [Proc] :transform A block which will be executed for each document
       #
       # Be aware, that if you want to change the target index settings and/or mappings,
       # you have to do so in advance by using the "Indices Create" API.
@@ -137,7 +137,7 @@ module Elasticsearch
             bulk = documents.map do |doc|
               doc['_index'] = arguments[:target][:index]
 
-              arguments[:target][:transform].call(doc) if arguments[:target][:transform]
+              arguments[:transform].call(doc) if arguments[:transform]
 
               doc['data'] = doc['_source']
               doc.delete('_score')

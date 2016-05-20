@@ -43,7 +43,8 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     should "transform documents with a lambda" do
       reindex = Elasticsearch::Extensions::Reindex.new \
                   source: { index: 'test1', client: @client },
-                  target: { index: 'test2', transform: lambda { |d| d['_source']['category'].upcase! } },
+                  target: { index: 'test2' },
+                  transform: lambda { |d| d['_source']['category'].upcase! },
                   refresh: true
 
       result = reindex.perform

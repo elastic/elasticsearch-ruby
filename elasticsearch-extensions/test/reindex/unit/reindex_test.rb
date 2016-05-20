@@ -83,7 +83,8 @@ class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
         client  = mock()
         subject = Elasticsearch::Extensions::Reindex.new \
           source: { index: 'foo', client: client },
-          target: { index: 'bar', transform: lambda { |d| d['_source']['foo'].upcase!; d } }
+          target: { index: 'bar' },
+          transform: lambda { |d| d['_source']['foo'].upcase!; d }
 
         client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
         client.expects(:scroll).returns(@default_response)
