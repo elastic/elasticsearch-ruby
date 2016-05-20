@@ -23,6 +23,52 @@ or install it from a source code checkout:
 
 ## Extensions
 
+### Reindex
+
+Copy documents from one index and cluster into another one, for example for purposes of changing
+the settings and mappings of the index.
+
+**NOTE:** Elasticsearch natively supports re-indexing since version 2.3. This extension is useful
+          when you need the feature on older versions.
+
+When the extension is loaded together with the
+[Ruby client for Elasticsearch](../elasticsearch/README.md),
+a `reindex` method is added to the client:
+
+    require 'elasticsearch'
+    require 'elasticsearch/extensions/reindex'
+
+    client = Elasticsearch::Client.new
+    target_client = Elasticsearch::Client.new url: 'http://localhost:9250', log: true
+
+    client.index index: 'test', type: 'd', body: { title: 'foo' }
+
+    client.reindex source: { index: 'test' },
+                   target: { index: 'test', client: target_client },
+                   transform: lambda { |doc| doc['_source']['title'].upcase! },
+                   refresh: true
+    # => { errors: 0 }
+
+    target_client.search index: 'test'
+    # => ... hits ... "title"=>"FOO"
+
+The method takes similar arguments as the core API
+[`reindex`](http://www.rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions#reindex-instance_method)
+method.
+
+You can also use the `Reindex` class directly:
+
+    require 'elasticsearch'
+    require 'elasticsearch/extensions/reindex'
+
+    client = Elasticsearch::Client.new
+
+    reindex = Elasticsearch::Extensions::Reindex.new \
+                source: { index: 'test', client: client },
+                target: { index: 'test-copy' }
+
+    reindex.perform
+
 ### ANSI
 
 Colorize and format selected  Elasticsearch response parts in terminal:
