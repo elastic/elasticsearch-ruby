@@ -185,6 +185,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 'FOOBAR', response.body
     end
 
+    should "not deserialize an empty response body" do
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
+      @transport.serializer.expects(:load).never
+      response = @transport.perform_request 'GET', '/' do
+                   Elasticsearch::Transport::Transport::Response.new 200, '', {"content-type" => 'application/json'}
+                 end
+
+      assert_instance_of Elasticsearch::Transport::Transport::Response, response
+      assert_equal '', response.body
+    end
+
     should "serialize non-String objects" do
       @transport.serializer.expects(:dump).times(3)
       @transport.__convert_to_json({:foo => 'bar'})

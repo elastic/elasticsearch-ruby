@@ -312,7 +312,7 @@ module Elasticsearch
             __raise_transport_error response
           end
 
-          json     = serializer.load(response.body) if response.headers && response.headers["content-type"] =~ /json/
+          json     = serializer.load(response.body) if response.body && !response.body.empty? && response.headers && response.headers["content-type"] =~ /json/
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
 
           __log   method, path, params, body, url, response, json, took, duration if logger
