@@ -4,7 +4,7 @@ module Elasticsearch
   module Test
     class PingTest < ::Test::Unit::TestCase
 
-      context "Indices: Exists" do
+      context "Ping" do
         subject { FakeClient.new }
 
          should "perform correct request" do
@@ -31,6 +31,11 @@ module Elasticsearch
 
         should "return false on 'not found' exceptions" do
           subject.expects(:perform_request).raises(StandardError.new '404 NotFound')
+          assert_equal false, subject.ping
+        end
+
+        should "return false on 'connection failed' exceptions" do
+          subject.expects(:perform_request).raises(StandardError.new 'ConnectionFailed')
           assert_equal false, subject.ping
         end
 

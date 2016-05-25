@@ -16,8 +16,14 @@ module Elasticsearch
         params = {}
         body   = nil
 
-        Utils.__rescue_from_not_found do
+        begin
           perform_request(method, path, params, body).status == 200 ? true : false
+        rescue Exception => e
+          if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not\s*Found|404|ConnectionFailed/i
+            false
+          else
+            raise e
+          end
         end
       end
     end
