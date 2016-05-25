@@ -12,25 +12,25 @@ require 'patron'
 module Backup
   module Database
 
-    # Integration with the Backup gem [https://github.com/meskyanichi/backup/]
+    # Integration with the Backup gem [http://backup.github.io/backup/v4/]
     #
     # This extension allows to backup Elasticsearch indices as flat JSON files on the disk.
     #
-    # Use the Backup gem's DSL to configure the backup:
+    # @example Use the Backup gem's DSL to configure the backup
     #
     #     require 'elasticsearch/extensions/backup'
     #
     #     Model.new(:elasticsearch_backup, 'Elasticsearch') do
     #
     #       database Elasticsearch do |db|
-    #         # db.url     = 'http://localhost:9200'
-    #         # db.indices = 'articles,people'
-    #         # db.size    = 500
-    #         # db.scroll  = '10m'
+    #         db.url     = 'http://localhost:9200'
+    #         db.indices = 'articles,people'
+    #         db.size    = 500
+    #         db.scroll  = '10m'
     #       end
     #
     #       store_with Local do |local|
-    #         local.path = '/usr/local/var/backups'
+    #         local.path = '/tmp/backups'
     #         local.keep = 3
     #       end
     #
@@ -41,8 +41,33 @@ module Backup
     #
     #     $ backup perform -t elasticsearch_backup
     #
+    # The Backup gem can store your backup files on S3, Dropbox and other
+    # cloud providers, send notifications about the operation, and so on;
+    # read more in the gem documentation.
     #
-    # A simple recover script could look like this:
+    # @example Use the integration as a standalone script (eg. in a Rake task)
+    #
+    #     require 'backup'
+    #     require 'elasticsearch/extensions/backup'
+    #
+    #     Backup::Logger.configure do
+    #       logfile.enabled   = true
+    #       logfile.log_path  = '/tmp/backups/log'
+    #     end; Backup::Logger.start!
+    #
+    #     backup  = Backup::Model.new(:elasticsearch, 'Backup Elasticsearch') do
+    #       database Backup::Database::Elasticsearch do |db|
+    #         db.indices = 'test'
+    #       end
+    #
+    #       store_with Backup::Storage::Local do |local|
+    #         local.path = '/tmp/backups'
+    #       end
+    #     end
+    #
+    #     backup.perform!
+    #
+    # @example A simple recover script for the backup created in the previous examples
     #
     #     PATH = '/path/to/backup/'
     #
@@ -66,7 +91,7 @@ module Backup
     #       client.bulk body: payload
     #     end
     #
-    # @see http://meskyanichi.github.io/backup/v4/
+    # @see http://backup.github.io/backup/v4/
     #
     class Elasticsearch < Base
       class Error < ::Backup::Error; end

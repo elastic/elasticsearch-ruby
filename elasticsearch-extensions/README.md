@@ -23,6 +23,36 @@ or install it from a source code checkout:
 
 ## Extensions
 
+### Backup
+
+Backup Elasticsearch indices as flat JSON files on the disk via integration
+with the [_Backup_](http://backup.github.io/backup/v4/) gem.
+
+Use the Backup gem's DSL to configure the backup:
+
+    require 'elasticsearch/extensions/backup'
+
+    Model.new(:elasticsearch_backup, 'Elasticsearch') do
+
+      database Elasticsearch do |db|
+        db.url     = 'http://localhost:9200'
+        db.indices = 'test'
+      end
+
+      store_with Local do |local|
+        local.path = '/tmp/backups'
+      end
+
+      compress_with Gzip
+    end
+
+Perform the backup with the Backup gem's command line utility:
+
+    $ backup perform -t elasticsearch_backup
+
+See more information in the [`Backup::Database::Elasticsearch`](lib/extensions/backup.rb)
+class documentation.
+
 ### Reindex
 
 Copy documents from one index and cluster into another one, for example for purposes of changing
@@ -68,6 +98,9 @@ You can also use the `Reindex` class directly:
                 target: { index: 'test-copy' }
 
     reindex.perform
+
+See more information in the [`Elasticsearch::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
+class documentation.
 
 ### ANSI
 
