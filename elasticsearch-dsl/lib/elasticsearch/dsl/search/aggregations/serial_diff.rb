@@ -7,17 +7,16 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       serial_diff buckets_path: 'foo'
+        #     aggregation :thirtieth_difference do
+        #       serial_diff buckets_path: 'the_sum'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         serial_diff do
-        #           buckets_path 'foo'
-        #         end
+        #     aggregation :thirtieth_difference do
+        #       serial_diff do
+        #         buckets_path 'the_sum'
+        #         lag 30
         #       end
         #     end
         #

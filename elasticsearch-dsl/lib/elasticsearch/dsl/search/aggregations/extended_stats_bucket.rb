@@ -7,17 +7,15 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       extended_stats_bucket buckets_path: 'tags'
+        #     aggregation :stats_monthly_sales do
+        #       extended_stats_bucket buckets_path: 'sales_per_month>sales'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         extended_stats_bucket do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :stats_monthly_sales do
+        #       extended_stats_bucket do
+        #         buckets_path 'sales_per_month>sales'
         #       end
         #     end
         #

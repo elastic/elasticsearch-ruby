@@ -7,17 +7,16 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       percentiles_bucket buckets_path: 'tags'
+        #     aggregation :sum_monthly_sales do
+        #       percentiles_bucket buckets_path: 'sales_per_month>sales'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         percentiles_bucket do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :sum_monthly_sales do
+        #       percentiles_bucket do
+        #         buckets_path 'sales_per_month>sales'
+        #         percents [25.0 50.0 75.0]
         #       end
         #     end
         #

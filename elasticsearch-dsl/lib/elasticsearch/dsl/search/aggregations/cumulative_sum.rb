@@ -7,17 +7,15 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       cumulative_sum buckets_path: 'tags'
+        #     aggregation :cumulative_sales do
+        #       cumulative_sum buckets_path: 'sales'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         cumulative_sum do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :cumulative_sales do
+        #       cumulative_sum do
+        #         buckets_path 'sales'
         #       end
         #     end
         #

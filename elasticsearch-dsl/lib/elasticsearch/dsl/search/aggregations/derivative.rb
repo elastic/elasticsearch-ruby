@@ -7,17 +7,15 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       derivative buckets_path: 'tags'
+        #     aggregation :sales_deriv do
+        #       derivative buckets_path: 'sales'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         derivative do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :sales_deriv do
+        #       derivative do
+        #         buckets_path 'sales'
         #       end
         #     end
         #

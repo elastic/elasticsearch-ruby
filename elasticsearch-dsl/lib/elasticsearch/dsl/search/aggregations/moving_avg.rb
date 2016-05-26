@@ -7,17 +7,19 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       moving_avg buckets_path: 'tags'
+        #     aggregation :the_movavg do
+        #       moving_avg buckets_path: 'the_sum'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         moving_avg do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :the_movavg do
+        #       moving_avg do
+        #         buckets_path 'the_sum'
+        #         model 'holt'
+        #         window 5
+        #         gap_policy 'insert_zero'
+        #         settings({ alpha: 0.5 })
         #       end
         #     end
         #

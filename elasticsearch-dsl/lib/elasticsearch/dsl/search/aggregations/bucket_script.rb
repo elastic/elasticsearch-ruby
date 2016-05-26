@@ -7,18 +7,16 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       bucket_script buckets_path: { foo: 'foo', bar: 'bar' }, script: 'baz'
+        #     aggregation :t-shirt-percentage do
+        #       bucket_script buckets_path: { tShirtSales: 't-shirts>sales', totalSales: 'total_sales' }, script: 'tShirtSales / totalSales * 100'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         bucket_script do
-        #           buckets_path foo: 'foo', bar: 'bar'
-        #           script 'baz'
-        #         end
+        #     aggregation :t-shirt-percentage do
+        #       bucket_script do
+        #         buckets_path tShirtSales: 't-shirts>sales', totalSales: 'total_sales'
+        #         script 'tShirtSales / totalSales * 100'
         #       end
         #     end
         #

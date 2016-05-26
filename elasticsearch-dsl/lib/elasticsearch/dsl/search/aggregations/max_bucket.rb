@@ -7,17 +7,15 @@ module Elasticsearch
         #
         # @example Passing the options as a Hash
         #
-        #     aggregation :tags do
-        #       max_bucket buckets_path: 'tags'
+        #     aggregation :max_monthly_sales do
+        #       max_bucket buckets_path: 'sales_per_month>sales'
         #     end
         #
         # @example Passing the options as a block
         #
-        #     search do
-        #       aggregation :tags do
-        #         max_bucket do
-        #           buckets_path 'tags'
-        #         end
+        #     aggregation :max_monthly_sales do
+        #       max_bucket do
+        #         buckets_path 'sales_per_month>sales'
         #       end
         #     end
         #
