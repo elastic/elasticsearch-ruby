@@ -1,3 +1,10 @@
+## EXT:0.0.21
+
+* Improved the documentation for the "Backup" extension and added it to the main README
+* Added the information about the "Reindex" extension to the README
+* Added a reindex extension
+* Improved the `Elasticsearch::Extensions::Test::Cluster` extension
+
 ## 1.0.17
 
 ### Client
