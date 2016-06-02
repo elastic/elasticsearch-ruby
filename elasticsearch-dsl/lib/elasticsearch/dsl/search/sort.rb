@@ -44,6 +44,10 @@ module Elasticsearch
           @hash = @value.flatten
           @hash
         end
+
+        def empty?
+          @value.empty? && @args.empty?
+        end
       end
     end
   end
