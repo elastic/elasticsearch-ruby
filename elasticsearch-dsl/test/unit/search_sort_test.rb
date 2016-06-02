@@ -22,6 +22,21 @@ module Elasticsearch
           assert_equal( [ { foo: { order: 'desc', mode: 'avg' } } ], subject.to_hash )
         end
 
+        context "when the search is empty" do
+          should "respond with true to empty?" do
+            subject = Elasticsearch::DSL::Search::Sort.new
+            assert_equal subject.empty?, true
+          end
+        end
+
+        context "when search is not empty" do
+          should "respond with false to empty?" do
+            subject = Elasticsearch::DSL::Search::Sort.new foo: { order: 'desc' }
+            assert_equal subject.empty?, false
+          end
+        end
+
+
         should "add fields with the DSL method" do
           subject = Elasticsearch::DSL::Search::Sort.new do
             by :foo
