@@ -36,6 +36,21 @@ module Elasticsearch
           end
         end
 
+        context "to_hash is indempotent" do
+          should 'when defined by args' do
+            subject = Elasticsearch::DSL::Search::Sort.new foo: { order: 'desc' }
+            assert_equal(subject.to_hash, subject.to_hash)
+          end
+
+          should 'when defined by a block' do
+            subject = Elasticsearch::DSL::Search::Sort.new do
+              by :foo
+            end
+
+            assert_equal(subject.to_hash, subject.to_hash)
+          end
+        end
+
 
         should "add fields with the DSL method" do
           subject = Elasticsearch::DSL::Search::Sort.new do

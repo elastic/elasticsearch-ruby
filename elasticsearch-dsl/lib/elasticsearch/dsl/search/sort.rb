@@ -36,9 +36,11 @@ module Elasticsearch
         #
         def to_hash
           if @block
-            call
+            call unless @block_called
+            @block_called = true
           else
-            @value << @args if @args
+            last_index = @value.length == 0 ? 0 : -1
+            @value[last_index] = @args if @args
           end
 
           @hash = @value.flatten
