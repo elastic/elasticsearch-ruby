@@ -8,7 +8,7 @@ end
 
 if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'
-  SimpleCov.start { add_filter "/test|test_/" }
+  SimpleCov.start { add_filter "test_" }
 end
 
 if ENV['CI'] && !RUBY_1_8
