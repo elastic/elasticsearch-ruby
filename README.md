@@ -7,7 +7,7 @@ This repository contains Ruby integrations for [Elasticsearch](http://elasticsea
 * various extensions and utilities.
 
 For integration with Ruby models and Rails applications,
-see the <https://github.com/elasticsearch/elasticsearch-rails> project.
+see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-rails)** project.
 
 ## Compatibility
 
