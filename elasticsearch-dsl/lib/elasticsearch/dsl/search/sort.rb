@@ -39,16 +39,19 @@ module Elasticsearch
             call unless @block_called
             @block_called = true
           else
-            last_index = @value.length == 0 ? 0 : -1
-            @value[last_index] = @args if @args
+            @value << @args if @args && !@args.empty? && ! @value.include?(@args)
           end
 
           @hash = @value.flatten
           @hash
         end
 
+        # Return whether the definition is empty
+        #
+        # @return [Boolean]
+        #
         def empty?
-          @value.empty? && @args.empty?
+          to_hash.empty?
         end
       end
     end
