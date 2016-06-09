@@ -22,6 +22,36 @@ module Elasticsearch
           assert_equal( [ { foo: { order: 'desc', mode: 'avg' } } ], subject.to_hash )
         end
 
+        context "when the search is empty" do
+          should "respond with true to empty?" do
+            subject = Elasticsearch::DSL::Search::Sort.new
+            assert_equal subject.empty?, true
+          end
+        end
+
+        context "when search is not empty" do
+          should "respond with false to empty?" do
+            subject = Elasticsearch::DSL::Search::Sort.new foo: { order: 'desc' }
+            assert_equal subject.empty?, false
+          end
+        end
+
+        context "to_hash is indempotent" do
+          should 'when defined by args' do
+            subject = Elasticsearch::DSL::Search::Sort.new foo: { order: 'desc' }
+            assert_equal(subject.to_hash, subject.to_hash)
+          end
+
+          should 'when defined by a block' do
+            subject = Elasticsearch::DSL::Search::Sort.new do
+              by :foo
+            end
+
+            assert_equal(subject.to_hash, subject.to_hash)
+          end
+        end
+
+
         should "add fields with the DSL method" do
           subject = Elasticsearch::DSL::Search::Sort.new do
             by :foo
