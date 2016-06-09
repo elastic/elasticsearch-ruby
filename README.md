@@ -65,27 +65,20 @@ Both of these libraries are extensively documented.
 **Please read the [`elasticsearch-transport`](http://rubydoc.info/gems/elasticsearch-transport)
 and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
 
-Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
+_Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or
-[Typhoeus](https://github.com/typhoeus/typhoeus).
+[Typhoeus](https://github.com/typhoeus/typhoeus)._
 
-### Transport
+This repository contains these additional Ruby libraries:
 
-* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
-* [Documentation](http://rubydoc.info/gems/elasticsearch-transport)
-* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/test)
+* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions),
+   which provides a set of extensions to the base library,
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
+  which provides a Ruby API for the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html),
+* [`elasticsearch-watcher`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-watcher),
+  which provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
 
-### API
-
-* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
-* [Documentation](http://rubydoc.info/gems/elasticsearch-api/)
-* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/test)
-
-### Extensions
-
-* [README](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/README.md)
-* [Documentation](http://rubydoc.info/gems/elasticsearch-extensions/)
-* [Test Suite](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-extensions/test)
+Please see their respective READMEs for information and documentation.
 
 ## Development
 
