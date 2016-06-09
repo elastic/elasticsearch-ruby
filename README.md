@@ -7,7 +7,7 @@ This repository contains Ruby integrations for [Elasticsearch](http://elasticsea
 * various extensions and utilities.
 
 For integration with Ruby models and Rails applications,
-see the <https://github.com/elasticsearch/elasticsearch-rails> project.
+see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-rails)** project.
 
 ## Compatibility
 
@@ -68,6 +68,15 @@ and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) docume
 Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or
 [Typhoeus](https://github.com/typhoeus/typhoeus).
+
+Also you can use three separate libraries:
+
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
+  which provides a Ruby API for the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html).
+* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions),
+  which provides a set of extensions to the [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
+* [`elasticsearch-watcher`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-watcher),
+  which provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
 
 ### Transport
 
