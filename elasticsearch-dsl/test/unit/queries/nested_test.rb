@@ -19,10 +19,12 @@ module Elasticsearch
             subject.path 'bar'
             subject.score_mode 'bar'
             subject.query 'bar'
+            subject.inner_hits({ size: 1 })
 
-            assert_equal %w[ path query score_mode ],
+            assert_equal %w[ inner_hits path query score_mode ],
                          subject.to_hash[:nested].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:nested][:path]
+            assert_equal({ size: 1 }, subject.to_hash[:nested][:inner_hits])
           end
 
           should "take the query as a Hash" do
