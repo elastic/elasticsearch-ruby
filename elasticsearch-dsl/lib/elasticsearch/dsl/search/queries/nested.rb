@@ -25,6 +25,7 @@ module Elasticsearch
 
           option_method :path
           option_method :score_mode
+          option_method :inner_hits
 
           # DSL method for building the `query` part of the query definition
           #
