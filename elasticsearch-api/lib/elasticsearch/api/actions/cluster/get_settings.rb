@@ -10,12 +10,15 @@ module Elasticsearch
         #     client.cluster.get_settings
         #
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting
+        #                                               (default: false)
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
         #
         def get_settings(arguments={})
           valid_params = [
-            :flat_settings
+            :flat_settings,
+            :include_defaults
           ]
 
           method = HTTP_GET
