@@ -14,12 +14,15 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
         #
         def nodeattrs(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :local,
             :master_timeout,
             :h,
             :help,
             :v ]
+
           method = 'GET'
           path   = "_cat/nodeattrs"
           params = Utils.__validate_and_extract_params arguments, valid_params
