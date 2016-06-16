@@ -67,7 +67,8 @@ namespace :test do
 
     # Check if a test cluster is running
     begin
-      client = Elasticsearch::Client.new :host => "localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}"
+      url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
+      client = Elasticsearch::Client.new :url => url
       es_version_info = client.info['version']
       build_hash      = es_version_info['build_hash']
       cluster_running = true
