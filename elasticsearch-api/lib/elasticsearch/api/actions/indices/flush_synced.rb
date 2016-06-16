@@ -12,7 +12,11 @@ module Elasticsearch
         #
         def flush_synced(arguments={})
           valid_params = [
-             ]
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards
+          ]
+
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_flush/synced'
 
