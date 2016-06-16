@@ -243,6 +243,21 @@ module Elasticsearch
         end
       end
 
+      def __report_unsupported_method(name)
+        message = "[!] You are using unsupported method [#{name}]"
+        if source = caller && caller.last
+          message += " in `#{source}`"
+        end
+
+        message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
+
+        if terminal = STDERR.tty?
+            STDERR.puts "\e[31;1m#{message}\e[0m"
+          else
+            STDERR.puts message
+          end
+      end
+
       extend self
     end
   end

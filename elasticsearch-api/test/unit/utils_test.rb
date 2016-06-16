@@ -296,6 +296,17 @@ module Elasticsearch
             __report_unsupported_parameters(arguments, unsupported_params)
           end
         end
+
+        context "__report_unsupported_method" do
+          should "print the warning" do
+            STDERR.expects(:puts).with do |message|
+              assert_match /foo/, message
+              true
+            end
+
+            __report_unsupported_method(:foo)
+          end
+        end
       end
     end
   end
