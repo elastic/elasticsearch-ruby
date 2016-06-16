@@ -11,6 +11,8 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html
         #
         def allocation_explain(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :include_yes_decisions ]
           method = 'GET'
