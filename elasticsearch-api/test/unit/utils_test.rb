@@ -248,6 +248,54 @@ module Elasticsearch
 
         end
 
+        context "__report_unsupported_parameters" do
+          should "print used unsupported parameters passed as Symbols" do
+            arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
+            unsupported_params = [:foo, :moo]
+
+            STDERR.expects(:puts).with do |message|
+              assert_equal 2, message.split("\n").size
+              true
+            end
+
+            __report_unsupported_parameters(arguments, unsupported_params)
+          end
+
+          should "print used unsupported parameters passed as Hashes" do
+            arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
+            unsupported_params = [ { :foo => { :explanation => 'NOT_SUPPORTED' } } ]
+
+            STDERR.expects(:puts).with do |message|
+              assert_match /NOT_SUPPORTED/, message
+              assert_equal 1, message.split("\n").size
+              true
+            end
+
+            __report_unsupported_parameters(arguments, unsupported_params)
+          end
+
+          should "print used unsupported parameters passed as a mix of Symbols and Hashes" do
+            arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
+            unsupported_params = [ { :foo => { :explanation => 'NOT_SUPPORTED'} }, :moo ]
+
+            STDERR.expects(:puts).with do |message|
+              assert_match /NOT_SUPPORTED/, message
+              assert_equal 2, message.split("\n").size
+              true
+            end
+
+            __report_unsupported_parameters(arguments, unsupported_params)
+          end
+
+          should "not print unused unsupported parameters" do
+            arguments = { :moo => 'bam', :baz => 'qux' }
+            unsupported_params = [:foo]
+
+            STDERR.expects(:puts).never
+
+            __report_unsupported_parameters(arguments, unsupported_params)
+          end
+        end
       end
     end
   end
