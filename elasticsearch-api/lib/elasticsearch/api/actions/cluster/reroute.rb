@@ -26,11 +26,13 @@ module Elasticsearch
         #                                     Defaults to all but metadata. (Options: _all, blocks, metadata,
         #                                     nodes, routing_table, master_node, version)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :retry_failed Retries allocation of shards that are blocked due to too many
+        #                                           subsequent allocation failures
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
         #
         def reroute(arguments={})
-          valid_params = [ :dry_run, :explain, :metric, :master_timeout, :timeout ]
+          valid_params = [ :dry_run, :explain, :metric, :master_timeout, :retry_failed, :timeout ]
 
           method = HTTP_POST
           path   = "_cluster/reroute"
