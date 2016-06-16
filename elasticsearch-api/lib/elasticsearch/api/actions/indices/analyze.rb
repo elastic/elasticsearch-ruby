@@ -36,6 +36,8 @@ module Elasticsearch
         # @option arguments [List] :filters A comma-separated list of token filters to use for the analysis.
         #                                   (Also available as the `:token_filters` option)
         # @option arguments [List] :char_filters A comma-separated list of char filters to use for the analysis
+        # @option arguments [Boolean] :explain Whether to output further details (default: false)
+        # @option arguments [List] :attributes A comma-separated list of token attributes to output (use with `:explain`)
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Boolean] :prefer_local With `true`, specify that a local shard should be used if available,
         #                                           with `false`, use a random shard (default: true)
@@ -50,6 +52,8 @@ module Elasticsearch
           valid_params = [
             :analyzer,
             :char_filters,
+            :explain,
+            :attributes,
             :field,
             :filters,
             :filter,
