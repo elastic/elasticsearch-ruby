@@ -289,8 +289,8 @@ suites.each do |suite|
     # --- Register context setup -------------------------------------------
     #
     setup do
-      $client.indices.delete index: '_all'
-      $client.indices.delete_template name: '*'
+      $client.indices.delete index: '_all', ignore: 404
+      $client.indices.delete_template name: '*', ignore: 404
       $client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
       $client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
       $client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
@@ -313,7 +313,7 @@ suites.each do |suite|
     # --- Register context teardown ----------------------------------------
     #
     teardown do
-      $client.indices.delete index: '_all'
+      $client.indices.delete index: '_all', ignore: 404
     end
 
     files = Dir[suite.join('*.{yml,yaml}')]
