@@ -53,7 +53,8 @@ module Elasticsearch
             :process,
             :settings,
             :thread_pool,
-            :transport ]
+            :transport,
+            :timeout ]
 
           valid_params = [ :timeout ]
 
