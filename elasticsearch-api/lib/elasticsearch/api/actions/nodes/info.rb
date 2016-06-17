@@ -53,10 +53,12 @@ module Elasticsearch
             :process,
             :settings,
             :thread_pool,
-            :transport,
-            :timeout ]
+            :transport ]
 
           valid_params = [ :timeout ]
+
+          unsupported_params = [ :timeout ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
 
           method = HTTP_GET
 

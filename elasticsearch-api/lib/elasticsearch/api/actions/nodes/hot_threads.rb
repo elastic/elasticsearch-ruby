@@ -34,6 +34,9 @@ module Elasticsearch
             :type,
             :timeout ]
 
+          unsupported_params = [ :timeout ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
 
