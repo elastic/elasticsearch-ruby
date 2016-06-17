@@ -58,6 +58,8 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html
       #
       def termvectors(arguments={})
+        Utils.__report_unsupported_method(__method__)
+
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
 
