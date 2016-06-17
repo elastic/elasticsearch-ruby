@@ -107,6 +107,7 @@ module Elasticsearch
       # @option arguments [String] :suggest_mode Specify suggest mode (options: missing, popular, always)
       # @option arguments [Number] :suggest_size How many suggestions to return in response
       # @option arguments [Text] :suggest_text The source text for which the suggestions should be returned
+      # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       #
@@ -151,6 +152,7 @@ module Elasticsearch
           :suggest_mode,
           :suggest_size,
           :suggest_text,
+          :terminate_after,
           :timeout,
           :version ]
 
