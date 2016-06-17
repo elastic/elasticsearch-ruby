@@ -89,6 +89,9 @@ module Elasticsearch
           :version,
           :version_type ]
 
+        unsupported_params = [ :pipeline ]
+        Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
         method = arguments[:id] ? HTTP_PUT : HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
