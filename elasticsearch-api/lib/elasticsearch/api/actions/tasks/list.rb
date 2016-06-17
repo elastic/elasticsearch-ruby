@@ -22,6 +22,8 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-list.html
         #
         def list(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :node_id,
             :actions,
@@ -33,8 +35,7 @@ module Elasticsearch
 
           task_id = arguments.delete(:task_id)
 
-          method = 'GET'
-          path   = "_tasks"
+          method = HTTP_GET
           path   = Utils.__pathify( '_tasks', Utils.__escape(task_id) )
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
