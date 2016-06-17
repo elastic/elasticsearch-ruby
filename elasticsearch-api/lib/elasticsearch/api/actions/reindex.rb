@@ -50,6 +50,8 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html
       #
       def reindex(arguments={})
+        Utils.__report_unsupported_method(__method__)
+
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         valid_params = [
           :refresh,
@@ -57,7 +59,8 @@ module Elasticsearch
           :consistency,
           :wait_for_completion,
           :requests_per_second ]
-        method = 'POST'
+
+        method = HTTP_POST
         path   = "_reindex"
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
