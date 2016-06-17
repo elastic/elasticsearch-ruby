@@ -20,6 +20,7 @@ module Elasticsearch
         # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)
         # @option arguments [Number] :threads Specify the number of threads to provide information for (default: 3)
         # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block)
+        # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @return [String]
         #
@@ -30,7 +31,8 @@ module Elasticsearch
             :interval,
             :snapshots,
             :threads,
-            :type ]
+            :type,
+            :timeout ]
 
           method = HTTP_GET
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'

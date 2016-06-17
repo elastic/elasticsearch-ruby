@@ -37,6 +37,7 @@ module Elasticsearch
         # @option arguments [String] :level Specify the level for aggregating indices stats
         #                                   (options: node, indices, shards)
         # @option arguments [List] :types A comma-separated list of document types for the `indexing` index metric
+        # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
         #
@@ -53,7 +54,8 @@ module Elasticsearch
             :groups,
             :human,
             :level,
-            :types ]
+            :types,
+            :timeout ]
 
           method = HTTP_GET
 
