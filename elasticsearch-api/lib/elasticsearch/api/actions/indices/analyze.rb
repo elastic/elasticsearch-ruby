@@ -64,6 +64,9 @@ module Elasticsearch
             :token_filters,
             :format ]
 
+          unsupported_params = [ :explain, :attributes ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
 

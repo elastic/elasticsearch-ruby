@@ -42,6 +42,8 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
         #
         def forcemerge(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :max_num_segments,
             :only_expunge_deletes,
