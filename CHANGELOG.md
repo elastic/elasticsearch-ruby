@@ -1,3 +1,37 @@
+## 1.0.18
+
+* Fixed the incorrect Rake dependency on Ruby 1.8 and updated the Rake dependency to 11.1
+* Simplified the main README and added the information about the DSL and Watcher libraries
+
+### API
+
+* Added `ignore: 404` to integration test setup blocks
+* Added options to the "Indices Get" and "Indices Flush Synced" APIs
+* Added the "Cat Tasks", "Cluster Stats", "Explain allocation", "Ingest", "Reindex" and "Update By Query" APIs
+* Added the `:terminate_after` parameter to the "Search" API
+* Added the `:timeout` option to the Nodes "Hot Threads", "Info" and "Stats" APIs
+* Added the `:timeout` parameter to the Nodes "Hot Threads", "Info" and "Stats" APIs
+* Added the `:verbose` option to the "Indices Segments" API and fixed formatting
+* Added the `explain` option to the "Analyze" API
+* Added the `filter` parameter for the "Indices Analyze" API
+* Added the `group_by` option to the "Tasks List" API
+* Added the `include_defaults` option to the "Get Cluster Settings" API
+* Added the `include_defaults` parameter to the "Indices" APIs
+* Added the `preserve_existing` option to the "Indices Put Settings" API
+* Added the `request_cache` parameter to the "Search" API
+* Added the `retry_failed` option to the "Cluster Reroute" API
+* Added the `size` parameter to the "Cat Thread Pool" API
+* Added the `update_all_types` parameter to "Indices Create" and "Indices Put Mapping" APIs
+* Added the parameters for ingest nodes into the "Bulk" and "Index" APIs
+* Fixes and improvements of handling the API method parameters
+* Changed, that the "Ping" API returns false also on connection errors (server "not reachable")
+* Added a `Utils.__report_unsupported_method` and `Utils.__report_unsupported_parameters` methods
+
+### Client
+
+* Fixed, that the clients tries to deserialize an empty body
+* Fixed, that dead connections have not been removed during reloading, leading to leaks
+
 ## EXT:0.0.21
 
 * Improved the documentation for the "Backup" extension and added it to the main README
