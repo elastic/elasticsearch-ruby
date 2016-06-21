@@ -1,3 +1,8 @@
+## EXT:0.0.22
+
+* Refactored and significantly improved the "Reindex" extension
+* Refactored and improved the `Extensions::Test::Cluster` extension
+
 ## 1.0.18
 
 * Fixed the incorrect Rake dependency on Ruby 1.8 and updated the Rake dependency to 11.1
