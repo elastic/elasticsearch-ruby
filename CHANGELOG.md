@@ -1,3 +1,10 @@
+## DSL:0.1.4
+
+* Added correct implementation of `Sort#empty?`
+* Added the `filter` method to the Bool query
+* Added the pipeline aggregations
+* Allowed access to calling context from search block
+
 ## EXT:0.0.22
 
 * Refactored and significantly improved the "Reindex" extension
