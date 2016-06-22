@@ -35,6 +35,9 @@ module Elasticsearch
             :human,
             :include_defaults ]
 
+          unsupported_params = [ :include_defaults ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
 
           path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments.delete(:feature))
