@@ -111,6 +111,9 @@ module Elasticsearch
           :wait_for_completion,
           :requests_per_second ]
 
+        unsupported_params = [ :pipeline ]
+        Utils.__report_unsupported_parameters(arguments, unsupported_params)
+
         method = HTTP_POST
 
         path   = Utils.__pathify Utils.__listify(arguments[:index]),
