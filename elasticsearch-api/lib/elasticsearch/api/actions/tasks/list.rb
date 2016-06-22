@@ -31,6 +31,9 @@ module Elasticsearch
             :group_by,
             :wait_for_completion ]
 
+          unsupported_params = [ :group_by ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           task_id = arguments.delete(:task_id)
 
           method = 'GET'
