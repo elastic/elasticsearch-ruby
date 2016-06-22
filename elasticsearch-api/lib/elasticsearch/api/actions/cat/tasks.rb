@@ -18,6 +18,8 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
         #
         def tasks(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :format,
             :node_id,
@@ -28,7 +30,9 @@ module Elasticsearch
             :h,
             :help,
             :v ]
-          method = 'GET'
+
+          method = HTTP_GET
+
           path   = "_cat/tasks"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
