@@ -34,6 +34,9 @@ module Elasticsearch
         def reroute(arguments={})
           valid_params = [ :dry_run, :explain, :metric, :master_timeout, :retry_failed, :timeout ]
 
+          unsupported_params = [ :retry_failed ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_POST
           path   = "_cluster/reroute"
 
