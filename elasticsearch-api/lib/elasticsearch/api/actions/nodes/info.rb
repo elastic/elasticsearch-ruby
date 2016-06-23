@@ -35,6 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :settings Return information about node settings
         # @option arguments [Boolean] :thread_pool Return information about the thread pool
         # @option arguments [Boolean] :transport Return information about transport
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
@@ -56,7 +57,7 @@ module Elasticsearch
             :transport,
             :timeout ]
 
-          valid_params = [ :timeout ]
+          valid_params = [ :flat_settings, :timeout ]
 
           method = HTTP_GET
 
