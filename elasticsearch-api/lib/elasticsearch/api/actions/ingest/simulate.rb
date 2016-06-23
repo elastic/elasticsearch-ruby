@@ -13,10 +13,13 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
         #
         def simulate(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [
-            :verbose ]
-          method = 'GET'
+
+          valid_params = [ :verbose ]
+
+          method = HTTP_GET
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id]), '_simulate'
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]

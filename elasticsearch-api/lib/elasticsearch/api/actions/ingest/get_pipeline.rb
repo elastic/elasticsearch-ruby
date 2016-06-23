@@ -11,10 +11,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def get_pipeline(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
           valid_params = [
             :master_timeout ]
-          method = 'GET'
+
+          method = HTTP_GET
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id])
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

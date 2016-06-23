@@ -43,6 +43,8 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/reference/api/delete-by-query/
       #
       def delete_by_query(arguments={})
+        Utils.__report_unsupported_method(__method__)
+
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
         valid_params = [

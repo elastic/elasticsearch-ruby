@@ -75,6 +75,9 @@ module Elasticsearch
           :fields,
           :pipeline ]
 
+        unsupported_params = [ :fields, :pipeline ]
+        Utils.__report_unsupported_parameters(arguments, unsupported_params)
+
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(type), '_bulk'
 

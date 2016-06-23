@@ -1,5 +1,5 @@
 module Elasticsearch
   module API
-    VERSION = "1.0.18"
+    VERSION = "2.0.0.pre"
   end
 end

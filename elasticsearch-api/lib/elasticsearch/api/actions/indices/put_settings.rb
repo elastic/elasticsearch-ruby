@@ -59,6 +59,9 @@ module Elasticsearch
             :flat_settings
           ]
 
+          unsupported_params = [ :preserve_existing ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
           params = Utils.__validate_and_extract_params arguments, valid_params

@@ -13,12 +13,16 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def put_pipeline(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
           valid_params = [
             :master_timeout,
             :timeout ]
-          method = 'PUT'
+
+          method = HTTP_PUT
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id])
 
           params = Utils.__validate_and_extract_params arguments, valid_params

@@ -1,3 +1,7 @@
+## 2.0.0
+
+* Added deprecation notices to API methods and parameters not supported on Elasticsearch 2.x
+
 ## DSL:0.1.4
 
 * Added correct implementation of `Sort#empty?`
