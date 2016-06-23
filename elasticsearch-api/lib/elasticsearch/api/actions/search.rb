@@ -78,6 +78,9 @@ module Elasticsearch
       # @option arguments [List] :fields A comma-separated list of fields to return as part of a hit
       # @option arguments [List] :fielddata_fields A comma-separated list of fields to return as the field data
       #                                            representation of a field for each hit
+      # @option arguments [List] :docvalue_fields A comma-separated list of fields to return as the docvalue
+      #                                           representation of a field for each hit
+      # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
       # @option arguments [Number] :from Starting offset (default: 0)
       # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
       #                                            (options: none, missing)
@@ -126,6 +129,8 @@ module Elasticsearch
           :df,
           :explain,
           :fielddata_fields,
+          :docvalue_fields,
+          :stored_fields,
           :fields,
           :from,
           :ignore_indices,
