@@ -347,7 +347,8 @@ suites.each do |suite|
 
           # --- Register test setup -------------------------------------------
           setup do
-            actions.select { |a| a['setup'] }.first['setup'].each do |action|
+            setup_actions = actions.select { |a| a['setup'] }
+            setup_actions.first['setup'].each do |action|
               if action['do']
                 api, arguments = action['do'].to_a.first
                 arguments      = Utils.symbolize_keys(arguments)
@@ -360,7 +361,25 @@ suites.each do |suite|
                 $stderr.puts "STASH: '$#{variable}' => #{result.inspect}" if ENV['DEBUG']
                 Runner.set variable, result
               end
-            end
+            end unless setup_actions.empty?
+          end
+
+          teardown do
+            teardown_actions = actions.select { |a| a['teardown'] }
+            teardown_actions.first['teardown'].each do |action|
+              if action['do']
+                api, arguments = action['do'].to_a.first
+                arguments      = Utils.symbolize_keys(arguments)
+                Runner.perform_api_call((test.to_s + '___teardown'), api, arguments)
+              end
+              if action['set']
+                stash = action['set']
+                property, variable = stash.to_a.first
+                result  = Runner.evaluate(test, property, $last_response)
+                $stderr.puts "STASH: '$#{variable}' => #{result.inspect}" if ENV['DEBUG']
+                Runner.set variable, result
+              end
+            end unless teardown_actions.empty?
           end
 
           # --- Register test method ------------------------------------------
