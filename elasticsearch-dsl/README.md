@@ -46,7 +46,7 @@ definition.to_hash
 require 'elasticsearch'
 client = Elasticsearch::Client.new trace: true
 
-client.search body: definition
+client.search body: definition.to_hash
 # curl -X GET 'http://localhost:9200/test/_search?pretty' -d '{
 #   "query":{
 #     "match":{
