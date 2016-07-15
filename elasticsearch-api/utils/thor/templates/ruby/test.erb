@@ -2,9 +2,9 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class <%= @module_namespace.empty? ? @method_name.camelize : @module_namespace.map {|n| n.capitalize}.join + @method_name.camelize %>Test < ::Test::Unit::TestCase
+    class <%= @module_namespace.map {|n| n.capitalize}.map { |n| n == 'Xpack' ? 'XPack' : n  }.join('') + @method_name.camelize %>Test < ::Test::Unit::TestCase
 
-      context "<%= @module_namespace.empty? ? '' : @module_namespace.map {|n| n.capitalize}.join + ': ' %><%= @method_name.humanize %>" do
+      context "<%= @module_namespace.map {|n| n.capitalize}.map { |n| n == 'Xpack' ? 'XPack' : n  }.join(' ') + ': ' %><%= @method_name.humanize %>" do
         subject { FakeClient.new }
 
         should "perform correct request" do
@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.<%= @full_namespace.join('.') %>
+          subject.<%= @full_namespace.join('.') %> <%= @spec['url']['parts'].select { |name, info| info['required'] }.keys.map { |d| ":#{d} => 'foo'" }.join(', ') %>
         end
 
       end

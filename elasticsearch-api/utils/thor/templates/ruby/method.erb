@@ -1,7 +1,7 @@
 module Elasticsearch
   module API
     <%- @module_namespace.each_with_index do |name, i| -%>
-    <%= '  '*i %>module <%= name.capitalize %>
+    <%= '  '*i %>module <%= name == 'xpack' ? 'XPack' : name.capitalize %>
     <%- end -%>
     <%= '  '*@namespace_depth %>module Actions
 
@@ -35,17 +35,13 @@ module Elasticsearch
       <%= '  '*(@namespace_depth+1) + "raise ArgumentError, \"Required argument 'body' missing\" unless arguments[:body]" + "\n" -%>
 <%- end -%>
 <%# Method, path, params, body  -%>
+      <%- unless @spec['url']['params'].empty? -%>
       <%= '  '*@namespace_depth %>  valid_params = [
       <%= '  '*(@namespace_depth+2) %><%= @spec['url']['params'].keys.map { |k| ":#{k}" }.join(",\n#{'  '*(@namespace_depth+5)}") %> ]
-      <%= '  '*@namespace_depth %>  method = '<%= @spec['methods'].first %>'
-      <%- unless @spec['url']['parts'].empty?  -%>
-      <%= '  '*@namespace_depth %>  path   = "<%= @spec['url']['path'].split('/').compact.reject {|p| p =~ /^\s*$/}.map do |p|
-        p =~ /\{/ ? "\#\{arguments[:#{p.tr('{}', '')}]\}" : p
-      end.join('/') %>"
-      <%- else -%>
-      <%= '  '*@namespace_depth %>  path   = "<%= @spec['url']['path'] %>"
       <%- end -%>
-      <%- unless @spec['url']['params'].keys.empty? -%>
+      <%= '  '*@namespace_depth %>  method = <%= @http_method %>
+      <%= '  '*@namespace_depth %>  path   = "<%= @http_path %>"
+      <%- unless @spec['url']['params'].empty? -%>
       <%= '  '*@namespace_depth %>  params = Utils.__validate_and_extract_params arguments, valid_params
       <%- else -%>
       <%= '  '*@namespace_depth %>  params = {}
