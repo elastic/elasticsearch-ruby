@@ -38,6 +38,12 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         assert_equal 9400, c.arguments[:port]
       end
 
+      should "not modify the arguments" do
+        args = { port: 9400 }.freeze
+
+        assert_nothing_raised { Cluster::Cluster.new args }
+      end
+
       should "take parameters from environment variables" do
         ENV['TEST_CLUSTER_PORT'] = '9400'
 
