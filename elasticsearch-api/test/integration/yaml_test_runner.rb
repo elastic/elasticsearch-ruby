@@ -478,16 +478,23 @@ suites.each do |suite|
                   $stderr.puts "CHECK: Expected '#{property}' to be #{value}, is: #{length.inspect}" if ENV['DEBUG']
                   assert_equal(value, length)
 
-                when a = action['lt'] || action['gt']
-                  next
+                when a = action['lt'] || action['gt'] || action['lte'] || action['gte']
                   property, value = a.to_a.first
-                  operator        = action['lt'] ? '<' : '>'
+                  operator = case
+                    when action['lt']
+                      '<'
+                    when action['gt']
+                      '>'
+                    when action['lte']
+                      '<='
+                    when action['gte']
+                      '>='
+                  end
 
                   result  = Runner.evaluate(test, property)
                   message = "Expected '#{property}' to be #{operator} #{value}, is: #{result.inspect}"
 
                   $stderr.puts "CHECK: #{message}" if ENV['DEBUG']
-                  # operator == 'less than' ? assert(value.to_f < result.to_f, message) : assert(value.to_f > result.to_f, message)
                   assert_operator result, operator.to_sym, value.to_i
 
                 when stash = action['set']
