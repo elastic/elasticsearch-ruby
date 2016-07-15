@@ -258,7 +258,8 @@ module Elasticsearch
 
         # Skip features
         elsif skip && skip['skip']['features']
-          if (skip['skip']['features'].split(',') & SKIP_FEATURES.split(',') ).size > 0
+          skip_features = skip['skip']['features'].respond_to?(:split) ? skip['skip']['features'].split(',') : skip['skip']['features']
+          if ( skip_features & SKIP_FEATURES.split(',') ).size > 0
             return skip['skip']['features']
           end
         end
