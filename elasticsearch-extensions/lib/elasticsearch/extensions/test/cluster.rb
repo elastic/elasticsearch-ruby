@@ -188,7 +188,7 @@ module Elasticsearch
           # @see Cluster#start
           #
           def initialize(arguments={})
-            @arguments = arguments
+            @arguments = arguments.dup
 
             @arguments[:command]           ||= ENV.fetch('TEST_CLUSTER_COMMAND',   'elasticsearch')
             @arguments[:port]              ||= ENV.fetch('TEST_CLUSTER_PORT',      9250).to_i
