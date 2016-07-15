@@ -26,6 +26,8 @@ module Elasticsearch
         #                                                        shards is finished
         # @option arguments [String] :wait_for_status Wait until cluster is in a specific state
         #                                             (options: green, yellow, red)
+        # @option arguments [List] :wait_for_events Wait until all currently queued events with the given priorty
+        #                                           are processed (immediate, urgent, high, normal, low, languid)
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-health/
         #
@@ -41,7 +43,8 @@ module Elasticsearch
             :wait_for_active_shards,
             :wait_for_nodes,
             :wait_for_relocating_shards,
-            :wait_for_status ]
+            :wait_for_status,
+            :wait_for_events ]
 
           method = HTTP_GET
           path   = Utils.__pathify "_cluster/health", Utils.__listify(index)
