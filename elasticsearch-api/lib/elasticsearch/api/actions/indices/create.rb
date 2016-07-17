@@ -62,6 +62,7 @@ module Elasticsearch
         # @option arguments [Hash] :body Optional configuration for the index (`settings` and `mappings`)
         # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
         #                                               with the same name across all types
+        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :master_timeout Timeout for connection to master
         #
@@ -72,7 +73,8 @@ module Elasticsearch
           valid_params = [
             :timeout,
             :master_timeout,
-            :update_all_types
+            :update_all_types,
+            :wait_for_active_shards
           ]
 
           method = HTTP_PUT
