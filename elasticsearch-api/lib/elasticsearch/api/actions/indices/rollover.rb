@@ -9,6 +9,7 @@ module Elasticsearch
         # @option arguments [String] :alias The name of the alias to rollover (*Required*)
         # @option arguments [String] :new_index The name of the rollover index
         # @option arguments [Hash] :body The conditions that needs to be met for executing rollover
+        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
@@ -18,6 +19,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'alias' missing" unless arguments[:alias]
 
           valid_params = [
+            :wait_for_active_shards,
             :timeout,
             :master_timeout ]
 
