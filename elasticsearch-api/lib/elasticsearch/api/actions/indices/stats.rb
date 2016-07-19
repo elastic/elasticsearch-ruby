@@ -107,8 +107,8 @@ module Elasticsearch
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
 
           params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-          params[:groups] = Utils.__listify(params[:groups]) if params[:groups]
+          params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
+          params[:groups] = Utils.__listify(params[:groups], :escape => false) if params[:groups]
 
           body   = nil
 
