@@ -68,7 +68,8 @@ module Elasticsearch
       #
       #     reindex = Elasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test1', client: client },
-      #                 target: { index: 'test2', transform: lambda { |doc| doc['_source']['category'].upcase! } }
+      #                 target: { index: 'test2' },
+      #                 transform: lambda { |doc| doc['_source']['category'].upcase! }
       #
       #
       # The reindexing process works by "scrolling" an index and sending
