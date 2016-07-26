@@ -57,10 +57,12 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       @client = Elasticsearch::Client.new \
         host: "localhost:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger),
-        transport_options: { headers: { content_type: 'application/yaml' } }
+        transport_options: { headers: { accept: 'application/yaml', content_type: 'application/yaml' } }
 
       response = @client.perform_request 'GET', '_cluster/health'
-      assert_match /---\ncluster_name:/, response.body.to_s
+
+      assert response.body.to_s.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
+      assert_equal 'application/yaml', response.headers['content-type']
     end
 
     should "pass options to the Faraday::Connection with a block" do
@@ -68,12 +70,13 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         host: "localhost:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger)
       ) do |client|
-        client.headers['Content-Type'] = 'application/yaml'
+        client.headers['Content-Type'] = 'application/yaml' # For ES 2.x
+        client.headers['Accept'] = 'application/yaml'       # For ES 5.x
       end
 
       response = @client.perform_request 'GET', '_cluster/health'
 
-      assert response.body.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
+      assert response.body.to_s.start_with?("---\n"), "Response body should be YAML: #{response.body.inspect}"
       assert_equal 'application/yaml', response.headers['content-type']
     end
 

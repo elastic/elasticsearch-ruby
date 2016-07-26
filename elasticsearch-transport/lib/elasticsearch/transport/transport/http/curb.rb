@@ -26,14 +26,17 @@ module Elasticsearch
                 else raise ArgumentError, "Unsupported HTTP method: #{method}"
               end
 
+              request_headers = connection.connection.headers
+              connection.connection.headers = request_headers.merge('Accept' => 'application/json') unless request_headers['Accept']
+
               connection.connection.http(method.to_sym)
 
-              headers = {}
-              headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
+              response_headers = {}
+              response_headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
 
               Response.new connection.connection.response_code,
                            connection.connection.body_str,
-                           headers
+                           response_headers
             end
           end
 
