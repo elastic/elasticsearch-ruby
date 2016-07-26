@@ -33,7 +33,10 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
 
     should "properly prepare the request" do
       @transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
-        :post == method && '{"foo":"bar"}' == body
+        assert_equal :post, method
+        assert_equal '{"foo":"bar"}', body
+        assert_equal 'application/json', headers['Content-Type']
+        true
       end.returns(stub_everything)
       @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
     end
