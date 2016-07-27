@@ -35,10 +35,10 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
         assert_equal :post, method
         assert_equal '{"foo":"bar"}', body
-        assert_equal 'application/json', headers['Content-Type']
-        assert_equal 'application/json', headers['Accept']
+        assert_nil   headers['Accept']
         true
       end.returns(stub_everything)
+
       @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
     end
 

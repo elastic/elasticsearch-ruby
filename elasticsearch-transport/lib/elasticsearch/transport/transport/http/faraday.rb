@@ -19,8 +19,6 @@ module Elasticsearch
           def perform_request(method, path, params={}, body=nil)
             super do |connection, url|
               headers = connection.connection.headers
-              headers['Content-Type'] ||= 'application/json'
-              headers['Accept']       ||= 'application/json'
 
               response = connection.connection.run_request \
                 method.downcase.to_sym,

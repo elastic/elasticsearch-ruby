@@ -65,19 +65,6 @@ else
         assert_equal 'application/json', response.headers['content-type']
       end
 
-      should "set application/json request header" do
-        @transport.connections.first.connection.expects(:http).with(:GET).returns(stub_everything)
-        @transport.connections.first.connection.expects(:body_str).returns(stub_everything)
-        @transport.connections.first.connection.expects(:header_str).returns(stub_everything)
-
-        @transport.connections.first.connection.expects(:headers=).with do |headers|
-          assert_equal 'application/json', headers['Accept']
-          true
-        end
-
-        response = @transport.perform_request 'GET', '/'
-      end
-
       should "handle HTTP methods" do
         @transport.connections.first.connection.expects(:http).with(:HEAD).returns(stub_everything)
         @transport.connections.first.connection.expects(:http).with(:GET).returns(stub_everything)
