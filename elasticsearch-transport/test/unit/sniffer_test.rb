@@ -11,6 +11,38 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
     Elasticsearch::Transport::Transport::Response.new 200, MultiJson.load(json)
   end
 
+  DEFAULT_NODES_INFO_RESPONSE = <<-JSON
+    {
+      "cluster_name" : "elasticsearch_test",
+      "nodes" : {
+        "N1" : {
+          "name" : "Node 1",
+          "transport_address" : "127.0.0.1:9300",
+          "host" : "testhost1",
+          "ip"   : "127.0.0.1",
+          "version" : "5.0.0",
+          "roles": [
+            "master",
+            "data",
+            "ingest"
+          ],
+          "attributes": {
+            "testattr": "test"
+          },
+          "http": {
+            "bound_address": [
+              "[fe80::1]:9250",
+              "[::1]:9250",
+              "127.0.0.1:9250"
+            ],
+            "publish_address": "127.0.0.1:9250",
+            "max_content_length_in_bytes": 104857600
+          }
+        }
+      }
+    }
+  JSON
+
   context "Sniffer" do
     setup do
       @transport = DummyTransport.new
@@ -21,74 +53,25 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
       assert_equal @transport, @sniffer.transport
     end
 
-    should "return an array of hosts as hashes with Elasticsearch 1.x syntax" do
-      @transport.expects(:perform_request).returns __nodes_info <<-JSON
-        {
-          "ok" : true,
-          "cluster_name" : "elasticsearch_test",
-          "nodes" : {
-            "N1" : {
-              "name" : "Node 1",
-              "transport_address" : "inet[/192.168.1.23:9300]",
-              "hostname" : "testhost1",
-              "version" : "0.20.6",
-              "http_address" : "inet[/192.168.1.23:9200]",
-              "thrift_address" : "/192.168.1.23:9500",
-              "memcached_address" : "inet[/192.168.1.23:11211]"
-            }
-          }
-        }
-      JSON
+    should "return an array of hosts as hashes" do
+      @transport.expects(:perform_request).returns __nodes_info(DEFAULT_NODES_INFO_RESPONSE)
 
       hosts = @sniffer.hosts
 
       assert_equal 1, hosts.size
-      assert_equal '192.168.1.23', hosts.first[:host]
-      assert_equal '9200',         hosts.first[:port]
-      assert_equal 'Node 1',       hosts.first['name']
-    end
-
-    should "return an array of hosts as hashes with Elasticsearch 2.0 syntax" do
-      @transport.expects(:perform_request).returns __nodes_info <<-JSON
-        {
-          "ok" : true,
-          "cluster_name" : "elasticsearch_test",
-          "nodes" : {
-            "N1" : {
-              "name" : "Node 1",
-              "transport_address" : "192.168.1.23:9300",
-              "hostname" : "testhost1",
-              "version" : "0.20.6",
-              "http_address" : "192.168.1.23:9200",
-              "thrift_address" : "192.168.1.23:9500",
-              "memcached_address" : "192.168.1.23:11211"
-            }
-          }
-        }
-      JSON
-
-      hosts = @sniffer.hosts
-
-      assert_equal 1, hosts.size
-      assert_equal '192.168.1.23', hosts.first[:host]
-      assert_equal '9200',         hosts.first[:port]
-      assert_equal 'Node 1',       hosts.first['name']
+      assert_equal '127.0.0.1', hosts.first[:host]
+      assert_equal '9250',      hosts.first[:port]
+      assert_equal 'Node 1',    hosts.first[:name]
     end
 
     should "return an array of hosts as hostnames when a hostname is returned" do
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {
-          "ok" : true,
-          "cluster_name" : "elasticsearch_test",
           "nodes" : {
             "N1" : {
-              "name" : "Node 1",
-              "transport_address" : "inet[/192.168.1.23:9300]",
-              "hostname" : "testhost1",
-              "version" : "0.20.6",
-              "http_address" : "inet[testhost1.com/192.168.1.23:9200]",
-              "thrift_address" : "/192.168.1.23:9500",
-              "memcached_address" : "inet[/192.168.1.23:11211]"
+              "http": {
+                "publish_address": "testhost1.com:9250"
+              }
             }
           }
         }
@@ -98,38 +81,35 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
 
       assert_equal 1, hosts.size
       assert_equal 'testhost1.com', hosts.first[:host]
-      assert_equal '9200',         hosts.first[:port]
-      assert_equal 'Node 1',       hosts.first['name']
+      assert_equal '9250',         hosts.first[:port]
+    end
+
+    should "return HTTP hosts for the HTTPS protocol in the transport" do
+      @transport = DummyTransport.new :options => { :protocol => 'https' }
+      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+
+      @transport.expects(:perform_request).returns __nodes_info(DEFAULT_NODES_INFO_RESPONSE)
+
+      assert_equal 1, @sniffer.hosts.size
     end
 
     should "skip hosts without a matching transport protocol" do
-      @transport = DummyTransport.new :options => { :protocol => 'memcached' }
+      @transport = DummyTransport.new
       @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
 
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {
-          "ok" : true,
-          "cluster_name" : "elasticsearch_test",
           "nodes" : {
             "N1" : {
-              "name" : "Memcached Node",
-              "http_address" : "inet[/192.168.1.23:9200]",
-              "memcached_address" : "inet[/192.168.1.23:11211]"
-            },
-            "N2" : {
-              "name" : "HTTP Node",
-              "http_address" : "inet[/192.168.1.23:9200]"
+              "foobar": {
+                "publish_address": "foobar:1234"
+              }
             }
           }
         }
       JSON
 
-      hosts = @sniffer.hosts
-
-      assert_equal 1, hosts.size
-      assert_equal '192.168.1.23',   hosts.first[:host]
-      assert_equal '11211',          hosts.first[:port]
-      assert_equal 'Memcached Node', hosts.first['name']
+      assert_empty @sniffer.hosts
     end
 
     should "have configurable timeout" do
