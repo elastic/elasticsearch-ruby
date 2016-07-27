@@ -32,11 +32,26 @@ module Elasticsearch
             nodes = transport.perform_request('GET', '_nodes/http').body
             hosts = nodes['nodes'].map do |id,info|
               addr_str = info["#{transport.protocol}_address"].to_s
-              matches = addr_str.match(ES1_RE_URL) || addr_str.match(ES2_RE_URL)
-              if matches
-                host = matches[1].empty? ? matches[2] : matches[1]
-                port = matches[3]
-                info.merge :host => host, :port => port, :id => id
+
+              if addr_str.empty?
+                if info['http']
+                  host, port = info['http']['publish_address'].split(':')
+
+                  { :id =>      id,
+                    :name =>    info['name'],
+                    :version => info['version'],
+                    :host =>    host,
+                    :port =>    port,
+                    :roles =>   info['roles'],
+                    :attributes => info['attributes'] }
+                end
+              else
+                matches = addr_str.match(ES1_RE_URL) || addr_str.match(ES2_RE_URL)
+                if matches
+                  host = matches[1].empty? ? matches[2] : matches[1]
+                  port = matches[3]
+                  info.merge :host => host, :port => port, :id => id
+                end
               end
             end.compact
 

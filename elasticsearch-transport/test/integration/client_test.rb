@@ -17,7 +17,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-      system "curl -X DELETE http://localhost:#{@port}/_all > /dev/null 2>&1"
+      system "curl -X DELETE http://127.0.0.1:#{@port}/_all > /dev/null 2>&1"
 
       @logger =  Logger.new(STDERR)
       @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -30,7 +30,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
       end
 
-      @client = Elasticsearch::Client.new host: "localhost:#{@port}"
+      @client = Elasticsearch::Client.new host: "127.0.0.1:#{@port}"
     end
 
     should "connect to the cluster" do
@@ -55,7 +55,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     should "pass options to the transport" do
       @client = Elasticsearch::Client.new \
-        host: "localhost:#{@port}",
+        host: "127.0.0.1:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger),
         transport_options: { headers: { accept: 'application/yaml', content_type: 'application/yaml' } }
 
@@ -67,7 +67,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     should "pass options to the Faraday::Connection with a block" do
       @client = Elasticsearch::Client.new(
-        host: "localhost:#{@port}",
+        host: "127.0.0.1:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger)
       ) do |client|
         client.headers['Content-Type'] = 'application/yaml' # For ES 2.x
@@ -83,7 +83,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with round robin selector" do
       setup do
         @client = Elasticsearch::Client.new \
-                    hosts:  ["localhost:#{@port}", "localhost:#{@port+1}" ],
+                    hosts:  ["127.0.0.1:#{@port}", "127.0.0.1:#{@port+1}" ],
                     logger: (ENV['QUIET'] ? nil : @logger)
       end
 
@@ -106,7 +106,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       setup do
         @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
         @client = Elasticsearch::Client.new \
-                    hosts: ["localhost:#{@port}", "foobar1"],
+                    hosts: ["127.0.0.1:#{@port}", "foobar1"],
                     logger: (ENV['QUIET'] ? nil : @logger),
                     retry_on_failure: true
       end
@@ -119,7 +119,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
       should "raise exception when it cannot get any healthy server" do
         @client = Elasticsearch::Client.new \
-                  hosts: ["localhost:#{@port}", "foobar1", "foobar2", "foobar3"],
+                  hosts: ["127.0.0.1:#{@port}", "foobar1", "foobar2", "foobar3"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_failure: 1
 
@@ -138,7 +138,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with a sick node and reloading on failure" do
       setup do
         @client = Elasticsearch::Client.new \
-                  hosts: ["localhost:#{@port}", "foobar1", "foobar2"],
+                  hosts: ["127.0.0.1:#{@port}", "foobar1", "foobar2"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   reload_on_failure: true
       end
@@ -155,7 +155,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with retrying on status" do
       should "retry when the status does match" do
         @client = Elasticsearch::Client.new \
-                  hosts: ["localhost:#{@port}"],
+                  hosts: ["127.0.0.1:#{@port}"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_status: 400
 
@@ -173,7 +173,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "when reloading connections" do
       should "keep existing connections" do
         require 'patron' # We need a client with keep-alive
-        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}", adapter: :patron, logger: @logger
+        client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}", adapter: :patron, logger: @logger
 
         assert_equal 'Faraday::Adapter::Patron',
                       client.transport.connections.first.connection.builder.handlers.first.name
@@ -195,7 +195,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       should "set the adapter with a block" do
         require 'net/http/persistent'
 
-        client = Elasticsearch::Transport::Client.new url: "localhost:#{@port}" do |f|
+        client = Elasticsearch::Transport::Client.new url: "127.0.0.1:#{@port}" do |f|
           f.adapter :net_http_persistent
         end
 
@@ -210,7 +210,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         teardown { begin; Object.send(:remove_const, :Patron); rescue NameError; end }
 
         require 'patron'
-        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}"
+        client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}"
 
         assert_equal 'Faraday::Adapter::Patron',
                       client.transport.connections.first.connection.builder.handlers.first.name
