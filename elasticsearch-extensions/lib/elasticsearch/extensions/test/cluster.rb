@@ -365,7 +365,7 @@ module Elasticsearch
               when /^0|^1/
                 '0.0.0.0'
               when /^2/
-                '0.0.0.0'
+                '_local_'
               when /^5/
                 '_local_'
               else
