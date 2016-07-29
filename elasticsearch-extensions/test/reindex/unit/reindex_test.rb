@@ -43,8 +43,8 @@ class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
                                 '_id'    => d['_id'],
                                 'data'   => d['_source']
                                } }]
-        @bulk_response    = {'errors'=>false, 'items' => [{'index' => {}}]}
-        @bulk_response_error = {'errors'=>true, 'items' => [{'index' => {}},{'index' => {'error' => 'FOOBAR'}}]}
+        @bulk_response    = {'errors'=>false, 'items' => [{'index' => {}}, {'index' => {}}]}
+        @bulk_response_error = {'errors'=>true, 'items' => [{'index' => {}}, {'index' => {'error' => 'FOOBAR'}}]}
       end
 
       should "scroll through the index and save batches in bulk" do
@@ -52,11 +52,15 @@ class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
         subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
                                                          target: { index: 'bar' }
 
-        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
-        client.expects(:scroll).returns(@default_response)
-              .then.returns(@empty_response)
-              .times(2)
-        client.expects(:bulk).with(body: @bulk_request).returns(@bulk_response)
+        client.expects(:search)
+          .returns({ '_scroll_id' => 'scroll_id_1' }.merge(Marshal.load(Marshal.dump(@default_response))))
+        client.expects(:scroll)
+          .returns(Marshal.load(Marshal.dump(@default_response)))
+          .then
+          .returns(@empty_response).times(2)
+        client.expects(:bulk)
+          .with(body: @bulk_request)
+          .returns(@bulk_response).times(2)
 
         result = subject.perform
 
@@ -68,10 +72,8 @@ class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
         subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
                                                          target: { index: 'bar' }
 
-        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
-        client.expects(:scroll).returns(@default_response)
-              .then.returns(@empty_response)
-              .times(2)
+        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' }.merge(@default_response))
+        client.expects(:scroll).returns(@empty_response)
         client.expects(:bulk).with(body: @bulk_request).returns(@bulk_response_error)
 
         result = subject.perform
@@ -86,10 +88,8 @@ class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
           target: { index: 'bar' },
           transform: lambda { |d| d['_source']['foo'].upcase!; d }
 
-        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' })
-        client.expects(:scroll).returns(@default_response)
-              .then.returns(@empty_response)
-              .times(2)
+        client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' }.merge(@default_response))
+        client.expects(:scroll).returns(@empty_response)
         client.expects(:bulk).with do |arguments|
                 assert_equal 'BAR', arguments[:body][0][:index]['data']['foo']
                 true

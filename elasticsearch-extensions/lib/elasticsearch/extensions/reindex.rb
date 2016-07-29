@@ -125,34 +125,43 @@ module Elasticsearch
           response = arguments[:source][:client].search(
             index: arguments[:source][:index],
             scroll: arguments[:scroll],
-            size: arguments[:batch_size],
-            search_type: 'scan',
-            fields: ['_source', '_parent', '_routing', '_timestamp']
+            size: arguments[:batch_size]
           )
+
+          documents = response['hits']['hits']
+
+          unless documents.empty?
+            bulk_response = __store_batch(documents)
+            output[:errors] += bulk_response['items'].select { |k, v| k.values.first['error'] }.size
+          end
 
           while response = arguments[:source][:client].scroll(scroll_id: response['_scroll_id'], scroll: arguments[:scroll]) do
             documents = response['hits']['hits']
             break if documents.empty?
 
-            bulk = documents.map do |doc|
-              doc['_index'] = arguments[:target][:index]
-
-              arguments[:transform].call(doc) if arguments[:transform]
-
-              doc['data'] = doc['_source']
-              doc.delete('_score')
-              doc.delete('_source')
-
-              { index: doc }
-            end
-
-            bulk_response = arguments[:target][:client].bulk body: bulk
+            bulk_response = __store_batch(documents)
             output[:errors] += bulk_response['items'].select { |k, v| k.values.first['error'] }.size
           end
 
           arguments[:target][:client].indices.refresh index: arguments[:target][:index] if arguments[:refresh]
 
           output
+        end
+
+        def __store_batch(documents)
+          body = documents.map do |doc|
+            doc['_index'] = arguments[:target][:index]
+
+            arguments[:transform].call(doc) if arguments[:transform]
+
+            doc['data'] = doc['_source']
+            doc.delete('_score')
+            doc.delete('_source')
+
+            { index: doc }
+          end
+
+          arguments[:target][:client].bulk body: body
         end
       end
     end
