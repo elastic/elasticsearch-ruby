@@ -160,7 +160,7 @@ module Elasticsearch
                 -E node.attr.testattr=test \
                 -E path.repo=/tmp \
                 -E repositories.url.allowed_urls=http://snapshot.test* \
-                -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
+                -E discovery.zen.minimum_master_nodes=#{arguments[:nodes]-1} \
                 -E logger.level=DEBUG \
                 #{arguments[:es_params]} \
                 > /dev/null
@@ -200,7 +200,7 @@ module Elasticsearch
             @arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
             @arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
             @arguments[:timeout]           ||= ENV.fetch('TEST_CLUSTER_TIMEOUT',   30).to_i
-            @arguments[:number_of_nodes]   ||= ENV.fetch('TEST_CLUSTER_NODES',     2).to_i
+            @arguments[:nodes]             ||= ENV.fetch('TEST_CLUSTER_NODES',     2).to_i
             @arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', __default_network_host)
 
             @clear_cluster = !!@arguments[:clear_cluster] || (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
@@ -242,13 +242,13 @@ module Elasticsearch
 
             __remove_cluster_data
 
-            STDOUT.print "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
+            STDOUT.print "Starting ".ansi(:faint) + arguments[:nodes].to_s.ansi(:bold, :faint) +
                          " Elasticsearch nodes..".ansi(:faint)
             pids = []
 
             STDERR.puts "Using Elasticsearch version [#{version}]" if ENV['DEBUG']
 
-            arguments[:number_of_nodes].times do |n|
+            arguments[:nodes].times do |n|
               n += 1
               command =  __command(version, arguments, n)
               STDERR.puts command.gsub(/ {1,}/, ' ') if ENV['DEBUG']
@@ -331,7 +331,7 @@ module Elasticsearch
           def running?
             if cluster_health = Timeout::timeout(0.25) { __get_cluster_health } rescue nil
               return cluster_health['cluster_name']    == arguments[:cluster_name] && \
-                     cluster_health['number_of_nodes'] == arguments[:number_of_nodes]
+                     cluster_health['number_of_nodes'] == arguments[:nodes]
             end
             return false
           end
@@ -489,7 +489,7 @@ module Elasticsearch
               loop do
                 response = __get_cluster_health(status)
 
-                if response && response['status'] == status && ( arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i  )
+                if response && response['status'] == status && ( arguments[:nodes].nil? || arguments[:nodes].to_i == response['number_of_nodes'].to_i  )
                   break
                 end
 
@@ -568,7 +568,7 @@ module Elasticsearch
           # @api private
           #
           def __check_for_running_processes(pids)
-            if `ps -p #{pids.join(' ')}`.split("\n").size < arguments[:number_of_nodes]+1
+            if `ps -p #{pids.join(' ')}`.split("\n").size < arguments[:nodes]+1
               STDERR.puts "", "[!!!] Process failed to start (see output above)".ansi(:red)
               exit(1)
             end
