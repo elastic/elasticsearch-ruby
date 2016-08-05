@@ -110,7 +110,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           Process.expects(:spawn).times(3)
           Process.expects(:detach).times(3)
 
-          c = Cluster::Cluster.new number_of_nodes: 3
+          c = Cluster::Cluster.new nodes: 3
 
           c.expects(:running?).returns(false)
 
@@ -162,7 +162,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         setup do
           @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new \
                        cluster_name: 'test',
-                       number_of_nodes: 2
+                       nodes: 2
         end
 
         should "return true" do
@@ -187,7 +187,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         setup do
           @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new \
                        cluster_name: 'test',
-                       number_of_nodes: 1
+                       nodes: 1
         end
 
         should "return true" do
