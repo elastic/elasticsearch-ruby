@@ -25,6 +25,7 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   gem "simplecov"
   gem "simplecov-rcov"
+  gem "json", '~> 1.8.3' if RUBY_VERSION < '2'
   gem "cane"
 end
 

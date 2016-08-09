@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   # Prevent unit test failures on Ruby 1.8
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_development_dependency "test-unit", '~> 2'
-    s.add_development_dependency "json"
+    s.add_development_dependency "json", '~> 1.8.3'
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
@@ -55,6 +55,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
     s.add_development_dependency "simplecov"
     s.add_development_dependency "simplecov-rcov"
+    s.add_development_dependency "json", '~> 1.8.3' if RUBY_VERSION < '2'
     s.add_development_dependency "cane"
   end
 

@@ -47,12 +47,13 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ci_reporter", "~> 1.9"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
-    s.add_development_dependency "json"
+    s.add_development_dependency "json", '~> 1.8.3'
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "simplecov"
     s.add_development_dependency "simplecov-rcov"
+    s.add_development_dependency "json", '~> 1.8.3' if RUBY_VERSION < '2'
     s.add_development_dependency "cane"
   end
 
