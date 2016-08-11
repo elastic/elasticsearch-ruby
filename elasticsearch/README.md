@@ -5,7 +5,7 @@ The `elasticsearch` library provides a Ruby client and API for [Elasticsearch](h
 Features overview:
 
 * Pluggable logging and tracing
-* Plugabble connection selection strategies (round-robin, random, custom)
+* Pluggable connection selection strategies (round-robin, random, custom)
 * Pluggable transport implementation, customizable and extendable
 * Pluggable serializer implementation
 * Request retries and dead connections handling
