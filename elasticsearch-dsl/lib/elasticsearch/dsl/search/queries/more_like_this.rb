@@ -10,7 +10,7 @@ module Elasticsearch
         #     search do
         #       query do
         #         more_like_this do
-        #           like_text 'Eyjafjallajökull'
+        #           like   ['Eyjafjallajökull']
         #           fields [:title, :abstract, :content]
         #         end
         #       end
@@ -22,7 +22,7 @@ module Elasticsearch
         #     search do
         #       query do
         #         more_like_this do
-        #           ids    [1, 2, 3]
+        #           like   [{_id: 1}, {_id: 2}, {_id: 3}]
         #           fields [:title, :abstract]
         #         end
         #       end
@@ -33,12 +33,18 @@ module Elasticsearch
         class MoreLikeThis
           include BaseComponent
 
-          option_method :fields
+          # like/unline is since 2.0.0 
+          option_method :like
+          option_method :unlike
+
+          # before 2.0.0 the following 3 options were available
           option_method :like_text
-          option_method :min_term_freq
-          option_method :max_query_terms
           option_method :docs
           option_method :ids
+
+          option_method :fields
+          option_method :min_term_freq
+          option_method :max_query_terms
           option_method :include
           option_method :exclude
           option_method :percent_terms_to_match
