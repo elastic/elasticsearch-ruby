@@ -64,6 +64,16 @@ module Elasticsearch
           assert_equal({ dummy_component_with_option_method: { foo: { bar: 'BAM' } } }, subject.to_hash)
         end
 
+        should "keep track of option methods" do
+          class DummyComponentWithCustomOptionMethod
+            include Elasticsearch::DSL::Search::BaseComponent
+            option_method :foo
+          end
+
+          subject = DummyComponentWithCustomOptionMethod
+          assert_true(subject.option_methods.include?(:foo))
+        end
+
         should "have an option method without args" do
           class DummyComponentWithOptionMethod
             include Elasticsearch::DSL::Search::BaseComponent

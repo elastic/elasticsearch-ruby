@@ -33,7 +33,7 @@ module Elasticsearch
           # @return [self]
           #
           def aggregation(*args, &block)
-            @aggregations ||= {}
+            @aggregations ||= AggregationsCollection.new
             @aggregations.update args.first => Aggregation.new(*args, &block)
             self
           end
@@ -50,8 +50,7 @@ module Elasticsearch
             @hash = { name => @args } unless @hash && @hash[name] && ! @hash[name].empty?
 
             if @aggregations
-              @hash[:aggregations] = {}
-              @aggregations.map { |name, value| @hash[:aggregations][name] = value.to_hash }
+              @hash[:aggregations] = @aggregations.to_hash
             end
             @hash
           end

@@ -43,6 +43,7 @@ module Elasticsearch
             #       # => {:mycustomquery=>{:foo=>{:custom=>"TEST"}}}
             #
             def option_method(name, block=nil)
+              option_methods << name
               if block
                 self.__send__ :define_method, name, &block
               else
@@ -101,6 +102,10 @@ module Elasticsearch
           #
           def name=(value)
             @name = value.to_sym
+          end
+
+          def option_methods
+            @option_methods ||= []
           end
         end
 

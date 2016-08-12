@@ -116,7 +116,7 @@ module Elasticsearch
         # @return [self]
         #
         def aggregation(*args, &block)
-          @aggregations ||= {}
+          @aggregations ||= AggregationsCollection.new
 
           if block
             @aggregations.update args.first => Aggregation.new(*args, &block)
