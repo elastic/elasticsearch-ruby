@@ -6,6 +6,12 @@ module Elasticsearch
       #
       module Aggregations;end
 
+      class AggregationsCollection < Hash
+        def to_hash
+          @hash ||= Hash[map { |k,v| [k, v.to_hash] }]
+        end
+      end
+
       # Wraps the `aggregations` part of a search definition
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html
