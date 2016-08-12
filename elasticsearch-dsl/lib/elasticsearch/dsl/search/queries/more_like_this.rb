@@ -33,7 +33,7 @@ module Elasticsearch
         class MoreLikeThis
           include BaseComponent
 
-          # like/unline is since 2.0.0 
+          # like/unlike is since 2.0.0 
           option_method :like
           option_method :unlike
 
