@@ -235,7 +235,7 @@ module Elasticsearch
         end
 
         unless messages.empty?
-          if terminal = STDERR.tty?
+          if STDERR.tty?
             STDERR.puts messages.map { |m| "\e[31;1m#{m}\e[0m" }.join("\n")
           else
             STDERR.puts messages.join("\n")
@@ -251,11 +251,11 @@ module Elasticsearch
 
         message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
 
-        if terminal = STDERR.tty?
-            STDERR.puts "\e[31;1m#{message}\e[0m"
-          else
-            STDERR.puts message
-          end
+        if STDERR.tty?
+          STDERR.puts "\e[31;1m#{message}\e[0m"
+        else
+          STDERR.puts message
+        end
       end
 
       extend self
