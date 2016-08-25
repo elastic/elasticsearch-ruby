@@ -57,6 +57,9 @@ module Elasticsearch
             :types,
             :timeout ]
 
+          unsupported_params = [ :timeout ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
 
           path   = Utils.__pathify '_nodes',

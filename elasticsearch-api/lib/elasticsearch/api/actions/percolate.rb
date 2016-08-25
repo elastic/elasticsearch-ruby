@@ -90,6 +90,9 @@ module Elasticsearch
           :version,
           :version_type ]
 
+        unsupported_params = [ :percolate_format ]
+        Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),

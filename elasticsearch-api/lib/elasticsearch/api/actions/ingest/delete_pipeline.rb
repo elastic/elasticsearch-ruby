@@ -12,6 +12,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def delete_pipeline(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
           valid_params = [
             :master_timeout,

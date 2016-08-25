@@ -64,7 +64,7 @@ module Elasticsearch
       def bulk(arguments={})
         arguments = arguments.clone
 
-        type      = arguments.delete(:type)
+        type = arguments.delete(:type)
 
         valid_params = [
           :consistency,
@@ -74,6 +74,9 @@ module Elasticsearch
           :timeout,
           :fields,
           :pipeline ]
+
+        unsupported_params = [ :fields, :pipeline ]
+        Utils.__report_unsupported_parameters(arguments, unsupported_params)
 
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(type), '_bulk'

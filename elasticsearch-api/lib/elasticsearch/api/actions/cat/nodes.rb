@@ -43,6 +43,9 @@ module Elasticsearch
             :help,
             :v ]
 
+          unsupported_params = [ :format ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
           path   = "_cat/nodes"
 

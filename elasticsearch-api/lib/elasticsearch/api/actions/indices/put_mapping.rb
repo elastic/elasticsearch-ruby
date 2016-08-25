@@ -62,6 +62,9 @@ module Elasticsearch
             :timeout
           ]
 
+          unsupported_params = [ :update_all_types ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
 

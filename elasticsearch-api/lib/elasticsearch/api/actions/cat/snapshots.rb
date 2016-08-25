@@ -21,6 +21,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-snapshots.html
         #
         def snapshots(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
 
           valid_params = [

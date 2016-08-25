@@ -13,6 +13,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
         #
         def simulate(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           valid_params = [
             :verbose ]

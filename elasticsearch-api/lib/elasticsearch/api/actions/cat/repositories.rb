@@ -21,6 +21,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-repositories.html
         #
         def repositories(arguments={})
+          Utils.__report_unsupported_method(__method__)
+
           valid_params = [
             :master_timeout,
             :h,

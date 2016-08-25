@@ -10,10 +10,11 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
       #
       def render_search_template(arguments={})
-        valid_params = [
-          :id
-        ]
-        method = 'GET'
+        Utils.__report_unsupported_method(__method__)
+
+        valid_params = [ :id ]
+
+        method = HTTP_GET
         path   = "_render/template"
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]

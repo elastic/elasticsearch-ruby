@@ -32,6 +32,9 @@ module Elasticsearch
             :verbose
           ]
 
+          unsupported_params = [ :verbose ]
+          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
+
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_segments'
 
