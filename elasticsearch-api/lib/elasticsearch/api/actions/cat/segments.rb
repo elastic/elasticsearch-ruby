@@ -20,6 +20,7 @@ module Elasticsearch
         def segments(arguments={})
           valid_params = [
             :bytes,
+            :index,
             :h,
             :help,
             :v ]
