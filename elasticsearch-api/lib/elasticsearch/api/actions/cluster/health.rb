@@ -24,6 +24,8 @@ module Elasticsearch
         # @option arguments [Number] :wait_for_nodes Wait until the specified number of nodes is available
         # @option arguments [Number] :wait_for_relocating_shards Wait until the specified number of relocating
         #                                                        shards is finished
+        # @option arguments [Boolean] :wait_for_no_relocating_shards Whether to wait until there are no relocating
+        #                                                            shards in the cluster
         # @option arguments [String] :wait_for_status Wait until cluster is in a specific state
         #                                             (options: green, yellow, red)
         # @option arguments [List] :wait_for_events Wait until all currently queued events with the given priorty
@@ -43,6 +45,7 @@ module Elasticsearch
             :wait_for_active_shards,
             :wait_for_nodes,
             :wait_for_relocating_shards,
+            :wait_for_no_relocating_shards,
             :wait_for_status,
             :wait_for_events ]
 
