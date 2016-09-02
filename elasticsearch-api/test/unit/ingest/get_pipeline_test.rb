@@ -7,12 +7,6 @@ module Elasticsearch
       context "Ingest: Get pipeline" do
         subject { FakeClient.new }
 
-        should "require the :id argument" do
-          assert_raise ArgumentError do
-            subject.ingest.get_pipeline
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
