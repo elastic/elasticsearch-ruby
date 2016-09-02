@@ -299,12 +299,20 @@ suites.each do |suite|
       $client.snapshot.delete_repository repository: 'test_repo_restore_1', ignore: 404
       $client.snapshot.delete_repository repository: 'test_repo_get_1', ignore: 404
       $client.snapshot.delete_repository repository: 'test_repo_get_2', ignore: 404
+      $client.snapshot.delete_repository repository: 'test_repo_status_1', ignore: 404
       $client.snapshot.delete_repository repository: 'test_cat_repo_1', ignore: 404
       $client.snapshot.delete_repository repository: 'test_cat_repo_2', ignore: 404
       $client.snapshot.delete_repository repository: 'test_cat_snapshots_1', ignore: 404
       # FIXME: This shouldn't be needed -------------
-      FileUtils.rm_rf('/tmp/test_repo_create_1_loc')
-      FileUtils.rm_rf('/tmp/test_repo_restore_1_loc')
+      %w[
+        test_cat_repo_1_loc
+        test_cat_repo_2_loc
+        test_cat_snapshots_1_loc
+        test_repo_get_1_loc
+        test_repo_status_1_loc
+      ].each do |d|
+        FileUtils.rm_rf("/tmp/#{d}")
+      end
       # ---------------------------------------------
       $results = {}
       $stash   = {}
