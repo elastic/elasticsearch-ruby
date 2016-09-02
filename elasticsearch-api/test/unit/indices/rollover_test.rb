@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.indices.rollover alias: 'foo'
+          subject.indices.rollover :alias => 'foo'
         end
 
         should "customize the index" do
