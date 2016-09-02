@@ -15,6 +15,7 @@ module Elasticsearch
         #
         # @option arguments [String] :repository A repository name
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
+        # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to #                                                 false which means a SnapshotMissingException is thrown
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
         #
@@ -22,6 +23,7 @@ module Elasticsearch
         #
         def status(arguments={})
           valid_params = [
+            :ignore_unavailable,
             :master_timeout ]
 
           repository = arguments.delete(:repository)
