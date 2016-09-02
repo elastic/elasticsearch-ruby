@@ -25,6 +25,8 @@ module Elasticsearch
         # @option arguments [Boolean] :full_id Display the complete node ID
         # @option arguments [String] :size The multiplier in which to display values
         #                                  (Options: k, m, g, t, p)
+        # @option arguments [List] :thread_pool_patterns A comma-separated list of regular expressions to filter
+        #                                                the thread pools in the output
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
@@ -40,6 +42,7 @@ module Elasticsearch
             :full_id,
             :size,
             :local,
+            :thread_pool_patterns,
             :master_timeout,
             :h,
             :help,
