@@ -5,13 +5,12 @@ module Elasticsearch
 
         # Return a specified pipeline
         #
-        # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported (*Required*)
+        # @option arguments [String] :id Comma separated list of pipeline ids (wildcards supported).
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def get_pipeline(arguments={})
-          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
           valid_params = [
             :master_timeout ]
           method = 'GET'
