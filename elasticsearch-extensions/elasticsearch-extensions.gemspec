@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "ci_reporter", "~> 1.9"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
-    s.add_development_dependency "json"
+    s.add_development_dependency "json", '~> 1.8'
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
