@@ -161,6 +161,7 @@ module Elasticsearch
                 -E path.repo=/tmp \
                 -E repositories.url.allowed_urls=http://snapshot.test* \
                 -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
+                -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
                 -E logger.level=DEBUG \
                 #{arguments[:es_params]} \
                 > /dev/null
@@ -256,6 +257,7 @@ module Elasticsearch
               pid = Process.spawn(command)
               Process.detach pid
               pids << pid
+              sleep 1
             end
 
             __check_for_running_processes(pids)
