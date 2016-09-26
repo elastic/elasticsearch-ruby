@@ -2,7 +2,7 @@ module Elasticsearch
   module API
     module Actions
 
-      # Returns true if the cluster returns a sucessfull HTTP response, false otherwise.
+      # Returns true if the cluster returns a successful HTTP response, false otherwise.
       #
       # @example
       #
