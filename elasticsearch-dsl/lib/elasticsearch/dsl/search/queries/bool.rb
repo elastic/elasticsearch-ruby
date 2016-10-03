@@ -36,6 +36,9 @@ module Elasticsearch
         class Bool
           include BaseComponent
 
+          option_method :minimum_should_match
+          option_method :boost
+
           def must(*args, &block)
             @hash[name][:must] ||= []
             value = Query.new(*args, &block).to_hash
