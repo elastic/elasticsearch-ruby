@@ -27,6 +27,25 @@ module Elasticsearch
             assert_equal( { bool: {must: [ {match: { foo: 'bar' }} ] } }, subject.to_hash )
           end
 
+          should "have option methods" do
+            subject = Bool.new do
+              should   { term tag: 'wow' }
+              should   { term tag: 'elasticsearch' }
+
+              minimum_should_match 1
+              boost 1.0
+            end
+
+            assert_equal( { bool:
+                            { 
+                              minimum_should_match: 1,
+                              boost: 1.0,
+                              should:     [ {term: { tag: 'wow' }}, {term: { tag: 'elasticsearch' }} ]
+                            }
+                          },
+                          subject.to_hash )            
+          end
+
           should "take a block with multiple methods" do
             subject = Bool.new do
               must     { match foo: 'bar' }
