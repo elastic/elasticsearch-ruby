@@ -67,6 +67,7 @@ module Elasticsearch
         #
         def validate_query(arguments={})
           valid_params = [
+            :rewrite,
             :explain,
             :ignore_unavailable,
             :allow_no_indices,
