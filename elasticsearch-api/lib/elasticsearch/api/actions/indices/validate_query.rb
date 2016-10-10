@@ -13,9 +13,12 @@ module Elasticsearch
         #
         #     client.indices.validate_query index: 'myindex', q: '[[[ BOOM! ]]]', explain: true
         #
-        # @example Validate a DSL query (with explanation)
+        # @example Validate a DSL query (with explanation and rewrite). With rewrite set to true, the 
+        #                                explanation is more detailed showing the actual Lucene query that will 
+        #                                be executed.
         #
         #     client.indices.validate_query index: 'myindex',
+        #                                   rewrite: true,
         #                                   explain: true,
         #                                   body: {
         #                                     filtered: {
