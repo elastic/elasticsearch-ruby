@@ -14,6 +14,7 @@ module Elasticsearch
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
         #
@@ -27,7 +28,8 @@ module Elasticsearch
             :parent_task,
             :h,
             :help,
-            :v ]
+            :v,
+            :s ]
           method = 'GET'
           path   = "_cat/tasks"
           params = Utils.__validate_and_extract_params arguments, valid_params

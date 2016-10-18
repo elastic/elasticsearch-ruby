@@ -19,6 +19,7 @@ module Elasticsearch
         #
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
         # @option arguments [Boolean] :help Return information about headers
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
@@ -33,7 +34,8 @@ module Elasticsearch
             :master_timeout,
             :h,
             :help,
-            :v ]
+            :v,
+            :s ]
 
           method = HTTP_GET
           path   = "_cat/pending_tasks"

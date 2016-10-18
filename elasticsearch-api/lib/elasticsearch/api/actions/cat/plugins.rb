@@ -9,6 +9,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :help Return help information
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
@@ -20,7 +21,8 @@ module Elasticsearch
             :master_timeout,
             :h,
             :help,
-            :v ]
+            :v,
+            :s ]
           method = 'GET'
           path   = "_cat/plugins"
           params = Utils.__validate_and_extract_params arguments, valid_params

@@ -40,6 +40,9 @@ module Elasticsearch
         # @option arguments [Boolean] :pri Limit the returned information on primary shards only (default: false)
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [String] :health A health status ("green", "yellow", or "red" to filter only indices
+        #                                    matching the specified health status (options: green, yellow, red)
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
         # @option arguments [Boolean] :help Return information about headers
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
@@ -51,12 +54,14 @@ module Elasticsearch
         def indices(arguments={})
           valid_params = [
             :bytes,
+            :h,
+            :health,
+            :help,
             :local,
             :master_timeout,
-            :h,
-            :help,
             :pri,
-            :v ]
+            :v,
+            :s ]
 
           index = arguments.delete(:index)
 
