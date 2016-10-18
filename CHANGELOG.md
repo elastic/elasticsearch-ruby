@@ -1,3 +1,20 @@
+## 5.0.0.pre
+
+### API
+
+* Updated the parameters for Elasticsearch 5.x APIs
+* Added Elasticsearch 5.x APIs
+
+## 2.0.0
+
+* Added deprecation notices to API methods and parameters not supported on Elasticsearch 2.x
+
+## 1.1.0
+
+### API
+
+* Added deprecation notices to API methods and arguments not supported on Elasticsearch 1.x
+
 ## DSL:0.1.4
 
 * Added correct implementation of `Sort#empty?`
