@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
         # @option arguments [Boolean] :help Return information about headers
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
@@ -42,7 +43,8 @@ module Elasticsearch
             :master_timeout,
             :h,
             :help,
-            :v ]
+            :v,
+            :s ]
 
           index = arguments.delete(:index)
 

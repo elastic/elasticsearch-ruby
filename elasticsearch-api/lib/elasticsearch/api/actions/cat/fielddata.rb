@@ -21,6 +21,7 @@ module Elasticsearch
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html
         #
@@ -32,6 +33,7 @@ module Elasticsearch
             :h,
             :help,
             :v,
+            :s,
             :fields ]
 
           fields = arguments.delete(:fields)

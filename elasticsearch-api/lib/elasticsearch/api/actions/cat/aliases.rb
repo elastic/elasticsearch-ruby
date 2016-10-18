@@ -25,6 +25,10 @@ module Elasticsearch
         #
         #     puts client.cat.aliases h: 'a,i'
         #
+        # @example Return the output sorted by the alias name
+        #
+        #     puts client.cat.aliases s: 'alias'
+        #
         # @example Return the information as Ruby objects
         #
         #     client.cat.aliases format: 'json'
@@ -32,6 +36,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
         # @option arguments [Boolean] :help Return information about headers
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
@@ -46,7 +51,8 @@ module Elasticsearch
             :master_timeout,
             :h,
             :help,
-            :v ]
+            :v,
+            :s ]
 
           name = arguments.delete(:name)
 
