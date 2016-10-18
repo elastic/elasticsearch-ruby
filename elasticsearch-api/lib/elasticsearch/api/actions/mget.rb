@@ -40,6 +40,7 @@ module Elasticsearch
       #                                     or a list of fields to return
       # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
       # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
+      # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       #
       # @see http://elasticsearch.org/guide/reference/api/multi-get/
       #
@@ -55,7 +56,8 @@ module Elasticsearch
           :routing,
           :_source,
           :_source_include,
-          :_source_exclude ]
+          :_source_exclude,
+          :stored_fields ]
 
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),

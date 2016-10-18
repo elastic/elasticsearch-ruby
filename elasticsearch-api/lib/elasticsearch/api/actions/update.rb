@@ -51,6 +51,10 @@ module Elasticsearch
       #                                               when a conflict occurs (default: 0)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [String] :script The URL-encoded script definition (instead of using request body)
+      # @option arguments [String] :_source Specify whether the _source field should be returned,
+      #                                     or a list of fields to return
+      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
+      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Time] :timestamp Explicit timestamp for the document
       # @option arguments [Duration] :ttl Expiration time for the document
@@ -77,6 +81,9 @@ module Elasticsearch
           :retry_on_conflict,
           :routing,
           :script,
+          :_source,
+          :_source_include,
+          :_source_exclude,
           :timeout,
           :timestamp,
           :ttl,
