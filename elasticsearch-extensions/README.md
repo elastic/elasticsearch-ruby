@@ -136,10 +136,10 @@ Start the cluster on specific port, with a specific Elasticsearch version, numbe
     require 'elasticsearch/extensions/test/cluster'
 
     Elasticsearch::Extensions::Test::Cluster.start \
-      cluster_name: "my-testing-cluster",
-      command:      "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
-      port:         9350,
-      nodes:        3
+      cluster_name:    "my-testing-cluster",
+      command:         "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
+      port:            9350,
+      number_of_nodes: 3
 
     # Starting 3 Elasticsearch nodes.....................
     # --------------------------------------------------------------------------------
