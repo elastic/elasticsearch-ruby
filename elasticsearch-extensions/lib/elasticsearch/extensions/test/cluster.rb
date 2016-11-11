@@ -172,7 +172,7 @@ module Elasticsearch
           # Create a new instance of the Cluster class
           #
           # @option arguments [String]  :cluster_name Cluster name (default: `elasticsearch_test`)
-          # @option arguments [Integer] :nodes        Number of desired nodes (default: 2)
+          # @option arguments [Integer] :number_of_nodes Number of desired nodes (default: 2)
           # @option arguments [String]  :command      Elasticsearch command (default: `elasticsearch`)
           # @option arguments [String]  :port         Starting port number; will be auto-incremented (default: 9250)
           # @option arguments [String]  :node_name    The node name (will be appended with a number)
@@ -222,7 +222,7 @@ module Elasticsearch
           # @example Start a cluster with a custom configuration
           #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(
           #        cluster_name: 'my-cluster',
-          #        nodes: 3,
+          #        number_of_nodes: 3,
           #        node_name: 'my-node',
           #        port: 9350
           #      ).start
