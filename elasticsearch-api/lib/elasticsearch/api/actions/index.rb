@@ -7,7 +7,7 @@ module Elasticsearch
       # The `index` API will either _create_ a new document, or _update_ an existing one, when a document `:id`
       # is passed. When creating a document, an ID will be auto-generated, when it's not passed as an argument.
       #
-      # You can specifically enforce the _create_ operation by settint the `op_type` argument to `create`, or
+      # You can specifically enforce the _create_ operation by setting the `op_type` argument to `create`, or
       # by using the {Actions#create} method.
       #
       # Optimistic concurrency control is performed, when the `version` argument is specified. By default,
