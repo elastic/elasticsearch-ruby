@@ -168,6 +168,8 @@ module Elasticsearch
               COMMAND
             }
           }
+          COMMANDS['6.0'] = COMMANDS['5.0']
+          COMMANDS.freeze
 
           # Create a new instance of the Cluster class
           #
@@ -368,7 +370,7 @@ module Elasticsearch
                 '0.0.0.0'
               when /^2/
                 '_local_'
-              when /^5/
+              when /^5|^6/
                 '_local_'
               else
                 raise RuntimeError, "Cannot determine default network host from version [#{version}]"
@@ -456,6 +458,8 @@ module Elasticsearch
                 '2.0'
               when /^5\..*/
                 '5.0'
+              when /^6\..*/
+                '6.0'
               else
                 raise RuntimeError, "Cannot determine major version from [#{version}]"
             end
