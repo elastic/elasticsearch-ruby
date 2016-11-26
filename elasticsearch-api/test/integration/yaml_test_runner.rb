@@ -231,39 +231,44 @@ module Elasticsearch
         skip = actions.select { |a| a['skip'] }.first
         $stderr.puts "SKIP: #{skip.inspect}" if ENV['DEBUG']
 
-        # Skip version
-        if skip && skip['skip']['version']
+        def skip_version(skip)
+          if skip && skip['skip']['version']
 
-          return skip['skip']['reason'] ? skip['skip']['reason'] : true if skip['skip']['version'] == 'all'
+            return skip['skip']['reason'] ? skip['skip']['reason'] : true if skip['skip']['version'] == 'all'
 
-          min, max = skip['skip']['version'].split('-').map(&:strip)
+            min, max = skip['skip']['version'].split('-').map(&:strip)
 
-          min_normalized = sprintf "%03d-%03d-%03d",
-                           *min.split('.')
-                               .map(&:to_i)
-                               .fill(0, min.split('.').length, 3-min.split('.').length)
+            min_normalized = sprintf "%03d-%03d-%03d",
+                             *min.split('.')
+                                 .map(&:to_i)
+                                 .fill(0, min.split('.').length, 3-min.split('.').length)
 
-          max_normalized = sprintf "%03d-%03d-%03d",
-                           *max.split('.')
-                               .map(&:to_i)
-                               .map(&:to_i)
-                               .fill(0, max.split('.').length, 3-max.split('.').length)
+            max_normalized = sprintf "%03d-%03d-%03d",
+                             *max.split('.')
+                                 .map(&:to_i)
+                                 .map(&:to_i)
+                                 .fill(0, max.split('.').length, 3-max.split('.').length)
 
-          es_normalized  = sprintf "%03d-%03d-%03d", *$es_version.split('.').map(&:to_i)
+            es_normalized  = sprintf "%03d-%03d-%03d", *$es_version.split('.').map(&:to_i)
 
-          if ( min.empty? || min_normalized <= es_normalized ) && ( max.empty? || max_normalized >= es_normalized )
-            return skip['skip']['reason'] ? skip['skip']['reason'] : true
-          end
+            if ( min.empty? || min_normalized <= es_normalized ) && ( max.empty? || max_normalized >= es_normalized )
+              return skip['skip']['reason'] ? skip['skip']['reason'] : true
+            end
 
-        # Skip features
-        elsif skip && skip['skip']['features']
-          skip_features = skip['skip']['features'].respond_to?(:split) ? skip['skip']['features'].split(',') : skip['skip']['features']
-          if ( skip_features & SKIP_FEATURES.split(',') ).size > 0
-            return skip['skip']['features']
+            return false
           end
         end
 
-        return false
+        def skip_features(skip)
+          if skip && skip['skip']['features']
+            skip_features = skip['skip']['features'].respond_to?(:split) ? skip['skip']['features'].split(',') : skip['skip']['features']
+            if ( skip_features & SKIP_FEATURES.split(',') ).size > 0
+              return skip['skip']['features']
+            end
+          end
+        end
+
+        return skip_version(skip) || skip_features(skip)
       end
 
       extend self
