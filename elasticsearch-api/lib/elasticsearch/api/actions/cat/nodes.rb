@@ -25,6 +25,7 @@ module Elasticsearch
         #
         #     client.cat.nodes format: 'json'
         #
+        # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)
         # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
         # @option arguments [Boolean] :v Display column headers as part of the output
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
@@ -38,6 +39,7 @@ module Elasticsearch
         #
         def nodes(arguments={})
           valid_params = [
+            :full_id,
             :local,
             :master_timeout,
             :h,
