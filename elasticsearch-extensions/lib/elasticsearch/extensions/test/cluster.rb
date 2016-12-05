@@ -429,11 +429,22 @@ module Elasticsearch
               begin
                 # First, try the new `--version` syntax...
                 STDERR.puts "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
-                Timeout::timeout(10) { output = `#{arguments[:command]} --version` }
+                rout, wout = IO.pipe
+                pid = Process.spawn("#{arguments[:command]} --version", out: wout)
+                Timeout::timeout(10) do
+                  Process.wait(pid)
+                  wout.close
+                  output = rout.read
+                  rout.close
+                end
               rescue Timeout::Error
-                # ...else, the new `-v` syntax
+                # ...else, the old `-v` syntax
                 STDERR.puts "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
                 output = `#{arguments[:command]} -v`
+              ensure
+                Process.kill('INT', pid)
+                wout.close
+                rout.close
               end
 
               STDERR.puts "> #{output}" if ENV['DEBUG']
