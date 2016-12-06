@@ -11,6 +11,8 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
       #
       def put_template(arguments={})
+        Utils.__report_unsupported_method(__method__)
+
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         method = HTTP_PUT
