@@ -406,6 +406,10 @@ suites.each do |suite|
             actions.each do |action|
               $stderr.puts "ACTION: #{action.inspect}" if ENV['DEBUG']
 
+              # This check verifies that the YAML has correct indentation.
+              # See https://github.com/elastic/elasticsearch/issues/21980
+              raise "INVALID YAML: #{action.inspect}" if action.keys.size != 1
+
               case
 
                 # --- Perform action ------------------------------------------
