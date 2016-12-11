@@ -53,6 +53,14 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
     end
 
+    should "ignore specified response codes" do
+      response = @client.perform_request 'GET', '/_foobar', ignore: 400
+      assert_equal 400, response.status
+
+      assert_instance_of Hash, response.body
+      assert_match /illegal_argument_exception/, response.body.inspect
+    end
+
     should "pass options to the transport" do
       @client = Elasticsearch::Client.new \
         host: "127.0.0.1:#{@port}",

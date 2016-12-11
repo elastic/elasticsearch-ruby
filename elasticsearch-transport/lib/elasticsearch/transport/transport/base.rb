@@ -244,6 +244,10 @@ module Elasticsearch
           start = Time.now if logger || tracer
           tries = 0
 
+          params = params.clone
+
+          ignore = Array(params.delete(:ignore)).compact.map { |s| s.to_i }
+
           begin
             tries     += 1
             connection = get_connection or raise Error.new("Cannot get new connection from pool.")
@@ -309,7 +313,9 @@ module Elasticsearch
             __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
             __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
             __log_failed response if logger
-            __raise_transport_error response
+
+            # Swallow the exception when the `ignore` parameter matches response status
+            __raise_transport_error response unless ignore.include?(response.status.to_i)
           end
 
           json     = serializer.load(response.body) if response.body && !response.body.empty? && response.headers && response.headers["content-type"] =~ /json/
