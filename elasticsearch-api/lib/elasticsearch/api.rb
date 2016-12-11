@@ -22,6 +22,7 @@ module Elasticsearch
     ]
 
     COMMON_QUERY_PARAMS = [
+      :ignore,                        # Client specific parameters
       :format,                        # Search, Cat, ...
       :pretty,                        # Pretty-print the response
       :human,                         # Return numeric values in human readable format
