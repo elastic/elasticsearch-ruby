@@ -246,6 +246,21 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       end
     end
 
+    should "not raise an error when the :ignore argument has been passed" do
+      @transport.stubs(:get_connection).returns(stub_everything :failures => 1)
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
+        @transport.perform_request 'GET', '/' do
+          Elasticsearch::Transport::Transport::Response.new 400, 'CLIENT ERROR'
+        end
+      end
+
+      # No `BadRequest` error
+      @transport.perform_request 'GET', '/', :ignore => 400 do
+        Elasticsearch::Transport::Transport::Response.new 400, 'CLIENT ERROR'
+      end
+    end
+
     should "mark the connection as dead on failure" do
       c = stub_everything :failures => 1
       @transport.expects(:get_connection).returns(c)
