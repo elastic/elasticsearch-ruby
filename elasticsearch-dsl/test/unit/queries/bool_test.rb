@@ -51,12 +51,14 @@ module Elasticsearch
               must     { match foo: 'bar' }
               must_not { match moo: 'bam' }
               should   { match xoo: 'bax' }
+              filter   { term  zoo: 'baz'}
             end
 
             assert_equal( { bool:
                             { must:     [ {match: { foo: 'bar' }} ],
                               must_not: [ {match: { moo: 'bam' }} ],
-                              should:   [ {match: { xoo: 'bax' }} ]
+                              should:   [ {match: { xoo: 'bax' }} ],
+                              filter:   [ {term:  { zoo: 'baz' }}]
                             }
                           },
                           subject.to_hash )
@@ -111,13 +113,23 @@ module Elasticsearch
                           subject.to_hash )
           end
 
-          should "allow adding a filter" do
+          should "combine chained filters" do
             subject = Bool.new
-            subject.filter do
-              term foo: 'bar'
-            end
+            subject.
+              filter {
+                term foo: "bar"
+              }
+            subject.filter {
+                term zoo: "baz"
+              }
 
-            assert_equal( { bool: { filter: { term: { foo: "bar" } } } }, subject.to_hash)
+            assert_equal( { bool:
+                            { filter: [
+                              { term: { foo: "bar"}},
+                              { term: { zoo: "baz"}}
+                            ] }
+                          },
+                          subject.to_hash)
           end
 
           should "be chainable" do
