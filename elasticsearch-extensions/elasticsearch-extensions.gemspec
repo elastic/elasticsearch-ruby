@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "ansi"
 
-  unless File.exists? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
+  unless File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
     s.add_dependency "elasticsearch"
   end
 
