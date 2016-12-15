@@ -238,11 +238,18 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           assert_equal '2.0', @subject.__determine_version
         end
 
-        should "return version from `elasticsearch -v`" do
+        should "return version from `elasticsearch --version`" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
 
-          @subject.expects(:`)
-            .with("/foo/bar/bin/elasticsearch --version")
+          Process.stubs(:wait)
+          Process.expects(:spawn)
+            .with do |command, options|
+              assert_equal "/foo/bar/bin/elasticsearch --version", command
+            end
+            .returns(123)
+          Process.expects(:kill).with('INT', 123)
+
+          IO.any_instance.expects(:read)
             .returns('Version: 2.3.0-SNAPSHOT, Build: d1c86b0/2016-03-30T10:43:20Z, JVM: 1.8.0_60')
 
           assert_equal '2.0', @subject.__determine_version
@@ -259,9 +266,15 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         should "raise an exception when the version cannot be parsed from command output" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
 
-          @subject.expects(:`)
-            .with("/foo/bar/bin/elasticsearch --version")
-            .returns('Version: FOOBAR')
+          Process.stubs(:wait)
+          Process.expects(:spawn)
+            .with do |command, options|
+              assert_equal "/foo/bar/bin/elasticsearch --version", command
+            end
+            .returns(123)
+          Process.expects(:kill).with('INT', 123)
+
+          IO.any_instance.expects(:read).returns('Version: FOOBAR')
 
           assert_raise(RuntimeError) { @subject.__determine_version }
         end
