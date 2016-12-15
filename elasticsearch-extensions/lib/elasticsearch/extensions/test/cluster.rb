@@ -429,20 +429,21 @@ module Elasticsearch
                 STDERR.puts "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
                 rout, wout = IO.pipe
                 pid = Process.spawn("#{arguments[:command]} --version", out: wout)
+
                 Timeout::timeout(10) do
                   Process.wait(pid)
-                  wout.close
-                  output = rout.read
-                  rout.close
+                  wout.close unless wout.closed?
+                  output = rout.read unless rout.closed?
+                  rout.close unless rout.closed?
                 end
               rescue Timeout::Error
                 # ...else, the old `-v` syntax
                 STDERR.puts "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
                 output = `#{arguments[:command]} -v`
               ensure
-                Process.kill('INT', pid)
-                wout.close
-                rout.close
+                Process.kill('INT', pid) if pid
+                wout.close unless wout.closed?
+                rout.close unless rout.closed?
               end
 
               STDERR.puts "> #{output}" if ENV['DEBUG']
