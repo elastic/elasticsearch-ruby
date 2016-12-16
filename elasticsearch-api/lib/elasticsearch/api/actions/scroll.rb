@@ -7,7 +7,8 @@ module Elasticsearch
       # When using `from` and `size` to return a large result sets, performance drops as you "paginate" in the set,
       # and you can't guarantee the consistency when the index is being updated at the same time.
       #
-      # "Scrolling" the results is frequently used with the `scan` search type.
+      # The "Scroll" API uses a "point in time" snapshot of the index state, which was created via a "Search" API
+      # request specifying the `scroll` parameter.
       #
       # @example A basic example
       #
@@ -24,8 +25,13 @@ module Elasticsearch
       #     1_000.times do |i| client.index index: 'test', type: 'test', id: i+1, body: {title: "Test #{i}"} end
       #     client.indices.refresh index: 'test'
       #
-      #     # Open the "view" of the index with the `scan` search_type
-      #     r = client.search index: 'test', search_type: 'scan', scroll: '5m', size: 10
+      #     # Open the "view" of the index by passing the `scroll` parameter
+      #     # Sorting by `_doc` makes the operations faster
+      #     r = client.search index: 'test', scroll: '1m', body: {sort: ['_doc']}
+      #
+      #     # Display the initial results
+      #     puts "--- BATCH 0 -------------------------------------------------"
+      #     puts r['hits']['hits'].map { |d| d['_source']['title'] }.inspect
       #
       #     # Call the `scroll` API until empty results are returned
       #     while r = client.scroll(scroll_id: r['_scroll_id'], scroll: '5m') and not r['hits']['hits'].empty? do
