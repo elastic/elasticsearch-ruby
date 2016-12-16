@@ -22,6 +22,11 @@ class Elasticsearch::Extensions::TestClusterIntegrationTest < Test::Unit::TestCa
       should "start and stop #{build.to_s}" do
         puts ("----- #{build.to_s} " + "-"*(80-7-build.to_s.size)).to_s.ansi(:bold)
         Elasticsearch::Extensions::Test::Cluster.start command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
+
+        # Index some data to create the data directory
+        client = Elasticsearch::Client.new host: "localhost:9250"
+        client.index index: 'test1', type: 'd', id: 1, body: { title: 'TEST' }
+
         Elasticsearch::Extensions::Test::Cluster.stop command: PATH_TO_BUILDS.join(build.join('bin/elasticsearch')).to_s
       end
     end

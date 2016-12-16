@@ -243,7 +243,7 @@ module Elasticsearch
               return false
             end
 
-            __remove_cluster_data
+            __remove_cluster_data if @clear_cluster
 
             STDOUT.print "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
                          " Elasticsearch nodes..".ansi(:faint)
@@ -503,17 +503,25 @@ module Elasticsearch
           # @return Boolean
           #
           def __wait_for_status(status='green', timeout=30)
-            Timeout::timeout(timeout) do
-              loop do
-                response = __get_cluster_health(status)
+            begin
+              Timeout::timeout(timeout) do
+                loop do
+                  response = __get_cluster_health(status)
+                  STDERR.puts response if ENV['DEBUG']
 
-                if response && response['status'] == status && ( arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i  )
-                  break
+                  if response && response['status'] == status && ( arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i  )
+                    break
+                  end
+
+                  STDOUT.print '.'.ansi(:faint)
+                  sleep 1
                 end
-
-                STDOUT.print '.'.ansi(:faint)
-                sleep 1
               end
+            rescue Timeout::Error => e
+              message = "\nTimeout while waiting for cluster status [#{status}]"
+              message += " and [#{arguments[:number_of_nodes]}] nodes" if arguments[:number_of_nodes]
+              STDOUT.puts message.ansi(:red, :bold)
+              raise e
             end
 
             return true
@@ -571,13 +579,12 @@ module Elasticsearch
             JSON.parse(response)
           end
 
-          # Remove the data directory (unless it has been disabled by arguments)
+          # Remove the data directory
           #
           # @api private
           #
           def __remove_cluster_data
-            # Wipe out data on disk for this cluster name by default
-            FileUtils.rm_rf "#{arguments[:path_data]}/#{arguments[:cluster_name]}" if @clear_cluster
+            FileUtils.rm_rf arguments[:path_data]
           end
 
 

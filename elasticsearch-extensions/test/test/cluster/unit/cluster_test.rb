@@ -95,6 +95,13 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
       end
 
+      should "remove cluster data" do
+        @subject.unstub(:__remove_cluster_data)
+        FileUtils.expects(:rm_rf).with("/tmp/elasticsearch_test")
+
+        @subject.__remove_cluster_data
+      end
+
       context "when starting a cluster, " do
         should "return false when it's already running" do
           Process.expects(:spawn).never
