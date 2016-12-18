@@ -24,9 +24,20 @@ module Elasticsearch
       # A convenience Ruby class for starting and stopping an Elasticsearch cluster,
       # eg. for integration tests
       #
-      # @example Start a cluster with default configuration
+      # @example Start a cluster with default configuration,
+      #          assuming `elasticsearch` is on $PATH.
+      #
       #      require 'elasticsearch/extensions/test/cluster'
-      #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.start
+      #      Elasticsearch::Extensions::Test::Cluster.start
+      #
+      # @example Start a cluster with a specific Elasticsearch launch script,
+      #          eg. from a downloaded `.tar.gz` distribution
+      #
+      #      system 'wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.1.tar.gz'
+      #      system 'tar -xvf elasticsearch-5.1.1.tar.gz'
+      #
+      #      require 'elasticsearch/extensions/test/cluster'
+      #      Elasticsearch::Extensions::Test::Cluster.start command: 'elasticsearch-5.1.1/bin/elasticsearch'
       #
       # @see Cluster#initialize
       #
