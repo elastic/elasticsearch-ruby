@@ -431,7 +431,11 @@ module Elasticsearch
                 raise RuntimeError, "Cannot determine Elasticsearch version from jar [#{jar}]"
               end
             else
-              STDERR.puts "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `elasticsearch --version`" if ENV['DEBUG']
+              STDERR.puts "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
+
+              unless File.exist? arguments[:command]
+                raise Errno::ENOENT, "File [#{arguments[:command]}] does not exist -- did you pass a correct path to the Elasticsearch launch script"
+              end
 
               output = ''
 
