@@ -1,3 +1,12 @@
+## EXT:0.0.23
+
+* Fixed removing the data directory for Elasticsearch 5 and 6 in the test cluster
+* Added, that Elasticsearch process is properly killed when determining version
+* Updated the test cluster class to be compatible Elasticsearch 6.x
+* Added `the max_local_storage_nodes` setting to the start command arguments for Elasticsearch 5.x
+* Improved the documentation and error messsages for the test cluster
+* Updated the "Reindex" extension for Elasticsearch 5.x
+
 ## DSL:0.1.4
 
 * Added correct implementation of `Sort#empty?`
