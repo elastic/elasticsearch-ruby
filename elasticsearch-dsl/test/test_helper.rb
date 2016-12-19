@@ -52,6 +52,7 @@ module Elasticsearch
         end
 
         @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+        @version = @client.info['version']['number']
       end
 
       def teardown
