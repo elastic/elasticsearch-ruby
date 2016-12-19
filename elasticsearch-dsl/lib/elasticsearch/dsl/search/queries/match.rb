@@ -24,9 +24,17 @@ module Elasticsearch
 
           option_method :query
           option_method :operator
+          option_method :minimum_should_match
           option_method :type
           option_method :boost
           option_method :fuzziness
+          option_method :prefix_length
+          option_method :max_expansions
+          option_method :fuzzy_rewrite
+          option_method :analyzer
+          option_method :lenient
+          option_method :zero_terms_query
+          option_method :cutoff_frequency
         end
 
       end
