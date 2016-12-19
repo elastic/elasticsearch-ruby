@@ -11,13 +11,15 @@ namespace :test do
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/unit/**/*_test.rb"]
-    # test.verbose = true
-    # test.warning = true
+    test.verbose = false
+    test.warning = false
   end
 
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
+    test.verbose = false
+    test.warning = false
   end
 
   desc "Run unit and integration tests"
