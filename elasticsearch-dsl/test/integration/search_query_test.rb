@@ -47,6 +47,22 @@ module Elasticsearch
             assert_equal 2, response['hits']['total']
             assert_equal 'Test', response['hits']['hits'][0]['_source']['title']
           end
+
+          should "find the document with a filter" do
+            skip "Not supported on this Elasticsearch version" unless @version > '2'
+
+            response = @client.search index: 'test', body: search {
+                query do
+                  bool do
+                    filter  { terms tags: ['one'] }
+                    filter  { terms tags: ['two'] }
+                  end
+                end
+              }.to_hash
+
+            assert_equal 1, response['hits']['total']
+            assert_equal 'Rest', response['hits']['hits'][0]['_source']['title']
+          end
         end
 
       end
