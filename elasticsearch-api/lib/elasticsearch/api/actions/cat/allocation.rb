@@ -50,9 +50,6 @@ module Elasticsearch
             :help,
             :v ]
 
-          unsupported_params = [ :format ]
-          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
-
           node_id = arguments.delete(:node_id)
 
           method = HTTP_GET

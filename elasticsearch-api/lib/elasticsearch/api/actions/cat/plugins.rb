@@ -22,9 +22,6 @@ module Elasticsearch
             :help,
             :v ]
 
-          unsupported_params = [ :format ]
-          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
-
           method = 'GET'
           path   = "_cat/plugins"
           params = Utils.__validate_and_extract_params arguments, valid_params
