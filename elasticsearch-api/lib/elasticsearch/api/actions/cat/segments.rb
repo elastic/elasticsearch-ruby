@@ -24,9 +24,6 @@ module Elasticsearch
             :help,
             :v ]
 
-          unsupported_params = [ :format ]
-          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
-
           method = HTTP_GET
           path   = "_cat/segments"
           params = Utils.__validate_and_extract_params arguments, valid_params

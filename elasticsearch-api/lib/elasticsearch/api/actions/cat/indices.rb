@@ -58,9 +58,6 @@ module Elasticsearch
             :pri,
             :v ]
 
-          unsupported_params = [ :format ]
-          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
-
           index = arguments.delete(:index)
 
           method = HTTP_GET

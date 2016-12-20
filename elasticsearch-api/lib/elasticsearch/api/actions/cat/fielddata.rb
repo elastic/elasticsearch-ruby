@@ -34,9 +34,6 @@ module Elasticsearch
             :v,
             :fields ]
 
-          unsupported_params = [ :format ]
-          Utils.__report_unsupported_parameters(arguments.keys, unsupported_params)
-
           fields = arguments.delete(:fields)
 
           method = HTTP_GET
