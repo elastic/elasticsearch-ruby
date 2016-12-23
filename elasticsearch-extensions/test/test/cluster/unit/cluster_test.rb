@@ -127,7 +127,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           c.expects(:wait_for_green).returns(true)
           c.expects(:__check_for_running_processes).returns(true)
           c.expects(:__determine_version).returns('5.0')
-          c.expects(:__print_cluster_info).returns(true)
+          c.expects(:__cluster_info).returns('CLUSTER INFO')
 
           assert_equal true, c.start
         end
@@ -198,8 +198,6 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
 
         should "return true" do
-          @subject.stubs(:__print_cluster_info)
-
           @subject
             .expects(:__get_cluster_health)
             .with('yellow')
