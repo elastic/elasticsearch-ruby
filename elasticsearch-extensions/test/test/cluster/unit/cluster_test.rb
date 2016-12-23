@@ -254,6 +254,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
         should "return version from `elasticsearch --version`" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
+          File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
           Process.expects(:spawn)
@@ -270,7 +271,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
 
         should "raise an exception when the version cannot be parsed from .jar" do
-          # Incorrect jar version
+          # Incorrect jar version (no dots)
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(true)
           Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['elasticsearch-100.jar'])
 
@@ -279,6 +280,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
         should "raise an exception when the version cannot be parsed from command output" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
+          File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
           Process.expects(:spawn)
