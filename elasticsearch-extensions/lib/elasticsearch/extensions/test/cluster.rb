@@ -7,6 +7,7 @@ require 'json'
 require 'ansi'
 
 STDOUT.sync = true
+STDERR.sync = true
 
 class String
 
@@ -248,22 +249,23 @@ module Elasticsearch
           #
           def start
             if self.running?
-              STDOUT.print "[!] Elasticsearch cluster already running".ansi(:red)
+              __log "[!] Elasticsearch cluster already running".ansi(:red)
               return false
             end
 
             __remove_cluster_data if @clear_cluster
 
-            STDOUT.print "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
-                         " Elasticsearch nodes..".ansi(:faint)
+            __log "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
+                  " Elasticsearch #{arguments[:number_of_nodes] < 2 ? 'node' : 'nodes'}..".ansi(:faint), :print
+
             pids = []
 
-            STDERR.puts "Using Elasticsearch version [#{version}]" if ENV['DEBUG']
+            __log "\nUsing Elasticsearch version [#{version}]" if ENV['DEBUG']
 
             arguments[:number_of_nodes].times do |n|
               n += 1
               command =  __command(version, arguments, n)
-              STDERR.puts command.gsub(/ {1,}/, ' ') if ENV['DEBUG']
+              __log command.gsub(/ {1,}/, ' ').ansi(:bold) if ENV['DEBUG']
 
               pid = Process.spawn(command)
               Process.detach pid
@@ -273,7 +275,7 @@ module Elasticsearch
 
             __check_for_running_processes(pids)
             wait_for_green
-            __print_cluster_info
+            __log __cluster_info
 
             return true
           end
@@ -295,7 +297,7 @@ module Elasticsearch
             begin
               nodes = __get_nodes
             rescue Exception => e
-              STDERR.puts "[!] Exception raised when stopping the cluster: #{e.inspect}".ansi(:red)
+              __log "[!] Exception raised when stopping the cluster: #{e.inspect}".ansi(:red)
               nil
             end
 
@@ -304,13 +306,14 @@ module Elasticsearch
             pids  = nodes['nodes'].map { |id, info| info['process']['id'] }
 
             unless pids.empty?
-              STDOUT.print "\nStopping Elasticsearch nodes... ".ansi(:faint)
+              __log "Stopping Elasticsearch nodes... ".ansi(:faint), :print
+
               pids.each_with_index do |pid, i|
                 ['INT','KILL'].each do |signal|
                   begin
                     Process.kill signal, pid
                   rescue Exception => e
-                    STDOUT.print "[#{e.class}] PID #{pid} not found. ".ansi(:red)
+                    __log "[#{e.class}] PID #{pid} not found. ".ansi(:red), :print
                   end
 
                   # Give the system some breathing space to finish...
@@ -322,14 +325,15 @@ module Elasticsearch
                     # `getpgid` will raise error if pid is dead, so if we get here, try next signal
                     next
                   rescue Errno::ESRCH
-                    STDOUT.print "Stopped PID #{pid}".ansi(:green) +
+                    __log "Stopped PID #{pid}".ansi(:green) +
                     (ENV['DEBUG'] ? " with #{signal} signal".ansi(:green) : '') +
-                    ". ".ansi(:green)
+                    ". ".ansi(:green), :print
                     break # pid is dead
                   end
                 end
               end
-              STDOUT.puts
+
+              __log "\n"
             else
               return false
             end
@@ -425,23 +429,24 @@ module Elasticsearch
             jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first if File.exist? path_to_lib
 
             version = if jar
-              if m = jar.match(/elasticsearch\-(\d+\.\d+.\d+).*/)
+              __log "Determining version from [#{jar}]" if ENV['DEBUG']
+              if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
                 m[1]
               else
                 raise RuntimeError, "Cannot determine Elasticsearch version from jar [#{jar}]"
               end
             else
-              STDERR.puts "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
+              __log "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
 
               unless File.exist? arguments[:command]
-                raise Errno::ENOENT, "File [#{arguments[:command]}] does not exist -- did you pass a correct path to the Elasticsearch launch script"
+                raise Errno::ENOENT, "File [#{arguments[:command]}] does not exist -- did you pass a correct path to the Elasticsearch launch script?"
               end
 
               output = ''
 
               begin
                 # First, try the new `--version` syntax...
-                STDERR.puts "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
+                __log "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
                 rout, wout = IO.pipe
                 pid = Process.spawn("#{arguments[:command]} --version", out: wout)
 
@@ -453,7 +458,7 @@ module Elasticsearch
                 end
               rescue Timeout::Error
                 # ...else, the old `-v` syntax
-                STDERR.puts "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
+                __log "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
                 output = `#{arguments[:command]} -v`
               ensure
                 if pid
@@ -520,33 +525,33 @@ module Elasticsearch
               Timeout::timeout(timeout) do
                 loop do
                   response = __get_cluster_health(status)
-                  STDERR.puts response if ENV['DEBUG']
+                  __log response if ENV['DEBUG']
 
                   if response && response['status'] == status && ( arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i  )
                     break
                   end
 
-                  STDOUT.print '.'.ansi(:faint)
+                  __log '.'.ansi(:faint), :print
                   sleep 1
                 end
               end
             rescue Timeout::Error => e
               message = "\nTimeout while waiting for cluster status [#{status}]"
               message += " and [#{arguments[:number_of_nodes]}] nodes" if arguments[:number_of_nodes]
-              STDOUT.puts message.ansi(:red, :bold)
+              __log message.ansi(:red, :bold)
               raise e
             end
 
             return true
           end
 
-          # Print information about the cluster on STDOUT
+          # Return information about the cluster
           #
           # @api private
           #
-          # @return Nil
+          # @return String
           #
-          def __print_cluster_info
+          def __cluster_info
             health = JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_cluster/health")))
             nodes  = if version == '0.90'
               JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/?process&http")))
@@ -555,21 +560,23 @@ module Elasticsearch
             end
             master = JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_cluster/state")))['master_node']
 
-            puts "\n",
-                  ('-'*80).ansi(:faint),
-                 'Cluster: '.ljust(20).ansi(:faint) + health['cluster_name'].to_s.ansi(:faint),
-                 'Status:  '.ljust(20).ansi(:faint) + health['status'].to_s.ansi(:faint),
-                 'Nodes:   '.ljust(20).ansi(:faint) + health['number_of_nodes'].to_s.ansi(:faint)
+            result = ["\n",
+                      ('-'*80).ansi(:faint),
+                      'Cluster: '.ljust(20).ansi(:faint) + health['cluster_name'].to_s.ansi(:faint),
+                      'Status:  '.ljust(20).ansi(:faint) + health['status'].to_s.ansi(:faint),
+                      'Nodes:   '.ljust(20).ansi(:faint) + health['number_of_nodes'].to_s.ansi(:faint)].join("\n")
 
             nodes['nodes'].each do |id, info|
               m = id == master ? '*' : '+'
-              puts ''.ljust(20) +
-                   "#{m} ".ansi(:faint) +
-                   "#{info['name'].ansi(:bold)} ".ansi(:faint) +
-                   "| version: #{info['version'] rescue 'N/A'}, ".ansi(:faint) +
-                   "pid: #{info['process']['id'] rescue 'N/A'}, ".ansi(:faint) +
-                   "address: #{info['http']['bound_address'] rescue 'N/A'}".ansi(:faint)
+              result << ''.ljust(20) +
+                        "#{m} ".ansi(:faint) +
+                        "#{info['name'].ansi(:bold)} ".ansi(:faint) +
+                        "| version: #{info['version'] rescue 'N/A'}, ".ansi(:faint) +
+                        "pid: #{info['process']['id'] rescue 'N/A'}, ".ansi(:faint) +
+                        "address: #{info['http']['bound_address'] rescue 'N/A'}".ansi(:faint)
             end
+
+            result
           end
 
           # Tries to load cluster health information
@@ -607,7 +614,7 @@ module Elasticsearch
           #
           def __check_for_running_processes(pids)
             if `ps -p #{pids.join(' ')}`.split("\n").size < arguments[:number_of_nodes]+1
-              STDERR.puts "", "[!!!] Process failed to start (see output above)".ansi(:red)
+              __log "\n[!!!] Process failed to start (see output above)".ansi(:red)
               exit(1)
             end
           end
@@ -618,6 +625,12 @@ module Elasticsearch
           #
           def __get_nodes
             JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/process")))
+          end
+
+          # Print to STDERR
+          #
+          def __log(message, mode=:puts)
+           STDERR.__send__ mode, message unless ENV['QUIET']
           end
         end
       end
