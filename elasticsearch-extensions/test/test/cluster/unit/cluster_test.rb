@@ -102,6 +102,13 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         @subject.__remove_cluster_data
       end
 
+      should "not log when :quiet" do
+        c = Cluster::Cluster.new quiet: true
+
+        STDERR.expects(:puts).never
+        c.__log 'QUIET'
+      end
+
       context "when starting a cluster, " do
         should "return false when it's already running" do
           Process.expects(:spawn).never
