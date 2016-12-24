@@ -197,6 +197,7 @@ module Elasticsearch
           # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
           # @option arguments [String]  :network_host The host that nodes will bind on and publish to
           # @option arguments [Boolean] :clear_cluster Wipe out cluster content on startup (default: true)
+          # @option arguments [Boolean] :quiet         Disable printing to STDERR (default: false)
           #
           # You can also use environment variables to set the constructor options (see source).
           #
@@ -217,6 +218,7 @@ module Elasticsearch
             @arguments[:timeout]           ||= ENV.fetch('TEST_CLUSTER_TIMEOUT',   30).to_i
             @arguments[:number_of_nodes]   ||= ENV.fetch('TEST_CLUSTER_NODES',     2).to_i
             @arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', __default_network_host)
+            @arguments[:quiet]             ||= ! ENV.fetch('QUIET', '').empty?
 
             @clear_cluster = !!@arguments[:clear_cluster] || (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
 
@@ -632,7 +634,7 @@ module Elasticsearch
           # Print to STDERR
           #
           def __log(message, mode=:puts)
-           STDERR.__send__ mode, message unless ENV['QUIET']
+           STDERR.__send__ mode, message unless @arguments[:quiet]
           end
         end
       end
