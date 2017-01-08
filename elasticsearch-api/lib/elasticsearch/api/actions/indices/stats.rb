@@ -71,6 +71,8 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
         #                                              are open, closed or both. (options: open, closed)
         #
+        # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files. Only applies if segment stats are requested. (default: false)
+        #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
         #
         def stats(arguments={})
@@ -99,7 +101,8 @@ module Elasticsearch
             :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
-            :expand_wildcards ]
+            :expand_wildcards,
+            :include_segment_file_sizes ]
 
           method = HTTP_GET
 
