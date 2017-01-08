@@ -32,6 +32,7 @@ module Elasticsearch
         #                                            (supports wildcards)
         # @option arguments [List] :fields A comma-separated list of fields for `fielddata` and `completion` index
         #                                  metrics (supports wildcards)
+        # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files. Only applies if segment stats are requested. (default: false)
         # @option arguments [Boolean] :groups A comma-separated list of search groups for `search` index metric
         # @option arguments [Boolean] :human Whether to return time and byte values in human-readable format
         # @option arguments [String] :level Specify the level for aggregating indices stats
@@ -51,6 +52,7 @@ module Elasticsearch
             :completion_fields,
             :fielddata_fields,
             :fields,
+            :include_segment_file_sizes,
             :groups,
             :human,
             :level,
