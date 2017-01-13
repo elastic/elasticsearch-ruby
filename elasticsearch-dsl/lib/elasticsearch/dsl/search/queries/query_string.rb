@@ -42,6 +42,7 @@ module Elasticsearch
           option_method :locale
           option_method :use_dis_max
           option_method :tie_breaker
+          option_method :time_zone
         end
 
       end
