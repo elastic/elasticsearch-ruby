@@ -452,7 +452,10 @@ module Elasticsearch
                 STDERR.puts "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
                 output = `#{arguments[:command]} -v`
               ensure
-                Process.kill('INT', pid) if pid
+                # Most likely the process has terminated already
+                if pid
+                  Process.kill('INT', pid) rescue Errno::ESRCH
+                end
                 wout.close unless wout.closed?
                 rout.close unless rout.closed?
               end
