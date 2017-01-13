@@ -36,8 +36,9 @@ module Elasticsearch
             subject.locale 'bar'
             subject.use_dis_max 'bar'
             subject.tie_breaker 'bar'
+            subject.time_zone 'bar'
 
-            assert_equal %w[ allow_leading_wildcard analyze_wildcard analyzer auto_generate_phrase_queries boost default_field default_operator enable_position_increments fields fuzziness fuzzy_max_expansions fuzzy_prefix_length lenient locale lowercase_expanded_terms minimum_should_match phrase_slop query tie_breaker use_dis_max ],
+            assert_equal %w[ allow_leading_wildcard analyze_wildcard analyzer auto_generate_phrase_queries boost default_field default_operator enable_position_increments fields fuzziness fuzzy_max_expansions fuzzy_prefix_length lenient locale lowercase_expanded_terms minimum_should_match phrase_slop query tie_breaker time_zone use_dis_max ],
                          subject.to_hash[:query_string][:foo].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:query_string][:foo][:query]
           end
