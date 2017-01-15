@@ -441,7 +441,18 @@ module Elasticsearch
               __log "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
 
               unless File.exist? arguments[:command]
-                raise Errno::ENOENT, "File [#{arguments[:command]}] does not exist -- did you pass a correct path to the Elasticsearch launch script?"
+                __log "File [#{arguments[:command]}] does not exists, checking full path by `which`: ", :print if ENV['DEBUG']
+
+                begin
+                  full_path = `which #{arguments[:command]}`.strip
+                  __log "#{full_path.inspect}\n", :print if ENV['DEBUG']
+                rescue Exception => e
+                  raise RuntimeError, "Cannot determine full path to [#{arguments[:command]}] with 'which'"
+                end
+
+                if full_path.empty?
+                  raise Errno::ENOENT, "Cannot find Elasticsearch launch script from [#{arguments[:command]}] -- did you pass a correct path?"
+                end
               end
 
               output = ''

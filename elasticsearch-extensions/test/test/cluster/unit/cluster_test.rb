@@ -305,6 +305,16 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
           assert_raise(RuntimeError) { @subject.__determine_version }
         end
+
+        should "raise an exception when the command cannot be found" do
+          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+
+          File.expects(:exist?).with('./../lib/').returns(false)
+          File.expects(:exist?).with('elasticsearch').returns(false)
+          @subject.expects(:`).returns('')
+
+          assert_raise(Errno::ENOENT) { @subject.__determine_version }
+        end
       end
     end
 
