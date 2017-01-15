@@ -71,7 +71,7 @@ module Elasticsearch
           end
 
           subject = DummyComponentWithCustomOptionMethod
-          assert_true(subject.option_methods.include?(:foo))
+          assert_includes subject.option_methods, :foo
         end
 
         should "have an option method without args" do
