@@ -14,8 +14,6 @@ branches:
     - travis
 
 rvm:
-  - 1.8.7
-  - 1.9.3
   - 2.1
   - 2.2
 
@@ -44,15 +42,6 @@ before_script:
 
 script:
   - SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=tags/v$ES_VERSION TEST_CLUSTER_COMMAND=/tmp/elasticsearch-$ES_VERSION/bin/elasticsearch rake test:$TEST_SUITE
-
-matrix:
-  exclude:
-    - rvm: 1.8.7
-      jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=1.7.5
-    - rvm: 1.8.7
-      jdk: openjdk7
-      env: TEST_SUITE=integration ES_VERSION=2.3.0
 
 notifications:
   disable: true
