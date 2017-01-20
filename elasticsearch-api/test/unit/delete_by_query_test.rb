@@ -15,8 +15,8 @@ module Elasticsearch
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'DELETE', method
-            assert_equal 'foo/_query', url
+            assert_equal 'POST', method
+            assert_equal 'foo/_delete_by_query', url
             assert_equal Hash.new, params
             assert_equal Hash.new, body[:term]
             true
@@ -27,7 +27,7 @@ module Elasticsearch
 
         should "optionally take the :type argument" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo/tweet,post/_query', url
+            assert_equal 'foo/tweet,post/_delete_by_query', url
             true
           end.returns(FakeResponse.new)
 
@@ -36,7 +36,7 @@ module Elasticsearch
 
         should "pass the query in URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo/_query', url
+            assert_equal 'foo/_delete_by_query', url
             assert_equal 'foo:bar', params[:q]
             true
           end.returns(FakeResponse.new)
