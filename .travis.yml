@@ -19,7 +19,7 @@ rvm:
   - 2.2
 
 jdk:
-  - openjdk8
+  - oraclejdk8
 
 env:
   - TEST_SUITE=unit
@@ -28,10 +28,10 @@ env:
 matrix:
   exclude:
     - rvm: 2.3
-      jdk: openjdk8
+      jdk: oraclejdk8
       env: TEST_SUITE=integration
     - rvm: 2.2
-      jdk: openjdk8
+      jdk: oraclejdk8
       env: TEST_SUITE=integration
 
 before_install:
