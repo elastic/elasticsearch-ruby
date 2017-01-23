@@ -2,6 +2,8 @@
 # Configuration file for https://travis-ci.org/elastic/elasticsearch-ruby
 # -----------------------------------------------------------------------
 
+dist: trusty
+
 sudo: required
 
 language: ruby
