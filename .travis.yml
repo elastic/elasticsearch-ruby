@@ -37,14 +37,13 @@ matrix:
 before_install:
   - gem update --system
   - gem --version
-
-install:
-  - test $TEST_SUITE == 'integration' && curl -s https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.tar.gz | tar xz -C /tmp || true
-
-before_script:
-  - gem install bundler -v 1.11.2
+  - gem install bundler -v 1.14.2
+  - curl -sS https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.tar.gz | tar xz -C /tmp
   - rake setup
   - rake elasticsearch:update
+
+install:
+  - bundle install
   - rake bundle:clean
   - rake bundle:install
 
