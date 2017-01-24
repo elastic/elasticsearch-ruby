@@ -113,12 +113,14 @@ module Elasticsearch
       # @option arguments [Text] :suggest_text The source text for which the suggestions should be returned
       # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard
       # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [String] :fuzzyness The level of fuzzyness. It is context dependent see API docs.
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       #
       # @return [Hash]
       #
       # @see http://www.elasticsearch.org/guide/reference/api/search/
       # @see http://www.elasticsearch.org/guide/reference/api/search/request-body/
+      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/common-options.html#fuzziness
       #
       def search(arguments={})
         arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
@@ -161,6 +163,7 @@ module Elasticsearch
           :suggest_text,
           :terminate_after,
           :timeout,
+          :fuzzyness,
           :version ]
 
         method = HTTP_GET
