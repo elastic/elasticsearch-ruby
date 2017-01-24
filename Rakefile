@@ -177,6 +177,7 @@ namespace :test do
   desc "Run unit tests in all subprojects"
   task :unit do
     Rake::Task['test:ci_reporter'].invoke if ENV['CI']
+    puts "Ruby [#{RUBY_VERSION}]" if defined? RUBY_VERSION
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
