@@ -24,7 +24,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
       setup do
         Elasticsearch::Extensions::Test::Cluster::Cluster.any_instance.stubs(:__default_network_host).returns('_local_')
 
-        @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+        @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new(number_of_nodes: 1)
         @subject.stubs(:__remove_cluster_data).returns(true)
       end
 
@@ -262,11 +262,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
-          Process.expects(:spawn)
-            .with do |command, options|
-              assert_equal "/foo/bar/bin/elasticsearch --version", command
-            end
-            .returns(123)
+          Process.expects(:spawn).returns(123)
           Process.expects(:kill).with('INT', 123)
 
           IO.any_instance.expects(:read)
@@ -288,11 +284,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
-          Process.expects(:spawn)
-            .with do |command, options|
-              assert_equal "/foo/bar/bin/elasticsearch --version", command
-            end
-            .returns(123)
+          Process.expects(:spawn).returns(123)
           Process.expects(:kill).with('INT', 123)
 
           IO.any_instance.expects(:read).returns('Version: FOOBAR')
