@@ -34,7 +34,6 @@ task :bundle => 'bundle:install'
 namespace :bundle do
   desc "Run `bundle install` in all subprojects"
   task :install do
-    puts
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle install"
