@@ -56,9 +56,9 @@ end
 namespace :elasticsearch do
   desc "Update the submodule with Elasticsearch core repository"
   task :update do
-    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} fetch origin --verbose"
+    sh "git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} fetch origin --quiet"
     begin
-      puts %x[git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} pull --verbose]
+      puts %x[git --git-dir=#{__current__.join('tmp/elasticsearch/.git')} --work-tree=#{__current__.join('tmp/elasticsearch')} pull]
     rescue Exception => @exception
       @failed = true
     end
