@@ -34,6 +34,7 @@ module Elasticsearch
           @hosts       = arguments[:hosts]   || []
           @options     = arguments[:options] || {}
           @options[:http] ||= {}
+          @options[:retry_on_status] ||= []
 
           @block       = block
           @connections = __build_connections
