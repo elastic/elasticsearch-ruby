@@ -31,10 +31,11 @@ module Elasticsearch
             :group_by,
             :wait_for_completion ]
 
+          arguments = arguments.clone
+
           task_id = arguments.delete(:task_id)
 
           method = 'GET'
-          path   = "_tasks"
           path   = Utils.__pathify( '_tasks', Utils.__escape(task_id) )
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil

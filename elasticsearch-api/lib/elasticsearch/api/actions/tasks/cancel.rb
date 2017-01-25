@@ -24,10 +24,11 @@ module Elasticsearch
             :parent_node,
             :parent_task ]
 
+          arguments = arguments.clone
+
           task_id = arguments.delete(:task_id)
 
           method = 'POST'
-          path   = "_tasks"
           path   = Utils.__pathify( '_tasks', Utils.__escape(task_id), '_cancel' )
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = nil
