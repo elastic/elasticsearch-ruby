@@ -34,8 +34,6 @@ task :bundle => 'bundle:install'
 namespace :bundle do
   desc "Run `bundle install` in all subprojects"
   task :install do
-    puts '-'*80
-    sh "cd #{__current__} && bundle install"
     puts
     subprojects.each do |project|
       puts '-'*80
@@ -46,7 +44,6 @@ namespace :bundle do
 
   desc "Remove Gemfile.lock in all subprojects"
   task :clean do
-    sh "rm -f Gemfile.lock"
     subprojects.each do |project|
       sh "rm -f #{__current__.join(project)}/Gemfile.lock"
     end
