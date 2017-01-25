@@ -2,7 +2,7 @@
 # Configuration file for https://travis-ci.org/elastic/elasticsearch-ruby
 # -----------------------------------------------------------------------
 
-sudo: false
+sudo: required
 
 language: ruby
 
