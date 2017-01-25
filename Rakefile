@@ -35,11 +35,11 @@ namespace :bundle do
   desc "Run `bundle install` in all subprojects"
   task :install do
     puts '-'*80
-    sh "bundle install --gemfile #{__current__}/Gemfile"
+    sh "cd #{__current__} && bundle install"
     puts
     subprojects.each do |project|
       puts '-'*80
-      sh "bundle install --gemfile #{__current__.join(project)}/Gemfile"
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle install"
       puts
     end
   end
