@@ -194,7 +194,7 @@ module Elasticsearch
           # @option arguments [String]  :path_work    Path to the directory with auxiliary files
           # @option arguments [String]  :path_logs    Path to the directory with log files
           # @option arguments [Boolean] :multicast_enabled Whether multicast is enabled (default: true)
-          # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 30)
+          # @option arguments [Integer] :timeout      Timeout when starting the cluster (default: 60)
           # @option arguments [String]  :network_host The host that nodes will bind on and publish to
           # @option arguments [Boolean] :clear_cluster Wipe out cluster content on startup (default: true)
           # @option arguments [Boolean] :quiet         Disable printing to STDERR (default: false)
@@ -215,7 +215,7 @@ module Elasticsearch
             @arguments[:path_logs]         ||= ENV.fetch('TEST_CLUSTER_LOGS',      '/tmp/log/elasticsearch')
             @arguments[:es_params]         ||= ENV.fetch('TEST_CLUSTER_PARAMS',    '')
             @arguments[:multicast_enabled] ||= ENV.fetch('TEST_CLUSTER_MULTICAST', 'true')
-            @arguments[:timeout]           ||= ENV.fetch('TEST_CLUSTER_TIMEOUT',   30).to_i
+            @arguments[:timeout]           ||= ENV.fetch('TEST_CLUSTER_TIMEOUT',   60).to_i
             @arguments[:number_of_nodes]   ||= ENV.fetch('TEST_CLUSTER_NODES',     2).to_i
             @arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', __default_network_host)
             @arguments[:quiet]             ||= ! ENV.fetch('QUIET', '').empty?
@@ -362,7 +362,7 @@ module Elasticsearch
           # @return Boolean
           #
           def wait_for_green
-            __wait_for_status('green', 60)
+            __wait_for_status('green', arguments[:timeout])
           end
 
           # Returns the major version of Elasticsearch
