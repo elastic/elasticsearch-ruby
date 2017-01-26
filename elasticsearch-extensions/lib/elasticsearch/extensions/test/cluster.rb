@@ -583,8 +583,9 @@ module Elasticsearch
                       'Nodes:   '.ljust(20).ansi(:faint) + health['number_of_nodes'].to_s.ansi(:faint)].join("\n")
 
             nodes['nodes'].each do |id, info|
-              m = id == master ? '*' : '+'
-              result << ''.ljust(20) +
+              m = id == master ? '*' : '-'
+              result << "\n" +
+                        ''.ljust(20) +
                         "#{m} ".ansi(:faint) +
                         "#{info['name'].ansi(:bold)} ".ansi(:faint) +
                         "| version: #{info['version'] rescue 'N/A'}, ".ansi(:faint) +
