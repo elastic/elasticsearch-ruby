@@ -10,7 +10,6 @@ STDOUT.sync = true
 STDERR.sync = true
 
 class String
-
   # Redefine the ANSI method: do not print ANSI when not running in the terminal
   #
   def ansi(*args)
@@ -21,7 +20,6 @@ end
 module Elasticsearch
   module Extensions
     module Test
-
       # A convenience Ruby class for starting and stopping an Elasticsearch cluster,
       # eg. for integration tests
       #
@@ -43,12 +41,11 @@ module Elasticsearch
       # @see Cluster#initialize
       #
       module Cluster
-
         # Starts a cluster
         #
         # @see Cluster#start
         #
-        def start(arguments={})
+        def start(arguments = {})
           Cluster.new(arguments).start
         end
 
@@ -56,7 +53,7 @@ module Elasticsearch
         #
         # @see Cluster#stop
         #
-        def stop(arguments={})
+        def stop(arguments = {})
           Cluster.new(arguments).stop
         end
 
@@ -64,7 +61,7 @@ module Elasticsearch
         #
         # @see Cluster#running?
         #
-        def running?(arguments={})
+        def running?(arguments = {})
           Cluster.new(arguments).running?
         end
 
@@ -72,7 +69,7 @@ module Elasticsearch
         #
         # @see Cluster#wait_for_green
         #
-        def wait_for_green(arguments={})
+        def wait_for_green(arguments = {})
           Cluster.new(arguments).wait_for_green
         end
 
@@ -81,14 +78,14 @@ module Elasticsearch
         class Cluster
           attr_reader :arguments
 
-          COMMANDS = {
-            '0.90' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
+          COMMANDS = { # rubocop:disable Style/MutableConstant
+            '0.90' => lambda do |arguments, node_number|
+                        <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -f \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{node_number} \
-                -D es.http.port=#{arguments[:port].to_i + (node_number-1)} \
+                -D es.http.port=#{arguments[:port].to_i + (node_number - 1)} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.path.logs=#{arguments[:path_logs]} \
@@ -105,15 +102,15 @@ module Elasticsearch
                 -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
               COMMAND
-              },
+                      end,
 
-            '1.0' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
+            '1.0' => lambda do |arguments, node_number|
+                       <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{node_number} \
-                -D es.http.port=#{arguments[:port].to_i + (node_number-1)} \
+                -D es.http.port=#{arguments[:port].to_i + (node_number - 1)} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.path.logs=#{arguments[:path_logs]} \
@@ -130,15 +127,15 @@ module Elasticsearch
                 -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
               COMMAND
-              },
+                     end,
 
-            '2.0' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
+            '2.0' => lambda do |arguments, node_number|
+                       <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
                 -D es.node.name=#{arguments[:node_name]}-#{node_number} \
-                -D es.http.port=#{arguments[:port].to_i + (node_number-1)} \
+                -D es.http.port=#{arguments[:port].to_i + (node_number - 1)} \
                 -D es.path.data=#{arguments[:path_data]} \
                 -D es.path.work=#{arguments[:path_work]} \
                 -D es.path.logs=#{arguments[:path_logs]} \
@@ -152,14 +149,14 @@ module Elasticsearch
                 -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
               COMMAND
-              },
+                     end,
 
-            '5.0' => lambda { |arguments, node_number|
+            '5.0' => lambda do |arguments, node_number|
               <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -E cluster.name=#{arguments[:cluster_name]} \
                 -E node.name=#{arguments[:node_name]}-#{node_number} \
-                -E http.port=#{arguments[:port].to_i + (node_number-1)} \
+                -E http.port=#{arguments[:port].to_i + (node_number - 1)} \
                 -E path.data=#{arguments[:path_data]} \
                 -E path.logs=#{arguments[:path_logs]} \
                 -E cluster.routing.allocation.disk.threshold_enabled=false \
@@ -169,12 +166,12 @@ module Elasticsearch
                 -E node.attr.testattr=test \
                 -E path.repo=/tmp \
                 -E repositories.url.allowed_urls=http://snapshot.test* \
-                -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
+                -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes] - 1} \
                 -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
                 -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
               COMMAND
-            }
+            end
           }
           COMMANDS['6.0'] = COMMANDS['5.0']
           COMMANDS.freeze
@@ -199,7 +196,7 @@ module Elasticsearch
           #
           # @see Cluster#start
           #
-          def initialize(arguments={})
+          def initialize(arguments = {})
             @arguments = arguments.dup
 
             @arguments[:command]           ||= ENV.fetch('TEST_CLUSTER_COMMAND',   'elasticsearch')
@@ -214,13 +211,13 @@ module Elasticsearch
             @arguments[:timeout]           ||= ENV.fetch('TEST_CLUSTER_TIMEOUT',   60).to_i
             @arguments[:number_of_nodes]   ||= ENV.fetch('TEST_CLUSTER_NODES',     2).to_i
             @arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', __default_network_host)
-            @arguments[:quiet]             ||= ! ENV.fetch('QUIET', '').empty?
+            @arguments[:quiet]             ||= !ENV.fetch('QUIET', '').empty?
 
-            @clear_cluster = !!@arguments[:clear_cluster] || (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
+            @clear_cluster = @arguments[:clear_cluster] || (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
 
             # Make sure `cluster_name` is not dangerous
-            raise ArgumentError, "The `cluster_name` argument cannot be empty string or a slash" \
-              if @arguments[:cluster_name] =~ /^[\/\\]?$/
+            raise ArgumentError, 'The `cluster_name` argument cannot be empty string or a slash' \
+              if @arguments[:cluster_name] =~ %r{^[\/\\]?$}
           end
 
           # Starts a cluster
@@ -248,14 +245,14 @@ module Elasticsearch
           # @see Cluster#stop
           #
           def start
-            if self.running?
-              __log "[!] Elasticsearch cluster already running".ansi(:red)
+            if running?
+              __log '[!] Elasticsearch cluster already running'.ansi(:red)
               return false
             end
 
             __remove_cluster_data if @clear_cluster
 
-            __log "Starting ".ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
+            __log 'Starting '.ansi(:faint) + arguments[:number_of_nodes].to_s.ansi(:bold, :faint) +
                   " Elasticsearch #{arguments[:number_of_nodes] < 2 ? 'node' : 'nodes'}..".ansi(:faint), :print
 
             pids = []
@@ -299,23 +296,25 @@ module Elasticsearch
           def stop
             begin
               nodes = __get_nodes
-            rescue Exception => e
-              __log "[!] Exception raised when stopping the cluster: #{e.inspect}".ansi(:red)
+            rescue StandardError => e
+              __log "[!] Error raised when stopping the cluster: #{e.inspect}".ansi(:red)
               nil
             end
 
-            return false if nodes.nil? or nodes.empty?
+            return false if nodes.nil? || nodes.empty?
 
-            pids  = nodes['nodes'].map { |id, info| info['process']['id'] }
+            pids = nodes['nodes'].map { |id, info| info['process']['id'] }
 
-            unless pids.empty?
-              __log "Stopping Elasticsearch nodes... ".ansi(:faint), :print
+            if pids.empty?
+              return false
+            else
+              __log 'Stopping Elasticsearch nodes... '.ansi(:faint), :print
 
               pids.each_with_index do |pid, i|
-                ['INT','KILL'].each do |signal|
+                ['INT', 'KILL'].each do |signal|
                   begin
                     Process.kill signal, pid
-                  rescue Exception => e
+                  rescue StandardError => e
                     __log "[#{e.class}] PID #{pid} not found. ".ansi(:red), :print
                   end
 
@@ -329,16 +328,14 @@ module Elasticsearch
                     next
                   rescue Errno::ESRCH
                     __log "Stopped PID #{pid}".ansi(:green) +
-                    (ENV['DEBUG'] ? " with #{signal} signal".ansi(:green) : '') +
-                    ". ".ansi(:green), :print
+                          (ENV['DEBUG'] ? " with #{signal} signal".ansi(:green) : '') +
+                          '. '.ansi(:green), :print
                     break # pid is dead
                   end
                 end
               end
 
               __log "\n"
-            else
-              return false
             end
 
             return pids
@@ -349,7 +346,7 @@ module Elasticsearch
           # @return Boolean
           #
           def running?
-            if cluster_health = Timeout::timeout(0.25) { __get_cluster_health } rescue nil
+            if cluster_health == (Timeout.timeout(0.25) { __get_cluster_health } rescue nil)
               return cluster_health['cluster_name']    == arguments[:cluster_name] && \
                      cluster_health['number_of_nodes'] == arguments[:number_of_nodes]
             end
@@ -373,7 +370,6 @@ module Elasticsearch
             @version ||= __determine_version
           end
 
-
           # Returns default `:network_host` setting based on the version
           #
           # @api private
@@ -382,14 +378,14 @@ module Elasticsearch
           #
           def __default_network_host
             case version
-              when /^0|^1/
-                '0.0.0.0'
-              when /^2/
-                '_local_'
-              when /^5|^6/
-                '_local_'
-              else
-                raise RuntimeError, "Cannot determine default network host from version [#{version}]"
+            when /^0|^1/
+              '0.0.0.0'
+            when /^2/
+              '_local_'
+            when /^5|^6/
+              '_local_'
+            else
+              raise "Cannot determine default network host from version [#{version}]"
             end
           end
 
@@ -432,82 +428,82 @@ module Elasticsearch
             jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first if File.exist? path_to_lib
 
             version = if jar
-              __log "Determining version from [#{jar}]" if ENV['DEBUG']
-              if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
-                m[1]
-              else
-                raise RuntimeError, "Cannot determine Elasticsearch version from jar [#{jar}]"
-              end
-            else
-              __log "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
+                        __log "Determining version from [#{jar}]" if ENV['DEBUG']
+                        if m == jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
+                          m[1]
+                        else
+                          raise "Cannot determine Elasticsearch version from jar [#{jar}]"
+                        end
+                      else
+                        __log "[!] Cannot find Elasticsearch .jar from path to command [#{arguments[:command]}], using `#{arguments[:command]} --version`" if ENV['DEBUG']
 
-              unless File.exist? arguments[:command]
-                __log "File [#{arguments[:command]}] does not exists, checking full path by `which`: ", :print if ENV['DEBUG']
+                        unless File.exist? arguments[:command]
+                          __log "File [#{arguments[:command]}] does not exists, checking full path by `which`: ", :print if ENV['DEBUG']
 
-                begin
-                  full_path = `which #{arguments[:command]}`.strip
-                  __log "#{full_path.inspect}\n", :print if ENV['DEBUG']
-                rescue Exception => e
-                  raise RuntimeError, "Cannot determine full path to [#{arguments[:command]}] with 'which'"
-                end
+                          begin
+                            full_path = `which #{arguments[:command]}`.strip
+                            __log "#{full_path.inspect}\n", :print if ENV['DEBUG']
+                          rescue StandardError
+                            raise "Cannot determine full path to [#{arguments[:command]}] with 'which'"
+                          end
 
-                if full_path.empty?
-                  raise Errno::ENOENT, "Cannot find Elasticsearch launch script from [#{arguments[:command]}] -- did you pass a correct path?"
-                end
-              end
+                          if full_path.empty?
+                            raise Errno::ENOENT, "Cannot find Elasticsearch launch script from [#{arguments[:command]}] -- did you pass a correct path?"
+                          end
+                        end
 
-              output = ''
+                        output = ''
 
-              begin
-                # First, try the new `--version` syntax...
-                __log "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
-                rout, wout = IO.pipe
-                pid = Process.spawn("#{arguments[:command]} --version", out: wout)
+                        begin
+                          # First, try the new `--version` syntax...
+                          __log "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
+                          rout, wout = IO.pipe
+                          pid = Process.spawn("#{arguments[:command]} --version", out: wout)
 
-                Timeout::timeout(10) do
-                  Process.wait(pid)
-                  wout.close unless wout.closed?
-                  output = rout.read unless rout.closed?
-                  rout.close unless rout.closed?
-                end
-              rescue Timeout::Error
-                # ...else, the old `-v` syntax
-                __log "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
-                output = `#{arguments[:command]} -v`
-              ensure
-                if pid
-                  Process.kill('INT', pid) rescue Errno::ESRCH # Most likely the process has terminated already
-                end
-                wout.close unless wout.closed?
-                rout.close unless rout.closed?
-              end
+                          Timeout.timeout(10) do
+                            Process.wait(pid)
+                            wout.close unless wout.closed?
+                            output = rout.read unless rout.closed?
+                            rout.close unless rout.closed?
+                          end
+                        rescue Timeout::Error
+                          # ...else, the old `-v` syntax
+                          __log "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
+                          output = `#{arguments[:command]} -v`
+                        ensure
+                          if pid
+                            Process.kill('INT', pid) rescue Errno::ESRCH # Most likely the process has terminated already
+                          end
+                          wout.close unless wout.closed?
+                          rout.close unless rout.closed?
+                        end
 
-              STDERR.puts "> #{output}" if ENV['DEBUG']
+                        STDERR.puts "> #{output}" if ENV['DEBUG']
 
-              if output.empty?
-                raise RuntimeError, "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
-              end
+                        if output.empty?
+                          raise "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
+                        end
 
-              if m = output.match(/Version: (\d\.\d.\d).*,/)
-                m[1]
-              else
-                raise RuntimeError, "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"
-              end
-            end
+                        if m == output.match(/Version: (\d\.\d.\d).*,/)
+                          m[1]
+                        else
+                          raise "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"
+                        end
+                      end
 
             case version
-              when /^0\.90.*/
-                '0.90'
-              when /^1\..*/
-                '1.0'
-              when /^2\..*/
-                '2.0'
-              when /^5\..*/
-                '5.0'
-              when /^6\..*/
-                '6.0'
-              else
-                raise RuntimeError, "Cannot determine major version from [#{version}]"
+            when /^0\.90.*/
+              '0.90'
+            when /^1\..*/
+              '1.0'
+            when /^2\..*/
+              '2.0'
+            when /^5\..*/
+              '5.0'
+            when /^6\..*/
+              '6.0'
+            else
+              raise "Cannot determine major version from [#{version}]"
             end
           end
 
@@ -518,7 +514,7 @@ module Elasticsearch
           # @return String
           #
           def __command(version, arguments, node_number)
-            if command = COMMANDS[version]
+            if command == COMMANDS[version]
               command.call(arguments, node_number)
             else
               raise ArgumentError, "Cannot find command for version [#{version}]"
@@ -536,14 +532,14 @@ module Elasticsearch
           #
           # @return Boolean
           #
-          def __wait_for_status(status='green', timeout=30)
+          def __wait_for_status(status = 'green', timeout = 30)
             begin
-              Timeout::timeout(timeout) do
+              Timeout.timeout(timeout) do
                 loop do
                   response = __get_cluster_health(status)
                   __log response if ENV['DEBUG']
 
-                  if response && response['status'] == status && ( arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i  )
+                  if response && response['status'] == status && (arguments[:number_of_nodes].nil? || arguments[:number_of_nodes].to_i == response['number_of_nodes'].to_i)
                     break
                   end
 
@@ -570,14 +566,14 @@ module Elasticsearch
           def __cluster_info
             health = JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_cluster/health")))
             nodes  = if version == '0.90'
-              JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/?process&http")))
-            else
-              JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/process,http")))
-            end
+                       JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/?process&http")))
+                     else
+                       JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_nodes/process,http")))
+                     end
             master = JSON.parse(Net::HTTP.get(URI("#{__cluster_url}/_cluster/state")))['master_node']
 
             result = ["\n",
-                      ('-'*80).ansi(:faint),
+                      ('-' * 80).ansi(:faint),
                       'Cluster: '.ljust(20).ansi(:faint) + health['cluster_name'].to_s.ansi(:faint),
                       'Status:  '.ljust(20).ansi(:faint) + health['status'].to_s.ansi(:faint),
                       'Nodes:   '.ljust(20).ansi(:faint) + health['number_of_nodes'].to_s.ansi(:faint)].join("\n")
@@ -602,13 +598,13 @@ module Elasticsearch
           #
           # @return Hash,Nil
           #
-          def __get_cluster_health(status=nil)
+          def __get_cluster_health(status = nil)
             uri = URI("#{__cluster_url}/_cluster/health")
             uri.query = "wait_for_status=#{status}" if status
 
             begin
               response = Net::HTTP.get(uri)
-            rescue Exception => e
+            rescue StandardError => e
               STDERR.puts e.inspect if ENV['DEBUG']
               return nil
             end
@@ -624,13 +620,12 @@ module Elasticsearch
             FileUtils.rm_rf arguments[:path_data]
           end
 
-
           # Check whether process for PIDs are running
           #
           # @api private
           #
           def __check_for_running_processes(pids)
-            if `ps -p #{pids.join(' ')}`.split("\n").size < arguments[:number_of_nodes]+1
+            if `ps -p #{pids.join(' ')}`.split("\n").size < arguments[:number_of_nodes] + 1
               __log "\n[!!!] Process failed to start (see output above)".ansi(:red)
               exit(1)
             end
@@ -646,8 +641,8 @@ module Elasticsearch
 
           # Print to STDERR
           #
-          def __log(message, mode=:puts)
-           STDERR.__send__ mode, message unless @arguments[:quiet]
+          def __log(message, mode = :puts)
+            STDERR.__send__ mode, message unless @arguments[:quiet]
           end
         end
       end
