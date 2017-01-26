@@ -83,7 +83,7 @@ module Elasticsearch
 
           COMMANDS = {
             '0.90' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '')
+              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -f \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
@@ -102,14 +102,13 @@ module Elasticsearch
                 -D es.node.bench=true \
                 -D es.path.repo=/tmp \
                 -D es.repositories.url.allowed_urls=http://snapshot.test* \
-                -D es.logger.level=DEBUG \
-                #{arguments[:es_params]} \
-                > /dev/null
+                -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
+                #{arguments[:es_params]}
               COMMAND
               },
 
             '1.0' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '')
+              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
@@ -129,13 +128,12 @@ module Elasticsearch
                 -D es.path.repo=/tmp \
                 -D es.repositories.url.allowed_urls=http://snapshot.test* \
                 -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
-                #{arguments[:es_params]} \
-                > /dev/null
+                #{arguments[:es_params]}
               COMMAND
               },
 
             '2.0' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '')
+              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -D es.foreground=yes \
                 -D es.cluster.name=#{arguments[:cluster_name]} \
@@ -151,14 +149,13 @@ module Elasticsearch
                 -D es.node.attr.testattr=test \
                 -D es.path.repo=/tmp \
                 -D es.repositories.url.allowed_urls=http://snapshot.test* \
-                -D es.logger.level=DEBUG \
-                #{arguments[:es_params]} \
-                > /dev/null
+                -D es.logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
+                #{arguments[:es_params]}
               COMMAND
               },
 
             '5.0' => lambda { |arguments, node_number|
-              <<-COMMAND.gsub(/                /, '')
+              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
                 #{arguments[:command]} \
                 -E cluster.name=#{arguments[:cluster_name]} \
                 -E node.name=#{arguments[:node_name]}-#{node_number} \
@@ -174,9 +171,8 @@ module Elasticsearch
                 -E repositories.url.allowed_urls=http://snapshot.test* \
                 -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
                 -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
-                -E logger.level=DEBUG \
-                #{arguments[:es_params]} \
-                > /dev/null
+                -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
+                #{arguments[:es_params]}
               COMMAND
             }
           }
@@ -268,7 +264,10 @@ module Elasticsearch
 
             arguments[:number_of_nodes].times do |n|
               n += 1
+
               command =  __command(version, arguments, n)
+              command += '> /dev/null' unless ENV['DEBUG']
+
               __log command.gsub(/ {1,}/, ' ').ansi(:bold) if ENV['DEBUG']
 
               pid = Process.spawn(command)
