@@ -1,3 +1,14 @@
+## DSL:0.1.5
+
+* Add support for the ["Exists" Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html)
+* Added missing `like` and `unlike` options to the ["More Like This" Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html)
+* Added missing `time_zone` option to the ["Query String" Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html)
+* Added missing `inner_hits` option to the [Nested Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-query.html)
+* Allow calling the `filter` method for the [Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html) multiple times
+* Added missing `minimum_should_match`, `prefix_length`, `max_expansions`, `fuzzy_rewrite`, `analyzer`, `lenient`, `zero_terms_query` and `cutoff_frequency` options to the [Match Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html)
+* Added missing `minimum_should_match` and `boost` options to the [Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+* Refactored the [Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html) collection into its own `AggregationsCollection` class
+
 ## EXT:0.0.23
 
 * Fixed removing the data directory for Elasticsearch 5 and 6 in the test cluster
