@@ -93,6 +93,10 @@ module Elasticsearch
           def __build_connections
             @request_options = {}
 
+            if options[:transport_options] && options[:transport_options][:headers]
+              @request_options[:headers] = options[:transport_options][:headers]
+            end
+
             if options.key?(:headers)
               @request_options[:headers] = options[:headers]
             end
