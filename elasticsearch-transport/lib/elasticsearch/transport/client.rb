@@ -102,6 +102,9 @@ module Elasticsearch
 
         @arguments[:transport_options].update(:request => { :timeout => @arguments[:request_timeout] } ) if @arguments[:request_timeout]
 
+        @arguments[:transport_options][:headers] ||= {}
+        @arguments[:transport_options][:headers].update 'Content-Type' => 'application/json' unless @arguments[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
+
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
 
         transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS

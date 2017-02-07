@@ -42,6 +42,17 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Test::Unit::TestC
       @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}
     end
 
+    should "properly pass the Content-Type header option" do
+      transport = Faraday.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => { :transport_options => { :headers => { 'Content-Type' => 'foo/bar' } } }
+
+      transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
+        assert_equal 'foo/bar', headers['Content-Type']
+        true
+      end.returns(stub_everything)
+
+      transport.perform_request 'GET', '/'
+    end
+
     should "serialize the request body" do
       @transport.connections.first.connection.expects(:run_request).returns(stub_everything)
       @transport.serializer.expects(:dump)

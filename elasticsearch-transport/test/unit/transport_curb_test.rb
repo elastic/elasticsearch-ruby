@@ -77,6 +77,12 @@ else
         assert_raise(ArgumentError) { @transport.perform_request 'FOOBAR', '/' }
       end
 
+      should "properly pass the Content-Type header option" do
+        transport = Curb.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => { :transport_options => { :headers => { 'Content-Type' => 'foo/bar' } } }
+
+        assert_equal "foo/bar", transport.connections.first.connection.headers["Content-Type"]
+      end
+
       should "allow to set options for Curb" do
         transport = Curb.new :hosts => [ { :host => 'foobar', :port => 1234 } ] do |curl|
           curl.headers["User-Agent"] = "myapp-0.0"

@@ -73,6 +73,11 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
       assert_equal 120, client.transport.options[:transport_options][:request][:timeout]
     end
 
+    should "set the 'Content-Type' header to 'application/json' by default" do
+      client = Elasticsearch::Transport::Client.new
+      assert_equal 'application/json', client.transport.options[:transport_options][:headers]['Content-Type']
+    end
+
     context "when passed hosts" do
       should "have localhost by default" do
         c = Elasticsearch::Transport::Client.new

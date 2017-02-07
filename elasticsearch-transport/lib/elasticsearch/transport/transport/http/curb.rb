@@ -43,7 +43,11 @@ module Elasticsearch
           #
           def __build_connection(host, options={}, block=nil)
             client = ::Curl::Easy.new
-            client.headers = {'User-Agent' => "Curb #{Curl::CURB_VERSION}"}
+
+            headers = options[:headers] || {}
+            headers.update('User-Agent' => "Curb #{Curl::CURB_VERSION}")
+
+            client.headers = headers
             client.url     = __full_url(host)
 
             if host[:user]
