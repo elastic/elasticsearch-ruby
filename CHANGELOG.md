@@ -1,3 +1,9 @@
+## 5.0.3
+
+### Client
+
+* Added proper handling of headers in client options to the Manticore adapter
+
 ## 5.0.2
 
 ### Client
