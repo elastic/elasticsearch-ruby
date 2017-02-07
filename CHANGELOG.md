@@ -1,3 +1,9 @@
+## 5.0.2
+
+### Client
+
+* Added default value 'application/json' for the 'Content-Type' header
+
 ## 5.0.0
 
 ### API
