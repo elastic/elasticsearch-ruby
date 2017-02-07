@@ -75,6 +75,19 @@ else
         assert_equal response.status, 200
       end
 
+      should "set headers from 'transport_options'" do
+        options = {
+          :transport_options => {
+            :headers => { "Content-Type" => "foo/bar"}
+          }
+        }
+
+        transport = Manticore.new :hosts => [ { :host => 'localhost', :port => 8080 } ], :options => options
+
+        assert_equal('foo/bar', transport.connections.first.connection.instance_variable_get(:@options)[:headers]['Content-Type'])
+        # TODO: Needs to check @request_options
+      end
+
       should "handle HTTP methods" do
         @transport.connections.first.connection.expects(:delete).with('http://127.0.0.1:8080//', {}).returns(stub_everything)
         @transport.connections.first.connection.expects(:head).with('http://127.0.0.1:8080//', {}).returns(stub_everything)
