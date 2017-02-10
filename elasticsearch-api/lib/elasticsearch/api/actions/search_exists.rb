@@ -48,7 +48,7 @@ module Elasticsearch
           :lenient,
           :lowercase_expanded_terms ]
         method = 'POST'
-        path   = "_search/exists"
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), "_search/exists" )
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
