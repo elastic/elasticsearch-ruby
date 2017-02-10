@@ -33,6 +33,8 @@ module Elasticsearch
       # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-exists.html
       #
       def search_exists(arguments={})
+        arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
+
         valid_params = [
           :ignore_unavailable,
           :allow_no_indices,
