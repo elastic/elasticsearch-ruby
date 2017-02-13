@@ -306,7 +306,7 @@ module Elasticsearch
             pids = nodes['nodes'].map { |id, info| info['process']['id'] }
 
             if pids.empty?
-              return false
+              false
             else
               __log 'Stopping Elasticsearch nodes... '.ansi(:faint), :print
 
@@ -346,7 +346,7 @@ module Elasticsearch
           # @return Boolean
           #
           def running?
-            if cluster_health == (Timeout.timeout(0.25) { __get_cluster_health } rescue nil)
+            if cluster_health = (Timeout.timeout(0.25) { __get_cluster_health } rescue nil)
               return cluster_health['cluster_name']    == arguments[:cluster_name] && \
                      cluster_health['number_of_nodes'] == arguments[:number_of_nodes]
             end
@@ -429,7 +429,7 @@ module Elasticsearch
 
             version = if jar
                         __log "Determining version from [#{jar}]" if ENV['DEBUG']
-                        if m == jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
+                        if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
                           m[1]
                         else
                           raise "Cannot determine Elasticsearch version from jar [#{jar}]"
@@ -484,7 +484,7 @@ module Elasticsearch
                           raise "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
                         end
 
-                        if m == output.match(/Version: (\d\.\d.\d).*,/)
+                        if m = output.match(/Version: (\d\.\d.\d).*,/)
                           m[1]
                         else
                           raise "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"
@@ -514,7 +514,7 @@ module Elasticsearch
           # @return String
           #
           def __command(version, arguments, node_number)
-            if command == COMMANDS[version]
+            if command = COMMANDS[version]
               command.call(arguments, node_number)
             else
               raise ArgumentError, "Cannot find command for version [#{version}]"
