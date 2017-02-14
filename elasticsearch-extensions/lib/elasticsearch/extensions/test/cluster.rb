@@ -305,33 +305,30 @@ module Elasticsearch
 
             pids = nodes['nodes'].map { |id, info| info['process']['id'] }
 
-            if pids.empty?
-              false
-            else
-              __log 'Stopping Elasticsearch nodes... '.ansi(:faint), :print
+            return false if pids.empty?
+            __log 'Stopping Elasticsearch nodes... '.ansi(:faint), :print
 
-              pids.each_with_index do |pid, i|
-                ['INT', 'KILL'].each do |signal|
-                  begin
-                    Process.kill signal, pid
-                  rescue StandardError => e
-                    __log "[#{e.class}] PID #{pid} not found. ".ansi(:red), :print
-                  end
+            pids.each_with_index do |pid, i|
+              ['INT', 'KILL'].each do |signal|
+                begin
+                  Process.kill signal, pid
+                rescue StandardError => e
+                  __log "[#{e.class}] PID #{pid} not found. ".ansi(:red), :print
+                end
 
-                  # Give the system some breathing space to finish...
-                  Kernel.sleep 1
+                # Give the system some breathing space to finish...
+                Kernel.sleep 1
 
-                  # Check that pid really is dead
-                  begin
-                    Process.getpgid pid
-                    # `getpgid` will raise error if pid is dead, so if we get here, try next signal
-                    next
-                  rescue Errno::ESRCH
-                    __log "Stopped PID #{pid}".ansi(:green) +
-                          (ENV['DEBUG'] ? " with #{signal} signal".ansi(:green) : '') +
-                          '. '.ansi(:green), :print
-                    break # pid is dead
-                  end
+                # Check that pid really is dead
+                begin
+                  Process.getpgid pid
+                  # `getpgid` will raise error if pid is dead, so if we get here, try next signal
+                  next
+                rescue Errno::ESRCH
+                  __log "Stopped PID #{pid}".ansi(:green) +
+                        (ENV['DEBUG'] ? " with #{signal} signal".ansi(:green) : '') +
+                        '. '.ansi(:green), :print
+                  break # pid is dead
                 end
               end
 
