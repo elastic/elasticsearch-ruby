@@ -37,10 +37,11 @@ module Elasticsearch
           option_method :field
           option_method :script
           option_method :params
+          option_method :keyed
 
           def key(key, value)
             @hash[name].update(@args) if @args
-            @hash[name][:keyed]  ||= true
+            @hash[name][:keyed] = true unless @hash[name].has_key?(:keyed)
             @hash[name][:ranges] ||= []
             @hash[name][:ranges] << value.merge(key: key) unless @hash[name][:ranges].any? { |i| i[:key] == key }
             self

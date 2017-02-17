@@ -32,6 +32,17 @@ module Elasticsearch
             assert_equal({ range: { field: "test", keyed: true, ranges: [ {to: 10, key: 'foo'}, { from: 10, to: 20, key: 'bar'}]}}, subject.to_hash)
           end
 
+          should "let you set keyed to false explicitly" do
+            subject = Range.new do
+              keyed false
+              field 'test'
+              key   'foo', to: 10
+              key   'bar', from: 10, to: 20
+            end
+
+            assert_equal({ range: { field: "test", keyed: false, ranges: [ {to: 10, key: 'foo'}, { from: 10, to: 20, key: 'bar'}]}}, subject.to_hash)
+          end
+
           should "define field in the block" do
             subject = Range.new do
               field 'test'
