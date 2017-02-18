@@ -331,7 +331,6 @@ suites.each do |suite|
 
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
-      puts File.basename file
       tests = YAML.load_documents File.new(file)
 
       # Extract setup actions
