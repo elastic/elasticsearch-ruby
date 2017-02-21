@@ -274,6 +274,11 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           assert_equal '2.0', @subject.__determine_version
         end
 
+        should "return version from arguments" do
+          cluster = Elasticsearch::Extensions::Test::Cluster::Cluster.new command: '/foo/bar/bin/elasticsearch', version: '5.2'
+          assert_equal '5.0', cluster.__determine_version
+        end
+
         should "raise an exception when the version cannot be parsed from .jar" do
           # Incorrect jar version
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(true)

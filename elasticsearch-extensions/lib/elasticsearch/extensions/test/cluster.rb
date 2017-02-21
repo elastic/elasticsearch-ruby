@@ -417,8 +417,9 @@ module Elasticsearch
 
           # Determine Elasticsearch version to be launched
           #
-          # Tries to parse the version number from the `lib/elasticsearch-X.Y.Z.jar` file,
-          # it not available, uses `elasticsearch --version` or `elasticsearch -v`
+          # Tries to get the version from the arguments passed,
+          # if not available, it parses the version number from the `lib/elasticsearch-X.Y.Z.jar` file,
+          # if that is not available, uses `elasticsearch --version` or `elasticsearch -v`
           #
           # @api private
           #
@@ -426,10 +427,9 @@ module Elasticsearch
           #
           def __determine_version
             path_to_lib = File.dirname(arguments[:command]) + '/../lib/'
-
-            jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first if File.exist? path_to_lib
-
-            version = if jar
+            version = if arguments[:version]
+              arguments[:version]
+            elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first).nil?
               __log "Determining version from [#{jar}]" if ENV['DEBUG']
               if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
                 m[1]
