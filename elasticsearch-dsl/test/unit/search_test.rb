@@ -38,6 +38,7 @@ module Elasticsearch
               search do |q|
                 q.from value
                 q.size @other_value
+                q.stored_fields ['term']
 
                 q.filter do |q|
                   q._and do |q|
@@ -51,6 +52,7 @@ module Elasticsearch
 
           assert_equal({from: 42,
                         size: 'foo',
+                        stored_fields: ['term'],
                         filter: { and: [ { term:  { thang: 'foo' } },
                                          { term:  { attributes: 42 } }]}},
           DummySearchReceiver.new.search_definition.to_hash)

@@ -159,6 +159,19 @@ module Elasticsearch
           end
         end
 
+        # DSL method for building the `stored_fields` part of a search definition
+        #
+        # @return [self]
+        #
+        def stored_fields(value=nil)
+          if value
+            @stored_fields = value
+            self
+          else
+            @stored_fields
+          end
+        end; alias_method :stored_fields=, :stored_fields
+
         # DSL method for building the `size` part of a search definition
         #
         # @return [self]
@@ -229,6 +242,7 @@ module Elasticsearch
           hash.update(aggregations: @aggregations.reduce({}) { |sum,item| sum.update item.first => item.last.to_hash }) if @aggregations
           hash.update(sort: @sort.to_hash) if @sort
           hash.update(size: @size) if @size
+          hash.update(stored_fields: @stored_fields) if @stored_fields
           hash.update(from: @from) if @from
           hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.update item.last.to_hash }) if @suggest
           hash.update(highlight: @highlight.to_hash) if @highlight
