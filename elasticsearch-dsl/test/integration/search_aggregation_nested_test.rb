@@ -15,10 +15,12 @@ module Elasticsearch
             mappings: {
               product: {
                 properties: {
+                  title: { type: 'text' },
+                  category: { type: 'keyword' },
                   offers: {
                     type: 'nested',
                     properties: {
-                      name:  { type: 'string' },
+                      name:  { type: 'text' },
                       price: { type: 'double' }
                     }
                   }
@@ -61,14 +63,18 @@ module Elasticsearch
         should "return the top categories for offer price range" do
           response = @client.search index: 'products-test', body: search {
             query do
-              filtered do
-                filter do
+              bool do
+                must do
                   nested do
                     path 'offers'
-                    filter do
-                      range 'offers.price' do
-                        gte 100
-                        lte 300
+                    query do
+                      bool do
+                        filter do
+                          range 'offers.price' do
+                            gte 100
+                            lte 300
+                          end
+                        end
                       end
                     end
                   end

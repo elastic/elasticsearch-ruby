@@ -7,7 +7,15 @@ module Elasticsearch
 
       context "Aggregations integration" do
         setup do
-          @client.indices.create index: 'test'
+          @client.indices.create index: 'test', body: {
+            mappings: {
+              d: {
+                properties: {
+                  tags: { type: 'keyword' }
+                }
+              }
+            }
+          }
           @client.index index: 'test', type: 'd', id: '1', body: { title: 'A', tags: %w[one], clicks: 5 }
           @client.index index: 'test', type: 'd', id: '2', body: { title: 'B', tags: %w[one two], clicks: 15 }
           @client.index index: 'test', type: 'd', id: '3', body: { title: 'C', tags: %w[one three], clicks: 20 }
@@ -98,7 +106,7 @@ module Elasticsearch
           should "define a global aggregation" do
             response = @client.search index: 'test', body: search {
                 query do
-                  filtered filter: { terms: { tags: ['two'] } }
+                  bool filter: { terms: { tags: ['two'] } }
                 end
 
                 aggregation :avg_clicks do
@@ -178,10 +186,10 @@ module Elasticsearch
             response = @client.search index: 'test', body: search {
               aggregation :clicks_for_one do
                 scripted_metric do
-                  init_script "_agg['transactions'] = []"
-                  map_script  "if (doc['tags'].value.contains('one')) { _agg.transactions.add(doc['clicks'].value) }"
-                  combine_script "sum = 0; for (t in _agg.transactions) { sum += t }; return sum"
-                  reduce_script "sum = 0; for (a in _aggs) { sum += a }; return sum"
+                  init_script "params._agg.transactions = []"
+                  map_script  "if (doc['tags'].value.contains('one')) { params._agg.transactions.add(doc['clicks'].value) }"
+                  combine_script "double sum = 0; for (t in params._agg.transactions) { sum += t } return sum"
+                  reduce_script "double sum = 0; for (a in params._aggs) { sum += a } return sum"
                 end
               end
             }.to_hash

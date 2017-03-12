@@ -51,7 +51,7 @@ module Elasticsearch
           ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
         end
 
-        @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+        @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
         @version = @client.info['version']['number']
       end
 

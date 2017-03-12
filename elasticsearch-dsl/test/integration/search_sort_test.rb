@@ -12,8 +12,8 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'test'
-          @client.index index: 'test', type: 'd', id: '1', body: { tags: ['one'], clicks: 5 }
-          @client.index index: 'test', type: 'd', id: '2', body: { tags: ['one', 'two'], clicks: 15 }
+          @client.index index: 'test', type: 'd', id: '1', body: { tags: ['one'], clicks: 15 }
+          @client.index index: 'test', type: 'd', id: '2', body: { tags: ['one', 'two'], clicks: 5 }
           @client.index index: 'test', type: 'd', id: '3', body: { tags: ['one', 'three'], clicks: 20 }
           @client.indices.refresh index: 'test'
         end
@@ -26,7 +26,7 @@ module Elasticsearch
               end
             }.to_hash
 
-            assert_same_elements ['3', '2', '1'], response['hits']['hits'].map { |d| d['_id'] }
+            assert_same_elements ['3', '1', '2'], response['hits']['hits'].map { |d| d['_id'] }
           end
         end
 

@@ -7,7 +7,11 @@ module Elasticsearch
 
         context "Search results pagination" do
           setup do
+            @client.indices.create index: 'test', body: {
+              mappings: { d: { properties: { title: { type: 'text', fields: { keyword: { type: 'keyword' } } } } } } }
+
             25.times { |i| @client.index index: 'test', type: 'd', id: i, body: { title: "Test #{sprintf('%03d', i)}" } }
+
             @client.indices.refresh index: 'test'
           end
 
@@ -26,7 +30,7 @@ module Elasticsearch
               query { match(:title) { query 'test' and type 'phrase_prefix' } }
               size 5
               from 5
-              sort { by :title }
+              sort { by 'title.keyword' }
             }.to_hash
 
             assert_equal 25, response['hits']['total']

@@ -70,7 +70,7 @@ module Elasticsearch
           should "return matching documents" do
             response = @client.search index: 'test', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     term color: 'red'
                   end
@@ -87,7 +87,7 @@ module Elasticsearch
           should "return matching documents" do
             response = @client.search index: 'test', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     terms color: ['red', 'grey', 'gold']
                   end
@@ -99,94 +99,11 @@ module Elasticsearch
           end
         end
 
-        context "and/or/not filters" do
-          should "find the document with and as a Hash" do
-            response = @client.search index: 'test', body: search {
-              query do
-                filtered do
-                  filter do
-                    _and filters: [ { term: { color: 'red' } }, { term: { size: 'xxl' } } ]
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 1, response['hits']['total']
-          end
-
-          should "find the document with and as a block" do
-            response = @client.search index: 'test', body: search {
-              query do
-                filtered do
-                  filter do
-                    _and do
-                      term color: 'red'
-                      term size:  'xxl'
-                    end
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 1, response['hits']['total']
-          end
-
-          should "find the documents with or" do
-            response = @client.search index: 'test', body: search {
-              query do
-                filtered do
-                  filter do
-                    _or do
-                      term size: 'l'
-                      term size: 'm'
-                    end
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 3, response['hits']['total']
-            assert response['hits']['hits'].all? { |h| ['l', 'm'].include? h['_source']['size']  }
-          end
-
-          should "find the documents with not as a Hash" do
-            response = @client.search index: 'test', body: search {
-              query do
-                filtered do
-                  filter do
-                    _not term: { size: 'xxl' }
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 6, response['hits']['total']
-            assert response['hits']['hits'].none? { |h| h['_source']['size'] == 'xxl' }
-          end
-
-          should "find the documents with not as a block" do
-            response = @client.search index: 'test', body: search {
-              query do
-                filtered do
-                  filter do
-                    _not do
-                      term size: 'xxl'
-                    end
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 6, response['hits']['total']
-            assert response['hits']['hits'].none? { |h| h['_source']['size'] == 'xxl' }
-          end
-        end
-
         context "bool filter" do
           should "return correct documents" do
             response = @client.search index: 'test', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     bool do
                       must do
@@ -222,10 +139,7 @@ module Elasticsearch
                 d: {
                   properties: {
                     location: {
-                      type: 'geo_point',
-                      geohash: true,
-                      geohash_prefix: true,
-                      geohash_precision: 6
+                      type: 'geo_point'
                     }
                   }
                 }
@@ -245,7 +159,7 @@ module Elasticsearch
           should "find documents within the bounding box" do
             response = @client.search index: 'places', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     geo_bounding_box :location do
                       top_right   "50.1815123678,14.7149200439"
@@ -263,7 +177,7 @@ module Elasticsearch
           should "find documents within the distance specified with a hash" do
             response = @client.search index: 'places', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     geo_distance location: '50.090223,14.399590', distance: '5km'
                   end
@@ -278,7 +192,7 @@ module Elasticsearch
           should "find documents within the distance specified with a block" do
             response = @client.search index: 'places', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     geo_distance :location do
                       lat '50.090223'
@@ -297,23 +211,40 @@ module Elasticsearch
           should "find documents within the geographical distance range" do
             response = @client.search index: 'places', body: search {
               query do
-                filtered do
+                bool do
                   filter do
-                    geo_distance_range location: { lat: '50.090223', lon: '14.399590' },
-                                       gte: '10km', lte: '50km'
+                    geo_distance location: { lat: '50.090223', lon: '14.399590' },
+                                       distance: '50km'
+                  end
+                end
+              end
+              aggregation :distance_ranges do
+                geo_distance do
+                  field  :location
+                  origin '50.090223,14.399590'
+                  unit   'km'
+                  ranges [ { from: 10, to: 50 } ]
+
+                  aggregation :results do
+                    top_hits _source: { include: 'name' }
                   end
                 end
               end
             }.to_hash
 
-            assert_equal 1, response['hits']['hits'].size
-            assert_equal 'Karlštejn', response['hits']['hits'][0]['_source']['name']
+            assert_equal 2, response['hits']['hits'].size
+
+            bucket = response['aggregations']['distance_ranges']['buckets'][0]
+
+            assert_equal 1, bucket['doc_count']
+            assert_equal 1, bucket['results']['hits']['hits'].size
+            assert_equal 'Karlštejn', bucket['results']['hits']['hits'][0]['_source']['name']
           end
 
           should "find documents within the polygon" do
             response = @client.search index: 'places', body: search {
               query do
-                filtered do
+                bool do
                   filter do
                     geo_polygon :location do
                       points [
@@ -323,26 +254,6 @@ module Elasticsearch
                        [14.7067869,49.9419006],
                        [14.2244355,49.9419006]
                       ]
-                    end
-                  end
-                end
-              end
-            }.to_hash
-
-            assert_equal 1, response['hits']['hits'].size
-            assert_equal 'Vyšehrad', response['hits']['hits'][0]['_source']['name']
-          end
-
-          should "find documents within the geohash cell" do
-            response = @client.search index: 'places', body: search {
-              query do
-                filtered do
-                  filter do
-                    geohash_cell :location do
-                      lat '50.090223'
-                      lon '14.399590'
-                      precision '10km'
-                      neighbors true
                     end
                   end
                 end

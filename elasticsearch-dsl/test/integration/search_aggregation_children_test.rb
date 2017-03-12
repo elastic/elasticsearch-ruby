@@ -13,12 +13,17 @@ module Elasticsearch
         setup do
           @client.indices.create index: 'articles-test', body: {
             mappings: {
-              article: {},
+              article: {
+                properties: {
+                  title:    { type: 'text' },
+                  category: { type: 'keyword' }
+                }
+              },
               comment: {
                 _routing: { required: true },
                 _parent:  { type: 'article' },
                 properties: {
-                  author: { type: 'string', analyzer: 'keyword' }
+                  author: { type: 'keyword' }
                 }
               }
             }
