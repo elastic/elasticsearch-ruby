@@ -331,7 +331,13 @@ suites.each do |suite|
 
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
-      tests = YAML.load_documents File.new(file)
+      begin
+        tests = YAML.load_documents File.new(file)
+      rescue Exception => e
+        $stderr.puts "ERROR [#{e.class}] while loading [#{file}] file".ansi(:red)
+        # raise e
+        next
+      end
 
       # Extract setup actions
       setup_actions = tests.select { |t| t['setup'] }.first['setup'] rescue []
