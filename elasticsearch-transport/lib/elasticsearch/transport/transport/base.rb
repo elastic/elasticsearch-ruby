@@ -49,9 +49,9 @@ module Elasticsearch
           @counter_mtx = Mutex.new
           @last_request_at = Time.now
           @reload_connections = options[:reload_connections]
-          @reload_after    = options[:reload_connections].is_a?(Fixnum) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
+          @reload_after    = options[:reload_connections].is_a?(0.class) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
-          @max_retries     = options[:retry_on_failure].is_a?(Fixnum)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
+          @max_retries     = options[:retry_on_failure].is_a?(0.class)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
           @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
         end
 
