@@ -167,6 +167,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
                   logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_status: 400
 
+        # Set the logger when the `QUIET` option is set
+        @client.transport.logger ||= Logger.new(STDERR)
+
+        @client.transport.logger.stubs(:fatal)
         @client.transport.logger
           .expects(:warn)
           .with( regexp_matches(/Attempt \d to get response/) )
@@ -181,7 +185,9 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "when reloading connections" do
       should "keep existing connections" do
         require 'patron' # We need a client with keep-alive
-        client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}", adapter: :patron, logger: @logger
+        client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}",
+                                                      adapter: :patron,
+                                                      logger: (ENV['QUIET'] ? nil : @logger)
 
         assert_equal 'Faraday::Adapter::Patron',
                       client.transport.connections.first.connection.builder.handlers.first.name
