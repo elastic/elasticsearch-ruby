@@ -420,7 +420,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @transport.perform_request('GET', '/') {Elasticsearch::Transport::Transport::Response.new 200, '{"foo":"bar"}' }
     end
 
-    should "log a failed Elasticsearch request" do
+    should "log a failed Elasticsearch request as fatal" do
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
@@ -430,6 +430,17 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
+    end unless RUBY_1_8
+
+    should "not log a failed Elasticsearch request as fatal" do
+      @block = Proc.new { |c, u| puts "ERROR" }
+      @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
+
+      @transport.expects(:__log).twice
+      @transport.logger.expects(:fatal).never
+
+      # No `BadRequest` error
+      @transport.perform_request('POST', '_search', :ignore => 500, &@block)
     end unless RUBY_1_8
 
     should "log and re-raise a Ruby exception" do

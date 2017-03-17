@@ -313,9 +313,9 @@ module Elasticsearch
           if response.status.to_i >= 300
             __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
             __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
-            __log_failed response if logger
 
-            # Swallow the exception when the `ignore` parameter matches response status
+            # Swallow the exception and log when the `ignore` parameter matches response status
+            __log_failed response if logger && !ignore.include?(response.status.to_i)
             __raise_transport_error response unless ignore.include?(response.status.to_i)
           end
 
