@@ -269,7 +269,6 @@ module Elasticsearch
           rescue Elasticsearch::Transport::Transport::ServerError => e
             if @retry_on_status.include?(response.status)
               logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
-              logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
               if tries <= max_retries
                 retry
               else
@@ -314,15 +313,16 @@ module Elasticsearch
             __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
             __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
 
-            # Swallow the exception and log when the `ignore` parameter matches response status
+            # Log the failure only when `ignore` doesn't match the response status
             __log_failed response if logger && !ignore.include?(response.status.to_i)
+
             __raise_transport_error response unless ignore.include?(response.status.to_i)
           end
 
           json     = serializer.load(response.body) if response.body && !response.body.empty? && response.headers && response.headers["content-type"] =~ /json/
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
 
-          __log   method, path, params, body, url, response, json, took, duration if logger
+          __log   method, path, params, body, url, response, json, took, duration if logger && !ignore.include?(response.status.to_i)
           __trace method, path, params, body, url, response, json, took, duration if tracer
 
           Response.new response.status, json || response.body, response.headers

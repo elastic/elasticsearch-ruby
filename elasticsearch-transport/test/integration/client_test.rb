@@ -168,7 +168,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
                   retry_on_status: 400
 
         @client.transport.logger
-          .expects(:debug)
+          .expects(:warn)
           .with( regexp_matches(/Attempt \d to get response/) )
           .times(4)
 
