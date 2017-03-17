@@ -436,7 +436,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
-      @transport.expects(:__log).twice
+      @transport.expects(:__log).once
       @transport.logger.expects(:fatal).never
 
       # No `BadRequest` error
