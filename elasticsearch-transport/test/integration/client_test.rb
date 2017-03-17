@@ -171,6 +171,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       should "keep existing connections" do
         require 'patron' # We need a client with keep-alive
         client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}", adapter: :patron, logger: @logger
+        client.transport.reload_connections!
 
         assert_equal 'Faraday::Adapter::Patron',
                       client.transport.connections.first.connection.builder.handlers.first.name
