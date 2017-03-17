@@ -53,7 +53,6 @@ module Elasticsearch
         #
         def measure(name, options={}, &block)
           ___          = '-'*ANSI::Terminal.terminal_width
-          test_name    = self.name.split('::').last
           context_name = self.context(nil) {}.first.parent.name
           count        = Integer(ENV['COUNT'] || options[:count] || 1_000)
           ticks        = []
@@ -72,7 +71,7 @@ module Elasticsearch
             result = RubyProf.stop
             # progress.finish
 
-            total = result.threads.reduce(0) { |total,info| total += info.total_time; total }
+            result.threads.reduce(0) { |total,info| total += info.total_time; total }
             mean  = (ticks.sort[(ticks.size/2).round-1])*1000
             avg   = (ticks.inject {|sum,el| sum += el; sum}.to_f/ticks.size)*1000
             max   = ticks.max*1000
