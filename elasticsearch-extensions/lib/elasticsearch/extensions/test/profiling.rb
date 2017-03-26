@@ -53,28 +53,35 @@ module Elasticsearch
         #
         def measure(name, options={}, &block)
           ___          = '-'*ANSI::Terminal.terminal_width
-          test_name    = self.name.split('::').last
+          test_name    = name
+          suite_name   = self.name.split('::').last
           context_name = self.context(nil) {}.first.parent.name
           count        = Integer(ENV['COUNT'] || options[:count] || 1_000)
           ticks        = []
-          # progress   = ANSI::Progressbar.new("#{name} (#{count}x)", count)
+          progress     = ANSI::Progressbar.new(suite_name, count) unless ENV['QUIET'] || options[:quiet]
 
-          should "#{name} (#{count}x)" do
+          should "#{test_name} (#{count}x)" do
             RubyProf.start
 
-            count.times do
-              ticks << Benchmark.realtime { self.instance_eval(&block) }
-              # RubyProf.pause
-              # progress.inc
-              # RubyProf.resume
+            begin
+              count.times do
+                ticks << Benchmark.realtime { self.instance_eval(&block) }
+
+                if progress
+                  RubyProf.pause
+                  progress.inc
+                  RubyProf.resume
+                end
+              end
+            ensure
+              result = RubyProf.stop
+              progress.finish if progress
             end
 
-            result = RubyProf.stop
-            # progress.finish
-
-            total = result.threads.reduce(0) { |total,info| total += info.total_time; total }
+            total = result.threads.reduce(0) { |t,info| t += info.total_time; t }
             mean  = (ticks.sort[(ticks.size/2).round-1])*1000
             avg   = (ticks.inject {|sum,el| sum += el; sum}.to_f/ticks.size)*1000
+            min   = ticks.min*1000
             max   = ticks.max*1000
 
 
@@ -84,9 +91,11 @@ module Elasticsearch
 
             puts "\n",
                  ___,
-                 'Context: ' + ANSI.bold(context_name) + ' should ' + ANSI.bold(name) + " (#{count}x)",
+                 "#{suite_name}: " + ANSI.bold(context_name) + ' should ' + ANSI.bold(name) + " (#{count}x)",
+                 "total: #{sprintf('%.2f', total)}s | " +
                  "mean: #{sprintf('%.2f', mean)}ms | " +
                  "avg: #{sprintf('%.2f',  avg)}ms | " +
+                 "min: #{sprintf('%.2f',  min)}ms | " +
                  "max: #{sprintf('%.2f',  max)}ms",
                  ___
             printer.print(STDOUT, {}) unless ENV['QUIET'] || options[:quiet]
