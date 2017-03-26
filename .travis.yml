@@ -19,10 +19,6 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.4.0
-      jdk: oraclejdk8
-      env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/5.x TEST_CLUSTER_COMMAND=/tmp/elasticsearch-5.2.2/bin/elasticsearch
-
     - rvm: 2.3.3
       jdk: oraclejdk8
       env: TEST_SUITE=unit
@@ -31,12 +27,16 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
+    - rvm: 2.4.0
+      jdk: oraclejdk8
+      env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=a6c423457588ff0a24e42bc3ebd9b825b861ed26 TEST_CLUSTER_COMMAND=/tmp/elasticsearch-6.0.0-alpha1-SNAPSHOT/bin/elasticsearch
+
 before_install:
   - gem update --system
   - gem --version
   - gem install bundler -v 1.14.3
   - bundle version
-  - curl -sS https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.tar.gz | tar xz -C /tmp
+  - curl -sS https://s3.amazonaws.com/ruby.elastic.co/artifacts/elasticsearch-6.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
   - rake setup
   - rake elasticsearch:update
 
