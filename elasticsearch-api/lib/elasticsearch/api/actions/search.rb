@@ -113,7 +113,9 @@ module Elasticsearch
       # @option arguments [Text] :suggest_text The source text for which the suggestions should be returned
       # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard
       # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
+      # @option arguments [Number] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
       #
       # @return [Hash]
       #
@@ -161,7 +163,9 @@ module Elasticsearch
           :suggest_text,
           :terminate_after,
           :timeout,
-          :version ]
+          :typed_keys,
+          :version,
+          :batched_reduce_size ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
