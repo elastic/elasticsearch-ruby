@@ -408,7 +408,7 @@ suites.each do |suite|
               ref = ENV['TEST_BUILD_REF'].to_s.gsub(/origin\//, '') || 'master'
               $stderr.puts "https://github.com/elasticsearch/elasticsearch/blob/#{ref}/rest-api-spec/test/" \
                           + file.gsub(PATH.to_s, ''), ""
-              $stderr.puts YAML.dump(test)
+              $stderr.puts YAML.dump(test) if ENV['DEBUG']
             end
             actions.each do |action|
               $stderr.puts "ACTION: #{action.inspect}" if ENV['DEBUG']
