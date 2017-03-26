@@ -12,6 +12,7 @@ branches:
   only:
     - master
     - travis
+    - 5.x
 
 matrix:
   include:
