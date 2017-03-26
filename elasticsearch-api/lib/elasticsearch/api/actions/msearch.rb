@@ -28,16 +28,20 @@ module Elasticsearch
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [List] :type A comma-separated list of document types to use as default
-      # @option arguments [Array<Hash>] :body An array of request definitions, each definition is a Hash;
-      #                                       pass the search definition as a `:search` argument
-      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch,
-      #                                         dfs_query_then_fetch, dfs_query_and_fetch, count, scan)
+      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
+      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
+      # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
+      # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       #
-      # @see http://www.elasticsearch.org/guide/reference/api/multi-search/
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html
       #
       def msearch(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        valid_params = [ :search_type ]
+
+         valid_params = [
+          :search_type,
+          :max_concurrent_searches,
+          :typed_keys ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_msearch' )
