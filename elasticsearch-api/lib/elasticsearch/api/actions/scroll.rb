@@ -46,8 +46,7 @@ module Elasticsearch
       #                                      should be maintained for scrolled search
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/scan-scroll.html#scan-scroll
-      # @see http://www.elasticsearch.org/guide/reference/api/search/scroll/
-      # @see http://www.elasticsearch.org/guide/reference/api/search/search-type/
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html
       #
       def scroll(arguments={})
         method = HTTP_GET
@@ -57,7 +56,7 @@ module Elasticsearch
           :scroll_id ]
 
         params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body] || params.delete(:scroll_id)
+        body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
