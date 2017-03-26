@@ -80,6 +80,7 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #
 url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
 $client ||= Elasticsearch::Client.new url: url
+$helper_client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
 # $client.transport.tracer = tracer if ENV['CI']
@@ -294,20 +295,20 @@ suites.each do |suite|
     # --- Register context setup -------------------------------------------
     #
     setup do
-      $client.indices.delete index: '_all', ignore: 404
-      $client.indices.delete_template name: '*', ignore: 404
-      $client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
-      $client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
-      $client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
-      $client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap2', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_repo_create_1', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_repo_restore_1', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_repo_get_1', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_repo_get_2', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_repo_status_1', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_cat_repo_1', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_cat_repo_2', ignore: 404
-      $client.snapshot.delete_repository repository: 'test_cat_snapshots_1', ignore: 404
+      $helper_client.indices.delete index: '_all', ignore: 404
+      $helper_client.indices.delete_template name: '*', ignore: 404
+      $helper_client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
+      $helper_client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
+      $helper_client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
+      $helper_client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap2', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_repo_create_1', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_repo_restore_1', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_repo_get_1', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_repo_get_2', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_repo_status_1', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_cat_repo_1', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_cat_repo_2', ignore: 404
+      $helper_client.snapshot.delete_repository repository: 'test_cat_snapshots_1', ignore: 404
       # FIXME: This shouldn't be needed -------------
       %w[
         test_cat_repo_1_loc
@@ -326,7 +327,7 @@ suites.each do |suite|
     # --- Register context teardown ----------------------------------------
     #
     teardown do
-      $client.indices.delete index: '_all', ignore: 404
+      $helper_client.indices.delete index: '_all', ignore: 404
     end
 
     files = Dir[suite.join('*.{yml,yaml}')]
