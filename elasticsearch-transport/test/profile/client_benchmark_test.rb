@@ -9,15 +9,15 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
       client = Elasticsearch::Client.new host: "localhost:#{@port}", adapter: ::Faraday.default_adapter
-      client.perform_request 'DELETE', '/ruby_test_benchmark/' rescue nil
-      client.perform_request 'POST',   '/ruby_test_benchmark/', {index: {number_of_shards: 1, number_of_replicas: 0}}
-      100.times do client.perform_request 'POST',   '/ruby_test_benchmark_search/test/', {}, {foo: 'bar'}; end
-      client.perform_request 'POST',   '/ruby_test_benchmark_search/_refresh'
+      client.perform_request 'DELETE', 'ruby_test_benchmark' rescue nil
+      client.perform_request 'PUT',   'ruby_test_benchmark', {}, {settings: {index: {number_of_shards: 1, number_of_replicas: 0}}}
+      100.times do client.perform_request 'POST',   'ruby_test_benchmark_search/test', {}, {foo: 'bar'}; end
+      client.perform_request 'POST',   'ruby_test_benchmark_search/_refresh'
     end
     teardown do
       client = Elasticsearch::Client.new host: "localhost:#{@port}"
-      client.perform_request 'DELETE', '/ruby_test_benchmark/'
-      client.perform_request 'DELETE', '/ruby_test_benchmark_search/'
+      client.perform_request 'DELETE', 'ruby_test_benchmark' rescue nil
+      client.perform_request 'DELETE', 'ruby_test_benchmark_search' rescue nil
     end
 
     context "with a single-node cluster and the default adapter" do
@@ -30,11 +30,11 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       measure "index a document" do
-        @client.perform_request 'POST', '/ruby_test_benchmark/test/', {}, {foo: 'bar'}
+        @client.perform_request 'POST', 'ruby_test_benchmark/test', {}, {foo: 'bar'}
       end
 
       measure "search" do
-        @client.perform_request 'POST', '/ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
+        @client.perform_request 'GET', 'ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
       end
     end
 
@@ -48,11 +48,11 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       measure "index a document"do
-        @client.perform_request 'POST', '/ruby_test_benchmark/test/', {}, {foo: 'bar'}
+        @client.perform_request 'POST', 'ruby_test_benchmark/test', {}, {foo: 'bar'}
       end
 
       measure "search" do
-        @client.perform_request 'POST', '/ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
+        @client.perform_request 'GET', 'ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
       end
     end
 
@@ -69,25 +69,19 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       measure "index a document" do
-        @client.perform_request 'POST', '/ruby_test_benchmark/test/', {}, {foo: 'bar'}
+        @client.perform_request 'POST', 'ruby_test_benchmark/test', {}, {foo: 'bar'}
       end
 
       measure "search" do
-        @client.perform_request 'POST', '/ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
+        @client.perform_request 'GET', 'ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
       end
     end
 
     context "with a single-node cluster and the Typhoeus client" do
-      require 'typhoeus'
-      require 'typhoeus/adapters/faraday'
-
       setup do
-        transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-          :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
-            f.adapter  :typhoeus
-          end
-
-        @client = Elasticsearch::Client.new transport: transport
+        require 'typhoeus'
+        require 'typhoeus/adapters/faraday'
+        @client = Elasticsearch::Client.new host: "localhost:#{@port}", adapter: :typhoeus
       end
 
       measure "get the cluster info", count: 1_000 do
@@ -95,11 +89,11 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       measure "index a document" do
-        @client.perform_request 'POST', '/ruby_test_benchmark/test/', {}, {foo: 'bar'}
+        @client.perform_request 'POST', 'ruby_test_benchmark/test', {}, {foo: 'bar'}
       end
 
       measure "search" do
-        @client.perform_request 'POST', '/ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
+        @client.perform_request 'GET', 'ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
       end
     end
 
@@ -114,11 +108,11 @@ class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::Profi
       end
 
       measure "index a document" do
-        @client.perform_request 'POST', '/ruby_test_benchmark/test/', {}, {foo: 'bar'}
+        @client.perform_request 'POST', 'ruby_test_benchmark/test', {}, {foo: 'bar'}
       end
 
       measure "search" do
-        @client.perform_request 'POST', '/ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
+        @client.perform_request 'GET', 'ruby_test_benchmark_search/test/_search', {}, {query: {match: {foo: 'bar'}}}
       end
     end
   end
