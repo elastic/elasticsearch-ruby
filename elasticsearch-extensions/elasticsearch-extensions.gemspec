@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "ansi"
   s.add_dependency "elasticsearch"
+  s.add_dependency "oj"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
@@ -50,5 +51,4 @@ Gem::Specification.new do |s|
 
   # Gems for testing integrations
   s.add_development_dependency "patron"
-  s.add_development_dependency "oj"
 end
