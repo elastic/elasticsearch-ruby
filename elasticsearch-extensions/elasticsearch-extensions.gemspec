@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "ansi"
   s.add_dependency "elasticsearch"
+  s.add_dependency "oj"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "minitest", "~> 4.0"
@@ -59,5 +60,4 @@ Gem::Specification.new do |s|
 
   # Gems for testing integrations
   s.add_development_dependency "patron"
-  s.add_development_dependency "oj"
 end
