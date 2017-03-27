@@ -24,7 +24,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
       setup do
         Elasticsearch::Extensions::Test::Cluster::Cluster.any_instance.stubs(:__default_network_host).returns('_local_')
 
-        @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+        @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new(number_of_nodes: 1)
         @subject.stubs(:__remove_cluster_data).returns(true)
       end
 
@@ -36,6 +36,13 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         c = Cluster::Cluster.new port: 9400
 
         assert_equal 9400, c.arguments[:port]
+      end
+
+      should "not modify the arguments" do
+        args = { port: 9400 }.freeze
+
+        assert_nothing_raised { Cluster::Cluster.new args }
+        assert_nil args[:command]
       end
 
       should "take parameters from environment variables" do
@@ -88,6 +95,20 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
       end
 
+      should "remove cluster data" do
+        @subject.unstub(:__remove_cluster_data)
+        FileUtils.expects(:rm_rf).with("/tmp/elasticsearch_test")
+
+        @subject.__remove_cluster_data
+      end
+
+      should "not log when :quiet" do
+        c = Cluster::Cluster.new quiet: true
+
+        STDERR.expects(:puts).never
+        c.__log 'QUIET'
+      end
+
       context "when starting a cluster, " do
         should "return false when it's already running" do
           Process.expects(:spawn).never
@@ -113,7 +134,7 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           c.expects(:wait_for_green).returns(true)
           c.expects(:__check_for_running_processes).returns(true)
           c.expects(:__determine_version).returns('5.0')
-          c.expects(:__print_cluster_info).returns(true)
+          c.expects(:__cluster_info).returns('CLUSTER INFO')
 
           assert_equal true, c.start
         end
@@ -184,8 +205,6 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
         end
 
         should "return true" do
-          @subject.stubs(:__print_cluster_info)
-
           @subject
             .expects(:__get_cluster_health)
             .with('yellow')
@@ -240,13 +259,10 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
         should "return version from `elasticsearch --version`" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
+          File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
-          Process.expects(:spawn)
-            .with do |command, options|
-              assert_equal "/foo/bar/bin/elasticsearch --version", command
-            end
-            .returns(123)
+          Process.expects(:spawn).returns(123)
           Process.expects(:kill).with('INT', 123)
 
           IO.any_instance.expects(:read)
@@ -255,8 +271,13 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           assert_equal '2.0', @subject.__determine_version
         end
 
+        should "return version from arguments" do
+          cluster = Elasticsearch::Extensions::Test::Cluster::Cluster.new command: '/foo/bar/bin/elasticsearch', version: '5.2'
+          assert_equal '5.0', cluster.__determine_version
+        end
+
         should "raise an exception when the version cannot be parsed from .jar" do
-          # Incorrect jar version
+          # Incorrect jar version (no dots)
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(true)
           Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['elasticsearch-100.jar'])
 
@@ -265,13 +286,10 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
 
         should "raise an exception when the version cannot be parsed from command output" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
+          File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
           Process.stubs(:wait)
-          Process.expects(:spawn)
-            .with do |command, options|
-              assert_equal "/foo/bar/bin/elasticsearch --version", command
-            end
-            .returns(123)
+          Process.expects(:spawn).returns(123)
           Process.expects(:kill).with('INT', 123)
 
           IO.any_instance.expects(:read).returns('Version: FOOBAR')
@@ -285,6 +303,16 @@ class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
           Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['elasticsearch-3.2.1.jar'])
 
           assert_raise(RuntimeError) { @subject.__determine_version }
+        end
+
+        should "raise an exception when the command cannot be found" do
+          @subject = Elasticsearch::Extensions::Test::Cluster::Cluster.new
+
+          File.expects(:exist?).with('./../lib/').returns(false)
+          File.expects(:exist?).with('elasticsearch').returns(false)
+          @subject.expects(:`).returns('')
+
+          assert_raise(Errno::ENOENT) { @subject.__determine_version }
         end
       end
     end
