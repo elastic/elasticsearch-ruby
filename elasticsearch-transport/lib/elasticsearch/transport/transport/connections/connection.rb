@@ -39,7 +39,7 @@ module Elasticsearch
           #
           def full_url(path, params={})
             url  = "#{host[:protocol]}://"
-            url += "#{host[:user]}:#{host[:password]}@" if host[:user]
+            url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
             url += "#{host[:host]}:#{host[:port]}"
             url += "#{host[:path]}" if host[:path]
             url += "/#{full_path(path, params)}"

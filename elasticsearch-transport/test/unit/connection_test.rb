@@ -30,6 +30,11 @@ class Elasticsearch::Transport::Transport::Connections::ConnectionTest < Test::U
       assert_equal 'http://U:P@localhost:9200/_search?foo=bar', c.full_url('_search', {:foo => 'bar'})
     end
 
+    should "return full url with escaped credentials" do
+      c = Connection.new :host => { :protocol => 'http', :user => 'U$$$', :password => 'P^^^', :host => 'localhost', :port => '9200' }
+      assert_equal 'http://U%24%24%24:P%5E%5E%5E@localhost:9200/_search?foo=bar', c.full_url('_search', {:foo => 'bar'})
+    end
+
     should "return full url with path" do
       c = Connection.new :host => { :protocol => 'http', :host => 'localhost', :port => '9200', :path => '/foo' }
       assert_equal 'http://localhost:9200/foo/_search?foo=bar', c.full_url('_search', {:foo => 'bar'})
