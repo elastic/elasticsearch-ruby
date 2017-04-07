@@ -1,3 +1,24 @@
+## 5.0.4
+
+### Client
+
+* Fixed incorrect test behaviour when the `QUIET` environment variable is set
+* Fixed double logging of failed responses
+* Swallow logging of exceptions when the `ignore` is specified
+* Fixed the bug with `nil` value of `retry_on_status`
+
+### API
+
+* Added the "Field Capabilities" API
+* Changed, that the YAML test content is not printed unless `DEBUG` is set
+* Fixed the failing unit tests for "Scroll" APIs
+* Added missing parameters to the "Search" API
+* Added missing parameters to the "Multi Search" API
+* Added missing parameters to the "Indices Clear Cache" API
+* Added missing arguments to the "Exists" API
+* Fixes for the "Scroll" API
+* Improved the YAML test runner
+
 ## 5.0.3
 
 ### Client
