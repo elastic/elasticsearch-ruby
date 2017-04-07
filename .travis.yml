@@ -37,7 +37,7 @@ before_install:
   - gem --version
   - gem install bundler -v 1.14.3
   - bundle version
-  - curl -sS https://s3.amazonaws.com/ruby.elastic.co/artifacts/elasticsearch-6.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
+  - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-6.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
   - rake setup
   - rake elasticsearch:update
 
