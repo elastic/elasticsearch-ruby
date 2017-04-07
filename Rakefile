@@ -256,7 +256,7 @@ desc <<-DESC
 
   Example:
 
-      $ rake update_version[5.0.3,5.0.4]
+      $ rake update_version[5.0.0,5.0.1]
 DESC
 task :update_version, :old, :new do |task, args|
   require 'ansi'
@@ -280,7 +280,7 @@ task :update_version, :old, :new do |task, args|
           f.rewind
           f.write content
         else
-          puts "- [#{file}]".ansi(:yellow).ljust(longest_line+20) + " [#{args[:old]}]".ansi(:faint,:strike)
+          puts "- [#{file}]".ansi(:yellow).ljust(longest_line+20) + " -".ansi(:faint,:strike)
         end
       end
     rescue Exception => e
@@ -291,7 +291,7 @@ task :update_version, :old, :new do |task, args|
 
   puts "\n\n", "= CHANGELOG ".ansi(:faint) + ('='*88).ansi(:faint), "\n"
 
-  log = `git --no-pager log --pretty='* %s' HEAD --not v#{args[:old]} elasticsearch*`.split("\n")
+  log = `git --no-pager log --reverse --no-color --pretty='* %s' HEAD --not v#{args[:old]} elasticsearch*`.split("\n")
 
   puts log.join("\n")
 
