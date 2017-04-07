@@ -1,3 +1,18 @@
+## 2.0.2
+
+### Client
+
+* * Fixed the bug with `nil` value of `retry_on_status`
+
+### API
+
+* * Added, that `_all` is used as default index in "Search Exists" API
+* * Added, that `index` and `type` parameters are respected in the "Search Exists" API
+
+## EXT:2.0.2
+
+* * Updated the `Test::Cluster` extension
+
 ## 2.0.0
 
 * Added deprecation notices to API methods and parameters not supported on Elasticsearch 2.x
