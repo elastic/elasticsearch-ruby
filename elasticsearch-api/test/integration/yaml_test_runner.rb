@@ -437,18 +437,26 @@ suites.each do |suite|
 
                     if catch_exception
                       $stderr.puts "CATCH: '#{catch_exception}': #{e.inspect}" if ENV['DEBUG']
-                      case e
-                        when 'missing'
-                          assert_match /\[404\]/, e.message
-                        when 'conflict'
-                          assert_match /\[409\]/, e.message
-                        when 'request'
-                          assert_match /\[500\]/, e.message
-                        when 'param'
-                          raise ArgumentError, "NOT IMPLEMENTED"
-                        when /\/.+\//
-                          assert_match Regexp.new(catch_exception.tr('/', '')), e.message
+
+                      if 'param' == catch_exception
+                        assert_equal 'ArgumentError', e.class.to_s
+                      else
+                        if e.class.to_s =~ /Elasticsearch/
+                          case catch_exception
+                            when 'missing'
+                              assert_match /\[404\]/, e.message
+                            when 'conflict'
+                              assert_match /\[409\]/, e.message
+                            when 'request'
+                              assert_match /\[4\d\d\]|\[5\d\d\]/, e.message
+                            when /\/.+\//
+                              assert_match Regexp.new(catch_exception.tr('/', '')), e.message
+                          end
+                        else
+                          raise e
+                        end
                       end
+
                     else
                       raise e
                     end
