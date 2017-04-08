@@ -27,6 +27,7 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/index_/
       #
       def create(arguments={})
+        raise ArgumentError, "Required argument 'id' missing"  unless arguments[:id]
         index arguments.update :op_type => 'create'
       end
     end
