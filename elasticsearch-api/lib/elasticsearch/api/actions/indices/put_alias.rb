@@ -16,14 +16,15 @@ module Elasticsearch
         #
         # See the {Indices::Actions#update_aliases} for performing operations with index aliases in bulk.
         #
-        # @option arguments [String] :index The name of the index with an alias
-        # @option arguments [String] :name The name of the alias to be created or updated
+        # @option arguments [String] :index The name of the index with an alias (*Required*)
+        # @option arguments [String] :name The name of the alias to be created or updated (*Required*)
         # @option arguments [Hash] :body The settings for the alias, such as `routing` or `filter`
         # @option arguments [Time] :timeout Explicit timestamp for the document
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
         def put_alias(arguments={})
+          raise ArgumentError, "Required argument 'index' missing"  unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
           valid_params = [ :timeout ]
 
