@@ -7,16 +7,10 @@ module Elasticsearch
       context "Creating a document with the #create method" do
         subject { FakeClient.new }
 
-        should "perform the create request" do
-          subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'POST', method
-            assert_equal 'foo/bar', url
-            assert_equal({:op_type => 'create'}, params)
-            assert_equal({:foo => 'bar'}, body)
-            true
-          end.returns(FakeResponse.new)
-
-          subject.create :index => 'foo', :type => 'bar', :body => {:foo => 'bar'}
+        should "require the ID" do
+          assert_raise ArgumentError do
+            subject.create :index => 'foo', :type => 'bar', :id => nil, :body => {:foo => 'bar'}
+          end
         end
 
         should "perform the create request with a specific ID" do
