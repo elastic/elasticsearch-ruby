@@ -2,6 +2,8 @@
 .yardoc
 _yardoc
 coverage
+**/test/reports/
+**/test/html_reports/
 doc/
 rdoc/
 tmp
