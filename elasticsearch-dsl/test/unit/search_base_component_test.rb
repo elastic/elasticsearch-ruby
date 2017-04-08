@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class BaseComponentTest < ::Test::Unit::TestCase
+    class BaseComponentTest < ::Elasticsearch::Test::UnitTestCase
       context "BaseComponent" do
 
         class DummyComponent

@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class PercentilesBucketTest < ::Test::Unit::TestCase
+      class PercentilesBucketTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Percentiles Bucket agg" do

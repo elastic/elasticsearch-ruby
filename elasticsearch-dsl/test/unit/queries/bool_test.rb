@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class BoolTest < ::Test::Unit::TestCase
+      class BoolTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "Bool Query" do
@@ -37,13 +37,13 @@ module Elasticsearch
             end
 
             assert_equal( { bool:
-                            { 
+                            {
                               minimum_should_match: 1,
                               boost: 1.0,
                               should:     [ {term: { tag: 'wow' }}, {term: { tag: 'elasticsearch' }} ]
                             }
                           },
-                          subject.to_hash )            
+                          subject.to_hash )
           end
 
           should "take a block with multiple methods" do

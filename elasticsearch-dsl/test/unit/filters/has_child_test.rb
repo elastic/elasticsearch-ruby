@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class HasChildTest < ::Test::Unit::TestCase
+      class HasChildTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "HasChild filter" do

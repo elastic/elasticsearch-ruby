@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class FuzzyLikeThisTest < ::Test::Unit::TestCase
+      class FuzzyLikeThisTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "FuzzyLikeThis query" do

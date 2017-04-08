@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class TermsTest < ::Test::Unit::TestCase
+      class TermsTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "Terms filter" do

@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class IndicesTest < ::Test::Unit::TestCase
+      class IndicesTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "Indices filter" do

@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class GeoBoundingBoxTest < ::Test::Unit::TestCase
+      class GeoBoundingBoxTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "GeoBoundingBox filter" do

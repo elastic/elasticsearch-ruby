@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class FunctionScoreTest < ::Test::Unit::TestCase
+      class FunctionScoreTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "FunctionScore query" do

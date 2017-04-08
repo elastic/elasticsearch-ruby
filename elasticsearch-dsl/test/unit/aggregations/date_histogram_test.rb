@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class DateHistogramTest < ::Test::Unit::TestCase
+      class DateHistogramTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "DateHistogram aggregation" do

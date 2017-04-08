@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class QueryStringTest < ::Test::Unit::TestCase
+      class QueryStringTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "QueryString query" do

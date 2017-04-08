@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class NotTest < ::Test::Unit::TestCase
+      class NotTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "Not filter" do

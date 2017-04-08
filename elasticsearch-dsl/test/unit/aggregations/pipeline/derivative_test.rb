@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class DerivativeTest < ::Test::Unit::TestCase
+      class DerivativeTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Derivative agg" do

@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class BucketSelectorTest < ::Test::Unit::TestCase
+      class BucketSelectorTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Bucket Selector agg" do

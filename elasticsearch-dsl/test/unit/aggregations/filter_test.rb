@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class FilterTest < ::Test::Unit::TestCase
+      class FilterTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Filter agg" do

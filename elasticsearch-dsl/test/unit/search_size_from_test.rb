@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SearchSizeTest < ::Test::Unit::TestCase
+    class SearchSizeTest < ::Elasticsearch::Test::UnitTestCase
       context "Search pagination" do
 
         should "encode the size parameter" do

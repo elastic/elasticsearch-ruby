@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class MoreLikeThisTest < ::Test::Unit::TestCase
+      class MoreLikeThisTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "MoreLikeThis query" do

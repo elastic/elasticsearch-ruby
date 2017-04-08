@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Queries
-      class ConstantScoreTest < ::Test::Unit::TestCase
+      class ConstantScoreTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Queries
 
         context "ConstantScore query" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SearchAggregationTest < ::Test::Unit::TestCase
+    class SearchAggregationTest < ::Elasticsearch::Test::UnitTestCase
       subject { Elasticsearch::DSL::Search::Aggregation.new }
 
       context "Search Aggregation" do

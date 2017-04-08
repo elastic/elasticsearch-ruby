@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class GeoPolygonTest < ::Test::Unit::TestCase
+      class GeoPolygonTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "GeoPolygon filter" do

@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class GeoDistanceTest < ::Test::Unit::TestCase
+      class GeoDistanceTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "GeoDistance aggregation" do

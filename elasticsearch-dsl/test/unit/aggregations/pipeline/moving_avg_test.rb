@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class MovingAvgTest < ::Test::Unit::TestCase
+      class MovingAvgTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Moving Average Bucket agg" do

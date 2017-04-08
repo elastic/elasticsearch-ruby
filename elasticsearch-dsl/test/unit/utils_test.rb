@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class UtilsTest < ::Test::Unit::TestCase
+    class UtilsTest < ::Elasticsearch::Test::UnitTestCase
       context "Utils" do
         should "convert a string to camelcase" do
           assert_equal 'Foo', Elasticsearch::DSL::Utils.__camelize('foo')

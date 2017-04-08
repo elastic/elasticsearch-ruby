@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SearchOptionsTest < ::Test::Unit::TestCase
+    class SearchOptionsTest < ::Elasticsearch::Test::UnitTestCase
       subject { Elasticsearch::DSL::Search::Options.new }
 
       context "Search options" do

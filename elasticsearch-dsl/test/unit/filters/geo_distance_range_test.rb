@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class GeoDistanceRangeTest < ::Test::Unit::TestCase
+      class GeoDistanceRangeTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "GeoDistanceRange filter" do

@@ -29,10 +29,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'mocha'
-  s.add_development_dependency 'minitest', '~> 4.0'
-  s.add_development_dependency 'minitest-reporters'
+  s.add_development_dependency 'minitest', '~> 5'
+  s.add_development_dependency 'minitest-reporters', '~> 1'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'simplecov-rcov'
   s.add_development_dependency 'ci_reporter', '~> 1.9'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'

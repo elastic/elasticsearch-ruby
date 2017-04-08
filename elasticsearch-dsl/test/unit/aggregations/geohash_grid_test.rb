@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class GeohashGridTest < ::Test::Unit::TestCase
+      class GeohashGridTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "GeohashGrid aggregation" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class HighlightTest < ::Test::Unit::TestCase
+    class HighlightTest < ::Elasticsearch::Test::UnitTestCase
       context "Search highlight" do
         subject { Elasticsearch::DSL::Search::Highlight.new }
 

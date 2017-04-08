@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class SignificantTermsTest < ::Test::Unit::TestCase
+      class SignificantTermsTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "SignificantTerms aggregation" do

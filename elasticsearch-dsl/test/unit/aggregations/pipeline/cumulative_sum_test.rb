@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class CumulativeSumTest < ::Test::Unit::TestCase
+      class CumulativeSumTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Cumulative Sum Bucket agg" do

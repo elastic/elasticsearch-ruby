@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Filters
-      class GeohashCellTest < ::Test::Unit::TestCase
+      class GeohashCellTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Filters
 
         context "GeohashCell filter" do

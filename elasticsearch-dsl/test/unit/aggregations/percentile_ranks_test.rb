@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class PercentileRanksTest < ::Test::Unit::TestCase
+      class PercentileRanksTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "PercentileRanks agg" do

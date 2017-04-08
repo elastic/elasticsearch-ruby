@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class ScriptedMetricTest < ::Test::Unit::TestCase
+      class ScriptedMetricTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "ScriptedMetric agg" do

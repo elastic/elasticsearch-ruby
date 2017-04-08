@@ -3,7 +3,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     module Aggregations
-      class ExtendedStatsBucketTest < ::Test::Unit::TestCase
+      class ExtendedStatsBucketTest < ::Elasticsearch::Test::UnitTestCase
         include Elasticsearch::DSL::Search::Aggregations
 
         context "Extended Stats Bucket agg" do

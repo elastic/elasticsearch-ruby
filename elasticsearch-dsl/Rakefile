@@ -182,7 +182,7 @@ namespace :generate do
       module Elasticsearch
         module Test
           module #{module_name}
-            class #{class_name}Test < ::Test::Unit::TestCase
+            class #{class_name}Test < ::Elasticsearch::Test::UnitTestCase
               include Elasticsearch::DSL::Search::#{module_name}
 
               context "#{class_name} #{options[:type]}" do

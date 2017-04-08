@@ -7,12 +7,15 @@ end
 
 at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 
-require 'test/unit'
+require 'minitest/autorun'
 require 'shoulda-context'
 require 'mocha/setup'
 
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+# Minitest::Reporters.use! [ Minitest::Reporters::SpecReporter.new,
+#                            Minitest::Reporters::JUnitReporter.new,
+#                            Minitest::Reporters::HtmlReporter.new ]
 
 require 'elasticsearch'
 require 'elasticsearch/extensions/test/cluster'
@@ -22,7 +25,23 @@ require 'elasticsearch/dsl'
 
 module Elasticsearch
   module Test
-    class IntegrationTestCase < ::Test::Unit::TestCase
+    module Assertions
+      def assert_nothing_raised(*)
+        yield
+      end
+    end
+
+    class UnitTestCase < ::Minitest::Test
+      include Assertions
+      alias_method :assert_not_nil, :refute_nil
+      alias_method :assert_raise, :assert_raises
+    end
+
+    class IntegrationTestCase < ::Minitest::Test
+      include Assertions
+      alias_method :assert_not_nil, :refute_nil
+      alias_method :assert_raise, :assert_raises
+
       include Elasticsearch::Extensions::Test
       extend  StartupShutdown
 

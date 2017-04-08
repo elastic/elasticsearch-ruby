@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class DSLTest < ::Test::Unit::TestCase
+    class DSLTest < ::Elasticsearch::Test::UnitTestCase
       context "The DSL" do
         class DummyDSLReceiver
           include Elasticsearch::DSL
