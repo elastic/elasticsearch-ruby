@@ -185,7 +185,7 @@ module Elasticsearch
         # @api private
         #
         def __trace(method, path, params, body, url, response, json, took, duration)
-          trace_url  = "http://localhost:9200/#{path}?pretty" +
+          trace_url  = "#{url}?pretty" +
                        ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
           trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
           tracer.info  "curl -X #{method.to_s.upcase} '#{trace_url}'#{trace_body}\n"
