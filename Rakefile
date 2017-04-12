@@ -172,7 +172,6 @@ namespace :test do
 
   desc "Run unit tests in all subprojects"
   task :unit do
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     puts "Ruby [#{RUBY_VERSION}]" if defined? RUBY_VERSION
     subprojects.each do |project|
       puts '-'*80
@@ -184,7 +183,6 @@ namespace :test do
   desc "Run integration tests in all subprojects"
   task :integration do
     Rake::Task['elasticsearch:update'].invoke
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
@@ -194,22 +192,10 @@ namespace :test do
 
   desc "Run all tests in all subprojects"
   task :all do
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:all"
       puts "\n"
-    end
-  end
-
-  task :ci_reporter do
-    ENV['CI_REPORTS'] ||= 'tmp/reports'
-    if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
-      require 'ci/reporter/rake/test_unit'
-      Rake::Task['ci:setup:testunit'].invoke
-    else
-      require 'ci/reporter/rake/minitest'
-      Rake::Task['ci:setup:minitest'].invoke
     end
   end
 

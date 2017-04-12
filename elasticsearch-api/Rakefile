@@ -21,19 +21,7 @@ namespace :test do
     git_specs "fetch origin --verbose", :verbose => true
   end
 
-  task :ci_reporter do
-    ENV['CI_REPORTS'] ||= 'tmp/reports'
-    if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
-      require 'ci/reporter/rake/test_unit'
-      Rake::Task['ci:setup:testunit'].invoke
-    else
-      require 'ci/reporter/rake/minitest'
-      Rake::Task['ci:setup:minitest'].invoke
-    end
-  end
-
   Rake::TestTask.new(:unit) do |test|
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/unit/**/*_test.rb"]
     # test.verbose = true
@@ -60,7 +48,6 @@ namespace :test do
 
     # Define the task
     t = Rake::TestTask.new(:integration) do |test|
-      Rake::Task['test:ci_reporter'].invoke if ENV['CI']
       test.libs << 'lib' << 'test'
       test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
       test.verbose = false
@@ -118,7 +105,6 @@ namespace :test do
 
   desc "Run unit and integration tests"
   task :all do
-    Rake::Task['test:ci_reporter'].invoke if ENV['CI']
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
   end
