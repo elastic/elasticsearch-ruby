@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'elasticsearch/extensions/ansi'
 
-class Elasticsearch::Extensions::AnsiTest < Test::Unit::TestCase
+class Elasticsearch::Extensions::AnsiTest < Elasticsearch::Test::UnitTestCase
   context "The ANSI extension" do
     setup do
       @client = Elasticsearch::Client.new

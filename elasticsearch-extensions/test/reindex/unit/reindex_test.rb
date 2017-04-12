@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'elasticsearch/extensions/reindex'
 
-class Elasticsearch::Extensions::ReindexTest < Test::Unit::TestCase
+class Elasticsearch::Extensions::ReindexTest < Elasticsearch::Test::UnitTestCase
   context "The Reindex extension module" do
     DEFAULT_OPTIONS = { source: { index: 'foo', client: Object.new }, target: { index: 'bar' } }
 

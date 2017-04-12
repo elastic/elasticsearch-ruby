@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "elasticsearch"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "minitest", "~> 4.0"
     s.add_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   end
 
@@ -36,25 +35,17 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "awesome_print"
 
-  s.add_development_dependency "shoulda-context"
-  s.add_development_dependency "mocha"
-  s.add_development_dependency "turn"
-  s.add_development_dependency "yard"
-  s.add_development_dependency "pry"
-  s.add_development_dependency "ci_reporter", "~> 1.9"
+  s.add_development_dependency 'shoulda-context'
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'minitest', '~> 5'
+  s.add_development_dependency 'minitest-reporters', '~> 1'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'cane'
+  s.add_development_dependency 'pry'
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_development_dependency "json", '~> 1.8'
-  end
-
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "simplecov"
-    s.add_development_dependency "simplecov-rcov"
-    s.add_development_dependency "cane"
-  end
-
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
-    s.add_development_dependency "test-unit", '~> 2'
   end
 
   # Gems for testing integrations

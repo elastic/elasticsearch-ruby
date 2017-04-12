@@ -2,7 +2,7 @@ require 'test_helper'
 
 require 'elasticsearch/extensions/test/cluster'
 
-class Elasticsearch::Extensions::TestClusterTest < Test::Unit::TestCase
+class Elasticsearch::Extensions::TestClusterTest < Elasticsearch::Test::UnitTestCase
   include Elasticsearch::Extensions::Test
   context "The Test::Cluster" do
     context "module" do

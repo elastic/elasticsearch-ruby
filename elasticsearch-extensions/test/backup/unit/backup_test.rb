@@ -38,7 +38,7 @@ end
 
 require 'elasticsearch/extensions/backup'
 
-class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
+class Elasticsearch::Extensions::BackupTest < Elasticsearch::Test::UnitTestCase
   context "The Backup gem extension" do
     setup do
       @model = stub trigger: true
