@@ -1,4 +1,6 @@
 # Elasticsearch
+[![Build Status](https://travis-ci.org/elastic/elasticsearch-ruby.svg?branch=master)](https://travis-ci.org/elastic/elasticsearch-ruby) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+
 
 This repository contains Ruby integrations for [Elasticsearch](http://elasticsearch.org):
 
@@ -86,8 +88,6 @@ This repository contains these additional Ruby libraries:
 Please see their respective READMEs for information and documentation.
 
 ## Development
-
-[![Build Status](https://travis-ci.org/elastic/elasticsearch-ruby.svg?branch=master)](https://travis-ci.org/elastic/elasticsearch-ruby) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
 To work on the code, clone and bootstrap the project first:
 
