@@ -35,6 +35,8 @@ module Elasticsearch
           option_method :rewrite
           option_method :slop
           option_method :type
+          option_method :slop
+          option_method :fuzziness
           option_method :use_dis_max
           option_method :zero_terms_query
         end
