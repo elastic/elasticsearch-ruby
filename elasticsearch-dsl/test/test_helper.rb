@@ -27,8 +27,8 @@ module Elasticsearch
       extend  StartupShutdown
 
       startup do
-        Cluster.start(nodes: 1) if ENV['SERVER'] \
-                                && ! Elasticsearch::Extensions::Test::Cluster.running?
+        Cluster.start(number_of_nodes: 1) if ENV['SERVER'] \
+                                && ! Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 1)
       end
 
       shutdown do
