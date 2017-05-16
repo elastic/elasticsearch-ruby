@@ -172,6 +172,18 @@ You can control the cluster configuration with environment variables as well:
 To prevent deleting data and configurations when the cluster is started, for example in a development environment,
 use the `clear_cluster: false` option or the `TEST_CLUSTER_CLEAR=false` environment variable.
 
+To check if cluster is running:
+
+    require 'elasticsearch/extensions/test/cluster'
+
+    # Identical arguments with Elasticsearch::Extensions::Test::Cluster.start needed.
+    Elasticsearch::Extensions::Test::Cluster.running? \
+      cluster_name:    "my-testing-cluster",
+      command:         "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
+      port:            9350,
+      number_of_nodes: 3
+
+
 [Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/Test/Cluster)
 
 ### Test::StartupShutdown
