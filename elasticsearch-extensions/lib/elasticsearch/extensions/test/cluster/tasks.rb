@@ -1,3 +1,4 @@
+require 'rake'
 require 'elasticsearch/extensions/test/cluster'
 
 namespace :elasticsearch do
