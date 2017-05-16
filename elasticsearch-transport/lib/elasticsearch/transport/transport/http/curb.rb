@@ -17,7 +17,7 @@ module Elasticsearch
           #
           def perform_request(method, path, params={}, body=nil)
             super do |connection,url|
-              connection.connection.url = url
+              connection.connection.url += url
 
               case method
                 when 'HEAD'
