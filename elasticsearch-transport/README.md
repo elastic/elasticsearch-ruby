@@ -312,6 +312,10 @@ for example sign the requests for the [AWS Elasticsearch service](https://aws.am
                 region: 'us-east-1'
     end
 
+Note that the URL you set up for AWS Elastisearch must not contain a trailing slash, since a signature
+is going to then be generated with a double slash in the request path - and the signature validation
+might fail.
+
 You can also initialize the transport class yourself, and pass it to the client constructor
 as the `transport` argument:
 
