@@ -40,11 +40,11 @@ module Elasticsearch
         should "pass the URL parameters" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'foo/_flush', url
-            assert_equal true, params[:refresh]
+            assert_equal true, params[:ignore_unavailable]
             true
           end.returns(FakeResponse.new)
 
-          subject.indices.flush :index => 'foo', :refresh => true
+          subject.indices.flush :index => 'foo', :ignore_unavailable => true
         end
 
       end
