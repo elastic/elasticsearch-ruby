@@ -33,6 +33,8 @@ module Elasticsearch
       # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-exists.html
       #
       def search_exists(arguments={})
+        arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
+
         valid_params = [
           :ignore_unavailable,
           :allow_no_indices,
@@ -48,7 +50,7 @@ module Elasticsearch
           :lenient,
           :lowercase_expanded_terms ]
         method = 'POST'
-        path   = "_search/exists"
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), "_search/exists" )
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
 
