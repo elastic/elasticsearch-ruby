@@ -471,6 +471,7 @@ module Elasticsearch
                   wout.close unless wout.closed?
                   output = rout.read unless rout.closed?
                   rout.close unless rout.closed?
+                  pid = nil
                 end
               rescue Timeout::Error
                 # ...else, the old `-v` syntax
