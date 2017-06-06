@@ -27,9 +27,11 @@ module Elasticsearch
           option_method :default_operator
           option_method :analyzer
           option_method :flags
-          option_method :lowercase_expanded_terms
-          option_method :locale
+          option_method :analyze_wildcard
           option_method :lenient
+          option_method :minimum_should_match
+          option_method :quote_field_suffix
+          option_method :all_fields
         end
 
       end
