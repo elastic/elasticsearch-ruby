@@ -12,7 +12,7 @@ module Elasticsearch
             assert_equal 'GET', method
             assert_equal '_search/scroll', url
             assert_equal 'cXVlcn...', params[:scroll_id]
-            assert_equal nil, body
+            assert_equal { scroll_id: 'cXVlcn...' }, body
             true
           end.returns(FakeResponse.new)
 

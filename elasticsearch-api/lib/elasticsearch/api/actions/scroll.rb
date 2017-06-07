@@ -57,6 +57,7 @@ module Elasticsearch
 
         params = Utils.__validate_and_extract_params arguments, valid_params
         body   = arguments[:body]
+        body[:scroll_id] = params[:scroll_id]
 
         perform_request(method, path, params, body).body
       end
