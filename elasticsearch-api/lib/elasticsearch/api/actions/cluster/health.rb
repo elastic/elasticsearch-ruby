@@ -38,6 +38,7 @@ module Elasticsearch
           index     = arguments.delete(:index)
 
           valid_params = [
+            :index,
             :level,
             :local,
             :master_timeout,
