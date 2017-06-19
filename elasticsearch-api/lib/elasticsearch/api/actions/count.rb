@@ -42,7 +42,10 @@ module Elasticsearch
       #                                      to a numeric field) should be ignored
       # @option arguments [Boolean] :lowercase_expanded_terms Specify whether query terms should be lowercased
       #
-      # @see http://elasticsearch.org/guide/reference/api/count/
+      # @option arguments [Boolean] :terminate_after Specify the maximum count for each shard, upon reaching
+      #                                              which the query execution will terminate early.
+      #
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
       #
       def count(arguments={})
         valid_params = [
@@ -58,7 +61,8 @@ module Elasticsearch
           :default_operator,
           :df,
           :lenient,
-          :lowercase_expanded_terms ]
+          :lowercase_expanded_terms,
+          :terminate_after ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
