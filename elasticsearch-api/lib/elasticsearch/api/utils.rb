@@ -35,11 +35,12 @@ module Elasticsearch
       def __listify(*list)
         options = list.last.is_a?(Hash) ? list.pop : {}
 
-        Array(list).flatten.
-          map { |e| e.respond_to?(:split) ? e.split(',') : e }.
+        escape = options[:escape]
+        Array(list).
+          flat_map { |e| e.respond_to?(:split) ? e.split(',') : e }.
           flatten.
           compact.
-          map { |e| options[:escape] == false ? e : __escape(e) }.
+          map { |e| escape == false ? e : __escape(e) }.
           join(',')
       end
 
