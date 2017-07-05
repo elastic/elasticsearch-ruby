@@ -35,6 +35,7 @@ module Elasticsearch
           option_method :lenient
           option_method :zero_terms_query
           option_method :cutoff_frequency
+          option_method :max_expansions
         end
 
       end
