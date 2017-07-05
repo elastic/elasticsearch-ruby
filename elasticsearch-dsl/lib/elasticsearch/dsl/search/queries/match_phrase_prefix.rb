@@ -9,21 +9,21 @@ module Elasticsearch
         #
         #     search do
         #       query do
-        #         match_phrase :content do
+        #         match_phrase_prefix :content do
         #           query 'example content'
-        #           analyzer 'standard'
+        #           max_expansions 10
         #         end
         #       end
         #     end
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query-phrase-prefix.html
         #
-        class MatchPhrase
+        class MatchPhrasePrefix
           include BaseComponent
 
           option_method :query
-          option_method :analyzer
           option_method :boost
+          option_method :max_expansions
         end
 
       end
