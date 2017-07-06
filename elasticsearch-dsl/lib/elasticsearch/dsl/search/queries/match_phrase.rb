@@ -24,6 +24,7 @@ module Elasticsearch
           option_method :query
           option_method :analyzer
           option_method :boost
+          option_method :max_expansions
         end
 
       end
