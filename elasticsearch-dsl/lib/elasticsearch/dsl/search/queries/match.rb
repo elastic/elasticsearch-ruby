@@ -24,7 +24,6 @@ module Elasticsearch
 
           option_method :query
           option_method :operator
-          option_method :type
           option_method :boost
           option_method :fuzziness
           option_method :max_expansions

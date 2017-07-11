@@ -24,9 +24,8 @@ module Elasticsearch
 
             subject.query    'bar'
             subject.operator 'bar'
-            subject.type     'bar'
 
-            assert_equal %w[ operator query type ],
+            assert_equal %w[ operator query ],
                          subject.to_hash[:match].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:match][:query]
           end
@@ -41,12 +40,11 @@ module Elasticsearch
             subject = Match.new :message do
               query     'test'
               operator  'and'
-              type      'phrase_prefix'
               boost     2
               fuzziness 'AUTO'
             end
 
-            assert_equal({match: {message: {query: "test", operator: "and", type: 'phrase_prefix', boost: 2, fuzziness: 'AUTO'}}},
+            assert_equal({match: {message: {query: "test", operator: "and",  boost: 2, fuzziness: 'AUTO'}}},
                          subject.to_hash)
           end
 
