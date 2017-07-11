@@ -3,7 +3,7 @@ module Elasticsearch
     module Search
       module Queries
 
-        # A query which matches all documents
+        # The same as match_phrase, except that it allows for prefix matches on the last term in the text
         #
         # @example
         #

@@ -3,7 +3,7 @@ module Elasticsearch
     module Search
       module Queries
 
-        # A query which matches all documents
+        # A query that analyzes the text and creates a phrase query out of the analyzed text
         #
         # @example
         #
