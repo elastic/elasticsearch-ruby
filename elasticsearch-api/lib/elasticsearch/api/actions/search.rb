@@ -116,6 +116,8 @@ module Elasticsearch
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
       # @option arguments [Number] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as a protection mechanism to reduce the memory overhead per search request if the potential number of shards in the request can be large.
+      # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests. The default grows with the number of nodes in the cluster but is at most 256.
+      # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint. (Default: 128)
       #
       # @return [Hash]
       #
@@ -165,7 +167,9 @@ module Elasticsearch
           :timeout,
           :typed_keys,
           :version,
-          :batched_reduce_size ]
+          :batched_reduce_size,
+          :max_concurrent_shard_requests,
+          :pre_filter_shard_size ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
