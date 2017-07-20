@@ -174,9 +174,28 @@ module Elasticsearch
                 -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
               COMMAND
+            },
+
+            '6.0' => lambda { |arguments, node_number|
+              <<-COMMAND.gsub(/                /, '').gsub(/\n$/, '')
+                #{arguments[:command]} \
+                -E cluster.name=#{arguments[:cluster_name]} \
+                -E node.name=#{arguments[:node_name]}-#{node_number} \
+                -E http.port=#{arguments[:port].to_i + (node_number-1)} \
+                -E path.data=#{arguments[:path_data]} \
+                -E path.logs=#{arguments[:path_logs]} \
+                -E cluster.routing.allocation.disk.threshold_enabled=false \
+                -E network.host=#{arguments[:network_host]} \
+                -E node.attr.testattr=test \
+                -E path.repo=/tmp \
+                -E repositories.url.allowed_urls=http://snapshot.test* \
+                -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
+                -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
+                -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
+                #{arguments[:es_params]}
+              COMMAND
             }
           }
-          COMMANDS['6.0'] = COMMANDS['5.0']
           COMMANDS.freeze
 
           # Create a new instance of the Cluster class
