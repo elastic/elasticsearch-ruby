@@ -62,7 +62,7 @@ module Elasticsearch
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size-1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
-          @http_method      = "HTTP_#{@spec['methods'].first}"
+          @http_method      = "Elasticsearch::API::HTTP_#{@spec['methods'].first}"
           @http_path        = unless @spec['url']['parts'].empty?
                                 @spec['url']['path']
                                   .split('/')
@@ -111,7 +111,7 @@ module Elasticsearch
 
         # -- Tree output
 
-        if options[:verbose] && `which tree > /dev/null 2>&1`
+        if options[:verbose] && `which tree > /dev/null 2>&1; echo $?`.to_i < 1
           lines = `tree #{@output}`.split("\n")
           say_status 'tree',
                      lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n")

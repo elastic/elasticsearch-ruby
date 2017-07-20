@@ -16,7 +16,7 @@ module Elasticsearch
             true
           end.returns(FakeResponse.new)
 
-          subject.<%= @full_namespace.join('.') %> <%= @spec['url']['parts'].select { |name, info| info['required'] }.keys.map { |d| ":#{d} => 'foo'" }.join(', ') %>
+          subject.<%= @full_namespace.join('.') %> <%= @spec['url']['parts'].select { |name, info| info['required'] }.keys.map { |d| ":#{d} => 'foo'" }.join(', ') rescue '' %>
         end
 
       end
