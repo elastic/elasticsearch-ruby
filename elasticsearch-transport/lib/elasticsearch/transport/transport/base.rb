@@ -129,7 +129,7 @@ module Elasticsearch
           Connections::Collection.new \
             :connections => hosts.map { |host|
               host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
-              host[:port] ||= options[:port] || options[:http][:scheme] || DEFAULT_PORT
+              host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
               if (options[:user] || options[:http][:user]) && !host[:user]
                 host[:user] ||= options[:user] || options[:http][:user]
                 host[:password] ||= options[:password] || options[:http][:password]
