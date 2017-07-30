@@ -59,10 +59,10 @@ module Elasticsearch
             :types,
             :timeout ]
 
-          method = HTTP_GET
+          node_id = arguments.delete(:node_id)
 
           path   = Utils.__pathify '_nodes',
-                                   Utils.__listify(arguments[:node_id]),
+                                   Utils.__listify(node_id),
                                    'stats',
                                    Utils.__listify(arguments.delete(:metric)),
                                    Utils.__listify(arguments.delete(:index_metric))
@@ -75,7 +75,7 @@ module Elasticsearch
 
           body   = nil
 
-          perform_request(method, path, params, body).body
+          perform_request(HTTP_GET, path, params, body).body
         end
       end
     end
