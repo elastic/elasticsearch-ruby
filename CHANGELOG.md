@@ -1,3 +1,10 @@
+## 1.1.3
+
+### Client
+
+* Fixed MRI 2.4 compatibility for 1.x
+* Fixed failing integration test for keeping existing collections
+
 ## 1.1.0
 
 ### API
