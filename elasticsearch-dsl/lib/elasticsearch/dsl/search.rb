@@ -219,6 +219,22 @@ module Elasticsearch
           @suggest = value
         end
 
+        # DSL method for building the `script` part of a search definition
+        #
+        # @return [self]
+        #
+        def script(*args, &block)
+          if block
+            @script = Script.new(*args, &block)
+            self
+          elsif !args.empty?
+            @script = args.first
+            self
+          else
+            @script
+          end
+        end
+
         # Delegates to the methods provided by the {Options} class
         #
         def method_missing(name, *args, &block)
@@ -246,6 +262,7 @@ module Elasticsearch
           hash.update(from: @from) if @from
           hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.update item.last.to_hash }) if @suggest
           hash.update(highlight: @highlight.to_hash) if @highlight
+          hash.update(script: @script) if @script
           hash.update(@options) unless @options.empty?
           hash
         end
