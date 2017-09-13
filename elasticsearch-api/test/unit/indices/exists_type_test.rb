@@ -10,7 +10,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'HEAD', method
-            assert_equal 'foo/bar', url
+            assert_equal 'foo/_mapping/bar', url
             assert_equal Hash.new, params
             assert_nil   body
             true
@@ -21,7 +21,7 @@ module Elasticsearch
 
         should "perform request against multiple indices" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo,bar/bam', url
+            assert_equal 'foo,bar/_mapping/bam', url
             true
           end.returns(FakeResponse.new)
 
@@ -30,7 +30,7 @@ module Elasticsearch
 
         should "URL-escape the parts" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'foo%5Ebar/bar%2Fbam', url
+            assert_equal 'foo%5Ebar/_mapping/bar%2Fbam', url
             true
           end.returns(FakeResponse.new)
 
