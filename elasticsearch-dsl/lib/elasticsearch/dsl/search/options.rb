@@ -21,7 +21,6 @@ module Elasticsearch
         ]
 
         def initialize(*args, &block)
-          super
           @hash = {}
         end
 
