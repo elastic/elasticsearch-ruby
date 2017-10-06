@@ -21,11 +21,9 @@ module Elasticsearch
             subject.default_operator 'bar'
             subject.analyzer 'bar'
             subject.flags 'bar'
-            subject.lowercase_expanded_terms 'bar'
-            subject.locale 'bar'
             subject.lenient 'bar'
 
-            assert_equal %w[ analyzer default_operator fields flags lenient locale lowercase_expanded_terms query ],
+            assert_equal %w[ analyzer default_operator fields flags lenient query ],
                          subject.to_hash[:simple_query_string][:foo].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:simple_query_string][:foo][:query]
           end
