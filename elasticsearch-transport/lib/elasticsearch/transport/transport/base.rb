@@ -10,13 +10,14 @@ module Elasticsearch
         DEFAULT_RELOAD_AFTER     = 10_000 # Requests
         DEFAULT_RESURRECT_AFTER  = 60     # Seconds
         DEFAULT_MAX_RETRIES      = 3      # Requests
+        DEFAULT_CONNECTIONS_PER_HOST  = 1 # Connections per host
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
         SANITIZED_PASSWORD       = '*' * (rand(14)+1)
 
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
         attr_accessor :serializer, :sniffer, :logger, :tracer,
                       :reload_connections, :reload_after,
-                      :resurrect_after, :max_retries
+                      :resurrect_after, :max_retries, :connections_per_host
 
         # Creates a new transport object
         #
@@ -127,7 +128,7 @@ module Elasticsearch
         #
         def __build_connections
           Connections::Collection.new \
-            :connections => hosts.map { |host|
+            :connections => (options[:connections_per_host] || DEFAULT_CONNECTIONS_PER_HOST).times.map { hosts.map { |host|
               host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
               host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
               if (options[:user] || options[:http][:user]) && !host[:user]
@@ -136,7 +137,7 @@ module Elasticsearch
               end
 
               __build_connection(host, (options[:transport_options] || {}), @block)
-            },
+            }}.flatten!,
             :selector_class => options[:selector_class],
             :selector => options[:selector]
         end
