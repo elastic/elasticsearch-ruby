@@ -1,3 +1,13 @@
+## EXT:0.0.27
+
+* Allow passing the Elasticsearch version to the Test::Cluster extension
+* Improved the profiling extension
+* Added that the timeout in `__determine_version` is configurable and increased the default value
+* Improved the integration test for the `Test::Cluster` extension
+* Improved the test infrastructure
+* Added the Elasticsearch start command for the 6.x version to the test/cluster extension
+* Added the "oj" and "patron" Rubygem to the list of runtime dependencies
+
 ## DSL:0.1.5
 
 * Added support for the ["Exists" Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html)
