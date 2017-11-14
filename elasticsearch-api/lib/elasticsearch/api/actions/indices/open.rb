@@ -18,8 +18,8 @@ module Elasticsearch
         #                                              are open, closed or both. (options: open, closed)
         # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
         #                                            `missing` ones (options: none, missing) @until 1.0
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
-        #                                                 unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
         # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
@@ -32,6 +32,7 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
+            :wait_for_active_shards,
             :timeout
           ]
 
