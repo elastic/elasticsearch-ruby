@@ -1,3 +1,46 @@
+## 6.0.0
+
+Elasticsearch 6.0 compatibility.
+
+### API
+
+* Added missing arguments to the "Exists" API
+* Added missing parameters to the "Indices Clear Cache" API
+* Added missing parameters to the "Indices Delete" API
+* Added missing parameters to the "Multi Search" API
+* Added missing parameters to the "Search" API
+* Added missing parameters to the "Search" API
+* Added requirement for the `id` argument for the "Create" API
+* Added support for additional parameters to the "Cluster State" API
+* Added support for additional parameters to the "Rollover" API
+* Added the "Remote Info" API
+* Added the "verbose" parameter to the "Get Snapshot" API
+* Aded the "Get Task" API
+* Changed, that the YAML test content is not printed unless `DEBUG` is set
+* Fixed a failing unit test for the "Create Document" API
+* Fixed handling of parameters in the "Rollover" API
+* Fixed incorrect handling of `catch` clauses in the YAML tests runner
+* Fixed incorrect handling of node ID in the "Nodes Stats" API
+* Fixed incorrect URL parameter in "Indices Flush" unit test
+* Fixed the failing unit tests for "Scroll" APIs
+* Fixes for the "Scroll" API
+* Updated and improved the YAML test runner
+
+### Client
+
+* Added default value 'application/json' for the 'Content-Type' header
+* Added escaping of username and password in URL
+* Added proper handling of headers in client options to the Manticore adapter
+* Don't block waiting for body on HEAD requests
+* Fixed double logging of failed responses
+* Fixed incorrect test behaviour when the `QUIET` environment variable is set
+* Fixed the bug with `nil` value of `retry_on_status`
+* Fixed the incorrect paths and Typhoeus configuration in the benchmark tests
+* Fixed the integration tests for client
+* Fixed typo in default port handling during `__build_connections`
+* Swallow logging of exceptions when the `ignore` is specified
+
+
 ## EXT:0.0.27
 
 * Allow passing the Elasticsearch version to the Test::Cluster extension
