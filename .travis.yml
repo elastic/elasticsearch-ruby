@@ -11,9 +11,10 @@ language: ruby
 branches:
   only:
     - master
-    - travis
+    - 6.x
     - 5.x
     - 2.x
+    - travis
 
 matrix:
   include:
