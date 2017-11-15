@@ -61,6 +61,7 @@ module Elasticsearch
       # @option arguments [Integer] :scroll_size Size on the scroll request powering the update_by_query
       # @option arguments [Boolean] :wait_for_completion Should the request should block until the reindex is complete.
       # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second. 0 means set no throttle.
+      # @option arguments [Integer] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
       #
@@ -109,7 +110,8 @@ module Elasticsearch
           :consistency,
           :scroll_size,
           :wait_for_completion,
-          :requests_per_second ]
+          :requests_per_second,
+          :slices ]
 
         method = HTTP_POST
 
