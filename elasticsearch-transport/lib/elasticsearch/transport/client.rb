@@ -181,6 +181,9 @@ module Elasticsearch
             @arguments[:http][k] ||= v
           end
 
+          # Remove the trailing slash
+          host_parts[:path].chomp!('/') if host_parts[:path]
+
           host_parts
         end
 

@@ -228,6 +228,14 @@ class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
         assert_equal 'bar', hosts[1][:host]
       end
 
+      should "remove trailing slash from URL path" do
+        hosts = @client.__extract_hosts 'http://myhost/'
+        assert_equal '', hosts[0][:path]
+
+        hosts = @client.__extract_hosts 'http://myhost/foo/bar/'
+        assert_equal '/foo/bar', hosts[0][:path]
+      end
+
       should "raise error for incompatible argument" do
         assert_raise ArgumentError do
           @client.__extract_hosts 123
