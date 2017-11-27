@@ -27,6 +27,7 @@ module Elasticsearch
           option_method :score_mode
           option_method :min_children
           option_method :max_children
+          option_method :inner_hits
 
           # DSL method for building the `query` part of the query definition
           #
