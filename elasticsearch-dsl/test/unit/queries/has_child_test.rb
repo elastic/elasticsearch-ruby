@@ -21,10 +21,12 @@ module Elasticsearch
             subject.score_mode 'bar'
             subject.min_children 'bar'
             subject.max_children 'bar'
+            subject.inner_hits({ size: 1 })
 
-            assert_equal %w[ max_children min_children query score_mode type ],
+            assert_equal %w[ inner_hits max_children min_children query score_mode type ],
                          subject.to_hash[:has_child].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:has_child][:type]
+            assert_equal({ size: 1 }, subject.to_hash[:has_child][:inner_hits])
           end
 
           should "take a block" do
