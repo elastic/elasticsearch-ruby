@@ -49,7 +49,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_equal 'bar', response.body['_source']['foo']
 
       assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
-        @client.perform_request 'GET', 'myindex/mydoc/1?routing=ABC'
+        @client.perform_request 'GET', 'myindex/mydoc/1?routing=FOOBARBAZ'
       end
     end
 
