@@ -47,36 +47,6 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
       assert_equal 3, @client.search(index: 'test2')['hits']['total']
     end
 
-    should "copy documents with parent/child relationship" do
-      mapping = { mappings: { p: {}, c: { _parent: { type: 'p' } } } }
-      @client.indices.create index: 'test_parent_1', body: mapping
-      @client.indices.create index: 'test_parent_2', body: mapping
-
-      @client.index index: 'test_parent_1', type: 'p', id: 1, body: { title: 'Parent 1' }
-      @client.index index: 'test_parent_1', type: 'p', id: 2, body: { title: 'Parent 2' }
-      @client.index index: 'test_parent_1', type: 'c', parent: 1, body: { title: 'Child One' }
-      @client.index index: 'test_parent_1', type: 'c', parent: 1, body: { title: 'Child Two' }
-
-      @client.indices.refresh index: 'test_parent_1'
-
-      reindex = Elasticsearch::Extensions::Reindex.new \
-                  source: { index: 'test_parent_1', client: @client },
-                  target: { index: 'test_parent_2' },
-                  batch_size: 2,
-                  refresh: true
-
-      result = reindex.perform
-
-      assert_equal 0, result[:errors]
-      assert_equal 4, @client.search(index: 'test_parent_2')['hits']['total']
-
-      response = @client.search index: 'test_parent_2', body: {
-        query: { has_child: { type: 'c', query: { match: { title: 'two' } } } } }
-
-      assert_equal 1, response['hits']['hits'].size
-      assert_equal 'Parent 1', response['hits']['hits'][0]['_source']['title']
-    end
-
     should "transform documents with a lambda" do
       reindex = Elasticsearch::Extensions::Reindex.new \
                   source: { index: 'test1', client: @client },
