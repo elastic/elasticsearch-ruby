@@ -453,7 +453,7 @@ module Elasticsearch
             path_to_lib = File.dirname(arguments[:command]) + '/../lib/'
             version = if arguments[:version]
               arguments[:version]
-            elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first).nil?
+            elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f =~ /^elasticsearch\-\d/ }.first).nil?
               __log "Determining version from [#{jar}]" if ENV['DEBUG']
               if m = jar.match(/elasticsearch\-(\S+-)?(?<version>\d+\.\d+\.\d+).*/)
                 m[:version]

@@ -252,7 +252,7 @@ class Elasticsearch::Extensions::TestClusterTest < Elasticsearch::Test::UnitTest
 
         should "return version from lib/elasticsearch.X.Y.Z.jar" do
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(true)
-          Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['foo.jar', 'elasticsearch-2.3.0.jar'])
+          Dir.expects(:entries).with('/foo/bar/bin/../lib/').returns(['foo.jar', 'elasticsearch-foo-1.0.0.jar', 'elasticsearch-2.3.0.jar', 'elasticsearch-bar-9.9.9.jar'])
 
           assert_equal '2.0', @subject.__determine_version
         end
