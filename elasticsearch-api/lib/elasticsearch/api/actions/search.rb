@@ -95,6 +95,7 @@ module Elasticsearch
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index should be maintained
       #                                      for scrolled search
+      # @option arguments [Hash] :slice Parameters which can ba applied to a scrolled search
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch,
       #                                         dfs_query_then_fetch, dfs_query_and_fetch, count, scan)
       # @option arguments [Number] :size Number of hits to return (default: 10)
@@ -150,6 +151,7 @@ module Elasticsearch
           :request_cache,
           :routing,
           :scroll,
+          :slice,
           :search_type,
           :size,
           :sort,

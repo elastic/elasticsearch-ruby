@@ -41,6 +41,7 @@ module Elasticsearch
       #     end
       #
       # @option arguments [String] :scroll_id The scroll ID
+      # @option arguments [Hash] :slice The parameters to be able to use Sliced Scroll.
       # @option arguments [Hash] :body The scroll ID if not passed by URL or query parameter.
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index
       #                                      should be maintained for scrolled search
@@ -53,6 +54,7 @@ module Elasticsearch
         path   = "_search/scroll"
         valid_params = [
           :scroll,
+          :slice,
           :scroll_id ]
 
         params = Utils.__validate_and_extract_params arguments, valid_params
