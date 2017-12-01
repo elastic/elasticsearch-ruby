@@ -32,7 +32,7 @@ matrix:
 
     - rvm: 2.4.0
       jdk: oraclejdk8
-      env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/master TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch
+      env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/master TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch QUIET=y
 
 before_install:
   - gem update --system
