@@ -15,7 +15,7 @@ module Elasticsearch
           valid_params = [
              ]
           method = 'PUT'
-          path   = "_watcher/watch/#{arguments[:id]}/_execute"
+          path   = "_xpack/watcher/watch/#{arguments[:id]}/_execute"
           params = {}
           body   = arguments[:body]
 

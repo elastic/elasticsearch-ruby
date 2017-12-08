@@ -17,7 +17,7 @@ module Elasticsearch
           valid_params = [
             :master_timeout ]
           method = 'PUT'
-          path   = "_watcher/watch/#{arguments[:id]}"
+          path   = "_xpack/watcher/watch/#{arguments[:id]}"
           params = Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
 
