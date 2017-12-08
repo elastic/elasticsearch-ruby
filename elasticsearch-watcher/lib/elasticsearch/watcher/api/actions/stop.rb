@@ -5,7 +5,7 @@ module Elasticsearch
 
         # Stop the watcher service
         #
-        # @see http://www.elastic.co/guide/en/watcher/current/appendix-api-service.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
         #
         def stop(arguments={})
           valid_params = [

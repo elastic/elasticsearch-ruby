@@ -5,7 +5,7 @@ module Elasticsearch
 
         # Return statistical information about the watcher service
         #
-        # @see http://www.elastic.co/guide/en/watcher/current/appendix-api-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
         #
         def stats(arguments={})
           valid_params = [

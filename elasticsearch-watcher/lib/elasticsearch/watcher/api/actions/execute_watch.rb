@@ -8,7 +8,7 @@ module Elasticsearch
         # @option arguments [String] :id Watch ID (*Required*)
         # @option arguments [Hash] :body Execution control
         #
-        # @see http://www.elastic.co/guide/en/watcher/current/appendix-api-execute-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
         #
         def execute_watch(arguments={})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
