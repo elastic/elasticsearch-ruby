@@ -70,8 +70,8 @@ client.watcher.put_watch id: 'error_500', body: {
                  indices: ['test'],
                  body: {
                    query: {
-                     filtered: {
-                       query: { match: { status: 500 } },
+                     bool: {
+                       must: { match: { status: 500 } },
                        filter: { range: { timestamp: { from: '{{ctx.trigger.scheduled_time}}||-5m', to: '{{ctx.trigger.triggered_time}}' } } }
                      }
                    },
