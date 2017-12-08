@@ -15,7 +15,7 @@ module Elasticsearch
             :master_timeout
           ]
           method = 'PUT'
-          path   = "_watcher/watch/#{arguments[:id]}/_ack"
+          path   = "_xpack/watcher/watch/#{arguments[:id]}/_ack"
           params = {}
           body   = nil
 

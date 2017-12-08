@@ -11,7 +11,7 @@ module Elasticsearch
           valid_params = [
              ]
           method = 'GET'
-          path   = "/_watcher/stats"
+          path   = "/_xpack/watcher/stats"
           params = {}
           body   = nil
 

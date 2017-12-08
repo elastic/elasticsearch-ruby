@@ -12,7 +12,7 @@ module Elasticsearch
           valid_params = [
              ]
           method = 'PUT'
-          path   = "/_watcher/_restart"
+          path   = "/_xpack/watcher/_restart"
           params = {}
           body   = nil
 
