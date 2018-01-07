@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesDeleteMappingTest < ::Test::Unit::TestCase
+    class IndicesDeleteMappingTest < UnitTest
 
       context "Indices: Delete mapping" do
         subject { FakeClient.new }

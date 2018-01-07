@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ClusterAllocationExplainTest < ::Test::Unit::TestCase
+    class ClusterAllocationExplainTest < UnitTest
 
       context "Cluster: Allocation explain" do
         subject { FakeClient.new }

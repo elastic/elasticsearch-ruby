@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class NodesHotThreadsTest < ::Test::Unit::TestCase
+    class NodesHotThreadsTest < UnitTest
 
       context "Nodes: Hot Threads" do
         subject { FakeClient.new }

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesForcemergeTest < ::Test::Unit::TestCase
+    class IndicesForcemergeTest < UnitTest
 
       context "Indices: Forcemerge" do
         subject { FakeClient.new }

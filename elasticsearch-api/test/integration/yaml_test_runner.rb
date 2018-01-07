@@ -6,7 +6,6 @@ require 'logger'
 require 'yaml'
 require 'active_support/inflector'
 require 'ansi'
-require 'turn'
 
 require 'elasticsearch'
 require 'elasticsearch/extensions/test/cluster'
@@ -16,10 +15,6 @@ require 'elasticsearch/extensions/test/profiling' unless JRUBY
 # Skip features
 skip_features = 'stash_in_path,requires_replica,headers,warnings'
 SKIP_FEATURES = ENV.fetch('TEST_SKIP_FEATURES', skip_features)
-
-# Turn configuration
-ENV['ansi'] = 'false' if ENV['CI']
-Turn.config.format = :pretty
 
 # Launch test cluster
 #
@@ -95,39 +90,8 @@ puts '-'*80,
      '-'*80
 
 require 'test_helper'
-require 'test/unit'
-require 'shoulda/context'
 
-# Monkeypatch shoulda to remove "should" from test name
-#
-module Shoulda
-  module Context
-    class Context
-      def create_test_from_should_hash(should)
-        test_name = ["test:", full_name, "|", "#{should[:name]}"].flatten.join(' ').to_sym
-
-        if test_methods[test_unit_class][test_name.to_s] then
-          raise DuplicateTestError, "'#{test_name}' is defined more than once."
-        end
-
-        test_methods[test_unit_class][test_name.to_s] = true
-
-        context = self
-        test_unit_class.send(:define_method, test_name) do
-          @shoulda_context = context
-          begin
-            context.run_parent_setup_blocks(self)
-            should[:before].bind(self).call if should[:before]
-            context.run_current_setup_blocks(self)
-            should[:block].bind(self).call
-          ensure
-            context.run_all_teardown_blocks(self)
-          end
-        end
-      end
-    end
-  end
-end
+Minitest::Reporters.use! Elasticsearch::Test::YAMLTestReporter.new
 
 module Elasticsearch
   module YamlTestSuite
@@ -142,7 +106,7 @@ module Elasticsearch
 
       def symbolize_keys(object)
         if object.is_a? Hash
-          object.reduce({}) { |memo,(k,v)| memo[k.to_sym] = symbolize_keys(v); memo }
+          object.reduce({}) { |memo,(k,v)| memo[k.to_s.to_sym] = symbolize_keys(v); memo }
         else
           object
         end
@@ -213,7 +177,7 @@ module Elasticsearch
       def in_context(name, &block)
         klass = Class.new(YamlTestCase)
         Object::const_set "%sTest" % name.split(/\s/).map { |d| d.capitalize }.join('').gsub(/[^\w]+/, ''), klass
-        klass.context name, &block
+        klass.context "[#{name.ansi(:bold)}]", &block
       end
 
       def fetch_or_return(var)
@@ -275,7 +239,7 @@ module Elasticsearch
       extend self
     end
 
-    class YamlTestCase < ::Test::Unit::TestCase; end
+    class YamlTestCase < ::Minitest::Test; end
   end
 end
 
@@ -333,10 +297,10 @@ suites.each do |suite|
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
       begin
-        tests = YAML.load_documents File.new(file)
+        tests = YAML.load_stream File.new(file)
       rescue Exception => e
         $stderr.puts "ERROR [#{e.class}] while loading [#{file}] file".ansi(:red)
-        # raise e
+        raise e
         next
       end
 
@@ -357,7 +321,7 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{file.gsub(PATH.to_s, '').ansi(:bold)}")
+          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{file.gsub(PATH.to_s, '')}")
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)

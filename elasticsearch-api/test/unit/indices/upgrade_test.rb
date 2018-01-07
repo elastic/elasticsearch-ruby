@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesUpgradeTest < ::Test::Unit::TestCase
+    class IndicesUpgradeTest < UnitTest
 
       context "Indices: Upgrade" do
         subject { FakeClient.new }

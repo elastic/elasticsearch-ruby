@@ -90,8 +90,8 @@ namespace :elasticsearch do
     case es_version
       when 0.0, 5..1000
         path_to_build   = __current__.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
-        build_command   = "cd #{__current__.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
-        extract_command = <<-CODE.gsub(/          /, '')
+        build_command   = "cd #{__current__.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble"
+        extract_command = <<-CODE.gsub(/          /, '').gsub(/\n$/, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
           if [[ $build ]]; then
             rm -rf "#{__current__.join('tmp/builds')}/$build";
@@ -99,33 +99,33 @@ namespace :elasticsearch do
             echo "Cannot determine build, exiting..."
             exit 1
           fi
-          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')};
+          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')}
         CODE
       when 1.8..4
         path_to_build   = __current__.join('tmp/elasticsearch/distribution/tar/target/releases/elasticsearch-*.tar.gz')
-        build_command = "cd #{__current__.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn --projects core,distribution/tar clean package -DskipTests -Dskip.integ.tests;"
-        extract_command = <<-CODE.gsub(/          /, '')
+        build_command = "cd #{__current__.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn --projects core,distribution/tar clean package -DskipTests -Dskip.integ.tests"
+        extract_command = <<-CODE.gsub(/          /, '').gsub(/\n$/, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
           if [[ $build ]]; then
-            rm -rf "#{__current__.join('tmp/builds')}/$build";
+            rm -rf "#{__current__.join('tmp/builds')}/$build"
           else
             echo "Cannot determine build, exiting..."
             exit 1
           fi
-          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')};
+          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')}
         CODE
       when 0.1..1.7
         path_to_build   = __current__.join('tmp/elasticsearch/target/releases/elasticsearch-*.tar.gz')
         build_command = "cd #{__current__.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn clean package -DskipTests"
-        extract_command = <<-CODE.gsub(/          /, '')
+        extract_command = <<-CODE.gsub(/          /, '').gsub(/\n$/, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
           if [[ $build ]]; then
-            rm -rf "#{__current__.join('tmp/builds')}/$build";
+            rm -rf "#{__current__.join('tmp/builds')}/$build"
           else
             echo "Cannot determine build, exiting..."
             exit 1
           fi
-          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')};
+          tar xvf #{path_to_build} -C #{__current__.join('tmp/builds')}
         CODE
       else
         STDERR.puts "", "[!] Cannot determine a compatible version of the build (gitref: #{gitref}, es_version: #{es_version})"
@@ -135,11 +135,12 @@ namespace :elasticsearch do
     sh <<-CODE.gsub(/      /, '')
       mkdir -p #{__current__.join('tmp/builds')};
       rm -rf '#{__current__.join('tmp/elasticsearch/distribution/tar/target/')}';
-      cd #{__current__.join('tmp/elasticsearch')} && git fetch origin --quiet;
-      cd #{__current__.join('tmp/elasticsearch')} && git checkout #{gitref};
-      #{build_command}
-      #{extract_command}
-      echo; echo; echo "Built: $build"
+
+      cd #{__current__.join('tmp/elasticsearch')} && git fetch origin --quiet && \
+      cd #{__current__.join('tmp/elasticsearch')} && git checkout #{gitref} && \
+      #{build_command} && \
+      #{extract_command} && \
+      echo && echo && echo "Built: $build"
     CODE
 
     puts "", '-'*80, ""

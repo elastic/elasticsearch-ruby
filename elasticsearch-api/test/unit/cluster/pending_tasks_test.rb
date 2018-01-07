@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ClusterPendingTasksTest < ::Test::Unit::TestCase
+    class ClusterPendingTasksTest < UnitTest
 
       context "Cluster: Pending tasks" do
         subject { FakeClient.new }

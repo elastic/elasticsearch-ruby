@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ReindexTest < ::Test::Unit::TestCase
+    class ReindexTest < UnitTest
 
       context "Reindex" do
         subject { FakeClient.new }

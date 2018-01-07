@@ -4,7 +4,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class APITest < ::Test::Unit::TestCase
+    class APITest < UnitTest
 
       context "The API module" do
 

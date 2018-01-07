@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesValidateQueryTest < ::Test::Unit::TestCase
+    class IndicesValidateQueryTest < UnitTest
 
       context "Indices: Validate query" do
         subject { FakeClient.new }

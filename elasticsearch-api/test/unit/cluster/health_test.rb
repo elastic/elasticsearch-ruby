@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class Cluster_Test < ::Test::Unit::TestCase
+    class Cluster_Test < UnitTest
 
       context "Health" do
         subject { FakeClient.new }

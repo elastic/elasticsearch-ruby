@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CatAllocationTest < ::Test::Unit::TestCase
+    class CatAllocationTest < UnitTest
 
       context "Cat: Allocation" do
         subject { FakeClient.new }

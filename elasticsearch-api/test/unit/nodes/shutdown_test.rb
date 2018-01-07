@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class NodesShutdownTest < ::Test::Unit::TestCase
+    class NodesShutdownTest < UnitTest
 
       context "Nodes: Shutdown" do
         subject { FakeClient.new }

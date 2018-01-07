@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesPutAliasTest < ::Test::Unit::TestCase
+    class IndicesPutAliasTest < UnitTest
 
       context "Indices: Put alias" do
         subject { FakeClient.new }

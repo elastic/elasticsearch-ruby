@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class AbortBenchmarkTest < ::Test::Unit::TestCase
+    class AbortBenchmarkTest < UnitTest
 
       context "Abort benchmark" do
         subject { FakeClient.new }

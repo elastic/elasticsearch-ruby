@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class PutScriptTest < ::Test::Unit::TestCase
+    class PutScriptTest < UnitTest
 
       context "Put script" do
         subject { FakeClient.new }

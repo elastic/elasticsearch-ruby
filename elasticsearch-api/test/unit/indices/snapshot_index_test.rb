@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesSnapshotIndexTest < ::Test::Unit::TestCase
+    class IndicesSnapshotIndexTest < UnitTest
 
       context "Indices: Snapshot index" do
         subject { FakeClient.new }

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ClearScrollTest < ::Test::Unit::TestCase
+    class ClearScrollTest < UnitTest
 
       context "Clear scroll" do
         subject { FakeClient.new }

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesSplitTest < ::Test::Unit::TestCase
+    class IndicesSplitTest < UnitTest
 
       context "Indices: Split" do
         subject { FakeClient.new }

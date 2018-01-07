@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesRolloverTest < ::Test::Unit::TestCase
+    class IndicesRolloverTest < UnitTest
 
       context "Indices: Rollover" do
         subject { FakeClient.new }

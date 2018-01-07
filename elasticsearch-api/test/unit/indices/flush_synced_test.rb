@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesFlushSyncedTest < ::Test::Unit::TestCase
+    class IndicesFlushSyncedTest < UnitTest
 
       context "Indices: Flush synced" do
         subject { FakeClient.new }

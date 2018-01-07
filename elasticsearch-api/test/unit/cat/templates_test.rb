@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CatTemplatesTest < ::Test::Unit::TestCase
+    class CatTemplatesTest < UnitTest
 
       context "Cat: Templates" do
         subject { FakeClient.new }

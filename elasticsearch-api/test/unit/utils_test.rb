@@ -4,12 +4,16 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class UtilsTest < ::Test::Unit::TestCase
+    class UtilsTest < UnitTest
       include Elasticsearch::API::Utils
 
       context "Utils" do
 
         context "__escape" do
+
+          teardown do
+            Object.__send__ :remove_const, :EscapeUtils if defined?(EscapeUtils)
+          end
 
           should "encode Unicode characters" do
             assert_equal '%E4%B8%AD%E6%96%87', __escape('中文')

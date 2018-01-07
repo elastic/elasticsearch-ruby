@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesOptimizeTest < ::Test::Unit::TestCase
+    class IndicesOptimizeTest < UnitTest
 
       context "Indices: Optimize" do
         subject { FakeClient.new }

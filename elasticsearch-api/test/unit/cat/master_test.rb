@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CatMasterTest < ::Test::Unit::TestCase
+    class CatMasterTest < UnitTest
 
       context "Cat: Master" do
         subject { FakeClient.new }

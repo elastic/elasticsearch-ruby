@@ -20,8 +20,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "ansi"
   s.add_dependency "elasticsearch"
-  s.add_dependency "oj"
-  s.add_dependency "patron"
+  s.add_dependency "oj" unless defined?(JRUBY_VERSION)
+  s.add_dependency "patron" unless defined?(JRUBY_VERSION)
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)

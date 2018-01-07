@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CatThreadPoolTest < ::Test::Unit::TestCase
+    class CatThreadPoolTest < UnitTest
 
       context "Cat: Thread pool" do
         subject { FakeClient.new }

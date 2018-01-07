@@ -7,7 +7,6 @@ require 'simplecov' and SimpleCov.start { add_filter "/test|test_/" } if ENV["CO
 require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
-require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 Dir[ File.expand_path('../../lib/elasticsearch/api/**/*.rb', __FILE__) ].each do |f|

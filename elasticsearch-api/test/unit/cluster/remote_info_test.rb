@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class ClusterRemoteInfoTest < ::Test::Unit::TestCase
+    class ClusterRemoteInfoTest < UnitTest
 
       context "Cluster: Remote info" do
         subject { FakeClient.new }
