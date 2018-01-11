@@ -34,7 +34,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "elasticsearch-transport"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "minitest", "~> 4.0"
+    s.add_development_dependency "minitest"
+    s.add_development_dependency "minitest-reporters"
     s.add_development_dependency "elasticsearch-extensions"
   end
 
