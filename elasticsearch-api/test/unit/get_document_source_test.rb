@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class GetSourceTest < ::Test::Unit::TestCase
+    class GetSourceTest < UnitTest
 
       context "Get document source" do
         subject { FakeClient.new }

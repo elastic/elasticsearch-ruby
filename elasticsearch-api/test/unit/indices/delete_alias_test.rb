@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesDeleteAliasTest < ::Test::Unit::TestCase
+    class IndicesDeleteAliasTest < UnitTest
 
       context "Indices: Delete alias" do
         subject { FakeClient.new }

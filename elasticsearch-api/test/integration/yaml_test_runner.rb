@@ -90,39 +90,77 @@ puts '-'*80,
      '-'*80
 
 require 'test_helper'
-require 'test/unit'
-require 'shoulda/context'
 
-# Monkeypatch shoulda to remove "should" from test name
-#
-module Shoulda
-  module Context
-    class Context
-      def create_test_from_should_hash(should)
-        test_name = ["test:", full_name, "|", "#{should[:name]}"].flatten.join(' ').to_sym
+class Elasticsearch::Test::YAMLTestReporter < Minitest::Reporters::SpecReporter
+  def before_suite(suite)
+    puts ">>>>> #{suite.to_s} #{''.ljust(72-suite.to_s.size, '>')}" unless ENV['QUIET']
+  end
+  def after_suite(suite)
+    super unless ENV['QUIET']
+  end
+  def record_print_status(test)
+    (@___failures ||= []) << test unless test.failures.empty?
+    test_name = test.name.gsub(/^test_: /, '').gsub(/ should /, ' ').gsub(/\.\s*$/, '')
+    print pad_test(test_name)
+    print_colored_status(test)
+    print(" (%.2fs)" % test.time) unless test.time.nil?
+    puts
+  end
+  def report
+    super
+    puts "\n"
 
-        if test_methods[test_unit_class][test_name.to_s] then
-          raise DuplicateTestError, "'#{test_name}' is defined more than once."
-        end
+    if @___failures and not @___failures.empty?
+      failures = @___failures.reject { |f| f.error? }
+      errors   = @___failures.select { |f| f.error? }
 
-        test_methods[test_unit_class][test_name.to_s] = true
+      unless failures.empty?
+        puts ">>>>> FAILED " + '>'*67
+        failures.each do |failure|
+          test_name = failure.name
+                        .gsub(/^test_: /, '')
+                        .gsub(/ should /, ' ')
+                        .gsub(/\| .*$/, '')
+                        .gsub(/\.\s*$/, '')
+          yaml_filename = failure.name.gsub(/.*\| (.*)\.\s*$/, '\1')
 
-        context = self
-        test_unit_class.send(:define_method, test_name) do
-          @shoulda_context = context
-          begin
-            context.run_parent_setup_blocks(self)
-            should[:before].bind(self).call if should[:before]
-            context.run_current_setup_blocks(self)
-            should[:block].bind(self).call
-          ensure
-            context.run_all_teardown_blocks(self)
-          end
+          puts "FAILED".ansi(:red) +
+               " [#{failure.failure.exception.class.to_s}] ".ansi(:red, :bold) +
+               test_name,
+               "<https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/#{yaml_filename}>".ansi(:underscore),
+               failure.failure.message.ansi(:faint)
         end
       end
+
+      unless errors.empty?
+        puts ">>>>> ERRORS " + '>'*67
+        errors.each do |failure|
+          test_name = failure.name
+                        .gsub(/^test_: /, '')
+                        .gsub(/ should /, ' ')
+                        .gsub(/\| .*$/, '')
+                        .gsub(/\.\s*$/, '')
+          yaml_filename = failure.name.gsub(/.*\| (.*)\.\s*$/, '\1')
+
+          puts "ERROR".ansi(:red) +
+               " [#{failure.failure.exception.class.to_s}] ".ansi(:red, :bold) +
+               test_name,
+               "<https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/#{yaml_filename}>".ansi(:underscore),
+               failure.failure.message
+                .split("\n").reject {|l| l =~ /yaml_test_runner.rb/}.join("\n")
+                .ansi(:faint)
+        end
+      end
+
+      puts '>'*80
+    else
+      message = "~~~~~ ALL TESTS PASS "
+      puts (message + '~'*(80-message.size)).ansi(:green, :bold)
     end
   end
 end
+
+Minitest::Reporters.use! Elasticsearch::Test::YAMLTestReporter.new
 
 module Elasticsearch
   module YamlTestSuite
@@ -137,7 +175,7 @@ module Elasticsearch
 
       def symbolize_keys(object)
         if object.is_a? Hash
-          object.reduce({}) { |memo,(k,v)| memo[k.to_sym] = symbolize_keys(v); memo }
+          object.reduce({}) { |memo,(k,v)| memo[k.to_s.to_sym] = symbolize_keys(v); memo }
         else
           object
         end
@@ -208,7 +246,7 @@ module Elasticsearch
       def in_context(name, &block)
         klass = Class.new(YamlTestCase)
         Object::const_set "%sTest" % name.split(/\s/).map { |d| d.capitalize }.join('').gsub(/[^\w]+/, ''), klass
-        klass.context name, &block
+        klass.context "[#{name.ansi(:bold)}]", &block
       end
 
       def fetch_or_return(var)
@@ -270,7 +308,7 @@ module Elasticsearch
       extend self
     end
 
-    class YamlTestCase < ::Test::Unit::TestCase; end
+    class YamlTestCase < ::Minitest::Test; end
   end
 end
 
@@ -333,7 +371,7 @@ suites.each do |suite|
     files.each do |file|
       begin
         tests = YAML.load_stream File.new(file)
-      rescue Exception => e
+      rescue RuntimeError => e
         $stderr.puts "ERROR [#{e.class}] while loading [#{file}] file".ansi(:red)
         # raise e
         next
@@ -356,7 +394,9 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{file.gsub(PATH.to_s, '').ansi(:bold)}")
+          yaml_file_line = File.read(file).split("\n").index {|l| l.include? test.keys.first.to_s }
+          l = yaml_file_line ? "#L#{yaml_file_line.to_i + 1}" : ''
+          test_name = test.keys.first.to_s + " | #{file.gsub(PATH.to_s, '').gsub(/^\//, '')}" + l
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)
@@ -427,7 +467,7 @@ suites.each do |suite|
 
                   begin
                     $results[test.hash] = Runner.perform_api_call(test, api, arguments)
-                  rescue Exception => e
+                  rescue StandardError => e
                     begin
                       $results[test.hash] = MultiJson.load(e.message.match(/{.+}/, 1).to_s)
                     rescue MultiJson::ParseError

@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesPutWarmerTest < ::Test::Unit::TestCase
+    class IndicesPutWarmerTest < UnitTest
 
       context "Indices: Put warmer" do
         subject { FakeClient.new }

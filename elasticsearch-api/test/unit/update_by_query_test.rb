@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class UpdateByQueryTest < ::Test::Unit::TestCase
+    class UpdateByQueryTest < UnitTest
 
       context "Update by query" do
         subject { FakeClient.new }

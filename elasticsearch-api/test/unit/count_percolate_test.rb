@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CountPercolateTest < ::Test::Unit::TestCase
+    class CountPercolateTest < UnitTest
 
       context "Count percolate" do
         subject { FakeClient.new }

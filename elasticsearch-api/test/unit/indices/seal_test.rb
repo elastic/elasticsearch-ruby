@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesSealTest < ::Test::Unit::TestCase
+    class IndicesSealTest < UnitTest
 
       context "Indices: Seal" do
         subject { FakeClient.new }

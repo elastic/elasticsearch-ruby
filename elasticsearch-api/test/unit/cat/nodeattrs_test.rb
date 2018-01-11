@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class CatNodeattrsTest < ::Test::Unit::TestCase
+    class CatNodeattrsTest < UnitTest
 
       context "Cat: Nodeattrs" do
         subject { FakeClient.new }

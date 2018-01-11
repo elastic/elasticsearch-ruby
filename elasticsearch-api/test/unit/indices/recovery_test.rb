@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesRecoveryTest < ::Test::Unit::TestCase
+    class IndicesRecoveryTest < UnitTest
 
       context "Indices: Recovery" do
         subject { FakeClient.new }

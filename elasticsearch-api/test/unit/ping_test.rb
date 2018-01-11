@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class PingTest < ::Test::Unit::TestCase
+    class PingTest < UnitTest
 
       context "Ping" do
         subject { FakeClient.new }

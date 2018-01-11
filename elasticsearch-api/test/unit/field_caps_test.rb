@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class FieldCapsTest < ::Test::Unit::TestCase
+    class FieldCapsTest < UnitTest
 
       context "Field caps" do
         subject { FakeClient.new }

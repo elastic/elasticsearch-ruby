@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesCloseTest < ::Test::Unit::TestCase
+    class IndicesCloseTest < UnitTest
 
       context "Indices: Close" do
         subject { FakeClient.new }

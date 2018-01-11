@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IngestDeletePipelineTest < ::Test::Unit::TestCase
+    class IngestDeletePipelineTest < UnitTest
 
       context "Ingest: Delete pipeline" do
         subject { FakeClient.new }

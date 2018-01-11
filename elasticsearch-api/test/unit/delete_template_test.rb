@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class DeleteTemplateTest < ::Test::Unit::TestCase
+    class DeleteTemplateTest < UnitTest
 
       context "Delete template" do
         subject { FakeClient.new }

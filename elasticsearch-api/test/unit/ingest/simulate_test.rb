@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IngestSimulateTest < ::Test::Unit::TestCase
+    class IngestSimulateTest < UnitTest
 
       context "Ingest: Simulate" do
         subject { FakeClient.new }

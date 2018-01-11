@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndexDocumentTest < ::Test::Unit::TestCase
+    class IndexDocumentTest < UnitTest
 
       context "Indexing a document" do
         subject { FakeClient.new }

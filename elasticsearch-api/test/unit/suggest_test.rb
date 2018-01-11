@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SuggestTest < ::Test::Unit::TestCase
+    class SuggestTest < UnitTest
 
       context "Suggest" do
         subject { FakeClient.new }

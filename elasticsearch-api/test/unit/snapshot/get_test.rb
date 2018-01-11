@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SnapshotGetTest < ::Test::Unit::TestCase
+    class SnapshotGetTest < UnitTest
 
       context "Snapshot: Get" do
         subject { FakeClient.new }

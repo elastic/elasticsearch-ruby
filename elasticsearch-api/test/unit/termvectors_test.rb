@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class TermvectorsTest < ::Test::Unit::TestCase
+    class TermvectorsTest < UnitTest
 
       context "Termvectors" do
         subject { FakeClient.new }

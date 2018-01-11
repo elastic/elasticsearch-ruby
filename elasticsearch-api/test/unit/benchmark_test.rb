@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class BenchmarkTest < ::Test::Unit::TestCase
+    class BenchmarkTest < UnitTest
 
       context "Benchmark" do
         subject { FakeClient.new }

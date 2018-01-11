@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IngestGetPipelineTest < ::Test::Unit::TestCase
+    class IngestGetPipelineTest < UnitTest
 
       context "Ingest: Get pipeline" do
         subject { FakeClient.new }

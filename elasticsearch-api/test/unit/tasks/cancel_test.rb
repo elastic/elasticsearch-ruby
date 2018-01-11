@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class TasksCancelTest < ::Test::Unit::TestCase
+    class TasksCancelTest < UnitTest
 
       context "Tasks: Cancel" do
         subject { FakeClient.new }

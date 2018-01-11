@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesGetFieldMappingTest < ::Test::Unit::TestCase
+    class IndicesGetFieldMappingTest < UnitTest
 
       context "Indices: Get field mapping" do
         subject { FakeClient.new }

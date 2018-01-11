@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesShrinkTest < ::Test::Unit::TestCase
+    class IndicesShrinkTest < UnitTest
 
       context "Indices: Shrink" do
         subject { FakeClient.new }

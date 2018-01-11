@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class IndicesClearCacheTest < ::Test::Unit::TestCase
+    class IndicesClearCacheTest < UnitTest
 
       context "Indices: Clear cache" do
         subject { FakeClient.new }

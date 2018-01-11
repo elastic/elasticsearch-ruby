@@ -2,7 +2,7 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class SnapshotDeleteRepositoryTest < ::Test::Unit::TestCase
+    class SnapshotDeleteRepositoryTest < UnitTest
 
       context "Snapshot: Delete repository" do
         subject { FakeClient.new }
