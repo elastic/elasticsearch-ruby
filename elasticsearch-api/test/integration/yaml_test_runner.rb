@@ -323,6 +323,10 @@ suites.each do |suite|
     #
     teardown do
       $helper_client.indices.delete index: '_all', ignore: 404
+
+      # Wipe out cluster "transient" settings
+      settings = $helper_client.cluster.get_settings(flat_settings: true)['transient'].keys.reduce({}) {|s,i| s[i] = nil; s}
+      $helper_client.cluster.put_settings body: { transient: settings } unless settings.empty?
     end
 
     files = Dir[suite.join('*.{yml,yaml}')]
