@@ -18,33 +18,59 @@ branches:
 
 matrix:
   include:
-    - rvm: 2.4.0
+
+    # Unit tests
+    - rvm: ruby-head
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.3.3
+    - rvm: 2.5.0
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.2.6
+    - rvm: 2.4.1
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.4.0
+    - rvm: 2.3.4
       jdk: oraclejdk8
-      env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/master TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch
+      env: TEST_SUITE=unit
+
+    - rvm: 2.2.5
+      jdk: oraclejdk8
+      env: TEST_SUITE=unit
+
+    - rvm: jruby-9.1.12.0
+      jdk: oraclejdk8
+      env: TEST_SUITE=unit
+
+    # Integration tests
+    - rvm: 2.5.0
+      jdk: oraclejdk8
+      env: QUIET=y TEST_SUITE=integration
+
+  allow_failures:
+    - rvm: ruby-head
+      jdk: oraclejdk8
+      env: TEST_SUITE=unit
 
 before_install:
+  - ls $PWD
+  - pkill -9 -f elasticsearch || true
   - gem update --system
   - gem --version
-  - gem install bundler -v 1.14.3
+  - gem install bundler -v 1.16.1
   - bundle version
+  - bundle install
+  - bundle exec rake setup
+  - bundle exec rake elasticsearch:update
   - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
-  - rake setup
-  - rake elasticsearch:update
+  - >
+    [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
+    TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch
+    bundle exec rake -I elasticsearch-extensions/lib test:cluster:start || true
 
 install:
-  - bundle install
   - rake bundle:clean
   - rake bundle:install
 
