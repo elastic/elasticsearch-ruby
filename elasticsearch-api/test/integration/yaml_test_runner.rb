@@ -6,7 +6,6 @@ require 'logger'
 require 'yaml'
 require 'active_support/inflector'
 require 'ansi'
-require 'turn'
 
 require 'elasticsearch'
 require 'elasticsearch/extensions/test/cluster'
@@ -16,10 +15,6 @@ require 'elasticsearch/extensions/test/profiling' unless JRUBY
 # Skip features
 skip_features = 'stash_in_path,requires_replica,headers,warnings'
 SKIP_FEATURES = ENV.fetch('TEST_SKIP_FEATURES', skip_features)
-
-# Turn configuration
-ENV['ansi'] = 'false' if ENV['CI']
-Turn.config.format = :pretty
 
 # Launch test cluster
 #

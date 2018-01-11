@@ -22,14 +22,6 @@ require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
 
-unless ENV["NOTURN"] || RUBY_1_8
-  require 'turn'
-
-  if ENV['QUIET']
-    Turn.config.format = :outline
-    Turn.config.trace = 1
-  end
-end
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch/api'
