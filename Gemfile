@@ -16,7 +16,6 @@ gem "pry"
 gem "ansi"
 gem "shoulda-context"
 gem "mocha"
-gem "turn"
 gem "yard"
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
