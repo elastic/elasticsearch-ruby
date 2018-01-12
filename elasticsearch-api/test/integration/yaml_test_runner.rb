@@ -78,7 +78,7 @@ $client ||= Elasticsearch::Client.new url: url
 $helper_client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
-# $client.transport.tracer = tracer if ENV['CI']
+$client.transport.tracer = tracer if ENV['TRACE']
 
 # Store Elasticsearch version
 #
