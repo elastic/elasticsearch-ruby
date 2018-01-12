@@ -183,8 +183,8 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     end
 
     context "when reloading connections" do
-      should "keep existing connections" do
-        require 'patron' # We need a client with keep-alive
+      should "keep existing connections with a persistent client" do
+        require 'patron'
         client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}",
                                                       adapter: :patron,
                                                       logger: (ENV['QUIET'] ? nil : @logger)
@@ -219,19 +219,6 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         response = @client.perform_request 'GET', '_cluster/health'
         assert_equal 200, response.status
       end
-
-      should "automatically use the Patron client when loaded" do
-        teardown { begin; Object.send(:remove_const, :Patron); rescue NameError; end }
-
-        require 'patron'
-        client = Elasticsearch::Transport::Client.new host: "127.0.0.1:#{@port}"
-
-        assert_equal 'Faraday::Adapter::Patron',
-                      client.transport.connections.first.connection.builder.handlers.first.name
-
-        response = @client.perform_request 'GET', '_cluster/health'
-        assert_equal 200, response.status
-      end unless JRUBY
     end
   end
 end
