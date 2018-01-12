@@ -17,7 +17,6 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-      system "curl -X DELETE http://127.0.0.1:#{@port}/_all > /dev/null 2>&1"
 
       @logger =  Logger.new(STDERR)
       @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -31,6 +30,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
 
       @client = Elasticsearch::Client.new host: "127.0.0.1:#{@port}"
+      @client.perform_request 'DELETE', '_all'
     end
 
     should "connect to the cluster" do
@@ -41,7 +41,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     end
 
     should "handle paths and URL parameters" do
-      @client.perform_request 'PUT', 'myindex/mydoc/1', {routing: 'XYZ'}, {foo: 'bar'}
+      @client.perform_request 'PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, {foo: 'bar'}
       @client.perform_request 'GET', '_cluster/health?wait_for_status=green', {}
 
       response = @client.perform_request 'GET', 'myindex/mydoc/1?routing=XYZ'
