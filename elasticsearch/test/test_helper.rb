@@ -24,10 +24,12 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 end
 
-require 'test/unit'
-require 'shoulda-context'
-require 'mocha/setup'
-require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
+require 'test/unit' if RUBY_1_8
+
+require 'minitest/autorun'
+require 'minitest/reporters'
+require 'shoulda/context'
+require 'mocha/mini_test'
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch'
@@ -39,9 +41,36 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/profiling' unless JRUBY
 end
 
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
+module Minitest
+  class Test
+    def assert_nothing_raised(*args)
+      begin
+        line = __LINE__
+        yield
+      rescue RuntimeError => e
+        raise MiniTest::Assertion, "Exception raised:\n<#{e.class}>", e.backtrace
+      end
+      true
+    end
+
+    def assert_not_nil(object, msg=nil)
+      msg = message(msg) { "<#{object.inspect}> expected to not be nil" }
+      assert !object.nil?, msg
+    end
+
+    def assert_block(*msgs)
+      assert yield, *msgs
+    end
+
+    alias :assert_raise :assert_raises
+  end
+end
+
 module Elasticsearch
   module Test
-    class IntegrationTestCase < ::Test::Unit::TestCase
+    class IntegrationTestCase < Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
@@ -50,7 +79,7 @@ module Elasticsearch
   end
 
   module Test
-    class ProfilingTest < ::Test::Unit::TestCase
+    class ProfilingTest < Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
       extend Elasticsearch::Extensions::Test::Profiling
 
