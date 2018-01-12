@@ -4,10 +4,10 @@ require 'pathname'
 require 'fileutils'
 
 require 'multi_json'
-require 'oj'
+require 'oj' unless defined?(JRUBY_VERSION)
 
 require 'elasticsearch'
-require 'patron'
+require 'patron' unless defined?(JRUBY_VERSION)
 
 module Backup
   module Database
