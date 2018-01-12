@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "patron" unless defined? JRUBY_VERSION
   s.add_development_dependency "typhoeus", '~> 0.6'
   s.add_development_dependency "net-http-persistent"
-  s.add_development_dependency "manticore", '~> 0.5.2' if defined? JRUBY_VERSION
+  s.add_development_dependency "manticore", '~> 0.6' if defined? JRUBY_VERSION
   s.add_development_dependency "hashie"
 
   # Prevent unit test failures on Ruby 1.8
