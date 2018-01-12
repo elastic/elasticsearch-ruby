@@ -7,7 +7,7 @@ else
   require 'elasticsearch/transport/transport/http/manticore'
   require 'manticore'
 
-  class Elasticsearch::Transport::Transport::HTTP::ManticoreTest < Test::Unit::TestCase
+  class Elasticsearch::Transport::Transport::HTTP::ManticoreTest < Minitest::Test
     include Elasticsearch::Transport::Transport::HTTP
 
     context "Manticore transport" do

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::ResponseTest < Test::Unit::TestCase
+class Elasticsearch::Transport::Transport::ResponseTest < Minitest::Test
   context "Response" do
 
     should "force-encode the body into UTF" do

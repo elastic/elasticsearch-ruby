@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
+class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
 
   class EmptyTransport
     include Elasticsearch::Transport::Transport::Base

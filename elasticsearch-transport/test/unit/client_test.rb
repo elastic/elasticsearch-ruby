@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientTest < Test::Unit::TestCase
+class Elasticsearch::Transport::ClientTest < Minitest::Test
 
   class DummyTransport
     def initialize(*); end

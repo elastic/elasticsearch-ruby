@@ -26,11 +26,12 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 end
 
-require 'test/unit'
-require 'shoulda-context'
-require 'mocha/setup'
+require 'test/unit' if RUBY_1_8
+require 'minitest/autorun'
+require 'minitest/reporters'
+require 'shoulda/context'
+require 'mocha/mini_test'
 require 'ansi/code'
-require 'turn' unless ENV["TM_FILEPATH"] || ENV["NOTURN"] || RUBY_1_8
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch-transport'
@@ -46,17 +47,49 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/profiling' unless JRUBY
 end
 
-class Test::Unit::TestCase
-  def setup
-  end
+class FixedMinitestSpecReporter < Minitest::Reporters::SpecReporter
+  def before_test(test)
+    last_test = tests.last
 
-  def teardown
+    before_suite(test.class) unless last_test
+
+    if last_test && last_test.klass.to_s != test.class.to_s
+      after_suite(last_test.class) if last_test
+      before_suite(test.class)
+    end
   end
 end
 
+module Minitest
+  class Test
+    def assert_nothing_raised(*args)
+      begin
+        line = __LINE__
+        yield
+      rescue RuntimeError => e
+        raise MiniTest::Assertion, "Exception raised:\n<#{e.class}>", e.backtrace
+      end
+      true
+    end
+
+    def assert_not_nil(object, msg=nil)
+      msg = message(msg) { "<#{object.inspect}> expected to not be nil" }
+      assert !object.nil?, msg
+    end
+
+    def assert_block(*msgs)
+      assert yield, *msgs
+    end
+
+    alias :assert_raise :assert_raises
+  end
+end
+
+Minitest::Reporters.use! FixedMinitestSpecReporter.new
+
 module Elasticsearch
   module Test
-    class IntegrationTestCase < ::Test::Unit::TestCase
+    class IntegrationTestCase < Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
@@ -65,7 +98,7 @@ module Elasticsearch
   end
 
   module Test
-    class ProfilingTest < ::Test::Unit::TestCase
+    class ProfilingTest < Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
       extend Elasticsearch::Extensions::Test::Profiling
 

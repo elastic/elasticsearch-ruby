@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::SerializerTest < Test::Unit::TestCase
+class Elasticsearch::Transport::Transport::SerializerTest < Minitest::Test
 
   context "Serializer" do
 
