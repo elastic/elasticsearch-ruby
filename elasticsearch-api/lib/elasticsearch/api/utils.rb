@@ -59,7 +59,7 @@ module Elasticsearch
       def __pathify(*segments)
         Array(segments).flatten.
           compact.
-          reject { |s| s.squeeze(' ').size == 0 }.
+          reject { |s| s.to_s.strip.empty? }.
           join('/').
           squeeze('/')
       end
