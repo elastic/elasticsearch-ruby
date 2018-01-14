@@ -11,7 +11,7 @@ see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-r
 
 ## Compatibility
 
-The Elasticsearch client is compatible with Ruby 1.8.7 and higher.
+The Elasticsearch client is compatible with Ruby 1.9 and higher.
 Other libraries in this repository might require a more recent Ruby version.
 
 The client's API is compatible with Elasticsearch's API versions from 0.90 till current,
