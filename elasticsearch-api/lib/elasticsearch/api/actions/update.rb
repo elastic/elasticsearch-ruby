@@ -20,7 +20,7 @@ module Elasticsearch
       # @example Add a tag to document `tags` property using a `script`
       #
       #     client.update index: 'myindex', type: 'mytype', id: '1',
-      #                   body: { script: 'ctx._source.tags += tag', params: { tag: 'x' } }
+      #                    body: { script: { source: 'ctx._source.tags.add(params.tag)', params: { tag: 'x' } } }
       #
       # @example Increment a document counter by 1 _or_ initialize it, when the document does not exist
       #
@@ -30,7 +30,7 @@ module Elasticsearch
       # @example Delete a document if it's tagged "to-delete"
       #
       #     client.update index: 'myindex', type: 'mytype', id: '1',
-      #                   body: { script: 'ctx._source.tags.contains(tag) ? ctx.op = "delete" : ctx.op = "none"',
+      #                   body: { script: 'ctx._source.tags.contains(params.tag) ? ctx.op = "delete" : ctx.op = "none"',
       #                           params: { tag: 'to-delete' } }
       #
       # @option arguments [String] :id Document ID (*Required*)
