@@ -16,13 +16,13 @@ module Elasticsearch
       #                            scroll: '5m',
       #                            body: { query: { match: { title: 'test' } }, sort: '_id' }
       #
-      #     result = client.scroll scroll: '5m', scroll_id: result['_scroll_id']
+      #     result = client.scroll scroll: '5m', body: { scroll_id: result['_scroll_id'] }
       #
       # @example Call the `scroll` API until all the documents are returned
       #
       #     # Index 1,000 documents
       #     client.indices.delete index: 'test'
-      #     1_000.times do |i| client.index index: 'test', type: 'test', id: i+1, body: {title: "Test #{i}"} end
+      #     1_000.times do |i| client.index index: 'test', type: 'test', id: i+1, body: {title: "Test #{i+1}"} end
       #     client.indices.refresh index: 'test'
       #
       #     # Open the "view" of the index by passing the `scroll` parameter
@@ -34,7 +34,7 @@ module Elasticsearch
       #     puts r['hits']['hits'].map { |d| d['_source']['title'] }.inspect
       #
       #     # Call the `scroll` API until empty results are returned
-      #     while r = client.scroll(scroll_id: r['_scroll_id'], scroll: '5m') and not r['hits']['hits'].empty? do
+      #     while r = client.scroll(body: { scroll_id: r['_scroll_id'] }, scroll: '5m') and not r['hits']['hits'].empty? do
       #       puts "--- BATCH #{defined?($i) ? $i += 1 : $i = 1} -------------------------------------------------"
       #       puts r['hits']['hits'].map { |d| d['_source']['title'] }.inspect
       #       puts
