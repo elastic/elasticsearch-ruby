@@ -48,7 +48,7 @@ module Elasticsearch
           valid_params = [
             :metric,
             :index_metric,
-            :node_id,
+            :nodeId,
             :completion_fields,
             :fielddata_fields,
             :fields,
