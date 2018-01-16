@@ -7,48 +7,11 @@ module Elasticsearch
       # Percolator allows you to register queries and then evaluate a document against them:
       # the IDs of matching queries are returned in the response.
       #
-      # @example Register queries named "alert-1" and "alert-2" for the "my-index" index
+      # @deprecated The `_percolate` API has been deprecated in favour of a special field mapping and the
+      #             `percolate` query;
+      #             see https://www.elastic.co/guide/en/elasticsearch/reference/5.5/breaking_50_percolator.html
       #
-      #     client.index index: 'my-index',
-      #                  type: '.percolator',
-      #                  id: 'alert-1',
-      #                  body: { query: { query_string: { query: 'foo' } } }
-      #
-      #     client.index index: 'my-index',
-      #                  type: '.percolator',
-      #                  id: 'alert-2',
-      #                  body: { query: { query_string: { query: 'bar' } } }
-      #
-      # @example Evaluate a custom document (passed as `:doc`) against the queries
-      #
-      #     client.percolate index: 'my-index', type: 'my-type', body: { doc: { title: "Foo" } }
-      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-1'} ]}
-      #
-      #     client.percolate index: 'my-index', type: 'my-type', body: { doc: { title: "Foo Bar" } }
-      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-2'}, {_index: 'my-index', _id: 'alert-1'} ] }
-      #
-      # @example Evaluate an existing document against the queries
-      #
-      #     client.index index: 'my-index', type: 'my-type', id: 123, body: { title: "Foo Bar" }
-      #
-      #     client.percolate index: 'my-index', type: 'my-type', id: '123'
-      #     # => { ..., matches: [ {_index: 'my-index', _id: 'alert-2'}, { _index: 'my-index', _id: 'alert-1'} ] }
-      #
-      # @example Register a query with custom `priority` property
-      #
-      #     client.index index: 'my-index',
-      #                  type: '.percolator',
-      #                  id: 'alert-high-1',
-      #                  body: { query: { query_string: { query: 'foo' } },
-      #                          priority: 'high' }
-      #
-      # @example Evaluate a document against "high priority" percolator queries
-      #
-      #     client.percolate index: 'my-index', type: 'my-type', body: {
-      #         doc:    { title: "Foo" },
-      #         filter: { term: { priority: 'high' } }
-      #       }
-      #     # => {..., matches: [ {_index: 'my-index', _id: 'alert-high-1'} ]}
+      # See full example for Elasticsearch 5.x and higher in <https://github.com/elastic/elasticsearch-ruby/blob/master/examples/percolator/percolator_alerts.rb>
       #
       # @option arguments [String] :index The index of the document being percolated. (*Required*)
       # @option arguments [String] :type The type of the document being percolated. (*Required*)
@@ -75,6 +38,8 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-percolate.html
       #
       def percolate(arguments={})
+        Utils.__report_unsupported_method :percolate
+
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
 
