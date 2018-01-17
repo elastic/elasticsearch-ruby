@@ -253,8 +253,8 @@ module Elasticsearch
             arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
             unsupported_params = [:foo, :moo]
 
-            STDERR.expects(:puts).with do |message|
-              assert_equal 2, message.split("\n").size
+            Kernel.expects(:warn).with do |message|
+              assert_equal 2, message.split("\n").reject { |l| l.include? 'Suppress this warning' }.size
               true
             end
 
@@ -265,9 +265,9 @@ module Elasticsearch
             arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
             unsupported_params = [ { :foo => { :explanation => 'NOT_SUPPORTED' } } ]
 
-            STDERR.expects(:puts).with do |message|
+            Kernel.expects(:warn).with do |message|
               assert_match /NOT_SUPPORTED/, message
-              assert_equal 1, message.split("\n").size
+              assert_equal 1, message.split("\n").reject { |l| l.include? 'Suppress this warning' }.size
               true
             end
 
@@ -278,9 +278,9 @@ module Elasticsearch
             arguments = { :foo => 'bar', :moo => 'bam', :baz => 'qux' }
             unsupported_params = [ { :foo => { :explanation => 'NOT_SUPPORTED'} }, :moo ]
 
-            STDERR.expects(:puts).with do |message|
+            Kernel.expects(:warn).with do |message|
               assert_match /NOT_SUPPORTED/, message
-              assert_equal 2, message.split("\n").size
+              assert_equal 2, message.split("\n").reject { |l| l.include? 'Suppress this warning' }.size
               true
             end
 
@@ -291,7 +291,7 @@ module Elasticsearch
             arguments = { :moo => 'bam', :baz => 'qux' }
             unsupported_params = [:foo]
 
-            STDERR.expects(:puts).never
+            Kernel.expects(:warn).never
 
             __report_unsupported_parameters(arguments, unsupported_params)
           end
@@ -299,7 +299,7 @@ module Elasticsearch
 
         context "__report_unsupported_method" do
           should "print the warning" do
-            STDERR.expects(:puts).with do |message|
+            Kernel.expects(:warn).with do |message|
               assert_match /foo/, message
               true
             end
