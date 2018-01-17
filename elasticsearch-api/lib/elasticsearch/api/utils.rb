@@ -235,10 +235,12 @@ module Elasticsearch
         end
 
         unless messages.empty?
+          messages << "Suppress this warning by the `-WO` command line flag."
+
           if STDERR.tty?
-            STDERR.puts messages.map { |m| "\e[31;1m#{m}\e[0m" }.join("\n")
+            Kernel.warn messages.map { |m| "\e[31;1m#{m}\e[0m" }.join("\n")
           else
-            STDERR.puts messages.join("\n")
+            Kernel.warn messages.join("\n")
           end
         end
       end
@@ -249,12 +251,12 @@ module Elasticsearch
           message += " in `#{source}`"
         end
 
-        message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
+        message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release. Suppress this warning by the `-WO` command line flag."
 
         if STDERR.tty?
-          STDERR.puts "\e[31;1m#{message}\e[0m"
+          Kernel.warn "\e[31;1m#{message}\e[0m"
         else
-          STDERR.puts message
+          Kernel.warn message
         end
       end
 
