@@ -7,12 +7,6 @@ module Elasticsearch
       context "Creating a document with the #create method" do
         subject { FakeClient.new }
 
-        should "require the ID" do
-          assert_raise ArgumentError do
-            subject.create :index => 'foo', :type => 'bar', :id => nil, :body => {:foo => 'bar'}
-          end
-        end
-
         should "perform the create request with a specific ID" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
@@ -33,6 +27,27 @@ module Elasticsearch
           end.returns(FakeResponse.new)
 
           subject.create :index => 'foo', :type => 'bar/bam', :id => '123', :body => {}
+        end
+
+        should "update the arguments with `op_type` when the `:id` argument is present" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/bar/1', url
+            assert_not_nil params[:op_type]
+            true
+          end.returns(FakeResponse.new)
+
+          subject.create :index => 'foo', :type => 'bar', :id => 1, :body => { :foo => 'bar' }
+        end
+
+        should "pass the arguments when the `:id` argument is missing" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'foo/bar', url
+            assert_nil params[:op_type]
+            assert_nil params[:id]
+            true
+          end.returns(FakeResponse.new)
+
+          subject.create :index => 'foo', :type => 'bar', :body => { :foo => 'bar' }
         end
       end
 
