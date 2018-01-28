@@ -187,8 +187,12 @@ module Elasticsearch
         return parts
       end
 
-      # Calls given block, rescuing from any exceptions. Returns `false`
-      # if exception contains NotFound/404 in its class name or message, else re-raises exception.
+      # Calls the given block, rescuing from `StandardError`.
+      #
+      # Primary use case is the `:ignore` parameter for API calls.
+      #
+      # Returns `false` if exception contains NotFound in its class name or message,
+      # else re-raises the exception.
       #
       # @yield [block] A block of code to be executed with exception handling.
       #
@@ -196,8 +200,8 @@ module Elasticsearch
       #
       def __rescue_from_not_found(&block)
         yield
-      rescue Exception => e
-        if e.class.to_s =~ /NotFound/ || e.message =~ /Not\s*Found|404/i
+      rescue StandardError => e
+        if e.class.to_s =~ /NotFound/ || e.message =~ /Not\s*Found/i
           false
         else
           raise e
