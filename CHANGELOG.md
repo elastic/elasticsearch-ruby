@@ -1,3 +1,24 @@
+## 6.0.1
+
+* Updated the compatibility table for 6.x
+
+### API
+
+* Added the "Cluster Remote Info" API
+* Speed up `Elasticsearch::API::Utils.__listify`
+* Speed up `Elasticsearch::API::Utils.__pathify`
+* Use "String#strip" and "String.empty?" in `Utils.__pathify`
+* Updated the inline documentation for using scripts in the "Update" API
+* Updated the "Scroll" API inline example with passing the scroll ID in the body
+* Marked the `percolate` method as deprecated and added an example for current percolator
+* Fixed, that `Utils.__report_unsupported_parameters` and `Utils.__report_unsupported_method` use `Kernel.warn` so they can be suppressed
+* Fixed the "greedy" regex in the `Utils.__rescue_from_not_found` method
+* Fixed the incorrect `create` method
+
+### Client
+
+* Fixed, that trailing slash is removed from URL in `Client#__extract_hosts`
+
 ## 6.0.0
 
 Elasticsearch 6.0 compatibility.
