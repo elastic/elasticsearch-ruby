@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email         = ["karel.minarik@elasticsearch.org"]
   s.description   = %q{Extensions for the Elasticsearch Rubygem}
   s.summary       = %q{Extensions for the Elasticsearch Rubygem}
-  s.homepage      = ""
+  s.homepage      = "https://github.com/elastic/elasticsearch-ruby"
   s.license       = "Apache 2"
 
   s.files         = `git ls-files`.split($/)
