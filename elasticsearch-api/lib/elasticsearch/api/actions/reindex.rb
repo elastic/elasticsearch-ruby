@@ -43,9 +43,11 @@ module Elasticsearch
       # @option arguments [String] :consistency Explicit write consistency setting for the operation
       #                                        (Options: one, quorum, all)
       # @option arguments [Boolean] :wait_for_completion Whether the request should block and wait until
-        #                                                the operation has completed
+      #                                                  the operation has completed
       # @option arguments [Float] :requests_per_second The throttling for this request in sub-requests per second.
       #                                                0 means set no throttling (default)
+      # @option arguments [Integer] :slices The number of slices this request should be divided into.
+      #                                     Defaults to 1 meaning the request isn't sliced into sub-requests.
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html
       #
@@ -56,7 +58,8 @@ module Elasticsearch
           :timeout,
           :consistency,
           :wait_for_completion,
-          :requests_per_second ]
+          :requests_per_second,
+          :slices ]
         method = 'POST'
         path   = "_reindex"
         params = Utils.__validate_and_extract_params arguments, valid_params
