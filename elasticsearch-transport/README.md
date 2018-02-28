@@ -21,7 +21,7 @@ The library is compatible with Ruby 1.9 or higher and with all versions of Elast
 Features overview:
 
 * Pluggable logging and tracing
-* Plugabble connection selection strategies (round-robin, random, custom)
+* Pluggable connection selection strategies (round-robin, random, custom)
 * Pluggable transport implementation, customizable and extendable
 * Pluggable serializer implementation
 * Request retries and dead connections handling
