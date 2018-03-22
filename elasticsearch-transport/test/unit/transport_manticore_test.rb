@@ -55,6 +55,13 @@ else
         @transport.perform_request 'POST', '/', {}, {'foo' => 'bar'}
       end
 
+      should "set custom headers for PUT request" do
+        @transport.connections.first.connection.expects(:put).
+          with('http://127.0.0.1:8080//', {:body => '{"foo":"bar"}', :headers => {"Content-Type" => "application/x-ndjson"}})
+          .returns(stub_everything)
+        @transport.perform_request 'PUT', '/', {}, '{"foo":"bar"}', {"Content-Type" => "application/x-ndjson"}
+      end
+
       should "not serialize a String request body" do
         @transport.connections.first.connection.expects(:post).
           with('http://127.0.0.1:8080//', {:body => '{"foo":"bar"}'}).returns(stub_everything)
