@@ -8,7 +8,7 @@ module Elasticsearch
         subject { FakeClient.new }
 
         should "post correct payload to the endpoint" do
-          subject.expects(:perform_request).with do |method, url, params, body|
+          subject.expects(:perform_request).with do |method, url, params, body, headers|
             assert_equal 'POST', method
             assert_equal '_bulk', url
             assert_equal Hash.new, params
@@ -32,6 +32,7 @@ module Elasticsearch
                 {"data":"MYDATA"}
               PAYLOAD
             end
+            assert_equal 'application/x-ndjson', headers["Content-Type"]
             true
           end.returns(FakeResponse.new)
 

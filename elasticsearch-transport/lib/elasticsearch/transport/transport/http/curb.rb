@@ -15,7 +15,7 @@ module Elasticsearch
           # @return [Response]
           # @see    Transport::Base#perform_request
           #
-          def perform_request(method, path, params={}, body=nil)
+          def perform_request(method, path, params={}, body=nil, headers=nil)
             super do |connection,url|
               connection.connection.url = url
 
@@ -26,6 +26,7 @@ module Elasticsearch
                   connection.connection.set :nobody, false
 
                   connection.connection.put_data = __convert_to_json(body) if body
+                  connection.connection.headers = headers if headers
                 else raise ArgumentError, "Unsupported HTTP method: #{method}"
               end
 

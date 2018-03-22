@@ -16,9 +16,9 @@ module Elasticsearch
           # @return [Response]
           # @see    Transport::Base#perform_request
           #
-          def perform_request(method, path, params={}, body=nil)
+          def perform_request(method, path, params={}, body=nil, headers=nil)
             super do |connection, url|
-              headers = connection.connection.headers
+              headers = headers || connection.connection.headers
 
               response = connection.connection.run_request \
                 method.downcase.to_sym,

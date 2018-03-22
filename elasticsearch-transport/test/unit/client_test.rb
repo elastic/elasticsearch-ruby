@@ -41,8 +41,15 @@ class Elasticsearch::Transport::ClientTest < Minitest::Test
     should "send GET request as POST with the send_get_body_as option" do
       transport = DummyTransport.new
       client = Elasticsearch::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
-      transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}'
+      transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}', nil
       client.perform_request 'GET', '/', {}, '{"foo":"bar"}'
+    end
+
+    should "call perform_request with custom headers" do
+      transport = DummyTransport.new
+      client = Elasticsearch::Transport::Client.new :transport => transport, :send_get_body_as => 'POST'
+      transport.expects(:perform_request).with 'POST', '/', {}, '{"foo":"bar"}', '{"Content-Type":"application/x-ndjson"}'
+      client.perform_request 'POST', '/', {}, '{"foo":"bar"}', '{"Content-Type":"application/x-ndjson"}'
     end
 
     should "have default logger for transport" do
