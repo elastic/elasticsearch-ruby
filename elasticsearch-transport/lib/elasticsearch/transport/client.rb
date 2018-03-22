@@ -125,10 +125,10 @@ module Elasticsearch
 
       # Performs a request through delegation to {#transport}.
       #
-      def perform_request(method, path, params={}, body=nil)
+      def perform_request(method, path, params={}, body=nil, headers=nil)
         method = @send_get_body_as if 'GET' == method && body
 
-        transport.perform_request method, path, params, body
+        transport.perform_request method, path, params, body, headers
       end
 
       # Normalizes and returns hosts configuration.
