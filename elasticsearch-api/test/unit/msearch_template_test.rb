@@ -14,7 +14,7 @@ module Elasticsearch
         end
 
         should "serialize and post header/data pairs" do
-          subject.expects(:perform_request).with do |method, url, params, body|
+          subject.expects(:perform_request).with do |method, url, params, body, headers|
             assert_equal 'GET', method
             assert_equal '_msearch/template', url
             assert_equal Hash.new, params
@@ -24,6 +24,7 @@ module Elasticsearch
             {"index":"bar"}
             {"id":"query_foo","params":{"q":"foo"}}
             PAYLOAD
+            assert_equal 'application/x-ndjson', headers["Content-Type"]
             true
           end.returns(FakeResponse.new)
 
