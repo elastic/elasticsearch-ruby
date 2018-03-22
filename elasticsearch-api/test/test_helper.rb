@@ -46,8 +46,8 @@ module Elasticsearch
     class FakeClient
       include Elasticsearch::API
 
-      def perform_request(method, path, params, body)
-        puts "PERFORMING REQUEST:", "--> #{method.to_s.upcase} #{path} #{params} #{body}"
+      def perform_request(method, path, params, body, headers={"Content-Type" => "application/json"})
+        puts "PERFORMING REQUEST:", "--> #{method.to_s.upcase} #{path} #{params} #{body} #{headers}"
         FakeResponse.new(200, 'FAKE', {})
       end
     end
