@@ -92,7 +92,7 @@ module Elasticsearch
           payload = body
         end
 
-        perform_request(method, path, params, payload).body
+        perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
       end
     end
   end

@@ -14,7 +14,7 @@ module Elasticsearch
         end
 
         should "post correct payload to the endpoint" do
-          subject.expects(:perform_request).with do |method, url, params, body|
+          subject.expects(:perform_request).with do |method, url, params, body, headers|
             assert_equal 'GET', method
             assert_equal '_msearch', url
             assert_equal Hash.new, params
@@ -26,6 +26,7 @@ module Elasticsearch
             {"search_type":"count"}
             {"facets":{"tags":{}}}
             PAYLOAD
+            assert_equal 'application/x-ndjson', headers["Content-Type"]
             true
           end.returns(FakeResponse.new)
 
