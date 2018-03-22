@@ -184,11 +184,14 @@ module Elasticsearch
         #
         # @api private
         #
-        def __trace(method, path, params, body, url, response, json, took, duration)
+        def __trace(method, path, params, headers, body, url, response, json, took, duration)
           trace_url  = "http://localhost:9200/#{path}?pretty" +
                        ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
           trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
-          tracer.info  "curl -X #{method.to_s.upcase} '#{trace_url}'#{trace_body}\n"
+          trace_command = "curl -X #{method.to_s.upcase}"
+          trace_command += " -H '#{headers.inject('') { |memo,item| memo << item[0] + ': ' + item[1] }}'" if headers && !headers.empty?
+          trace_command += " '#{trace_url}'#{trace_body}\n"
+          tracer.info trace_command
           tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
           tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
         end
@@ -312,7 +315,7 @@ module Elasticsearch
 
           if response.status.to_i >= 300
             __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
-            __trace  method, path, params, body, url, response, nil, 'N/A', duration if tracer
+            __trace  method, path, params, headers, body, url, response, nil, 'N/A', duration if tracer
 
             # Log the failure only when `ignore` doesn't match the response status
             __log_failed response if logger && !ignore.include?(response.status.to_i)
@@ -324,7 +327,7 @@ module Elasticsearch
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
 
           __log   method, path, params, body, url, response, json, took, duration if logger && !ignore.include?(response.status.to_i)
-          __trace method, path, params, body, url, response, json, took, duration if tracer
+          __trace method, path, params, headers, body, url, response, json, took, duration if tracer
 
           Response.new response.status, json || response.body, response.headers
         ensure

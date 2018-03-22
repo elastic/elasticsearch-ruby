@@ -353,7 +353,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
           never
 
       assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
-        @transport.perform_request('GET', '/', &@block)
+        @transport.perform_request('GET', '/', {}, nil, &@block)
       end
     end
 
