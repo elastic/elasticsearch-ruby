@@ -1,3 +1,14 @@
+## 6.0.2
+
+### Client
+
+* Allow passing request headers in `perform_request`
+
+### API
+
+* Allow passing headers in `perform_request`
+* Set application/x-ndjson content type on Bulk and Msearch requests
+
 ## 6.0.1
 
 * Updated the compatibility table for 6.x
