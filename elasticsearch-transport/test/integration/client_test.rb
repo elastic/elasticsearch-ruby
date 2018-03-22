@@ -73,6 +73,11 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_equal 'application/yaml', response.headers['content-type']
     end
 
+    should "pass request headers to the transport" do
+      response = @client.perform_request 'GET', '/', {}, nil, {'Content-Type' => 'application/yaml'}
+      assert_match(/---/, response.body)
+    end
+
     should "pass options to the Faraday::Connection with a block" do
       @client = Elasticsearch::Client.new(
         host: "127.0.0.1:#{@port}",
