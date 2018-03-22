@@ -233,6 +233,7 @@ module Elasticsearch
         # @param path   [String] The API endpoint
         # @param params [Hash]   Request parameters (will be serialized by {Connections::Connection#full_url})
         # @param body   [Hash]   Request body (will be serialized by the {#serializer})
+        # @param headers [Hash]   Request headers (will be serialized by the {#serializer})
         # @param block  [Proc]   Code block to evaluate, passed from the implementation
         #
         # @return [Response]
@@ -240,7 +241,7 @@ module Elasticsearch
         # @raise  [ServerError]   If request failed on server
         # @raise  [Error]         If no connection is available
         #
-        def perform_request(method, path, params={}, body=nil, &block)
+        def perform_request(method, path, params={}, body=nil, headers=nil, &block)
           raise NoMethodError, "Implement this method in your transport class" unless block_given?
           start = Time.now if logger || tracer
           tries = 0
