@@ -34,6 +34,7 @@ matrix:
       env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/2.4 TEST_CLUSTER_COMMAND=/tmp/elasticsearch-2.4.3/bin/elasticsearch
 
 before_install:
+  - git branch -a; git checkout 5.x
   - gem update --system
   - gem --version
   - gem install bundler -v 1.14.3
