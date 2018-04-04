@@ -34,12 +34,12 @@ matrix:
       env: TEST_SUITE=integration SERVER=start TEST_CLUSTER_LOGS=/tmp/log TEST_BUILD_REF=origin/2.4 TEST_CLUSTER_COMMAND=/tmp/elasticsearch-2.4.3/bin/elasticsearch
 
 before_install:
+  - pushd elastic/elasticsearch-ruby > /dev/null ; git checkout 5.x ; popd > /dev/null
   - gem update --system
   - gem --version
   - gem install bundler -v 1.14.3
   - bundle version
   - curl -sS https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.3/elasticsearch-2.4.3.tar.gz | tar xz -C /tmp
-  - git checkout 5.x
   - rake setup
   - rake elasticsearch:update
 
