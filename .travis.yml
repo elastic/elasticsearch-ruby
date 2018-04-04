@@ -39,6 +39,7 @@ before_install:
   - gem install bundler -v 1.14.3
   - bundle version
   - curl -sS https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.3/elasticsearch-2.4.3.tar.gz | tar xz -C /tmp
+  - git checkout 5.x
   - rake setup
   - rake elasticsearch:update
 
