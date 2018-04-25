@@ -40,6 +40,38 @@ Elasticsearch 6.0 compatibility.
 * Fixed typo in default port handling during `__build_connections`
 * Swallow logging of exceptions when the `ignore` is specified
 
+## 5.0.5
+
+### Client
+
+* Added escaping of username and password in URL
+* Don't block waiting for body on HEAD requests
+
+### API
+
+* Aded the "Get Task" API
+* Fixed handling of parameters in the "Rollover" API
+* Added requirement for the `id` argument for the "Create" API
+* Added support for additional parameters to the "Rollover" API
+* Added support for additional parameters to the "Cluster State" API
+* Fixed incorrect handling of `catch` clauses in the YAML tests runner
+* Fixed a failing unit test for the "Create Document" API
+* Removed unsupported parameters from the "Indices Flush" API
+* Added the "Remote Info" API
+* Fixed incorrect URL parameter in "Indices Flush" unit test
+* Fixed incorrect handling of node ID in the "Nodes Stats" API
+* Fix the path for indices exists_type? method & update docs
+* Added terminate_after parameter to Count action
+* Marked the `percolate` method as deprecated and added an example for current percolator
+* Fixed, that `Utils.__report_unsupported_parameters` and `Utils.__report_unsupported_method`
+  use `Kernel.warn` so they can be suppressed
+* Update the Reindex API to support :slices
+
+### DSL
+
+* Added the `match_phrase` and `match_phrase_prefix` queries
+* Removed the `type` field from the "Match" query
+* Added an integration test for the "match phrase prefix" query
 
 ## 5.0.4
 
