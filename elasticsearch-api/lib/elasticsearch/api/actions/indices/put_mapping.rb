@@ -12,7 +12,7 @@ module Elasticsearch
         #     client.indices.put_mapping index: 'myindex', type: 'mytype', body: {
         #       mytype: {
         #         properties: {
-        #           title: { type: 'string', analyzer: 'snowball' }
+        #           title: { type: 'text', analyzer: 'snowball' }
         #         }
         #       }
         #     }
