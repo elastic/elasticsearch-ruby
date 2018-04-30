@@ -53,7 +53,7 @@ class FixedMinitestSpecReporter < Minitest::Reporters::SpecReporter
 
     before_suite(test.class) unless last_test
 
-    if last_test && last_test.klass.to_s != test.class.to_s
+    if last_test && last_test.class.to_s != test.class.to_s
       after_suite(last_test.class) if last_test
       before_suite(test.class)
     end
