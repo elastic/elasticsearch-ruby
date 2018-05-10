@@ -374,6 +374,42 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
         @transport.perform_request('GET', '/', &@block)
       end
     end
+
+    should "not retry when the status code does match but retry count is 0" do
+      @transport = DummyTransportPerformer.new :options => { :retry_on_status => 500, :retry_on_failure => 0 }
+      assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
+
+      @block.expects(:call).
+             returns(Elasticsearch::Transport::Transport::Response.new 500, 'Internal Error').
+             times(1)
+
+      @transport.logger.
+          expects(:warn).
+          with( regexp_matches(/Attempt \d to get response/) ).
+          times(1)
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+        @transport.perform_request('GET', '/', &@block)
+      end
+    end
+
+    should "retry when the status code does match, retry_on_failure is 0, but the retry_on_status override is set" do
+      @transport = DummyTransportPerformer.new :options => { :retry_on_status => 500, :retry_on_failure => 0, :retries_on_status => 3 }
+      assert_equal [500], @transport.instance_variable_get(:@retry_on_status)
+
+      @block.expects(:call).
+             returns(Elasticsearch::Transport::Transport::Response.new 500, 'Internal Error').
+             times(4)
+
+      @transport.logger.
+          expects(:warn).
+          with( regexp_matches(/Attempt \d to get response/) ).
+          times(4)
+
+      assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
+        @transport.perform_request('GET', '/', &@block)
+      end
+    end
   end  unless RUBY_1_8
 
   context "logging" do

@@ -10,6 +10,7 @@ module Elasticsearch
         DEFAULT_RELOAD_AFTER     = 10_000 # Requests
         DEFAULT_RESURRECT_AFTER  = 60     # Seconds
         DEFAULT_MAX_RETRIES      = 3      # Requests
+        DEFAULT_RETRIES_ON_STATUS= 0      # Requests
         DEFAULT_SERIALIZER_CLASS = Serializer::MultiJson
         SANITIZED_PASSWORD       = '*' * (rand(14)+1)
 
@@ -54,6 +55,7 @@ module Elasticsearch
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
           @max_retries     = options[:retry_on_failure].is_a?(Integer)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
           @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
+          @retries_on_status = options[:retries_on_status].is_a?(Integer) ? options[:retries_on_status] : DEFAULT_RETRIES_ON_STATUS
         end
 
         # Returns a connection from the connection pool by delegating to {Connections::Collection#get_connection}.
@@ -273,7 +275,7 @@ module Elasticsearch
           rescue Elasticsearch::Transport::Transport::ServerError => e
             if @retry_on_status.include?(response.status)
               logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
-              if tries <= max_retries
+              if tries <= max_retries || tries <= @retries_on_status
                 retry
               else
                 logger.fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries" if logger
