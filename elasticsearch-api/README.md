@@ -86,8 +86,8 @@ class MySimpleClient
 
   CONNECTION = ::Faraday::Connection.new url: 'http://localhost:9200'
 
-  def perform_request(method, path, params, body)
-    puts "--> #{method.upcase} #{path} #{params} #{body}"
+  def perform_request(method, path, params, body, header = nil)
+    puts "--> #{method.upcase} #{path} #{params} #{body} #{headers}"
 
     CONNECTION.run_request \
       method.downcase.to_sym,
