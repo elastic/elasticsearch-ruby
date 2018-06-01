@@ -50,7 +50,7 @@ module Elasticsearch
           # @return [String]
           #
           def full_path(path, params={})
-            path + (params.empty? ? '' : "?#{::Faraday::Utils::ParamsHash[params].to_query}")
+            URI.encode(path) + (params.empty? ? '' : "?#{::Faraday::Utils::ParamsHash[params].to_query}")
           end
 
           # Returns true when this connection has been marked dead, false otherwise.
