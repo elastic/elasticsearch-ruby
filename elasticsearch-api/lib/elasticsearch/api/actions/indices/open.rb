@@ -21,6 +21,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
         #
@@ -32,7 +33,8 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :timeout
+            :timeout,
+            :wait_for_active_shards
           ]
 
           method = HTTP_POST
