@@ -279,6 +279,8 @@ suites.each do |suite|
       end
 
       # $helper_client.cat.tasks(format: 'json')
+      tasks = $helper_client.tasks.get['nodes'].values.first['tasks'].values.select { |d| d['cancellable'] }.map { |d| "#{d['node']}:#{d['id']}" }
+      tasks.each { |t| $helper_client.tasks.cancel task_id: t }
 
       $helper_client.indices.delete index: '.ml-*', ignore: 404
     end
@@ -329,7 +331,7 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first.to_s + (ENV['QUIET'] ? '' : " | #{file.gsub(PATH.to_s, '').ansi(:bold)}")
+          test_name = test.keys.first.to_s + " | #{file.gsub(PATH.to_s, '').ansi(:bold)}"
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)
