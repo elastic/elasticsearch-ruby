@@ -40,6 +40,7 @@ module Elasticsearch
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
         # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
         #                                               with the same name across all types
         # @option arguments [Time] :timeout Explicit operation timeout
@@ -55,6 +56,7 @@ module Elasticsearch
             :ignore_conflicts,
             :ignore_indices,
             :ignore_unavailable,
+            :include_type_name,
             :allow_no_indices,
             :expand_wildcards,
             :update_all_types,

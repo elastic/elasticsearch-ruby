@@ -56,6 +56,7 @@ module Elasticsearch
       # @option arguments [Hash] :body The document
       # @option arguments [String] :consistency Explicit write consistency setting for the operation
       #                                         (options: one, quorum, all)
+      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
       # @option arguments [String] :op_type Explicit operation type (options: index, create)
       # @option arguments [String] :parent ID of the parent document
       # @option arguments [String] :percolate Percolator queries to execute while indexing the document
@@ -76,6 +77,7 @@ module Elasticsearch
 
         valid_params = [
           :consistency,
+          :include_type_name,
           :op_type,
           :parent,
           :percolate,

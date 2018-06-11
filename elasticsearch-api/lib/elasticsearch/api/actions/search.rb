@@ -82,6 +82,7 @@ module Elasticsearch
       #                                           representation of a field for each hit
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
       # @option arguments [Number] :from Starting offset (default: 0)
+      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
       # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore `missing` ones
       #                                            (options: none, missing)
       # @option arguments [Boolean] :lenient Specify whether format-based query failures
@@ -134,6 +135,7 @@ module Elasticsearch
           :df,
           :explain,
           :fielddata_fields,
+          :include_type_name,
           :docvalue_fields,
           :stored_fields,
           :fields,

@@ -16,6 +16,7 @@ module Elasticsearch
       # @option arguments [String] :type The type of the document; use `_all` to fetch the first document
       #                                  matching the ID across all types) (*Required*)
       # @option arguments [List] :fields A comma-separated list of fields to return in the response
+      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
       # @option arguments [String] :parent The ID of the parent document
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on
       #                                        (default: random)
@@ -40,6 +41,7 @@ module Elasticsearch
 
         valid_params = [
           :fields,
+          :include_type_name,
           :parent,
           :preference,
           :realtime,

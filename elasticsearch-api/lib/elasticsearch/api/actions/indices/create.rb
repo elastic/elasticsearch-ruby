@@ -60,6 +60,7 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index (*Required*)
         # @option arguments [Hash] :body Optional configuration for the index (`settings` and `mappings`)
+        # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
         # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
         #                                               with the same name across all types
         # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
@@ -71,10 +72,11 @@ module Elasticsearch
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           valid_params = [
-            :timeout,
-            :master_timeout,
+            :include_type_name,
             :update_all_types,
-            :wait_for_active_shards
+            :wait_for_active_shards,
+            :master_timeout,
+            :timeout
           ]
 
           method = HTTP_PUT

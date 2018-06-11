@@ -18,6 +18,7 @@ module Elasticsearch
       # @option arguments [String] :type The type of the document (*Required*)
       # @option arguments [String] :consistency Specific write consistency setting for the operation
       #                                         (options: one, quorum, all)
+      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
       # @option arguments [String] :parent ID of parent document
       # @option arguments [Boolean] :refresh Refresh the index after performing the operation
       # @option arguments [String] :replication Specific replication type (options: sync, async)
@@ -35,6 +36,7 @@ module Elasticsearch
 
         valid_params = [
           :consistency,
+          :include_type_name,
           :parent,
           :refresh,
           :replication,

@@ -41,6 +41,7 @@ module Elasticsearch
       # @option arguments [String] :consistency Explicit write consistency setting for the operation
       #                                         (options: one, quorum, all)
       # @option arguments [List] :fields A comma-separated list of fields to return in the response
+      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
       # @option arguments [String] :lang The script language (default: mvel)
       # @option arguments [String] :parent ID of the parent document
       # @option arguments [String] :percolate Perform percolation during the operation;
@@ -73,6 +74,7 @@ module Elasticsearch
         valid_params = [
           :consistency,
           :fields,
+          :include_type_name,
           :lang,
           :parent,
           :percolate,

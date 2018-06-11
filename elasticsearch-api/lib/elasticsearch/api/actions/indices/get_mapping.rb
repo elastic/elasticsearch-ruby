@@ -24,6 +24,7 @@ module Elasticsearch
         #                                               indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
         #                                              are open, closed or both. (options: open, closed)
+        # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
         # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
         #                                            `missing` ones (options: none, missing) @until 1.0
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
@@ -37,6 +38,7 @@ module Elasticsearch
           valid_params = [
             :ignore_indices,
             :ignore_unavailable,
+            :include_type_name,
             :allow_no_indices,
             :expand_wildcards,
             :local
