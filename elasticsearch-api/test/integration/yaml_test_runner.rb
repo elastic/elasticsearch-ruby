@@ -138,68 +138,6 @@ class Elasticsearch::Test::YAMLTestReporter < ::MiniTest::Reporters::SpecReporte
       end
     end
   end
-
-
-  def record_print_status(test)
-    (@___failures ||= []) << test unless test.failures.empty?
-    test_name = test.name.gsub(/^test_: /, '').gsub(/ should /, ' ').gsub(/\.\s*$/, '')
-    print pad_test(test_name)
-    print_colored_status(test)
-    print(" (%.2fs)" % test.time) unless test.time.nil?
-    puts
-  end
-  def report
-    super
-    puts "\n"
-
-    if @___failures and not @___failures.empty?
-      failures = @___failures.reject { |f| f.error? }
-      errors   = @___failures.select { |f| f.error? }
-
-      unless failures.empty?
-        puts ">>>>> FAILED " + '>'*67
-        failures.each do |failure|
-          test_name = failure.name
-                        .gsub(/^test_: /, '')
-                        .gsub(/ should /, ' ')
-                        .gsub(/\| .*$/, '')
-                        .gsub(/\.\s*$/, '')
-          yaml_filename = failure.name.gsub(/.*\| (.*)\.\s*$/, '\1')
-
-          puts "FAILED".ansi(:red) +
-               " [#{failure.failure.exception.class.to_s}] ".ansi(:red, :bold) +
-               test_name,
-               "<https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/#{yaml_filename}>".ansi(:underscore),
-               failure.failure.message.ansi(:faint)
-        end
-      end
-
-      unless errors.empty?
-        puts ">>>>> ERRORS " + '>'*67
-        errors.each do |failure|
-          test_name = failure.name
-                        .gsub(/^test_: /, '')
-                        .gsub(/ should /, ' ')
-                        .gsub(/\| .*$/, '')
-                        .gsub(/\.\s*$/, '')
-          yaml_filename = failure.name.gsub(/.*\| (.*)\.\s*$/, '\1')
-
-          puts "ERROR".ansi(:red) +
-               " [#{failure.failure.exception.class.to_s}] ".ansi(:red, :bold) +
-               test_name,
-               "<https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/#{yaml_filename}>".ansi(:underscore),
-               failure.failure.message
-                .split("\n").reject {|l| l =~ /yaml_test_runner.rb/}.join("\n")
-                .ansi(:faint)
-        end
-      end
-
-      puts '>'*80
-    else
-      message = "~~~~~ ALL TESTS PASS "
-      puts (message + '~'*(80-message.size)).ansi(:green, :bold)
-    end
-  end
 end
 
 Minitest::Reporters.use! Elasticsearch::Test::YAMLTestReporter.new
