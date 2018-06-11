@@ -23,7 +23,7 @@ require 'test/unit' if RUBY_1_8
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 
 class FixedMinitestSpecReporter < Minitest::Reporters::SpecReporter
   def before_test(test)
@@ -51,7 +51,7 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
 end
 
 module Minitest
-  class Test
+  module Assertions
     def assert_nothing_raised(*args)
       begin
         line = __LINE__
@@ -77,7 +77,7 @@ end
 
 module Elasticsearch
   module Test
-    class UnitTest < Minitest::Test; end
+    class UnitTest < Minitest::Unit::TestCase; end
 
     class FakeClient
       include Elasticsearch::API

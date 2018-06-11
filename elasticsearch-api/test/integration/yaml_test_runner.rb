@@ -91,13 +91,55 @@ puts '-'*80,
 
 require 'test_helper'
 
-class Elasticsearch::Test::YAMLTestReporter < Minitest::Reporters::SpecReporter
+class Elasticsearch::Test::YAMLTestReporter < ::MiniTest::Reporters::SpecReporter
   def before_suite(suite)
-    puts ">>>>> #{suite.to_s} #{''.ljust(72-suite.to_s.size, '>')}" unless ENV['QUIET']
+    puts ">>>>> #{suite.to_s} #{''.ljust(73-suite.to_s.size, '>')}" unless ENV['QUIET']
   end
+
   def after_suite(suite)
     super unless ENV['QUIET']
   end
+
+  def after_suites(suites, type)
+    time = Time.now - runner.suites_start_time
+
+    color = ( runner.errors > 0 || runner.failures > 0 ) ? :red : :green
+    status_line = "Finished in %.6fs, %.4f tests/s, %.4f assertions/s.\n".ansi(color) %
+      [time, runner.test_count / time, runner.assertion_count / time]
+    status_line += "#{runner.test_count} tests: #{runner.skips} skipped, #{runner.errors} errored, #{runner.failures} failed.".ansi(:bold, color)
+
+    puts '=' * 80
+    puts status_line
+    puts '-' * 80, ''
+
+    runner.test_results.each do |suite, tests|
+      tests.each do |test, test_runner|
+        next unless test_runner.result.to_s =~ /error|failure/
+
+        test_name = test_runner.test.to_s
+                      .gsub(/^test_: /, '')
+                      .gsub(/ should /, ' ')
+                      .gsub(/\| .*$/, '')
+                      .gsub(/\.\s*$/, '')
+        yaml_filename = test_runner.test.to_s.gsub(/.*\| (.*)\.\s*$/, '\1')
+
+        status = case test_runner.result
+          when :failure
+            "FAILURE"
+          when :error
+            "ERROR"
+        end
+
+        puts status.ansi(:red) +
+               " [#{test_runner.suite.to_s}] ".ansi(:red, :bold) +
+               test_name,
+               "<https://github.com/elastic/elasticsearch/blob/master/rest-api-spec/src/main/resources/rest-api-spec/test/#{yaml_filename}>".ansi(:underscore),
+               test_runner.exception.message.ansi(:faint), ''
+      end
+    end
+  end
+
+
   def record_print_status(test)
     (@___failures ||= []) << test unless test.failures.empty?
     test_name = test.name.gsub(/^test_: /, '').gsub(/ should /, ' ').gsub(/\.\s*$/, '')
@@ -308,13 +350,13 @@ module Elasticsearch
       extend self
     end
 
-    class YamlTestCase < ::Minitest::Test; end
+    class YamlTestCase < ::Minitest::Unit::TestCase; end
   end
 end
 
 include Elasticsearch::YamlTestSuite
 
-rest_api_test_source = $client.info['version']['number'] < '2' ? '../../../../tmp/elasticsearch/rest-api-spec/test' : '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
+rest_api_test_source = '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
 PATH    = Pathname(ENV.fetch('TEST_REST_API_SPEC', File.expand_path(rest_api_test_source, __FILE__)))
 
 suites  = Dir.glob(PATH.join('*')).map { |d| Pathname(d) }
