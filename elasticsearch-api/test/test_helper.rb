@@ -25,20 +25,7 @@ require 'minitest/reporters'
 require 'shoulda/context'
 require 'mocha/minitest'
 
-class FixedMinitestSpecReporter < Minitest::Reporters::SpecReporter
-  def before_test(test)
-    last_test = tests.last
-
-    before_suite(test.class) unless last_test
-
-    if last_test && last_test.klass.to_s != test.class.to_s
-      after_suite(last_test.class) if last_test
-      before_suite(test.class)
-    end
-  end
-end
-
-Minitest::Reporters.use! FixedMinitestSpecReporter.new
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch/api'
