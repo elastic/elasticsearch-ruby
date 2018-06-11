@@ -30,7 +30,7 @@ module Elasticsearch
 
       __root = Pathname( File.expand_path('../../..', __FILE__) )
 
-      desc "generate <PATH TO JSON SPEC FILES>", "Generate source code and tests from the REST API JSON specification"
+      desc "generate", "Generate source code and tests from the REST API JSON specification"
       method_option :language,  default: 'ruby',                                          desc: 'Programming language'
       method_option :force,     type: :boolean, default: false,                           desc: 'Overwrite the output'
       method_option :verbose,   type: :boolean, default: false,                           desc: 'Output more information'
@@ -46,7 +46,11 @@ module Elasticsearch
         # -- Test helper
         copy_file "templates/ruby/test_helper.rb", @output.join('test').join('test_helper.rb') if options[:language] == 'ruby'
 
-        Dir[@input].each do |file|
+        files = Dir.entries(@input.to_s).reject { |f| f.start_with?('.') }
+
+        files.each do |filepath|
+          file    = @input.join(filepath)
+
           @path   = Pathname(file)
           @json   = MultiJson.load( File.read(@path) )
           @spec   = @json.values.first
