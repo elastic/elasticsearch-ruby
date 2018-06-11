@@ -24,7 +24,9 @@ default_skip_patterns = [
   '/xpack/15_basic',          # Test inserts invalid license, making all subsequent tests fail
   '/license/20_put_license',  # Test inserts invalid license, making all subsequent tests fail
   '/token/',                  # Tokens require full SSL setup (TODO)
-  '/ssl/10_basic'             # (?) Test relies on some external setup
+  '/ssl/10_basic',            # (?) Test relies on some external setup
+  '/ml/jobs_crud.yml',        # (?) Test expects settings?
+  '/ml/ml_info.yml'           # Test doesn't reset itself in teardown
 ].join('|')
 
 SKIP_PATTERNS = Regexp.new( [default_skip_patterns, ENV['TEST_SKIP_PATTERNS'] ].compact.join('|') )
@@ -88,6 +90,20 @@ puts '-'*80,
 
 $client.transport.logger = $logger unless ENV['QUIET'] || ENV['CI']
 $original_client = $client.clone
+
+module Minitest
+  module Reporters
+    class SpecReporter
+      def record_print_status(test)
+        test_name = test.name.gsub(/^test_: (.+) should (.+)/, '[\1] \2')
+        print pad_test(test_name)
+        print_colored_status(test)
+        print(" (%.2fs)" % test.time) unless test.time.nil?
+        puts
+      end
+    end
+  end
+end
 
 module Elasticsearch
   module YamlTestSuite
@@ -331,7 +347,8 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          test_name = test.keys.first.to_s + " | #{file.gsub(PATH.to_s, '').ansi(:bold)}"
+          test_name = test.keys.first.to_s.gsub(/test/i, '').strip.capitalize.ansi(:bold) +
+                      " | #{file.gsub(PATH.to_s, '')}"
           actions   = test.values.first
 
           if reason = Runner.skip?(actions)

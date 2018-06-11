@@ -5,7 +5,7 @@ require 'pathname'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 
 require 'ansi'
 
