@@ -7,12 +7,6 @@ module Elasticsearch
       context "Indices: Put mapping" do
         subject { FakeClient.new }
 
-        should "require the :type argument" do
-          assert_raise ArgumentError do
-            subject.indices.put_mapping :index => 'foo', :body => {}
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method

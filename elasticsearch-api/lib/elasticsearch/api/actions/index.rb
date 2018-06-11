@@ -73,7 +73,7 @@ module Elasticsearch
       #
       def index(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
+        arguments[:type] ||= DEFAULT_DOC
 
         valid_params = [
           :consistency,

@@ -13,12 +13,6 @@ module Elasticsearch
           end
         end
 
-        should "require the :type argument" do
-          assert_raise ArgumentError do
-            subject.index :index => 'foo'
-          end
-        end
-
         should "perform the index request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'POST', method

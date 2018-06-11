@@ -50,7 +50,6 @@ module Elasticsearch
       #
       def count_percolate(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         valid_params = [
           :routing,
           :preference,

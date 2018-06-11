@@ -49,7 +49,6 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/
         #
         def put_mapping(arguments={})
-          raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
 
           valid_params = [

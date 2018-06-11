@@ -36,6 +36,7 @@ module Elasticsearch
     HTTP_DELETE       = 'DELETE'.freeze
     UNDERSCORE_SEARCH = '_search'.freeze
     UNDERSCORE_ALL    = '_all'.freeze
+    DEFAULT_DOC       = '_doc'.freeze
 
     # Auto-include all namespaces in the receiver
     #

@@ -13,12 +13,6 @@ module Elasticsearch
           end
         end
 
-        should "require the :type argument" do
-          assert_raise ArgumentError do
-            subject.termvectors :index => 'foo', :id => '1'
-          end
-        end
-
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method

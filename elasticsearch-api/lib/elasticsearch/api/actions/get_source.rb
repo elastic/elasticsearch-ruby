@@ -34,7 +34,7 @@ module Elasticsearch
       def get_source(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-        arguments[:type] ||= UNDERSCORE_ALL
+        arguments[:type] ||= DEFAULT_DOC
 
         valid_params = [
           :fields,
