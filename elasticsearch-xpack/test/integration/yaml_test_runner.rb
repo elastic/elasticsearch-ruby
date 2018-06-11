@@ -71,8 +71,28 @@ $tracer = Logger.new($stdout)
 $tracer.progname = 'elasticsearch.tracer'
 $tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 
-password = ENV.fetch("ELASTIC_PASSWORD", "changeme")
+if ENV['ELASTIC_PASSWORD']
+  password = ENV['ELASTIC_PASSWORD']
+else
+  password = begin
+    puts "The ELASTIC_PASSWORD environment variable is not set, getting password by running `bin/elasticsearch-setup-passwords`...".ansi(:faint)
+    out = `docker exec -it elasticsearch-xpack bin/elasticsearch-setup-passwords auto --batch`
+    matches = out.match(/PASSWORD elastic = (\S+)/)
+    if matches && matches.captures.first
+      matches.captures.first
+    else
+      puts "\nCannot get password from Docker:".ansi(:bold, :red)
+      puts out.to_s.ansi(:faint)
+      exit(1)
+    end
+  end
+  puts "Password succesfully generated, export it in your shell for subsequent runs:".ansi(:faint),
+        "export ELASTIC_PASSWORD=#{password}"
+end
+
 $url = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@localhost:#{ENV['TEST_CLUSTER_PORT'] || 9260}")
+
+puts '-'*80, "Connecting to <#{$url}>".ansi(:bold, :faint)
 
 $client        ||= Elasticsearch::Client.new url: $url
 $helper_client ||= Elasticsearch::Client.new url: $url
