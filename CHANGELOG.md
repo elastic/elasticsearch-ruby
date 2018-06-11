@@ -1,3 +1,17 @@
+## 6.0.3
+
+### API
+
+* Update the Reindex API to support :slices
+* Update the "Delete By Query" API to support :slices
+* Added the `wait_for_no_initializing_shards` option for "Cluster Health" API
+* Added the `wait_for_active_shards` option for the "Indices Open" API
+* Added the "Indices Split" API
+
+## EXT:6.0.3
+
+* Add elasticsearch-extensions homepage to Gemspec
+
 ## 6.0.2
 
 ### Client
