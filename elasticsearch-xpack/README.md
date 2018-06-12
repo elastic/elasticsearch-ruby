@@ -11,13 +11,8 @@ Install the package from [Rubygems](https://rubygems.org):
 
 To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
 
-    gem 'elasticsearch-xpack', git: 'https://github.com/elastic/elasticsearch-x-pack-ruby.git'
+    gem 'elasticsearch-xpack', git: 'https://github.com/elastic/elasticsearch-ruby.git'
 
-or install it from a source code checkout:
-
-    git clone https://github.com/elasticsearch/elasticsearch-xpack-ruby.git
-    bundle install
-    rake install
 
 ## Usage
 
@@ -42,8 +37,8 @@ official [X-Pack for the Elastic Stack](https://www.elastic.co/guide/en/x-pack/c
 
 For examples, look into the [`examples`](examples) folder in this repository.
 
-You can use the provided `test:server` Rake task to launch
-a [Docker-based](https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docker.html#_image_types)
+You can use the provided `test:elasticsearch` Rake task to launch
+a [Docker-based](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 Elasticsearch node with the full X-Pack license preinstalled.
 
 ## License
