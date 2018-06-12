@@ -25,7 +25,9 @@
 require 'elasticsearch'
 require 'elasticsearch/xpack'
 
-client = Elasticsearch::Client.new url: 'http://elastic:changeme@localhost:9260', log: true
+password = ENV.fetch('ELASTIC_PASSWORD', 'changeme')
+
+client = Elasticsearch::Client.new url: "http://elastic:#{password}@localhost:9260", log: true
 client.transport.logger.formatter = proc do |severity, datetime, progname, msg| "\e[2m#{msg}\e[0m\n" end
 
 # Print information about the Watcher plugin
@@ -169,4 +171,4 @@ end
 
 # Delete the watch
 #
-client.xpack.watcher.delete_watch id: 'error_500', master_timeout: '30s'
+client.xpack.watcher.delete_watch id: 'error_500'
