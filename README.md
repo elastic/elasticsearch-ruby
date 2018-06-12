@@ -4,6 +4,7 @@ This repository contains Ruby integrations for [Elasticsearch](http://elasticsea
 
 * a client for connecting to an Elasticsearch cluster,
 * a Ruby API for the Elasticsearch's REST API,
+* a Ruby API for the X-Pack APIs,
 * various extensions and utilities.
 
 For integration with Ruby models and Rails applications,
@@ -81,8 +82,8 @@ This repository contains these additional Ruby libraries:
    which provides a set of extensions to the base library,
 * [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
   which provides a Ruby API for the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html),
-* [`elasticsearch-watcher`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-watcher),
-  which provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
+* [`elasticsearch-xpack`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-xpack),
+  which provides Ruby API for the [_X-Pack_](https://www.elastic.co/products/x-pack) APIs.
 
 Please see their respective READMEs for information and documentation.
 
