@@ -30,7 +30,7 @@ require 'test/unit' if RUBY_1_8
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'ansi/code'
 
 require 'require-prof' if ENV["REQUIRE_PROF"]

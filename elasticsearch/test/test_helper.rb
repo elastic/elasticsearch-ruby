@@ -29,7 +29,7 @@ require 'test/unit' if RUBY_1_8
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 
 require 'require-prof' if ENV["REQUIRE_PROF"]
 require 'elasticsearch'
@@ -44,7 +44,7 @@ end
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 module Minitest
-  class Test
+  module Assertions
     def assert_nothing_raised(*args)
       begin
         line = __LINE__
@@ -70,7 +70,7 @@ end
 
 module Elasticsearch
   module Test
-    class IntegrationTestCase < Minitest::Test
+    class IntegrationTestCase < ::Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
@@ -79,7 +79,7 @@ module Elasticsearch
   end
 
   module Test
-    class ProfilingTest < Minitest::Test
+    class ProfilingTest < ::Minitest::Test
       extend Elasticsearch::Extensions::Test::StartupShutdown
       extend Elasticsearch::Extensions::Test::Profiling
 

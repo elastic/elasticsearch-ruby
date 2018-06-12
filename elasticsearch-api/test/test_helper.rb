@@ -64,7 +64,7 @@ end
 
 module Elasticsearch
   module Test
-    class UnitTest < Minitest::Unit::TestCase; end
+    class UnitTest < ::Minitest::Test; end
 
     class FakeClient
       include Elasticsearch::API
