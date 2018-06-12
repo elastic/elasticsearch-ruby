@@ -1,0 +1,48 @@
+require 'bundler/gem_tasks'
+
+require 'rake/testtask'
+
+task :default do
+  exec "rake --tasks"
+end
+
+Rake::TestTask.new('test:unit') do |test|
+  test.libs << 'test'
+  test.test_files = FileList['test/unit/**/*_test.rb']
+  test.verbose = false
+  test.warning = false
+end
+
+namespace :test do
+  desc "Run integration tests"
+  task :integration do
+    sh <<-COMMAND
+      bundle exec ruby -I ../elasticsearch/lib:../elasticsearch-transport/lib:../elasticsearch-api/lib:./lib:./test test/integration/yaml_test_runner.rb
+    COMMAND
+  end
+
+  desc "Run Elasticsearch with X-Pack installed (Docker)"
+    task :elasticsearch do
+      sh <<-COMMAND.gsub(/^\s*/, '').gsub(/\s{1,}/, ' ')
+        docker run \
+          --name elasticsearch-xpack \
+          --env "discovery.type=single-node" \
+          --env "cluster.name=elasticsearch-api-test" \
+          --env "node.name=es-01" \
+          --env "http.port=9200" \
+          --env "cluster.routing.allocation.disk.threshold_enabled=false" \
+          --env "node.attr.testattr=test" \
+          --env "path.repo=/tmp" \
+          --env "repositories.url.allowed_urls=http://snapshot.test*" \
+          --env "bootstrap.memory_lock=true" \
+          --env "ELASTIC_PASSWORD=MagicWord" \
+          --ulimit nofile=65536:65536 \
+          --ulimit memlock=-1:-1 \
+          --publish 9260:9200 \
+          --volume $(pwd)/tmp/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+          --memory 4g \
+          --rm \
+          docker.elastic.co/elasticsearch/elasticsearch:7.0.0-alpha1-SNAPSHOT
+      COMMAND
+    end
+end
