@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Ruby integrations for the X-Pack extensions for Elasticsearch"
   spec.description   = "Ruby integrations for the X-Pack extensions for Elasticsearch"
-  spec.homepage      = "https://github.com/elastic/elasticsearch-xpack-ruby"
+  spec.homepage      = "https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-xpack"
   spec.license       = "Apache 2"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
