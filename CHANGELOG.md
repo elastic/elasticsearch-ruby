@@ -1,3 +1,9 @@
+## 6.1.0
+
+### X-Pack
+
+* Added the `elasticsearch-xpack` source code into the repository
+
 ## 6.0.3
 
 ### API
