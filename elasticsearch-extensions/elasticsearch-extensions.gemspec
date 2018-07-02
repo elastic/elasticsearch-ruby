@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "ansi"
   s.add_dependency "elasticsearch"
-  s.add_dependency "oj" unless defined?(JRUBY_VERSION)
-  s.add_dependency "patron" unless defined?(JRUBY_VERSION)
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
@@ -45,6 +43,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'
   s.add_development_dependency 'pry'
+  s.add_development_dependency 'oj' unless defined?(JRUBY_VERSION)
+  s.add_development_dependency 'patron' unless defined?(JRUBY_VERSION)
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_development_dependency "json", '~> 1.8'
