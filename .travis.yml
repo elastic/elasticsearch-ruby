@@ -40,7 +40,7 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: jruby-9.1.12.0
+    - rvm: jruby-9.1.17.0
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
