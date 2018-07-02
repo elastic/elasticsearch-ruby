@@ -11,8 +11,13 @@ rescue LoadError
   warn('The "oj" gem could not be loaded. JSON parsing and serialization performance may not be optimal.')
 end
 
+begin
+  require 'patron'
+rescue LoadError
+  warn('The "patron" gem could not be loaded. HTTP requests may not be performed optimally.')
+end
+
 require 'elasticsearch'
-require 'patron'
 
 module Backup
   module Database
