@@ -4,7 +4,12 @@ require 'pathname'
 require 'fileutils'
 
 require 'multi_json'
-require 'oj'
+
+begin
+  require 'oj'
+rescue LoadError
+  warn('The "oj" gem could not be loaded. JSON parsing and serialization performance may not be optimal.')
+end
 
 require 'elasticsearch'
 require 'patron'
