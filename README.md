@@ -74,7 +74,8 @@ and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) docume
 
 _Keep in mind, that for optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or
-[Typhoeus](https://github.com/typhoeus/typhoeus)._
+[Typhoeus](https://github.com/typhoeus/typhoeus)._ These libraries are not dependencies of the elasticsearch gems, so
+be sure to define a dependency in your own application.
 
 This repository contains these additional Ruby libraries:
 
