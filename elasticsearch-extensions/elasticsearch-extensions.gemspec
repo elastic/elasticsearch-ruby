@@ -43,8 +43,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'oj' unless defined?(JRUBY_VERSION)
-  s.add_development_dependency 'patron' unless defined?(JRUBY_VERSION)
+
+  unless defined?(JRUBY_VERSION)
+    s.add_development_dependency 'oj'
+    s.add_development_dependency 'patron'
+  end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_development_dependency "json", '~> 1.8'
