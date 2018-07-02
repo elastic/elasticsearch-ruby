@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "elasticsearch"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+    s.add_development_dependency "ruby-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   end
 
   s.add_development_dependency "bundler", "> 1"
