@@ -17,9 +17,10 @@ module Elasticsearch
             subject = Nested.new
 
             subject.path 'bar'
+            subject.query 'bar'
             subject.filter 'bar'
 
-            assert_equal %w[ filter path ],
+            assert_equal %w[ filter path query ],
                          subject.to_hash[:nested].keys.map(&:to_s).sort
             assert_equal 'bar', subject.to_hash[:nested][:path]
           end
