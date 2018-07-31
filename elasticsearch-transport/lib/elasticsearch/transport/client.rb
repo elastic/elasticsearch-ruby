@@ -182,7 +182,7 @@ module Elasticsearch
           end
 
           # Remove the trailing slash
-          host_parts[:path].chomp!('/') if host_parts[:path]
+          host_parts[:path] = host_parts[:path].chomp('/') if host_parts[:path]
 
           host_parts
         end
