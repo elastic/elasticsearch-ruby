@@ -19,7 +19,7 @@ module Elasticsearch
       #     }
       #
       # @option arguments [String] :id Script ID (*Required*)
-      # @option arguments [String] :lang Script language (*Required*)
+      # @option arguments [String] :lang Script language
       # @option arguments [Hash]   :body A JSON document containing the script (*Required*)
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
@@ -29,7 +29,6 @@ module Elasticsearch
       #
       def put_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
-        raise ArgumentError, "Required argument 'lang' missing" unless arguments[:lang]
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
         valid_params = [
@@ -38,7 +37,7 @@ module Elasticsearch
           :version_type ]
 
         method = HTTP_PUT
-        path   = "_scripts/#{arguments.delete(:lang)}/#{arguments[:id]}"
+        path   = "_scripts/#{arguments.has_key?(:lang) ? "#{arguments.delete(:lang)}/" : ''}#{arguments[:id]}"
 
         params = Utils.__validate_and_extract_params arguments, valid_params
 
