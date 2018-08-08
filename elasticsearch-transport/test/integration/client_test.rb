@@ -206,7 +206,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         response = client.perform_request 'GET', '_nodes/stats/http'
         b = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
 
-        assert_equal a, b
+        assert b >= a
       end unless JRUBY
     end
 
