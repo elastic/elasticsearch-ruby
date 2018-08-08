@@ -18,6 +18,7 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'target' missing" unless arguments[:target]
           valid_params = [
+            :copy_settings,
             :timeout,
             :master_timeout,
             :wait_for_active_shards ]

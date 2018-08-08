@@ -12,15 +12,13 @@ module Elasticsearch
             assert_equal 'PUT', method
             assert_equal 'foo/_split/bar', url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
           subject.indices.split :index => 'foo', :target => 'bar'
         end
-
       end
-
     end
   end
 end
