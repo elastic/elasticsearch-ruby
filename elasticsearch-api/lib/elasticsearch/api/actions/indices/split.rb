@@ -19,12 +19,19 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'target' missing" unless arguments[:target]
           valid_params = [
-            :timeout,
-            :master_timeout,
-            :wait_for_active_shards ]
-          method = HTTP_PUT
-          path   = Utils.__pathify Utils.__escape(arguments[:index]), '_split', Utils.__escape(arguments[:target])
-          params = Utils.__validate_and_extract_params arguments, valid_params
+              :copy_settings,
+              :timeout,
+              :master_timeout,
+              :wait_for_active_shards ]
+
+          arguments = arguments.clone
+
+          source = arguments.delete(:index)
+          target = arguments.delete(:target)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = Utils.__pathify Utils.__escape(source), '_split', Utils.__escape(target)
+          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
