@@ -8,3 +8,6 @@ doc/
 rdoc/
 tmp
 Gemfile.lock
+.DS_Store
+*.log
+.idea/*
