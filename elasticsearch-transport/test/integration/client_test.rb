@@ -48,9 +48,9 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_equal 200, response.status
       assert_equal 'bar', response.body['_source']['foo']
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
-        @client.perform_request 'GET', 'myindex/mydoc/1?routing=FOOBARBAZ'
-      end
+      # assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
+      #   @client.perform_request 'GET', 'myindex/mydoc/1?routing=FOOBARBAZ'
+      # end
     end
 
     should "ignore specified response codes" do
@@ -161,6 +161,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         assert_nothing_raised do
           5.times { @client.perform_request 'GET', '_nodes/_local' }
         end
+        sleep(2)
         assert_equal 2, @client.transport.connections.size
       end
     end
