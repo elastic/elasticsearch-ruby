@@ -41,6 +41,8 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     end
 
     should "handle paths and URL parameters" do
+      @client.perform_request 'DELETE', 'myindex' rescue
+      @client.perform_request 'PUT', 'myindex', {}, { settings: { number_of_shards: 10 } }
       @client.perform_request 'PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, {foo: 'bar'}
       @client.perform_request 'GET', '_cluster/health?wait_for_status=green', {}
 
