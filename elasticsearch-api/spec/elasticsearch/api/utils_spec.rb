@@ -27,7 +27,7 @@ describe Elasticsearch::API::Utils do
       expect(utils.__escape('foo bar')).to eq('foo+bar')
     end
 
-    it 'uses the escape_utils gem when available' do
+    it 'uses the escape_utils gem when available', unless: JRUBY do
       require 'escape_utils'
       expect(CGI).not_to receive(:escape)
       expect(EscapeUtils).to receive(:escape_url).and_call_original
