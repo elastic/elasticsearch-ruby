@@ -19,35 +19,35 @@ branches:
 matrix:
   include:
 
-    # Unit tests
-    - rvm: ruby-head
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: 2.5.0
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: 2.4.1
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: 2.3.4
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: 2.2.5
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: jruby-9.1.17.0
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
+#    # Unit tests
+#    - rvm: ruby-head
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
+#
+#    - rvm: 2.5.0
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
+#
+#    - rvm: 2.4.1
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
+#
+#    - rvm: 2.3.4
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
+#
+#    - rvm: 2.2.5
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
+#
+#    - rvm: jruby-9.1.17.0
+#      jdk: oraclejdk8
+#      env: TEST_SUITE=unit
 
     # Integration tests
     - rvm: 2.5.0
       jdk: oraclejdk8
-      env: QUIET=y TEST_SUITE=integration
+      env: QUIET=y TEST_CLUSTER_PORT=9250 TEST_SUITE=integration
 
   allow_failures:
     - rvm: ruby-head
@@ -59,16 +59,12 @@ before_install:
   - pkill -9 -f elasticsearch || true
   - gem update --system
   - gem --version
-  - gem install bundler -v 1.16.1
+  - gem install bundler
   - bundle version
   - bundle install
   - bundle exec rake setup
   - bundle exec rake elasticsearch:update
-  - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
-  - >
-    [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
-    TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch
-    bundle exec rake -I elasticsearch-extensions/lib test:cluster:start || true
+  - ELASTICSEARCH_VERSION=7.0.0-alpha1 TEST_CLUSTER_PORT=9250 TEST_SUITE=integration source ./travis_before_script.sh
 
 install:
   - rake bundle:clean
