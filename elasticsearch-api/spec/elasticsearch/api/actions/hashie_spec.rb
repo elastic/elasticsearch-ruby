@@ -1,16 +1,10 @@
-require 'test_helper'
-
+require 'spec_helper'
 require 'hashie'
 
-module Elasticsearch
-  module Test
-    class HashieTest < UnitTest
+describe 'Hashie' do
 
-      context "Hashie" do
-        subject { FakeClient.new }
-
-        should "wrap the response" do
-          json =<<-JSON
+  let(:json) do
+    <<-JSON
             {
               "took": 14,
               "timed_out": false,
@@ -64,15 +58,15 @@ module Elasticsearch
                 }
               }
             }
-          JSON
+    JSON
+  end
 
-          response = Hashie::Mash.new MultiJson.load(json)
+  let(:response) do
+    Hashie::Mash.new MultiJson.load(json)
+  end
 
-          assert_equal 'Test 1', response.hits.hits.first._source.title
-          assert_equal 'z',      response.facets.tags.terms.first.term
-        end
-      end
-
-    end
+  it 'wraps the response' do
+    expect(response.hits.hits.first._source.title).to eq('Test 1')
+    expect(response.facets.tags.terms.first.term).to eq('z')
   end
 end
