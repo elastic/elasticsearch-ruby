@@ -37,12 +37,6 @@ describe 'client#index' do
     }.to raise_exception(ArgumentError)
   end
 
-  it 'requires the :type argument' do
-    expect {
-      client.index(index: 'foo')
-    }.to raise_exception(ArgumentError)
-  end
-
   it 'performs the request' do
     expect(client_double.index(index: 'foo', type: 'bar', body: { foo: 'bar' })).to eq({})
   end

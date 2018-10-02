@@ -33,12 +33,6 @@ describe 'client#termvectors' do
     }.to raise_exception(ArgumentError)
   end
 
-  it 'requires the :type argument' do
-    expect {
-      client.termvectors(index: 'foo', id: '1')
-    }.to raise_exception(ArgumentError)
-  end
-
   it 'performs the request' do
     expect(client_double.termvectors(index: 'foo', type: 'bar', id: '123', body: {})).to eq({})
   end

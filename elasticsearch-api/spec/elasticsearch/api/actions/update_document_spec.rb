@@ -33,12 +33,6 @@ describe 'client#update' do
     }.to raise_exception(ArgumentError)
   end
 
-  it 'requires the :type argument' do
-    expect {
-      client.update(index: 'foo', id: '1')
-    }.to raise_exception(ArgumentError)
-  end
-
   it 'requires the :id argument' do
     expect {
       client.update(index: 'foo', type: 'bar')

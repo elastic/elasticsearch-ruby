@@ -60,8 +60,6 @@ end
 
 
 unless ENV["NOTURN"] || RUBY_1_8
-  require 'turn'
-
   if ENV['QUIET']
     Turn.config.format = :outline
     Turn.config.trace = 1

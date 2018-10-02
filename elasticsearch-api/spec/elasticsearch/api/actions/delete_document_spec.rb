@@ -25,12 +25,6 @@ describe 'client#delete' do
     }.to raise_exception(ArgumentError)
   end
 
-  it 'requires the :type argument' do
-    expect {
-      client.delete(index: 'foo', id: '1')
-    }.to raise_exception(ArgumentError)
-  end
-
   it 'requires the :id argument' do
     expect {
       client.delete(index: 'foo', type: 'bar')
