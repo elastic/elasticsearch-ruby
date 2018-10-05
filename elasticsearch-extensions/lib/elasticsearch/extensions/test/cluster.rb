@@ -190,6 +190,7 @@ module Elasticsearch
                 -E path.repo=/tmp \
                 -E repositories.url.allowed_urls=http://snapshot.test* \
                 -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
+                -E xpack.security.enabled=false \
                 -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
                 -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
