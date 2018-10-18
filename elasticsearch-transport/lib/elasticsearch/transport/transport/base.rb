@@ -202,7 +202,7 @@ module Elasticsearch
         #
         def __raise_transport_error(response)
           error = ERRORS[response.status] || ServerError
-          raise error.new "[#{response.status}] #{response.body}"
+          raise error.new "[#{response.status}] #{response.body}", response
         end
 
         # Converts any non-String object to JSON
