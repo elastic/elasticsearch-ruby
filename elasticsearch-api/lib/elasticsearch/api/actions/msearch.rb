@@ -41,6 +41,7 @@ module Elasticsearch
          valid_params = [
           :search_type,
           :max_concurrent_searches,
+          :max_concurrent_shard_requests,
           :typed_keys ]
 
         method = HTTP_GET

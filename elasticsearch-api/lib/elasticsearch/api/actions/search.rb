@@ -171,7 +171,8 @@ module Elasticsearch
           :version,
           :batched_reduce_size,
           :max_concurrent_shard_requests,
-          :pre_filter_shard_size ]
+          :pre_filter_shard_size,
+          :allow_partial_search_results ]
 
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
