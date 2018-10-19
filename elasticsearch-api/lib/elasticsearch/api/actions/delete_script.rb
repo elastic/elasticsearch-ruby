@@ -13,9 +13,6 @@ module Elasticsearch
       #
       def delete_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
-
-        valid_params =
-
         method = HTTP_DELETE
         path   = "_scripts/#{arguments.has_key?(:lang) ? "#{arguments.delete(:lang)}/" : ''}#{arguments[:id]}"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)

@@ -2,11 +2,6 @@ module Elasticsearch
   module API
     module Actions
 
-      # The valid parameters for this action.
-      #
-      # @since 6.0.1
-      VALID_PARAMS =
-
       # Return the number of queries matching a document.
       #
       # Percolator allows you to register queries and then evaluate a document against them:

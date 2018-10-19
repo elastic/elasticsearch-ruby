@@ -10,9 +10,6 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
       #
       def render_search_template(arguments={})
-        valid_params = [
-          :id
-        ]
         method = 'GET'
         path   = "_render/template"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)

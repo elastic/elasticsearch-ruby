@@ -32,7 +32,7 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:delete, [ :timeout ].freeze)
+        ParamsRegistry.register(:delete_alias, [ :timeout ].freeze)
       end
     end
   end

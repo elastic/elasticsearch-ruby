@@ -25,7 +25,7 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:status, [
+        ParamsRegistry.register(:verify_repository, [
             :repository,
             :master_timeout,
             :timeout ].freeze)

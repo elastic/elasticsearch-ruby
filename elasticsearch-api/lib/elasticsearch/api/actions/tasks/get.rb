@@ -24,7 +24,7 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:cancel, [ :wait_for_completion ].freeze)
+        ParamsRegistry.register(:get, [ :wait_for_completion ].freeze)
       end
     end
   end
