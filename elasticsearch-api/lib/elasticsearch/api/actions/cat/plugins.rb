@@ -16,20 +16,24 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-plugins.html
         #
         def plugins(arguments={})
-          valid_params = [
+          method = 'GET'
+          path   = "_cat/plugins"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:plugins, [
             :local,
             :master_timeout,
             :h,
             :help,
             :v,
-            :s ]
-          method = 'GET'
-          path   = "_cat/plugins"
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :s ].freeze)
       end
     end
   end

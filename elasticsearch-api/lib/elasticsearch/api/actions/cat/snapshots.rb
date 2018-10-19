@@ -23,23 +23,25 @@ module Elasticsearch
         #
         def snapshots(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" if !arguments[:repository] && !arguments[:help]
-
-          valid_params = [
-            :master_timeout,
-            :h,
-            :help,
-            :v,
-            :s ]
-
           repository = arguments.delete(:repository)
 
           method = HTTP_GET
           path   = Utils.__pathify "_cat/snapshots", Utils.__escape(repository)
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:snapshots, [
+            :master_timeout,
+            :h,
+            :help,
+            :v,
+            :s ].freeze)
       end
     end
   end
