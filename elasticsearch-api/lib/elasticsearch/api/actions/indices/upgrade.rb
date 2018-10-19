@@ -19,19 +19,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-upgrade.html
         #
         def upgrade(arguments={})
-          valid_params = [
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :wait_for_completion ]
-
           method = HTTP_POST
           path   = "_upgrade"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:upgrade, [
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
+            :wait_for_completion ].freeze)
       end
     end
   end

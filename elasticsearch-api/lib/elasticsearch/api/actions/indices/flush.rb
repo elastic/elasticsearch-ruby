@@ -24,21 +24,24 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/
         #
         def flush(arguments={})
-          valid_params = [
-            :force,
-            :wait_if_ongoing,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards ]
-
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_flush'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:flush, [
+            :force,
+            :wait_if_ongoing,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards ].freeze)
       end
     end
   end

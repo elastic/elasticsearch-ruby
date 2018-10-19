@@ -25,25 +25,27 @@ module Elasticsearch
         #
         def get(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          method = HTTP_GET
 
-          valid_params = [
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments.delete(:feature))
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get, [
             :local,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
             :flat_settings,
             :human,
-            :include_defaults ]
-
-          method = HTTP_GET
-
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), Utils.__listify(arguments.delete(:feature))
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :include_defaults ].freeze)
       end
     end
   end

@@ -42,20 +42,22 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
         #
         def forcemerge(arguments={})
-          valid_params = [
-            :max_num_segments,
-            :only_expunge_deletes,
-            :flush
-          ]
-
           method = HTTP_POST
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_forcemerge'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:forcemerge, [
+            :max_num_segments,
+            :only_expunge_deletes,
+            :flush ].freeze)
       end
     end
   end

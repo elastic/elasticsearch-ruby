@@ -42,7 +42,22 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-get-settings/
         #
         def get_settings(arguments={})
-          valid_params = [
+          method = HTTP_GET
+          path   = Utils.__pathify Utils.__listify(arguments[:index]),
+                                   Utils.__listify(arguments[:type]),
+                                   arguments.delete(:prefix),
+                                   '_settings',
+                                   Utils.__escape(arguments[:name])
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get_settings, [
             :prefix,
             :ignore_indices,
             :ignore_unavailable,
@@ -50,20 +65,7 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards,
             :flat_settings,
-            :local
-          ]
-
-          method = HTTP_GET
-          path   = Utils.__pathify Utils.__listify(arguments[:index]),
-                                   Utils.__listify(arguments[:type]),
-                                   arguments.delete(:prefix),
-                                   '_settings',
-                                   Utils.__escape(arguments[:name])
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :local ].freeze)
       end
     end
   end

@@ -50,8 +50,19 @@ module Elasticsearch
         def put_mapping(arguments={})
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
+          method = HTTP_PUT
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
 
-          valid_params = [
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = arguments[:body]
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:put_mapping, [
             :ignore_conflicts,
             :ignore_indices,
             :ignore_unavailable,
@@ -59,17 +70,7 @@ module Elasticsearch
             :expand_wildcards,
             :update_all_types,
             :master_timeout,
-            :timeout
-          ]
-
-          method = HTTP_PUT
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = arguments[:body]
-
-          perform_request(method, path, params, body).body
-        end
+            :timeout ].freeze)
       end
     end
   end
