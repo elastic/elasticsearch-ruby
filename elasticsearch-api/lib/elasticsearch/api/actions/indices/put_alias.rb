@@ -26,8 +26,6 @@ module Elasticsearch
         def put_alias(arguments={})
           raise ArgumentError, "Required argument 'index' missing"  unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
-          valid_params = [ :timeout ]
-
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 

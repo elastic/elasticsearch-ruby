@@ -31,22 +31,10 @@ module Elasticsearch
       #
       # @since 6.1.1
       ParamsRegistry.register(:field_caps, [
-          :analyze_wildcard,
-          :analyzer,
-          :default_operator,
-          :df,
           :fields,
-          :lenient,
-          :lowercase_expanded_terms,
-          :parent,
-          :preference,
-          :q,
-          :routing,
-          :source,
-          :_source,
-          :_source_include,
-          :_source_exclude,
-          :stored_fields ].freeze)
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards ].freeze)
     end
   end
 end

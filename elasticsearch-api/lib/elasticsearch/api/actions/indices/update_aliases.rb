@@ -32,8 +32,6 @@ module Elasticsearch
         #
         def update_aliases(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [ :timeout ]
-
           method = HTTP_POST
           path   = "_aliases"
 
