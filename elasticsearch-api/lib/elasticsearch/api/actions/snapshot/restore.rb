@@ -31,22 +31,24 @@ module Elasticsearch
         def restore(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing"   unless arguments[:snapshot]
-
-          valid_params = [
-            :master_timeout,
-            :wait_for_completion ]
-
           repository = arguments.delete(:repository)
           snapshot   = arguments.delete(:snapshot)
 
           method = HTTP_POST
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__escape(snapshot), '_restore' )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:restore, [
+            :master_timeout,
+            :wait_for_completion ].freeze)
       end
     end
   end
