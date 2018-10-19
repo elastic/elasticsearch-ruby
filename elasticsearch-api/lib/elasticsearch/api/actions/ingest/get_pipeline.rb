@@ -11,15 +11,18 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def get_pipeline(arguments={})
-          valid_params = [
-            :master_timeout ]
           method = 'GET'
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id])
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get_pipeline, [ :master_timeout ].freeze)
       end
     end
   end
