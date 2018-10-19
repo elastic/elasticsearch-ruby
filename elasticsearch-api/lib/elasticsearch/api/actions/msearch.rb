@@ -37,16 +37,10 @@ module Elasticsearch
       #
       def msearch(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
-         valid_params = [
-          :search_type,
-          :max_concurrent_searches,
-          :typed_keys ]
-
         method = HTTP_GET
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_msearch' )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         case
@@ -73,6 +67,14 @@ module Elasticsearch
 
         perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:msearch, [
+          :search_type,
+          :max_concurrent_searches,
+          :typed_keys ].freeze)
     end
   end
 end

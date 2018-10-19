@@ -22,20 +22,24 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html
       #
       def search_shards(arguments={})
-        valid_params = [
+        method = HTTP_GET
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search_shards' )
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = nil
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:search_shards, [
           :preference,
           :routing,
           :local,
           :ignore_unavailable,
           :allow_no_indices,
-          :expand_wildcards ]
-        method = HTTP_GET
-        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_search_shards' )
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = nil
-
-        perform_request(method, path, params, body).body
-      end
+          :expand_wildcards ].freeze)
     end
   end
 end

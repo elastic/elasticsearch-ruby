@@ -38,7 +38,29 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= UNDERSCORE_ALL
 
-        valid_params = [
+        valid_params =
+
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id])
+
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = nil
+
+        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+        else
+          perform_request(method, path, params, body).body
+        end
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:get, [
           :fields,
           :parent,
           :preference,
@@ -51,24 +73,7 @@ module Elasticsearch
           :_source_include,
           :_source_exclude,
           :_source_transform,
-          :stored_fields ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id])
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = nil
-
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
-        if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-        else
-          perform_request(method, path, params, body).body
-        end
-      end
+          :stored_fields ].freeze)
     end
   end
 end

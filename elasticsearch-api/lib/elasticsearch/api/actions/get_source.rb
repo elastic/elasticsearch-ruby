@@ -35,25 +35,13 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= UNDERSCORE_ALL
-
-        valid_params = [
-          :fields,
-          :parent,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing,
-          :_source,
-          :_source_include,
-          :_source_exclude ]
-
         method = HTTP_GET
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id]),
                                  '_source'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = nil
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
@@ -62,6 +50,20 @@ module Elasticsearch
           perform_request(method, path, params, body).body
         end
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:get_source, [
+          :fields,
+          :parent,
+          :preference,
+          :realtime,
+          :refresh,
+          :routing,
+          :_source,
+          :_source_include,
+          :_source_exclude ].freeze)
     end
   end
 end

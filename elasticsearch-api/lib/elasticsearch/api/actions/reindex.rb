@@ -53,20 +53,24 @@ module Elasticsearch
       #
       def reindex(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        valid_params = [
+        method = 'POST'
+        path   = "_reindex"
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:reindex, [
           :refresh,
           :timeout,
           :consistency,
           :wait_for_completion,
           :requests_per_second,
-          :slices ]
-        method = 'POST'
-        path   = "_reindex"
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :slices ].freeze)
     end
   end
 end
