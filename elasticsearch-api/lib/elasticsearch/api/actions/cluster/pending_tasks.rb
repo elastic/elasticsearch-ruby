@@ -17,16 +17,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-pending.html
         #
         def pending_tasks(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout ]
           method = HTTP_GET
           path   = "_cluster/pending_tasks"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:pending_tasks, [
+            :local,
+            :master_timeout ].freeze)
       end
     end
   end
