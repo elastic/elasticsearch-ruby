@@ -4,15 +4,24 @@ $LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-transport/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-dsl/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-xpack/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-extensions/lib', __dir__))
 
 require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
 
-begin
-  require 'elasticsearch-dsl'
-rescue LoadError
-  warn 'elasticsearch-dsl gem not loaded. Please install it explicitly.'
+gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch-xpack', 'elasticsearch-extensions'].inject([]) do |not_loaded, gem|
+  begin
+    require gem
+  rescue LoadError
+    not_loaded << gem
+  end
+  not_loaded
+end
+
+unless gems_not_loaded.empty?
+  warn "The following gems were not loaded: [#{gems_not_loaded.join(', ')}]. Please install and require them explicitly."
 end
 
 include Elasticsearch
