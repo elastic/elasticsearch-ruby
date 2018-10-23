@@ -55,8 +55,21 @@ module Elasticsearch
       #
       def delete_by_query(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+        method = HTTP_POST
+        path   = Utils.__pathify Utils.__listify(arguments[:index]),
+                                 Utils.__listify(arguments[:type]),
+                                 '/_delete_by_query'
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:delete_by_query, [
           :analyzer,
           :analyze_wildcard,
           :default_operator,
@@ -88,18 +101,7 @@ module Elasticsearch
           :scroll_size,
           :wait_for_completion,
           :requests_per_second,
-          :slices ]
-
-        method = HTTP_POST
-        path   = Utils.__pathify Utils.__listify(arguments[:index]),
-                                 Utils.__listify(arguments[:type]),
-                                 '/_delete_by_query'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :slices ].freeze)
     end
   end
 end

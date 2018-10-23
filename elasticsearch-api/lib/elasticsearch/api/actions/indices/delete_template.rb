@@ -20,12 +20,10 @@ module Elasticsearch
         #
         def delete_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
-          valid_params = [ :timeout ]
-
           method = HTTP_DELETE
           path   = Utils.__pathify '_template', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body = nil
 
           if Array(arguments[:ignore]).include?(404)
@@ -34,6 +32,11 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:delete_template, [ :timeout ].freeze)
       end
     end
   end

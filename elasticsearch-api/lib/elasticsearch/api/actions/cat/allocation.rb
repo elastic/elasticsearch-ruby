@@ -43,28 +43,26 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html
         #
         def allocation(arguments={})
-          valid_params = [
+          node_id = arguments.delete(:node_id)
+          method = HTTP_GET
+          path   = Utils.__pathify '_cat/allocation', Utils.__listify(node_id)
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          body   = nil
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:allocation, [
             :bytes,
             :local,
             :master_timeout,
             :h,
             :help,
             :v,
-            :s ]
-
-          node_id = arguments.delete(:node_id)
-
-          method = HTTP_GET
-
-          path   = Utils.__pathify '_cat/allocation', Utils.__listify(node_id)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
-
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :s ].freeze)
       end
     end
   end

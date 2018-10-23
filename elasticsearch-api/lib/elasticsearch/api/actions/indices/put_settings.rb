@@ -47,8 +47,18 @@ module Elasticsearch
         #
         def put_settings(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          method = HTTP_PUT
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = arguments[:body]
 
-          valid_params = [
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:put_settings, [
             :ignore_indices,
             :ignore_unavailable,
             :include_defaults,
@@ -56,16 +66,7 @@ module Elasticsearch
             :expand_wildcards,
             :preserve_existing,
             :master_timeout,
-            :flat_settings
-          ]
-
-          method = HTTP_PUT
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_settings'
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = arguments[:body]
-
-          perform_request(method, path, params, body).body
-        end
+            :flat_settings ].freeze)
       end
     end
   end

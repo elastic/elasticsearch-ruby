@@ -48,7 +48,21 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
         #
         def analyze(arguments={})
-          valid_params = [
+          method = HTTP_GET
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params[:filters] = Utils.__listify(params[:filters]) if params[:filters]
+
+          body   = arguments[:body]
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:analyze, [
             :analyzer,
             :char_filters,
             :explain,
@@ -61,18 +75,7 @@ module Elasticsearch
             :text,
             :tokenizer,
             :token_filters,
-            :format ]
-
-          method = HTTP_GET
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_analyze'
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:filters] = Utils.__listify(params[:filters]) if params[:filters]
-
-          body   = arguments[:body]
-
-          perform_request(method, path, params, body).body
-        end
+            :format ].freeze)
       end
     end
   end

@@ -70,8 +70,27 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= DEFAULT_DOC
+        method = HTTP_POST
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id]),
+                                 '_update'
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+        else
+          perform_request(method, path, params, body).body
+        end
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:update, [
           :consistency,
           :fields,
           :include_type_name,
@@ -90,25 +109,7 @@ module Elasticsearch
           :timestamp,
           :ttl,
           :version,
-          :version_type ]
-
-        method = HTTP_POST
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id]),
-                                 '_update'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
-        if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-        else
-          perform_request(method, path, params, body).body
-        end
-      end
+          :version_type ].freeze)
     end
   end
 end

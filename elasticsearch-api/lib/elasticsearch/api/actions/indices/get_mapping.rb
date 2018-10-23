@@ -35,24 +35,25 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html
         #
         def get_mapping(arguments={})
-          valid_params = [
-            :ignore_indices,
-            :ignore_unavailable,
-            :include_type_name,
-            :allow_no_indices,
-            :expand_wildcards,
-            :local
-          ]
-
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]),
                                    '_mapping',
                                    Utils.__listify(arguments[:type])
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get_mapping, [
+            :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
+            :local ].freeze)
       end
     end
   end

@@ -18,17 +18,12 @@ module Elasticsearch
         #
         def delete_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
-
-          valid_params = [
-            :master_timeout,
-            :timeout ]
-
           repository = arguments.delete(:repository)
 
           method = HTTP_DELETE
           path   = Utils.__pathify( '_snapshot', Utils.__listify(repository) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           if Array(arguments[:ignore]).include?(404)
@@ -37,6 +32,13 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:delete_repository, [
+            :master_timeout,
+            :timeout ].freeze)
       end
     end
   end

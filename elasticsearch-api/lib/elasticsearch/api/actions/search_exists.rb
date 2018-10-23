@@ -33,7 +33,18 @@ module Elasticsearch
       # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-exists.html
       #
       def search_exists(arguments={})
-        valid_params = [
+        method = 'POST'
+        path   = "_search/exists"
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:search_exists, [
           :ignore_unavailable,
           :allow_no_indices,
           :expand_wildcards,
@@ -46,14 +57,7 @@ module Elasticsearch
           :default_operator,
           :df,
           :lenient,
-          :lowercase_expanded_terms ]
-        method = 'POST'
-        path   = "_search/exists"
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :lowercase_expanded_terms ].freeze)
     end
   end
 end

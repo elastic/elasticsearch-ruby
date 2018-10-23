@@ -50,7 +50,23 @@ module Elasticsearch
       #
       def count_percolate(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        valid_params = [
+
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 arguments[:id],
+                                 '_percolate/count'
+
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:count_percolate, [
           :routing,
           :preference,
           :ignore_unavailable,
@@ -59,19 +75,7 @@ module Elasticsearch
           :percolate_index,
           :percolate_type,
           :version,
-          :version_type ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 arguments[:id],
-                                 '_percolate/count'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :version_type ].freeze)
     end
   end
 end

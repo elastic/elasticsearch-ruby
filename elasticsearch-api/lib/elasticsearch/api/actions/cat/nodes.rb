@@ -38,25 +38,28 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html
         #
         def nodes(arguments={})
-          valid_params = [
-            :full_id,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :v,
-            :s ]
-
           method = HTTP_GET
           path   = "_cat/nodes"
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h], :escape => false) if params[:h]
 
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:nodes, [
+            :full_id,
+            :local,
+            :master_timeout,
+            :h,
+            :help,
+            :v,
+            :s ].freeze)
       end
     end
   end

@@ -15,17 +15,21 @@ module Elasticsearch
         def put_pipeline(arguments={})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [
-            :master_timeout,
-            :timeout ]
           method = 'PUT'
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:put_pipeline, [
+            :master_timeout,
+            :timeout ].freeze)
       end
     end
   end

@@ -18,23 +18,25 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks-cancel.html
         #
         def cancel(arguments={})
-          valid_params = [
-            :node_id,
-            :actions,
-            :parent_node,
-            :parent_task ]
-
           arguments = arguments.clone
-
           task_id = arguments.delete(:task_id)
 
           method = 'POST'
           path   = Utils.__pathify( '_tasks', Utils.__escape(task_id), '_cancel' )
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:cancel, [
+            :node_id,
+            :actions,
+            :parent_node,
+            :parent_task ].freeze)
       end
     end
   end

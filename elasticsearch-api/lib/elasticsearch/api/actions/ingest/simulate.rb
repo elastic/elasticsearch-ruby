@@ -14,15 +14,18 @@ module Elasticsearch
         #
         def simulate(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          valid_params = [
-            :verbose ]
           method = 'GET'
           path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id]), '_simulate'
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:simulate, [ :verbose ].freeze)
       end
     end
   end

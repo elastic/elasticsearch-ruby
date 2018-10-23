@@ -51,28 +51,29 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html
         #
         def shards(arguments={})
-          valid_params = [
-            :local,
-            :master_timeout,
-            :bytes,
-            :h,
-            :help,
-            :v,
-            :s ]
-
           index = arguments.delete(:index)
-
           method = HTTP_GET
-
           path   = Utils.__pathify '_cat/shards', Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:shards, [
+            :local,
+            :master_timeout,
+            :bytes,
+            :h,
+            :help,
+            :v,
+            :s ].freeze)
       end
     end
   end

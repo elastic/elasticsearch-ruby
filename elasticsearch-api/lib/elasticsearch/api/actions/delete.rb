@@ -34,23 +34,12 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= DEFAULT_DOC
 
-        valid_params = [
-          :consistency,
-          :include_type_name,
-          :parent,
-          :refresh,
-          :replication,
-          :routing,
-          :timeout,
-          :version,
-          :version_type ]
-
         method = HTTP_DELETE
         path   = Utils.__pathify Utils.__escape(arguments[:index]),
                                  Utils.__escape(arguments[:type]),
                                  Utils.__escape(arguments[:id])
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = nil
 
         if Array(arguments[:ignore]).include?(404)
@@ -59,6 +48,19 @@ module Elasticsearch
           perform_request(method, path, params, body).body
         end
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:delete, [
+          :consistency,
+          :parent,
+          :refresh,
+          :replication,
+          :routing,
+          :timeout,
+          :version,
+          :version_type ].freeze)
     end
   end
 end

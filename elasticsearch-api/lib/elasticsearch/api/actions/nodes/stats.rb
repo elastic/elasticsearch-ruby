@@ -44,8 +44,29 @@ module Elasticsearch
         #
         def stats(arguments={})
           arguments = arguments.clone
+          node_id = arguments.delete(:node_id)
 
-          valid_params = [
+          path   = Utils.__pathify '_nodes',
+                                   Utils.__listify(node_id),
+                                   'stats',
+                                   Utils.__listify(arguments.delete(:metric)),
+                                   Utils.__listify(arguments.delete(:index_metric))
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+          [:completion_fields, :fielddata_fields, :fields, :groups, :types].each do |key|
+            params[key] = Utils.__listify(params[key]) if params[key]
+          end
+
+          body   = nil
+
+          perform_request(HTTP_GET, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:stats, [
             :metric,
             :index_metric,
             :node_id,
@@ -57,26 +78,7 @@ module Elasticsearch
             :human,
             :level,
             :types,
-            :timeout ]
-
-          node_id = arguments.delete(:node_id)
-
-          path   = Utils.__pathify '_nodes',
-                                   Utils.__listify(node_id),
-                                   'stats',
-                                   Utils.__listify(arguments.delete(:metric)),
-                                   Utils.__listify(arguments.delete(:index_metric))
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-
-          [:completion_fields, :fielddata_fields, :fields, :groups, :types].each do |key|
-            params[key] = Utils.__listify(params[key]) if params[key]
-          end
-
-          body   = nil
-
-          perform_request(HTTP_GET, path, params, body).body
-        end
+            :timeout ].freeze)
       end
     end
   end

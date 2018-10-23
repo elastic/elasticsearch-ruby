@@ -31,25 +31,12 @@ module Elasticsearch
           arguments = arguments.clone
           index     = arguments.delete(:index)
           metric    = arguments.delete(:metric)
-
-          valid_params = [
-            :metric,
-            :index_templates,
-            :local,
-            :master_timeout,
-            :flat_settings,
-            :allow_no_indices,
-            :expand_wildcards,
-            :ignore_unavailable ]
-
           method = HTTP_GET
-          path   = "_cluster/state"
-
           path   = Utils.__pathify '_cluster/state',
                                    Utils.__listify(metric),
                                    Utils.__listify(index)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           [:index_templates].each do |key|
             params[key] = Utils.__listify(params[key]) if params[key]
@@ -59,6 +46,19 @@ module Elasticsearch
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:state, [
+            :metric,
+            :index_templates,
+            :local,
+            :master_timeout,
+            :flat_settings,
+            :allow_no_indices,
+            :expand_wildcards,
+            :ignore_unavailable ].freeze)
       end
     end
   end

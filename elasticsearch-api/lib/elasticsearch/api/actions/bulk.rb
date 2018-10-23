@@ -69,23 +69,10 @@ module Elasticsearch
 
         type      = arguments.delete(:type)
 
-        valid_params = [
-          :include_type_name,
-          :wait_for_active_shards,
-          :refresh,
-          :routing,
-          :timeout,
-          :type,
-          :fields,
-          :_source,
-          :_source_exclude,
-          :_source_include,
-          :pipeline ]
-
         method = HTTP_POST
         path   = Utils.__pathify Utils.__escape(arguments[:index]), Utils.__escape(type), '_bulk'
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         if body.is_a? Array
@@ -96,6 +83,21 @@ module Elasticsearch
 
         perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:bulk, [
+          :wait_for_active_shards,
+          :refresh,
+          :routing,
+          :timeout,
+          :type,
+          :fields,
+          :_source,
+          :_source_exclude,
+          :_source_include,
+          :pipeline ].freeze)
     end
   end
 end

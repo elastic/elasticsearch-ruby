@@ -85,8 +85,27 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id]),
+                                 '_mlt'
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+        [:mlt_fields, :search_indices, :search_types, :stop_words].each do |name|
+          params[name] = Utils.__listify(params[name]) if params[name]
+        end
+
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:mlt, [
           :boost_terms,
           :max_doc_freq,
           :max_query_terms,
@@ -105,24 +124,7 @@ module Elasticsearch
           :search_source,
           :search_type,
           :search_types,
-          :stop_words ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id]),
-                                 '_mlt'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-
-        [:mlt_fields, :search_indices, :search_types, :stop_words].each do |name|
-          params[name] = Utils.__listify(params[name]) if params[name]
-        end
-
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :stop_words ].freeze)
     end
   end
 end

@@ -46,7 +46,19 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-optimize/
         #
         def optimize(arguments={})
-          valid_params = [
+          method = HTTP_POST
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:optimize, [
             :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
@@ -58,16 +70,7 @@ module Elasticsearch
             :only_expunge_deletes,
             :operation_threading,
             :refresh,
-            :wait_for_merge ]
-
-          method = HTTP_POST
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_optimize'
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :wait_for_merge ].freeze)
       end
     end
   end
