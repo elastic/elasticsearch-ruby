@@ -23,16 +23,11 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get_repository(arguments={})
-          valid_params = [
-            :master_timeout,
-            :local ]
-
           repository = arguments.delete(:repository)
-
           method = HTTP_GET
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           if Array(arguments[:ignore]).include?(404)
@@ -41,6 +36,13 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get_repository, [
+            :master_timeout,
+            :local ].freeze)
       end
     end
   end

@@ -27,20 +27,23 @@ module Elasticsearch
       # @see http://elasticsearch.org/guide/reference/api/search/suggest/
       #
       def suggest(arguments={})
-        valid_params = [
-          :ignore_indices,
-          :preference,
-          :routing,
-          :source ]
-
         method = HTTP_POST
         path   = Utils.__pathify( Utils.__listify(arguments[:index]), '_suggest' )
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:suggest, [
+          :ignore_indices,
+          :preference,
+          :routing,
+          :source ].freeze)
     end
   end
 end

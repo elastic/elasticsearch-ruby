@@ -17,7 +17,18 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
         #
         def templates(arguments={})
-          valid_params = [
+          method = HTTP_GET
+          path   = "_cat/templates"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:templates, [
             :name,
             :format,
             :local,
@@ -25,14 +36,7 @@ module Elasticsearch
             :h,
             :help,
             :v,
-            :s ]
-          method = HTTP_GET
-          path   = "_cat/templates"
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :s ].freeze)
       end
     end
   end

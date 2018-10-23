@@ -19,20 +19,22 @@ module Elasticsearch
       #
       def field_caps(arguments={})
         raise ArgumentError, "Required argument 'fields' missing" unless arguments[:fields]
-
-        valid_params = [
-          :fields,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards ]
-
         method = HTTP_GET
         path   = Utils.__pathify Utils.__listify(arguments[:index]), '_field_caps'
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:field_caps, [
+          :fields,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards ].freeze)
     end
   end
 end

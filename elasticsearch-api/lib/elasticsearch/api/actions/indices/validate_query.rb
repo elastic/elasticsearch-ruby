@@ -66,7 +66,21 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/validate/
         #
         def validate_query(arguments={})
-          valid_params = [
+          method = HTTP_GET
+          path   = Utils.__pathify Utils.__listify(arguments[:index]),
+                                   Utils.__listify(arguments[:type]),
+                                   '_validate/query'
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = arguments[:body]
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:validate_query, [
             :rewrite,
             :explain,
             :ignore_unavailable,
@@ -79,18 +93,7 @@ module Elasticsearch
             :default_operator,
             :df,
             :lenient,
-            :lowercase_expanded_terms ]
-
-          method = HTTP_GET
-          path   = Utils.__pathify Utils.__listify(arguments[:index]),
-                                   Utils.__listify(arguments[:type]),
-                                   '_validate/query'
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = arguments[:body]
-
-          perform_request(method, path, params, body).body
-        end
+            :lowercase_expanded_terms ].freeze)
       end
     end
   end

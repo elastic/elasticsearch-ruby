@@ -70,21 +70,23 @@ module Elasticsearch
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-          valid_params = [
-            :timeout,
-            :master_timeout,
-            :update_all_types,
-            :wait_for_active_shards
-          ]
-
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__escape(arguments[:index])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:create, [
+            :timeout,
+            :master_timeout,
+            :update_all_types,
+            :wait_for_active_shards ].freeze)
       end
     end
   end

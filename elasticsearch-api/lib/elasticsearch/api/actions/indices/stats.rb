@@ -76,7 +76,39 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
         #
         def stats(arguments={})
-          valid_parts = [
+          method = HTTP_GET
+          parts  = Utils.__extract_parts arguments, ParamsRegistry.get(:stats_parts)
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(:stats_params)
+          params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
+          params[:groups] = Utils.__listify(params[:groups], :escape => false) if params[:groups]
+
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:stats_params, [
+            :fields,
+            :completion_fields,
+            :fielddata_fields,
+            :groups,
+            :level,
+            :types,
+            :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
+            :include_segment_file_sizes ].freeze)
+
+        # Register this action with its valid parts when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:stats_parts, [
             :docs,
             :fielddata,
             :filter_cache,
@@ -89,34 +121,7 @@ module Elasticsearch
             :search,
             :suggest,
             :store,
-            :warmer ]
-
-          valid_params = [
-            :fields,
-            :completion_fields,
-            :fielddata_fields,
-            :groups,
-            :level,
-            :types,
-            :ignore_indices,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :include_segment_file_sizes ]
-
-          method = HTTP_GET
-
-          parts  = Utils.__extract_parts arguments, valid_parts
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
-          params[:groups] = Utils.__listify(params[:groups], :escape => false) if params[:groups]
-
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :warmer ].freeze)
       end
     end
   end

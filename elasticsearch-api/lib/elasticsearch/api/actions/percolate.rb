@@ -42,8 +42,22 @@ module Elasticsearch
 
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id]),
+                                 '_percolate'
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:percolate, [
           :routing,
           :preference,
           :ignore_unavailable,
@@ -53,19 +67,7 @@ module Elasticsearch
           :percolate_type,
           :percolate_format,
           :version,
-          :version_type ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id]),
-                                 '_percolate'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :version_type ].freeze)
     end
   end
 end

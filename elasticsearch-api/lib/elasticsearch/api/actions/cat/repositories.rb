@@ -22,20 +22,23 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-repositories.html
         #
         def repositories(arguments={})
-          valid_params = [
-            :master_timeout,
-            :h,
-            :help,
-            :v,
-            :s ]
-
           method = HTTP_GET
           path   = "_cat/repositories"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:repositories, [
+            :master_timeout,
+            :h,
+            :help,
+            :v,
+            :s ].freeze)
       end
     end
   end

@@ -25,17 +25,21 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html
         #
         def recovery(arguments={})
-          valid_params = [
-            :detailed,
-            :active_only,
-            :human ]
           method = HTTP_GET
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_recovery'
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:recovery, [
+            :detailed,
+            :active_only,
+            :human ].freeze)
       end
     end
   end

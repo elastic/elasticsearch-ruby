@@ -35,7 +35,28 @@ module Elasticsearch
       # @see #termvector
       #
       def mtermvectors(arguments={})
-        valid_params = [
+        ids = arguments.delete(:ids)
+
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 '_mtermvectors'
+
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+        if ids
+          body = { :ids => ids }
+        else
+          body = arguments[:body]
+        end
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:mtermvectors, [
           :ids,
           :term_statistics,
           :field_statistics,
@@ -46,25 +67,7 @@ module Elasticsearch
           :preference,
           :realtime,
           :routing,
-          :parent ]
-
-        ids = arguments.delete(:ids)
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 '_mtermvectors'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-
-        if ids
-          body = { :ids => ids }
-        else
-          body = arguments[:body]
-        end
-
-        perform_request(method, path, params, body).body
-      end
+          :parent ].freeze)
     end
   end
 end

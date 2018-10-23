@@ -34,18 +34,10 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/
         #
         def delete(arguments={})
-          valid_params = [
-            :timeout,
-            :master_timeout,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-           ]
-
           method = HTTP_DELETE
           path   = Utils.__pathify Utils.__listify(arguments[:index])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           if Array(arguments[:ignore]).include?(404)
@@ -54,6 +46,16 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:delete, [
+            :timeout,
+            :master_timeout,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards ].freeze)
       end
     end
   end

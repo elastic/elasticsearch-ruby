@@ -126,8 +126,26 @@ module Elasticsearch
       #
       def search(arguments={})
         arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
+        method = HTTP_GET
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+        body   = arguments[:body]
+
+        params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
+        params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields], :escape => false) if params[:fielddata_fields]
+
+        # FIX: Unescape the `filter_path` parameter due to __listify default behavior. Investigate.
+        params[:filter_path] =  defined?(EscapeUtils) ? EscapeUtils.unescape_url(params[:filter_path]) : CGI.unescape(params[:filter_path]) if params[:filter_path]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:search, [
           :analyzer,
           :analyze_wildcard,
           :default_operator,
@@ -169,23 +187,7 @@ module Elasticsearch
           :version,
           :batched_reduce_size,
           :max_concurrent_shard_requests,
-          :pre_filter_shard_size ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), UNDERSCORE_SEARCH )
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-
-        body   = arguments[:body]
-
-        params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
-        params[:fielddata_fields] = Utils.__listify(params[:fielddata_fields], :escape => false) if params[:fielddata_fields]
-
-        # FIX: Unescape the `filter_path` parameter due to __listify default behavior. Investigate.
-        params[:filter_path] =  defined?(EscapeUtils) ? EscapeUtils.unescape_url(params[:filter_path]) : CGI.unescape(params[:filter_path]) if params[:filter_path]
-
-        perform_request(method, path, params, body).body
-      end
+          :pre_filter_shard_size ].freeze)
     end
   end
 end

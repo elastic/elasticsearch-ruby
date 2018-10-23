@@ -18,25 +18,25 @@ module Elasticsearch
         #
         def rollover(arguments={})
           raise ArgumentError, "Required argument 'alias' missing" unless arguments[:alias]
-
-          valid_params = [
-            :wait_for_active_shards,
-            :timeout,
-            :master_timeout,
-            :dry_run ]
-
           arguments = arguments.clone
-
           source = arguments.delete(:alias)
           target = arguments.delete(:new_index)
-
           method = HTTP_POST
           path   = Utils.__pathify Utils.__escape(source), '_rollover', Utils.__escape(target)
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:rollover, [
+            :wait_for_active_shards,
+            :timeout,
+            :master_timeout,
+            :dry_run ].freeze)
       end
     end
   end

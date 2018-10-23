@@ -60,19 +60,6 @@ module Elasticsearch
       def termvectors(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'type' missing" unless arguments[:type]
-
-        valid_params = [
-          :term_statistics,
-          :field_statistics,
-          :fields,
-          :offsets,
-          :positions,
-          :payloads,
-          :preference,
-          :realtime,
-          :routing,
-          :parent ]
-
         method = HTTP_GET
         endpoint = arguments.delete(:endpoint) || '_termvectors'
 
@@ -81,7 +68,7 @@ module Elasticsearch
                                  arguments[:id],
                                  endpoint
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body
@@ -92,6 +79,21 @@ module Elasticsearch
       def termvector(arguments={})
         termvectors(arguments.merge :endpoint => '_termvector')
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:termvectors, [
+          :term_statistics,
+          :field_statistics,
+          :fields,
+          :offsets,
+          :positions,
+          :payloads,
+          :preference,
+          :realtime,
+          :routing,
+          :parent ].freeze)
     end
   end
 end

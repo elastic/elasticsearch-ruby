@@ -31,16 +31,10 @@ module Elasticsearch
       #
       def mpercolate(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        valid_params = [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :percolate_format ]
-
         method = HTTP_GET
         path   = "_mpercolate"
 
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         case
@@ -54,6 +48,15 @@ module Elasticsearch
 
         perform_request(method, path, params, payload).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:mpercolate, [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :percolate_format ].freeze)
     end
   end
 end

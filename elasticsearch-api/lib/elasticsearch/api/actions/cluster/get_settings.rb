@@ -16,18 +16,20 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
         #
         def get_settings(arguments={})
-          valid_params = [
-            :flat_settings,
-            :include_defaults
-          ]
-
           method = HTTP_GET
           path   = "_cluster/settings"
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:get_settings, [
+            :flat_settings,
+            :include_defaults ].freeze)
       end
     end
   end

@@ -10,16 +10,19 @@ module Elasticsearch
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-template.html
       #
       def render_search_template(arguments={})
-        valid_params = [
-          :id
-        ]
         method = 'GET'
         path   = "_render/template"
-        params = Utils.__validate_and_extract_params arguments, valid_params
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:render_search_template, [
+          :id ].freeze)
     end
   end
 end

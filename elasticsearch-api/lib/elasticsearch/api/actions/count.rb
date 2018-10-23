@@ -48,7 +48,19 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
       #
       def count(arguments={})
-        valid_params = [
+        method = HTTP_GET
+        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
+
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:count, [
           :ignore_unavailable,
           :allow_no_indices,
           :expand_wildcards,
@@ -62,16 +74,7 @@ module Elasticsearch
           :df,
           :lenient,
           :lowercase_expanded_terms,
-          :terminate_after ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify( Utils.__listify(arguments[:index]), Utils.__listify(arguments[:type]), '_count' )
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        perform_request(method, path, params, body).body
-      end
+          :terminate_after ].freeze)
     end
   end
 end

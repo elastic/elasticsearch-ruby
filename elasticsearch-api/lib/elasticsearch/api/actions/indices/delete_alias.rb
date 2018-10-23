@@ -20,16 +20,19 @@ module Elasticsearch
         def delete_alias(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing"  unless arguments[:name]
-          valid_params = [ :timeout ]
-
           method = HTTP_DELETE
           path   = Utils.__pathify Utils.__escape(arguments[:index]), '_alias', Utils.__escape(arguments[:name])
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:delete_alias, [ :timeout ].freeze)
       end
     end
   end

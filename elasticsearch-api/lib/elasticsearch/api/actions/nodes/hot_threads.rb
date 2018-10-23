@@ -27,21 +27,24 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
         #
         def hot_threads(arguments={})
-          valid_params = [
-            :interval,
-            :snapshots,
-            :threads,
-            :type,
-            :timeout ]
-
           method = HTTP_GET
           path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'hot_threads'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:hot_threads, [
+            :interval,
+            :snapshots,
+            :threads,
+            :type,
+            :timeout ].freeze)
       end
     end
   end

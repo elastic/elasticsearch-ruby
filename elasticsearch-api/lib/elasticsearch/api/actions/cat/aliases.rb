@@ -46,27 +46,25 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html
         #
         def aliases(arguments={})
-          valid_params = [
+          name = arguments.delete(:name)
+          method = HTTP_GET
+          path   = Utils.__pathify '_cat/aliases', Utils.__listify(name)
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          body   = nil
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:aliases, [
             :local,
             :master_timeout,
             :h,
             :help,
             :v,
-            :s ]
-
-          name = arguments.delete(:name)
-
-          method = HTTP_GET
-
-          path   = Utils.__pathify '_cat/aliases', Utils.__listify(name)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
-
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :s ].freeze)
       end
     end
   end

@@ -26,7 +26,20 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html
         #
         def fielddata(arguments={})
-          valid_params = [
+          fields = arguments.delete(:fields)
+
+          method = HTTP_GET
+          path   = Utils.__pathify "_cat/fielddata", Utils.__listify(fields)
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:fielddata, [
             :bytes,
             :local,
             :master_timeout,
@@ -34,17 +47,7 @@ module Elasticsearch
             :help,
             :v,
             :s,
-            :fields ]
-
-          fields = arguments.delete(:fields)
-
-          method = HTTP_GET
-          path   = Utils.__pathify "_cat/fielddata", Utils.__listify(fields)
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :fields ].freeze)
       end
     end
   end

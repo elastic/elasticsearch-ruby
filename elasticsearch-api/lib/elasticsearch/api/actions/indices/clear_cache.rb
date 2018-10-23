@@ -38,7 +38,21 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
         #
         def clear_cache(arguments={})
-          valid_params = [
+          method = HTTP_POST
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body   = nil
+
+          params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:clear_cache, [
             :field_data,
             :fielddata,
             :fields,
@@ -49,18 +63,7 @@ module Elasticsearch
             :index,
             :recycler,
             :request_cache,
-            :request ]
-
-          method = HTTP_POST
-          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_cache/clear'
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
-          perform_request(method, path, params, body).body
-        end
+            :request ].freeze)
       end
     end
   end

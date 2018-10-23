@@ -23,21 +23,24 @@ module Elasticsearch
         def create_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'body' missing"       unless arguments[:body]
-          valid_params = [
-            :repository,
-            :master_timeout,
-            :timeout ]
-
           repository = arguments.delete(:repository)
 
           method = HTTP_PUT
           path   = Utils.__pathify( '_snapshot', Utils.__escape(repository) )
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:create_repository, [
+            :repository,
+            :master_timeout,
+            :timeout ].freeze)
       end
     end
   end

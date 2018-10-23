@@ -52,7 +52,23 @@ module Elasticsearch
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html
         #
         def indices(arguments={})
-          valid_params = [
+          index = arguments.delete(:index)
+          method = HTTP_GET
+
+          path   = Utils.__pathify '_cat/indices', Utils.__listify(index)
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params[:h] = Utils.__listify(params[:h]) if params[:h]
+
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:indices, [
             :bytes,
             :h,
             :health,
@@ -61,21 +77,7 @@ module Elasticsearch
             :master_timeout,
             :pri,
             :v,
-            :s ]
-
-          index = arguments.delete(:index)
-
-          method = HTTP_GET
-
-          path   = Utils.__pathify '_cat/indices', Utils.__listify(index)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
-
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :s ].freeze)
       end
     end
   end

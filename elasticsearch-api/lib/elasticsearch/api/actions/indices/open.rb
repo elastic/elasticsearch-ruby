@@ -27,24 +27,25 @@ module Elasticsearch
         #
         def open(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          method = HTTP_POST
+          path   = Utils.__pathify Utils.__escape(arguments[:index]), '_open'
 
-          valid_params = [
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:open, [
             :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
             :timeout,
-            :wait_for_active_shards
-          ]
-
-          method = HTTP_POST
-          path   = Utils.__pathify Utils.__escape(arguments[:index]), '_open'
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :wait_for_active_shards ].freeze)
       end
     end
   end

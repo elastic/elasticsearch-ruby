@@ -38,8 +38,19 @@ module Elasticsearch
         def health(arguments={})
           arguments = arguments.clone
           index     = arguments.delete(:index)
+          method = HTTP_GET
+          path   = Utils.__pathify "_cluster/health", Utils.__listify(index)
 
-          valid_params = [
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          body = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:health, [
             :level,
             :local,
             :master_timeout,
@@ -50,16 +61,7 @@ module Elasticsearch
             :wait_for_no_relocating_shards,
             :wait_for_no_initializing_shards,
             :wait_for_status,
-            :wait_for_events ]
-
-          method = HTTP_GET
-          path   = Utils.__pathify "_cluster/health", Utils.__listify(index)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :wait_for_events ].freeze)
       end
     end
   end

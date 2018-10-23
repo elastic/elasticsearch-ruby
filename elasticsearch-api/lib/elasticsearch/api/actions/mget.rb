@@ -46,8 +46,23 @@ module Elasticsearch
       #
       def mget(arguments={})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+        method = HTTP_GET
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 '_mget'
 
-        valid_params = [
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        body   = arguments[:body]
+
+        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
+
+        perform_request(method, path, params, body).body
+      end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:mget, [
           :fields,
           :parent,
           :preference,
@@ -57,20 +72,7 @@ module Elasticsearch
           :_source,
           :_source_include,
           :_source_exclude,
-          :stored_fields ]
-
-        method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 '_mget'
-
-        params = Utils.__validate_and_extract_params arguments, valid_params
-        body   = arguments[:body]
-
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
-        perform_request(method, path, params, body).body
-      end
+          :stored_fields ].freeze)
     end
   end
 end

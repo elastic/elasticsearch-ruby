@@ -18,18 +18,21 @@ module Elasticsearch
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
         #
         def shutdown(arguments={})
-          valid_params = [
-            :delay,
-            :exit ]
-
           method = HTTP_POST
           path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:shutdown, [
+            :delay,
+            :exit ].freeze)
       end
     end
   end

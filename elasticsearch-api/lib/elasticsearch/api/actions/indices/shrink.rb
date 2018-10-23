@@ -19,26 +19,26 @@ module Elasticsearch
         def shrink(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'target' missing" unless arguments[:target]
-
-          valid_params = [
-            :wait_for_active_shards,
-            :wait_for_no_relocating_shards,
-            :timeout,
-            :master_timeout
-          ]
-
           arguments = arguments.clone
-
           source = arguments.delete(:index)
           target = arguments.delete(:target)
 
           method = HTTP_PUT
           path   = Utils.__pathify(source, '_shrink', target)
-          params = Utils.__validate_and_extract_params arguments, valid_params
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = arguments[:body]
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:shrink, [
+            :wait_for_active_shards,
+            :wait_for_no_relocating_shards,
+            :timeout,
+            :master_timeout ].freeze)
       end
     end
   end

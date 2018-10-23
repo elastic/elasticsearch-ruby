@@ -43,8 +43,30 @@ module Elasticsearch
         def info(arguments={})
           arguments = arguments.clone
           metric    = arguments.delete(:metric)
+          method = HTTP_GET
+          if metric
+            parts = metric
+          else
+            parts = Utils.__extract_parts arguments, ParamsRegistry.get(:info_parts)
+          end
 
-          valid_parts = [
+          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(:info_params)
+          body   = nil
+
+          perform_request(method, path, params, body).body
+        end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:info_params, [ :flat_settings, :timeout ].freeze)
+
+        # Register this action with its valid parts when the module is loaded.
+        #
+        # @since 6.1.1
+        ParamsRegistry.register(:info_parts, [
             :_all,
             :http,
             :jvm,
@@ -55,25 +77,7 @@ module Elasticsearch
             :settings,
             :thread_pool,
             :transport,
-            :timeout ]
-
-          valid_params = [ :flat_settings, :timeout ]
-
-          method = HTTP_GET
-
-          if metric
-            parts = metric
-          else
-            parts = Utils.__extract_parts arguments, valid_parts
-          end
-
-          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), Utils.__listify(parts)
-
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
-
-          perform_request(method, path, params, body).body
-        end
+            :timeout ].freeze)
       end
     end
   end
