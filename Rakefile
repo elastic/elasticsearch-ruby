@@ -206,3 +206,23 @@ task :update_version, :old, :new do |task, args|
         "rake release"
         "\n"
 end
+
+require_relative "profile/benchmarking"
+
+namespace :benchmark do
+  desc "Run the client benchmark tests."
+
+  namespace :simple do
+    desc "Run the ping benchmark test"
+    task :ping do
+      puts "SIMPLE REQUEST BENCHMARK:: PING"
+      Elasticsearch::Benchmarking::Simple.run(:ping)
+    end
+
+    desc "Run the ping benchmark test"
+    task :create_index do
+      puts "SIMPLE REQUEST BENCHMARK:: CREATE INDEX"
+      Elasticsearch::Benchmarking::Simple.run(:create_index)
+    end
+  end
+end
