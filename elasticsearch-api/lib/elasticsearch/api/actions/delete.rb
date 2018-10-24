@@ -60,7 +60,8 @@ module Elasticsearch
           :routing,
           :timeout,
           :version,
-          :version_type ].freeze)
+          :version_type,
+          :include_type_name ].freeze)
     end
   end
 end

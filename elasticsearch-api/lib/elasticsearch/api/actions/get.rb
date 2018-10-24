@@ -72,7 +72,8 @@ module Elasticsearch
           :_source_include,
           :_source_exclude,
           :_source_transform,
-          :stored_fields ].freeze)
+          :stored_fields,
+          :include_type_name ].freeze)
     end
   end
 end

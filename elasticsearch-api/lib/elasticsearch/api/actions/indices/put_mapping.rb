@@ -71,7 +71,8 @@ module Elasticsearch
             :expand_wildcards,
             :update_all_types,
             :master_timeout,
-            :timeout ].freeze)
+            :timeout,
+            :include_type_name ].freeze)
       end
     end
   end
