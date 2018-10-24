@@ -97,7 +97,8 @@ module Elasticsearch
           :_source,
           :_source_exclude,
           :_source_include,
-          :pipeline ].freeze)
+          :pipeline,
+          :include_type_name ].freeze)
     end
   end
 end
