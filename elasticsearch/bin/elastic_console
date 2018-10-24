@@ -11,13 +11,11 @@ require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
 
-gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch-xpack', 'elasticsearch-extensions'].inject([]) do |not_loaded, gem|
+gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch-xpack', 'elasticsearch-extensions'].reject do |gem|
   begin
     require gem
   rescue LoadError
-    not_loaded << gem
   end
-  not_loaded
 end
 
 unless gems_not_loaded.empty?
