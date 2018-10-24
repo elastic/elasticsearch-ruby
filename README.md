@@ -18,7 +18,7 @@ Other libraries in this repository might require a more recent Ruby version.
 The client's API is compatible with Elasticsearch's API versions from 0.90 till current,
 just use a release matching major version of Elasticsearch.
 
-| Ruby          |   | Elasticsearch |
+| Gem Version          |   | Elasticsearch |
 |:-------------:|:-:| :-----------: |
 | 0.90          | → | 0.90          |
 | 1.x           | → | 1.x           |
