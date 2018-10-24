@@ -71,7 +71,7 @@ and available online at <http://rubydoc.info/gems/elasticsearch-api>.
 
 When you want to mix the library into your own client, it must conform to a following _contract_:
 
-* It responds to a `perform_request(method, path, params, body)` method,
+* It responds to a `perform_request(method, path, params, body, headers)` method,
 * the method returns an object with `status`, `body` and `headers` methods.
 
 A simple client could look like this:
@@ -86,7 +86,7 @@ class MySimpleClient
 
   CONNECTION = ::Faraday::Connection.new url: 'http://localhost:9200'
 
-  def perform_request(method, path, params, body, header = nil)
+  def perform_request(method, path, params, body, headers = nil)
     puts "--> #{method.upcase} #{path} #{params} #{body} #{headers}"
 
     CONNECTION.run_request \
