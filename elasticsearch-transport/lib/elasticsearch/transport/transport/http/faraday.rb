@@ -17,7 +17,8 @@ module Elasticsearch
           # @see    Transport::Base#perform_request
           #
           def perform_request(method, path, params={}, body=nil, headers=nil)
-            super do |connection, url|
+            super do |connection|
+              url = connection.full_url(path, params)
               headers = headers || connection.connection.headers
 
               response = connection.connection.run_request \

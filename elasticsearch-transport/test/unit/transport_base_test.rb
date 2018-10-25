@@ -239,7 +239,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
 
       # `block.expects(:call).raises(::Errno::ECONNREFUSED)` fails on Ruby 1.8
-      block = lambda { |a, b| raise ::Errno::ECONNREFUSED }
+      block = lambda { |a| raise ::Errno::ECONNREFUSED }
 
       assert_raise ::Errno::ECONNREFUSED do
         @transport.perform_request 'GET', '/', &block
@@ -265,7 +265,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       c = stub_everything :failures => 1
       @transport.expects(:get_connection).returns(c)
 
-      block = lambda { |a,b| raise ::Errno::ECONNREFUSED }
+      block = lambda { |a| raise ::Errno::ECONNREFUSED }
 
       c.expects(:dead!)
 

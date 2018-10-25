@@ -4,6 +4,7 @@ require "timeout"
 require "multi_json"
 require "faraday"
 
+require "elasticsearch/transport/transport/loggable"
 require "elasticsearch/transport/transport/serializer/multi_json"
 require "elasticsearch/transport/transport/sniffer"
 require "elasticsearch/transport/transport/response"
@@ -14,6 +15,7 @@ require "elasticsearch/transport/transport/connections/connection"
 require "elasticsearch/transport/transport/connections/collection"
 require "elasticsearch/transport/transport/http/faraday"
 require "elasticsearch/transport/client"
+
 
 require "elasticsearch/transport/version"
 
