@@ -14,10 +14,10 @@ module Elasticsearch
     # @return [ Array ] A list of json documents.
     #
     # @since 7.0.0
-    def load_file(file_name)
+    def load_json_from_file(file_name)
       File.open(file_name, "r") do |f|
         f.each_line.collect do |line|
-          parse_json(line)
+          JSON.parse(line)
         end
       end
     end

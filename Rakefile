@@ -213,16 +213,82 @@ namespace :benchmark do
   desc "Run the client benchmark tests."
 
   namespace :simple do
-    desc "Run the ping benchmark test"
+    desc "Run the \'ping\' benchmark test"
     task :ping do
       puts "SIMPLE REQUEST BENCHMARK:: PING"
-      Elasticsearch::Benchmarking::Simple.run(:ping)
+      Elasticsearch::Benchmarking::Simple.new.run(:ping)
     end
 
-    desc "Run the ping benchmark test"
+    desc "Run the \'ping\' benchmark test with patron adapter"
+    task :ping_patron do
+      puts "SIMPLE REQUEST BENCHMARK:: PATRON:: PING"
+      require 'patron'
+      Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
+    end
+
+    desc "Run the \'create index\' benchmark test"
     task :create_index do
       puts "SIMPLE REQUEST BENCHMARK:: CREATE INDEX"
-      Elasticsearch::Benchmarking::Simple.run(:create_index)
+      Elasticsearch::Benchmarking::Simple.new.run(:create_index)
+    end
+
+    desc "Run the \'create small document\' benchmark test"
+    task :create_document_small do
+      puts "SIMPLE REQUEST BENCHMARK:: CREATE SMALL DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:create_document_small)
+    end
+
+    desc "Run the \'create large document\' benchmark test"
+    task :create_document_large do
+      puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:create_document_large)
+    end
+
+    desc "Run the \'get small document\' benchmark test"
+    task :get_document_small do
+      puts "SIMPLE REQUEST BENCHMARK:: GET SMALL DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:get_document_small)
+    end
+
+    desc "Run the \'get large document\' benchmark test"
+    task :get_document_large do
+      puts "SIMPLE REQUEST BENCHMARK:: GET LARGE DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:get_document_large)
+    end
+
+    desc "Run the \'search small document\' benchmark test"
+    task :search_document_small do
+      puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:search_document_small)
+    end
+
+    desc "Run the \'search large document\' benchmark test"
+    task :search_document_large do
+      puts "SIMPLE REQUEST BENCHMARK:: SEARCH LARGE DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:search_document_large)
+    end
+
+    desc "Run the \'update document\' benchmark test"
+    task :update_document do
+      puts "SIMPLE REQUEST BENCHMARK:: UPDATE DOCUMENT"
+      Elasticsearch::Benchmarking::Simple.new.run(:update_document)
+    end
+
+    desc "Run all simple benchmark test"
+    task :all do
+      %w[ benchmark:simple:ping
+          benchmark:simple:ping_patron
+          benchmark:simple:create_index
+          benchmark:simple:create_document_small
+          benchmark:simple:create_document_large
+          benchmark:simple:get_document_small
+          benchmark:simple:get_document_large
+          benchmark:simple:search_document_small
+          benchmark:simple:search_document_large
+          benchmark:simple:update_document
+        ].each do |task_name|
+          Rake::Task[task_name].invoke
+      end
     end
   end
 end
