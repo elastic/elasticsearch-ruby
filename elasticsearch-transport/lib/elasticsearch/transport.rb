@@ -16,7 +16,6 @@ require "elasticsearch/transport/transport/connections/collection"
 require "elasticsearch/transport/transport/http/faraday"
 require "elasticsearch/transport/client"
 
-
 require "elasticsearch/transport/version"
 
 module Elasticsearch
