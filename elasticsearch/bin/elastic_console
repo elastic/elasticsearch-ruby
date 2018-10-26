@@ -23,6 +23,7 @@ unless gems_not_loaded.empty?
 end
 
 include Elasticsearch
+include Elasticsearch::DSL if defined?(Elasticsearch::DSL)
 
 begin
   require 'pry'
