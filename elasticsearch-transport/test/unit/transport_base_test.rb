@@ -424,7 +424,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
-      @transport.expects(:__log)
+      @transport.expects(:__log_response)
       @transport.logger.expects(:fatal)
 
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
@@ -436,7 +436,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
-      @transport.expects(:__log).once
+      @transport.expects(:__log_response).once
       @transport.logger.expects(:fatal).never
 
       # No `BadRequest` error
@@ -447,7 +447,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).raises(Exception)
 
-      @transport.expects(:__log).never
+      @transport.expects(:__log_response).never
       @transport.logger.expects(:fatal)
 
       assert_raise(Exception) { @transport.perform_request('POST', '_search', &@block) }

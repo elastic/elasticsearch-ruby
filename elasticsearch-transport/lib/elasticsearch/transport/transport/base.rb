@@ -6,6 +6,7 @@ module Elasticsearch
       #
       module Base
         include Loggable
+
         DEFAULT_PORT             = 9200
         DEFAULT_PROTOCOL         = 'http'
         DEFAULT_RELOAD_AFTER     = 10_000 # Requests
@@ -82,7 +83,7 @@ module Elasticsearch
           __rebuild_connections :hosts => hosts, :options => options
           self
         rescue SnifferTimeoutError
-          logger.error "[SnifferTimeoutError] Timeout when reloading connections." if logger
+          log_error("[SnifferTimeoutError] Timeout when reloading connections.")
           self
         end
 
@@ -92,135 +93,6 @@ module Elasticsearch
         #
         def resurrect_dead_connections!
           connections.dead.each { |c| c.resurrect! }
-        end
-
-        # Rebuilds the connections collection in the transport.
-        #
-        # The methods *adds* new connections from the passed hosts to the collection,
-        # and *removes* all connections not contained in the passed hosts.
-        #
-        # @return [Connections::Collection]
-        # @api private
-        #
-        def __rebuild_connections(arguments={})
-          @state_mutex.synchronize do
-            @hosts       = arguments[:hosts]    || []
-            @options     = arguments[:options]  || {}
-
-            __close_connections
-
-            new_connections = __build_connections
-            stale_connections = @connections.all.select  { |c| ! new_connections.include?(c) }
-            new_connections = new_connections.reject { |c| @connections.include?(c) }
-
-            @connections.remove(stale_connections)
-            @connections.add(new_connections)
-            @connections
-          end
-        end
-
-        # Builds and returns a collection of connections
-        #
-        # The adapters have to implement the {Base#__build_connection} method.
-        #
-        # @return [Connections::Collection]
-        # @api    private
-        #
-        def __build_connections
-          Connections::Collection.new \
-            :connections => hosts.map { |host|
-              host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
-              host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
-              if (options[:user] || options[:http][:user]) && !host[:user]
-                host[:user] ||= options[:user] || options[:http][:user]
-                host[:password] ||= options[:password] || options[:http][:password]
-              end
-
-              __build_connection(host, (options[:transport_options] || {}), @block)
-            },
-            :selector_class => options[:selector_class],
-            :selector => options[:selector]
-        end
-
-        # @abstract Build and return a connection.
-        #           A transport implementation *must* implement this method.
-        #           See {HTTP::Faraday#__build_connection} for an example.
-        #
-        # @return [Connections::Connection]
-        # @api    private
-        #
-        def __build_connection(host, options={}, block=nil)
-          raise NoMethodError, "Implement this method in your class"
-        end
-
-        # Closes the connections collection
-        #
-        # @api private
-        #
-        def __close_connections
-          # A hook point for specific adapters when they need to close connections
-        end
-
-        # Log request and response information
-        #
-        # @api private
-        #
-        def __log(method, path, params, body, url, response, json, took, duration)
-          if logger
-            sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD +  '@')
-            log_info  "#{method.to_s.upcase} #{sanitized_url} " +
-                         "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
-            log_debug "> #{__convert_to_json(body)}" if body
-            log_debug "< #{response.body}"
-          end
-        end
-
-        # Trace the request in the `curl` format
-        #
-        # @api private
-        #
-        def __trace(method, path, params, headers, body, url, response, json, took, duration)
-          if tracer
-            trace_url  = "http://localhost:9200/#{path}?pretty" +
-                         ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
-            trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
-            trace_command = "curl -X #{method.to_s.upcase}"
-            trace_command += " -H '#{headers.inject('') { |memo,item| memo << item[0] + ': ' + item[1] }}'" if headers && !headers.empty?
-            trace_command += " '#{trace_url}'#{trace_body}\n"
-            tracer.info trace_command
-            tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
-            tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
-          end
-        end
-
-        # Raise error specific for the HTTP response status or a generic server error
-        #
-        # @api private
-        #
-        def __raise_transport_error(response)
-          error = ERRORS[response.status] || ServerError
-          raise error.new "[#{response.status}] #{response.body}"
-        end
-
-        # Converts any non-String object to JSON
-        #
-        # @api private
-        #
-        def __convert_to_json(o=nil, options={})
-          o.is_a?(String) ? o : serializer.dump(o, options)
-        end
-
-        # Returns a full URL based on information from host
-        #
-        # @param host [Hash] Host configuration passed in from {Client}
-        #
-        # @api private
-        def __full_url(host)
-          url  = "#{host[:protocol]}://"
-          url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
-          url += "#{host[:host]}:#{host[:port]}"
-          url += "#{host[:path]}" if host[:path]
-          url
         end
 
         # Performs a request to Elasticsearch, while handling logging, tracing, marking dead connections,
@@ -309,7 +181,7 @@ module Elasticsearch
           duration = Time.now - start
 
           if response.status.to_i >= 300
-            __log(method, path, params, body, url, response, nil, 'N/A', duration)
+            __log_response(method, path, params, body, url, response, nil, 'N/A', duration)
             __trace(method, path, params, headers, body, url, response, nil, 'N/A', duration)
 
             unless ignore.include?(response.status.to_i)
@@ -324,7 +196,7 @@ module Elasticsearch
           end
 
           took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a'
-          __log(method, path, params, body, url, response, json, took, duration) unless ignore.include?(response.status.to_i)
+          __log_response(method, path, params, body, url, response, json, took, duration) unless ignore.include?(response.status.to_i)
           __trace(method, path, params, headers, body, url, response, json, took, duration)
 
           Response.new(response.status, json || response.body, response.headers)
@@ -339,6 +211,135 @@ module Elasticsearch
         #
         def host_unreachable_exceptions
           [Errno::ECONNREFUSED]
+        end
+
+        # Rebuilds the connections collection in the transport.
+        #
+        # The methods *adds* new connections from the passed hosts to the collection,
+        # and *removes* all connections not contained in the passed hosts.
+        #
+        # @return [Connections::Collection]
+        # @api private
+        #
+        def __rebuild_connections(arguments={})
+          @state_mutex.synchronize do
+            @hosts       = arguments[:hosts]    || []
+            @options     = arguments[:options]  || {}
+
+            __close_connections
+
+            new_connections = __build_connections
+            stale_connections = @connections.all.select  { |c| ! new_connections.include?(c) }
+            new_connections = new_connections.reject { |c| @connections.include?(c) }
+
+            @connections.remove(stale_connections)
+            @connections.add(new_connections)
+            @connections
+          end
+        end
+
+        # Builds and returns a collection of connections
+        #
+        # The adapters have to implement the {Base#__build_connection} method.
+        #
+        # @return [Connections::Collection]
+        # @api    private
+        #
+        def __build_connections
+          Connections::Collection.new \
+            :connections => hosts.map { |host|
+            host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
+            host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
+            if (options[:user] || options[:http][:user]) && !host[:user]
+              host[:user] ||= options[:user] || options[:http][:user]
+              host[:password] ||= options[:password] || options[:http][:password]
+            end
+
+            __build_connection(host, (options[:transport_options] || {}), @block)
+          },
+            :selector_class => options[:selector_class],
+            :selector => options[:selector]
+        end
+
+        # @abstract Build and return a connection.
+        #           A transport implementation *must* implement this method.
+        #           See {HTTP::Faraday#__build_connection} for an example.
+        #
+        # @return [Connections::Connection]
+        # @api    private
+        #
+        def __build_connection(host, options={}, block=nil)
+          raise NoMethodError, "Implement this method in your class"
+        end
+
+        # Closes the connections collection
+        #
+        # @api private
+        #
+        def __close_connections
+          # A hook point for specific adapters when they need to close connections
+        end
+
+        # Trace the request in the `curl` format
+        #
+        # @api private
+        #
+        def __trace(method, path, params, headers, body, url, response, json, took, duration)
+          if tracer
+            trace_url  = "http://localhost:9200/#{path}?pretty" +
+                ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
+            trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
+            trace_command = "curl -X #{method.to_s.upcase}"
+            trace_command += " -H '#{headers.inject('') { |memo,item| memo << item[0] + ': ' + item[1] }}'" if headers && !headers.empty?
+            trace_command += " '#{trace_url}'#{trace_body}\n"
+            tracer.info trace_command
+            tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
+            tracer.debug json ? serializer.dump(json, :pretty => true).gsub(/^/, '# ').sub(/\}$/, "\n# }")+"\n" : "# #{response.body}\n"
+          end
+        end
+
+        # Raise error specific for the HTTP response status or a generic server error
+        #
+        # @api private
+        #
+        def __raise_transport_error(response)
+          error = ERRORS[response.status] || ServerError
+          raise error.new "[#{response.status}] #{response.body}"
+        end
+
+        # Converts any non-String object to JSON
+        #
+        # @api private
+        #
+        def __convert_to_json(o=nil, options={})
+          o.is_a?(String) ? o : serializer.dump(o, options)
+        end
+
+        # Returns a full URL based on information from host
+        #
+        # @param host [Hash] Host configuration passed in from {Client}
+        #
+        # @api private
+        def __full_url(host)
+          url  = "#{host[:protocol]}://"
+          url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
+          url += "#{host[:host]}:#{host[:port]}"
+          url += "#{host[:path]}" if host[:path]
+          url
+        end
+
+        private
+
+        # Log request and response information
+        #
+        # @api private
+        #
+        def __log_response(method, path, params, body, url, response, json, took, duration)
+          sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD + '@')
+          log_info "#{method.to_s.upcase} #{sanitized_url} " +
+                       "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
+          log_debug "> #{__convert_to_json(body)}" if body
+          log_debug "< #{response.body}"
         end
       end
     end

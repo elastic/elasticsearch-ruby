@@ -2,7 +2,6 @@ module Elasticsearch
 
   module Loggable
 
-
     def log_debug(message)
       logger.debug(message) if logger && logger.debug?
     end
