@@ -16,7 +16,7 @@ module Elasticsearch
           # @see    Transport::Base#perform_request
           #
           def perform_request(method, path, params={}, body=nil, headers=nil)
-            super do |connection|
+            super do |connection, url|
               connection.connection.url = connection.full_url(path, params)
 
               case method
