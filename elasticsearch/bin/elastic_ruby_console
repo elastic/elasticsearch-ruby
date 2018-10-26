@@ -36,10 +36,10 @@ rescue LoadError
 end
 
 if defined?(Pry)
-  Pry.config.prompt_name = 'elastic'
+  Pry.config.prompt_name = 'elastic_ruby'
   Pry.start
 elsif defined?(IRB)
   IRB.start
 else
-  abort 'LoadError: elastic_console requires Pry or IRB'
+  abort 'LoadError: elastic_ruby_console requires Pry or IRB'
 end
