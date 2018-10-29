@@ -526,7 +526,7 @@ suites.each do |suite|
                   message = "Expected '#{property}' to be #{operator} #{value}, is: #{result.inspect}"
 
                   $stderr.puts "CHECK: #{message}" if ENV['DEBUG']
-                  assert_operator result, operator.to_sym, value.to_i
+                  assert_operator result, operator.to_sym, Runner.fetch_or_return(value).to_i
 
                 when stash = action['set']
                   property, variable = stash.to_a.first
