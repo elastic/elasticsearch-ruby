@@ -455,8 +455,8 @@ module Elasticsearch
               arguments[:version]
             elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f.start_with? 'elasticsearch' }.first).nil?
               __log "Determining version from [#{jar}]" if ENV['DEBUG']
-              if m = jar.match(/elasticsearch\-(\d+\.\d+\.\d+).*/)
-                m[1]
+              if m = jar.match(/elasticsearch\-(\S+-)?(?<version>\d+\.\d+\.\d+).*/)
+                m[:version]
               else
                 raise RuntimeError, "Cannot determine Elasticsearch version from jar [#{jar}]"
               end
