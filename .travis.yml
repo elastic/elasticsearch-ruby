@@ -42,6 +42,7 @@ before_install:
   - curl -sS https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.2.tar.gz | tar xz -C /tmp
   - rake setup
   - rake elasticsearch:update
+  - /tmp/elasticsearch-6.4.2/bin/elasticsearch-keystore create
 
 install:
   - bundle install
