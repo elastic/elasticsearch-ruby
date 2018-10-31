@@ -239,7 +239,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @transport.expects(:get_connection).returns(stub_everything :failures => 1)
 
       # `block.expects(:call).raises(::Errno::ECONNREFUSED)` fails on Ruby 1.8
-      block = lambda { |a, b| raise ::Errno::ECONNREFUSED }
+      block = lambda { |a,b| raise ::Errno::ECONNREFUSED }
 
       assert_raise ::Errno::ECONNREFUSED do
         @transport.perform_request 'GET', '/', &block
@@ -424,7 +424,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
-      @transport.expects(:__log)
+      @transport.expects(:__log_response)
       @transport.logger.expects(:fatal)
 
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
@@ -436,7 +436,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).returns(Elasticsearch::Transport::Transport::Response.new 500, 'ERROR')
 
-      @transport.expects(:__log).once
+      @transport.expects(:__log_response).once
       @transport.logger.expects(:fatal).never
 
       # No `BadRequest` error
@@ -447,7 +447,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @block = Proc.new { |c, u| puts "ERROR" }
       @block.expects(:call).raises(Exception)
 
-      @transport.expects(:__log).never
+      @transport.expects(:__log_response).never
       @transport.logger.expects(:fatal)
 
       assert_raise(Exception) { @transport.perform_request('POST', '_search', &@block) }

@@ -5,6 +5,8 @@ module Elasticsearch
       # @abstract Module with common functionality for transport implementations.
       #
       module Base
+        include Loggable
+
         DEFAULT_PORT             = 9200
         DEFAULT_PROTOCOL         = 'http'
         DEFAULT_RELOAD_AFTER     = 10_000 # Requests
@@ -81,7 +83,7 @@ module Elasticsearch
           __rebuild_connections :hosts => hosts, :options => options
           self
         rescue SnifferTimeoutError
-          logger.error "[SnifferTimeoutError] Timeout when reloading connections." if logger
+          log_error "[SnifferTimeoutError] Timeout when reloading connections."
           self
         end
 
@@ -128,15 +130,15 @@ module Elasticsearch
         def __build_connections
           Connections::Collection.new \
             :connections => hosts.map { |host|
-              host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
-              host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
-              if (options[:user] || options[:http][:user]) && !host[:user]
-                host[:user] ||= options[:user] || options[:http][:user]
-                host[:password] ||= options[:password] || options[:http][:password]
-              end
+            host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
+            host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
+            if (options[:user] || options[:http][:user]) && !host[:user]
+              host[:user] ||= options[:user] || options[:http][:user]
+              host[:password] ||= options[:password] || options[:http][:password]
+            end
 
-              __build_connection(host, (options[:transport_options] || {}), @block)
-            },
+            __build_connection(host, (options[:transport_options] || {}), @block)
+          },
             :selector_class => options[:selector_class],
             :selector => options[:selector]
         end
@@ -164,20 +166,14 @@ module Elasticsearch
         #
         # @api private
         #
-        def __log(method, path, params, body, url, response, json, took, duration)
-          sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD +  '@')
-          logger.info  "#{method.to_s.upcase} #{sanitized_url} " +
-                       "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
-          logger.debug "> #{__convert_to_json(body)}" if body
-          logger.debug "< #{response.body}"
-        end
-
-        # Log failed request
-        #
-        # @api private
-        #
-        def __log_failed(response)
-          logger.fatal "[#{response.status}] #{response.body}"
+        def __log_response(method, path, params, body, url, response, json, took, duration)
+          if logger
+            sanitized_url = url.to_s.gsub(/\/\/(.+):(.+)@/, '//' + '\1:' + SANITIZED_PASSWORD + '@')
+            log_info "#{method.to_s.upcase} #{sanitized_url} " +
+                         "[status:#{response.status}, request:#{sprintf('%.3fs', duration)}, query:#{took}]"
+            log_debug "> #{__convert_to_json(body)}" if body
+            log_debug "< #{response.body}"
+          end
         end
 
         # Trace the request in the `curl` format
@@ -186,7 +182,7 @@ module Elasticsearch
         #
         def __trace(method, path, params, headers, body, url, response, json, took, duration)
           trace_url  = "http://localhost:9200/#{path}?pretty" +
-                       ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
+              ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
           trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
           trace_command = "curl -X #{method.to_s.upcase}"
           trace_command += " -H '#{headers.inject('') { |memo,item| memo << item[0] + ': ' + item[1] }}'" if headers && !headers.empty?
@@ -246,7 +242,7 @@ module Elasticsearch
         #
         def perform_request(method, path, params={}, body=nil, headers=nil, &block)
           raise NoMethodError, "Implement this method in your transport class" unless block_given?
-          start = Time.now if logger || tracer
+          start = Time.now
           tries = 0
 
           params = params.clone
@@ -272,11 +268,11 @@ module Elasticsearch
 
           rescue Elasticsearch::Transport::Transport::ServerError => e
             if @retry_on_status.include?(response.status)
-              logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
+              log_warn "[#{e.class}] Attempt #{tries} to get response from #{url}"
               if tries <= max_retries
                 retry
               else
-                logger.fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries" if logger
+                log_fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries"
                 raise e
               end
             else
@@ -284,21 +280,21 @@ module Elasticsearch
             end
 
           rescue *host_unreachable_exceptions => e
-            logger.error "[#{e.class}] #{e.message} #{connection.host.inspect}" if logger
+            log_error "[#{e.class}] #{e.message} #{connection.host.inspect}"
 
             connection.dead!
 
             if @options[:reload_on_failure] and tries < connections.all.size
-              logger.warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.all.size})" if logger
+              log_warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.all.size})"
               reload_connections! and retry
             end
 
             if @options[:retry_on_failure]
-              logger.warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}" if logger
+              log_warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}"
               if tries <= max_retries
                 retry
               else
-                logger.fatal "[#{e.class}] Cannot connect to #{connection.host.inspect} after #{tries} tries" if logger
+                log_fatal "[#{e.class}] Cannot connect to #{connection.host.inspect} after #{tries} tries"
                 raise e
               end
             else
@@ -306,27 +302,32 @@ module Elasticsearch
             end
 
           rescue Exception => e
-            logger.fatal "[#{e.class}] #{e.message} (#{connection.host.inspect if connection})" if logger
+            log_fatal "[#{e.class}] #{e.message} (#{connection.host.inspect if connection})"
             raise e
 
           end #/begin
 
-          duration = Time.now-start if logger || tracer
+          duration = Time.now - start
 
           if response.status.to_i >= 300
-            __log    method, path, params, body, url, response, nil, 'N/A', duration if logger
+            __log_response    method, path, params, body, url, response, nil, 'N/A', duration
             __trace  method, path, params, headers, body, url, response, nil, 'N/A', duration if tracer
 
             # Log the failure only when `ignore` doesn't match the response status
-            __log_failed response if logger && !ignore.include?(response.status.to_i)
+            unless ignore.include?(response.status.to_i)
+              log_fatal "[#{response.status}] #{response.body}"
+            end
 
             __raise_transport_error response unless ignore.include?(response.status.to_i)
           end
 
           json     = serializer.load(response.body) if response.body && !response.body.empty? && response.headers && response.headers["content-type"] =~ /json/
-          took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a' if logger || tracer
+          took     = (json['took'] ? sprintf('%.3fs', json['took']/1000.0) : 'n/a') rescue 'n/a'
 
-          __log   method, path, params, body, url, response, json, took, duration if logger && !ignore.include?(response.status.to_i)
+          unless ignore.include?(response.status.to_i)
+            __log_response   method, path, params, body, url, response, json, took, duration
+          end
+
           __trace method, path, params, headers, body, url, response, json, took, duration if tracer
 
           Response.new response.status, json || response.body, response.headers
