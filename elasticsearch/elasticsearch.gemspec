@@ -14,8 +14,10 @@ Gem::Specification.new do |s|
 
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  s.executables   << 'elastic_ruby_console'
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
+  s.bindir = "bin"
 
   s.extra_rdoc_files  = [ "README.md", "LICENSE.txt" ]
   s.rdoc_options      = [ "--charset=UTF-8" ]

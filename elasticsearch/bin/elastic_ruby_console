@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-transport/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-dsl/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-xpack/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-extensions/lib', __dir__))
+
+require 'elasticsearch'
+require 'elasticsearch-transport'
+require 'elasticsearch-api'
+
+gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch/xpack', 'elasticsearch-extensions'].reject do |gem|
+  begin
+    (require gem) || true
+  rescue LoadError
+    false
+  end
+end
+
+unless gems_not_loaded.empty?
+  warn "The following gems were not loaded: [#{gems_not_loaded.join(', ')}]. Please install and require them explicitly."
+end
+
+include Elasticsearch
+include Elasticsearch::DSL if defined?(Elasticsearch::DSL)
+
+begin
+  require 'pry'
+rescue LoadError
+end
+
+begin
+  require 'irb'
+rescue LoadError
+end
+
+if defined?(Pry)
+  Pry.config.prompt_name = 'elastic_ruby'
+  Pry.start
+elsif defined?(IRB)
+  IRB.start
+else
+  abort 'LoadError: elastic_ruby_console requires Pry or IRB'
+end
