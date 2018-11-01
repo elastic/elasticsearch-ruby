@@ -15,6 +15,7 @@ gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch/xpack', 'elasticsearch-ex
   begin
     (require gem) || true
   rescue LoadError
+    false
   end
 end
 
