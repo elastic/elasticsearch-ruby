@@ -11,9 +11,9 @@ require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
 
-gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch-xpack', 'elasticsearch-extensions'].reject do |gem|
+gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch/xpack', 'elasticsearch-extensions'].reject do |gem|
   begin
-    require gem
+    (require gem) || true
   rescue LoadError
   end
 end
