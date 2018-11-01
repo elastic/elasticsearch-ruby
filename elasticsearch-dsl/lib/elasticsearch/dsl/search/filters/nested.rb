@@ -38,6 +38,11 @@ module Elasticsearch
             self
           end
 
+          def query(*args, &block)
+            @query = block ? Elasticsearch::DSL::Search::Query.new(*args, &block) : args.first
+            self
+          end
+
           # Converts the query definition to a Hash
           #
           # @return [Hash]
@@ -47,6 +52,10 @@ module Elasticsearch
             if @filter
               _filter = @filter.respond_to?(:to_hash) ? @filter.to_hash : @filter
               hash[self.name].update(filter: _filter)
+            end
+            if @query
+              _query = @query.respond_to?(:to_hash) ? @query.to_hash : @query
+              hash[self.name].update(query: _query)
             end
             hash
           end
