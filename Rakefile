@@ -222,8 +222,13 @@ namespace :benchmark do
     desc "Run the \'ping\' benchmark test with patron adapter"
     task :ping_patron do
       puts "SIMPLE REQUEST BENCHMARK:: PATRON:: PING"
-      require 'patron'
-      Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
+      begin
+        require 'patron'
+      rescue LoadError
+        puts "Patron not loaded, skipping test"
+      else
+        Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
+      end
     end
 
     desc "Run the \'create index\' benchmark test"
@@ -288,6 +293,30 @@ namespace :benchmark do
           benchmark:simple:update_document
         ].each do |task_name|
           Rake::Task[task_name].invoke
+      end
+    end
+  end
+
+  namespace :complex do
+
+    desc "Run the \'create documents\' benchmark test"
+    task :create_documents do
+      puts "COMPLEX REQUEST BENCHMARK:: CREATE DOCUMENTS"
+      Elasticsearch::Benchmarking::Complex.new.run(:create_documents)
+    end
+
+    desc "Run the \'search documents\' benchmark test"
+    task :search_documents do
+      puts "COMPLEX REQUEST BENCHMARK:: SEARCH DOCUMENTS"
+      Elasticsearch::Benchmarking::Complex.new.run(:search_documents)
+    end
+
+    desc "Run all simple benchmark test"
+    task :all do
+      %w[ benchmark:complex:create_documents
+          benchmark:complex:search_documents
+        ].each do |task_name|
+        Rake::Task[task_name].invoke
       end
     end
   end
