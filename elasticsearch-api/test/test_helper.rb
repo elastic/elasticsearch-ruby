@@ -40,30 +40,3 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/startup_shutdown'
   require 'elasticsearch/extensions/test/profiling' unless JRUBY
 end
-
-module Elasticsearch
-  module Test
-    class FakeClient
-      include Elasticsearch::API
-
-      def perform_request(method, path, params, body, headers={"Content-Type" => "application/json"})
-        puts "PERFORMING REQUEST:", "--> #{method.to_s.upcase} #{path} #{params} #{body} #{headers}"
-        FakeResponse.new(200, 'FAKE', {})
-      end
-    end
-
-    FakeResponse = Struct.new(:status, :body, :headers) do
-      def status
-        values[0] || 200
-      end
-      def body
-        values[1] || '{}'
-      end
-      def headers
-        values[2] || {}
-      end
-    end
-
-    class NotFound < StandardError; end
-  end
-end
