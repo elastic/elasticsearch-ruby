@@ -16,7 +16,7 @@ module Elasticsearch
       #                            scroll: '5m',
       #                            body: { query: { match: { title: 'test' } }, sort: '_id' }
       #
-      #     result = client.scroll scroll: '5m', body: { scroll_id: result['_scroll_id'] }
+      #     result = client.scroll body: { scroll_id: result['_scroll_id'], scroll: '5m' }
       #
       # @example Call the `scroll` API until all the documents are returned
       #
