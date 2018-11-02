@@ -83,18 +83,16 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_document_small(repetitions)
-        client.indices.delete(index: '_all')
-        index_name = 'ruby-client-benchmarking'
-        client.indices.create(index: index_name)
-        document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.create(index: index_name, body: document)
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.create(index: INDEX, body: document)
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -107,17 +105,16 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_document_large(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.create(index: INDEX_NAME, body: document)
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.create(index: INDEX, body: document)
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -130,18 +127,17 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_large(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
-        id = client.create(index: INDEX_NAME, body: document)['_id']
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.get(index: INDEX_NAME, id: id)
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
+          id = client.create(index: INDEX, body: document)['_id']
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.get(index: INDEX, id: id)
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -154,18 +150,17 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_small(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-        id = client.create(index: INDEX_NAME, body: document)['_id']
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.get(index: INDEX_NAME, id: id)
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+          id = client.create(index: INDEX, body: document)['_id']
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.get(index: INDEX, id: id)
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -178,20 +173,19 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_large(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
-        client.create(index: INDEX_NAME, body: document)
-        search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.search(index: INDEX_NAME,
-                            body: { query: { match: { search_criteria[0] => search_criteria[1] } } })
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
+          client.create(index: INDEX, body: document)
+          search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.search(index: INDEX,
+                              body: { query: { match: { search_criteria[0] => search_criteria[1] } } })
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -204,20 +198,19 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_small(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-        client.create(index: INDEX_NAME, body: document)
-        search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do
-              client.search(index: INDEX_NAME,
-                            body: { query: { match: { search_criteria[0] => search_criteria[1] } } })
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+          client.create(index: INDEX, body: document)
+          search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.search(index: INDEX,
+                              body: { query: { match: { search_criteria[0] => search_criteria[1] } } })
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 
@@ -230,21 +223,20 @@ module Elasticsearch
       #
       # @since 7.0.0
       def update_document(repetitions)
-        client.indices.delete(index: '_all')
-        client.indices.create(index: INDEX_NAME)
-        document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-        id = client.create(index: INDEX_NAME, body: document)['_id']
-        field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
-        results = repetitions.times.collect do
-          Benchmark.realtime do
-            1_000.times do |i|
-              client.update(index: INDEX_NAME,
-                            id: id,
-                            body: { doc: { field:  "#{document[field]}-#{i}" } })
+        results = Benchmarking.with_cleanup(client) do
+          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+          id = client.create(index: INDEX, body: document)['_id']
+          field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
+          repetitions.times.collect do
+            Benchmark.realtime do
+              1_000.times do |i|
+                client.update(index: INDEX,
+                              id: id,
+                              body: { doc: { field:  "#{document[field]}-#{i}" } })
+              end
             end
           end
         end
-        client.indices.delete(index: '_all')
         Benchmarking.median(results)
       end
 

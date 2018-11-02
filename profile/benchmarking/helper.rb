@@ -27,13 +27,31 @@ module Elasticsearch
     # @example Get the median.
     #   Benchmarking.median(values)
     #
-    # @param [ Array ] The values to get the median of.
+    # @param [ Array ] values The values to get the median of.
     #
     # @return [ Numeric ] The median of the list.
     #
     # @since 7.0.0
     def median(values)
       values.sort![values.size / 2 - 1]
+    end
+
+    # Delete, then create an index for a test. Yield to the block and then
+    #   delete the index after.
+    #
+    # @example Clean before and cleanup after a test.
+    #   Benchmarking.with_cleanup(client) { ... }
+    #
+    # @param [ Elasticsearch::Client ] client The client to use when performing
+    #   index creation and cleanup.
+    #
+    # @since 7.0.0
+    def with_cleanup(client)
+      client.indices.delete(index: '_all')
+      client.indices.create(index: INDEX)
+      results = yield
+      client.indices.delete(index: '_all')
+      results
     end
   end
 end
