@@ -2,8 +2,12 @@ require 'benchmark'
 require 'elasticsearch'
 require 'elasticsearch-api'
 require 'elasticsearch-transport'
+require 'json'
 require_relative 'benchmarking/helper'
 require_relative 'benchmarking/simple'
+require_relative 'benchmarking/complex'
+
+require 'pry-nav'
 
 module Elasticsearch
 
@@ -49,12 +53,19 @@ module Elasticsearch
     # @since 7.0.0
     LARGE_DOCUMENT = [DATA_PATH, 'largedoc.json'].join('/').freeze
 
+    # The file path and name for the dataset.
+    #
+    # @return [ String ] The file path and name for the dataset.
+    #
+    # @since 7.0.0
+    DATASET = [DATA_PATH, 'nytimes-best-sellers.json'].join('/').freeze
+
     # The name of the index to use for benchmark tests.
     #
     # @return [ String ] The index to use for benchmarking tests.
     #
     # @since 7.0.0
-    INDEX_NAME = 'benchmarking-ruby'.freeze
+    INDEX = 'benchmarking-ruby'.freeze
 
     # The default number of test repetitions.
     #
