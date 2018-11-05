@@ -38,8 +38,8 @@ module Elasticsearch
       # @option arguments [String] :routing Specific routing value
       # @option arguments [String] :_source Specify whether the _source field should be returned,
       #                                     or a list of fields to return
-      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
-      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
+      # @option arguments [String] :_source_excludes A list of fields to exclude from the returned _source field
+      # @option arguments [String] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       #
       # @see http://elasticsearch.org/guide/reference/api/multi-get/
@@ -70,8 +70,8 @@ module Elasticsearch
           :refresh,
           :routing,
           :_source,
-          :_source_include,
-          :_source_exclude,
+          :_source_includes,
+          :_source_excludes,
           :stored_fields ].freeze)
     end
   end
