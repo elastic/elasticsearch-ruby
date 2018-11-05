@@ -69,8 +69,8 @@ module Elasticsearch
           :version,
           :version_type,
           :_source,
-          :_source_include,
-          :_source_exclude,
+          :_source_includes,
+          :_source_excludes,
           :_source_transform,
           :stored_fields,
           :include_type_name ].freeze)

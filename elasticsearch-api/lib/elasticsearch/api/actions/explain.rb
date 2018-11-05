@@ -78,8 +78,8 @@ module Elasticsearch
           :routing,
           :source,
           :_source,
-          :_source_include,
-          :_source_exclude,
+          :_source_includes,
+          :_source_excludes,
           :stored_fields ].freeze)
     end
   end
