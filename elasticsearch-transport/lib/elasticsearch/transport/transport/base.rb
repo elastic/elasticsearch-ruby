@@ -32,7 +32,7 @@ module Elasticsearch
           @state_mutex = Mutex.new
 
           @hosts       = arguments[:hosts]   || []
-          @options     = arguments[:options] || {}
+          @options     = arguments[:options].dup || {}
           @options[:http] ||= {}
           @options[:retry_on_status] ||= []
 
