@@ -30,8 +30,8 @@ module Elasticsearch
       # @return [ Numeric ] The test results.
       #
       # @since 7.0.0
-      def run(type, repetitions = TEST_REPETITIONS)
-        puts "#{type} : #{send(type, repetitions)}"
+      def run(type, opts={})
+        puts "#{type} : #{send(type, opts[:repetitions] || TEST_REPETITIONS, opts)}"
       end
 
       # Test sending a ping request.
@@ -42,7 +42,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def ping(repetitions)
+      def ping(repetitions, opts={})
         results = repetitions.times.collect do
           Benchmark.realtime do
             1_000.times do
@@ -61,7 +61,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def create_index(repetitions)
+      def create_index(repetitions, opts={})
         client.indices.delete(index: '_all')
         results = repetitions.times.collect do
           Benchmark.realtime do
@@ -82,7 +82,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def create_document_small(repetitions)
+      def create_document_small(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
           repetitions.times.collect do
@@ -104,7 +104,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def create_document_large(repetitions)
+      def create_document_large(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
           repetitions.times.collect do
@@ -126,7 +126,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def get_document_large(repetitions)
+      def get_document_large(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
           id = client.create(index: INDEX, body: document)['_id']
@@ -149,7 +149,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def get_document_small(repetitions)
+      def get_document_small(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
           id = client.create(index: INDEX, body: document)['_id']
@@ -172,7 +172,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def search_document_large(repetitions)
+      def search_document_large(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
           client.create(index: INDEX, body: document)
@@ -197,16 +197,21 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def search_document_small(repetitions)
+      def search_document_small(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
           client.create(index: INDEX, body: document)
           search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
+          request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
+          if opts[:noop]
+            Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
+          else
+            request.merge!(index: INDEX)
+          end
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
-                client.search(index: INDEX,
-                              body: { query: { match: { search_criteria[0] => search_criteria[1] } } })
+                client.search(request)
               end
             end
           end
@@ -222,7 +227,7 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def update_document(repetitions)
+      def update_document(repetitions, opts={})
         results = Benchmarking.with_cleanup(client) do
           document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
           id = client.create(index: INDEX, body: document)['_id']

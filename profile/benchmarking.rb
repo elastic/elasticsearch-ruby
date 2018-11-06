@@ -7,8 +7,6 @@ require_relative 'benchmarking/helper'
 require_relative 'benchmarking/simple'
 require_relative 'benchmarking/complex'
 
-require 'pry-nav'
-
 module Elasticsearch
 
   # Module with all functionality for running client transport benchmark tests.

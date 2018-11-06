@@ -267,6 +267,12 @@ namespace :benchmark do
       Elasticsearch::Benchmarking::Simple.new.run(:search_document_small)
     end
 
+    desc "Run the \'search small document\' benchmark test with the noop plugin"
+    task :search_document_small_noop do
+      puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT WITH NOOP PLUGIN"
+      Elasticsearch::Benchmarking::Simple.new.run(:search_document_small, noop: true)
+    end
+
     desc "Run the \'search large document\' benchmark test"
     task :search_document_large do
       puts "SIMPLE REQUEST BENCHMARK:: SEARCH LARGE DOCUMENT"
@@ -289,6 +295,7 @@ namespace :benchmark do
           benchmark:simple:get_document_small
           benchmark:simple:get_document_large
           benchmark:simple:search_document_small
+          benchmark:simple:search_document_small_noop
           benchmark:simple:search_document_large
           benchmark:simple:update_document
         ].each do |task_name|
