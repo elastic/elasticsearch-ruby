@@ -18,3 +18,8 @@ end
 if File.exist? File.expand_path("../../elasticsearch-extensions", __FILE__)
   gem 'elasticsearch-extensions', :path => File.expand_path("../../elasticsearch-extensions", __FILE__), :require => false
 end
+
+group :development do
+  gem 'rspec'
+  gem 'pry-nav'
+end
