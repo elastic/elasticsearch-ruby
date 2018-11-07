@@ -6,11 +6,16 @@ task  :test    => 'test:unit'
 # ----- Test tasks ------------------------------------------------------------
 
 require 'rake/testtask'
+require 'rspec/core/rake_task'
+
 namespace :test do
+
+  RSpec::Core::RakeTask.new(:spec)
 
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/unit/**/*_test.rb"]
+    test.deps = [ :spec ]
     test.verbose = false
     test.warning = false
   end
