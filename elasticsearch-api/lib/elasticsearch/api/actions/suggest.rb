@@ -6,6 +6,10 @@ module Elasticsearch
       #
       # Pass the request definition in the `:body` argument.
       #
+      # @deprecated The `_suggest` API has been deprecated in favour of using `_search` with
+      #   suggest criteria in the body.
+      #   Please see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html
+      #
       # @example Return query terms suggestions ("auto-correction")
       #
       #     client.suggest index: 'myindex',
