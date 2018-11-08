@@ -6,6 +6,7 @@ module Elasticsearch
     #
     # @since 7.0.0
     class Simple
+      include Measurable
 
       # Create a Simple request benchmark test.
       #
@@ -31,7 +32,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def run(type, opts={})
-        puts "#{type} : #{send(type, opts[:repetitions] || TEST_REPETITIONS, opts)}"
+        puts "#{type} : #{send(type, opts)}"
       end
 
       # Test sending a ping request.
@@ -42,15 +43,17 @@ module Elasticsearch
       # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @since 7.0.0
-      def ping(repetitions, opts={})
-        results = repetitions.times.collect do
+      def ping(opts={})
+        results = opts['repetitions'].times.collect do
           Benchmark.realtime do
             1_000.times do
               client.ping
             end
           end
         end
-        Benchmarking.median(results)
+        opts['metrics'].inject({}) do |metrics, metric|
+          metrics.merge(metric => send(metric, results))
+        end
       end
 
       # Test sending a create_index request.
@@ -71,7 +74,7 @@ module Elasticsearch
           end
         end
         client.indices.delete(index: '_all')
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a create document request for a small document.
@@ -83,8 +86,8 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_document_small(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+        results = with_cleanup do
+          document = small_document
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
@@ -93,7 +96,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a create document request for a large document.
@@ -105,8 +108,8 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_document_large(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
+        results = with_cleanup do
+          document = large_document
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
@@ -115,7 +118,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a get document request for a large document.
@@ -127,9 +130,8 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_large(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
-          id = client.create(index: INDEX, body: document)['_id']
+        results = with_cleanup do
+          id = client.create(index: INDEX, body: large_document)['_id']
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
@@ -138,7 +140,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a get document request for a small document.
@@ -150,9 +152,8 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_small(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-          id = client.create(index: INDEX, body: document)['_id']
+        results = with_cleanup do
+          id = client.create(index: INDEX, body: small_document)['_id']
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
@@ -161,7 +162,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a search request and retrieving a large document.
@@ -173,10 +174,9 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_large(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(LARGE_DOCUMENT)[0]
-          client.create(index: INDEX, body: document)
-          search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
+        results = with_cleanup do
+          client.create(index: INDEX, body: large_document)
+          search_criteria = large_document.find { |k,v| k != 'id' && v.is_a?(String) }
           repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
@@ -186,7 +186,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a search request and retrieving a small document.
@@ -198,10 +198,9 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_small(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
-          client.create(index: INDEX, body: document)
-          search_criteria = document.find { |k,v| k != 'id' && v.is_a?(String) }
+        results = with_cleanup do
+          client.create(index: INDEX, body: small_document)
+          search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
           request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
           if opts[:noop]
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
@@ -216,7 +215,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a update request for a small document.
@@ -228,8 +227,8 @@ module Elasticsearch
       #
       # @since 7.0.0
       def update_document(repetitions, opts={})
-        results = Benchmarking.with_cleanup(client) do
-          document = Benchmarking.load_json_from_file(SMALL_DOCUMENT)[0]
+        results = with_cleanup do
+          document = small_document
           id = client.create(index: INDEX, body: document)['_id']
           field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
           repetitions.times.collect do
@@ -242,15 +241,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
-      end
-
-      private
-
-      def client
-        @client ||= Elasticsearch::Transport::Client.new(host: ELASTICSEARCH_URL,
-                                                         adapter: @adapter,
-                                                         tracer: nil)
+        median(results)
       end
     end
   end

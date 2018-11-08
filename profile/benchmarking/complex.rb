@@ -6,6 +6,7 @@ module Elasticsearch
     #
     # @since 7.0.0
     class Complex
+      include Measurable
 
       # Create a Complex request benchmark test.
       #
@@ -43,14 +44,15 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_documents(repetitions)
-        results = Benchmarking.with_cleanup(client) do
+        results = with_cleanup do
+          data = dataset
           repetitions.times.collect do
             Benchmark.realtime do
-              client.bulk(body: dataset)
+              client.bulk(body: data)
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       # Test sending a request a search request.
@@ -62,7 +64,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_documents(repetitions)
-        results = Benchmarking.with_cleanup(client) do
+        results = with_cleanup(client) do
           client.bulk(body: dataset)
           query = { match: { publisher: "Random House"} }
           request = { index: INDEX, body: { query: query } }
@@ -72,7 +74,7 @@ module Elasticsearch
             end
           end
         end
-        Benchmarking.median(results)
+        median(results)
       end
 
       def mixed_bulk_small(repetitions)
@@ -81,23 +83,6 @@ module Elasticsearch
 
       def mixed_bulk_large(repetitions)
 
-      end
-
-      private
-
-      def client
-        @client ||= Elasticsearch::Transport::Client.new(host: ELASTICSEARCH_URL,
-                                                         adapter: @adapter,
-                                                         tracer: nil)
-      end
-
-      def dataset
-        @dataset ||= begin
-          Benchmarking.load_json_from_file(DATASET).collect do |d|
-            d.delete('_id')
-            { index:  { _index: INDEX, _type: '_doc', data: d } }
-          end
-        end
       end
     end
   end

@@ -1,0 +1,7 @@
+- name: Basic benchmark
+  repetitions: 10
+  metrics:
+    - mean
+    - median
+    - max
+    - min

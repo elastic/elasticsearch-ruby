@@ -19,6 +19,7 @@ import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 
 require 'pathname'
+require 'pry-nav'
 
 CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
 SUBPROJECTS = [ 'elasticsearch',
@@ -210,13 +211,14 @@ end
 require_relative "profile/benchmarking"
 
 namespace :benchmark do
-  desc "Run the client benchmark tests."
 
   namespace :simple do
+
     desc "Run the \'ping\' benchmark test"
     task :ping do
-      puts "SIMPLE REQUEST BENCHMARK:: PING"
-      Elasticsearch::Benchmarking::Simple.new.run(:ping)
+      Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
+        Elasticsearch::Benchmarking::Simple.new.run(:ping, run)
+      end
     end
 
     desc "Run the \'ping\' benchmark test with patron adapter"
@@ -267,12 +269,6 @@ namespace :benchmark do
       Elasticsearch::Benchmarking::Simple.new.run(:search_document_small)
     end
 
-    desc "Run the \'search small document\' benchmark test with the noop plugin"
-    task :search_document_small_noop do
-      puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT WITH NOOP PLUGIN"
-      Elasticsearch::Benchmarking::Simple.new.run(:search_document_small, noop: true)
-    end
-
     desc "Run the \'search large document\' benchmark test"
     task :search_document_large do
       puts "SIMPLE REQUEST BENCHMARK:: SEARCH LARGE DOCUMENT"
@@ -286,7 +282,7 @@ namespace :benchmark do
     end
 
     desc "Run all simple benchmark test"
-    task :all do
+    task :all, [:matrix] do |t, args|
       %w[ benchmark:simple:ping
           benchmark:simple:ping_patron
           benchmark:simple:create_index
@@ -295,11 +291,19 @@ namespace :benchmark do
           benchmark:simple:get_document_small
           benchmark:simple:get_document_large
           benchmark:simple:search_document_small
-          benchmark:simple:search_document_small_noop
           benchmark:simple:search_document_large
           benchmark:simple:update_document
         ].each do |task_name|
-          Rake::Task[task_name].invoke
+          Rake::Task[task_name].invoke(*args)
+      end
+    end
+
+    namespace :noop do
+
+      desc "Run the \'search small document\' benchmark test with the noop plugin"
+      task :search_document_small do
+        puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT WITH NOOP PLUGIN"
+        Elasticsearch::Benchmarking::Simple.new.run(:search_document_small, noop: true)
       end
     end
   end
