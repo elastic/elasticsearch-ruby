@@ -217,95 +217,98 @@ namespace :benchmark do
     desc "Run the \'ping\' benchmark test"
     task :ping do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
-        Elasticsearch::Benchmarking::Simple.new.run(:ping, run)
-      end
-    end
-
-    desc "Run the \'ping\' benchmark test with patron adapter"
-    task :ping_patron do
-      puts "SIMPLE REQUEST BENCHMARK:: PATRON:: PING"
-      begin
-        require 'patron'
-      rescue LoadError
-        puts "Patron not loaded, skipping test"
-      else
-        Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
+        task = Elasticsearch::Benchmarking::Simple.new
+        puts "PING - #{run['name']}: #{task.run(:ping, run)}"
       end
     end
 
     desc "Run the \'create index\' benchmark test"
     task :create_index do
-      puts "SIMPLE REQUEST BENCHMARK:: CREATE INDEX"
-      Elasticsearch::Benchmarking::Simple.new.run(:create_index)
-    end
-
-    desc "Run the \'create small document\' benchmark test"
-    task :create_document_small do
-      puts "SIMPLE REQUEST BENCHMARK:: CREATE SMALL DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:create_document_small)
-    end
-
-    desc "Run the \'create large document\' benchmark test"
-    task :create_document_large do
-      puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:create_document_large)
-    end
-
-    desc "Run the \'get small document\' benchmark test"
-    task :get_document_small do
-      puts "SIMPLE REQUEST BENCHMARK:: GET SMALL DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:get_document_small)
-    end
-
-    desc "Run the \'get large document\' benchmark test"
-    task :get_document_large do
-      puts "SIMPLE REQUEST BENCHMARK:: GET LARGE DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:get_document_large)
-    end
-
-    desc "Run the \'search small document\' benchmark test"
-    task :search_document_small do
-      puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:search_document_small)
-    end
-
-    desc "Run the \'search large document\' benchmark test"
-    task :search_document_large do
-      puts "SIMPLE REQUEST BENCHMARK:: SEARCH LARGE DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:search_document_large)
-    end
-
-    desc "Run the \'update document\' benchmark test"
-    task :update_document do
-      puts "SIMPLE REQUEST BENCHMARK:: UPDATE DOCUMENT"
-      Elasticsearch::Benchmarking::Simple.new.run(:update_document)
-    end
-
-    desc "Run all simple benchmark test"
-    task :all, [:matrix] do |t, args|
-      %w[ benchmark:simple:ping
-          benchmark:simple:ping_patron
-          benchmark:simple:create_index
-          benchmark:simple:create_document_small
-          benchmark:simple:create_document_large
-          benchmark:simple:get_document_small
-          benchmark:simple:get_document_large
-          benchmark:simple:search_document_small
-          benchmark:simple:search_document_large
-          benchmark:simple:update_document
-        ].each do |task_name|
-          Rake::Task[task_name].invoke(*args)
+      Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
+        task = Elasticsearch::Benchmarking::Simple.new
+        puts "CREATE INDEX - #{run['name']}: #{task.run(:create_index, run)}"
       end
     end
 
-    namespace :noop do
-
-      desc "Run the \'search small document\' benchmark test with the noop plugin"
-      task :search_document_small do
-        puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT WITH NOOP PLUGIN"
-        Elasticsearch::Benchmarking::Simple.new.run(:search_document_small, noop: true)
-      end
-    end
+    # desc "Run the \'ping\' benchmark test with patron adapter"
+    # task :ping_patron do
+    #   puts "SIMPLE REQUEST BENCHMARK:: PATRON:: PING"
+    #   begin
+    #     require 'patron'
+    #   rescue LoadError
+    #     puts "Patron not loaded, skipping test"
+    #   else
+    #     Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
+    #   end
+    # end
+    #
+    # desc "Run the \'create small document\' benchmark test"
+    # task :create_document_small do
+    #   puts "SIMPLE REQUEST BENCHMARK:: CREATE SMALL DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:create_document_small)
+    # end
+    #
+    # desc "Run the \'create large document\' benchmark test"
+    # task :create_document_large do
+    #   puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:create_document_large)
+    # end
+    #
+    # desc "Run the \'get small document\' benchmark test"
+    # task :get_document_small do
+    #   puts "SIMPLE REQUEST BENCHMARK:: GET SMALL DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:get_document_small)
+    # end
+    #
+    # desc "Run the \'get large document\' benchmark test"
+    # task :get_document_large do
+    #   puts "SIMPLE REQUEST BENCHMARK:: GET LARGE DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:get_document_large)
+    # end
+    #
+    # desc "Run the \'search small document\' benchmark test"
+    # task :search_document_small do
+    #   puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:search_document_small)
+    # end
+    #
+    # desc "Run the \'search large document\' benchmark test"
+    # task :search_document_large do
+    #   puts "SIMPLE REQUEST BENCHMARK:: SEARCH LARGE DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:search_document_large)
+    # end
+    #
+    # desc "Run the \'update document\' benchmark test"
+    # task :update_document do
+    #   puts "SIMPLE REQUEST BENCHMARK:: UPDATE DOCUMENT"
+    #   Elasticsearch::Benchmarking::Simple.new.run(:update_document)
+    # end
+    #
+    # desc "Run all simple benchmark test"
+    # task :all, [:matrix] do |t, args|
+    #   %w[ benchmark:simple:ping
+    #       benchmark:simple:ping_patron
+    #       benchmark:simple:create_index
+    #       benchmark:simple:create_document_small
+    #       benchmark:simple:create_document_large
+    #       benchmark:simple:get_document_small
+    #       benchmark:simple:get_document_large
+    #       benchmark:simple:search_document_small
+    #       benchmark:simple:search_document_large
+    #       benchmark:simple:update_document
+    #     ].each do |task_name|
+    #       Rake::Task[task_name].invoke(*args)
+    #   end
+    # end
+    #
+    # namespace :noop do
+    #
+    #   desc "Run the \'search small document\' benchmark test with the noop plugin"
+    #   task :search_document_small do
+    #     puts "SIMPLE REQUEST BENCHMARK:: SEARCH SMALL DOCUMENT WITH NOOP PLUGIN"
+    #     Elasticsearch::Benchmarking::Simple.new.run(:search_document_small, noop: true)
+    #   end
+    # end
   end
 
   namespace :complex do
