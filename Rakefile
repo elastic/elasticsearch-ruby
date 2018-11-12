@@ -1,6 +1,6 @@
 require 'pathname'
 
-subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-api elasticsearch-extensions |
+subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-dsl elasticsearch-api elasticsearch-extensions |
 __current__ = Pathname( File.expand_path('..', __FILE__) )
 
 # TODO: Figure out "bundle exec or not"
