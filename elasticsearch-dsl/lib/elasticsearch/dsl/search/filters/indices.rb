@@ -65,7 +65,7 @@ module Elasticsearch
             end
             if @no_match_filter
               _no_match_filter = @no_match_filter.respond_to?(:to_hash) ? @no_match_filter.to_hash : @no_match_filter
-              hash[self.name].update(no_match_filter: _filter)
+              hash[self.name].update(no_match_filter: _no_match_filter)
             end
             hash
           end
