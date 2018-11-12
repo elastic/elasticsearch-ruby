@@ -248,11 +248,13 @@ namespace :benchmark do
     #   Elasticsearch::Benchmarking::Simple.new.run(:create_document_small)
     # end
     #
-    # desc "Run the \'create large document\' benchmark test"
-    # task :create_document_large do
-    #   puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT"
-    #   Elasticsearch::Benchmarking::Simple.new.run(:create_document_large)
-    # end
+    desc "Run the \'create large document\' benchmark test"
+    task :create_document_large do
+      Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
+        task = Elasticsearch::Benchmarking::Simple.new
+        puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT - #{run['name']}: #{task.run(:create_document_large, run)}"
+      end
+    end
     #
     # desc "Run the \'get small document\' benchmark test"
     # task :get_document_small do
@@ -315,15 +317,17 @@ namespace :benchmark do
 
     desc "Run the \'create documents\' benchmark test"
     task :create_documents do
-      puts "COMPLEX REQUEST BENCHMARK:: CREATE DOCUMENTS"
-      Elasticsearch::Benchmarking::Complex.new.run(:create_documents)
+      Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
+        task = Elasticsearch::Benchmarking::Complex.new
+        puts "COMPLEX REQUEST BENCHMARK:: CREATE DOCUMENTS - #{run['name']}: #{task.run(:create_documents, run)}"
+      end
     end
 
-    desc "Run the \'search documents\' benchmark test"
-    task :search_documents do
-      puts "COMPLEX REQUEST BENCHMARK:: SEARCH DOCUMENTS"
-      Elasticsearch::Benchmarking::Complex.new.run(:search_documents)
-    end
+    # desc "Run the \'search documents\' benchmark test"
+    # task :search_documents do
+    #   puts "COMPLEX REQUEST BENCHMARK:: SEARCH DOCUMENTS"
+    #   Elasticsearch::Benchmarking::Complex.new.run(:search_documents)
+    # end
 
     desc "Run all simple benchmark test"
     task :all do

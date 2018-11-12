@@ -4,6 +4,33 @@ module Elasticsearch
     # Helper functions used by benchmarking tasks
     module Measurable
 
+      # Create a benchmark test.
+      #
+      # @example Create a test.
+      #   Benchmarking::Complex.new(:patron)
+      #
+      # @param [ Symbol ] adapter The adapter the client should be configured with.
+      #
+      # @since 7.0.0
+      def initialize(adapter = ::Faraday.default_adapter)
+        @adapter = adapter
+      end
+
+      # Run a benchmark test.
+      #
+      # @example Run a test.
+      #   Benchmarking::Complex.run(:ping)
+      #
+      # @param [ Symbol ] type The name of the test to run.
+      # @param [ Integer ] repetitions The number of test repetitions.
+      #
+      # @return [ Numeric ] The test results.
+      #
+      # @since 7.0.0
+      def run(type, opts={})
+        send(type, opts)
+      end
+
       private
 
       attr_reader :adapter
@@ -48,7 +75,7 @@ module Elasticsearch
       # @return [ String ] The file path and name for the dataset.
       #
       # @since 7.0.0
-      DATASET = [DATA_PATH, 'nytimes-best-sellers.json'].join('/').freeze
+      DATASET = [DATA_PATH, 'documents-small.json'].join('/').freeze
 
       # The name of the index to use for benchmark tests.
       #
@@ -87,12 +114,11 @@ module Elasticsearch
                                                          tracer: nil)
       end
 
-      def dataset
-        @dataset ||= begin
-          Benchmarking.load_json_from_file(DATASET).collect do |d|
-            d.delete('_id')
-            { index:  { _index: INDEX, _type: '_doc', data: d } }
-          end
+      def dataset_slices(slice_size=10000)
+        @dataset_slices ||= begin
+          load_json_from_file(DATASET).collect do |d|
+            { index: { _index: INDEX, _type: '_doc', data: d } }
+          end.each_slice(slice_size)
         end
       end
 

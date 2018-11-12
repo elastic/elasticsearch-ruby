@@ -8,39 +8,12 @@ module Elasticsearch
     class Simple
       include Measurable
 
-      # Create a Simple request benchmark test.
-      #
-      # @example Create a test.
-      #   Benchmarking::Simple.new(:patron)
-      #
-      # @param [ Symbol ] adapter The adapter the client should be configured with.
-      #
-      # @since 7.0.0
-      def initialize(adapter = ::Faraday.default_adapter)
-        @adapter = adapter
-      end
-
-      # Run a Simple request benchmark test.
-      #
-      # @example Run a test.
-      #   Benchmarking::Simple.run(:ping)
-      #
-      # @param [ Symbol ] type The name of the test to run.
-      # @param [ Integer ] repetitions The number of test repetitions.
-      #
-      # @return [ Numeric ] The test results.
-      #
-      # @since 7.0.0
-      def run(type, opts={})
-        send(type, opts)
-      end
-
       # Test sending a ping request.
       #
       # @example Test sending a ping request.
-      #   Benchmarking::Simple.ping(10)
+      #   Benchmarking::Simple.ping(opts)
       #
-      # @param [ Integer ] repetitions The number of test repetitions.
+      # @param [ Hash ] opts The test run options.
       #
       # @since 7.0.0
       def ping(opts = {})
@@ -58,9 +31,9 @@ module Elasticsearch
       # Test sending a create_index request.
       #
       # @example Test sending a create index request.
-      #   Benchmarking::Simple.create_index(10)
+      #   Benchmarking::Simple.create_index(opts)
       #
-      # @param [ Integer ] repetitions The number of test repetitions.
+      # @param [ Hash ] opts The test run options.
       #
       # @since 7.0.0
       def create_index(opts={})
@@ -99,27 +72,28 @@ module Elasticsearch
       #   median(results)
       # end
       #
-      # # Test sending a create document request for a large document.
-      # #
-      # # @example Test sending a create document request.
-      # #   Benchmarking::Simple.create_document_large(10)
-      # #
-      # # @param [ Integer ] repetitions The number of test repetitions.
-      # #
-      # # @since 7.0.0
-      # def create_document_large(repetitions, opts={})
-      #   results = with_cleanup do
-      #     document = large_document
-      #     repetitions.times.collect do
-      #       Benchmark.realtime do
-      #         1_000.times do
-      #           client.create(index: INDEX, body: document)
-      #         end
-      #       end
-      #     end
-      #   end
-      #   median(results)
-      # end
+      # Test sending a create document request for a large document.
+      #
+      # @example Test sending a create document request.
+      #   Benchmarking::Simple.create_document_large(10)
+      #
+      # @param [ Integer ] repetitions The number of test repetitions.
+      #
+      # @since 7.0.0
+      def create_document_large(opts={})
+        document = large_document
+        results = with_cleanup do
+          opts['repetitions'].times.collect do
+            Benchmark.realtime do
+              1_000.times do
+                client.create(index: INDEX, body: document)
+              end
+            end
+          end
+        end
+        res = Results.new(self, results, opts.merge(operation: __method__))
+        res.index!(client)[:results]
+      end
       #
       # # Test sending a get document request for a large document.
       # #

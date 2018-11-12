@@ -8,82 +8,58 @@ module Elasticsearch
     class Complex
       include Measurable
 
-      # Create a Complex request benchmark test.
-      #
-      # @example Create a test.
-      #   Benchmarking::Complex.new(:patron)
-      #
-      # @param [ Symbol ] adapter The adapter the client should be configured with.
-      #
-      # @since 7.0.0
-      def initialize(adapter = ::Faraday.default_adapter)
-        @adapter = adapter
-      end
-
-      # Run a Complex request benchmark test.
-      #
-      # @example Run a test.
-      #   Benchmarking::Complex.run(:ping)
-      #
-      # @param [ Symbol ] type The name of the test to run.
-      # @param [ Integer ] repetitions The number of test repetitions.
-      #
-      # @return [ Numeric ] The test results.
-      #
-      # @since 7.0.0
-      def run(type, repetitions = TEST_REPETITIONS)
-        puts "#{type} : #{send(type, repetitions)}"
-      end
-
       # Test sending a bulk request to create a large number of documents.
       #
       # @example Test sending a bulk create request.
-      #   Benchmarking::Complex.create_documents(10)
+      #   Benchmarking::Complex.create_documents(opts)
       #
-      # @param [ Integer ] repetitions The number of test repetitions.
+      # @param [ Hash ] opts The test run options.
       #
       # @since 7.0.0
-      def create_documents(repetitions)
+      def create_documents(opts = {})
         results = with_cleanup do
-          data = dataset
-          repetitions.times.collect do
+          slices = dataset_slices
+          opts['repetitions'].times.collect do
             Benchmark.realtime do
-              client.bulk(body: data)
+              slices.each do |slice|
+                client.bulk(body: slice)
+              end
             end
           end
         end
-        median(results)
+        res = Results.new(self, results, opts.merge(operation: __method__))
+        res.index!(client)[:results]
       end
 
-      # Test sending a request a search request.
+      # # Test sending a request a search request.
+      # #
+      # # @example Test sending a search request.
+      # #   Benchmarking::Complex.search_documents(10)
+      # #
+      # # @param [ Integer ] repetitions The number of test repetitions.
+      # #
+      # # @since 7.0.0
+      # def search_documents(repetitions)
+      #   results = with_cleanup(client) do
+      #     client.bulk(body: dataset)
+      #     query = { match: { publisher: "Random House"} }
+      #     request = { index: INDEX, body: { query: query } }
+      #     repetitions.times.collect do
+      #       Benchmark.realtime do
+      #         client.search(request)
+      #       end
+      #     end
+      #   end
+      #   median(results)
+      # end
       #
-      # @example Test sending a search request.
-      #   Benchmarking::Complex.search_documents(10)
+      # def mixed_bulk_small(repetitions)
       #
-      # @param [ Integer ] repetitions The number of test repetitions.
+      # end
       #
-      # @since 7.0.0
-      def search_documents(repetitions)
-        results = with_cleanup(client) do
-          client.bulk(body: dataset)
-          query = { match: { publisher: "Random House"} }
-          request = { index: INDEX, body: { query: query } }
-          repetitions.times.collect do
-            Benchmark.realtime do
-              client.search(request)
-            end
-          end
-        end
-        median(results)
-      end
-
-      def mixed_bulk_small(repetitions)
-
-      end
-
-      def mixed_bulk_large(repetitions)
-
-      end
+      # def mixed_bulk_large(repetitions)
+      #
+      # end
     end
   end
 end
