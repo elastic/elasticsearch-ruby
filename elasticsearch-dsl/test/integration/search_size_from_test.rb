@@ -27,7 +27,7 @@ module Elasticsearch
 
           should "move the offset" do
             response = @client.search index: 'test', body: search {
-              query { match(:title) { query 'test' and type 'phrase_prefix' } }
+              query { match(:title) { query 'test' } }
               size 5
               from 5
               sort { by 'title.keyword' }
