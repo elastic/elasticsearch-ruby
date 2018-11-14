@@ -24,22 +24,22 @@ module Elasticsearch
             }
           }
 
-          @client.index index: 'articles-and-comments', id: 1,
+          @client.index index: 'articles-and-comments', id: 1, type: '_doc',
                         body: { title: 'A', category: 'one', join_field: 'article' }
-          @client.index index: 'articles-and-comments', id: 2,
+          @client.index index: 'articles-and-comments', id: 2, type: '_doc',
                         body: { title: 'B', category: 'one', join_field: 'article' }
-          @client.index index: 'articles-and-comments', id: 3,
+          @client.index index: 'articles-and-comments', id: 3, type: '_doc',
                         body: { title: 'C', category: 'two', join_field: 'article' }
 
-          @client.index index: 'articles-and-comments', routing: '1',
+          @client.index index: 'articles-and-comments', routing: '1', type: '_doc',
                         body: { author: 'John', join_field: { name: 'comment', parent: 1 } }
-          @client.index index: 'articles-and-comments', routing: '1',
+          @client.index index: 'articles-and-comments', routing: '1', type: '_doc',
                         body: { author: 'Mary',join_field: { name: 'comment', parent: 1 } }
-          @client.index index: 'articles-and-comments', routing: '2',
+          @client.index index: 'articles-and-comments', routing: '2', type: '_doc',
                         body: { author: 'John', join_field: { name: 'comment', parent: 2 } }
-          @client.index index: 'articles-and-comments', routing: '2',
+          @client.index index: 'articles-and-comments', routing: '2', type: '_doc',
                         body: { author: 'Dave', join_field: { name: 'comment', parent: 2 } }
-          @client.index index: 'articles-and-comments', routing: '3',
+          @client.index index: 'articles-and-comments', routing: '3', type: '_doc',
                         body: { author: 'Ruth',join_field: { name: 'comment', parent: 3 } }
           @client.indices.refresh index: 'articles-and-comments'
         end
