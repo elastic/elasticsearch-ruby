@@ -11,45 +11,41 @@ module Elasticsearch
         end
 
         setup do
-          @client.indices.create index: 'articles-test', body: {
+          @client.indices.create index: 'articles-and-comments', body: {
             mappings: {
-              article: {
+              _doc: {
                 properties: {
                   title:    { type: 'text' },
-                  category: { type: 'keyword' }
-                }
-              },
-              comment: {
-                _routing: { required: true },
-                _parent:  { type: 'article' },
-                properties: {
-                  author: { type: 'keyword' }
+                  category: { type: 'keyword' },
+                  join_field: { type: 'join', relations: { article: 'comment' } },
+                  author: { type: 'keyword'}
                 }
               }
             }
           }
-          @client.index index: 'articles-test', type: 'article', id: 1,
-                        body: { title: 'A', category: 'one'  }
-          @client.index index: 'articles-test', type: 'article', id: 2,
-                        body: { title: 'B', category: 'one'  }
-          @client.index index: 'articles-test', type: 'article', id: 3,
-                        body: { title: 'C', category: 'two'  }
 
-          @client.index index: 'articles-test', type: 'comment', parent: '1',
-                        body: { author: 'John' }
-          @client.index index: 'articles-test', type: 'comment', parent: '1',
-                        body: { author: 'Mary' }
-          @client.index index: 'articles-test', type: 'comment', parent: '2',
-                        body: { author: 'John' }
-          @client.index index: 'articles-test', type: 'comment', parent: '2',
-                        body: { author: 'Dave' }
-          @client.index index: 'articles-test', type: 'comment', parent: '3',
-                        body: { author: 'Ruth' }
-          @client.indices.refresh index: 'articles-test'
+          @client.index index: 'articles-and-comments', id: 1,
+                        body: { title: 'A', category: 'one', join_field: 'article' }
+          @client.index index: 'articles-and-comments', id: 2,
+                        body: { title: 'B', category: 'one', join_field: 'article' }
+          @client.index index: 'articles-and-comments', id: 3,
+                        body: { title: 'C', category: 'two', join_field: 'article' }
+
+          @client.index index: 'articles-and-comments', routing: '1',
+                        body: { author: 'John', join_field: { name: 'comment', parent: 1 } }
+          @client.index index: 'articles-and-comments', routing: '1',
+                        body: { author: 'Mary',join_field: { name: 'comment', parent: 1 } }
+          @client.index index: 'articles-and-comments', routing: '2',
+                        body: { author: 'John', join_field: { name: 'comment', parent: 2 } }
+          @client.index index: 'articles-and-comments', routing: '2',
+                        body: { author: 'Dave', join_field: { name: 'comment', parent: 2 } }
+          @client.index index: 'articles-and-comments', routing: '3',
+                        body: { author: 'Ruth',join_field: { name: 'comment', parent: 3 } }
+          @client.indices.refresh index: 'articles-and-comments'
         end
 
         should "return the top commenters per article category" do
-          response = @client.search index: 'articles-test', size: 0, body: search {
+          response = @client.search index: 'articles-and-comments', size: 0, body: search {
             aggregation :top_categories do
               terms field: 'category' do
                 aggregation :comments do
