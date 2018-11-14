@@ -186,10 +186,10 @@ module Elasticsearch
             response = @client.search index: 'test', body: search {
               aggregation :clicks_for_one do
                 scripted_metric do
-                  init_script "state._agg.transactions = []"
-                  map_script  "if (doc['tags'].value.contains('one')) { state._agg.transactions.add(doc['clicks'].value) }"
-                  combine_script "double sum = 0; for (t in state._agg.transactions) { sum += t } return sum"
-                  reduce_script "double sum = 0; for (a in state._aggs) { sum += a } return sum"
+                  init_script "state.transactions = []"
+                  map_script  "if (doc['tags'].value.contains('one')) { state.transactions.add(doc['clicks'].value) }"
+                  combine_script "double sum = 0; for (t in state.transactions) { sum += t } return sum"
+                  reduce_script "double sum = 0; for (a in states) { sum += a } return sum"
                 end
               end
             }.to_hash
