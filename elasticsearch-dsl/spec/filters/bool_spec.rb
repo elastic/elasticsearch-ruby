@@ -18,11 +18,11 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
     context 'when a hash is provided' do
 
       let(:search) do
-        described_class.new(must: [ {term: { foo: 'bar' } } ])
+        described_class.new(must: [ { term: { foo: 'bar' } } ])
       end
 
       it 'applies the hash' do
-        expect(search.to_hash).to eq(bool: { must: [ {term: { foo: 'bar' } } ] })
+        expect(search.to_hash).to eq(bool: { must: [ { term: { foo: 'bar' } } ] })
       end
     end
 
@@ -35,7 +35,7 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
       end
 
       it 'executes the block' do
-        expect(search.to_hash).to eq(bool: { must: [ {term: { foo: 'bar' }} ] })
+        expect(search.to_hash).to eq(bool: { must: [ { term: { foo: 'bar' } } ] })
       end
 
       context 'when the block calls multiple methods' do
@@ -50,9 +50,9 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
 
         it 'executes the block' do
           expect(search.to_hash).to eq(bool:
-                                           { must:     [ {term: { foo: 'bar' }} ],
-                                             must_not: [ {term: { moo: 'bam' }} ],
-                                             should:   [ {term: { xoo: 'bax' }} ]
+                                           { must:     [ { term: { foo: 'bar' } } ],
+                                             must_not: [ { term: { moo: 'bam' } } ],
+                                             should:   [ { term: { xoo: 'bax' } } ]
                                            })
         end
       end
@@ -71,8 +71,8 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
 
         it 'executes the block' do
           expect(search.to_hash).to eq(bool:
-                                           { must:     [ {term: { foo: 'bar' }}, {term: { moo: 'bam' }} ],
-                                             should:   [ {term: { xoo: 'bax' }}, {term: { zoo: 'baz' }} ]
+                                           { must:     [ { term: { foo: 'bar' } }, { term: { moo: 'bam' } } ],
+                                             should:   [ { term: { xoo: 'bax' } }, { term: { zoo: 'baz' } } ]
                                            })
         end
       end
@@ -86,7 +86,7 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
     end
 
     it 'applies the condition' do
-      expect(search.to_hash).to eq(bool: { must: [ {term: { foo: 'bar' }} ] })
+      expect(search.to_hash).to eq(bool: { must: [ { term: { foo: 'bar' } } ] })
     end
 
     context 'when the method is called more than once' do
@@ -97,7 +97,7 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
       end
 
       it 'applies the conditions' do
-        expect(search.to_hash).to eq(bool: { must: [ {term: { foo: 'bar' } }, { term: { moo: 'bam' } } ] })
+        expect(search.to_hash).to eq(bool: { must: [ { term: { foo: 'bar' } }, { term: { moo: 'bam' } } ] })
       end
     end
   end
@@ -109,7 +109,7 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
     end
 
     it 'applies the condition' do
-      expect(search.to_hash).to eq(bool: { should: [ {term: { xoo: 'bax' }} ] })
+      expect(search.to_hash).to eq(bool: { should: [ { term: { xoo: 'bax' } } ] })
     end
   end
 
