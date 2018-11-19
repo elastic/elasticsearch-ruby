@@ -51,6 +51,17 @@ describe Elasticsearch::DSL::Search::Queries::HasParent do
         expect(search.to_hash[:has_parent][:score_mode]).to eq('bar')
       end
     end
+
+    describe '#inner_hits' do
+
+      before do
+        search.inner_hits(size: 1)
+      end
+
+      it 'applies the option' do
+        expect(search.to_hash[:has_parent][:inner_hits]).to eq(size: 1)
+      end
+    end
   end
 
   describe '#initialize' do
