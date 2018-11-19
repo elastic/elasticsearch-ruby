@@ -43,7 +43,6 @@ module Elasticsearch
         # @option arguments [String] :text The text on which the analysis should be performed
         #                                  (when request body is not used)
         # @option arguments [String] :tokenizer The name of the tokenizer to use for the analysis
-        # @option arguments [String] :format Format of the output (options: detailed, text)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
         #
@@ -74,8 +73,7 @@ module Elasticsearch
             :prefer_local,
             :text,
             :tokenizer,
-            :token_filters,
-            :format ].freeze)
+            :token_filters ].freeze)
       end
     end
   end
