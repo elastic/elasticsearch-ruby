@@ -40,7 +40,6 @@ module Elasticsearch
       #       puts
       #     end
       #
-      # @option arguments [String] :scroll_id The scroll ID
       # @option arguments [Hash] :body The scroll ID if not passed by URL or query parameter.
       # @option arguments [Duration] :scroll Specify how long a consistent view of the index
       #                                      should be maintained for scrolled search
