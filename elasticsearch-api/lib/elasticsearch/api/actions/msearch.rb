@@ -22,13 +22,13 @@ module Elasticsearch
       #         { query: { match_all: {} } },
       #         { index: 'myindex', type: 'mytype' },
       #         { query: { query_string: { query: '"Test 1"' } } },
-      #         { search_type: 'count' },
+      #         { search_type: 'query_then_fetch' },
       #         { aggregations: { published: { terms: { field: 'published' } } } }
       #       ]
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [List] :type A comma-separated list of document types to use as default
-      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
+      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs)
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
