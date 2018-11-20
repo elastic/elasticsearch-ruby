@@ -16,10 +16,6 @@ describe Elasticsearch::Client do
     end unless ENV['QUIET']
   end
 
-  let(:hosts) do
-    "127.0.0.1:#{port}"
-  end
-
   let(:port) do
     (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
   end
@@ -43,7 +39,7 @@ describe Elasticsearch::Client do
     end
 
     it 'connects to the cluster' do
-      expect(response.body['number_of_nodes']).to eq(TEST_HOSTS.size)
+      expect(response.body['number_of_nodes']).to eq(ELASTICSEARCH_HOSTS.size)
     end
   end
 
@@ -68,7 +64,7 @@ describe Elasticsearch::Client do
     context 'when a block is provided' do
 
       let(:client) do
-        Elasticsearch::Client.new(host: "127.0.0.1:#{port}", logger: logger) do |client|
+        Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
           client.headers['Accept'] = 'application/yaml'
         end
       end
@@ -85,7 +81,7 @@ describe Elasticsearch::Client do
       context 'when the Faraday adapter is set in the block' do
 
         let(:client) do
-          Elasticsearch::Client.new(host: "127.0.0.1:#{port}", logger: logger) do |client|
+          Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
             client.adapter(:net_http_persistent)
           end
         end
@@ -116,7 +112,7 @@ describe Elasticsearch::Client do
       context 'when a node is unreachable' do
 
         let(:hosts) do
-          ["127.0.0.1:#{port}", "foobar1", "foobar2"]
+          [ELASTICSEARCH_HOSTS.first, "foobar1", "foobar2"]
         end
 
         let(:options) do
@@ -138,7 +134,7 @@ describe Elasticsearch::Client do
     context 'when retry_on_failure is an integer' do
 
       let(:hosts) do
-        ["127.0.0.1:#{port}", 'foobar1', 'foobar2', 'foobar3']
+        [ELASTICSEARCH_HOSTS.first, 'foobar1', 'foobar2', 'foobar3']
       end
 
       let(:options) do
@@ -156,7 +152,7 @@ describe Elasticsearch::Client do
     context 'when reload_on_failure is true' do
 
       let(:hosts) do
-        ["127.0.0.1:#{port}", 'foobar1', 'foobar2']
+        [ELASTICSEARCH_HOSTS.first, 'foobar1', 'foobar2']
       end
 
       let(:options) do
@@ -264,7 +260,7 @@ describe Elasticsearch::Client do
       context 'when the round-robin selector is used' do
 
         let(:hosts) do
-          ["127.0.0.1:#{port}", "127.0.0.1:9251"]
+          ELASTICSEARCH_HOSTS
         end
 
         let(:nodes) do
@@ -281,7 +277,7 @@ describe Elasticsearch::Client do
       context 'when the round-robin selector is used' do
 
         let(:hosts) do
-          ["127.0.0.1:#{port}", "127.0.0.1:9251"]
+          ELASTICSEARCH_HOSTS
         end
 
         let(:nodes) do
@@ -306,23 +302,17 @@ describe Elasticsearch::Client do
         client.transport.connections.first.connection.builder.handlers.first
       end
 
-      let!(:connections_before) do
-        response = client.perform_request('GET', '_nodes/stats/http')
-        response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
-      end
-
-      let(:connections_after) do
-        client.transport.reload_connections!
-        response = client.perform_request('GET', '_nodes/stats/http')
-        response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
-      end
-
       it 'uses the patron connection handler' do
         expect(connection_handler).to eq('Faraday::Adapter::Patron')
       end
 
       it 'keeps connections open' do
-        expect(connections_after).to be > (connections_before)
+        response = client.perform_request('GET', '_nodes/stats/http')
+        connections_before = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+        client.transport.reload_connections!
+        response = client.perform_request('GET', '_nodes/stats/http')
+        connections_after = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+        expect(connections_after).to be >= (connections_before)
       end
     end
   end
