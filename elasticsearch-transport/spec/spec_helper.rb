@@ -17,6 +17,20 @@ def jruby?
   RUBY_PLATFORM =~ /\bjava\b/
 end
 
+def node_names
+  $node_names ||= default_client.nodes.stats['nodes'].collect do |name, stats|
+    stats['name']
+  end
+end
+
+def total_nodes
+  ELASTICSEARCH_HOSTS.size
+end
+
+def default_client
+  $client ||= Elasticsearch::Client.new(hosts: ELASTICSEARCH_HOSTS)
+end
+
 require 'patron' unless jruby?
 
 module Config

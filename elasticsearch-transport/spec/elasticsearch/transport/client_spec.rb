@@ -201,7 +201,7 @@ describe Elasticsearch::Client do
       before do
         client.perform_request('DELETE', '_all')
         client.perform_request('DELETE', 'myindex') rescue
-            client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 10 } })
+        client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 10 } })
         client.perform_request('PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, { foo: 'bar' })
         client.perform_request('GET', '_cluster/health?wait_for_status=green', {})
       end
@@ -259,35 +259,26 @@ describe Elasticsearch::Client do
 
       context 'when the round-robin selector is used' do
 
-        let(:hosts) do
-          ELASTICSEARCH_HOSTS
-        end
-
         let(:nodes) do
           3.times.collect do
             client.perform_request('GET', '_nodes/_local').body['nodes'].to_a[0][1]['name']
           end
         end
 
-        it 'rotates nodes' do
-          expect(nodes).to eq(['node-1', 'node-2', 'node-1'])
-        end
-      end
-
-      context 'when the round-robin selector is used' do
-
-        let(:hosts) do
-          ELASTICSEARCH_HOSTS
+        let(:node_names) do
+          client.nodes.stats['nodes'].collect do |name, stats|
+            stats['name']
+          end
         end
 
-        let(:nodes) do
-          3.times.collect do
-            client.perform_request('GET', '_nodes/_local').body['nodes'].to_a[0][1]['name']
+        let(:expected_names) do
+          3.times.collect do |i|
+            node_names[i % node_names.size]
           end
         end
 
         it 'rotates nodes' do
-          expect(nodes).to eq(['node-1', 'node-2', 'node-1'])
+          expect(nodes).to eq(expected_names)
         end
       end
     end
@@ -308,10 +299,10 @@ describe Elasticsearch::Client do
 
       it 'keeps connections open' do
         response = client.perform_request('GET', '_nodes/stats/http')
-        connections_before = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+        connections_before = response.body['nodes'].values.find { |n| n['name'] == node_names.first }['http']['total_opened']
         client.transport.reload_connections!
         response = client.perform_request('GET', '_nodes/stats/http')
-        connections_after = response.body['nodes'].values.select { |n| n['name'] == 'node-1' }.first['http']['total_opened']
+        connections_after = response.body['nodes'].values.find { |n| n['name'] == node_names.first }['http']['total_opened']
         expect(connections_after).to be >= (connections_before)
       end
     end
