@@ -28,57 +28,72 @@ describe Elasticsearch::Transport::Client do
     expect(client.transport.hosts[0][:host]).to eq('localhost')
   end
 
-  # describe 'adapter' do
-  #
-  #   context 'when no adapter is specified' do
-  #
-  #     before do
-  #       Object.send(:remove_const, :Typhoeus) if defined?(Typhoeus)
-  #       Object.send(:remove_const, :Patron) if defined?(Patron)
-  #     end
-  #
-  #     let(:adapter) do
-  #       client.transport.connections.all.first.connection.builder.handlers
-  #     end
-  #
-  #     it 'uses Faraday' do
-  #       expect(adapter).to include(Faraday::Adapter::NetHttp)
-  #     end
-  #   end
-  #
-  #   context 'when the adapter is specified' do
-  #
-  #     let(:adapter) do
-  #       client.transport.connections.all.first.connection.builder.handlers
-  #     end
-  #
-  #     let(:client) do
-  #       described_class.new(adapter: :typhoeus)
-  #     end
-  #
-  #     it 'uses Faraday' do
-  #       expect(adapter).to include(Faraday::Adapter::Typhoeus)
-  #     end
-  #   end
-  #
-  #   context 'when the adapter can be detected', unless: jruby? do
-  #
-  #     around do |example|
-  #       require 'patron'; load 'patron.rb'
-  #       example.run
-  #       Object.send(:remove_const, :Patron)
-  #       Object.send(:remove_const, :Typhoeus)
-  #     end
-  #
-  #     let(:adapter) do
-  #       client.transport.connections.all.first.connection.builder.handlers
-  #     end
-  #
-  #     it 'uses the detected adapter' do
-  #       expect(adapter).to include(Faraday::Adapter::Patron)
-  #     end
-  #   end
-  # end
+  describe 'adapter' do
+
+    context 'when no adapter is specified' do
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.handlers
+      end
+
+      it 'uses Faraday NetHttp' do
+        expect(adapter).to include(Faraday::Adapter::NetHttp)
+      end
+    end
+
+    context 'when the adapter is specified' do
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.handlers
+      end
+
+      let(:client) do
+        described_class.new(adapter: :typhoeus)
+      end
+
+      it 'uses Faraday' do
+        expect(adapter).to include(Faraday::Adapter::Typhoeus)
+      end
+    end
+
+    context 'when the adapter can be detected', unless: jruby? do
+
+      around do |example|
+        require 'patron'; load 'patron.rb'
+        example.run
+      end
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.handlers
+      end
+
+      it 'uses the detected adapter' do
+        expect(adapter).to include(Faraday::Adapter::Patron)
+      end
+    end
+
+    context 'when the Faraday adapter is configured' do
+
+      let(:client) do
+        described_class.new do |faraday|
+          faraday.adapter :typhoeus
+          faraday.response :logger
+        end
+      end
+
+      let(:handlers) do
+        client.transport.connections.all.first.connection.builder.handlers
+      end
+
+      it 'sets the adapter' do
+        expect(handlers).to include(Faraday::Adapter::Typhoeus)
+      end
+
+      it 'sets the logger' do
+        expect(handlers).to include(Faraday::Response::Logger)
+      end
+    end
+  end
 
   shared_examples_for 'a client that extracts hosts' do
 
@@ -315,6 +330,21 @@ describe Elasticsearch::Transport::Client do
           hosts
         }.to raise_exception(ArgumentError)
       end
+    end
+  end
+
+  context 'when hosts are specified with the \'host\' key' do
+
+    let(:client) do
+      described_class.new(hosts: ['host1', 'host2', 'host3', 'host4'], randomize_hosts: true)
+    end
+
+    let(:hosts) do
+      client.transport.hosts
+    end
+
+    it 'sets the hosts in random order' do
+      expect(hosts.all? { |host| client.transport.hosts.include?(host) }).to be(true)
     end
   end
 
@@ -850,6 +880,10 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when patron is used as an adapter', unless: jruby? do
+
+        before do
+          require 'patron'
+        end
 
         let(:options) do
           { adapter: :patron }

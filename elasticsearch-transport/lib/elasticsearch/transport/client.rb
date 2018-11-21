@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Licensed to Elasticsearch B.V. under one or more contributor
 # license agreements. See the NOTICE file distributed with
 # this work for additional information regarding copyright
@@ -16,9 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-=======
-require 'pry-byebug'
->>>>>>> [CLIENT] Convert tests to rspec and refactor client
 module Elasticsearch
   module Transport
 
