@@ -32,8 +32,6 @@ def default_client
   $client ||= Elasticsearch::Client.new(hosts: ELASTICSEARCH_HOSTS)
 end
 
-require 'patron' unless jruby?
-
 module Config
 
   def self.included(context)
