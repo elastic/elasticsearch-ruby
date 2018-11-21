@@ -40,6 +40,7 @@ namespace :test do
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
+    test.deps = [ :spec ]
     test.verbose = false
     test.warning = false
   end

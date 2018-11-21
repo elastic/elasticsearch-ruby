@@ -31,3 +31,8 @@ end
 if File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
   gem 'elasticsearch', :path => File.expand_path("../../elasticsearch", __FILE__), :require => false
 end
+
+group :development do
+  gem 'rspec'
+  gem 'pry-byebug'
+end
