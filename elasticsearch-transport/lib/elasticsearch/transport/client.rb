@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Licensed to Elasticsearch B.V. under one or more contributor
 # license agreements. See the NOTICE file distributed with
 # this work for additional information regarding copyright
@@ -15,6 +16,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
+=======
+require 'pry-byebug'
+>>>>>>> [CLIENT] Convert tests to rspec and refactor client
 module Elasticsearch
   module Transport
 
@@ -40,6 +44,8 @@ module Elasticsearch
         logger.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
         logger
       end
+
+      DEFAULT_HOST = 'localhost:9200'.freeze
 
       # Returns the transport object.
       #
@@ -99,43 +105,49 @@ module Elasticsearch
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
-      def initialize(arguments={}, &block)
-        @arguments = arguments
+      def initialize(options={}, &block)
+        @options = options
+        @options[:logger] ||= @options[:log]   ? DEFAULT_LOGGER.call() : nil
+        @options[:tracer] ||= @options[:trace] ? DEFAULT_TRACER.call() : nil
+        @options[:reload_connections] ||= false
+        @options[:retry_on_failure]   ||= false
+        @options[:reload_on_failure]  ||= false
+        @options[:randomize_hosts]    ||= false
+        @options[:transport_options]  ||= {}
+        @options[:http]               ||= {}
 
-        hosts = @arguments[:hosts] || \
-                @arguments[:host]  || \
-                @arguments[:url]   || \
-                @arguments[:urls]  || \
-                ENV.fetch('ELASTICSEARCH_URL', 'localhost:9200')
+        @seeds = __extract_hosts(@options[:hosts] ||
+                                     @options[:host] ||
+                                     @options[:url] ||
+                                     @options[:urls] ||
+                                     ENV['ELASTICSEARCH_URL'] ||
+                                     DEFAULT_HOST)
 
-        @arguments[:logger] ||= @arguments[:log]   ? DEFAULT_LOGGER.call() : nil
-        @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
-        @arguments[:reload_connections] ||= false
-        @arguments[:retry_on_failure]   ||= false
-        @arguments[:reload_on_failure]  ||= false
-        @arguments[:randomize_hosts]    ||= false
-        @arguments[:transport_options]  ||= {}
-        @arguments[:http]               ||= {}
+        @send_get_body_as = @options[:send_get_body_as] || 'GET'
 
-        @arguments[:transport_options].update(:request => { :timeout => @arguments[:request_timeout] } ) if @arguments[:request_timeout]
+        if @options[:request_timeout]
+          @options[:transport_options][:request] = { :timeout => @options[:request_timeout] }
+        end
 
-        @arguments[:transport_options][:headers] ||= {}
-        @arguments[:transport_options][:headers].update 'Content-Type' => 'application/json' unless @arguments[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
+        @options[:transport_options][:headers] ||= {}
 
-        @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
+        unless @options[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
+          @options[:transport_options][:headers]['Content-Type'] = 'application/json'
+        end
 
-        transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
-
-        @transport       = @arguments[:transport] || begin
+        if @options[:transport]
+          @transport = @options[:transport]
+        else
+          transport_class  = @options[:transport_class] || DEFAULT_TRANSPORT_CLASS
           if transport_class == Transport::HTTP::Faraday
-            transport_class.new(:hosts => __extract_hosts(hosts, @arguments), :options => @arguments) do |faraday|
+            @transport = transport_class.new(:hosts => @seeds, :options => @options) do |faraday|
               block.call faraday if block
               unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
-                faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
+                faraday.adapter(@options[:adapter] || __auto_detect_adapter)
               end
             end
           else
-            transport_class.new(:hosts => __extract_hosts(hosts, @arguments), :options => @arguments)
+            @transport = transport_class.new(:hosts => @seeds, :options => @options)
           end
         end
       end
@@ -144,9 +156,10 @@ module Elasticsearch
       #
       def perform_request(method, path, params={}, body=nil, headers=nil)
         method = @send_get_body_as if 'GET' == method && body
-
-        transport.perform_request method, path, params, body, headers
+        transport.perform_request(method, path, params, body, headers)
       end
+
+      private
 
       # Normalizes and returns hosts configuration.
       #
@@ -160,52 +173,57 @@ module Elasticsearch
       #
       # @api private
       #
-      def __extract_hosts(hosts_config, options={})
-        if hosts_config.is_a?(Hash)
-          hosts = [ hosts_config ]
+      def __extract_hosts(hosts_config)
+        hosts = case hosts_config
+        when String
+          hosts_config.split(',').map { |h| h.strip! || h }
+        when Array
+          hosts_config
+        when Hash, URI
+          [ hosts_config ]
         else
-          if hosts_config.is_a?(String) && hosts_config.include?(',')
-            hosts = hosts_config.split(/\s*,\s*/)
+          Array(hosts_config)
+        end
+
+        host_list = hosts.map { |host| __parse_host(host) }
+        @options[:randomize_hosts] ? host_list.shuffle! : host_list
+      end
+
+      def __parse_host(host)
+        host_parts = case host
+        when String
+          if host =~ /^[a-z]+\:\/\//
+            uri = URI.parse(host)
+            { :scheme => uri.scheme,
+              :user => uri.user,
+              :password => uri.password,
+              :host => uri.host,
+              :path => uri.path,
+              :port => uri.port }
           else
-            hosts = Array(hosts_config)
+            host, port = host.split(':')
+            { :host => host,
+              :port => port }
           end
+        when URI
+          { :scheme => host.scheme,
+            :user => host.user,
+            :password => host.password,
+            :host => host.host,
+            :path => host.path,
+            :port => host.port }
+        when Hash
+          host
+        else
+          raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
         end
 
-        result = hosts.map do |host|
-          host_parts = case host
-            when String
-              if host =~ /^[a-z]+\:\/\//
-                uri = URI.parse(host)
-                { :scheme => uri.scheme, :user => uri.user, :password => uri.password, :host => uri.host, :path => uri.path, :port => uri.port }
-              else
-                host, port = host.split(':')
-                { :host => host, :port => port }
-              end
-            when URI
-              { :scheme => host.scheme, :user => host.user, :password => host.password, :host => host.host, :path => host.path, :port => host.port }
-            when Hash
-              host
-            else
-              raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
-            end
+        @options[:http][:user] ||= host_parts[:user]
+        @options[:http][:password] ||= host_parts[:password]
 
-          host_parts[:port] = host_parts[:port].to_i unless host_parts[:port].nil?
-
-          # Transfer the selected host parts such as authentication credentials to `options`,
-          # so we can re-use them when reloading connections
-          #
-          host_parts.select { |k,v| [:scheme, :port, :user, :password].include?(k) }.each do |k,v|
-            @arguments[:http][k] ||= v
-          end
-
-          # Remove the trailing slash
-          host_parts[:path] = host_parts[:path].chomp('/') if host_parts[:path]
-
-          host_parts
-        end
-
-        result.shuffle! if options[:randomize_hosts]
-        result
+        host_parts[:port] = host_parts[:port].to_i if host_parts[:port]
+        host_parts[:path].chomp!('/') if host_parts[:path]
+        host_parts
       end
 
       # Auto-detect the best adapter (HTTP "driver") available, based on libraries
