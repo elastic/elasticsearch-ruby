@@ -39,7 +39,7 @@ matrix:
     # Integration tests
     - rvm: 2.5.3
       jdk: oraclejdk8
-      env: QUIET=y TEST_SUITE=integration
+      env: QUIET=y ELASTICSEARCH_HOSTS=localhost:9250,localhost:9251 TEST_SUITE=integration
 
   allow_failures:
     - rvm: ruby-head
