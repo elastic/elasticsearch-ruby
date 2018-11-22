@@ -101,49 +101,51 @@ module Elasticsearch
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
-      def initialize(options={}, &block)
-        @options = options
-        @options[:logger] ||= @options[:log]   ? DEFAULT_LOGGER.call() : nil
-        @options[:tracer] ||= @options[:trace] ? DEFAULT_TRACER.call() : nil
-        @options[:reload_connections] ||= false
-        @options[:retry_on_failure]   ||= false
-        @options[:reload_on_failure]  ||= false
-        @options[:randomize_hosts]    ||= false
-        @options[:transport_options]  ||= {}
+      def initialize(arguments={}, &block)
+        @options = arguments
+        @arguments = arguments
+        @arguments[:logger] ||= @arguments[:log]   ? DEFAULT_LOGGER.call() : nil
+        @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
+        @arguments[:reload_connections] ||= false
+        @arguments[:retry_on_failure]   ||= false
+        @arguments[:reload_on_failure]  ||= false
+        @arguments[:randomize_hosts]    ||= false
+        @arguments[:transport_options]  ||= {}
+        @arguments[:http]               ||= {}
         @options[:http]               ||= {}
 
-        @seeds = __extract_hosts(@options[:hosts] ||
-                                     @options[:host] ||
-                                     @options[:url] ||
-                                     @options[:urls] ||
+        @seeds = __extract_hosts(@arguments[:hosts] ||
+                                     @arguments[:host] ||
+                                     @arguments[:url] ||
+                                     @arguments[:urls] ||
                                      ENV['ELASTICSEARCH_URL'] ||
                                      DEFAULT_HOST)
 
-        @send_get_body_as = @options[:send_get_body_as] || 'GET'
+        @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
 
-        if @options[:request_timeout]
-          @options[:transport_options][:request] = { :timeout => @options[:request_timeout] }
+        if @arguments[:request_timeout]
+          @arguments[:transport_options][:request] = { :timeout => @arguments[:request_timeout] }
         end
 
-        @options[:transport_options][:headers] ||= {}
+        @arguments[:transport_options][:headers] ||= {}
 
-        unless @options[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
-          @options[:transport_options][:headers]['Content-Type'] = 'application/json'
+        unless @arguments[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
+          @arguments[:transport_options][:headers]['Content-Type'] = 'application/json'
         end
 
-        if @options[:transport]
-          @transport = @options[:transport]
+        if @arguments[:transport]
+          @transport = @arguments[:transport]
         else
-          transport_class  = @options[:transport_class] || DEFAULT_TRANSPORT_CLASS
+          transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
           if transport_class == Transport::HTTP::Faraday
-            @transport = transport_class.new(:hosts => @seeds, :options => @options) do |faraday|
+            @transport = transport_class.new(:hosts => @seeds, :options => @arguments) do |faraday|
               block.call faraday if block
               unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
-                faraday.adapter(@options[:adapter] || __auto_detect_adapter)
+                faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
               end
             end
           else
-            @transport = transport_class.new(:hosts => @seeds, :options => @options)
+            @transport = transport_class.new(:hosts => @seeds, :options => @arguments)
           end
         end
       end
