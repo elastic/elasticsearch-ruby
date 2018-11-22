@@ -12,7 +12,8 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Hash] :body The template definition (*Required*)
-        # @option arguments [Boolean] :create Whether the index template should only be added for a new one, #                                     or can also replace an existing one (default: false)
+        # @option arguments [Boolean] :create Whether the index template should only be added for a new one,
+        #   or can also replace an existing one (default: false)
         # @option arguments [Number] :order The order for this template when merging multiple matching ones
         #                                   (higher numbers are merged later, overriding the lower numbers)
         # @option arguments [Time] :timeout Explicit operation timeout
