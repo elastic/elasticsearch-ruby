@@ -18,16 +18,22 @@ def jruby?
   RUBY_PLATFORM =~ /\bjava\b/
 end
 
+# The names of the connected nodes.
+#
+# @return [ Array<String> ] The node names.
+#
+# @since 7.0.0
 def node_names
   $node_names ||= default_client.nodes.stats['nodes'].collect do |name, stats|
     stats['name']
   end
 end
 
-def total_nodes
-  ELASTICSEARCH_HOSTS.size
-end
-
+# The default client.
+#
+# @return [ Elasticsearch::Client ] The default client.
+#
+# @since 7.0.0
 def default_client
   $client ||= Elasticsearch::Client.new(hosts: ELASTICSEARCH_HOSTS)
 end
