@@ -38,6 +38,7 @@ describe Elasticsearch::DSL::Search::Queries::QueryString do
 
     [ 'query',
       'fields',
+      'type',
       'default_field',
       'default_operator',
       'allow_leading_wildcard',

@@ -41,6 +41,7 @@ module Elasticsearch
 
           option_method :query
           option_method :fields
+          option_method :type
           option_method :default_field
           option_method :default_operator
           option_method :analyzer
