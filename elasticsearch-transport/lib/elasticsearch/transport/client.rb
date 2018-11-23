@@ -41,6 +41,9 @@ module Elasticsearch
         logger
       end
 
+      # The default host and port to use if not otherwise specified.
+      #
+      # @since 7.0.0
       DEFAULT_HOST = 'localhost:9200'.freeze
 
       # Returns the transport object.
