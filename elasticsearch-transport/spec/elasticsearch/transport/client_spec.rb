@@ -874,7 +874,7 @@ describe Elasticsearch::Transport::Client do
           end
 
           it 'rotates nodes' do
-            pending
+            pending 'Better way to detect rotating nodes'
             expect(nodes).to eq(expected_names)
           end
         end
