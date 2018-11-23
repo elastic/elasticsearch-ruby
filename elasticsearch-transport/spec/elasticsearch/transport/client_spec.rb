@@ -890,10 +890,10 @@ describe Elasticsearch::Transport::Client do
             end
           end
 
-          it 'rotates nodes' do
-            pending 'Better way to detect rotating nodes'
-            expect(nodes).to eq(expected_names)
-          end
+          # it 'rotates nodes' do
+          #   pending 'Better way to detect rotating nodes'
+          #   expect(nodes).to eq(expected_names)
+          # end
         end
       end
 
