@@ -11,7 +11,7 @@ module Elasticsearch
       # Create a Results object.
       #
       # @example Create a results object.
-      #   Benchmarking::Results.new(task, [...])
+      #   Benchmarking::Results.new(task, [...], options)
       #
       # @param [ Elasticsearch::Benchmarking ] task The task that executed the benchmarking run.
       # @param [ Array<Fixnum> ] results An array of the results.
@@ -151,7 +151,12 @@ module Elasticsearch
           name: CLIENT_NAME,
           git: git_doc,
           language: language_doc,
-          os: client_os_doc }
+          os: client_os_doc,
+          adapter: adapter }
+      end
+
+      def adapter
+        @task.client_adapter
       end
 
       def git_doc
@@ -198,7 +203,6 @@ module Elasticsearch
             RbConfig::CONFIG['build']
         ].compact.join(', ')
       end
-
 
       def server_doc
         { version: @task.server_version,

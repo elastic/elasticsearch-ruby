@@ -32,7 +32,7 @@ module Elasticsearch
     # @return [ Integer ] The default number of warmup repetitions.
     #
     # @since 7.0.0
-    DEFAULT_WARMUP_REPETITIONS = 5.freeze
+    DEFAULT_WARMUP_REPETITIONS = 1.freeze
 
     # The default definition of a test run.
     #

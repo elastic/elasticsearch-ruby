@@ -5,50 +5,92 @@ module Elasticsearch
     module Measurable
 
       attr_reader :options
+      attr_reader :client_adapter
 
       # Create a benchmark test.
       #
       # @example Create a test.
-      #   Benchmarking::Complex.new(:patron)
+      #   Benchmarking::Simple.new({ warmup_repetitions: 1 }, :patron)
       #
+      # @param [ Hash ] options The options for the benchmarking task.
       # @param [ Symbol ] adapter The adapter the client should be configured with.
       #
       # @since 7.0.0
       def initialize(options = {}, adapter = ::Faraday.default_adapter)
         @options = options
-        @adapter = adapter
+        @client_adapter = adapter
       end
 
       # Run a benchmark test.
       #
       # @example Run a test.
-      #   Benchmarking::Complex.run(:ping)
+      #   task.run(:ping)
       #
       # @param [ Symbol ] type The name of the test to run.
       #
-      # @return [ Numeric ] The test results.
+      # @return [ Hash ] The test results document.
       #
       # @since 7.0.0
       def run(type, opts={})
         send(type, opts)
       end
 
+      # Get the nodes info on the elasticsearch server used for the benchmarking tests.
+      #
+      # @example Get the nodes info.
+      #   task.nodes_info
+      #
+      # @return [ Hash ] The nodes info.
+      #
+      # @since 7.0.0
       def nodes_info
         client.nodes.info(os: true)
       end
 
+      # Get the version of the elasticsearch server used for the benchmarking tests.
+      #
+      # @example Get the server version.
+      #   task.server_version
+      #
+      # @return [ String ] The server version.
+      #
+      # @since 7.0.0
       def server_version
         client.perform_request('GET', '/').body['version']['number']
       end
 
+      # Get the description of the benchmarking task.
+      #
+      # @example Get the task description.
+      #   task.description
+      #
+      # @return [ String ] The task description.
+      #
+      # @since 7.0.0
       def description
         @options['description']
       end
 
+      # Get number of measured repetitions.
+      #
+      # @example Get the number of measured repetitions.
+      #   task.measured_repetitions
+      #
+      # @return [ Numeric ] The number of measured repetitions.
+      #
+      # @since 7.0.0
       def measured_repetitions
         @options['repetitions']['measured'] || DEFAULT_REPETITIONS
       end
 
+      # Get number of warmup repetitions.
+      #
+      # @example Get the number of warmup repetitions.
+      #   task.warmup_repetitions
+      #
+      # @return [ Numeric ] The number of warmup repetitions.
+      #
+      # @since 7.0.0
       def warmup_repetitions
         @options['repetitions']['warmup'] || WARMUP_REPETITIONS
       end
@@ -97,7 +139,7 @@ module Elasticsearch
       # @return [ String ] The file path and name for the dataset.
       #
       # @since 7.0.0
-      DATASET = [DATA_PATH, 'documents-small.json'].join('/').freeze
+      DATASET_FILE = [DATA_PATH, 'documents-small.json'].join('/').freeze
 
       # The name of the index to use for benchmark tests.
       #
@@ -130,20 +172,34 @@ module Elasticsearch
 
       def dataset_slices(slice_size=10000)
         @dataset_slices ||= begin
-          load_json_from_file(DATASET).collect do |d|
+          dataset.collect do |d|
             { index: { _index: INDEX, _type: '_doc', data: d } }
           end.each_slice(slice_size)
         end
       end
 
+      def dataset
+        @dataset ||= load_json_from_file(DATASET_FILE)
+      end
+
       def small_document
-        load_json_from_file(SMALL_DOCUMENT)[0]
+        @small_document ||= load_json_from_file(SMALL_DOCUMENT)[0]
       end
 
       def large_document
-        load_json_from_file(LARGE_DOCUMENT)[0]
+        @large_document ||= load_json_from_file(LARGE_DOCUMENT)[0]
       end
 
+      def noop_plugin?
+        false
+      end
+
+      private
+
+      def index_results!(results, options = {})
+        res = Results.new(self, results, options)
+        res.index!(client)[:results]
+      end
     end
   end
 end
