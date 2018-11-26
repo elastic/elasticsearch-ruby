@@ -24,14 +24,25 @@ module Elasticsearch
     # @return [ Integer ] The number of test repetitions.
     #
     # @since 7.0.0
-    TEST_REPETITIONS = 10.freeze
+    DEFAULT_TEST_REPETITIONS = 10.freeze
+
+    # The number of default warmup repetitions of the test to do before
+    # recording times.
+    #
+    # @return [ Integer ] The default number of warmup repetitions.
+    #
+    # @since 7.0.0
+    DEFAULT_WARMUP_REPETITIONS = 5.freeze
 
     # The default definition of a test run.
     #
     # @return [ Hash ] The default test run definition.
     #
     # @since 7.0.0
-    DEFAULT_RUN = { 'repetitions' => TEST_REPETITIONS,
+    DEFAULT_RUN = { 'description' => 'Default run',
+                    'repetitions' => {
+                      'measured' => DEFAULT_TEST_REPETITIONS,
+                      'warmup' => DEFAULT_WARMUP_REPETITIONS },
                     'name' => 'default',
                     'metrics' => ['mean'] }.freeze
 

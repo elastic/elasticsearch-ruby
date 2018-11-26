@@ -217,16 +217,16 @@ namespace :benchmark do
     desc "Run the \'ping\' benchmark test"
     task :ping do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
-        task = Elasticsearch::Benchmarking::Simple.new
-        puts "PING - #{run['name']}: #{task.run(:ping, run)}"
+        task = Elasticsearch::Benchmarking::Simple.new(run)
+        puts "PING - #{run['name']}: #{task.run(:ping)}"
       end
     end
 
     desc "Run the \'create index\' benchmark test"
     task :create_index do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
-        task = Elasticsearch::Benchmarking::Simple.new
-        puts "CREATE INDEX - #{run['name']}: #{task.run(:create_index, run)}"
+        task = Elasticsearch::Benchmarking::Simple.new(run)
+        puts "CREATE INDEX - #{run['name']}: #{task.run(:create_index)}"
       end
     end
 

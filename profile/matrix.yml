@@ -1,12 +1,16 @@
-- name: Basic benchmark, 5 repetitions
-  repetitions: 5
-  metrics:
-    - mean
-    - median
-    - max
-    - min
+#- name: Basic benchmark, 5 repetitions
+#  repetitions:
+#    warmup: 1
+#    measured: 5
+#  metrics:
+#    - mean
+#    - median
+#    - max
+#    - min
 
-- name: One Repetition
-  repetitions: 1
+- description: Ten Repetitions
+  repetitions:
+    warmup: 5
+    measured: 10
   metrics:
     - mean

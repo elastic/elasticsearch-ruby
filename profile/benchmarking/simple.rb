@@ -17,14 +17,18 @@ module Elasticsearch
       #
       # @since 7.0.0
       def ping(opts = {})
-        results = opts['repetitions'].times.collect do
+        start = Time.now
+        results = measured_repetitions.times.collect do
           Benchmark.realtime do
-            1_000.times do
+            5.times do
               client.ping
             end
           end
         end
-        res = Results.new(self, results, opts.merge(operation: __method__))
+        end_time = Time.now
+        options = { duration: end_time - start,
+                    operation: __method__ }
+        res = Results.new(self, results, opts.merge(options))
         res.index!(client)[:results]
       end
 

@@ -4,6 +4,8 @@ module Elasticsearch
     # Helper functions used by benchmarking tasks
     module Measurable
 
+      attr_reader :options
+
       # Create a benchmark test.
       #
       # @example Create a test.
@@ -12,7 +14,8 @@ module Elasticsearch
       # @param [ Symbol ] adapter The adapter the client should be configured with.
       #
       # @since 7.0.0
-      def initialize(adapter = ::Faraday.default_adapter)
+      def initialize(options = {}, adapter = ::Faraday.default_adapter)
+        @options = options
         @adapter = adapter
       end
 
@@ -22,13 +25,32 @@ module Elasticsearch
       #   Benchmarking::Complex.run(:ping)
       #
       # @param [ Symbol ] type The name of the test to run.
-      # @param [ Integer ] repetitions The number of test repetitions.
       #
       # @return [ Numeric ] The test results.
       #
       # @since 7.0.0
       def run(type, opts={})
         send(type, opts)
+      end
+
+      def nodes_info
+        client.nodes.info(os: true)
+      end
+
+      def server_version
+        client.perform_request('GET', '/').body['version']['number']
+      end
+
+      def description
+        @options['description']
+      end
+
+      def measured_repetitions
+        @options['repetitions']['measured'] || DEFAULT_REPETITIONS
+      end
+
+      def warmup_repetitions
+        @options['repetitions']['warmup'] || WARMUP_REPETITIONS
       end
 
       private
@@ -84,14 +106,6 @@ module Elasticsearch
       # @since 7.0.0
       INDEX = 'benchmarking-ruby'.freeze
 
-      # The number of default warmup repetitions of the test to do before
-      # recording times.
-      #
-      # @return [ Integer ] The default number of warmup repetitions.
-      #
-      # @since 7.0.0
-      WARMUP_REPETITIONS = 5.freeze
-
       def load_json_from_file(file_name)
         File.open(file_name, "r") do |f|
           f.each_line.collect do |line|
@@ -129,6 +143,7 @@ module Elasticsearch
       def large_document
         load_json_from_file(LARGE_DOCUMENT)[0]
       end
+
     end
   end
 end
