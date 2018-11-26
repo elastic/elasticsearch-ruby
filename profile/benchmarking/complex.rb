@@ -1,3 +1,20 @@
+# Licensed to Elasticsearch B.V. under one or more contributor
+# license agreements. See the NOTICE file distributed with
+# this work for additional information regarding copyright
+# ownership. Elasticsearch B.V. licenses this file to you under
+# the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
 module Elasticsearch
   module Benchmarking
 
@@ -8,27 +25,47 @@ module Elasticsearch
     class Complex
       include Measurable
 
-      # Test sending a bulk request to create a large number of documents.
+      # Test sending a bulk request to index a large dataset.
       #
-      # @example Test sending a bulk create request.
-      #   Benchmarking::Complex.create_documents(opts)
+      # @example Test sending a bulk index request.
+      #   task.create_documents(opts)
       #
       # @param [ Hash ] opts The test run options.
       #
+      # @results [ Hash ] The results documents.
+      #
       # @since 7.0.0
-      def create_documents(opts = {})
-        results = with_cleanup do
-          slices = dataset_slices
-          opts['repetitions'].times.collect do
+      def index_documents(opts = {})
+        start = 0
+        end_time = 0
+        results = []
+        slices = dataset_slices
+
+        warmup_repetitions.times do
+          slices.each do |slice|
+            client.bulk(body: slice)
+          end
+        end
+
+        with_cleanup do
+          start = Time.now
+          results = measured_repetitions.times.collect do
             Benchmark.realtime do
               slices.each do |slice|
                 client.bulk(body: slice)
               end
             end
           end
+          end_time = Time.now
+          results
         end
-        res = Results.new(self, results, opts.merge(operation: __method__))
-        res.index!(client)[:results]
+
+        options = { duration: end_time - start,
+                    operation: __method__,
+                    dataset: File.basename(DATASET_FILE),
+                    dataset_size: ObjectSpace.memsize_of(dataset),
+                    dataset_n_documents: dataset.length }
+        index_results!(results, options)
       end
 
       # # Test sending a request a search request.
