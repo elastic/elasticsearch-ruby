@@ -218,7 +218,7 @@ namespace :benchmark do
     task :ping do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
         task = Elasticsearch::Benchmarking::Simple.new(run)
-        puts "PING - #{run['name']}: #{task.run(:ping)}"
+        puts "PING: #{task.run(:ping)}"
       end
     end
 
@@ -226,7 +226,7 @@ namespace :benchmark do
     task :create_index do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
         task = Elasticsearch::Benchmarking::Simple.new(run)
-        puts "CREATE INDEX - #{run['name']}: #{task.run(:create_index)}"
+        puts "CREATE INDEX: #{task.run(:create_index)}"
       end
     end
 
@@ -241,13 +241,15 @@ namespace :benchmark do
     #     Elasticsearch::Benchmarking::Simple.new(:patron).run(:ping)
     #   end
     # end
-    #
-    # desc "Run the \'create small document\' benchmark test"
-    # task :create_document_small do
-    #   puts "SIMPLE REQUEST BENCHMARK:: CREATE SMALL DOCUMENT"
-    #   Elasticsearch::Benchmarking::Simple.new.run(:create_document_small)
-    # end
-    #
+
+    desc "Run the \'create small document\' benchmark test"
+    task :create_document_small do
+      Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
+        task = Elasticsearch::Benchmarking::Simple.new(run)
+        puts "CREATE SMALL DOCUMENT : #{task.run(:create_document_small)}"
+      end
+    end
+
     desc "Run the \'create large document\' benchmark test"
     task :create_document_large do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|

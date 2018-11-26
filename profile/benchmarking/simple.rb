@@ -1,3 +1,5 @@
+require 'objspace'
+
 module Elasticsearch
   module Benchmarking
 
@@ -53,28 +55,38 @@ module Elasticsearch
         res = Results.new(self, results, opts.merge(operation: __method__))
         res.index!(client)[:results]
       end
+
+      # Test sending a create document request for a small document.
       #
-      # # Test sending a create document request for a small document.
-      # #
-      # # @example Test sending a create document request.
-      # #   Benchmarking::Simple.create_document_small(10)
-      # #
-      # # @param [ Integer ] repetitions The number of test repetitions.
-      # #
-      # # @since 7.0.0
-      # def create_document_small(repetitions, opts={})
-      #   results = with_cleanup do
-      #     document = small_document
-      #     repetitions.times.collect do
-      #       Benchmark.realtime do
-      #         1_000.times do
-      #           client.create(index: INDEX, body: document)
-      #         end
-      #       end
-      #     end
-      #   end
-      #   median(results)
-      # end
+      # @example Test sending a create document request.
+      #   Benchmarking::Simple.create_document_small(10)
+      #
+      # @param [ Integer ] repetitions The number of test repetitions.
+      #
+      # @since 7.0.0
+      def create_document_small(opts={})
+        start = 0
+        end_time = 0
+        results = with_cleanup do
+          document = small_document
+          start = Time.now
+          measured_repetitions.times.collect do
+            Benchmark.realtime do
+              10.times do
+                client.create(index: INDEX, body: document)
+              end
+            end
+          end
+        end
+        end_time = Time.now
+        options = { duration: end_time - start,
+                    operation: __method__,
+                    dataset: 'small_document',
+                    dataset_size: ObjectSpace.memsize_of(small_document),
+                    dataset_n_documents: 1 }
+        res = Results.new(self, results, opts.merge(options))
+        res.index!(client)[:results]
+      end
       #
       # Test sending a create document request for a large document.
       #
