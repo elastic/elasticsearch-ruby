@@ -22,7 +22,7 @@ module Elasticsearch
         start = Time.now
         results = measured_repetitions.times.collect do
           Benchmark.realtime do
-            5.times do
+            1_000.times do
               client.ping
             end
           end
@@ -30,7 +30,7 @@ module Elasticsearch
         end_time = Time.now
         options = { duration: end_time - start,
                     operation: __method__ }
-        res = Results.new(self, results, opts.merge(options))
+        res = Results.new(self, results, options)
         res.index!(client)[:results]
       end
 
@@ -42,17 +42,23 @@ module Elasticsearch
       # @param [ Hash ] opts The test run options.
       #
       # @since 7.0.0
-      def create_index(opts={})
+      def create_index(opts = {})
+        start = 0
+        end_time = 0
         results = with_cleanup do
-          opts['repetitions'].times.collect do
+          start = Time.now
+          measured_repetitions.times.collect do
             Benchmark.realtime do
-              20.times do
+              100.times do
                 client.indices.create(index: "test-#{Time.now.to_f}")
               end
             end
           end
+          end_time = Time.now
         end
-        res = Results.new(self, results, opts.merge(operation: __method__))
+        options = { duration: end_time - start,
+                    operation: __method__ }
+        res = Results.new(self, results, options)
         res.index!(client)[:results]
       end
 
@@ -72,7 +78,7 @@ module Elasticsearch
           start = Time.now
           measured_repetitions.times.collect do
             Benchmark.realtime do
-              10.times do
+              1_000.times do
                 client.create(index: INDEX, body: document)
               end
             end
@@ -84,7 +90,7 @@ module Elasticsearch
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
                     dataset_n_documents: 1 }
-        res = Results.new(self, results, opts.merge(options))
+        res = Results.new(self, results, options)
         res.index!(client)[:results]
       end
       #
@@ -97,9 +103,12 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_document_large(opts={})
-        document = large_document
+        start = 0
+        end_time = 0
         results = with_cleanup do
-          opts['repetitions'].times.collect do
+          document = large_document
+          start = Time.now
+          measured_repetitions.times.collect do
             Benchmark.realtime do
               1_000.times do
                 client.create(index: INDEX, body: document)
@@ -107,7 +116,13 @@ module Elasticsearch
             end
           end
         end
-        res = Results.new(self, results, opts.merge(operation: __method__))
+        end_time = Time.now
+        options = { duration: end_time - start,
+                    operation: __method__,
+                    dataset: 'large_document',
+                    dataset_size: ObjectSpace.memsize_of(large_document),
+                    dataset_n_documents: 1 }
+        res = Results.new(self, results, options)
         res.index!(client)[:results]
       end
       #

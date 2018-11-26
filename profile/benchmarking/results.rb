@@ -70,7 +70,6 @@ module Elasticsearch
       end
 
       def event_doc
-        binding.pry
         { description: description,
           category: category,
           action: action,

@@ -253,8 +253,8 @@ namespace :benchmark do
     desc "Run the \'create large document\' benchmark test"
     task :create_document_large do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
-        task = Elasticsearch::Benchmarking::Simple.new
-        puts "SIMPLE REQUEST BENCHMARK:: CREATE LARGE DOCUMENT - #{run['name']}: #{task.run(:create_document_large, run)}"
+        task = Elasticsearch::Benchmarking::Simple.new(run)
+        puts "CREATE SMALL DOCUMENT : #{task.run(:create_document_large)}"
       end
     end
     #
