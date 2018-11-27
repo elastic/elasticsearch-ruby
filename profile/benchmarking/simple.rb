@@ -193,13 +193,12 @@ module Elasticsearch
         end_time = 0
         results = []
 
-        id = client.create(index: INDEX, body: small_document)['_id']
-        warmup_repetitions.times do
-          client.get(index: INDEX, id: id)
-        end
-
         with_cleanup do
           id = client.create(index: INDEX, body: small_document)['_id']
+          warmup_repetitions.times do
+            client.get(index: INDEX, id: id)
+          end
+
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
@@ -235,13 +234,12 @@ module Elasticsearch
         end_time = 0
         results = []
 
-        id = client.create(index: INDEX, body: large_document)['_id']
-        warmup_repetitions.times do
-          client.get(index: INDEX, id: id)
-        end
-
         with_cleanup do
           id = client.create(index: INDEX, body: large_document)['_id']
+          warmup_repetitions.times do
+            client.get(index: INDEX, id: id)
+          end
+
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
@@ -276,18 +274,6 @@ module Elasticsearch
         end_time = 0
         results = []
 
-        client.create(index: INDEX, body: small_document)
-        search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
-        request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
-        if noop_plugin?
-          Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
-        else
-          request.merge!(index: INDEX)
-        end
-        warmup_repetitions.times do
-          client.search(request)
-        end
-
         with_cleanup do
           client.create(index: INDEX, body: small_document)
           search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
@@ -296,6 +282,10 @@ module Elasticsearch
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else
             request.merge!(index: INDEX)
+          end
+
+          warmup_repetitions.times do
+            client.search(request)
           end
 
           start = Time.now
@@ -332,26 +322,17 @@ module Elasticsearch
         end_time = 0
         results = []
 
-        client.create(index: INDEX, body: large_document)
-        search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
-        request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
-        if noop_plugin?
-          Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
-        else
-          request.merge!(index: INDEX)
-        end
-        warmup_repetitions.times do
-          client.search(request)
-        end
-
         results = with_cleanup do
           client.create(index: INDEX, body: large_document)
-          search_criteria = large_document.find { |k,v| k != 'id' && v.is_a?(String) }
+          search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
           request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else
             request.merge!(index: INDEX)
+          end
+          warmup_repetitions.times do
+            client.search(request)
           end
 
           start = Time.now
@@ -389,19 +370,17 @@ module Elasticsearch
         end_time = 0
         results = []
 
-        document = small_document
-        id = client.create(index: INDEX, body: document)['_id']
-        field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
-        warmup_repetitions.times do |i|
-          client.update(index: INDEX,
-                        id: id,
-                        body: { doc: { field:  "#{document[field]}-#{i}" } })
-        end
-
         with_cleanup do
           document = small_document
           id = client.create(index: INDEX, body: document)['_id']
           field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
+
+          warmup_repetitions.times do |i|
+            client.update(index: INDEX,
+                          id: id,
+                          body: { doc: { field:  "#{document[field]}-#{i}" } })
+          end
+
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
