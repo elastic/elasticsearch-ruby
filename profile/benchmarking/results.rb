@@ -90,11 +90,12 @@ module Elasticsearch
         { description: description,
           category: category,
           action: action,
-          dataset: dataset,
-          dataset_details: dataset_doc,
           duration: duration,
           stastistics: statistics_doc,
-          repetitions: repetitions_doc }
+          repetitions: repetitions_doc }.tap do |doc|
+            doc.merge!(dataset: dataset,
+                       dataset_details: dataset_details) if dataset
+        end
       end
 
       def description
@@ -114,7 +115,7 @@ module Elasticsearch
         @options[:dataset]
       end
 
-      def dataset_doc
+      def dataset_details
         { size: @options[:dataset_size],
           num_documents: @options[:dataset_n_documents] }
       end
