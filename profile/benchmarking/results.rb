@@ -65,7 +65,8 @@ module Elasticsearch
 
       CLIENT_NAME = 'elasticsearch-ruby-client'.freeze
 
-      COMPLEXITIES = { Elasticsearch::Benchmarking::Simple => :simple }.freeze
+      COMPLEXITIES = { Elasticsearch::Benchmarking::Simple => :simple,
+                       Elasticsearch::Benchmarking::Complex => :complex }.freeze
 
       def index_name
         options[:index_name] || DEFAULT_INDEX_NAME

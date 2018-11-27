@@ -68,28 +68,52 @@ module Elasticsearch
         index_results!(results, options)
       end
 
-      # # Test sending a request a search request.
-      # #
-      # # @example Test sending a search request.
-      # #   Benchmarking::Complex.search_documents(10)
-      # #
-      # # @param [ Integer ] repetitions The number of test repetitions.
-      # #
-      # # @since 7.0.0
-      # def search_documents(repetitions)
-      #   results = with_cleanup(client) do
-      #     client.bulk(body: dataset)
-      #     query = { match: { publisher: "Random House"} }
-      #     request = { index: INDEX, body: { query: query } }
-      #     repetitions.times.collect do
-      #       Benchmark.realtime do
-      #         client.search(request)
-      #       end
-      #     end
-      #   end
-      #   median(results)
-      # end
+      # Test sending a request a search request.
       #
+      # @example Test sending a search request.
+      #   Benchmarking::Complex.search_documents(10)
+      #
+      # @param [ Integer ] repetitions The number of test repetitions.
+      #
+      # @since 7.0.0
+      def search_documents(opts = {})
+        start = 0
+        end_time = 0
+        results = []
+
+        with_cleanup do
+          slices = dataset_slices
+          sample_slice = slices.collect do |slice|
+            client.bulk(body: slice)
+            slice
+          end[rand(slices.size)-1]
+
+          sample_documment = sample_slice[rand(sample_slice.size)-1][:index][:data]
+          search_criteria = sample_documment.find { |k,v| v.is_a?(String) }
+          request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
+
+          warmup_repetitions.times do
+            client.search(request)
+          end
+
+          start = Time.now
+          results = measured_repetitions.times.collect do
+            Benchmark.realtime do
+              client.search(request)
+            end
+          end
+          end_time = Time.now
+          results
+        end
+
+        options = { duration: end_time - start,
+                    operation: __method__,
+                    dataset: File.basename(DATASET_FILE),
+                    dataset_size: ObjectSpace.memsize_of(dataset),
+                    dataset_n_documents: dataset.length }
+        index_results!(results, options)
+      end
+
       # def mixed_bulk_small(repetitions)
       #
       # end
