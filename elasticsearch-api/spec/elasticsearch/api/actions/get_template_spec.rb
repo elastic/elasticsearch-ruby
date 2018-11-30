@@ -22,7 +22,7 @@ describe 'client#get_template' do
   context 'when the `lang` parameter is specificed' do
 
     let(:url) do
-      '_search/template/foo'
+      '_scripts/foo'
     end
 
     it 'performs the request' do

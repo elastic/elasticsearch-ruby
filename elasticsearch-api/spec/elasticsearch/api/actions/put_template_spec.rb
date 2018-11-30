@@ -4,8 +4,8 @@ describe 'client#put_template' do
 
   let(:expected_args) do
     [
-        'PUT',
-        '_search/template/foo',
+        'POST',
+        '_scripts/foo',
         { },
         { }
     ]
