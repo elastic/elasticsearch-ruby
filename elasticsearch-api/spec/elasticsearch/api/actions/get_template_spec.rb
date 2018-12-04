@@ -36,7 +36,7 @@ describe 'client#get_template' do
     Class.new { include Elasticsearch::API }.new
   end
 
-  context 'when the `lang` parameter is specificed' do
+  context 'when the `lang` parameter is specified' do
 
     let(:url) do
       '_scripts/foo'
