@@ -25,6 +25,8 @@ module Elasticsearch
       # or the conveniency "combined" format where data is passed along with the header
       # in a single item in a custom `:data` key.
       #
+      # @note The body argument is required and cannot be empty.
+      #
       # @example Perform three operations in a single request, passing actions and data as an array of hashes
       #
       #     client.bulk body: [
