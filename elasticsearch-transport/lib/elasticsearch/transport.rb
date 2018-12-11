@@ -14,6 +14,7 @@ require "elasticsearch/transport/transport/connections/connection"
 require "elasticsearch/transport/transport/connections/collection"
 require "elasticsearch/transport/transport/http/faraday"
 require "elasticsearch/transport/client"
+require "elasticsearch/transport/redacted"
 
 require "elasticsearch/transport/version"
 
