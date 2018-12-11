@@ -39,11 +39,10 @@ module Elasticsearch
           # @option arguments [Object] :connection The transport-specific physical connection or "session"
           # @option arguments [Hash]   :options    Options (usually passed in from transport)
           #
-          def initialize(arguments = Redacted.new)
-            args = Redacted.new(arguments)
-            @host       = args[:host]
-            @connection = args[:connection]
-            @options    = args[:options] || {}
+          def initialize(arguments={})
+            @host       = arguments[:host].is_a?(Hash) ? Redacted.new(arguments[:host]) : arguments[:host]
+            @connection = arguments[:connection]
+            @options    = arguments[:options] || {}
             @state_mutex = Mutex.new
 
             @options[:resurrect_timeout] ||= DEFAULT_RESURRECT_TIMEOUT

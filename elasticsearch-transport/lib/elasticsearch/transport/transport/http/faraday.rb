@@ -37,11 +37,10 @@ module Elasticsearch
             super do |connection, url|
               headers = headers || connection.connection.headers
 
-              response = connection.connection.run_request \
-                method.downcase.to_sym,
-                url,
-                ( body ? __convert_to_json(body) : nil ),
-                headers
+              response = connection.connection.run_request(method.downcase.to_sym,
+                                                           url,
+                                                           ( body ? __convert_to_json(body) : nil ),
+                                                           headers)
 
               Response.new response.status, response.body, response.headers
             end
