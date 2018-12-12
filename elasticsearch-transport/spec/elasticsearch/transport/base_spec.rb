@@ -21,13 +21,10 @@ describe Elasticsearch::Transport::Transport::Base do
 
   context 'when a host is printed in a logged message' do
 
-    context 'when the host info contains a password' do
+    shared_examples_for 'a redacted string' do
 
       let(:client) do
-        Elasticsearch::Transport::Client.new(hosts: 'fake',
-                                             logger: logger,
-                                             password: 'secret_password',
-                                             user: 'test')
+        Elasticsearch::Transport::Client.new(arguments)
       end
 
       let(:logger) do
@@ -47,6 +44,38 @@ describe Elasticsearch::Transport::Transport::Base do
           client.cluster.stats
         }.to raise_exception(Faraday::ConnectionFailed)
       end
+    end
+
+    context 'when the user and password are provided as separate arguments' do
+
+      let(:arguments) do
+        { hosts: 'fake',
+          logger: logger,
+          password: 'secret_password',
+          user: 'test' }
+      end
+
+      it_behaves_like 'a redacted string'
+    end
+
+    context 'when the user and password are provided in the string URI' do
+
+      let(:arguments) do
+        { hosts: 'http://test:secret_password@fake.com',
+          logger: logger }
+      end
+
+      it_behaves_like 'a redacted string'
+    end
+
+    context 'when the user and password are provided in the URI object' do
+
+      let(:arguments) do
+        { hosts: URI.parse('http://test:secret_password@fake.com'),
+          logger: logger }
+      end
+
+      it_behaves_like 'a redacted string'
     end
   end
 end

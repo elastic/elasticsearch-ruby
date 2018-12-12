@@ -3,6 +3,7 @@ require 'elasticsearch-transport'
 require 'logger'
 require 'ansi/code'
 require 'hashie/mash'
+require 'pry-nav'
 
 # The hosts to use for creating a elasticsearch client.
 #
