@@ -61,7 +61,7 @@ before_install:
   - >
     [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
     TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch
-    bundle exec rake -I elasticsearch-extensions/lib test:cluster:start
+    bundle exec rake -I elasticsearch-extensions/lib test:cluster:start &&
     curl http://localhost:9250/_cluster/health?level=shards || true
 
 install:
