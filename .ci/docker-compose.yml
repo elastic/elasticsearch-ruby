@@ -1,0 +1,36 @@
+version: '3.2'
+services:
+  client:
+    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.5.3}
+    build:
+      context: ..
+      dockerfile: .ci/Dockerfile
+      args:
+          RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.5.3}
+          ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-6.5.0}
+    environment:
+      - "TEST_ES_SERVER=http://elasticsearch:9200"
+    volumes:
+      - ..:/usr/src/app
+      - esvol:/tmp
+    networks:
+      - esnet
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
+    volumes:
+      - esvol:/tmp
+    networks:
+      - esnet
+    environment:
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
+      - bootstrap.memory_lock=false
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "http.max_content_length=5mb"
+networks:
+  esnet:
+volumes:
+  esvol:
