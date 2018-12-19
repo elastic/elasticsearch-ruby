@@ -4,7 +4,8 @@ module Elasticsearch
       module MachineLearning
         module Actions
 
-          # Send data to an anomaly detection job for analysis
+          # Finds the structure of a text file. The text file must contain data that is suitable to be
+          #   ingested into Elasticsearch.
           #
           # @option arguments [Hash] :body The contents of the file to be analyzed (*Required*)
           #

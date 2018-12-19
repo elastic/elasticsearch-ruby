@@ -4,7 +4,7 @@ module Elasticsearch
       module MachineLearning
         module Actions
 
-          # Update certain properties of a job
+          # Updates the description of a filter, adds items, or removes items.
           #
           # @option arguments [String] :filter_id The ID of the filter to update (*Required*)
           # @option arguments [Hash] :body The filter update (*Required*)

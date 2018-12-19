@@ -3,7 +3,6 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          require 'pry-nav'
 
           # Remove a role from the native realm
           #
