@@ -15,7 +15,9 @@ module Elasticsearch
           def execute_watch(arguments={})
             valid_params = [ :debug ]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/watcher/watch/#{arguments[:id]}/_execute"
+
+            path   = Elasticsearch::API::Utils.__pathify "_xpack/watcher/watch", arguments.delete(:id), "_execute"
+
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 
