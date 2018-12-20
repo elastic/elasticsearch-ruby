@@ -47,7 +47,7 @@ module Elasticsearch
         results = measured_repetitions.times.collect do
           start = Time.now
           Benchmark.realtime do
-            100.times do
+            1000.times do
               client.ping
             end
           end
@@ -75,7 +75,7 @@ module Elasticsearch
         results = []
 
         warmup_repetitions.times do
-          client.indices.create(index: "test-#{Time.now.to_f}")
+          client.indices.create(index: "benchmarking-#{Time.now.to_f}")
         end
 
         with_cleanup do
@@ -83,7 +83,7 @@ module Elasticsearch
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               10.times do
-                client.indices.create(index: "test-#{Time.now.to_f}")
+                client.indices.create(index: "benchmarking-#{Time.now.to_f}")
               end
             end
           end
@@ -120,7 +120,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              100.times do
+              10.times do
                 client.create(index: INDEX, body: document)
               end
             end

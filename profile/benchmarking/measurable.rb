@@ -174,10 +174,10 @@ module Elasticsearch
       end
 
       def with_cleanup
-        client.indices.delete(index: 'test-*')
+        client.indices.delete(index: 'benchmarking-*')
         client.indices.create(index: INDEX) unless client.indices.exists?(index: INDEX)
         results = yield
-        client.indices.delete(index: 'test-*')
+        client.indices.delete(index: 'benchmarking-*')
         results
       end
 
