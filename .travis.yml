@@ -28,7 +28,7 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.2.10
+    - rvm: 2.3.8
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
