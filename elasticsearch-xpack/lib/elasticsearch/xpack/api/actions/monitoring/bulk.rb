@@ -37,7 +37,8 @@ module Elasticsearch
             valid_params = [
               :system_id,
               :system_api_version,
-              :system_version ]
+              :system_version,
+              :interval ]
 
             arguments = arguments.clone
             type = arguments.delete(:type)

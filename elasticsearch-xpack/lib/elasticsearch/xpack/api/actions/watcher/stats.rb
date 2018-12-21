@@ -29,7 +29,7 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/watcher-api-stats.html
           #
           def stats(arguments={})
-            valid_params = [ :metric ]
+            valid_params = [ :metric, :emit_stacktraces ]
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/watcher/stats"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params

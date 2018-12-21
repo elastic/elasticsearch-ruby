@@ -33,14 +33,17 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
 
             valid_params = [
-              :master_timeout,
-              :action_id ]
+              :master_timeout ]
 
             arguments = arguments.clone
             watch_id  = arguments.delete(:watch_id)
+            action_id  = arguments.delete(:action_id)
 
             method = Elasticsearch::API::HTTP_PUT
+
             path   = "_xpack/watcher/watch/#{watch_id}/_ack"
+            path << "/#{action_id}" if action_id
+
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

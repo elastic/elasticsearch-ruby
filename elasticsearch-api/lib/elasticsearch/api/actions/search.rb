@@ -207,7 +207,8 @@ module Elasticsearch
           :batched_reduce_size,
           :max_concurrent_shard_requests,
           :pre_filter_shard_size,
-          :allow_partial_search_results ].freeze)
+          :allow_partial_search_results,
+          :rest_total_hits_as_int ].freeze)
     end
   end
 end

@@ -36,6 +36,18 @@ module Elasticsearch
           subject.xpack.watcher.ack_watch watch_id: 'foo'
         end
 
+        should "perform correct request when action id is provided" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'PUT', method
+            assert_equal '_xpack/watcher/watch/foo/_ack/bar', url
+            assert_equal Hash.new, params
+            assert_nil   body
+            true
+          end.returns(FakeResponse.new)
+
+          subject.xpack.watcher.ack_watch watch_id: 'foo', action_id: 'bar'
+        end
+
       end
 
     end
