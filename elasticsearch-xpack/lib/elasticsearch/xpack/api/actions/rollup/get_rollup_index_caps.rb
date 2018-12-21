@@ -6,11 +6,14 @@ module Elasticsearch
 
           # TODO: Description
           #
-          # @option arguments [String] :id The ID of the index to check rollup capabilities on, or left blank for all jobs
+          # @option arguments [String] :index The rollup index or index pattern to obtain rollup capabilities from (*Required*)
           #
-          def get_rollup_caps(arguments={})
+          # @see
+          #
+          def get_rollup_index_caps(arguments={})
+            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/rollup/data/#{arguments[:id]}"
+            path   = "#{arguments[:index]}/_xpack/rollup/data"
             params = {}
             body   = nil
 

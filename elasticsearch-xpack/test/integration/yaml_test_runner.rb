@@ -300,6 +300,30 @@ suites.each do |suite|
       $results = {}
       $stash   = {}
 
+      # Cleanup for roles
+      $helper_client.xpack.security.get_role.each do |role, _|
+        begin
+          $helper_client.xpack.security.delete_role name: role
+        rescue
+        end
+      end
+
+      # Cleanup for privileges
+      $helper_client.xpack.security.get_privileges.each do |privilege, _|
+        begin
+          $helper_client.xpack.security.delete_privileges name: privilege
+        rescue
+        end
+      end
+
+      # Cleanup for users
+      $helper_client.xpack.security.get_user.each do |user, _|
+        begin
+          $helper_client.xpack.security.delete_user username: user
+        rescue
+        end
+      end
+
       # Setup machine learning user
       $helper_client.xpack.security.put_user username: 'x_pack_rest_user',  body: { password: 'x-pack-test-password', roles: ['superuser'] }
 
@@ -346,7 +370,7 @@ suites.each do |suite|
         next
       end
 
-      tests = YAML.load_documents File.new(file)
+      tests = YAML.load_stream File.new(file)
 
       # Extract setup and teardown actions
       setup_actions    = tests.select { |t| t['setup'] }.first['setup'] rescue []
@@ -378,7 +402,7 @@ suites.each do |suite|
 
           # --- Register test setup -------------------------------------------
           setup do
-            actions.select { |a| a['setup'] }.first['setup'].each do |action|
+            actions.find { |a| a['setup'] }['setup'].each do |action|
               if action['do']
                 if headers = action['do'] && action['do'].delete('headers')
                   puts "HEADERS: " + headers.inspect if ENV['DEBUG']
@@ -405,6 +429,7 @@ suites.each do |suite|
 
           # --- Register test teardown -------------------------------------------
           teardown do
+            $client = $helper_client
             actions.select { |a| a['teardown'] }.first['teardown'].each do |action|
               if action['do']
                 api, arguments = action['do'].to_a.first
