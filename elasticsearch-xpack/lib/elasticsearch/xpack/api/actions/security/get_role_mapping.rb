@@ -29,7 +29,7 @@ module Elasticsearch
           #
           def get_role_mapping(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/security/role_mapping/#{arguments[:name]}"
+            path   = "_xpack/security/role_mapping/#{Elasticsearch::API::Utils.__listify(arguments[:name])}"
             params = {}
             body   = nil
 
