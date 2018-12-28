@@ -19,6 +19,17 @@ module Elasticsearch
           subject.xpack.security.get_role_mapping :name => 'foo'
         end
 
+        should "handle a list of roles" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'GET', method
+            assert_equal "_xpack/security/role_mapping/foo,bar", url
+            assert_equal Hash.new, params
+            assert_nil   body
+            true
+          end.returns(FakeResponse.new)
+
+          subject.xpack.security.get_role_mapping :name => ['foo', 'bar']
+        end
       end
 
     end
