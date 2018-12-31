@@ -24,6 +24,14 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
 
   match do |response|
 
+    # sql test returns results at '$body' key. See sql/translate.yml
+    expected_pairs = expected_pairs['$body'] if expected_pairs['$body']
+
+    # sql test has a String response. See sql/sql.yml
+    if expected_pairs.is_a?(String)
+      return compare_string_response(response, expected_pairs)
+    end
+
     expected_pairs.all? do |expected_key, expected_value|
 
       # See test xpack/10_basic.yml
@@ -31,26 +39,27 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
       if expected_key =~ /nodes\.\$master\.modules/
         expected_key = inject_master_node_id(expected_key, test)
       end
-        # joe.metadata.key2 => ['joe', 'metadata', 'key2']
-        split_key = expected_key.split('.')
 
-        actual_value = split_key.inject(response) do |response, key|
-          # If the key is an index, indicating element of a list
-          if key =~ /\A[-+]?[0-9]+\z/
-            response[key.to_i]
-          else
-            response[key]
-          end
-        end
+      # joe.metadata.key2 => ['joe', 'metadata', 'key2']
+      split_key = expected_key.split('.')
 
-        # When you must match a regex. For example:
-        #   match: {task: '/.+:\d+/'}
-        if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
-          /#{expected_value.tr("/", "")}/ =~ actual_value
+      actual_value = split_key.inject(response) do |response, key|
+        # If the key is an index, indicating element of a list
+        if key =~ /\A[-+]?[0-9]+\z/
+          response[key.to_i]
         else
-          actual_value == expected_value
+          response[key]
         end
       end
+
+      # When you must match a regex. For example:
+      #   match: {task: '/.+:\d+/'}
+      if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
+        /#{expected_value.tr("/", "")}/ =~ actual_value
+      else
+        actual_value == expected_value
+      end
+    end
   end
 
   def inject_master_node_id(expected_key, test)
@@ -63,6 +72,11 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
       end
     end
     split_key.join('.')
+  end
+
+  def compare_string_response(response, expected_string)
+    regexp = Regexp.new(expected_string.strip[1..-2], Regexp::EXTENDED|Regexp::MULTILINE)
+    regexp =~ response
   end
 end
 
@@ -122,6 +136,7 @@ describe 'XPack Rest API YAML tests' do
             rescue
             end
             DEFAULT_CLIENT.indices.delete(index: 'test*')
+            DEFAULT_CLIENT.indices.delete(index: 'my_test*')
             test_file.setup(DEFAULT_CLIENT)
           end
 

@@ -66,7 +66,10 @@ module Elasticsearch
       def prepare_arguments(args, test)
         args = symbolize_keys(args)
         if test
-          args.collect do |key, value|
+          args.each do |key, value|
+            if value.is_a?(Hash)
+              args[key] = prepare_arguments(value, test)
+            end
             if test.cached_values[value]
               args[key] = test.cached_values[value]
             end
