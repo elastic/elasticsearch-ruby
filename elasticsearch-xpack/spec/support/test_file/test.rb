@@ -24,7 +24,7 @@ module Elasticsearch
               # the action has a catch, it's a singular task group
               if action['do'] && action['do']['catch']
                 task_groups << TaskGroup.new(self)
-              elsif action['do'] && is_a_validation?(@definition[i-1])
+              elsif action['do'] && i > 0 && is_a_validation?(@definition[i-1])
                 task_groups << TaskGroup.new(self)
               elsif i == 0
                 task_groups << TaskGroup.new(self)

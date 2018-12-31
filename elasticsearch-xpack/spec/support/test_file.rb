@@ -59,7 +59,9 @@ module Elasticsearch
       def setup(client)
         return unless @setup
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
-        actions.each { |action| action.execute(client) }
+        actions.each do |action|
+          action.execute(client)
+        end
         self
       end
 
@@ -95,9 +97,15 @@ module Elasticsearch
           clear_jobs(client)
           clear_tasks(client)
           clear_machine_learning_indices(client)
+          create_x_pack_rest_user(client)
         end
 
         private
+
+        def create_x_pack_rest_user(client)
+          client.xpack.security.put_user(username: 'x_pack_rest_user',
+                                         body: { password: 'x-pack-test-password', roles: ['superuser'] })
+        end
 
         def clear_roles(client)
           client.xpack.security.get_role.each do |role, _|

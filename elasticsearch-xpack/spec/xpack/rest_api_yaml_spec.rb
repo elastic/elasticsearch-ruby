@@ -128,15 +128,14 @@ describe 'XPack Rest API YAML tests' do
             DEFAULT_CLIENT
           end
 
+          # Runs once before each test in a test file
           before(:all) do
-            # Runs once before each test in a test file
             begin
               DEFAULT_CLIENT.xpack.watcher.get_watch(id: "test_watch")
               DEFAULT_CLIENT.xpack.watcher.delete_watch(id: "test_watch")
             rescue
             end
-            DEFAULT_CLIENT.indices.delete(index: 'test*')
-            DEFAULT_CLIENT.indices.delete(index: 'my_test*')
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, DEFAULT_CLIENT)
             test_file.setup(DEFAULT_CLIENT)
           end
 
