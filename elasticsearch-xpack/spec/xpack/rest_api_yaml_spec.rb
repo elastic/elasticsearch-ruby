@@ -5,10 +5,7 @@ RSpec::Matchers.define :match_response_field_length do |expected_pairs|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
-      # joe.metadata.2.key2 => ['joe', 'metadata', 2, 'key2']
-      split_key = expected_key.split('.').map do |key|
-        (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
-      end
+      split_key = split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
@@ -40,13 +37,8 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
       # See test xpack/10_basic.yml
       # The master node id must be injected in the keys of match clauses
       expected_key = inject_master_node_id(expected_key, test)
-
-      # joe.metadata.2.key2 => ['joe', 'metadata', 2, 'key2']
-      split_key = expected_key.split('.').map do |key|
-        (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
-      end
-
-      actual_value = split_key.inject(response) { |_response, key| _response[key] }
+      split_key = split_and_parse_key(expected_key)
+      actual_value = find_value_in_document(split_key, response)
 
       # When you must match a regex. For example:
       #   match: {task: '/.+:\d+/'}
@@ -112,7 +104,7 @@ describe 'XPack Rest API YAML tests' do
 
     test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
-    context "#{test_file.name}" do
+    context "#{File.basename(file)}" do
 
       before(:all) do
         # Runs once before all tests in a test file
@@ -144,7 +136,6 @@ describe 'XPack Rest API YAML tests' do
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, DEFAULT_CLIENT)
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, DEFAULT_CLIENT)
             test_file.setup(DEFAULT_CLIENT)
-            puts "STARTING TEST"
           end
 
           after(:all) do
@@ -183,7 +174,6 @@ describe 'XPack Rest API YAML tests' do
                 it 'sends the request and receives the expected response' do
                   task_group.run(client)
                   task_group.match_clauses.each do |match|
-                    skip 'Must implement parsing of backslash and dot' if match['match'].keys.any? { |keys| keys =~ /\\/ }
                     expect(task_group.response).to match_response(test, match['match'])
                   end
                 end
