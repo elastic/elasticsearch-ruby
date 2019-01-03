@@ -30,6 +30,16 @@ module Elasticsearch
                               'is_true'
                             ].freeze
 
+        # The maximum Elasticsearch version this client version can successfully run tests against.
+        #
+        # @since 6.1.1
+        MAX_REQUIRED_VERSION = nil
+
+        # The minimum Elasticsearch version this client version can successfully run tests against.
+        #
+        # @since 6.1.1
+        MIN_REQUIRED_VERSION = nil
+
         # Initialize the Test object.
         #
         # @example Create a test object
@@ -115,10 +125,16 @@ module Elasticsearch
         #
         # @since 6.1.1
         def skip_test?(features_to_skip = test_file.skip_features)
-          @skip.any? { |skip| features_to_skip.include?(skip['features']) }
+          @skip.any? do |skip|
+            features_to_skip.include?(skip['features']) || skip['version'] == 'all'
+          end
         end
 
         private
+
+        def meets_version_requirement?(version)
+          version >= MIN_REQUIRED_VERSION && version <= MAX_REQUIRED_VERSION
+        end
 
         def is_a_validation?(action)
           GROUP_TERMINATORS.any? { |validation| action[validation] } || expects_exception?(action)

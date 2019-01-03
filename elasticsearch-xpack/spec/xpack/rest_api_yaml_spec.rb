@@ -83,6 +83,8 @@ RSpec::Matchers.define :match_error do |expected_error|
     message = actual_error.message.tr("\\","")
 
     case expected_error
+      when 'request_timeout'
+        message =~ /\[408\]/
       when 'missing'
         message =~ /\[404\]/
       when 'conflict'
@@ -128,13 +130,18 @@ describe 'XPack Rest API YAML tests' do
           # Runs once before each test in a test file
           before(:all) do
             begin
+              # todo: remove these two lines when Dimitris' PR is merged
+              DEFAULT_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
+              DEFAULT_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
+
               DEFAULT_CLIENT.xpack.watcher.get_watch(id: "test_watch")
               DEFAULT_CLIENT.xpack.watcher.delete_watch(id: "test_watch")
             rescue
             end
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, DEFAULT_CLIENT)
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, DEFAULT_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_jobs, DEFAULT_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, DEFAULT_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, DEFAULT_CLIENT)
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, DEFAULT_CLIENT)
             test_file.setup(DEFAULT_CLIENT)
             puts "STARTING TEST"
@@ -165,7 +172,7 @@ describe 'XPack Rest API YAML tests' do
                   it 'contains the expected error in the request response' do
                     task_group.run(client)
                     task_group.match_clauses.each do |match|
-                      expect(task_group.exception.message).to match(/#{match['match'].values.first}/)
+                      expect(task_group.exception.message).to match(Regexp.new(Regexp.escape(match['match'].values.first.to_s)))
                     end
                   end
                 end

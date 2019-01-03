@@ -94,7 +94,8 @@ module Elasticsearch
           clear_users(client)
           clear_privileges(client)
           clear_datafeeds(client)
-          clear_jobs(client)
+          clear_ml_jobs(client)
+          clear_rollup_jobs(client)
           clear_tasks(client)
           clear_machine_learning_indices(client)
           create_x_pack_rest_user(client)
@@ -132,10 +133,17 @@ module Elasticsearch
           end
         end
 
-        def clear_jobs(client)
+        def clear_ml_jobs(client)
           client.xpack.ml.close_job(job_id: '_all', force: true)
           client.xpack.ml.get_jobs['jobs'].each do |d|
             client.xpack.ml.delete_job(job_id: d['job_id'])
+          end
+        end
+
+        def clear_rollup_jobs(client)
+          client.xpack.rollup.get_jobs(id: '_all')['jobs'].each do |d|
+            client.xpack.rollup.stop_job(id: d['config']['id'])
+            client.xpack.rollup.delete_job(id: d['config']['id'])
           end
         end
 
