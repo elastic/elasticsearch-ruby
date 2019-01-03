@@ -5,6 +5,9 @@ RSpec::Matchers.define :match_response_field_length do |expected_pairs|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
+      # ssl test returns results at '$body' key. See ssl/10_basic.yml
+      expected_pairs = expected_pairs['$body'] if expected_pairs['$body']
+
       split_key = split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
