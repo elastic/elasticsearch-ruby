@@ -4,15 +4,18 @@ RSpec::Matchers.define :match_response_field_length do |expected_pairs|
 
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-      # joe.metadata.key2 => ['joe', 'metadata', 'key2']
-      split_key = expected_key.split('.')
 
-      actual_value = split_key.inject(response) do |response, key|
+      # joe.metadata.2.key2 => ['joe', 'metadata', 2, 'key2']
+      split_key = expected_key.split('.').map do |key|
+        (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
+      end
+
+      actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
-        if key =~ /\A[-+]?[0-9]+\z/
-          response[key.to_i]
+        if _response.empty? && key == '$body'
+          _response
         else
-          response[key]
+          _response[key]
         end
       end
       actual_value.size == expected_value
@@ -36,21 +39,14 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
 
       # See test xpack/10_basic.yml
       # The master node id must be injected in the keys of match clauses
-      if expected_key =~ /nodes\.\$master\.modules/
-        expected_key = inject_master_node_id(expected_key, test)
+      expected_key = inject_master_node_id(expected_key, test)
+
+      # joe.metadata.2.key2 => ['joe', 'metadata', 2, 'key2']
+      split_key = expected_key.split('.').map do |key|
+        (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
       end
 
-      # joe.metadata.key2 => ['joe', 'metadata', 'key2']
-      split_key = expected_key.split('.')
-
-      actual_value = split_key.inject(response) do |response, key|
-        # If the key is an index, indicating element of a list
-        if key =~ /\A[-+]?[0-9]+\z/
-          response[key.to_i]
-        else
-          response[key]
-        end
-      end
+      actual_value = split_key.inject(response) { |_response, key| _response[key] }
 
       # When you must match a regex. For example:
       #   match: {task: '/.+:\d+/'}
@@ -63,15 +59,13 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
   end
 
   def inject_master_node_id(expected_key, test)
-    split_key = expected_key.split('.')
-    split_key.each_with_index do |value, i|
-      # Replace the $master key in the nested document with the cached master node's id
-      # See test xpack/10_basic.yml
-      if value == "$master"
-        split_key[i] = test.cached_values['$master_node']
-      end
+    # Replace the $master key in the nested document with the cached master node's id
+    # See test xpack/10_basic.yml
+    if test.cached_values['$master']
+      expected_key.gsub(/\$master/, test.cached_values['$master'])
+    else
+      expected_key
     end
-    split_key.join('.')
   end
 
   def compare_string_response(response, expected_string)
@@ -97,6 +91,9 @@ RSpec::Matchers.define :match_error do |expected_error|
         message =~ /\[500\]/
       when 'bad_request'
         message =~ /\[400\]/
+    when 'param'
+        message =~ /\[400\]/ ||
+        actual_error.is_a?(ArgumentError)
       when 'unauthorized'
         actual_error.is_a?(Elasticsearch::Transport::Transport::Errors::Unauthorized)
       when 'forbidden'
@@ -111,7 +108,7 @@ describe 'XPack Rest API YAML tests' do
 
   REST_API_YAML_FILES.each do |file|
 
-    test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, SKIP_FEATURES)
+    test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
     context "#{test_file.name}" do
 
@@ -136,59 +133,70 @@ describe 'XPack Rest API YAML tests' do
             rescue
             end
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, DEFAULT_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, DEFAULT_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_jobs, DEFAULT_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, DEFAULT_CLIENT)
             test_file.setup(DEFAULT_CLIENT)
+            puts "STARTING TEST"
           end
 
           after(:all) do
             test_file.teardown(DEFAULT_CLIENT)
           end
 
-          test.task_groups.each do |task_group|
+          if test.skip_test?
+            skip 'Test contains features not yet support'
 
-            # 'catch' is in the task group definition
-            if task_group.catch_exception?
+          else
 
-              it 'sends the request and throws the expected error' do
-                task_group.run(client)
-                expect(task_group.exception).to match_error(task_group.expected_exception_message)
-              end
+            test.task_groups.each do |task_group|
 
-              # 'match' on error description is in the task group definition
-              if task_group.has_match_clauses?
+              # 'catch' is in the task group definition
+              if task_group.catch_exception?
 
-                it 'contains the expected error in the request response' do
+                it 'sends the request and throws the expected error' do
                   task_group.run(client)
-                  task_group.match_clauses.each do |match|
-                    expect(task_group.exception.message).to match(/#{match['match'].values.first}/)
+                  expect(task_group.exception).to match_error(task_group.expected_exception_message)
+                end
+
+                # 'match' on error description is in the task group definition
+                if task_group.has_match_clauses?
+
+                  it 'contains the expected error in the request response' do
+                    task_group.run(client)
+                    task_group.match_clauses.each do |match|
+                      expect(task_group.exception.message).to match(/#{match['match'].values.first}/)
+                    end
                   end
                 end
-              end
 
-            # 'match' is in the task group definition
-            elsif task_group.has_match_clauses?
+              # 'match' is in the task group definition
+              elsif task_group.has_match_clauses?
 
-              it 'sends the request and receives the expected response' do
-                task_group.run(client)
-                task_group.match_clauses.each do |match|
-                  expect(task_group.response).to match_response(test, match['match'])
+                it 'sends the request and receives the expected response' do
+                  task_group.run(client)
+                  task_group.match_clauses.each do |match|
+                    skip 'Must implement parsing of backslash and dot' if match['match'].keys.any? { |keys| keys =~ /\\/ }
+                    expect(task_group.response).to match_response(test, match['match'])
+                  end
                 end
-              end
 
-            # 'length' is in the task group definition
-            elsif task_group.has_length_match_clauses?
+              # 'length' is in the task group definition
+              elsif task_group.has_length_match_clauses?
 
-              it 'sends the request and the response fields have the expected length' do
-                task_group.run(client)
-                task_group.length_match_clauses.each do |match|
-                  expect(task_group.response).to match_response_field_length(match['length'])
+                it 'sends the request and the response fields have the expected length' do
+                  task_group.run(client)
+                  task_group.length_match_clauses.each do |match|
+                    expect(task_group.response).to match_response_field_length(match['length'])
+                  end
                 end
-              end
 
-            else
+              else
 
-              # no verification is in the task group definition
-              it 'executes the request' do
-                task_group.run(client)
+                # no verification is in the task group definition
+                it 'executes the request' do
+                  task_group.run(client)
+                end
               end
             end
           end

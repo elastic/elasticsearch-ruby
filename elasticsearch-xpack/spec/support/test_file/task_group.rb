@@ -155,13 +155,23 @@ module Elasticsearch
           end
 
           def set_variable(action)
-            variables_to_set.find do |set_definition|
-              action.response.each do |key, value|
-                if set_definition['set'][key]
-                  @test.cache_variable(key, value)
+            variables_to_set.each do |set_definition|
+              set_definition['set'].each do |response_key, variable_name|
+
+                nested_key_chain = response_key.split('.').map do |key|
+                  (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
+                end
+
+                if to_set = find_value(nested_key_chain, action.response)
+                  @test.cache_value(variable_name, to_set)
                 end
               end
             end
+          end
+
+          def find_value(chain, document)
+            return document[chain[0]] unless chain.size > 1
+            find_value(chain[1..-1], document[chain[0]]) if document[chain[0]]
           end
         end
       end
