@@ -17,6 +17,7 @@ module Elasticsearch
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_forecast/#{arguments[:forecast_id]}"
 
             valid_params = [
+                :forecast_id,
                 :allow_no_forecasts,
                 :timeout ]
 
