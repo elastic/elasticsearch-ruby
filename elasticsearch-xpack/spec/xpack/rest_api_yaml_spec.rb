@@ -107,7 +107,7 @@ describe 'XPack Rest API YAML tests' do
 
     test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
-    context "#{File.basename(file)}" do
+    context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
 
       before(:all) do
         # Runs once before all tests in a test file

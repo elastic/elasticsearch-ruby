@@ -41,7 +41,8 @@ skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/20
 # Figure out how to parse \\
 skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/ml/get_datafeed_stats.yml")
 
-REST_API_YAML_FILES = Dir.glob("#{CURRENT_PATH}/support/yaml_tests/**/*.yml") - skipped_files
+YAML_FILES_DIRECTORY = "#{CURRENT_PATH}/support/yaml_tests"
+REST_API_YAML_FILES = Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
 # all ml indices must be deleted between each test (because of one being closed) "Test put job after closing state index"
@@ -76,5 +77,5 @@ end
 def split_and_parse_key(key)
   key.split(/(?<!\\)\./).map do |key|
     (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
-  end.reject { |k| k== '$body' }
+  end.reject { |k| k == '$body' }
 end
