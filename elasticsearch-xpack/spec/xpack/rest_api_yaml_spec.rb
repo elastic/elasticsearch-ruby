@@ -56,8 +56,8 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
   def inject_master_node_id(expected_key, test)
     # Replace the $master key in the nested document with the cached master node's id
     # See test xpack/10_basic.yml
-    if test.cached_values['$master']
-      expected_key.gsub(/\$master/, test.cached_values['$master'])
+    if test.cached_values['master']
+      expected_key.gsub(/\$master/, test.cached_values['master'])
     else
       expected_key
     end

@@ -76,5 +76,5 @@ end
 def split_and_parse_key(key)
   key.split(/(?<!\\)\./).map do |key|
     (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
-  end
+  end.reject { |k| k== '$body' }
 end

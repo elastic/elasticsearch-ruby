@@ -96,7 +96,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         def cache_value(cache_key, value)
-          @cached_values["$#{cache_key}"] = value
+          @cached_values["#{cache_key}"] = value
         end
 
         # Run all the tasks in this test.

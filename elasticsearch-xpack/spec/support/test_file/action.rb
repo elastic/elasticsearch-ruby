@@ -6,7 +6,7 @@ module Elasticsearch
     #
     #   1. Applying header settings on a client.
     #   2. Sending some request to Elasticsearch.
-    #   3. Sending some request to Elasticsearch and expecting an exception.
+    #   3. Sending some request to Elasticsearch, expecting an exception.
     #
     # @since 6.1.1
     class Action
@@ -34,7 +34,8 @@ module Elasticsearch
       # @param [ Elasticsearch::Client ] client The client to use to execute the action.
       # @param [ Test ] test The test containing this action. Necessary for caching variables.
       #
-      # @return [ client ] The client.
+      # @return [ Elasticsearch::Client ] The client. It will be a new one than the one passed in,
+      #   if the action is to set headers.
       #
       # @since 6.1.1
       def execute(client, test = nil)
@@ -51,7 +52,7 @@ module Elasticsearch
           case _method
           when 'headers'
             # todo: create a method on Elasticsearch::Client that can clone the client with new options
-            Elasticsearch::Client.new(host: URL, transport_options: { headers: symbolize_keys(args) })
+            Elasticsearch::Client.new(host: URL, transport_options: { headers: prepare_arguments(args, test) })
           when 'catch'
             client
           else
@@ -64,18 +65,22 @@ module Elasticsearch
       private
 
       def prepare_arguments(args, test)
-        args = symbolize_keys(args)
-        if test
-          args.each do |key, value|
-            if value.is_a?(Hash)
-              args[key] = prepare_arguments(value, test)
-            end
-            if test.cached_values[value]
-              args[key] = test.cached_values[value]
+        symbolize_keys(args).tap do |args|
+          if test
+            args.each do |key, value|
+              case value
+              when Hash
+                args[key] = prepare_arguments(value, test)
+              when String
+                # Find the cached values where the variable name is contained in the arguments.
+                if cached_value = test.cached_values.find { |k, v| value =~ /\$\{?#{k}\}?/ }
+                  # The arguments may contain the variable in the form ${variable} or $variable
+                  args[key] = value.gsub(/\$\{?#{cached_value[0]}\}?/, cached_value[1])
+                end
+              end
             end
           end
         end
-        args
       end
 
       def symbolize_keys(object)
