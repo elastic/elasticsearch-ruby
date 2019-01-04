@@ -12,4 +12,4 @@ RUN rake bundle:clean
 RUN rake bundle:install
 
 
-CMD [ "bundle", "exec", "rake", "test:unit"]
+CMD [ "rake", "test:unit" ]

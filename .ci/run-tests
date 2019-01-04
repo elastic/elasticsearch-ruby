@@ -10,6 +10,21 @@
 #   - $RUBY_TEST_VERSION
 #
 
-ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION} RUBY_TEST_VERSION=${RUBY_TEST_VERSION} docker-compose -f .ci/docker-compose.yml run client
+export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION}
+export RUBY_TEST_VERSION=${RUBY_TEST_VERSION}
 
+# build the client to ensure the proper version variables are used
+docker-compose -f .ci/docker-compose.yml build client
+if [[ $? != 0 ]]; then
+  echo "The client container failed to build."
+  exit $?
+fi
+
+docker-compose -f .ci/docker-compose.yml run client
+test_exit_code=$?
+
+# clean up the docker-compose environment
 docker-compose -f .ci/docker-compose.yml down --volumes --remove-orphans
+
+# exit with the exit code received from the test run
+exit $test_exit_code
