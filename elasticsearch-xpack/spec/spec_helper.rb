@@ -37,15 +37,11 @@ skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/xpack/15_basic.yml
 skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/10_basic.yml")
 skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/20_privileges.yml")
 
-# CAN BE FIXED:
-# Figure out how to parse \\
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/ml/get_datafeed_stats.yml")
-
 YAML_FILES_DIRECTORY = "#{CURRENT_PATH}/support/yaml_tests"
 REST_API_YAML_FILES = Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
-# all ml indices must be deleted between each test (because of one being closed) "Test put job after closing state index"
+
 
 # Given a list of keys, find the value in a recursively nested document.
 #
