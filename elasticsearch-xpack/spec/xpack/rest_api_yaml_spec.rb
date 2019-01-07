@@ -26,6 +26,8 @@ end
 RSpec::Matchers.define :match_true_field do |field|
 
   match do |response|
+    # Handle is_true: ''
+    return response == true if field == ''
     !!find_value_in_document(split_and_parse_key(field) , response)
   end
 end
@@ -33,6 +35,8 @@ end
 RSpec::Matchers.define :match_false_field do |field|
 
   match do |response|
+    # Handle is_false: ''
+    return response == false if field == ''
     !find_value_in_document(split_and_parse_key(field) , response)
   end
 end
@@ -210,10 +214,8 @@ describe 'XPack Rest API YAML tests' do
                 if task_group.has_true_clauses?
 
                   task_group.true_clauses.each do |match|
-                    unless match['is_true'] == ''
-                      it 'sends the request and the response fields have the expected fields set to true' do
-                        expect(task_group.response).to match_true_field(match['is_true'])
-                      end
+                    it 'sends the request and the response fields have the expected fields set to true' do
+                      expect(task_group.response).to match_true_field(match['is_true'])
                     end
                   end
                 end
@@ -222,10 +224,8 @@ describe 'XPack Rest API YAML tests' do
                 if task_group.has_false_clauses?
 
                   task_group.false_clauses.each do |match|
-                    unless match['is_false'] == ''
-                      it 'sends the request and the response fields have the expected fields set to false' do
-                        expect(task_group.response).to match_false_field(match['is_false'])
-                      end
+                    it 'sends the request and the response fields have the expected fields set to false' do
+                      expect(task_group.response).to match_false_field(match['is_false'])
                     end
                   end
                 end
