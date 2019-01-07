@@ -51,7 +51,7 @@ before_install:
   - pkill -9 -f elasticsearch || true
   - gem update --system
   - gem --version
-  - gem install bundler -v 1.16.1
+  - gem install bundler
   - bundle version
   - bundle install
   - bundle exec rake setup
