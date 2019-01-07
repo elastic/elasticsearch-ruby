@@ -23,6 +23,20 @@ RSpec::Matchers.define :match_response_field_length do |expected_pairs|
   end
 end
 
+RSpec::Matchers.define :match_true_field do |field|
+
+  match do |response|
+    !!find_value_in_document(split_and_parse_key(field) , response)
+  end
+end
+
+RSpec::Matchers.define :match_false_field do |field|
+
+  match do |response|
+    !find_value_in_document(split_and_parse_key(field) , response)
+  end
+end
+
 RSpec::Matchers.define :match_response do |test, expected_pairs|
 
   match do |response|
@@ -125,14 +139,12 @@ describe 'XPack Rest API YAML tests' do
           # Runs once before each test in a test file
           before(:all) do
             begin
-              # todo: remove these two lines when Dimitris' PR is merged
-              DEFAULT_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
-              DEFAULT_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
-
-              DEFAULT_CLIENT.xpack.watcher.get_watch(id: "test_watch")
               DEFAULT_CLIENT.xpack.watcher.delete_watch(id: "test_watch")
-            rescue
+            rescue Elasticsearch::Transport::Transport::Errors::NotFound
             end
+            # todo: remove these two lines when Dimitris' PR is merged
+            DEFAULT_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
+            DEFAULT_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, DEFAULT_CLIENT)
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, DEFAULT_CLIENT)
             Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, DEFAULT_CLIENT)
@@ -146,56 +158,76 @@ describe 'XPack Rest API YAML tests' do
           end
 
           if test.skip_test?
-            skip 'Test contains features not yet support'
+            skip 'Test contains feature(s) not yet support'
 
           else
 
             test.task_groups.each do |task_group|
 
+              before do
+                task_group.run(client)
+              end
+
               # 'catch' is in the task group definition
               if task_group.catch_exception?
 
                 it 'sends the request and throws the expected error' do
-                  task_group.run(client)
                   expect(task_group.exception).to match_error(task_group.expected_exception_message)
                 end
 
                 # 'match' on error description is in the task group definition
                 if task_group.has_match_clauses?
 
-                  it 'contains the expected error in the request response' do
-                    task_group.run(client)
-                    task_group.match_clauses.each do |match|
+                  task_group.match_clauses.each do |match|
+                    it 'contains the expected error in the request response' do
                       expect(task_group.exception.message).to match(Regexp.new(Regexp.escape(match['match'].values.first.to_s)))
                     end
                   end
                 end
-
-              # 'match' is in the task group definition
-              elsif task_group.has_match_clauses?
-
-                it 'sends the request and receives the expected response' do
-                  task_group.run(client)
-                  task_group.match_clauses.each do |match|
-                    expect(task_group.response).to match_response(test, match['match'])
-                  end
-                end
-
-              # 'length' is in the task group definition
-              elsif task_group.has_length_match_clauses?
-
-                it 'sends the request and the response fields have the expected length' do
-                  task_group.run(client)
-                  task_group.length_match_clauses.each do |match|
-                    expect(task_group.response).to match_response_field_length(match['length'])
-                  end
-                end
-
               else
 
-                # no verification is in the task group definition
-                it 'executes the request' do
-                  task_group.run(client)
+                # 'match' is in the task group definition
+                if task_group.has_match_clauses?
+
+                  task_group.match_clauses.each do |match|
+                    it "has the expected value in the response field '#{match['match'].keys.join(',')}'" do
+                      expect(task_group.response).to match_response(test, match['match'])
+                    end
+                  end
+                end
+
+                # 'length' is in the task group definition
+                if task_group.has_length_match_clauses?
+
+                  task_group.length_match_clauses.each do |match|
+                    it "the '#{match['length'].keys.join(',')}' field have the expected length" do
+                      expect(task_group.response).to match_response_field_length(match['length'])
+                    end
+                  end
+                end
+
+                # 'is_true' is in the task group definition
+                if task_group.has_true_clauses?
+
+                  task_group.true_clauses.each do |match|
+                    unless match['is_true'] == ''
+                      it 'sends the request and the response fields have the expected fields set to true' do
+                        expect(task_group.response).to match_true_field(match['is_true'])
+                      end
+                    end
+                  end
+                end
+
+                # 'is_false' is in the task group definition
+                if task_group.has_false_clauses?
+
+                  task_group.false_clauses.each do |match|
+                    unless match['is_false'] == ''
+                      it 'sends the request and the response fields have the expected fields set to false' do
+                        expect(task_group.response).to match_false_field(match['is_false'])
+                      end
+                    end
+                  end
                 end
               end
             end

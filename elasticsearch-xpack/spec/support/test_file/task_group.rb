@@ -51,7 +51,8 @@ module Elasticsearch
           #
           # @since 6.1.1
           def add_action(action)
-            @actions << action if action['do'] || action['match'] || action['length'] || action['set']
+            @actions << action if action['do'] || action['match'] || action['length'] ||
+                                    action['set'] || action['is_true'] || action['is_false']
             self
           end
 
@@ -66,6 +67,10 @@ module Elasticsearch
           #
           # @since 6.1.1
           def run(client)
+            # Allow the actions to be execute only once.
+            return if @executed
+            @executed = true
+
             do_actions.inject(client) do |_client, action|
               action.execute(_client, test)
               # Cache the result of the action, if a set action is defined.
@@ -115,6 +120,24 @@ module Elasticsearch
             !!length_match_clauses
           end
 
+          # Does this task group have match clauses on a field value being true.
+          #
+          # @return [ true, false ] If the task group has match clauses on a field value being true.
+          #
+          # @since 6.1.1
+          def has_true_clauses?
+            !!true_clauses
+          end
+
+          # Does this task group have match clauses on a field value being false.
+          #
+          # @return [ true, false ] If the task group has match clauses on a field value being false.
+          #
+          # @since 6.1.1
+          def has_false_clauses?
+            !!false_clauses
+          end
+
           # The expected exception message.
           #
           # @return [ String ] The expected exception message.
@@ -133,6 +156,24 @@ module Elasticsearch
           # @since 6.1.1
           def match_clauses
             @match_actions ||= @actions.group_by { |a| a.keys.first }['match']
+          end
+
+          # The true match clauses.
+          #
+          # @return [ Array<Hash> ] The true match clauses.
+          #
+          # @since 6.1.1
+          def true_clauses
+            @true_clauses ||= @actions.group_by { |a| a.keys.first }['is_true']
+          end
+
+          # The false match clauses.
+          #
+          # @return [ Array<Hash> ] The false match clauses.
+          #
+          # @since 6.1.1
+          def false_clauses
+            @false_clauses ||= @actions.group_by { |a| a.keys.first }['is_false']
           end
 
           # The field length match clauses.
