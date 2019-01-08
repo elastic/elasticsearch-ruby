@@ -1,6 +1,9 @@
 ARG RUBY_TEST_VERSION=2.5
 FROM ruby:${RUBY_TEST_VERSION}
 
+ENV GEM_HOME="/usr/local/bundle"
+ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
+
 WORKDIR /usr/src/app
 
 COPY . .
