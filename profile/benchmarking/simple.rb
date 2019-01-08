@@ -276,8 +276,8 @@ module Elasticsearch
 
         with_cleanup do
           client.create(index: INDEX, body: small_document)
-          search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
-          request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
+          search_criteria = { match: { 'user.lang': 'en' } }
+          request = { body: { query: { match: search_criteria } } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else

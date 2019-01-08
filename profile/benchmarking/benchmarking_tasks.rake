@@ -15,7 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'pry-byebug'
 require_relative "../benchmarking"
 
 namespace :benchmark do

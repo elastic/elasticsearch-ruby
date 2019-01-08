@@ -80,7 +80,7 @@ module Elasticsearch
 
       def results_doc
         @results_doc ||= begin
-          { '@timestamp' => Time.now,
+          { '@timestamp' => Time.now.iso8601,
             event: event_doc,
             agent: agent_doc,
             server: server_doc }
