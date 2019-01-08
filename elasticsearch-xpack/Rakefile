@@ -59,7 +59,7 @@ namespace :test do
           --volume $(pwd)/tmp/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
           --memory 4g \
           --rm \
-          docker.elastic.co/elasticsearch/elasticsearch:7.0.0-alpha1-SNAPSHOT
+          docker.elastic.co/elasticsearch/elasticsearch:7.0.0-SNAPSHOT
       COMMAND
     end
 end
