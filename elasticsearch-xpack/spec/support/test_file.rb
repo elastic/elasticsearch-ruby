@@ -148,7 +148,11 @@ module Elasticsearch
         end
 
         def clear_tasks(client)
-          tasks = client.tasks.get['nodes'].values.first['tasks'].values.select { |d| d['cancellable'] }.map { |d| "#{d['node']}:#{d['id']}" }
+          tasks = client.tasks.get['nodes'].values.first['tasks'].values.select do |d|
+            d['cancellable']
+          end.map do |d|
+            "#{d['node']}:#{d['id']}"
+          end
           tasks.each { |t| client.tasks.cancel task_id: t }
         end
 
@@ -157,7 +161,9 @@ module Elasticsearch
         end
 
         def clear_indices(client)
-          indices = client.indices.get(index: '_all').keys.reject { |i| i.start_with?('.security') }
+          indices = client.indices.get(index: '_all').keys.reject do |i|
+            i.start_with?('.security') || i.start_with?('.watches')
+          end
           client.indices.delete(index: indices, ignore: 404) unless indices.empty?
         end
       end

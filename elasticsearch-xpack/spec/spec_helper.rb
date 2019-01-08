@@ -12,6 +12,9 @@ end
 
 password = ENV['ELASTIC_PASSWORD']
 URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@localhost:#{ENV['TEST_CLUSTER_PORT'] || 9260}")
+
+ADMIN_CLIENT = Elasticsearch::Client.new(host: URL)
+
 if ENV['QUIET'] == 'true'
   DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL)
 else
@@ -21,11 +24,9 @@ end
 CURRENT_PATH = File.expand_path(File.dirname(__FILE__))
 
 skipped_files = []
+
 # ArgumentError for empty body
 skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/watcher/put_watch/10_basic.yml")
-
-# Elasticsearch is started with the xpack.watcher.index.rest.direct_access option set to true so indices can be cleared.
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/watcher/block_direct_index_access/10_basic.yml")
 
 # The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
 skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/snapshot/10_basic.yml")

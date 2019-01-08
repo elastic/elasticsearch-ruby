@@ -129,7 +129,7 @@ describe 'XPack Rest API YAML tests' do
 
       before(:all) do
         # Runs once before all tests in a test file
-        Elasticsearch::RestAPIYAMLTests::TestFile.prepare(DEFAULT_CLIENT)
+        Elasticsearch::RestAPIYAMLTests::TestFile.prepare(ADMIN_CLIENT)
       end
 
       test_file.tests.each do |test|
@@ -143,22 +143,24 @@ describe 'XPack Rest API YAML tests' do
           # Runs once before each test in a test file
           before(:all) do
             begin
-              DEFAULT_CLIENT.xpack.watcher.delete_watch(id: "test_watch")
+              # watcher/get_watch/30_with_chain_input.yml needs to have a teardown deleting my_watch.
+              ADMIN_CLIENT.xpack.watcher.delete_watch(id: "my_watch")
             rescue Elasticsearch::Transport::Transport::Errors::NotFound
             end
+
             # todo: remove these two lines when Dimitris' PR is merged
-            DEFAULT_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
-            DEFAULT_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, DEFAULT_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, DEFAULT_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, DEFAULT_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, DEFAULT_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, DEFAULT_CLIENT)
-            test_file.setup(DEFAULT_CLIENT)
+            ADMIN_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
+            ADMIN_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, ADMIN_CLIENT)
+            test_file.setup(ADMIN_CLIENT)
           end
 
           after(:all) do
-            test_file.teardown(DEFAULT_CLIENT)
+            test_file.teardown(ADMIN_CLIENT)
           end
 
           if test.skip_test?
