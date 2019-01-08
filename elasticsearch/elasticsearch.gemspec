@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "elasticsearch-transport", '6.1.0'
   s.add_dependency "elasticsearch-api",       '6.1.0'
 
-  s.add_development_dependency "bundler", "> 1"
+  s.add_development_dependency "bundler"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
     s.add_development_dependency "rake", "~> 11.1"
