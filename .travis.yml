@@ -56,7 +56,7 @@ before_install:
   - bundle install
   - bundle exec rake setup
   - bundle exec rake elasticsearch:update
-  - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-alpha1-SNAPSHOT.tar.gz | tar xz -C /tmp
+  - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-SNAPSHOT.tar.gz | tar xz -C /tmp
   - /tmp/elasticsearch-7.0.0-alpha1-SNAPSHOT/bin/elasticsearch-keystore create
   - >
     [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
