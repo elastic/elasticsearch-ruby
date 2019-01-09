@@ -117,7 +117,7 @@ module Elasticsearch
             output << ""
           end
           output << Helpers.___
-          output << "#{hits.size.to_s.ansi(:bold)} of #{json['hits']['total'].to_s.ansi(:bold)} results".ansi(:faint)
+          output << "#{hits.size.to_s.ansi(:bold)} of #{json['hits']['total']['value'].to_s.ansi(:bold)} results".ansi(:faint)
 
           output.join("\n")
         end

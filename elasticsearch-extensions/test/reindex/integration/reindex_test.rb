@@ -61,7 +61,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
       result = reindex.perform
 
       assert_equal 0, result[:errors]
-      assert_equal 3, @client.search(index: 'test2')['hits']['total']
+      assert_equal 3, @client.search(index: 'test2')['hits']['total']['value']
     end
 
     should "transform documents with a lambda" do
@@ -74,7 +74,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
       result = reindex.perform
 
       assert_equal 0, result[:errors]
-      assert_equal 3, @client.search(index: 'test2')['hits']['total']
+      assert_equal 3, @client.search(index: 'test2')['hits']['total']['value']
       assert_equal 'ONE', @client.get(index: 'test2', type: 'd', id: 1)['_source']['category']
     end
 
@@ -91,7 +91,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
       @client.indices.refresh index: 'test3'
 
       assert_equal 3, result[:errors]
-      assert_equal 0, @client.search(index: 'test3')['hits']['total']
+      assert_equal 0, @client.search(index: 'test3')['hits']['total']['value']
     end
 
     should "reindex via the API integration" do
@@ -100,7 +100,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
       @client.reindex source: { index: 'test1' }, target: { index: 'test4' }
       @client.indices.refresh index: 'test4'
 
-      assert_equal 3, @client.search(index: 'test4')['hits']['total']
+      assert_equal 3, @client.search(index: 'test4')['hits']['total']['value']
     end
   end
 
