@@ -36,7 +36,7 @@ module Elasticsearch
             explain true
           }.to_hash
 
-          assert_equal 1, response['hits']['total']
+          assert_equal 1, response['hits']['total']['value']
           assert_not_nil  response['hits']['hits'][0]['_explanation']
         end
       end

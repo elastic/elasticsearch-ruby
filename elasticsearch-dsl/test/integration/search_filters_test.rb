@@ -95,7 +95,7 @@ module Elasticsearch
               end
             }.to_hash
 
-            assert_equal 4, response['hits']['total']
+            assert_equal 4, response['hits']['total']['value']
             assert response['hits']['hits'].all? { |h| h['_source']['color'] == 'red'  }, response.inspect
           end
         end
@@ -112,7 +112,7 @@ module Elasticsearch
               end
             }.to_hash
 
-            assert_equal 7, response['hits']['total']
+            assert_equal 7, response['hits']['total']['value']
           end
         end
 

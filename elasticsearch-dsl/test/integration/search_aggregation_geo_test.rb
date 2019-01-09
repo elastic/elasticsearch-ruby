@@ -72,7 +72,7 @@ module Elasticsearch
           assert_equal 1,       result['buckets'][0]['doc_count']
           assert_equal 'Pacha', result['buckets'][0]['top_venues']['hits']['hits'][0]['_source']['name']
 
-          assert_equal 2,       result['buckets'][1]['top_venues']['hits']['total']
+          assert_equal 2,       result['buckets'][1]['top_venues']['hits']['total']['value']
         end
 
         should "return the geohash grid distribution" do

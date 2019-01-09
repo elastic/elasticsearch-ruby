@@ -67,7 +67,7 @@ module Elasticsearch
           s = MySearch.new('test')
           response = @client.search index: 'test', body: s.search_definition.to_hash
 
-          assert_equal 2, response['hits']['total']
+          assert_equal 2, response['hits']['total']['value']
           assert_equal 'Test', response['hits']['hits'][0]['_source']['title']
           assert_same_elements ['1', '2'], response['hits']['hits'].map { |d| d['_id'] }
         end

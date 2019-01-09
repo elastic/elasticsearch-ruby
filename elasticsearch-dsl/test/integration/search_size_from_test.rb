@@ -38,7 +38,7 @@ module Elasticsearch
               size 15
             }.to_hash
 
-            assert_equal 25, response['hits']['total']
+            assert_equal 25, response['hits']['total']['value']
             assert_equal 15, response['hits']['hits'].size
           end
 
@@ -50,7 +50,7 @@ module Elasticsearch
               sort { by 'title.keyword' }
             }.to_hash
 
-            assert_equal 25, response['hits']['total']
+            assert_equal 25, response['hits']['total']['value']
             assert_equal 5,  response['hits']['hits'].size
             assert_equal 'Test 005', response['hits']['hits'][0]['_source']['title']
             assert_equal 'Test 009', response['hits']['hits'][4]['_source']['title']
