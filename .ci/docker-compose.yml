@@ -1,12 +1,12 @@
 version: '3.2'
 services:
   client:
-    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.5.3}
+    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.0}
     build:
       context: ..
       dockerfile: .ci/Dockerfile
       args:
-          RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.5.3}
+          RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.0}
           ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-6.5.0}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
