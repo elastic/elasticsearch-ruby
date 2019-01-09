@@ -76,7 +76,8 @@ module Elasticsearch
           :preference,
           :routing,
           :scroll,
-          :search_type ].freeze)
+          :search_type,
+          :rest_total_hits_as_int ].freeze)
     end
   end
 end

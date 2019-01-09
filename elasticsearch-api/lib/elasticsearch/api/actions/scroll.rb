@@ -78,7 +78,8 @@ module Elasticsearch
       # @since 6.1.1
       ParamsRegistry.register(:scroll, [
           :scroll,
-          :scroll_id ].freeze)
+          :scroll_id,
+          :rest_total_hits_as_int ].freeze)
     end
   end
 end

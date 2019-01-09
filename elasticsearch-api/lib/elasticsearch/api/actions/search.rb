@@ -208,7 +208,8 @@ module Elasticsearch
           :max_concurrent_shard_requests,
           :pre_filter_shard_size,
           :allow_partial_search_results,
-          :rest_total_hits_as_int ].freeze)
+          :rest_total_hits_as_int,
+          :track_total_hits ].freeze)
     end
   end
 end
