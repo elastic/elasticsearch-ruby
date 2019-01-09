@@ -175,7 +175,7 @@ namespace :test do
     puts "Ruby [#{RUBY_VERSION}]" if defined? RUBY_VERSION
     subprojects.each do |project|
       puts '-'*80
-      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:unit"
+      sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && unset BUNDLE_PATH && unset BUNDLE_BIN && bundle exec rake test:unit"
       puts "\n"
     end
   end
