@@ -55,13 +55,7 @@ describe 'client#explain' do
       client.explain(index: 'foo', type: 'bar')
     }.to raise_exception(ArgumentError)
   end
-
-  it 'requires the :type argument' do
-    expect {
-      client.explain(index: 'foo', id: '1')
-    }.to raise_exception(ArgumentError)
-  end
-
+  
   it 'performs the request' do
     expect(client_double.explain(index: 'foo', type: 'bar', id: 1, body: {})).to eq({})
   end
