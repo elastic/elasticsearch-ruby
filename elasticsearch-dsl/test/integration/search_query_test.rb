@@ -38,7 +38,7 @@ module Elasticsearch
           should "find the document" do
             response = @client.search index: 'test', body: search { query { match title: 'test' } }.to_hash
 
-            assert_equal 1, response['hits']['total']
+            assert_equal 1, response['hits']['total']['value']
           end
         end
 
@@ -46,7 +46,7 @@ module Elasticsearch
           should "find the document" do
             response = @client.search index: 'test', body: search { query { match_phrase_prefix title: 'te' } }.to_hash
 
-            assert_equal 1, response['hits']['total']
+            assert_equal 1, response['hits']['total']['value']
           end
         end
 
@@ -54,7 +54,7 @@ module Elasticsearch
           should "find the document" do
             response = @client.search index: 'test', body: search { query { query_string { query 'te*' } } }.to_hash
 
-            assert_equal 1, response['hits']['total']
+            assert_equal 1, response['hits']['total']['value']
           end
         end
 
@@ -69,7 +69,7 @@ module Elasticsearch
                 end
               }.to_hash
 
-            assert_equal 2, response['hits']['total']
+            assert_equal 2, response['hits']['total']['value']
             assert_equal 'Test', response['hits']['hits'][0]['_source']['title']
           end
 
@@ -85,7 +85,7 @@ module Elasticsearch
                 end
               }.to_hash
 
-            assert_equal 1, response['hits']['total']
+            assert_equal 1, response['hits']['total']['value']
             assert_equal 'Rest', response['hits']['hits'][0]['_source']['title']
           end
         end

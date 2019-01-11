@@ -46,12 +46,6 @@ describe 'client#percolate' do
     }.to raise_exception(ArgumentError)
   end
 
-  it 'requires the :type argument' do
-    expect {
-      client.percolate(index: 'foo', body: {})
-    }.to raise_exception(ArgumentError)
-  end
-
   it 'performs the request' do
     expect(client_double.percolate(index: 'foo', type: 'bar', body: { doc: { foo: 'bar' } })).to eq({})
   end

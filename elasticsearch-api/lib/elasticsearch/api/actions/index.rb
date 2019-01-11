@@ -118,7 +118,8 @@ module Elasticsearch
           :timestamp,
           :ttl,
           :version,
-          :version_type ].freeze)
+          :version_type,
+          :if_seq_no ].freeze)
     end
   end
 end

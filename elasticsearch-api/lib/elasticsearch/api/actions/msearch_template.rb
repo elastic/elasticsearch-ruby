@@ -59,7 +59,7 @@ module Elasticsearch
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.1.1
-      ParamsRegistry.register(:msearch_template, [ :search_type ].freeze)
+      ParamsRegistry.register(:msearch_template, [ :search_type, :rest_total_hits_as_int ].freeze)
     end
   end
 end
