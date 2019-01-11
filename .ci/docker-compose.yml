@@ -22,6 +22,9 @@ services:
       - esvol:/tmp
     networks:
       - esnet
+    deploy:
+      mode: replicated
+      replicas: 2
     environment:
       - path.repo=/tmp
       - "repositories.url.allowed_urls=http://*"
@@ -29,6 +32,7 @@ services:
       - bootstrap.memory_lock=false
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
       - "http.max_content_length=5mb"
+      - "discovery.zen.minimum_master_nodes=2"
 networks:
   esnet:
 volumes:

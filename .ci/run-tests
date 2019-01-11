@@ -19,7 +19,7 @@ function clean_docker_compose() {
 }
 
 # build the client to ensure the proper version variables are used
-docker-compose -f .ci/docker-compose.yml build client
+docker-compose -f .ci/docker-compose.yml --compatibility build client
 build_exit_code=$?
 if [[ $build_exit_code != 0 ]]; then
   echo "The client container failed to build."
@@ -27,7 +27,7 @@ if [[ $build_exit_code != 0 ]]; then
   exit $build_exit_code
 fi
 
-docker-compose -f .ci/docker-compose.yml run client
+docker-compose -f .ci/docker-compose.yml --compatibility run client
 test_exit_code=$?
 
 clean_docker_compose
