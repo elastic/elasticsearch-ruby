@@ -54,7 +54,7 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:put_template, [ :create, :order, :timeout ].freeze)
+        ParamsRegistry.register(:put_template, [ :create, :order, :timeout, :include_type_name ].freeze)
       end
     end
   end

@@ -62,7 +62,8 @@ module Elasticsearch
             :expand_wildcards,
             :flat_settings,
             :human,
-            :include_defaults ].freeze)
+            :include_defaults,
+            :include_type_name ].freeze)
       end
     end
   end

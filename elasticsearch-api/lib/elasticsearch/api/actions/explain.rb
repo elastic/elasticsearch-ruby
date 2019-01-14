@@ -64,10 +64,17 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         method = HTTP_GET
-        path   = Utils.__pathify(Utils.__escape(arguments[:index]),
-                                 (Utils.__escape(arguments[:type] || DEFAULT_DOC)),
-                                 Utils.__escape(arguments[:id]),
-                                 '_explain')
+
+        if arguments[:type]
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   Utils.__escape(arguments[:type]),
+                                   Utils.__escape(arguments[:id]),
+                                   '_explain'
+        else
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   '_explain',
+                                   Utils.__escape(arguments[:id])
+        end
 
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
