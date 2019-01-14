@@ -88,10 +88,17 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
         arguments[:type] ||= DEFAULT_DOC
         method = HTTP_POST
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id]),
-                                 '_update'
+
+        if arguments[:type]
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   Utils.__escape(arguments[:type]),
+                                   Utils.__escape(arguments[:id]),
+                                   '_update'
+        else
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   '_update',
+                                   Utils.__escape(arguments[:id])
+        end
 
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]

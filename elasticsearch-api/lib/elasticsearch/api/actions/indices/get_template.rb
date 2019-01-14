@@ -53,7 +53,10 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:get_template, [ :flat_settings, :local, :master_timeout ].freeze)
+        ParamsRegistry.register(:get_template, [ :flat_settings,
+                                                 :local,
+                                                 :master_timeout,
+                                                 :include_type_name ].freeze)
       end
     end
   end

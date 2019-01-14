@@ -76,7 +76,8 @@ module Elasticsearch
             :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
-            :expand_wildcards ].freeze)
+            :expand_wildcards,
+            :include_type_name ].freeze)
       end
     end
   end

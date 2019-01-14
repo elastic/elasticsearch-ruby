@@ -54,10 +54,18 @@ module Elasticsearch
         arguments[:type] ||= DEFAULT_DOC
 
         method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id]),
-                                 '_source'
+
+        if arguments[:type]
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   Utils.__escape(arguments[:type]),
+                                   Utils.__escape(arguments[:id]),
+                                   '_source'
+        else
+          path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                   '_source',
+                                   Utils.__escape(arguments[:id])
+        end
+
 
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = nil
