@@ -483,15 +483,14 @@ module Elasticsearch
               begin
                 # First, try the new `--version` syntax...
                 __log "Running [#{arguments[:command]} --version] to determine version" if ENV['DEBUG']
-                rout, wout = IO.pipe
-                pid = Process.spawn("#{arguments[:command]} --version", out: wout)
+                io = IO.popen("#{arguments[:command]} --version")
+                pid = io.pid
 
                 Timeout::timeout(arguments[:timeout_version]) do
                   Process.wait(pid)
-                  wout.close unless wout.closed?
-                  output = rout.read unless rout.closed?
-                  rout.close unless rout.closed?
+                  output = io.read
                 end
+
               rescue Timeout::Error
                 # ...else, the old `-v` syntax
                 __log "Running [#{arguments[:command]} -v] to determine version" if ENV['DEBUG']
@@ -500,8 +499,7 @@ module Elasticsearch
                 if pid
                   Process.kill('INT', pid) rescue Errno::ESRCH # Most likely the process has terminated already
                 end
-                wout.close unless wout.closed?
-                rout.close unless rout.closed?
+                io.close unless io.closed?
               end
 
               STDERR.puts "> #{output}" if ENV['DEBUG']

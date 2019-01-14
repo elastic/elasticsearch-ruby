@@ -261,12 +261,15 @@ class Elasticsearch::Extensions::TestClusterTest < Elasticsearch::Test::UnitTest
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
           File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
-          Process.stubs(:wait)
-          Process.expects(:spawn).returns(123)
-          Process.expects(:kill).with('INT', 123)
+          io = mock('IO')
+          io.expects(:pid).returns(123)
+          io.expects(:read).returns('Version: 2.3.0-SNAPSHOT, Build: d1c86b0/2016-03-30T10:43:20Z, JVM: 1.8.0_60')
+          io.expects(:closed?).returns(false)
+          io.expects(:close)
+          IO.expects(:popen).returns(io)
 
-          IO.any_instance.expects(:read)
-            .returns('Version: 2.3.0-SNAPSHOT, Build: d1c86b0/2016-03-30T10:43:20Z, JVM: 1.8.0_60')
+          Process.stubs(:wait)
+          Process.expects(:kill).with('INT', 123)
 
           assert_equal '2.0', @subject.__determine_version
         end
@@ -288,11 +291,15 @@ class Elasticsearch::Extensions::TestClusterTest < Elasticsearch::Test::UnitTest
           File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
           File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
 
-          Process.stubs(:wait)
-          Process.expects(:spawn).returns(123)
-          Process.expects(:kill).with('INT', 123)
+          io = mock('IO')
+          io.expects(:pid).returns(123)
+          io.expects(:read).returns('Version: FOOBAR')
+          io.expects(:closed?).returns(false)
+          io.expects(:close)
+          IO.expects(:popen).returns(io)
 
-          IO.any_instance.expects(:read).returns('Version: FOOBAR')
+          Process.stubs(:wait)
+          Process.expects(:kill).with('INT', 123)
 
           assert_raise(RuntimeError) { @subject.__determine_version }
         end
