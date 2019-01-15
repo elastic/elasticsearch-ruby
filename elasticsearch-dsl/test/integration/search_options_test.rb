@@ -25,8 +25,8 @@ module Elasticsearch
       context "Search options" do
         setup do
           @client.indices.create index: 'test'
-          @client.index index: 'test', type: 'd', id: '1', body: { title: 'Test' }
-          @client.index index: 'test', type: 'd', id: '2', body: { title: 'Rest' }
+          @client.index index: 'test', id: '1', body: { title: 'Test' }
+          @client.index index: 'test', id: '2', body: { title: 'Rest' }
           @client.indices.refresh index: 'test'
         end
 

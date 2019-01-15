@@ -29,16 +29,14 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'articles-and-comments', body: {
-            mappings: {
-              _doc: {
-                properties: {
-                  title:    { type: 'text' },
-                  category: { type: 'keyword' },
-                  join_field: { type: 'join', relations: { article: 'comment' } },
-                  author: { type: 'keyword'}
-                }
+              mappings: {
+                  properties: {
+                      title: {type: 'text'},
+                      category: {type: 'keyword'},
+                      join_field: {type: 'join', relations: {article: 'comment'}},
+                      author: {type: 'keyword'}
+                  }
               }
-            }
           }
 
           @client.index index: 'articles-and-comments', id: 1,

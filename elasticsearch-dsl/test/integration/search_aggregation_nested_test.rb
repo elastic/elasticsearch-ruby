@@ -29,31 +29,30 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'products-test', body: {
-            mappings: {
-              product: {
-                properties: {
-                  title: { type: 'text' },
-                  category: { type: 'keyword' },
-                  offers: {
-                    type: 'nested',
-                    properties: {
-                      name:  { type: 'text' },
-                      price: { type: 'double' }
-                    }
+              mappings: {
+                  properties: {
+                      title: {type: 'text'},
+                      category: {type: 'keyword'},
+                      offers: {
+                          type: 'nested',
+                          properties: {
+                              name: {type: 'text'},
+                              price: {type: 'double'}
+                          }
+                      }
                   }
-                }
               }
-            }
           }
-          @client.index index: 'products-test', type: 'product',
+
+          @client.index index: 'products-test',
                         body: { title: 'A',
                                 category: 'audio',
                                 offers: [ { name: 'A1', price: 100 }, { name: 'A2', price: 120 } ] }
-          @client.index index: 'products-test', type: 'product',
+          @client.index index: 'products-test',
                         body: { title: 'B',
                                 category: 'audio',
                                 offers: [ { name: 'B1', price: 200 }, { name: 'B2', price: 180 } ] }
-          @client.index index: 'products-test', type: 'product',
+          @client.index index: 'products-test',
                         body: { title: 'C',
                                 category: 'video',
                                 offers: [ { name: 'C1', price: 300 }, { name: 'C2', price: 350 } ] }

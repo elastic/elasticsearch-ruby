@@ -56,9 +56,9 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'test'
-          @client.index index: 'test', type: 'd', id: '1', body: { title: 'Test', tags: ['one'] }
-          @client.index index: 'test', type: 'd', id: '2', body: { title: 'Test', tags: ['one', 'two'] }
-          @client.index index: 'test', type: 'd', id: '3', body: { title: 'Test', tags: ['three'] }
+          @client.index index: 'test', id: '1', body: { title: 'Test', tags: ['one'] }
+          @client.index index: 'test', id: '2', body: { title: 'Test', tags: ['one', 'two'] }
+          @client.index index: 'test', id: '3', body: { title: 'Test', tags: ['three'] }
           @client.indices.refresh index: 'test'
         end
 

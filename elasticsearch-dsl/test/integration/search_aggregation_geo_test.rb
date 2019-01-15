@@ -29,23 +29,21 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'venues-test', body: {
-            mappings: {
-              venue: {
-                properties: {
-                  location: { type: 'geo_point' }
-                }
+              mappings: {
+                  properties: {
+                      location: {type: 'geo_point'}
+                  }
               }
-            }
           }
-          @client.index index: 'venues-test', type: 'venue',
+          @client.index index: 'venues-test',
                         body: { name: 'Space', location: "38.886214,1.403889" }
-          @client.index index: 'venues-test', type: 'venue',
+          @client.index index: 'venues-test',
                         body: { name: 'Pacha', location: "38.9184427,1.4433646" }
-          @client.index index: 'venues-test', type: 'venue',
+          @client.index index: 'venues-test',
                         body: { name: 'Amnesia', location: "38.948045,1.408341" }
-          @client.index index: 'venues-test', type: 'venue',
+          @client.index index: 'venues-test',
                         body: { name: 'Privilege', location: "38.958082,1.408288" }
-          @client.index index: 'venues-test', type: 'venue',
+          @client.index index: 'venues-test',
                         body: { name: 'Es Paradis', location: "38.979071,1.307394" }
           @client.indices.refresh index: 'venues-test'
         end

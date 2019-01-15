@@ -31,49 +31,49 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'test'
-          @client.index index: 'test', type: 'd', id: 1,
+          @client.index index: 'test', id: 1,
                         body: { name: 'Original',
                                 color: 'red',
                                 size: 'xxl',
                                 category: 'unisex',
                                 manufacturer: 'a' }
 
-          @client.index index: 'test', type: 'd', id: 2,
+          @client.index index: 'test', id: 2,
                         body: { name: 'Original',
                                 color: 'red',
                                 size: 'xl',
                                 category: 'unisex',
                                 manufacturer: 'a' }
 
-          @client.index index: 'test', type: 'd', id: 3,
+          @client.index index: 'test', id: 3,
                         body: { name: 'Original',
                                 color: 'red',
                                 size: 'l',
                                 category: 'unisex',
                                 manufacturer: 'a' }
 
-          @client.index index: 'test', type: 'd', id: 4,
+          @client.index index: 'test', id: 4,
                         body: { name: 'Western',
                                 color: 'red',
                                 size: 'm',
                                 category: 'men',
                                 manufacturer: 'c' }
 
-          @client.index index: 'test', type: 'd', id: 5,
+          @client.index index: 'test', id: 5,
                         body: { name: 'Modern',
                                 color: 'grey',
                                 size: 'l',
                                 category: 'men',
                                 manufacturer: 'b' }
 
-          @client.index index: 'test', type: 'd', id: 6,
+          @client.index index: 'test', id: 6,
                         body: { name: 'Modern',
                                 color: 'grey',
                                 size: 's',
                                 category: 'men',
                                 manufacturer: 'b' }
 
-          @client.index index: 'test', type: 'd', id: 7,
+          @client.index index: 'test', id: 7,
                         body: { name: 'Modern',
                                 color: 'grey',
                                 size: 's',
@@ -152,21 +152,19 @@ module Elasticsearch
         context "geographical filters" do
           setup do
             @client.indices.create index: 'places', body: {
-              mappings: {
-                d: {
-                  properties: {
-                    location: {
-                      type: 'geo_point'
+                mappings: {
+                    properties: {
+                        location: {
+                            type: 'geo_point'
+                        }
                     }
-                  }
                 }
-              }
             }
-            @client.index index: 'places', type: 'd', id: 1,
+            @client.index index: 'places', id: 1,
                           body: { name: 'Vyšehrad',
                                   location: '50.064399, 14.420018'}
 
-            @client.index index: 'places', type: 'd', id: 2,
+            @client.index index: 'places', id: 2,
                           body: { name: 'Karlštejn',
                                   location: '49.939518, 14.188046'}
 
