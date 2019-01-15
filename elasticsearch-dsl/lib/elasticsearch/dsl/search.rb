@@ -15,14 +15,16 @@ module Elasticsearch
       #         match title: 'test'
       #       end
       #     end
+      #     definition.to_hash
+      #     => {:query=>{:match=>{:title=>"test"}}}
       #
       # @example Using the class imperatively
       #
       #     definition = Search.new
-      #     query = Query.new
+      #     query = Queries::Match.new title: 'test'
       #     definition.query query
       #     definition.to_hash
-      #     # => => {:query=>{:match=>{:title=>"Test"}}}
+      #     # => {:query=>{:match=>{:title=>"test"}}}
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search.html
       #
