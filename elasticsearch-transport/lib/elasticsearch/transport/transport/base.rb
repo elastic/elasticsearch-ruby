@@ -110,7 +110,7 @@ module Elasticsearch
 
             new_connections = __build_connections
             stale_connections = @connections.all.select  { |c| ! new_connections.include?(c) }
-            new_connections = new_connections.reject { |c| @connections.include?(c) }
+            new_connections = new_connections.reject { |c| @connections.all.include?(c) }
 
             @connections.remove(stale_connections)
             @connections.add(new_connections)

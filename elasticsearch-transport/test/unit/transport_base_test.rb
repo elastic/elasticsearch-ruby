@@ -555,6 +555,22 @@ class Elasticsearch::Transport::Transport::BaseTest < Test::Unit::TestCase
       assert_equal 1, @transport.connections.size
       assert_equal 1, @transport.connections.all.size
     end
+
+    should "not duplicate connections" do
+      @transport.__rebuild_connections :hosts => [ { :host => 'node1', :port => 1 },
+                                                   { :host => 'node2', :port => 2 } ],
+                                       :options => { :http => {} }
+      assert_equal 2, @transport.connections.size
+
+      @transport.connections[0].dead!
+
+      @transport.__rebuild_connections :hosts => [ { :host => 'node1', :port => 1 },
+                                                   { :host => 'node2', :port => 2 } ],
+                                       :options => { :http => {} }
+
+      assert_equal 2, @transport.connections.all.size
+      assert_equal 1, @transport.connections.size
+    end
   end
 
   context "rebuilding connections" do
