@@ -31,37 +31,35 @@ module Elasticsearch
 
         setup do
           @client.indices.create index: 'test', body: {
-            mappings: {
-              d: {
-                properties: {
-                  title: { type: 'text' },
-                  suggest: {
-                    type: 'object',
-                    properties: {
-                      title:   { type: 'completion' },
-                      payload: { type: 'object', enabled: false }
-                    }
+              mappings: {
+                  properties: {
+                      title: {type: 'text'},
+                      suggest: {
+                          type: 'object',
+                          properties: {
+                              title: {type: 'completion'},
+                              payload: {type: 'object', enabled: false}
+                          }
+                      }
                   }
-                }
               }
-            }
           }
 
-          @client.index index: 'test', type: 'd', id: '1', body: {
+          @client.index index: 'test', id: '1', body: {
             title: 'One',
             suggest: {
               title: { input: ['one', 'uno', 'jedna'] },
               payload: { id: '1' }
             }
           }
-          @client.index index: 'test', type: 'd', id: '2', body: {
+          @client.index index: 'test', id: '2', body: {
             title: 'Two',
             suggest: {
               title: { input: ['two', 'due', 'dvě'] },
               payload: { id: '2' }
             }
           }
-          @client.index index: 'test', type: 'd', id: '3', body: {
+          @client.index index: 'test', id: '3', body: {
             title: 'Three',
             suggest: {
               title: { input: ['three', 'tres', 'tři'] },

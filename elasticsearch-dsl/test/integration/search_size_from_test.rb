@@ -25,9 +25,9 @@ module Elasticsearch
         context "Search results pagination" do
           setup do
             @client.indices.create index: 'test', body: {
-              mappings: { d: { properties: { title: { type: 'text', fields: { keyword: { type: 'keyword' } } } } } } }
+              mappings: { properties: { title: { type: 'text', fields: { keyword: { type: 'keyword' } } } } } }
 
-            25.times { |i| @client.index index: 'test', type: 'd', id: i, body: { title: "Test #{sprintf('%03d', i)}" } }
+            25.times { |i| @client.index index: 'test', id: i, body: { title: "Test #{sprintf('%03d', i)}" } }
 
             @client.indices.refresh index: 'test'
           end

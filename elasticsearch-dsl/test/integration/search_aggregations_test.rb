@@ -25,17 +25,15 @@ module Elasticsearch
       context "Aggregations integration" do
         setup do
           @client.indices.create index: 'test', body: {
-            mappings: {
-              d: {
-                properties: {
-                  tags: { type: 'keyword' }
-                }
+              mappings: {
+                  properties: {
+                      tags: {type: 'keyword'}
+                  }
               }
-            }
           }
-          @client.index index: 'test', type: 'd', id: '1', body: { title: 'A', tags: %w[one], clicks: 5 }
-          @client.index index: 'test', type: 'd', id: '2', body: { title: 'B', tags: %w[one two], clicks: 15 }
-          @client.index index: 'test', type: 'd', id: '3', body: { title: 'C', tags: %w[one three], clicks: 20 }
+          @client.index index: 'test', id: '1', body: { title: 'A', tags: %w[one], clicks: 5 }
+          @client.index index: 'test', id: '2', body: { title: 'B', tags: %w[one two], clicks: 15 }
+          @client.index index: 'test', id: '3', body: { title: 'C', tags: %w[one three], clicks: 20 }
           @client.indices.refresh index: 'test'
         end
 
