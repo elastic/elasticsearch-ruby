@@ -1,6 +1,12 @@
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 JRUBY    = defined?(JRUBY_VERSION)
 
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+
 if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
   require 'rubygems'
   gem 'test-unit'

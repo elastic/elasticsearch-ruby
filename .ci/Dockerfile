@@ -3,6 +3,7 @@ FROM ruby:${RUBY_TEST_VERSION}
 
 ENV GEM_HOME="/usr/local/bundle"
 ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
+ENV QUIET=true
 
 WORKDIR /usr/src/app
 
@@ -15,4 +16,4 @@ RUN rake bundle:clean
 RUN rake bundle:install
 
 
-CMD [ "rake", "test:unit" ]
+CMD [ "rake", "test:integration" ]

@@ -21,6 +21,7 @@ namespace :test do
   end
 
   Rake::TestTask.new(:integration) do |test|
+    sh '../scripts/wait-cluster.sh'
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
     test.deps = [ :spec ]
