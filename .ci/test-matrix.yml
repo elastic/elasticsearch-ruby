@@ -6,4 +6,8 @@ RUBY_TEST_VERSION:
 - 2.6.0
 - 2.4.5
 
+TEST_SUITE:
+- unit
+- integration
+
 exclude: ~
