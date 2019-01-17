@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+#
+# Runs the client tests via Docker with the expectation that the required
+# environment variables have already been exported before running this script.
+#
+# The required environment variables include:
+#
+#   - $ELASTICSEARCH_VERSION
+#   - $RUBY_TEST_VERSION
+#   - TEST_SUITE
+#
+
+export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION}
+export RUBY_TEST_VERSION=${RUBY_TEST_VERSION}
+export TEST_SUITE=${TEST_SUITE}
+
+function clean_docker_compose() {
+  # clean up the docker-compose environment
+  docker-compose -f .ci/docker-compose.yml down --volumes --remove-orphans
+}
+
+# build the client to ensure the proper version variables are used
+docker-compose -f .ci/docker-compose.yml --compatibility build client
+build_exit_code=$?
+if [[ $build_exit_code != 0 ]]; then
+  echo "The client container failed to build."
+  clean_docker_compose
+  exit $build_exit_code
+fi
+
+docker-compose -f .ci/docker-compose.yml --compatibility run client
+test_exit_code=$?
+
+clean_docker_compose
+
+# exit with the exit code received from the test run
+exit $test_exit_code
