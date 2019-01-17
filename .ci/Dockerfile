@@ -1,6 +1,10 @@
 ARG RUBY_TEST_VERSION=2.5
 FROM ruby:${RUBY_TEST_VERSION}
 
+ARG TEST_SUITE=unit
+ENV TEST_SUITE=${TEST_SUITE}
+
+
 ENV GEM_HOME="/usr/local/bundle"
 ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
 ENV QUIET=true
@@ -16,4 +20,4 @@ RUN rake bundle:clean
 RUN rake bundle:install
 
 
-CMD [ "rake", "test:integration" ]
+CMD ["sh", "-c", "rake test:$TEST_SUITE"]

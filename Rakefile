@@ -1,7 +1,7 @@
 require 'pathname'
 
 subprojects = %w| elasticsearch elasticsearch-transport elasticsearch-dsl elasticsearch-api elasticsearch-extensions |
-subprojects = %w| elasticsearch-transport |
+subprojects = %w| elasticsearch-transport | if ENV['TEST_SUITE'] == 'integration'
 __current__ = Pathname( File.expand_path('..', __FILE__) )
 
 # TODO: Figure out "bundle exec or not"

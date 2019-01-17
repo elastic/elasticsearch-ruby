@@ -8,10 +8,12 @@
 #
 #   - $ELASTICSEARCH_VERSION
 #   - $RUBY_TEST_VERSION
+#   - TEST_SUITE
 #
 
 export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION}
 export RUBY_TEST_VERSION=${RUBY_TEST_VERSION}
+export TEST_SUITE=${TEST_SUITE}
 
 function clean_docker_compose() {
   # clean up the docker-compose environment
