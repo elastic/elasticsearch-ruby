@@ -20,4 +20,4 @@ RUN rake bundle:clean
 RUN rake bundle:install
 
 
-CMD ["sh", "-c", "rake test:$TEST_SUITE"]
+CMD ["sh", "-c", "rake test:integration"]
