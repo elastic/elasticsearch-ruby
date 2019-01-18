@@ -34,8 +34,7 @@ namespace :test do
   end
 
   Rake::TestTask.new(:all) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
+    test.deps = [ :unit, :integration ]
   end
 
   Rake::TestTask.new(:profile) do |test|

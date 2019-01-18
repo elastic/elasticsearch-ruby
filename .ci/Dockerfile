@@ -1,7 +1,7 @@
 ARG RUBY_TEST_VERSION=2.5
 FROM ruby:${RUBY_TEST_VERSION}
 
-ARG TEST_SUITE=unit
+ARG TEST_SUITE=all
 ENV TEST_SUITE=${TEST_SUITE}
 
 
@@ -20,4 +20,4 @@ RUN rake bundle:clean
 RUN rake bundle:install
 
 
-CMD ["sh", "-c", "rake test:integration"]
+CMD ["sh", "-c", "rake test:$TEST_SUITE"]
