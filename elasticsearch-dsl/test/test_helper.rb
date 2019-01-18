@@ -5,6 +5,12 @@ if ENV['COVERAGE'] || ENV['CI']
   SimpleCov.start { add_filter "/test|test_" }
 end
 
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+
 at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 
 require 'minitest/autorun'
@@ -57,7 +63,6 @@ module Elasticsearch
       end
 
       def setup
-        @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
 
         @logger =  Logger.new(STDERR)
         @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -70,7 +75,7 @@ module Elasticsearch
           ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
         end
 
-        @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
+        @client = Elasticsearch::Client.new hosts: ELASTICSEARCH_HOSTS, logger: (ENV['QUIET'] ? nil : @logger)
         @version = @client.info['version']['number']
       end
 
