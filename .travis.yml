@@ -64,7 +64,7 @@ install:
   - rake bundle:install
 
 script:
-  - rake test:$TEST_SUITE
+  - rake test:${TEST_SUITE}
 
 notifications:
   disable: true
