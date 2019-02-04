@@ -20,7 +20,7 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.5.3
+    - rvm: 2.6.1
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
@@ -32,7 +32,7 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.5.3
+    - rvm: 2.6.1
       jdk: oraclejdk8
       env: QUIET=y ELASTICSEARCH_HOSTS=localhost:9250,localhost:9251 TEST_SUITE=integration
 

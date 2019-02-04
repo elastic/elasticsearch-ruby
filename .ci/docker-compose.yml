@@ -6,7 +6,7 @@ services:
       context: ..
       dockerfile: .ci/Dockerfile
       args:
-          RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.0}
+          RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.1}
           ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-6.5.0}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
