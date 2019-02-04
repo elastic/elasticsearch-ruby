@@ -200,6 +200,9 @@ namespace :test do
     end
   end
 
+  desc "Run test in Travis"
+  task :travis => [ ENV['TEST_SUITE'] ]
+
   namespace :cluster do
     desc "Start Elasticsearch nodes for tests"
     task :start do
