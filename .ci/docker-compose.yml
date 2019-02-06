@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   client:
-    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.0}
+    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.1}
     build:
       context: ..
       dockerfile: .ci/Dockerfile
