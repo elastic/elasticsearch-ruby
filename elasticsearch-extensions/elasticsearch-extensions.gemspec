@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.description   = %q{Extensions for the Elasticsearch Rubygem}
   s.summary       = %q{Extensions for the Elasticsearch Rubygem}
   s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-extensions"
-  s.license       = "Apache 2"
+  s.license       = "Apache-2.0"
 
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }

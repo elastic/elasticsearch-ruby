@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.description   = %q{A Ruby DSL builder for Elasticsearch}
   s.summary       = s.description
   s.homepage      = "https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-dsl"
-  s.license       = "Apache 2"
+  s.license       = "Apache-2.0"
 
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
