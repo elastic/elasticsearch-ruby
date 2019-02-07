@@ -182,7 +182,6 @@ namespace :test do
 
   desc "Run integration tests in all subprojects"
   task :integration do
-    Rake::Task['elasticsearch:update'].invoke
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
@@ -190,8 +189,18 @@ namespace :test do
     end
   end
 
-  desc "Run all tests in all subprojects"
-  task :all do
+  desc "Run rest api tests"
+  task :rest_api do
+    Rake::Task['elasticsearch:update'].invoke
+    puts '-' * 80
+    sh "cd #{__current__.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
+    puts "\n"
+  end
+
+  desc "Run all tests in all subprojects exception api"
+  task :client do
+    subprojects.delete('elasticsearch-api')
+    subprojects.delete('elasticsearch-extensions')
     subprojects.each do |project|
       puts '-'*80
       sh "cd #{__current__.join(project)} && unset BUNDLE_GEMFILE && bundle exec rake test:all"

@@ -1,13 +1,14 @@
 version: '3.2'
 services:
   client:
-    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.0}
+    image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.1}
     build:
       context: ..
       dockerfile: .ci/Dockerfile
       args:
           RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.1}
           ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-6.5.0}
+          TEST_SUITE: ${TEST_SUITE:-client}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
     volumes:
@@ -18,17 +19,27 @@ services:
       - elasticsearch
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.0}
-    volumes:
-      - esvol:/tmp
-    networks:
-      - esnet
     environment:
+      - cluster.name=docker-cluster
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - path.repo=/tmp
       - "repositories.url.allowed_urls=http://*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
+      - "discovery.zen.minimum_master_nodes=2"
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
-      - "http.max_content_length=5mb"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esvol:/tmp
+    ports:
+      - 9200
+    networks:
+      - esnet
+    deploy:
+      replicas: 2
 networks:
   esnet:
 volumes:

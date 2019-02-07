@@ -14,6 +14,10 @@ branches:
     - 6.x
     - 5.x
 
+env:
+  global:
+    - TEST_ES_SERVER=http://localhost:9250
+
 matrix:
   include:
     - rvm: ruby-head
@@ -34,7 +38,7 @@ matrix:
 
     - rvm: 2.6.1
       jdk: oraclejdk8
-      env: QUIET=y ELASTICSEARCH_HOSTS=localhost:9250,localhost:9251 TEST_SUITE=integration
+      env: QUIET=y TEST_SUITE=integration
 
   allow_failures:
     - rvm: ruby-head
