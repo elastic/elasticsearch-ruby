@@ -8,7 +8,7 @@ services:
       args:
           RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.1}
           ELASTICSEARCH_VERSION: ${ELASTICSEARCH_VERSION:-6.5.0}
-          TEST_SUITE: ${TEST_SUITE:-all}
+          TEST_SUITE: ${TEST_SUITE:-client}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
     volumes:
