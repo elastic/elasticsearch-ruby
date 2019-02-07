@@ -333,7 +333,7 @@ suites.each do |suite|
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
       begin
-        tests = YAML.load_documents File.new(file)
+        tests = YAML.load_stream File.new(file)
       rescue Exception => e
         $stderr.puts "ERROR [#{e.class}] while loading [#{file}] file".ansi(:red)
         # raise e
