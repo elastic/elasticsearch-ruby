@@ -16,7 +16,7 @@ branches:
 
 env:
   global:
-    - TEST_ES_SERVER=localhost:9250,localhost:9251
+    - TEST_ES_SERVER=http://localhost:9250
 
 matrix:
   include:
@@ -38,7 +38,7 @@ matrix:
 
     - rvm: 2.6.1
       jdk: oraclejdk8
-      env: QUIET=y TEST_SUITE=integration
+      env: QUIET=y ELASTICSEARCH_HOSTS=localhost:9250,localhost:9251 TEST_SUITE=integration
 
   allow_failures:
     - rvm: ruby-head
@@ -68,7 +68,7 @@ install:
   - rake bundle:install
 
 script:
-  - rake test:travis
+  - rake test:$TEST_SUITE
 
 notifications:
   disable: true
