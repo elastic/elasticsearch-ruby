@@ -4,7 +4,6 @@ require 'elasticsearch/extensions/reindex'
 class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::IntegrationTestCase
   context "The Reindex extension" do
     setup do
-      @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
 
       @logger =  ::Logger.new(STDERR)
       @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -17,7 +16,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
         ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
       end
 
-      @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: @logger
+      @client = Elasticsearch::Client.new host: "#{TEST_HOST}:#{TEST_PORT}", logger: @logger
       @client.indices.delete index: '_all'
 
       @client.index index: 'test1', type: 'd', id: 1, body: { title: 'TEST 1', category: 'one' }
