@@ -3,7 +3,7 @@ services:
   client:
     image: docker.elastic.co/clients/elasticsearch-ruby:${RUBY_TEST_VERSION:-2.6.1}
     build:
-      context: ..
+      context: ../../
       dockerfile: .ci/Dockerfile
       args:
           RUBY_TEST_VERSION: ${RUBY_TEST_VERSION:-2.6.1}
@@ -26,7 +26,7 @@ services:
       - "repositories.url.allowed_urls=http://*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-      - "discovery.zen.minimum_master_nodes=2"
+      - "discovery.zen.minimum_master_nodes=1"
       - "discovery.zen.ping.unicast.hosts=elasticsearch"
     ulimits:
       memlock:
@@ -38,8 +38,6 @@ services:
       - 9200
     networks:
       - esnet
-    deploy:
-      replicas: 2
 networks:
   esnet:
 volumes:

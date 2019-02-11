@@ -1,5 +1,13 @@
 JRUBY    = defined?(JRUBY_VERSION)
 
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+
+TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
+
 if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'
   SimpleCov.start { add_filter "/test|test_" }
