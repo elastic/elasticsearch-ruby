@@ -652,7 +652,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'connects to the cluster' do
-        expect(response.body['number_of_nodes']).to eq(ELASTICSEARCH_HOSTS.size)
+        expect(response.body['number_of_nodes']).to be > (1)
       end
     end
 

@@ -17,11 +17,11 @@ export TEST_SUITE=${TEST_SUITE}
 
 function clean_docker_compose() {
   # clean up the docker-compose environment
-  docker-compose -f .ci/docker-compose.yml down --volumes --remove-orphans
+  docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml down --volumes --remove-orphans
 }
 
 # build the client to ensure the proper version variables are used
-docker-compose -f .ci/docker-compose.yml --compatibility build client
+docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml --compatibility build client
 build_exit_code=$?
 if [[ $build_exit_code != 0 ]]; then
   echo "The client container failed to build."
@@ -29,7 +29,7 @@ if [[ $build_exit_code != 0 ]]; then
   exit $build_exit_code
 fi
 
-docker-compose -f .ci/docker-compose.yml --compatibility run client
+docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml --compatibility run client
 test_exit_code=$?
 
 clean_docker_compose

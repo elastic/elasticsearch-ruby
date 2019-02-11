@@ -31,8 +31,7 @@ module Elasticsearch
 
       context "Elasticsearch client" do
         setup do
-          @port  = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-          system "curl -X DELETE http://localhost:#{@port}/_all > /dev/null 2>&1"
+          system "curl -X DELETE http://#{TEST_HOST}:#{TEST_PORT}/_all > /dev/null 2>&1"
 
           @logger =  Logger.new(STDERR)
           @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -45,7 +44,7 @@ module Elasticsearch
             ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
           end
 
-          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
+          @client = Elasticsearch::Client.new host: "#{TEST_HOST}:#{TEST_PORT}", logger: (ENV['QUIET'] ? nil : @logger)
         end
 
         should "perform the API methods" do
