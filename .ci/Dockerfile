@@ -8,15 +8,16 @@ ENV TEST_SUITE=${TEST_SUITE}
 ENV GEM_HOME="/usr/local/bundle"
 ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
 ENV QUIET=true
+ENV CI=true
 
 WORKDIR /usr/src/app
 
 COPY . .
 
+RUN rake bundle:clean
 RUN bundle install
 RUN bundle exec rake setup
 RUN bundle exec rake elasticsearch:update
-RUN rake bundle:clean
 RUN rake bundle:install
 
 
