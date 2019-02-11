@@ -28,7 +28,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
   context "Transport" do
     setup do
-      @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+      @host, @port = ELASTICSEARCH_HOSTS.first.split(':')
       begin; Object.send(:remove_const, :Patron);   rescue NameError; end
     end
 
@@ -37,7 +37,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'typhoeus/adapters/faraday'
 
       transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-        :hosts => [ { :host => 'localhost', :port => @port } ] do |f|
+        :hosts => [ { host: @host, port: @port } ] do |f|
           f.response :logger
           f.adapter  :typhoeus
         end
@@ -48,7 +48,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     should "allow to define connection parameters and pass them" do
       transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-                    :hosts => [ { :host => 'localhost', :port => @port } ],
+                    :hosts => [ { host: @host, port: @port } ],
                     :options => { :transport_options => {
                                     :params => { :format => 'yaml' }
                                   }
@@ -65,7 +65,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'elasticsearch/transport/transport/http/curb'
 
       transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-        :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
+        :hosts => [ { host: @host, port: @port } ] do |curl|
           curl.verbose = true
         end
 
@@ -78,7 +78,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       require 'elasticsearch/transport/transport/http/curb'
 
       transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-        :hosts => [ { :host => 'localhost', :port => @port } ] do |curl|
+        :hosts => [ { host: @host, port: @port } ] do |curl|
           curl.verbose = true
         end
 

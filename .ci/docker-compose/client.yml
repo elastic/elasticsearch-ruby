@@ -26,8 +26,8 @@ services:
       - "repositories.url.allowed_urls=http://*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-      - "discovery.zen.minimum_master_nodes=2"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+      - "discovery.type=single-node"
+      #- "discovery.zen.ping.unicast.hosts=elasticsearch"
     ulimits:
       memlock:
         soft: -1
@@ -39,7 +39,7 @@ services:
     networks:
       - esnet
     deploy:
-      replicas: 2
+      replicas: 1
 networks:
   esnet:
 volumes:
