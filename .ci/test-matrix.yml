@@ -7,7 +7,7 @@ RUBY_TEST_VERSION:
 - 2.4.5
 
 TEST_SUITE:
-- rest_api
+#- rest_api
 - client
 
 exclude: ~
