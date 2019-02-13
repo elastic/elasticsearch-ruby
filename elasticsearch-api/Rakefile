@@ -35,6 +35,11 @@ require 'rspec/core/rake_task'
 
 namespace :test do
 
+  desc "Wait for Elasticsearch to be in a green state"
+  task :wait_for_green do
+    sh '../scripts/wait-cluster.sh'
+  end
+
   RSpec::Core::RakeTask.new(:spec)
 
   desc "Update the repository with YAML tests"
@@ -51,7 +56,7 @@ namespace :test do
   end
 
   desc "Run integration tests"
-  task :integration do
+  task :integration => :wait_for_green do
     require 'elasticsearch'
 
     branches = `git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} branch --no-color`
@@ -70,6 +75,7 @@ namespace :test do
 
     # Define the task
     t = Rake::TestTask.new(:integration) do |test|
+      test.deps = [ :wait_for_green ]
       test.libs << 'lib' << 'test'
       test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
       test.verbose = false
@@ -78,7 +84,8 @@ namespace :test do
 
     # Check if a test cluster is running
     begin
-      url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
+      url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
+      url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}" unless url
       client = Elasticsearch::Client.new :url => url
       es_version_info = client.info['version']
       build_hash      = es_version_info['build_hash']

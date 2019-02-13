@@ -32,6 +32,7 @@ require 'elasticsearch/extensions/test/profiling' unless JRUBY
 # Skip features
 skip_features = 'stash_in_path,requires_replica,headers,warnings,default_shards'
 SKIP_FEATURES = ENV.fetch('TEST_SKIP_FEATURES', skip_features)
+SKIPPED_TESTS = [ '/nodes.stats/30_discovery.yml' ]
 
 # Launch test cluster
 #
@@ -90,7 +91,8 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #
 #     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
 #
-url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
+url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
+url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}" unless url
 $client ||= Elasticsearch::Client.new url: url
 $helper_client ||= Elasticsearch::Client.new url: url
 
@@ -326,7 +328,9 @@ suites.each do |suite|
     #
     setup do
       $helper_client.indices.delete index: '_all', ignore: 404
-      $helper_client.indices.delete_template name: '*', ignore: 404
+      $helper_client.indices.delete_template name: 'test_2', ignore: 404
+      $helper_client.indices.delete_template name: 'test', ignore: 404
+      $helper_client.indices.delete_template name: 'index_template', ignore: 404
       $helper_client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
       $helper_client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
       $helper_client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
@@ -366,6 +370,7 @@ suites.each do |suite|
 
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
+      next if SKIPPED_TESTS.any? { |test| file =~ /#{test}/ }
       begin
         tests = YAML.load_stream File.new(file)
       rescue RuntimeError => e
@@ -391,7 +396,8 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          yaml_file_line = File.read(file).split("\n").index {|l| l.include? test.keys.first.to_s }
+          yaml_file_line = File.read(file).force_encoding("UTF-8").split("\n").index {|l| l.include? test.keys.first.to_s }
+
           l = yaml_file_line ? "#L#{yaml_file_line.to_i + 1}" : ''
           test_name = test.keys.first.to_s + " | #{file.gsub(PATH.to_s, '').gsub(/^\//, '')}" + l
           actions   = test.values.first

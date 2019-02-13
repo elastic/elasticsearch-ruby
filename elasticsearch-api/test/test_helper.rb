@@ -15,6 +15,15 @@
 # specific language governing permissions and limitations
 # under the License.
 
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+
+TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
+
+
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 JRUBY    = defined?(JRUBY_VERSION)
 

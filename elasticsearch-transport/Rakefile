@@ -28,7 +28,12 @@ require 'rspec/core/rake_task'
 
 namespace :test do
 
-  RSpec::Core::RakeTask.new(:spec)
+  desc "Wait for Elasticsearch to be in a green state"
+  task :wait_for_green do
+    sh '../scripts/wait-cluster.sh'
+  end
+
+  task :spec => :wait_for_green
 
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
@@ -40,7 +45,7 @@ namespace :test do
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
-    test.deps = [ :spec ]
+    test.deps = [ :wait_for_green, :spec ]
     test.verbose = false
     test.warning = false
   end
