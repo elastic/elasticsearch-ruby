@@ -32,6 +32,7 @@ require 'elasticsearch/extensions/test/profiling' unless JRUBY
 # Skip features
 skip_features = 'stash_in_path,requires_replica,headers,warnings,default_shards'
 SKIP_FEATURES = ENV.fetch('TEST_SKIP_FEATURES', skip_features)
+SKIPPED_TESTS = [ '/nodes.stats/30_discovery.yml' ]
 
 # Launch test cluster
 #
@@ -369,6 +370,7 @@ suites.each do |suite|
 
     files = Dir[suite.join('*.{yml,yaml}')]
     files.each do |file|
+      next if SKIPPED_TESTS.any? { |test| file =~ /#{test}/ }
       begin
         tests = YAML.load_stream File.new(file)
       rescue RuntimeError => e
@@ -394,7 +396,8 @@ suites.each do |suite|
 
       tests.each do |test|
         context '' do
-          yaml_file_line = File.read(file).split("\n").index {|l| l.include? test.keys.first.to_s }
+          yaml_file_line = File.read(file).force_encoding("UTF-8").split("\n").index {|l| l.include? test.keys.first.to_s }
+
           l = yaml_file_line ? "#L#{yaml_file_line.to_i + 1}" : ''
           test_name = test.keys.first.to_s + " | #{file.gsub(PATH.to_s, '').gsub(/^\//, '')}" + l
           actions   = test.values.first
