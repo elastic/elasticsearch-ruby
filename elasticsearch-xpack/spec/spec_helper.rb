@@ -22,7 +22,7 @@ TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOS
 URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@#{TEST_HOST}:#{ENV['TEST_CLUSTER_PORT'] || 9200}")
 
 ADMIN_CLIENT = Elasticsearch::Client.new(host: URL)
-ADMIN_CLIENT.cluster.health(wait_for_status: 'green', timeout: '50s')
+sleep(5)
 
 if ENV['QUIET'] == 'true'
   DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL)
