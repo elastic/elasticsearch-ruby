@@ -11,9 +11,18 @@ RSpec.configure do |config|
 end
 
 password = ENV['ELASTIC_PASSWORD']
-URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@localhost:#{ENV['TEST_CLUSTER_PORT'] || 9260}")
+
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
+
+URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@#{TEST_HOST}:#{ENV['TEST_CLUSTER_PORT'] || 9200}")
 
 ADMIN_CLIENT = Elasticsearch::Client.new(host: URL)
+ADMIN_CLIENT.cluster.health(wait_for_status: 'green', timeout: '50s')
 
 if ENV['QUIET'] == 'true'
   DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL)
@@ -21,27 +30,25 @@ else
   DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout))
 end
 
-CURRENT_PATH = File.expand_path(File.dirname(__FILE__))
-
+YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
+                          "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/roles"
 skipped_files = []
 
 # ArgumentError for empty body
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/watcher/put_watch/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
 
 # The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/snapshot/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/snapshot/10_basic.yml")
 
 # The test inserts an invalid license, which makes all subsequent tests fail.
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/xpack/15_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
 
 # Searching the monitoring index returns no results.
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/10_basic.yml")
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/20_privileges.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
 
-YAML_FILES_DIRECTORY = "#{CURRENT_PATH}/support/yaml_tests"
 REST_API_YAML_FILES = Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
-
 
 
 # Given a list of keys, find the value in a recursively nested document.

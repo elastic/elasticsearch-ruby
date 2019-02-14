@@ -37,6 +37,13 @@ namespace :test do
     puts "\n"
   end
 
+  desc "Run security (Platinum) rest api yaml tests"
+  task :security => 'elasticsearch:update' do |test|
+    puts '-' * 80
+    sh "cd #{CURRENT_PATH.join('elasticsearch-xpack')} && unset BUNDLE_GEMFILE && bundle exec rspec"
+    puts "\n"
+  end
+
   namespace :cluster do
     desc "Start Elasticsearch nodes for tests"
     task :start do

@@ -8,7 +8,8 @@ SUBPROJECTS = [ 'elasticsearch',
                 'elasticsearch-transport',
                 'elasticsearch-dsl',
                 'elasticsearch-api',
-                'elasticsearch-extensions' ].freeze
+                'elasticsearch-extensions',
+                'elasticsearch-xpack' ].freeze
 
 task :default do
   system "rake --tasks"
