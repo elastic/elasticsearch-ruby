@@ -38,7 +38,9 @@ namespace :test do
   end
 
   desc "Run security (Platinum) rest api yaml tests"
-  task :security => 'elasticsearch:update' do |test|
+  task :security do
+    Rake::Task['elasticsearch:wait_for_green'].invoke
+    Rake::Task['elasticsearch:checkout_build'].invoke
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-xpack')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api"
     puts "\n"

@@ -20,11 +20,12 @@ COPY . .
 RUN gem update --system
 RUN gem uninstall bundler
 RUN gem install bundler
-RUN rake bundle:clean
 RUN bundle install
+RUN bundle exec rake bundle:clean
+RUN rake bundle:install
 RUN bundle exec rake setup
 RUN bundle exec rake elasticsearch:update
-RUN rake bundle:install
 
 
-CMD ["sh", "-c", "rake test:$TEST_SUITE"]
+
+CMD ["sh", "-c", "bundle exec rake test:$TEST_SUITE"]

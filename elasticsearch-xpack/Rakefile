@@ -14,18 +14,13 @@ Rake::TestTask.new('test:unit') do |test|
   test.warning = false
 end
 
-desc "Wait for Elasticsearch to be in a green state"
-task :wait_for_green do
-  sh '../scripts/wait-cluster.sh'
-end
-
 namespace :test do
 
   RSpec::Core::RakeTask.new(:spec)
 
   desc "Run rest api yaml tests"
   Rake::TestTask.new(:rest_api)  do |test|
-    test.deps = [ :wait_for_green, :spec ]
+    test.deps = [ :spec ]
   end
 
   desc "Run integration tests"
