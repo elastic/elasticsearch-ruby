@@ -55,8 +55,11 @@ end
 
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
-                          "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/roles"
+                          "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
 skipped_files = []
+
+# Current license is basic.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
 
 # ArgumentError for empty body
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
