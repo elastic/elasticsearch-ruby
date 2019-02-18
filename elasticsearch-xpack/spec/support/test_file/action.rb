@@ -52,7 +52,8 @@ module Elasticsearch
           case _method
           when 'headers'
             # todo: create a method on Elasticsearch::Client that can clone the client with new options
-            Elasticsearch::Client.new(host: URL, transport_options: { headers: prepare_arguments(args, test) })
+            Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS.merge(
+                                                                      headers: prepare_arguments(args, test)))
           when 'catch'
             client
           else

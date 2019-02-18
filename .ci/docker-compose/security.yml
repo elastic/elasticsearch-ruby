@@ -20,31 +20,35 @@ services:
       - elasticsearch
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION:-6.5.3}
+    networks:
+      - esnet
     environment:
-      - "ELASTIC_PASSWORD=changeme"
-      - "xpack.security.enabled=true"
-      - "xpack.license.self_generated.type=trial"
-      - cluster.name=docker-cluster
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - path.repo=/tmp
       - "repositories.url.allowed_urls=http://*"
       - node.attr.testattr=test
       - bootstrap.memory_lock=false
-      #- "discovery.type=single-node"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      - "discovery.type=single-node"
+      - "http.max_content_length=5mb"
+      - "ELASTIC_PASSWORD=changeme"
+      - "xpack.security.enabled=true"
+      - "xpack.license.self_generated.type=trial"
+      - "xpack.security.http.ssl.enabled=true"
+      # 'certificate' Verifies that the provided certificate is signed by a trusted authority (CA),
+      #    but does not perform any hostname verification.
+      - "xpack.security.http.ssl.verification_mode=certificate"
+      - "xpack.security.http.ssl.key=testnode.key"
+      - "xpack.security.http.ssl.certificate=testnode.crt"
+      - "xpack.security.http.ssl.certificate_authorities=ca.crt"
+      - "xpack.security.transport.ssl.enabled=true"
+      - "xpack.security.transport.ssl.key=testnode.key"
+      - "xpack.security.transport.ssl.certificate=testnode.crt"
+      - "xpack.security.transport.ssl.certificate_authorities=ca.crt"
     volumes:
-      - esvol:/tmp
-    ports:
-      - 9200
-    networks:
-      - esnet
-    deploy:
-      replicas: 1
+      - "../certs/testnode.crt:/usr/share/elasticsearch/config/testnode.crt"
+      - "../certs/testnode.key:/usr/share/elasticsearch/config/testnode.key"
+      - "../certs/ca.crt:/usr/share/elasticsearch/config/ca.crt"
 networks:
+  # we need two networks otherwise the two ES instances will join each other
   esnet:
 volumes:
   esvol:

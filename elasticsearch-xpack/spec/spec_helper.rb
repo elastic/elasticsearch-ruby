@@ -4,29 +4,55 @@ require 'elasticsearch'
 require 'elasticsearch/xpack'
 require 'logger'
 require 'support/test_file'
+require 'openssl'
 
 RSpec.configure do |config|
   config.formatter = 'documentation'
   config.color = true
 end
 
-password = ENV['ELASTIC_PASSWORD']
+PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
-ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
-                        hosts.split(',').map do |host|
-                          /(http\:\/\/)?(\S+)/.match(host)[2]
-                        end
-                      end.freeze
-TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
+TRANSPORT_OPTIONS = {}
+TEST_SUITE = ENV['TEST_SUITE'].freeze
 
-URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@#{TEST_HOST}:#{ENV['TEST_CLUSTER_PORT'] || 9200}")
-ADMIN_CLIENT = Elasticsearch::Client.new(host: URL)
+if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+  split_hosts = hosts.split(',').map do |host|
+    /(http\:\/\/)?(\S+)/.match(host)[2]
+  end
+
+  TEST_HOST, TEST_PORT = split_hosts.first.split(':')
+end
+
+raw_certificate = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.crt'))
+certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+
+raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
+key = OpenSSL::PKey::RSA.new(raw_key)
+
+if TEST_SUITE == 'security'
+  TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
+                                     client_cert: certificate,
+                                     client_key: key,
+                                     ca_file: '.ci/certs/ca.crt'})
+
+  password = ENV['ELASTIC_PASSWORD']
+  URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
+else
+  URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+end
+
+ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
 
 if ENV['QUIET'] == 'true'
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL)
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
 else
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout))
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                             transport_options: TRANSPORT_OPTIONS,
+                                             tracer: Logger.new($stdout))
 end
+
+
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
                           "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/roles"

@@ -13,39 +13,24 @@ namespace :elasticsearch do
   task :wait_for_green do
     require 'elasticsearch'
 
-    if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
-      split_hosts = hosts.split(',').map do |host|
-        /(http\:\/\/)?(\S+)/.match(host)[2]
-      end
-
-      host, port = split_hosts.first.split(':')
-      if password = ENV['ELASTIC_PASSWORD']
-        url = "http://elastic:#{password}@#{host}:#{port}"
-      else
-        url = "http://#{host}:#{port}"
-      end
-
-      client  = Elasticsearch::Client.new(url: url)
-
-      ready = nil
-      5.times do |i|
-        begin
-          puts "Attempting to wait for green status: #{i+1}"
-          if client.cluster.health(wait_for_status: 'green', timeout: '50s')
-           ready = true
-           break
-          end
-        rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => ex
-          puts "Couldn't confirm green status.\n#{ex.inspect}."
-        rescue Faraday::ConnectionFailed => ex
-          puts "Couldn't connect to Elasticsearch.\n#{ex.inspect}."
-          sleep(10)
+    ready = nil
+    5.times do |i|
+      begin
+        puts "Attempting to wait for green status: #{i + 1}"
+        if admin_client.cluster.health(wait_for_status: 'green', timeout: '50s')
+          ready = true
+          break
         end
+      rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => ex
+        puts "Couldn't confirm green status.\n#{ex.inspect}."
+      rescue Faraday::ConnectionFailed => ex
+        puts "Couldn't connect to Elasticsearch.\n#{ex.inspect}."
+        sleep(30)
       end
-      unless ready
-        puts "Couldn't connect to Elasticsearch, aborting program."
-        exit(1)
-      end
+    end
+    unless ready
+      puts "Couldn't connect to Elasticsearch, aborting program."
+      exit(1)
     end
   end
 
@@ -169,19 +154,6 @@ namespace :elasticsearch do
   task :checkout_build do
     require 'elasticsearch'
 
-    hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
-    host, port = hosts.split(',').map do |host|
-      /(http\:\/\/)?(\S+)/.match(host)[2]
-    end.first.split(':')
-
-    if password = ENV['ELASTIC_PASSWORD']
-      url = "http://elastic:#{password}@#{host}:#{port}"
-    else
-      url = hosts
-    end
-
-    client = Elasticsearch::Client.new(:url => url)
-
     branches = `git --git-dir=#{ELASTICSEARCH_PATH}/.git --work-tree=#{ELASTICSEARCH_PATH} branch --no-color`
     current_branch = branches.
         split("\n").
@@ -195,7 +167,7 @@ namespace :elasticsearch do
       current_branch = 'master'
     end
 
-    es_version_info = client.info['version']
+    es_version_info = admin_client.info['version']
     unless build_hash = es_version_info['build_hash']
       STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
       exit(1)
