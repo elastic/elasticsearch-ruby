@@ -115,7 +115,7 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
       search.filter { term zoo: 'baz' }
     end
 
-    it 'combines the filer clauses' do
+    it 'combines the filter clauses' do
       expect(search.to_hash).to eq(bool:
                                        { filter: [
                                            { term: { foo: "bar"}},
@@ -137,6 +137,37 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
     it 'applies the option' do
       expect(search.to_hash).to eq(bool: { must:   [ {match: { foo: 'bar' }}, {match: { moo: 'bam' }} ],
                                            should: [ {match: { xoo: 'bax' }} ] })
+    end
+  end
+
+  describe '#filter' do
+
+    context 'when a block is used to define the filter' do
+
+      let(:search) do
+        described_class.new do
+          filter do
+            term foo: 'Foo!'
+          end
+        end
+      end
+
+      it 'applies the filter' do
+        expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
+      end
+    end
+
+    context 'when a hash is used to define the filter' do
+
+      let(:search) do
+        described_class.new do
+          filter(term: { foo: 'Foo!' })
+        end
+      end
+
+      it 'applies the filter' do
+        expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
+      end
     end
   end
 end
