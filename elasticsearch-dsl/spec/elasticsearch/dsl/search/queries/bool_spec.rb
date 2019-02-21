@@ -115,7 +115,7 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
       search.filter { term zoo: 'baz' }
     end
 
-    it 'combines the filer clauses' do
+    it 'combines the filter clauses' do
       expect(search.to_hash).to eq(bool:
                                        { filter: [
                                            { term: { foo: "bar"}},
@@ -137,6 +137,56 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
     it 'applies the option' do
       expect(search.to_hash).to eq(bool: { must:   [ {match: { foo: 'bar' }}, {match: { moo: 'bam' }} ],
                                            should: [ {match: { xoo: 'bax' }} ] })
+    end
+  end
+
+  describe '#filter' do
+
+    context 'when a block is used to define the filter' do
+
+      let(:search) do
+        described_class.new do
+          filter do
+            term foo: 'Foo!'
+          end
+        end
+      end
+
+      it 'applies the filter' do
+        expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
+      end
+    end
+
+    context 'when a filter is passed as an argument' do
+
+      context 'when the filter is a hash' do
+
+        let(:search) do
+          described_class.new do
+            filter(term: { foo: 'Foo!' })
+          end
+        end
+
+        it 'applies the filter' do
+          expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
+        end
+      end
+
+      context 'when the filter is a `Elasticsearch::DSL::Search::Filter` object' do
+
+        let(:search) do
+          filter_object = Elasticsearch::DSL::Search::Filter.new do
+            term bar: 'Bar!'
+          end
+          described_class.new do
+            filter(filter_object)
+          end
+        end
+
+        it 'applies the filter' do
+          expect(search.to_hash).to eq(bool: { filter: [{ term: { bar: 'Bar!' } }] })
+        end
+      end
     end
   end
 end
