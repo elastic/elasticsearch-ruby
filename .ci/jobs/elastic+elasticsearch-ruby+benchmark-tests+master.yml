@@ -1,0 +1,61 @@
+---
+- job:
+    project-type: freestyle
+    name: elastic+elasticsearch-ruby+benchmark-tests+master
+    concurrent: false
+    display-name: 'elastic / elasticsearch-ruby benchmark-tests # master'
+    description: Run elasticsearch-ruby benchmarking tests.
+    # only multijob workflow should trigger
+    triggers: null
+    vault:
+      url: https://secrets.elastic.co:8200
+      # vault read auth/approle/role/clients-ci/role-id
+      role_id: ddbd0d44-0e51-105b-177a-c8fdfd445126
+    node: macrobenchmarks
+    parameters:
+    - string:
+        name: branch_specifier
+        default: refs/heads/master
+        description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
+          &lt;commitId&gt;, etc.)
+    builders:
+    - shell: |-
+        #!/usr/local/bin/runbld
+        set -eo pipefail
+
+        # drop caches
+        sudo /usr/local/sbin/drop-caches
+
+        set +x
+        source /usr/local/bin/bash_standard_lib.sh
+
+        # VAULT_ROLE_ID and VAULT_SECRET_ID are injected by jjbb
+        VAULT_TOKEN=$(retry 5 vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
+        export VAULT_TOKEN
+        unset VAULT_ROLE_ID VAULT_SECRET_ID
+
+        ES_RESULT_CLUSTER_USERNAME=$(retry 5 vault read -field username secret/clients-ci/benchmarking-cluster)
+        export ES_RESULT_CLUSTER_USERNAME
+        ES_RESULT_CLUSTER_PASSWORD=$(retry 5 vault read -field password secret/clients-ci/benchmarking-cluster)
+        export ES_RESULT_CLUSTER_PASSWORD
+        ES_RESULT_CLUSTER_URL=$(retry 5 vault read -field url secret/clients-ci/benchmarking-cluster)
+        export ES_RESULT_CLUSTER_URL
+
+        unset VAULT_TOKEN
+        set -x
+
+        export PATH="$HOME/.rbenv/bin:$PATH"
+        eval "$(rbenv init -)"
+        rbenv local 2.6.1
+
+        bundle install
+
+        export ELASTICSEARCH_URL=http://worker-954083.build.fsn1-dc3.hetzner.elasticnet.co:9200
+        bundle exec rake benchmark:simple:ping
+
+    # override default
+    publishers: null
+    # override default
+    yaml-strategy: null
+    # override default
+    axes: null
