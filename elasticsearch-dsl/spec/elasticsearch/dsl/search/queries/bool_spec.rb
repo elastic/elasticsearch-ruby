@@ -157,16 +157,35 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
       end
     end
 
-    context 'when a hash is used to define the filter' do
+    context 'when a filter is passed as an argument' do
 
-      let(:search) do
-        described_class.new do
-          filter(term: { foo: 'Foo!' })
+      context 'when the filter is a hash' do
+
+        let(:search) do
+          described_class.new do
+            filter(term: { foo: 'Foo!' })
+          end
+        end
+
+        it 'applies the filter' do
+          expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
         end
       end
 
-      it 'applies the filter' do
-        expect(search.to_hash).to eq(bool: { filter: [{ term: { foo: 'Foo!' } }] })
+      context 'when the filter is a `Elasticsearch::DSL::Search::Filter` object' do
+
+        let(:search) do
+          filter_object = Elasticsearch::DSL::Search::Filter.new do
+            term bar: 'Bar!'
+          end
+          described_class.new do
+            filter(filter_object)
+          end
+        end
+
+        it 'applies the filter' do
+          expect(search.to_hash).to eq(bool: { filter: [{ term: { bar: 'Bar!' } }] })
+        end
       end
     end
   end

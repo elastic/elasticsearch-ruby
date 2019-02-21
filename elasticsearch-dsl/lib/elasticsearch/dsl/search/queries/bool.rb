@@ -62,8 +62,8 @@ module Elasticsearch
 
           def filter(*args, &block)
             @hash[name][:filter] ||= []
-            if filter = block ? Filter.new(*args, &block).to_hash : args.first
-              @hash[name][:filter] << filter
+            if filter = block ? Filter.new(*args, &block) : args.first
+              @hash[name][:filter] << filter.to_hash
             end
             self
           end
