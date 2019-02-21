@@ -56,7 +56,8 @@ module Elasticsearch
 
         options = { duration: end_time - start,
                     operation: __method__ }
-        index_results!(results, options)
+        results
+        #index_results!(results, options)
       end
 
       # Test sending a create_index request.
