@@ -42,7 +42,7 @@ module Elasticsearch
       # Create a benchmark test.
       #
       # @example Create a test.
-      #   Benchmarking::Simple.new({ warmup_repetitions: 1 }, :patron)
+      #   Benchmarking::Simple.new({ 'repetitions' => { 'warmup' => 1 }}, :patron)
       #
       # @param [ Hash ] options The options for the benchmarking task.
       # @param [ Symbol ] adapter The adapter the client should be configured with.
