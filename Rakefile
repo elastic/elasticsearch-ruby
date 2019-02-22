@@ -17,6 +17,7 @@
 
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
+import 'profile/benchmarking/benchmarking_tasks.rake'
 
 require 'pathname'
 
@@ -27,7 +28,6 @@ SUBPROJECTS = [ 'elasticsearch',
                 'elasticsearch-api',
                 'elasticsearch-extensions' ].freeze
 
-import 'profile/benchmarking/benchmarking_tasks.rake'
 
 # TODO: Figure out "bundle exec or not"
 # subprojects.each { |project| $LOAD_PATH.unshift CURRENT_PATH.join(project, "lib").to_s }

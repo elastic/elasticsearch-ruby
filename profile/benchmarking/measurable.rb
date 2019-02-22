@@ -24,6 +24,21 @@ module Elasticsearch
       attr_reader :options
       attr_reader :client_adapter
 
+      # The default number of measured repetitions.
+      #
+      # @since 7.0.0
+      DEFAULT_MEASURED_REPETITIONS = 5
+
+      # The default number of warmup repetitions.
+      #
+      # @since 7.0.0
+      DEFAULT_WARMUP_REPETITIONS = 1
+
+      # The default number of action iterations.
+      #
+      # @since 7.0.0
+      DEFAULT_ACTION_ITERATIONS = 1
+
       # Create a benchmark test.
       #
       # @example Create a test.
@@ -97,7 +112,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def measured_repetitions
-        @options['repetitions']['measured'] || DEFAULT_REPETITIONS
+        @options['repetitions']['measured'] || DEFAULT_MEASURED_REPETITIONS
       end
 
       # Get number of warmup repetitions.
@@ -109,7 +124,19 @@ module Elasticsearch
       #
       # @since 7.0.0
       def warmup_repetitions
-        @options['repetitions']['warmup'] || WARMUP_REPETITIONS
+        @options['repetitions']['warmup'] || DEFAULT_WARMUP_REPETITIONS
+      end
+
+      # Get number of iterations of the action.
+      #
+      # @example Get the number of iterations of the action.
+      #   task.action_iterations
+      #
+      # @return [ Numeric ] The number of action iterations.
+      #
+      # @since 7.0.0
+      def action_iterations
+        @options['repetitions']['action_iterations'] || DEFAULT_ACTION_ITERATIONS
       end
 
       private
@@ -215,7 +242,7 @@ module Elasticsearch
 
       def index_results!(results, options = {})
         res = Results.new(self, results, options)
-        res.index!(client)[:results]
+        (doc = res.index!(client)) && doc[:results]
       end
     end
   end

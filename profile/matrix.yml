@@ -1,4 +1,4 @@
-- name: Basic benchmark, 5 repetitions
+- description: Basic benchmark, 5 repetitions
   repetitions:
     warmup: 1
     measured: 5

@@ -55,9 +55,9 @@ module Elasticsearch
         end_time = Time.now
 
         options = { duration: end_time - start,
-                    operation: __method__ }
-        results
-        #index_results!(results, options)
+                    operation: __method__,
+                    action_iterations: 1000 }
+        index_results!(results, options)
       end
 
       # Test sending a create_index request.
@@ -93,7 +93,8 @@ module Elasticsearch
         end
 
         options = { duration: end_time - start,
-                    operation: __method__ }
+                    operation: __method__,
+                    action_iterations: 10 }
         index_results!(results, options)
       end
 
@@ -134,7 +135,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 10 }
         index_results!(results, options)
       end
 
@@ -175,7 +177,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
 
@@ -216,7 +219,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
 
@@ -256,7 +260,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
 
@@ -277,7 +282,7 @@ module Elasticsearch
 
         with_cleanup do
           client.create(index: INDEX, body: small_document)
-          search_criteria = { match: { 'user.lang': 'en' } }
+          search_criteria = { match: { cuisine: 'mexican' } }
           request = { body: { query: { match: search_criteria } } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
@@ -304,7 +309,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
 
@@ -325,8 +331,8 @@ module Elasticsearch
 
         results = with_cleanup do
           client.create(index: INDEX, body: large_document)
-          search_criteria = small_document.find { |k,v| k != 'id' && v.is_a?(String) }
-          request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
+          search_criteria = { match: { 'user.lang': 'en' } }
+          request = { body: { query: { match: search_criteria } } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else
@@ -352,7 +358,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
 
@@ -400,7 +407,8 @@ module Elasticsearch
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
-                    dataset_n_documents: 1 }
+                    dataset_n_documents: 1,
+                    action_iterations: 1_000 }
         index_results!(results, options)
       end
     end

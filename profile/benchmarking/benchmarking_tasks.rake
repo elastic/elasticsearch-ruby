@@ -25,7 +25,8 @@ namespace :benchmark do
     task :ping do
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
         task = Elasticsearch::Benchmarking::Simple.new(run)
-        puts "PING: #{task.run(:ping)}"
+        puts "PING: "
+        puts "#{task.run(:ping)}"
       end
     end
 

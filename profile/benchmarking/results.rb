@@ -37,7 +37,7 @@ module Elasticsearch
       # @since 7.0.0
       def initialize(task, results, options = {})
         @task = task
-        @raw_results = results
+        @raw_results = results.map { |r| r * 1000 }
         @options = options
       end
 
@@ -51,8 +51,8 @@ module Elasticsearch
       # @since 7.0.0
       def index!(client)
         create_index!(client)
-        client.index(index: index_name, body: results_doc)
-        results_doc
+        #client.index(index: index_name, body: results_doc)
+        puts results_doc
       end
 
       private
@@ -67,6 +67,10 @@ module Elasticsearch
 
       COMPLEXITIES = { Elasticsearch::Benchmarking::Simple => :simple,
                        Elasticsearch::Benchmarking::Complex => :complex }.freeze
+
+      def action_iterations
+        options[:action_iterations]
+      end
 
       def index_name
         options[:index_name] || DEFAULT_INDEX_NAME
@@ -139,7 +143,7 @@ module Elasticsearch
       end
 
       def mean
-        raw_results.inject{ |sum, el| sum + el }.to_f / raw_results.size
+        raw_results.inject { |sum, el| sum + el }.to_f / raw_results.size
       end
 
       def max
@@ -162,7 +166,8 @@ module Elasticsearch
 
       def repetitions_doc
         { warmup: @task.warmup_repetitions,
-          measured: @task.measured_repetitions }
+          measured: @task.measured_repetitions,
+          iterations: action_iterations }
       end
 
       def agent_doc
