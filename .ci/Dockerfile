@@ -16,7 +16,7 @@ COPY . .
 RUN bundle install
 RUN bundle exec rake setup
 RUN bundle exec rake elasticsearch:update
-RUN bundle exec rake bundle:clean
+RUN rake bundle:clean
 RUN rake bundle:install
 
 
