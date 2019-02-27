@@ -58,6 +58,9 @@ YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
                           "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
 skipped_files = []
 
+# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ssl/10_basic.yml")
+
 # Current license is basic.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
 
