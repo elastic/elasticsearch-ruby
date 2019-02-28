@@ -41,13 +41,14 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         warmup_repetitions.times { client.ping }
 
         results = measured_repetitions.times.collect do
           start = Time.now
           Benchmark.realtime do
-            1000.times do
+            action_iterations.times do
               client.ping
             end
           end
@@ -56,7 +57,7 @@ module Elasticsearch
 
         options = { duration: end_time - start,
                     operation: __method__,
-                    action_iterations: 1000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -74,6 +75,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 10
 
         warmup_repetitions.times do
           client.indices.create(index: "benchmarking-#{Time.now.to_f}")
@@ -83,7 +85,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              10.times do
+              action_iterations.times do
                 client.indices.create(index: "benchmarking-#{Time.now.to_f}")
               end
             end
@@ -94,7 +96,7 @@ module Elasticsearch
 
         options = { duration: end_time - start,
                     operation: __method__,
-                    action_iterations: 10 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -113,6 +115,7 @@ module Elasticsearch
         end_time = 0
         results = []
         document = small_document
+        action_iterations = 10
 
         warmup_repetitions.times do
           client.create(index: INDEX, body: document)
@@ -122,7 +125,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              10.times do
+              action_iterations.times do
                 client.create(index: INDEX, body: document)
               end
             end
@@ -136,7 +139,7 @@ module Elasticsearch
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
                     dataset_n_documents: 1,
-                    action_iterations: 10 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -155,6 +158,7 @@ module Elasticsearch
         end_time = 0
         results = []
         document = large_document
+        action_iterations = 1_000
 
         warmup_repetitions.times do
           client.create(index: INDEX, body: document)
@@ -164,7 +168,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do
+              action_iterations.times do
                 client.create(index: INDEX, body: document)
               end
             end
@@ -178,7 +182,7 @@ module Elasticsearch
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -196,6 +200,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         with_cleanup do
           id = client.create(index: INDEX, body: small_document)['_id']
@@ -206,7 +211,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do
+              action_iterations.times do
                 client.get(index: INDEX, id: id)
               end
             end
@@ -220,7 +225,7 @@ module Elasticsearch
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -238,6 +243,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         with_cleanup do
           id = client.create(index: INDEX, body: large_document)['_id']
@@ -248,7 +254,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do
+              action_iterations.times do
                 client.get(index: INDEX, id: id)
               end
             end
@@ -261,7 +267,7 @@ module Elasticsearch
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -279,6 +285,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         with_cleanup do
           client.create(index: INDEX, body: small_document)
@@ -297,7 +304,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do
+              action_iterations.times do
                 client.search(request)
               end
             end
@@ -310,7 +317,7 @@ module Elasticsearch
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -328,6 +335,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         results = with_cleanup do
           client.create(index: INDEX, body: large_document)
@@ -345,7 +353,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do
+              action_iterations.times do
                 client.search(request)
               end
             end
@@ -359,7 +367,7 @@ module Elasticsearch
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
 
@@ -377,6 +385,7 @@ module Elasticsearch
         start = 0
         end_time = 0
         results = []
+        action_iterations = 1_000
 
         with_cleanup do
           document = small_document
@@ -392,7 +401,7 @@ module Elasticsearch
           start = Time.now
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
-              1_000.times do |i|
+              action_iterations.times do |i|
                 client.update(index: INDEX,
                               id: id,
                               body: { doc: { field:  "#{document[field]}-#{i}" } })
@@ -408,7 +417,7 @@ module Elasticsearch
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
                     dataset_n_documents: 1,
-                    action_iterations: 1_000 }
+                    action_iterations: action_iterations }
         index_results!(results, options)
       end
     end

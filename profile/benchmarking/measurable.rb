@@ -76,7 +76,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def nodes_info
-        client.nodes.info(os: true)
+        client.nodes.info(os: true) if client.ping
       end
 
       # Get the version of the elasticsearch server used for the benchmarking tests.
@@ -88,7 +88,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def server_version
-        client.perform_request('GET', '/').body['version']['number']
+        client.perform_request('GET', '/').body['version']['number'] if client.ping
       end
 
       # Get the description of the benchmarking task.
@@ -149,6 +149,27 @@ module Elasticsearch
       #
       # @since 7.0.0
       ELASTICSEARCH_URL = ENV['ELASTICSEARCH_URL'] || "localhost:#{(ENV['TEST_CLUSTER_PORT'] || 9200)}"
+
+      # The username for the results cluster.
+      #
+      # @return [ String ] The username for the results cluster.
+      #
+      # @since 7.0.0
+      ES_RESULT_CLUSTER_USERNAME = ENV['ES_RESULT_CLUSTER_USERNAME'].freeze
+
+      # The password for the results cluster.
+      #
+      # @return [ String ] The password for the results cluster.
+      #
+      # @since 7.0.0
+      ES_RESULT_CLUSTER_PASSWORD = ENV['ES_RESULT_CLUSTER_PASSWORD'].freeze
+
+      # The results cluster url.
+      #
+      # @return [ String ] The results cluster url.
+      #
+      # @since 7.0.0
+      ES_RESULT_CLUSTER_URL = ENV['ES_RESULT_CLUSTER_URL'].freeze
 
       # The current path.
       #
@@ -238,11 +259,26 @@ module Elasticsearch
         false
       end
 
-      private
-
       def index_results!(results, options = {})
         res = Results.new(self, results, options)
-        (doc = res.index!(client)) && doc[:results]
+        if result_cluster_client.ping
+          res.index!(result_cluster_client)
+          puts "#{'*' * 5} Indexed results #{'*' * 5} \n"
+        else
+          puts "#{'*' * 5} Results cluster not available, did not index results #{'*' * 5} \n"
+        end
+        res.results_doc
+      rescue => ex
+        puts "Could not index results, due to #{ex.class}."
+      end
+
+      def result_cluster_client
+        @result_cluster_client ||= begin
+          opts = { host: ES_RESULT_CLUSTER_URL }
+          opts.merge!(user: ES_RESULT_CLUSTER_USERNAME) if ES_RESULT_CLUSTER_USERNAME
+          opts.merge!(password: ES_RESULT_CLUSTER_PASSWORD) if ES_RESULT_CLUSTER_PASSWORD
+          Elasticsearch::Client.new(opts)
+        end
       end
     end
   end
