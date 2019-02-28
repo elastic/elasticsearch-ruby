@@ -1,0 +1,20 @@
+- view:
+    name: 'Main'
+    regex: '^.*$'
+    view-type: list
+- view:
+    name: 'Benchmark'
+    regex: '^.*benchmark.*$'
+    view-type: list
+- view:
+    name: 'Ruby'
+    regex: '^.*elasticsearch-ruby.*$'
+    view-type: list
+- view:
+    name: 'Javascript'
+    regex: '^.*elasticsearch-js.*$'
+    view-type: list
+- view:
+    name: 'Python'
+    regex: '^.*elasticsearch-py.*$'
+    view-type: list

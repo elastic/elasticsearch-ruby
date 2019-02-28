@@ -1,0 +1,43 @@
+---
+- job:
+    project-type: multijob
+    name: elastic+elasticsearch-ruby+benchmark-multijob+master
+    concurrent: false
+    display-name: 'elastic / elasticsearch-ruby benchmark-multijob # master'
+    description: Benchmarking the elasticsearch-ruby master branch.
+    node: flyweight
+    # trigger on demand while work in progress
+    triggers: null
+    builders:
+      # override default
+      - shell: null
+      - multijob:
+          name: start-elasticsearch
+          condition: SUCCESSFUL
+          projects:
+            - name: elastic+elasticsearch-ruby+benchmark-start-elasticsearch+master
+      - multijob:
+          name: run-tests
+          # continue to next phase to clean up even if this phase fails
+          condition: ALWAYS
+          projects:
+            - name: elastic+elasticsearch-ruby+benchmark-tests+master
+      - multijob:
+          name: stop-elasticsearch
+          condition: SUCCESSFUL
+          projects:
+            - name: elastic+elasticsearch-ruby+benchmark-stop-elasticsearch+master
+    # override default
+    publishers: null
+    # override default
+    yaml-strategy: null
+    # override default
+    axes: null
+    # override default
+    scm: null
+    properties:
+      - lockable-resources:
+          # clients-ci uses this lockable resource to ensure only one benchmarking job
+          # is using the shared elasticsearch instance at a time
+          resources: benchmarking-elasticsearch-instance
+
