@@ -74,6 +74,7 @@ module Elasticsearch
       ParamsRegistry.register(:msearch, [
           :search_type,
           :max_concurrent_searches,
+          :max_concurrent_shard_requests,
           :typed_keys ].freeze)
     end
   end

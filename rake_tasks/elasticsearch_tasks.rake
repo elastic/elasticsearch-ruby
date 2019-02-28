@@ -1,3 +1,4 @@
+ELASTICSEARCH_PATH = "#{CURRENT_PATH}/tmp/elasticsearch"
 
 desc "Clone elasticsearch into the ./tmp directory"
 task :setup do
@@ -7,11 +8,37 @@ task :setup do
 end
 
 namespace :elasticsearch do
+
+  desc "Wait for elasticsearch cluster to be in green state"
+  task :wait_for_green do
+    require 'elasticsearch'
+
+    ready = nil
+    5.times do |i|
+      begin
+        puts "Attempting to wait for green status: #{i + 1}"
+        if admin_client.cluster.health(wait_for_status: 'green', timeout: '50s')
+          ready = true
+          break
+        end
+      rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => ex
+        puts "Couldn't confirm green status.\n#{ex.inspect}."
+      rescue Faraday::ConnectionFailed => ex
+        puts "Couldn't connect to Elasticsearch.\n#{ex.inspect}."
+        sleep(30)
+      end
+    end
+    unless ready
+      puts "Couldn't connect to Elasticsearch, aborting program."
+      exit(1)
+    end
+  end
+
   desc "Update the submodule with Elasticsearch core repository"
   task :update do
     sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} fetch origin --quiet"
     begin
-      puts %x[git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} pull]
+      %x[git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} pull]
     rescue Exception => @exception
       @failed = true
     end
@@ -122,4 +149,36 @@ namespace :elasticsearch do
     STDERR.puts "Log: #{CURRENT_PATH.join('tmp/elasticsearch')}/rest-api-spec", ""
     sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} log --pretty=format:'%C(yellow)%h%Creset %s \e[2m[%ar by %an]\e[0m' -- rest-api-spec", :verbose => false
   end
+
+  desc "Checkout the build hash from the running Elasticsearch server"
+  task :checkout_build do
+    require 'elasticsearch'
+
+    branches = `git --git-dir=#{ELASTICSEARCH_PATH}/.git --work-tree=#{ELASTICSEARCH_PATH} branch --no-color`
+    current_branch = branches.
+        split("\n").
+        select { |b| b =~ /^\*/ }.
+        reject { |b| b =~ /no branch|detached/ }.
+        map    { |b| b.gsub(/^\*\s*/, '') }.
+        first
+
+    unless current_branch
+      STDERR.puts "[!] Unable to determine current branch, defaulting to 'master'"
+      current_branch = 'master'
+    end
+
+    es_version_info = admin_client.info['version']
+    unless build_hash = es_version_info['build_hash']
+      STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
+      exit(1)
+    end
+
+    name = ENV['CI'] ? build_hash : "[\e[1m#{build_hash}\e[0m]"
+    STDERR.puts '-'*80, "YAML tests: Switching to #{name} from #{current_branch}", '-'*80
+    git_specs("checkout #{build_hash} --force --quiet")
+  end
+end
+
+def git_specs(command, options={})
+  sh "git --git-dir=#{ELASTICSEARCH_PATH}/.git --work-tree=#{ELASTICSEARCH_PATH} #{command}", options
 end

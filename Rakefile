@@ -1,14 +1,41 @@
+require 'pathname'
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
-
-require 'pathname'
 
 CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
 SUBPROJECTS = [ 'elasticsearch',
                 'elasticsearch-transport',
                 'elasticsearch-dsl',
                 'elasticsearch-api',
-                'elasticsearch-extensions' ].freeze
+                'elasticsearch-extensions',
+                'elasticsearch-xpack' ].freeze
+
+def admin_client
+  $admin_client ||= begin
+    transport_options = {}
+    test_suite = ENV['TEST_SUITE'].freeze
+
+    if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+      split_hosts = hosts.split(',').map do |host|
+        /(http\:\/\/)?(\S+)/.match(host)[2]
+      end
+
+      host, port = split_hosts.first.split(':')
+    end
+
+    if test_suite == 'security'
+      transport_options.merge!(:ssl => { verify: false,
+                                         ca_path: ".ci/certs/"})
+
+      password = ENV['ELASTIC_PASSWORD']
+      user = ENV['ELASTIC_USER'] || 'elastic'
+      url = "https://#{user}:#{password}@#{host}:#{port}"
+    else
+      url = "http://#{host || 'localhost'}:#{port || 9200}"
+    end
+    Elasticsearch::Client.new(host: url, transport_options: transport_options)
+  end
+end
 
 task :default do
   system "rake --tasks"
