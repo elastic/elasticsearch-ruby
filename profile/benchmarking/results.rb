@@ -25,6 +25,11 @@ module Elasticsearch
 
       attr_reader :raw_results
 
+      # String constant for unit of time elapsed.
+      #
+      # @since 7.0.0
+      MILLISECONDS = 'milliseconds'.freeze
+
       # Create a Results object.
       #
       # @example Create a results object.
@@ -136,11 +141,12 @@ module Elasticsearch
       end
 
       def duration
-        @options[:duration]
+        @options[:duration] * 1000
       end
 
       def statistics_doc
-        { mean: mean,
+        { unit: MILLISECONDS,
+          mean: mean,
           median: median,
           max: max,
           min: min,
