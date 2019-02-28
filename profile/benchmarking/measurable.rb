@@ -262,8 +262,14 @@ module Elasticsearch
       def index_results!(results, options = {})
         res = Results.new(self, results, options)
         if result_cluster_client.ping
-          (doc = res.index!(result_cluster_client)) && doc[:results]
+          res.index!(result_cluster_client)
+          puts "#{'*' * 5} Indexed results #{'*' * 5} \n"
+        else
+          puts "#{'*' * 5} Results cluster not available, did not index results #{'*' * 5} \n"
         end
+        res.results_doc
+      rescue => ex
+        puts "Could not index results, due to #{ex.class}."
       end
 
       def result_cluster_client

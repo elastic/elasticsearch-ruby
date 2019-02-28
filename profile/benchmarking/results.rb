@@ -48,11 +48,30 @@ module Elasticsearch
       #
       # @param [ Elasticsearch::Client ] client The client to use to index the results.
       #
+      # @return [ Hash ] The results document.
+      #
       # @since 7.0.0
       def index!(client)
         create_index!(client)
-        #client.index(index: index_name, body: results_doc)
-        puts results_doc
+        client.index(index: index_name, body: results_doc)
+        results_doc
+      end
+
+      # The document recording the benchmarking run results, to index into the results cluster.
+      #
+      # @example Get the results document.
+      #   results.results_doc
+      #
+      # @return [ Hash ] The results document.
+      #
+      # @since 7.0.0
+      def results_doc
+        @results_doc ||= begin
+          { '@timestamp' => Time.now.iso8601,
+            event: event_doc,
+            agent: agent_doc,
+            server: server_doc }
+        end
       end
 
       private
@@ -79,15 +98,6 @@ module Elasticsearch
       def create_index!(client)
         unless client.indices.exists?(index: index_name)
           client.indices.create(index: index_name)
-        end
-      end
-
-      def results_doc
-        @results_doc ||= begin
-          { '@timestamp' => Time.now.iso8601,
-            event: event_doc,
-            agent: agent_doc,
-            server: server_doc }
         end
       end
 
