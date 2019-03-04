@@ -15,7 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'pry-nav'
 module Elasticsearch
   module Benchmarking
 
