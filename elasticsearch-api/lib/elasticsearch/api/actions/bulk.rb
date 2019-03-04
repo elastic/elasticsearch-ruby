@@ -97,7 +97,9 @@ module Elasticsearch
           :fields,
           :_source,
           :_source_exclude,
+          :_source_excludes,
           :_source_include,
+          :_source_includes,
           :pipeline ].freeze)
     end
   end
