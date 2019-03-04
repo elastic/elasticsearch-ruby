@@ -208,7 +208,7 @@ module Elasticsearch
 
         { branch: branch,
           sha: sha.chomp,
-          commit_message: commit_message.chomp,
+          commit_message: commit_message.gsub(/\n/, ''),
           repository: repository.chomp }
       end
 
