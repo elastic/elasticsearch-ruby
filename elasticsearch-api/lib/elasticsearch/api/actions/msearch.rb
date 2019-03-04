@@ -75,7 +75,8 @@ module Elasticsearch
           :search_type,
           :max_concurrent_searches,
           :max_concurrent_shard_requests,
-          :typed_keys ].freeze)
+          :typed_keys,
+          :rest_total_hits_as_int ].freeze)
     end
   end
 end
