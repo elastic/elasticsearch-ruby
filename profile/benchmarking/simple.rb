@@ -290,7 +290,7 @@ module Elasticsearch
         with_cleanup do
           client.create(index: INDEX, body: small_document)
           search_criteria = { match: { cuisine: 'mexican' } }
-          request = { body: { query: { match: search_criteria } } }
+          request = { body: { query: search_criteria } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else
@@ -340,7 +340,7 @@ module Elasticsearch
         results = with_cleanup do
           client.create(index: INDEX, body: large_document)
           search_criteria = { match: { 'user.lang': 'en' } }
-          request = { body: { query: { match: search_criteria } } }
+          request = { body: { query: search_criteria } }
           if noop_plugin?
             Elasticsearch::API.const_set('UNDERSCORE_SEARCH', '_noop_search')
           else

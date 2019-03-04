@@ -88,8 +88,8 @@ module Elasticsearch
             slice
           end[rand(slices.size)-1]
 
-          sample_documment = sample_slice[rand(sample_slice.size)-1][:index][:data]
-          search_criteria = sample_documment.find { |k,v| v.is_a?(String) }
+          sample_document = sample_slice[rand(sample_slice.size)-1][:index][:data]
+          search_criteria = sample_document.find { |k,v| v.is_a?(String) }
           request = { body: { query: { match: { search_criteria[0] => search_criteria[1] } } } }
 
           warmup_repetitions.times do

@@ -51,7 +51,7 @@
         bundle install
 
         export ELASTICSEARCH_URL=http://worker-954083.build.fsn1-dc3.hetzner.elasticnet.co:9200
-        bundle exec rake benchmark:simple:ping
+        bundle exec rake benchmark:simple:all
 
     # override default
     publishers: null

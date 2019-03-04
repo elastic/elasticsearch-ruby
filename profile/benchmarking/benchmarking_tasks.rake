@@ -132,7 +132,6 @@ namespace :benchmark do
       %w[ benchmark:simple:ping
           benchmark:simple:create_index
           benchmark:simple:index_document_small
-          benchmark:simple:index_document_small_patron
           benchmark:simple:index_document_large
           benchmark:simple:get_document_small
           benchmark:simple:get_document_large
@@ -162,8 +161,16 @@ namespace :benchmark do
 
   namespace :complex do
 
+    task :download_dataset do
+      current_path = File.expand_path(File.dirname(__FILE__))
+      data_path = [current_path, 'data'].join('/')
+      unless File.exists?([data_path, 'stackoverflow.json'].join('/'))
+        `gsutil cp gs://clients-team-files/stackoverflow.json "#{data_path}/"`
+      end
+    end
+
     desc "Run the \'index documents\' benchmark test"
-    task :index_documents do
+    task :index_documents => :download_dataset do
       require 'elasticsearch'
       Elasticsearch::Benchmarking.each_run(ENV['matrix']) do |run|
         task = Elasticsearch::Benchmarking::Complex.new(run)

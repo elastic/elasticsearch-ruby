@@ -171,6 +171,7 @@ module Elasticsearch
       end
 
       def standard_deviation
+        return 0 if raw_results.size < 2
         Math.sqrt(sample_variance)
       end
 
@@ -204,7 +205,6 @@ module Elasticsearch
         branch = /\* (.+)/.match(`git branch`)[1]
         commit_message = `git log -1 --pretty=%B`
         repository = 'elasticsearch-ruby'
-
 
         { branch: branch,
           sha: sha.chomp,

@@ -204,7 +204,7 @@ module Elasticsearch
       # @return [ String ] The file path and name for the dataset.
       #
       # @since 7.0.0
-      DATASET_FILE = [DATA_PATH, 'documents-small.json'].join('/').freeze
+      DATASET_FILE = [DATA_PATH, 'stackoverflow.json'].join('/').freeze
 
       # The name of the index to use for benchmark tests.
       #
@@ -270,6 +270,7 @@ module Elasticsearch
         res.results_doc
       rescue => ex
         puts "Could not index results, due to #{ex.class}."
+        puts "#{ex.backtrace[0..15]}"
       end
 
       def result_cluster_client
