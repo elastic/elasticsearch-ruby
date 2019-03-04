@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'pry-nav'
 module Elasticsearch
   module Benchmarking
 
@@ -201,11 +202,12 @@ module Elasticsearch
 
       def git_doc
         sha = `git rev-parse HEAD`
-        branch = `git branch | grep \\* | cut -d ' ' -f2`
+        branch = /\* (.+)/.match(`git branch`)[1]
         commit_message = `git log -1 --pretty=%B`
         repository = 'elasticsearch-ruby'
 
-        { branch: branch.chomp,
+
+        { branch: branch,
           sha: sha.chomp,
           commit_message: commit_message.chomp,
           repository: repository.chomp }
