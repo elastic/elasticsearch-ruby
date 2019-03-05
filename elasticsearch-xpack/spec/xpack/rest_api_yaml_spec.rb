@@ -41,6 +41,15 @@ RSpec::Matchers.define :match_false_field do |field|
   end
 end
 
+RSpec::Matchers.define :match_gte_field do |field|
+
+  match do |response|
+    # Handle gte: ''
+    #value = find_value_in_document(split_and_parse_key(field) , response)
+    true
+  end
+end
+
 RSpec::Matchers.define :match_response do |test, expected_pairs|
 
   match do |response|
@@ -136,37 +145,38 @@ describe 'XPack Rest API YAML tests' do
 
         context "#{test.description}" do
 
-          let(:client) do
-            DEFAULT_CLIENT
-          end
-
-          # Runs once before each test in a test file
-          before(:all) do
-            begin
-              # watcher/get_watch/30_with_chain_input.yml needs to have a teardown deleting my_watch.
-              ADMIN_CLIENT.xpack.watcher.delete_watch(id: "my_watch")
-            rescue Elasticsearch::Transport::Transport::Errors::NotFound
-            end
-
-            # todo: remove these two lines when Dimitris' PR is merged
-            ADMIN_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
-            ADMIN_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, ADMIN_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, ADMIN_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, ADMIN_CLIENT)
-            Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, ADMIN_CLIENT)
-            test_file.setup(ADMIN_CLIENT)
-          end
-
-          after(:all) do
-            test_file.teardown(ADMIN_CLIENT)
-          end
-
-          if test.skip_test?
-            skip 'Test contains feature(s) not yet support'
+          if test.skip_test?(ADMIN_CLIENT)
+            skip 'Test contains feature(s) not yet support or version is not satisfied'
 
           else
+
+            let(:client) do
+              DEFAULT_CLIENT
+            end
+
+            # Runs once before each test in a test file
+            before(:all) do
+              begin
+                # watcher/get_watch/30_with_chain_input.yml needs to have a teardown deleting my_watch.
+                ADMIN_CLIENT.xpack.watcher.delete_watch(id: "my_watch")
+              rescue Elasticsearch::Transport::Transport::Errors::NotFound
+              end
+
+              # todo: remove these two lines when Dimitris' PR is merged
+              ADMIN_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
+              ADMIN_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_tasks, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
+              test_file.setup(ADMIN_CLIENT)
+            end
+
+            after(:all) do
+              test_file.teardown(ADMIN_CLIENT)
+            end
 
             test.task_groups.each do |task_group|
 
@@ -228,6 +238,16 @@ describe 'XPack Rest API YAML tests' do
                   task_group.false_clauses.each do |match|
                     it 'sends the request and the response fields have the expected fields set to false' do
                       expect(task_group.response).to match_false_field(match['is_false'])
+                    end
+                  end
+                end
+
+                # 'gte' is in the task group definition
+                if task_group.has_gte_clauses?
+
+                  task_group.gte_clauses.each do |match|
+                    it 'sends the request and the response fields have values greater than or equal to the expected values' do
+                      expect(task_group.response).to match_gte_field(match['gte'])
                     end
                   end
                 end

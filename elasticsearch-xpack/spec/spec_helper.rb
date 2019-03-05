@@ -67,6 +67,9 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
 # ArgumentError for empty body
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
 
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/rollup/rollup_search.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
+
 # The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/snapshot/10_basic.yml")
 

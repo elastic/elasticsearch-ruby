@@ -52,8 +52,9 @@ module Elasticsearch
         def initialize(test_file, test_definition)
           @test_file = test_file
           @description = test_definition.keys.first
-          @definition = test_definition[description]
-          @skip = test_definition[description].collect { |doc| doc['skip'] }.compact
+          @skip = test_definition[description].select { |doc| doc['skip'] }.compact
+          @definition = test_definition[description].select { |doc| !doc.key?('skip') }
+          @definition.delete_if { |doc| doc['skip'] }
           @cached_values = {}
         end
 
@@ -71,15 +72,17 @@ module Elasticsearch
 
               # the action has a catch, it's a singular task group
               if action['do'] && action['do']['catch']
-                task_groups << TaskGroup.new(self)
+                task_group = TaskGroup.new(self)
               elsif action['do'] && i > 0 && is_a_validation?(@definition[i-1])
-                task_groups << TaskGroup.new(self)
+                task_group = TaskGroup.new(self)
               elsif i == 0
-                task_groups << TaskGroup.new(self)
+                task_group = TaskGroup.new(self)
+              else
+                task_group = task_groups[-1]
               end
 
-              task_groups[-1].add_action(action)
-              task_groups
+              task_group.add_action(action)
+              task_groups << task_group
             end
           end
         end
@@ -124,9 +127,16 @@ module Elasticsearch
         # @return [ true, false ] Whether this test should be skipped, given a list of unsupported features.
         #
         # @since 6.1.1
-        def skip_test?(features_to_skip = test_file.skip_features)
-          @skip.any? do |skip|
-            features_to_skip.include?(skip['features']) || skip['version'] == 'all'
+        def skip_test?(client, features_to_skip = test_file.skip_features)
+          return false if @skip.empty?
+          version_regexp = /(\d.\d.\d)( - )*(\d.\d.\d)*/
+          @skip.collect { |s| s['skip'] }.any? do |skip|
+            if version_regexp =~ skip['version']
+              range = version_regexp.match(skip['version'])[1]..version_regexp.match(skip['version'])[3]
+              range.cover?(client.info['version']['number'])
+            else
+              features_to_skip.include?(skip['features']) || skip['version'] == 'all'
+            end
           end
         end
 
