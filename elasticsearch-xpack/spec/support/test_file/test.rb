@@ -72,17 +72,14 @@ module Elasticsearch
 
               # the action has a catch, it's a singular task group
               if action['do'] && action['do']['catch']
-                task_group = TaskGroup.new(self)
+                task_groups << TaskGroup.new(self)
               elsif action['do'] && i > 0 && is_a_validation?(@definition[i-1])
-                task_group = TaskGroup.new(self)
+                task_groups << TaskGroup.new(self)
               elsif i == 0
-                task_group = TaskGroup.new(self)
-              else
-                task_group = task_groups[-1]
+                task_groups << TaskGroup.new(self)
               end
 
-              task_group.add_action(action)
-              task_groups << task_group
+              task_groups[-1].add_action(action) && task_groups
             end
           end
         end
@@ -138,6 +135,8 @@ module Elasticsearch
               features_to_skip.include?(skip['features']) || skip['version'] == 'all'
             end
           end
+        rescue
+          warn('Could not determine Elasticsearch version')
         end
 
         private
