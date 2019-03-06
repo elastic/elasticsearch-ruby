@@ -99,6 +99,20 @@ module Elasticsearch
           @cached_values["#{cache_key}"] = value
         end
 
+        # Get a cached value.
+        #
+        # @example
+        #   test.get_cached_value('$watch_count_active')
+        #
+        # @param [ String ] key The key of the cached value.
+        #
+        # @return [ Hash ] The cached value at the key or the key if it's not found.
+        #
+        # @since 6.1.1
+        def get_cached_value(key)
+          @cached_values.fetch(key.gsub(/\$/, ''), key)
+        end
+
         # Run all the tasks in this test.
         #
         # @example

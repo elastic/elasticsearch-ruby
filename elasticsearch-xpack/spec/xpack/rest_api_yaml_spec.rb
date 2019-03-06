@@ -60,7 +60,7 @@ RSpec::Matchers.define :match_gte_field do |expected_pairs|
   end
 end
 
-RSpec::Matchers.define :match_gt_field do |expected_pairs|
+RSpec::Matchers.define :match_gt_field do |expected_pairs, test|
 
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
@@ -75,7 +75,7 @@ RSpec::Matchers.define :match_gt_field do |expected_pairs|
         end
       end
       puts "actual: #{actual} and exected: #{expected_value}"
-      actual_value > expected_value
+      actual_value > test.get_cached_value(expected_value)
     end
   end
 end
@@ -326,7 +326,7 @@ describe 'XPack Rest API YAML tests' do
 
                   task_group.gt_clauses.each do |match|
                     it 'sends the request and the response fields have values greater than to the expected values' do
-                      expect(task_group.response).to match_gt_field(match['gt'])
+                      expect(task_group.response).to match_gt_field(match['gt'], test)
                     end
                   end
                 end
