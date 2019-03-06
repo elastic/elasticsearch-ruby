@@ -41,12 +41,81 @@ RSpec::Matchers.define :match_false_field do |field|
   end
 end
 
-RSpec::Matchers.define :match_gte_field do |field|
+RSpec::Matchers.define :match_gte_field do |expected_pairs|
 
   match do |response|
-    # Handle gte: ''
-    #value = find_value_in_document(split_and_parse_key(field) , response)
-    true
+    expected_pairs.all? do |expected_key, expected_value|
+      split_key = split_and_parse_key(expected_key)
+
+      actual_value = split_key.inject(response) do |_response, key|
+        # If the key is an index, indicating element of a list
+        if _response.empty? && key == '$body'
+          _response
+        else
+          _response[key]
+        end
+      end
+      actual_value >= expected_value
+    end
+  end
+end
+
+RSpec::Matchers.define :match_gt_field do |expected_pairs|
+
+  match do |response|
+    expected_pairs.all? do |expected_key, expected_value|
+      split_key = split_and_parse_key(expected_key)
+
+      actual_value = split_key.inject(response) do |_response, key|
+        # If the key is an index, indicating element of a list
+        if _response.empty? && key == '$body'
+          _response
+        else
+          _response[key]
+        end
+      end
+      puts "actual: #{actual} and exected: #{expected_value}"
+      actual_value > expected_value
+    end
+  end
+end
+
+RSpec::Matchers.define :match_lte_field do |expected_pairs|
+
+  match do |response|
+    expected_pairs.all? do |expected_key, expected_value|
+      split_key = split_and_parse_key(expected_key)
+
+      actual_value = split_key.inject(response) do |_response, key|
+        # If the key is an index, indicating element of a list
+        if _response.empty? && key == '$body'
+          _response
+        else
+          _response[key]
+        end
+      end
+      actual_value <= expected_value
+    end
+  end
+end
+
+RSpec::Matchers.define :match_lt_field do |expected_pairs|
+
+  match do |response|
+    expected_pairs.all? do |expected_key, expected_value|
+      split_key = split_and_parse_key(expected_key)
+
+      actual_value = split_key.inject(response) do |_response, key|
+        # If the key is an index, indicating element of a list
+        if _response.empty? && key == '$body'
+          _response
+        else
+          _response[key]
+        end
+      end
+      puts "actual: #{actual} and exected: #{expected_value}"
+      actual_value < expected_value
+    end
   end
 end
 
@@ -248,6 +317,36 @@ describe 'XPack Rest API YAML tests' do
                   task_group.gte_clauses.each do |match|
                     it 'sends the request and the response fields have values greater than or equal to the expected values' do
                       expect(task_group.response).to match_gte_field(match['gte'])
+                    end
+                  end
+                end
+
+                # 'gt' is in the task group definition
+                if task_group.has_gt_clauses?
+
+                  task_group.gt_clauses.each do |match|
+                    it 'sends the request and the response fields have values greater than to the expected values' do
+                      expect(task_group.response).to match_gt_field(match['gt'])
+                    end
+                  end
+                end
+
+                # 'lte' is in the task group definition
+                if task_group.has_lte_clauses?
+
+                  task_group.lte_clauses.each do |match|
+                    it 'sends the request and the response fields have values less than or equal to the expected values' do
+                      expect(task_group.response).to match_lte_field(match['lte'])
+                    end
+                  end
+                end
+
+                # 'lt' is in the task group definition
+                if task_group.has_lt_clauses?
+
+                  task_group.lt_clauses.each do |match|
+                    it 'sends the request and the response fields have values less than to the expected values' do
+                      expect(task_group.response).to match_lt_field(match['lt'])
                     end
                   end
                 end

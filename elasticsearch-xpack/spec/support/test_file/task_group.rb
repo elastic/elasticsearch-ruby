@@ -146,6 +146,33 @@ module Elasticsearch
             !!gte_clauses
           end
 
+          # Does this task group have clauses on a field value being gt.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being gt.
+          #
+          # @since 6.1.1
+          def has_gt_clauses?
+            !!gt_clauses
+          end
+
+          # Does this task group have clauses on a field value being lte.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being lte.
+          #
+          # @since 6.1.1
+          def has_lte_clauses?
+            !!lte_clauses
+          end
+
+          # Does this task group have clauses on a field value being lt.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being lt.
+          #
+          # @since 6.1.1
+          def has_lt_clauses?
+            !!lt_clauses
+          end
+
           # The expected exception message.
           #
           # @return [ String ] The expected exception message.
@@ -197,6 +224,33 @@ module Elasticsearch
             @gte_clauses ||= @actions.group_by { |a| a.keys.first }['gte']
           end
 
+          # The gt clauses.
+          #
+          # @return [ Array<Hash> ] The gt clauses.
+          #
+          # @since 6.1.1
+          def gt_clauses
+            @gt_clauses ||= @actions.group_by { |a| a.keys.first }['gt']
+          end
+
+          # The lte clauses.
+          #
+          # @return [ Array<Hash> ] The lte clauses.
+          #
+          # @since 6.1.1
+          def lte_clauses
+            @lte_clauses ||= @actions.group_by { |a| a.keys.first }['lte']
+          end
+
+          # The lt clauses.
+          #
+          # @return [ Array<Hash> ] The lt clauses.
+          #
+          # @since 6.1.1
+          def lt_clauses
+            @lt_clauses ||= @actions.group_by { |a| a.keys.first }['lt']
+          end
+
           # The field length match clauses.
           #
           # @return [ Array<Hash> ] The field length match clauses.
@@ -215,7 +269,9 @@ module Elasticsearch
                       'is_true',
                       'is_false',
                       'gte',
-                      'lte' ].freeze
+                      'gt',
+                      'lte',
+                      'lt' ].freeze
 
           def do_actions
             @do_actions ||= @actions.group_by { |a| a.keys.first }['do'].map { |definition| Action.new(definition['do']) }
