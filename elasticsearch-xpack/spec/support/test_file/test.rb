@@ -110,6 +110,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         def get_cached_value(key)
+          return key unless key.is_a?(String)
           @cached_values.fetch(key.gsub(/\$/, ''), key)
         end
 

@@ -74,7 +74,6 @@ RSpec::Matchers.define :match_gt_field do |expected_pairs, test|
           _response[key]
         end
       end
-      puts "actual: #{actual} and exected: #{expected_value}"
       actual_value > test.get_cached_value(expected_value)
     end
   end

@@ -53,10 +53,10 @@ module Elasticsearch
           when 'headers'
             if ENV['QUIET'] == 'true'
               # todo: create a method on Elasticsearch::Client that can clone the client with new options
-              Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout),
+              Elasticsearch::Client.new(host: URL,
                                         transport_options: TRANSPORT_OPTIONS.merge( headers: prepare_arguments(args, test)))
             else
-              Elasticsearch::Client.new(host: URL,
+              Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout),
                                         transport_options: TRANSPORT_OPTIONS.merge( headers: prepare_arguments(args, test)))
             end
           when 'catch'
