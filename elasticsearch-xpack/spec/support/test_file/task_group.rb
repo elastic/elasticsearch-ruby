@@ -51,8 +51,7 @@ module Elasticsearch
           #
           # @since 6.1.1
           def add_action(action)
-            @actions << action if action['do'] || action['match'] || action['length'] ||
-                                    action['set'] || action['is_true'] || action['is_false']
+            @actions << action if ACTIONS.any? { |a| action[a] }
             self
           end
 
@@ -138,14 +137,54 @@ module Elasticsearch
             !!false_clauses
           end
 
+          # Does this task group have clauses on a field value being gte.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being gte.
+          #
+          # @since 6.1.1
+          def has_gte_clauses?
+            !!gte_clauses
+          end
+
+          # Does this task group have clauses on a field value being gt.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being gt.
+          #
+          # @since 6.1.1
+          def has_gt_clauses?
+            !!gt_clauses
+          end
+
+          # Does this task group have clauses on a field value being lte.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being lte.
+          #
+          # @since 6.1.1
+          def has_lte_clauses?
+            !!lte_clauses
+          end
+
+          # Does this task group have clauses on a field value being lt.
+          #
+          # @return [ true, false ] If the task group has clauses on a field value being lt.
+          #
+          # @since 6.1.1
+          def has_lt_clauses?
+            !!lt_clauses
+          end
+
           # The expected exception message.
           #
           # @return [ String ] The expected exception message.
           #
           # @since 6.1.1
           def expected_exception_message
-            if catch_exception = @actions.group_by { |a| a.keys.first }['do'].find { |a| a['do']['catch'] }
-              catch_exception['do']['catch']
+            @expected_exception_message ||= begin
+              if do_definitions =  @actions.group_by { |a| a.keys.first }['do']
+                if catch_exception = do_definitions.find { |a| a['do']['catch'] }
+                  catch_exception['do']['catch']
+                end
+              end
             end
           end
 
@@ -176,6 +215,42 @@ module Elasticsearch
             @false_clauses ||= @actions.group_by { |a| a.keys.first }['is_false']
           end
 
+          # The gte clauses.
+          #
+          # @return [ Array<Hash> ] The gte clauses.
+          #
+          # @since 6.1.1
+          def gte_clauses
+            @gte_clauses ||= @actions.group_by { |a| a.keys.first }['gte']
+          end
+
+          # The gt clauses.
+          #
+          # @return [ Array<Hash> ] The gt clauses.
+          #
+          # @since 6.1.1
+          def gt_clauses
+            @gt_clauses ||= @actions.group_by { |a| a.keys.first }['gt']
+          end
+
+          # The lte clauses.
+          #
+          # @return [ Array<Hash> ] The lte clauses.
+          #
+          # @since 6.1.1
+          def lte_clauses
+            @lte_clauses ||= @actions.group_by { |a| a.keys.first }['lte']
+          end
+
+          # The lt clauses.
+          #
+          # @return [ Array<Hash> ] The lt clauses.
+          #
+          # @since 6.1.1
+          def lt_clauses
+            @lt_clauses ||= @actions.group_by { |a| a.keys.first }['lt']
+          end
+
           # The field length match clauses.
           #
           # @return [ Array<Hash> ] The field length match clauses.
@@ -186,6 +261,17 @@ module Elasticsearch
           end
 
           private
+
+          ACTIONS = [ 'do',
+                      'match',
+                      'length',
+                      'set',
+                      'is_true',
+                      'is_false',
+                      'gte',
+                      'gt',
+                      'lte',
+                      'lt' ].freeze
 
           def do_actions
             @do_actions ||= @actions.group_by { |a| a.keys.first }['do'].map { |definition| Action.new(definition['do']) }
