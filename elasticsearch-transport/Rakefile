@@ -34,6 +34,7 @@ namespace :test do
   end
 
   task :spec => :wait_for_green
+  RSpec::Core::RakeTask.new(:spec)
 
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
@@ -45,7 +46,7 @@ namespace :test do
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
-    test.deps = [ :wait_for_green, :spec ]
+    test.deps = [ 'test:wait_for_green', 'test:spec' ]
     test.verbose = false
     test.warning = false
   end
