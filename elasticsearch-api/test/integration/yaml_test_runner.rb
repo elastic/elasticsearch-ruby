@@ -329,6 +329,7 @@ suites.each do |suite|
     setup do
       $helper_client.indices.delete index: '_all', ignore: 404
       $helper_client.indices.delete_template name: 'test_2', ignore: 404
+      $helper_client.indices.delete_template name: 'test2', ignore: 404
       $helper_client.indices.delete_template name: 'test', ignore: 404
       $helper_client.indices.delete_template name: 'index_template', ignore: 404
       $helper_client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
