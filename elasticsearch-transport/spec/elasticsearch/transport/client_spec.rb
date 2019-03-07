@@ -630,7 +630,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     let(:port) do
-      (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
+      TEST_PORT
     end
 
     let(:transport_options) do
@@ -652,7 +652,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'connects to the cluster' do
-        expect(response.body['number_of_nodes']).to be > (1)
+        expect(response.body['number_of_nodes']).to be >= (1)
       end
     end
 
@@ -781,7 +781,7 @@ describe Elasticsearch::Transport::Client do
         it 'reloads the connections' do
           expect(client.transport.connections.size).to eq(3)
           expect(responses.all? { true }).to be(true)
-          expect(client.transport.connections.size).to eq(2)
+          expect(client.transport.connections.size).to be >= (1)
         end
       end
 
@@ -792,7 +792,7 @@ describe Elasticsearch::Transport::Client do
         end
 
         let(:logger) do
-          double('logger', :debug? => false, :warn? => true, :fatal? => false)
+          double('logger', :debug? => false, :warn? => true, :fatal? => false, :error? => false)
         end
 
         before do
@@ -814,7 +814,7 @@ describe Elasticsearch::Transport::Client do
         before do
           client.perform_request('DELETE', '_all')
           client.perform_request('DELETE', 'myindex') rescue
-          client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 10 } })
+          client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 2, number_of_replicas: 0 } })
           client.perform_request('PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, { foo: 'bar' })
           client.perform_request('GET', '_cluster/health?wait_for_status=green', {})
         end

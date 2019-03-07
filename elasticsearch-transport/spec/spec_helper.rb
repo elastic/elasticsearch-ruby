@@ -8,7 +8,13 @@ require 'pry-nav'
 # The hosts to use for creating a elasticsearch client.
 #
 # @since 7.0.0
-ELASTICSEARCH_HOSTS = ENV['ELASTICSEARCH_HOSTS'] ? ENV['ELASTICSEARCH_HOSTS'].split(',').freeze : [ '127.0.0.1:9250' ].freeze
+ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+                        hosts.split(',').map do |host|
+                          /(http\:\/\/)?(\S+)/.match(host)[2]
+                        end
+                      end.freeze
+
+TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
 
 # Are we testing on JRuby?
 #
