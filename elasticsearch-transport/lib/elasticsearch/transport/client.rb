@@ -201,6 +201,10 @@ module Elasticsearch
               :host => uri.host,
               :path => uri.path,
               :port => uri.port }
+          elsif host =~ /^\[[a-z0-9:]+\]:[0-9]+/
+            host, sep, port = host.rpartition(':')
+            {:host => host,
+             :port => port}
           else
             host, port = host.split(':')
             { :host => host,

@@ -126,6 +126,19 @@ describe Elasticsearch::Transport::Client do
         expect(hosts[0][:port]).to be(9200)
       end
 
+      context 'when ipv6 is specified' do
+
+        let(:host) do
+          '[fd95:ff55:7fb8:f1e5:f816:3eff:feed:ce5b]:9200'
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('[fd95:ff55:7fb8:f1e5:f816:3eff:feed:ce5b]')
+          expect(hosts[0][:scheme]).to eq('http')
+          expect(hosts[0][:port]).to be(9200)
+        end
+      end
+
       context 'when a path is specified' do
 
         let(:host) do
