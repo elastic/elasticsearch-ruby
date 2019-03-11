@@ -26,7 +26,7 @@ namespace :test do
   end
 
   Rake::TestTask.new(:integration) do |test|
-    test.deps = [ :wait_for_green ]
+    test.deps = [ :wait_for_green, :spec ]
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/integration/**/*_test.rb"]
     test.verbose = false
