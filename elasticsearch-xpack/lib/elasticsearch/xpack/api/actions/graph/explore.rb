@@ -43,7 +43,7 @@ module Elasticsearch
             type  = arguments.delete(:type)
 
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), Elasticsearch::API::Utils.__listify(type), '_xpack/_graph/_explore'
+            path   = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), Elasticsearch::API::Utils.__listify(type), '_graph/explore'
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 

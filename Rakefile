@@ -18,7 +18,7 @@
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
-
+require 'pry-nav'
 require 'pathname'
 
 CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
@@ -26,13 +26,42 @@ SUBPROJECTS = [ 'elasticsearch',
                 'elasticsearch-transport',
                 'elasticsearch-dsl',
                 'elasticsearch-api',
-                'elasticsearch-extensions' ].freeze
+                'elasticsearch-extensions',
+                'elasticsearch-xpack' ].freeze
 
 RELEASE_TOGETHER = [ 'elasticsearch',
                      'elasticsearch-transport',
                      'elasticsearch-api',
                      'elasticsearch-xpack' ].freeze
 
+CERTS_PATH = '.ci/certs/'.freeze
+
+def admin_client
+  $admin_client ||= begin
+    transport_options = {}
+    test_suite = ENV['TEST_SUITE'].freeze
+
+    if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+      split_hosts = hosts.split(',').map do |host|
+        /(http\:\/\/)?(\S+)/.match(host)[2]
+      end
+
+      host, port = split_hosts.first.split(':')
+    end
+
+    if test_suite == 'security'
+      transport_options.merge!(:ssl => { verify: false,
+                                         ca_path: CERTS_PATH })
+
+      password = ENV['ELASTIC_PASSWORD']
+      user = ENV['ELASTIC_USER'] || 'elastic'
+      url = "https://#{user}:#{password}@#{host}:#{port}"
+    else
+      url = "http://#{host || 'localhost'}:#{port || 9200}"
+    end
+    Elasticsearch::Client.new(host: url, transport_options: transport_options)
+  end
+end
 
 # TODO: Figure out "bundle exec or not"
 # subprojects.each { |project| $LOAD_PATH.unshift CURRENT_PATH.join(project, "lib").to_s }
@@ -49,13 +78,6 @@ task :subprojects do
     version =  Gem::Specification::load(CURRENT_PATH.join(project, "#{project}.gemspec").to_s).version.to_s
     puts "#{version}".ljust(10) +
          "| \e[1m#{project.ljust(SUBPROJECTS.map {|s| s.length}.max)}\e[0m | #{commit[ 0..80]}..."
-  end
-end
-
-desc "Setup the project"
-task :setup do
-  unless File.exist?('./tmp/elasticsearch')
-    sh "git clone https://github.com/elasticsearch/elasticsearch.git tmp/elasticsearch"
   end
 end
 

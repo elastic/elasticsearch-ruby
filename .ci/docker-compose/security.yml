@@ -12,6 +12,7 @@ services:
           ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-changeme}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
+      - "QUIET=false"
     volumes:
       - esvol:/tmp
     networks:
@@ -23,12 +24,11 @@ services:
     networks:
       - esnet
     environment:
-      - path.repo=/tmp
-      - "repositories.url.allowed_urls=http://*"
-      - node.attr.testattr=test
-      - bootstrap.memory_lock=false
+      - "node.attr.testattr=test"
+      - "path.repo=/tmp"
+      - "repositories.url.allowed_urls=http://snapshot.*"
       - "discovery.type=single-node"
-      - "http.max_content_length=5mb"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
       - "ELASTIC_PASSWORD=changeme"
       - "xpack.security.enabled=true"
       - "xpack.license.self_generated.type=trial"
@@ -36,17 +36,17 @@ services:
       # 'certificate' Verifies that the provided certificate is signed by a trusted authority (CA),
       #    but does not perform any hostname verification.
       - "xpack.security.http.ssl.verification_mode=certificate"
-      - "xpack.security.http.ssl.key=testnode.key"
-      - "xpack.security.http.ssl.certificate=testnode.crt"
-      - "xpack.security.http.ssl.certificate_authorities=ca.crt"
+      - "xpack.security.http.ssl.key=certs/testnode.key"
+      - "xpack.security.http.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.http.ssl.certificate_authorities=certs/ca.crt"
       - "xpack.security.transport.ssl.enabled=true"
-      - "xpack.security.transport.ssl.key=testnode.key"
-      - "xpack.security.transport.ssl.certificate=testnode.crt"
-      - "xpack.security.transport.ssl.certificate_authorities=ca.crt"
+      - "xpack.security.transport.ssl.key=certs/testnode.key"
+      - "xpack.security.transport.ssl.certificate=certs/testnode.crt"
+      - "xpack.security.transport.ssl.certificate_authorities=certs/ca.crt"
     volumes:
-      - "../certs/testnode.crt:/usr/share/elasticsearch/config/testnode.crt"
-      - "../certs/testnode.key:/usr/share/elasticsearch/config/testnode.key"
-      - "../certs/ca.crt:/usr/share/elasticsearch/config/ca.crt"
+      - "../certs/testnode.crt:/usr/share/elasticsearch/config/certs/testnode.crt"
+      - "../certs/testnode.key:/usr/share/elasticsearch/config/certs/testnode.key"
+      - "../certs/ca.crt:/usr/share/elasticsearch/config/certs/ca.crt"
 networks:
   # we need two networks otherwise the two ES instances will join each other
   esnet:

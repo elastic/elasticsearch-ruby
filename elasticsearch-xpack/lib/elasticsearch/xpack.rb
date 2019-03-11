@@ -46,6 +46,11 @@ module Elasticsearch
       def xpack
         @xpack_client ||= Elasticsearch::XPack::API::Client.new(self)
       end
+
+
+      def security
+        @security ||= xpack.security
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
