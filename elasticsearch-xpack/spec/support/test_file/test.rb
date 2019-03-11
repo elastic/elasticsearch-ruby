@@ -141,10 +141,10 @@ module Elasticsearch
         # @since 6.1.1
         def skip_test?(client, features_to_skip = test_file.skip_features)
           return false if @skip.empty?
-          version_regexp = /(\d.\d.\d)( - )*(\d.\d.\d)*/
+          range_partition =  /\s*-\s*/
           @skip.collect { |s| s['skip'] }.any? do |skip|
-            if version_regexp =~ skip['version']
-              range = version_regexp.match(skip['version'])[1]..version_regexp.match(skip['version'])[3]
+            if versions = skip['version'].partition(range_partition)
+              range = versions[0]..versions[2]
               range.cover?(client.info['version']['number'])
             else
               features_to_skip.include?(skip['features']) || skip['version'] == 'all'
