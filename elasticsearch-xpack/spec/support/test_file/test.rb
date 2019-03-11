@@ -28,7 +28,7 @@ module Elasticsearch
                               'match',
                               'is_false',
                               'is_true'
-                            ].freeze
+        ].freeze
 
         # The maximum Elasticsearch version this client version can successfully run tests against.
         #
@@ -52,8 +52,9 @@ module Elasticsearch
         def initialize(test_file, test_definition)
           @test_file = test_file
           @description = test_definition.keys.first
-          @definition = test_definition[description]
-          @skip = test_definition[description].collect { |doc| doc['skip'] }.compact
+          @skip = test_definition[description].select { |doc| doc['skip'] }.compact
+          @definition = test_definition[description].select { |doc| !doc.key?('skip') }
+          @definition.delete_if { |doc| doc['skip'] }
           @cached_values = {}
         end
 
@@ -78,8 +79,7 @@ module Elasticsearch
                 task_groups << TaskGroup.new(self)
               end
 
-              task_groups[-1].add_action(action)
-              task_groups
+              task_groups[-1].add_action(action) && task_groups
             end
           end
         end
@@ -97,6 +97,21 @@ module Elasticsearch
         # @since 6.1.1
         def cache_value(cache_key, value)
           @cached_values["#{cache_key}"] = value
+        end
+
+        # Get a cached value.
+        #
+        # @example
+        #   test.get_cached_value('$watch_count_active')
+        #
+        # @param [ String ] key The key of the cached value.
+        #
+        # @return [ Hash ] The cached value at the key or the key if it's not found.
+        #
+        # @since 6.1.1
+        def get_cached_value(key)
+          return key unless key.is_a?(String)
+          @cached_values.fetch(key.gsub(/\$/, ''), key)
         end
 
         # Run all the tasks in this test.
@@ -124,10 +139,19 @@ module Elasticsearch
         # @return [ true, false ] Whether this test should be skipped, given a list of unsupported features.
         #
         # @since 6.1.1
-        def skip_test?(features_to_skip = test_file.skip_features)
-          @skip.any? do |skip|
-            features_to_skip.include?(skip['features']) || skip['version'] == 'all'
+        def skip_test?(client, features_to_skip = test_file.skip_features)
+          return false if @skip.empty?
+          version_regexp = /(\d.\d.\d)( - )*(\d.\d.\d)*/
+          @skip.collect { |s| s['skip'] }.any? do |skip|
+            if version_regexp =~ skip['version']
+              range = version_regexp.match(skip['version'])[1]..version_regexp.match(skip['version'])[3]
+              range.cover?(client.info['version']['number'])
+            else
+              features_to_skip.include?(skip['features']) || skip['version'] == 'all'
+            end
           end
+        rescue
+          warn('Could not determine Elasticsearch version')
         end
 
         private

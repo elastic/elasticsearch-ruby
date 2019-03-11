@@ -4,44 +4,84 @@ require 'elasticsearch'
 require 'elasticsearch/xpack'
 require 'logger'
 require 'support/test_file'
+require 'openssl'
 
 RSpec.configure do |config|
   config.formatter = 'documentation'
   config.color = true
 end
 
-password = ENV['ELASTIC_PASSWORD']
-URL = ENV.fetch('TEST_CLUSTER_URL', "http://elastic:#{password}@localhost:#{ENV['TEST_CLUSTER_PORT'] || 9260}")
+PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: URL)
+TRANSPORT_OPTIONS = {}
+TEST_SUITE = ENV['TEST_SUITE'].freeze
 
-if ENV['QUIET'] == 'true'
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL)
-else
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout))
+if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+  split_hosts = hosts.split(',').map do |host|
+    /(http\:\/\/)?(\S+)/.match(host)[2]
+  end
+
+  TEST_HOST, TEST_PORT = split_hosts.first.split(':')
 end
 
-CURRENT_PATH = File.expand_path(File.dirname(__FILE__))
+raw_certificate = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.crt'))
+certificate = OpenSSL::X509::Certificate.new(raw_certificate)
 
+raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
+key = OpenSSL::PKey::RSA.new(raw_key)
+
+if TEST_SUITE == 'security'
+  TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
+                                     client_cert: certificate,
+                                     client_key: key,
+                                     ca_file: '.ci/certs/ca.crt'})
+
+  password = ENV['ELASTIC_PASSWORD']
+  URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
+else
+  URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+end
+
+ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+
+if ENV['QUIET'] == 'true'
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+else
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                             transport_options: TRANSPORT_OPTIONS,
+                                             tracer: Logger.new($stdout))
+end
+
+
+
+YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
+    "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/indices.freeze"
 skipped_files = []
 
+# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ssl/10_basic.yml")
+
+# Current license is basic.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
+
 # ArgumentError for empty body
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/watcher/put_watch/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
 
 # The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/snapshot/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/snapshot/10_basic.yml")
 
 # The test inserts an invalid license, which makes all subsequent tests fail.
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/xpack/15_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
+
+# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
 
 # Searching the monitoring index returns no results.
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/10_basic.yml")
-skipped_files += Dir.glob("#{CURRENT_PATH}/support/yaml_tests/monitoring/bulk/20_privileges.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
 
-YAML_FILES_DIRECTORY = "#{CURRENT_PATH}/support/yaml_tests"
 REST_API_YAML_FILES = Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
-
 
 
 # Given a list of keys, find the value in a recursively nested document.

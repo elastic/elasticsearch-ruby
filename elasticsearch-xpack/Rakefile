@@ -18,6 +18,8 @@
 require 'bundler/gem_tasks'
 
 require 'rake/testtask'
+require 'rspec/core/rake_task'
+
 
 task :default do
   exec "rake --tasks"
@@ -31,6 +33,15 @@ Rake::TestTask.new('test:unit') do |test|
 end
 
 namespace :test do
+
+  RSpec::Core::RakeTask.new(:spec)
+
+  desc "Run rest api yaml tests"
+  Rake::TestTask.new(:rest_api)  do |test|
+    `rm Gemfile.lock`
+    test.deps = [ :spec ]
+  end
+
   desc "Run integration tests"
   task :integration do
     sh <<-COMMAND
