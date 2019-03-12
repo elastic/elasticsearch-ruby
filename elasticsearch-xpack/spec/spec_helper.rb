@@ -30,26 +30,29 @@ certificate = OpenSSL::X509::Certificate.new(raw_certificate)
 raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
 key = OpenSSL::PKey::RSA.new(raw_key)
 
-if TEST_SUITE == 'security'
-  TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
-                                     client_cert: certificate,
-                                     client_key: key,
-                                     ca_file: '.ci/certs/ca.crt'})
 
-  password = ENV['ELASTIC_PASSWORD']
-  URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
-else
-  URL = "http://#{TEST_HOST}:#{TEST_PORT}"
-end
+if defined?(TEST_HOST) && defined?(TEST_PORT)
+  if TEST_SUITE == 'security'
+    TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
+                                       client_cert: certificate,
+                                       client_key: key,
+                                       ca_file: '.ci/certs/ca.crt'})
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+    password = ENV['ELASTIC_PASSWORD']
+    URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
+  else
+    URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+  end
 
-if ENV['QUIET'] == 'true'
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
-else
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
-                                             transport_options: TRANSPORT_OPTIONS,
-                                             tracer: Logger.new($stdout))
+  ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+
+  if ENV['QUIET'] == 'true'
+    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+  else
+    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                               transport_options: TRANSPORT_OPTIONS,
+                                               tracer: Logger.new($stdout))
+  end
 end
 
 
@@ -115,4 +118,32 @@ def split_and_parse_key(key)
   key.split(/(?<!\\)\./).map do |key|
     (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
   end.reject { |k| k == '$body' }
+end
+
+
+module HelperModule
+  def self.included(context)
+
+    context.let(:client_double) do
+      Class.new { include Elasticsearch::XPack::API }.new.tap do |client|
+        expect(client).to receive(:perform_request).with(*expected_args).and_return(response_double)
+      end
+    end
+
+    context.let(:client) do
+      Class.new { include Elasticsearch::XPack::API }.new.tap do |client|
+        expect(client).to receive(:perform_request).with(*expected_args).and_return(response_double)
+      end
+    end
+
+    context.let(:response_double) do
+      double('response', status: 200, body: {}, headers: {})
+    end
+  end
+end
+
+RSpec.configure do |config|
+  config.include(HelperModule)
+  config.formatter = 'documentation'
+  config.color = true
 end
