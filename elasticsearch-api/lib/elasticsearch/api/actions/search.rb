@@ -190,7 +190,8 @@ module Elasticsearch
           :batched_reduce_size,
           :max_concurrent_shard_requests,
           :pre_filter_shard_size,
-          :rest_total_hits_as_int ].freeze)
+          :rest_total_hits_as_int,
+          :ignore_throttled ].freeze)
     end
   end
 end
