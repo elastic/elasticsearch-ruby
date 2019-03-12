@@ -12,7 +12,7 @@ module Elasticsearch
           #
           def get_jobs(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/rollup/job/#{arguments[:id]}"
+            path   = "_rollup/job/#{arguments[:id]}"
             params = {}
             body   = nil
 
