@@ -62,6 +62,7 @@ module Elasticsearch
           when 'catch'
             client
           else
+            raise "#{client.class} does not respond to method: #{_method}" unless client.respond_to?(_method)
             @response = client.send(_method, prepare_arguments(args, test))
             client
           end
