@@ -274,7 +274,7 @@ describe 'XPack Rest API YAML tests' do
                 if task_group.has_match_clauses?
 
                   task_group.match_clauses.each do |match|
-                    it "has the expected value in the response field '#{match['match'].keys.join(',')}'" do
+                    it "has the expected value (#{match['match'].values.join(',')}) in the response field (#{match['match'].keys.join(',')})" do
                       expect(task_group.response).to match_response(test, match['match'])
                     end
                   end
