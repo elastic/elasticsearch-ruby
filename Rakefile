@@ -10,6 +10,11 @@ SUBPROJECTS = [ 'elasticsearch',
                 'elasticsearch-extensions',
                 'elasticsearch-xpack' ].freeze
 
+RELEASE_TOGETHER = [ 'elasticsearch',
+                     'elasticsearch-transport',
+                     'elasticsearch-api',
+                     'elasticsearch-xpack' ].freeze
+
 def admin_client
   $admin_client ||= begin
     transport_options = {}
@@ -86,7 +91,7 @@ end
 
 desc "Release all subprojects to Rubygems"
 task :release do
-  SUBPROJECTS.each do |project|
+  RELEASE_TOGETHER.each do |project|
     next if project == 'elasticsearch-extensions'
     sh "cd #{CURRENT_PATH.join(project)} && rake release"
     puts '-'*80
@@ -189,7 +194,7 @@ task :update_version, :old, :new do |task, args|
   end
 
   unless log_entries[:xpack].empty?
-    changelog_update << "## XPACK:#{args[:new]}\n\n"
+    changelog_update << "## XPACK"
     changelog_update << log_entries[:xpack]
                             .map { |l| l.gsub /\[XPACK\] /, '' }
                             .map { |l| "#{l}" }
