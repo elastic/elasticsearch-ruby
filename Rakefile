@@ -185,7 +185,7 @@ task :update_version, :old, :new do |task, args|
   end
 
   unless log_entries[:client].empty?
-    changelog_update << "## EXT:#{args[:new]}\n\n"
+    changelog_update << "### EXT:#{args[:new]}\n\n"
     changelog_update << log_entries[:ext]
                           .map { |l| l.gsub /\[EXT\] /, '' }
                           .map { |l| "#{l}" }
@@ -194,7 +194,7 @@ task :update_version, :old, :new do |task, args|
   end
 
   unless log_entries[:xpack].empty?
-    changelog_update << "## XPACK"
+    changelog_update << "### XPACK\n\n"
     changelog_update << log_entries[:xpack]
                             .map { |l| l.gsub /\[XPACK\] /, '' }
                             .map { |l| "#{l}" }
