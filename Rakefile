@@ -141,6 +141,7 @@ task :update_version, :old, :new do |task, args|
   log_entries[:api] = log.select { |l| l =~ /\[API\]/ }
   log_entries[:dsl] = log.select { |l| l =~ /\[DSL\]/ }
   log_entries[:ext] = log.select { |l| l =~ /\[EXT\]/ }
+  log_entries[:xpack] = log.select { |l| l =~ /\[XPACK\]/ }
 
   changelog = File.read(File.open('CHANGELOG.md', 'r'))
 
@@ -183,6 +184,15 @@ task :update_version, :old, :new do |task, args|
                           .map { |l| l.gsub /\[EXT\] /, '' }
                           .map { |l| "#{l}" }
                           .join("\n")
+    changelog_update << "\n\n"
+  end
+
+  unless log_entries[:xpack].empty?
+    changelog_update << "## XPACK:#{args[:new]}\n\n"
+    changelog_update << log_entries[:xpack]
+                            .map { |l| l.gsub /\[XPACK\] /, '' }
+                            .map { |l| "#{l}" }
+                            .join("\n")
     changelog_update << "\n\n"
   end
 
