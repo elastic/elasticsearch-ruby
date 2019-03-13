@@ -22,8 +22,8 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9'
 
-  s.add_dependency "elasticsearch-transport", '6.1.0'
-  s.add_dependency "elasticsearch-api",       '6.1.0'
+  s.add_dependency "elasticsearch-transport", '6.2.0'
+  s.add_dependency "elasticsearch-api",       '6.2.0'
 
   s.add_development_dependency "bundler"
 

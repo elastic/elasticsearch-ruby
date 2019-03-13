@@ -1,3 +1,76 @@
+## 6.2.0
+
+### Client
+
+* Assert that connection count is at least previous count when reloaded
+* Don't mutate user-defined options upon initialization of client
+* Only dup options if they are passed in
+* Convert client tests to rspec for 6.x
+* Redacted password if host info is printed in error message
+* Adds tests for not including password in logged error message
+* The redacted string change will be in 6.1.1
+* Add more tests for different ways to specify client host argument
+* Do not duplicate connections in connection pool after rebuild (#591)
+
+### API
+
+* Update split indices method and test
+* Port api/actions tests to rspec (#543)
+* Account for escape_utils not being available for JRuby
+* Convert cat API tests to rspec (#547)
+* Convert cluster API tests to rspec (#548)
+* Convert indices tests to rspec (#549)
+* Fix documentation of #indices.analyze
+* Avoid instantiating an array of valid params for each request, each time it is called (#550)
+* Skip tests with 'default_shards' in features (#558)
+* Convert snapshot, ingest, tasks, nodes api tests to rspec (#563)
+* Update documentation for msearch
+* Remove reference to deprecated format option for _analyze endpoint
+* Correct endpoints used for get and put search template
+* Fix minor typo
+* Note that a non-empty body argument is required for the bulk api
+* Support ignore_throttled option on search API
+
+### DSL
+
+* Convert aggregations/pipeline tests to rspec (#564)
+* Convert aggregations tests to rspec (#566)
+* Convert filters tests to rspec (#568)
+* Fix bug in applying no_match_filter to indices filter
+* Fix integration tests for join field syntax
+* Update test for current elasticsearch version
+* Include type in index document operation in test
+* minor: fix spacing
+* Convert queries tests to rspec (#569)
+* spec directory structure should mirror code directory structure
+* Ensure that filters are registered when called on bool queries (#609)
+* Apply PR 572 to 6.x branch
+* Ensure that specs are running as part of integration tests
+* Revert previous commit; spec tests are running as part of unit tests
+
+## EXT:6.2.0
+
+* Remove gem dependency on 'oj' gem and instead warn if LoadError
+* Remove gem dependency on 'patron' gem and instead warn if LoadError
+* Make ruby-prof a gem development dependency
+* Fix jar regex determining elasticsearch version (#557)
+* Added, that determining version from .jar file is more defensive
+
+## XPACK:6.2.0
+
+* Add ruby-prof as a development dependency
+* Handle multiple roles passed to get_role_mapping
+* Minor updates to xpack api methods (#586)
+* Rewrite xpack rest api yaml test handler (#585)
+* Set up docker files for running security (Platinum) tests on Jenkins (#606)
+* Run Platinum rest api tests on 6.6.1 (#615)
+* Fix mistake in testing version range so test can be skipped
+* Support freeze and unfreeze APIs
+* Adjust rollup get_jobs endpoint
+* Improve error handling in spec_helper and action execution
+* Revert commit cd6b88deccdd7ad128364c0dc0d7c3326d650730
+* Fix skip test logic
+
 ## 6.1.0
 
 ### X-Pack
