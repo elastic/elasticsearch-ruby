@@ -91,7 +91,7 @@ module Elasticsearch
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:stats_params, [
             :fields,
             :completion_fields,
@@ -107,7 +107,7 @@ module Elasticsearch
 
         # Register this action with its valid parts when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:stats_parts, [
             :docs,
             :fielddata,

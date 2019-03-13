@@ -7,7 +7,7 @@ module Elasticsearch
 
         # A Mapping of all the actions to their list of valid params.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         PARAMS = {}
 
         # Register an action with its list of valid params.
@@ -18,7 +18,7 @@ module Elasticsearch
         # @param [ Symbol ] action The action to register.
         # @param [ Array[Symbol] ] valid_params The list of valid params.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def register(action, valid_params)
           PARAMS[action.to_sym] = valid_params
         end
@@ -32,7 +32,7 @@ module Elasticsearch
         #
         # @return [ Array<Symbol> ] The list of valid params for the action.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def get(action)
           PARAMS.fetch(action, [])
         end

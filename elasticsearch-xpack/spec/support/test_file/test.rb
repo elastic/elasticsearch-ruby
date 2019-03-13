@@ -6,7 +6,7 @@ module Elasticsearch
 
       # Represents a single test in a test file. A single test can have many operations and validations.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       class Test
 
         attr_reader :description
@@ -21,7 +21,7 @@ module Elasticsearch
         #   do, do, match, match
         #   do, match
         #
-        # @since 6.1.1
+        # @since 6.2.0
         GROUP_TERMINATORS = [ 'length',
                               'gt',
                               'set',
@@ -33,12 +33,12 @@ module Elasticsearch
 
         # The maximum Elasticsearch version this client version can successfully run tests against.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         MAX_REQUIRED_VERSION = nil
 
         # The minimum Elasticsearch version this client version can successfully run tests against.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         MIN_REQUIRED_VERSION = nil
 
         # Initialize the Test object.
@@ -49,7 +49,7 @@ module Elasticsearch
         # @param [ String ] test_file The name of the test file.
         # @param [ Hash ] test_definition A hash corresponding to the parsed YAML containing the test definition.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def initialize(test_file, test_definition)
           @test_file = test_file
           @description = test_definition.keys.first
@@ -66,7 +66,7 @@ module Elasticsearch
         #
         # @return [ Array<TaskGroup> ] The list of task groups.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def task_groups
           @task_groups ||= begin
             @definition.each_with_index.inject([]) do |task_groups, (action, i)|
@@ -95,7 +95,7 @@ module Elasticsearch
         #
         # @return [ Hash ] The cached values.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def cache_value(cache_key, value)
           @cached_values["#{cache_key}"] = value
         end
@@ -109,7 +109,7 @@ module Elasticsearch
         #
         # @return [ Hash ] The cached value at the key or the key if it's not found.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def get_cached_value(key)
           return key unless key.is_a?(String)
           @cached_values.fetch(key.gsub(/\$/, ''), key)
@@ -124,7 +124,7 @@ module Elasticsearch
         #
         # @return [ self ]
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def run(client)
           task_groups.each { |task_group| task_group.run(client) }
           self
@@ -139,7 +139,7 @@ module Elasticsearch
         #
         # @return [ true, false ] Whether this test should be skipped, given a list of unsupported features.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def skip_test?(client, features_to_skip = test_file.skip_features)
           return false if @skip.empty?
           range_partition =  /\s*-\s*/

@@ -21,7 +21,7 @@ module Elasticsearch
     # Class for wrapping a hash that could have sensitive data.
     # When printed, the sensitive values will be redacted.
     #
-    # @since 6.1.1
+    # @since 6.2.0
     class Redacted < ::Hash
 
       def initialize(elements = nil)
@@ -31,20 +31,20 @@ module Elasticsearch
 
       # The keys whose values will be redacted.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       SENSITIVE_KEYS = [ :password,
                          :pwd ].freeze
 
       # The replacement string used in place of the value for sensitive keys.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       STRING_REPLACEMENT = '<REDACTED>'.freeze
 
       # Get a string representation of the hash.
       #
       # @return [ String ] The string representation of the hash.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def inspect
         redacted_string(:inspect)
       end
@@ -53,7 +53,7 @@ module Elasticsearch
       #
       # @return [ String ] The string representation of the hash.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def to_s
         redacted_string(:to_s)
       end

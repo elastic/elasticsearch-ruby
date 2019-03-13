@@ -94,7 +94,7 @@ REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 #
 # @return [ Object ] The value at the nested key.
 #
-# @since 6.1.1
+# @since 6.2.0
 def find_value_in_document(chain, document)
   return document[chain[0]] unless chain.size > 1
   find_value_in_document(chain[1..-1], document[chain[0]]) if document[chain[0]]
@@ -113,7 +113,7 @@ end
 #
 # @return [ Array<Object> ] A list of the nested keys.
 #
-# @since 6.1.1
+# @since 6.2.0
 def split_and_parse_key(key)
   key.split(/(?<!\\)\./).map do |key|
     (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')

@@ -33,7 +33,7 @@ module Elasticsearch
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:shrink, [
             :wait_for_active_shards,
             :wait_for_no_relocating_shards,

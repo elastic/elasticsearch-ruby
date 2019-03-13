@@ -21,7 +21,7 @@ module Elasticsearch
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:get_pipeline, [ :master_timeout ].freeze)
       end
     end
