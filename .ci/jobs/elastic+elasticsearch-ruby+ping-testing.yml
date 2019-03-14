@@ -14,7 +14,7 @@
           set -eo pipefail
           set -x
           ping -c 20 worker-954083.build.fsn1-dc3.hetzner.elasticnet.co
-          ping -c 20 clients-ci.elastic.co
+          ping -c 20 clients-ci-master-blue
 
     # override default
     publishers: null
