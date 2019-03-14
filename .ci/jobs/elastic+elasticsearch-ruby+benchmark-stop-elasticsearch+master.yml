@@ -10,7 +10,7 @@
     node: macrobenchmark-target
     builders:
     - shell: |-
-        #!/usr/bin/env bash
+        #!/usr/local/bin/runbld --script-only
         set -eo pipefail
         set -x
 
