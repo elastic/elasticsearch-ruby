@@ -18,7 +18,6 @@
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
-require 'pry-nav'
 require 'pathname'
 
 CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
