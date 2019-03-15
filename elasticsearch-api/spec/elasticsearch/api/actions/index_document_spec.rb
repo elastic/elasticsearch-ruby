@@ -136,7 +136,7 @@ describe 'client#index' do
 
   context 'when an invalid URL parameter is provided' do
 
-    it 'raises and ArgumentError' do
+    it 'raises an ArgumentError' do
       expect {
         client.index(index: 'foo', type: 'bar', id: '1', qwerty: 'yuiop')
       }.to raise_exception(ArgumentError)
