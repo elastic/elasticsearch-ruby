@@ -84,15 +84,20 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
 # Possible Docker issue. The IP from the response cannot be used to connect.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/execute_watch/60_http_input.yml")
 
+# Error about creating a job that already exists.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/jobs_crud.yml")
+
 # Searching the monitoring index returns no results.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
+
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_model.yml")
 
 
 SINGLE_TEST = nil
 # Uncomment the following line and set it to a file when a single test should be run.
 # SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
-#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/watcher/execute_watch/60_http_input.yml"]
+#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/api_key/10_basic.yml"]
 
 
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
