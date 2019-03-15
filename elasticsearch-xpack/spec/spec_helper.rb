@@ -81,6 +81,9 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
 # 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
 
+# Possible Docker issue. The IP from the response cannot be used to connect.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/execute_watch/60_http_input.yml")
+
 # Searching the monitoring index returns no results.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
@@ -89,7 +92,7 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges
 SINGLE_TEST = nil
 # Uncomment the following line and set it to a file when a single test should be run.
 # SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
-#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/rollup/rollup_search.yml"]
+#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/watcher/execute_watch/60_http_input.yml"]
 
 
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
