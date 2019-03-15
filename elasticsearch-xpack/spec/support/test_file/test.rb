@@ -25,6 +25,7 @@ module Elasticsearch
         GROUP_TERMINATORS = [ 'length',
                               'gt',
                               'set',
+                              'transform_and_set',
                               'match',
                               'is_false',
                               'is_true'
@@ -97,6 +98,7 @@ module Elasticsearch
         # @since 6.1.1
         def cache_value(cache_key, value)
           @cached_values["#{cache_key}"] = value
+          @cached_values
         end
 
         # Get a cached value.
@@ -111,7 +113,7 @@ module Elasticsearch
         # @since 6.1.1
         def get_cached_value(key)
           return key unless key.is_a?(String)
-          @cached_values.fetch(key.gsub(/\$/, ''), key)
+          @cached_values.fetch(key.gsub(/[\$\{\}]/, ''), key)
         end
 
         # Run all the tasks in this test.
