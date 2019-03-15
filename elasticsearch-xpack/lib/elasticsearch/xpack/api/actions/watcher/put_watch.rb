@@ -37,7 +37,9 @@ module Elasticsearch
             valid_params = [
               :master_timeout,
               :active,
-              :version ]
+              :version,
+              :if_seq_no,
+              :if_primary_term ]
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_xpack/watcher/watch/#{arguments[:id]}"
