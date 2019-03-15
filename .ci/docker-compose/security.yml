@@ -12,7 +12,6 @@ services:
           ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-changeme}
     environment:
       - "TEST_ES_SERVER=http://elasticsearch:9200"
-      - "QUIET=false"
     volumes:
       - esvol:/tmp
     networks:
