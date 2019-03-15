@@ -143,11 +143,15 @@ module Elasticsearch
           return false if @skip.empty?
           range_partition =  /\s*-\s*/
           @skip.collect { |s| s['skip'] }.any? do |skip|
-            if versions = skip['version'].partition(range_partition)
-              range = versions[0]..versions[2]
+            if features_to_skip.include?(skip['features'])
+              true
+            elsif skip['version'] == 'all'
+              true
+            elsif versions = skip['version'].partition(range_partition)
+              low = versions[0]
+              high = versions[2] unless versions[2] == ''
+              range = low..high
               range.cover?(client.info['version']['number'])
-            else
-              features_to_skip.include?(skip['features']) || skip['version'] == 'all'
             end
           end
         rescue
