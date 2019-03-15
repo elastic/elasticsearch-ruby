@@ -135,8 +135,13 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
       # See test xpack/10_basic.yml
       # The master node id must be injected in the keys of match clauses
       expected_key = inject_master_node_id(expected_key, test)
+
       split_key = split_and_parse_key(expected_key)
       actual_value = find_value_in_document(split_key, response)
+
+      # Sometimes the expected value is a cached value from a previous request.
+      # See test api_key/10_basic.yml
+      expected_value = test.get_cached_value(expected_value)
 
       # When you must match a regex. For example:
       #   match: {task: '/.+:\d+/'}

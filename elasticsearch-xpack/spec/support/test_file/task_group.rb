@@ -74,6 +74,7 @@ module Elasticsearch
               action.execute(_client, test)
               # Cache the result of the action, if a set action is defined.
               set_variable(action)
+              transform_and_set_variable(action)
               _client
             end
             self
@@ -266,6 +267,7 @@ module Elasticsearch
                       'match',
                       'length',
                       'set',
+                      'transform_and_set',
                       'is_true',
                       'is_false',
                       'gte',
@@ -279,6 +281,28 @@ module Elasticsearch
 
           def variables_to_set
             @actions.group_by { |a| a.keys.first }['set'] || []
+          end
+
+          def variables_to_transform_and_set
+            @actions.group_by { |a| a.keys.first }['transform_and_set'] || []
+          end
+
+          def transform_and_set_variable(action)
+            variables_to_transform_and_set.each do |set_definition|
+              set_definition['transform_and_set'].each do |response_key, transform_description|
+
+                match_base_64_transform = /(\#base64EncodeCredentials\()(\S*)\)/
+                matches = match_base_64_transform.match(transform_description)
+                fields = matches[2].split(',') if matches.length > 0
+
+                values_to_encode = action.response.select do |key|
+                  fields.include?(key)
+                end.values if fields
+
+                to_set = Base64.encode64(values_to_encode.join(':'))
+                @test.cache_value(response_key, to_set)
+              end
+            end
           end
 
           def set_variable(action)
