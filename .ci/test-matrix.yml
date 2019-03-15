@@ -4,10 +4,11 @@ ELASTICSEARCH_VERSION:
 
 RUBY_TEST_VERSION:
 - 2.6.1
-- 2.4.5
+#- 2.4.5
 
 TEST_SUITE:
 - rest_api
 - client
+- security
 
 exclude: ~
