@@ -8,7 +8,6 @@
     # only multijob workflow should trigger
     triggers: null
     vault:
-      url: https://secrets.elastic.co:8200
       # vault read auth/approle/role/clients-ci/role-id
       role_id: ddbd0d44-0e51-105b-177a-c8fdfd445126
     node: macrobenchmarks
