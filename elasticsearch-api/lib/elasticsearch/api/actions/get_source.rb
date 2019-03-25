@@ -11,21 +11,18 @@ module Elasticsearch
       #     client.get_source index: 'myindex', type: 'mytype', id: '1'
       #
       # @option arguments [String] :id The document ID (*Required*)
-      # @option arguments [Number,List] :ignore The list of HTTP errors to ignore; only `404` supported at the moment
       # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document; use `_all` to fetch the first document
-      #                                  matching the ID across all types) (*Required*)
-      # @option arguments [List] :fields A comma-separated list of fields to return in the response
+      # @option arguments [String] :type The type of the document; use `_all` to fetch the first document matching the ID across all types (*Required*)
       # @option arguments [String] :parent The ID of the parent document
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on
-      #                                        (default: random)
+      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
       # @option arguments [String] :routing Specific routing value
-      # @option arguments [String] :_source Specify whether the _source field should be returned,
-      #                                     or a list of fields to return
-      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
-      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
+      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
+      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
+      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
       # @see http://elasticsearch.org/guide/reference/api/get/
       #
@@ -55,17 +52,16 @@ module Elasticsearch
       #
       # @since 6.2.0
       ParamsRegistry.register(:get_source, [
-          :fields,
           :parent,
           :preference,
           :realtime,
           :refresh,
           :routing,
           :_source,
-          :_source_include,
+          :_source_excludes,
           :_source_includes,
-          :_source_exclude,
-          :_source_excludes ].freeze)
+          :version,
+          :version_type ].freeze)
     end
   end
 end

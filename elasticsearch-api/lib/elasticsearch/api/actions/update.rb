@@ -33,34 +33,24 @@ module Elasticsearch
       #                   body: { script: 'ctx._source.tags.contains(params.tag) ? ctx.op = "delete" : ctx.op = "none"',
       #                           params: { tag: 'to-delete' } }
       #
+      #
       # @option arguments [String] :id Document ID (*Required*)
-      # @option arguments [Number,List] :ignore The list of HTTP errors to ignore; only `404` supported at the moment
       # @option arguments [String] :index The name of the index (*Required*)
       # @option arguments [String] :type The type of the document (*Required*)
-      # @option arguments [Hash] :body The request definition using either `script` or partial `doc` (*Required*)
-      # @option arguments [String] :consistency Explicit write consistency setting for the operation
-      #                                         (options: one, quorum, all)
+      # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
+      # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [List] :fields A comma-separated list of fields to return in the response
-      # @option arguments [String] :lang The script language (default: mvel)
-      # @option arguments [String] :parent ID of the parent document
-      # @option arguments [String] :percolate Perform percolation during the operation;
-      #                                       use specific registered query name, attribute, or wildcard
-      # @option arguments [Boolean] :refresh Refresh the index after performing the operation
-      # @option arguments [String] :replication Specific replication type (options: sync, async)
-      # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried
-      #                                               when a conflict occurs (default: 0)
+      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
+      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
+      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
+      # @option arguments [String] :lang The script language (default: painless)
+      # @option arguments [String] :parent ID of the parent document. Is is only used for routing and when for the upsert request
+      # @option arguments [String] :refresh If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
+      # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried when a conflict occurs (default: 0)
       # @option arguments [String] :routing Specific routing value
-      # @option arguments [String] :script The URL-encoded script definition (instead of using request body)
-      # @option arguments [String] :_source Specify whether the _source field should be returned,
-      #                                     or a list of fields to return
-      # @option arguments [String] :_source_exclude A list of fields to exclude from the returned _source field
-      # @option arguments [String] :_source_include A list of fields to extract and return from the _source field
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Time] :timestamp Explicit timestamp for the document
-      # @option arguments [Duration] :ttl Expiration time for the document
       # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [Number] :version_type Explicit version number for concurrency control
-      #
+      # @option arguments [String] :version_type Specific version type (options: internal, force)
       # @since 0.20
       #
       # @see http://elasticsearch.org/guide/reference/api/update/
@@ -91,24 +81,17 @@ module Elasticsearch
       #
       # @since 6.2.0
       ParamsRegistry.register(:update, [
-          :consistency,
+          :wait_for_active_shards,
           :fields,
+          :_source,
+          :_source_excludes,
+          :_source_includes,
           :lang,
           :parent,
-          :percolate,
           :refresh,
-          :replication,
           :retry_on_conflict,
           :routing,
-          :script,
-          :_source,
-          :_source_include,
-          :_source_includes,
-          :_source_exclude,
-          :_source_excludes,
           :timeout,
-          :timestamp,
-          :ttl,
           :version,
           :version_type ].freeze)
     end

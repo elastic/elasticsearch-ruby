@@ -5,9 +5,9 @@ module Elasticsearch
       # Retrieve an indexed script from Elasticsearch
       #
       # @option arguments [String] :id Script ID (*Required*)
-      # @option arguments [String] :lang Script language
+      # @option arguments [Time] :master_timeout Specify timeout for connection to master
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
+      # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
       #
       def get_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
@@ -18,6 +18,13 @@ module Elasticsearch
 
         perform_request(method, path, params, body).body
       end
+
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.2.0
+      ParamsRegistry.register(:get_script, [
+          :master_timeout ].freeze)
     end
   end
 end

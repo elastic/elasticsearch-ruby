@@ -26,6 +26,12 @@ module Elasticsearch
           end
         end
       end
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.2.0
+      ParamsRegistry.register(:ping, [
+      ].freeze)
     end
   end
 end
