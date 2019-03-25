@@ -35,19 +35,14 @@ module Elasticsearch
       #       }
       #     }
       #
-      # @option arguments [Hash] :body The definition of the operation (source index, target index, ...)
-      #                                (*Required*)
-      # @option arguments [Boolean] :refresh Whether the affected indexes should be refreshed
-      # @option arguments [Time] :timeout Time each individual bulk request should wait for shards
-      #                                   that are unavailable. (Default: 1m)
-      # @option arguments [String] :consistency Explicit write consistency setting for the operation
-      #                                        (Options: one, quorum, all)
-      # @option arguments [Boolean] :wait_for_completion Whether the request should block and wait until
-      #                                                  the operation has completed
-      # @option arguments [Float] :requests_per_second The throttling for this request in sub-requests per second.
-      #                                                0 means set no throttling (default)
-      # @option arguments [Integer] :slices The number of slices this request should be divided into.
-      #                                     Defaults to 1 meaning the request isn't sliced into sub-requests.
+      # @option arguments [Hash] :body The search definition using the Query DSL and the prototype for the index request. (*Required*)
+      # @option arguments [Boolean] :refresh Should the effected indexes be refreshed?
+      # @option arguments [Time] :timeout Time each individual bulk request should wait for shards that are unavailable.
+      # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+      # @option arguments [Boolean] :wait_for_completion Should the request should block until the reindex is complete.
+      # @option arguments [Number] :requests_per_second The throttle to set on this request in sub-requests per second. -1 means no throttle.
+      # @option arguments [Number] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+      #
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html
       #
@@ -67,7 +62,7 @@ module Elasticsearch
       ParamsRegistry.register(:reindex, [
           :refresh,
           :timeout,
-          :consistency,
+          :wait_for_active_shards,
           :wait_for_completion,
           :requests_per_second,
           :slices ].freeze)

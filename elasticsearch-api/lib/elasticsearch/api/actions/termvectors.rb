@@ -36,24 +36,23 @@ module Elasticsearch
       #                       }
       #     # => { ..., "term_vectors" => { "text" => { "field_statistics" => { ... }, "terms" => { "bar" => ... } } }
       #
-      # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document (*Required*)
-      # @option arguments [String] :id The document ID
-      # @option arguments [Hash] :body The request definition
-      # @option arguments [Boolean] :term_statistics Whether total term frequency and
-      #                                              document frequency should be returned
-      # @option arguments [Boolean] :field_statistics Whether document count, sum of document frequencies
-      #                                               and sum of total term frequencies should be returned
-      # @option arguments [List] :fields A comma-separated list of fields to return
-      # @option arguments [Boolean] :offsets Whether term offsets should be returned
-      # @option arguments [Boolean] :positions Whether term positions should be returned
-      # @option arguments [Boolean] :payloads Whether term payloads should be returned
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on
-      #                                        (default: random)
-      # @option arguments [String] :realtime Specifies if requests are real-time as opposed to near-real-time
-      #                                      (default: true)
-      # @option arguments [String] :routing Specific routing value
-      # @option arguments [String] :parent Parent ID of the documents
+      #
+      # @option arguments [String] :index The index in which the document resides. (*Required*)
+      # @option arguments [String] :type The type of the document. (*Required*)
+      # @option arguments [String] :id The id of the document, when not specified a doc param should be supplied.
+      # @option arguments [Hash] :body Define parameters and or supply a document to get termvectors for. See documentation.
+      # @option arguments [Boolean] :term_statistics Specifies if total term frequency and document frequency should be returned.
+      # @option arguments [Boolean] :field_statistics Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned.
+      # @option arguments [List] :fields A comma-separated list of fields to return.
+      # @option arguments [Boolean] :offsets Specifies if term offsets should be returned.
+      # @option arguments [Boolean] :positions Specifies if term positions should be returned.
+      # @option arguments [Boolean] :payloads Specifies if term payloads should be returned.
+      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random).
+      # @option arguments [String] :routing Specific routing value.
+      # @option arguments [String] :parent Parent id of documents.
+      # @option arguments [Boolean] :realtime Specifies if request is real-time as opposed to near-real-time (default: true).
+      # @option arguments [Number] :version Explicit version number for concurrency control
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-termvectors.html
       #
@@ -91,9 +90,11 @@ module Elasticsearch
           :positions,
           :payloads,
           :preference,
-          :realtime,
           :routing,
-          :parent ].freeze)
+          :parent,
+          :realtime,
+          :version,
+          :version_type ].freeze)
     end
   end
 end

@@ -28,10 +28,13 @@ module Elasticsearch
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [List] :type A comma-separated list of document types to use as default
-      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs)
+      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+      # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on it's rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
+      # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests each sub search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
+      # @option arguments [Boolean] :rest_total_hits_as_int This parameter is ignored in this version. It is used in the next major version to control whether the rest response should render the total.hits as an object or a number
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/5.x/search-multi-search.html
       #
@@ -68,14 +71,16 @@ module Elasticsearch
         perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
       end
 
+
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.2.0
       ParamsRegistry.register(:msearch, [
           :search_type,
           :max_concurrent_searches,
-          :max_concurrent_shard_requests,
           :typed_keys,
+          :pre_filter_shard_size,
+          :max_concurrent_shard_requests,
           :rest_total_hits_as_int ].freeze)
     end
   end

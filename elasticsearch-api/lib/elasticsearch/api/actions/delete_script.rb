@@ -5,9 +5,8 @@ module Elasticsearch
       # Remove an indexed script from Elasticsearch
       #
       # @option arguments [String] :id Script ID (*Required*)
-      # @option arguments [String] :lang Script language
-      # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
+      # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [Time] :master_timeout Specify timeout for connection to master
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html
       #
@@ -25,8 +24,8 @@ module Elasticsearch
       #
       # @since 6.2.0
       ParamsRegistry.register(:delete_script, [
-          :version,
-          :version_type ].freeze)
+          :timeout,
+          :master_timeout ].freeze)
     end
   end
 end

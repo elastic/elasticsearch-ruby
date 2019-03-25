@@ -18,8 +18,8 @@ module Elasticsearch
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
       # @option arguments [String] :routing Specific routing value
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
-      # @option arguments [List] :_source_exclude A list of fields to exclude from the returned _source field
-      # @option arguments [List] :_source_include A list of fields to extract and return from the _source field
+      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
+      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
 
@@ -44,6 +44,7 @@ module Elasticsearch
       end
       alias_method :exists?, :exists
 
+
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.2.0
@@ -55,9 +56,7 @@ module Elasticsearch
           :refresh,
           :routing,
           :_source,
-          :_source_exclude,
           :_source_excludes,
-          :_source_include,
           :_source_includes,
           :version,
           :version_type ].freeze)
