@@ -13,15 +13,16 @@ module Elasticsearch
         #
         #     client.cat.fielddata fields: 'title,body'
         #
-        # @option arguments [List] :fields A comma-separated list of fields to include in the output
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, m, g)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                   (default: false)
+        # @option arguments [List] :fields A comma-separated list of fields to return the fielddata size
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [List] :fields A comma-separated list of fields to return in the output
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html
         #
@@ -40,13 +41,14 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:fielddata, [
+            :format,
             :bytes,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
             :s,
+            :v,
             :fields ].freeze)
       end
     end
