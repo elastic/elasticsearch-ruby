@@ -36,18 +36,16 @@ module Elasticsearch
         #     client.cat.indices format: 'json'
         #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, m, g)
-        # @option arguments [Boolean] :pri Limit the returned information on primary shards only (default: false)
-        # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
-        # @option arguments [Boolean] :v Display column headers as part of the output
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :health A health status ("green", "yellow", or "red" to filter only indices
-        #                                    matching the specified health status (options: green, yellow, red)
-        # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
-        # @option arguments [Boolean] :help Return information about headers
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [String] :health A health status ("green", "yellow", or "red" to filter only indices matching the specified health status (options: green, yellow, red)
+        # @option arguments [Boolean] :help Return help information
+        # @option arguments [Boolean] :pri Set to true to return stats only for primary shards
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html
         #
@@ -69,15 +67,16 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:indices, [
+            :format,
             :bytes,
+            :local,
+            :master_timeout,
             :h,
             :health,
             :help,
-            :local,
-            :master_timeout,
             :pri,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
