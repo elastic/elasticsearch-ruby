@@ -6,6 +6,7 @@ module Elasticsearch
         # Help information for the Cat API
         #
         # @option arguments [Boolean] :help Return help information
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html
         #
@@ -22,7 +23,8 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:help, [
-            :help ].freeze)
+            :help,
+            :s ].freeze)
       end
     end
   end
