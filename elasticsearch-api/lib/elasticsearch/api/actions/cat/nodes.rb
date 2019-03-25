@@ -25,15 +25,14 @@ module Elasticsearch
         #
         #     client.cat.nodes format: 'json'
         #
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)
-        # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
-        # @option arguments [Boolean] :v Display column headers as part of the output
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
-        # @option arguments [Boolean] :help Return information about headers
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [Boolean] :help Return help information
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html
         #
@@ -53,13 +52,14 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:nodes, [
+            :format,
             :full_id,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
