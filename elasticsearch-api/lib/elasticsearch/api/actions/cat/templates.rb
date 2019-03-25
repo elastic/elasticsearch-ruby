@@ -11,8 +11,8 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
         #
@@ -29,14 +29,13 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:templates, [
-            :name,
             :format,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
