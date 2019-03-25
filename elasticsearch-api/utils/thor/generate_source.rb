@@ -47,6 +47,7 @@ module Elasticsearch
         copy_file "templates/ruby/test_helper.rb", @output.join('test').join('test_helper.rb') if options[:language] == 'ruby'
 
         Dir[@input].each do |file|
+          next if File.basename(file)[0] == '_'
           @path   = Pathname(file)
           @json   = MultiJson.load( File.read(@path) )
           @spec   = @json.values.first
