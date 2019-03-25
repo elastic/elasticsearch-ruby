@@ -21,13 +21,13 @@ module Elasticsearch
         #
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)
         # @option arguments [Boolean] :dry_run Simulate the operation only and return the resulting state
-        # @option arguments [Boolean] :explain Return an explanation for why the commands can or cannot be executed
-        # @option arguments [Boolean] :metric Limit the information returned to the specified metrics.
-        #                                     Defaults to all but metadata. (Options: _all, blocks, metadata,
-        #                                     nodes, routing_table, master_node, version)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :explain Return an explanation of why the commands can or cannot be executed
         # @option arguments [Boolean] :retry_failed Retries allocation of shards that are blocked due to too many
-        #                                           subsequent allocation failures
+        #   subsequent allocation failures
+        # @option arguments [List] :metric Limit the information returned to the specified metrics. Defaults to all
+        #   but metadata (options: _all, blocks, metadata, nodes, routing_table, master_node, version)
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
         #
@@ -47,9 +47,9 @@ module Elasticsearch
         ParamsRegistry.register(:reroute, [
             :dry_run,
             :explain,
+            :retry_failed,
             :metric,
             :master_timeout,
-            :retry_failed,
             :timeout ].freeze)
       end
     end
