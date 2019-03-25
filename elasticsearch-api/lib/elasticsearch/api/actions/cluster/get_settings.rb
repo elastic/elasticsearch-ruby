@@ -10,8 +10,9 @@ module Elasticsearch
         #     client.cluster.get_settings
         #
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting
-        #                                               (default: false)
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
         #
@@ -29,6 +30,8 @@ module Elasticsearch
         # @since 6.2.0
         ParamsRegistry.register(:get_settings, [
             :flat_settings,
+            :master_timeout,
+            :timeout,
             :include_defaults ].freeze)
       end
     end
