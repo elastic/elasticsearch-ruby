@@ -30,15 +30,14 @@ module Elasticsearch
         #     client.cat.allocation format: 'json'
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, m, g)
-        # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
-        # @option arguments [Boolean] :v Display column headers as part of the output
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
-        # @option arguments [Boolean] :help Return information about headers
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [Boolean] :help Return help information
+        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html
         #
@@ -56,13 +55,14 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:allocation, [
+            :format,
             :bytes,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
