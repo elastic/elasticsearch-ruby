@@ -18,7 +18,8 @@ module Elasticsearch
         #
         def templates(arguments={})
           method = HTTP_GET
-          path   = "_cat/templates"
+          name = arguments.delete(:name)
+          path = Utils.__pathify( '_cat/templates', Utils.__escape(name))
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 

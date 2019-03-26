@@ -21,7 +21,8 @@ module Elasticsearch
         #
         def segments(arguments={})
           method = 'GET'
-          path   = "_cat/segments"
+          index = arguments.delete(:index)
+          path = Utils.__pathify( '_cat/segments', Utils.__escape(index))
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
