@@ -15,8 +15,9 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def delete_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -36,7 +37,9 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:delete_template, [ :timeout ].freeze)
+        ParamsRegistry.register(:delete_template, [
+            :timeout,
+            :master_timeout ].freeze)
       end
     end
   end

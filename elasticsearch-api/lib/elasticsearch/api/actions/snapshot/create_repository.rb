@@ -17,8 +17,9 @@ module Elasticsearch
         # @option arguments [Hash] :body The repository definition (*Required*)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Boolean] :verify Whether to verify the repository after creation
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_repositories
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def create_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -38,9 +39,9 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:create_repository, [
-            :repository,
             :master_timeout,
-            :timeout ].freeze)
+            :timeout,
+            :verify ].freeze)
       end
     end
   end

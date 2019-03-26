@@ -113,19 +113,4 @@ describe 'client#search' do
       }.to raise_exception(ArgumentError)
     end
   end
-
-  context 'when the request field params are not URL-encoded' do
-
-    let(:params) do
-      { fields: 'foo^bar'}
-    end
-
-    let(:url) do
-      'foo/bar/_search'
-    end
-
-    it 'does not encode the field params' do
-      expect(client_double.search(index: 'foo', type: 'bar', fields: 'foo^bar'))
-    end
-  end
 end

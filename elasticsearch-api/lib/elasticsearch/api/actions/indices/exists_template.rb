@@ -7,11 +7,12 @@ module Elasticsearch
         #
         #     client.indices.exists_template? name: 'mytemplate'
         #
-        # @option arguments [String] :name The name of the template (*Required*)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [List] :name The comma separated names of the index templates (*Required*)
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def exists_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -30,7 +31,10 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:exists_template, [ :local, :master_timeout ].freeze)
+        ParamsRegistry.register(:exists_template, [
+            :flat_settings,
+            :master_timeout,
+            :local ].freeze)
       end
     end
   end

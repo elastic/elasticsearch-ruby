@@ -13,14 +13,11 @@ module Elasticsearch
         #
         #     client.snapshot.get_repository repository: 'my-backups'
         #
-        # @option arguments [List] :repository A comma-separated list of repository names. Leave blank or use `_all`
-        #                                      to get a list of repositories
+        # @option arguments [List] :repository A comma-separated list of repository names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
-        # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get_repository(arguments={})
           repository = arguments.delete(:repository)

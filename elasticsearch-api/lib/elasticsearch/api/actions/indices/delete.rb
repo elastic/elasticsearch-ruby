@@ -23,15 +23,14 @@ module Elasticsearch
         #
         #     client.indices.delete index: '_all'
         #
-        # @option arguments [List] :index A comma-separated list of indices to delete;
-        #                                 use `_all` to delete all indices
+        # @option arguments [List] :index A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
         # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
-        # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (options: open, closed, none, all) (default: open)
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, none, all)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
         #
         def delete(arguments={})
           method = HTTP_DELETE

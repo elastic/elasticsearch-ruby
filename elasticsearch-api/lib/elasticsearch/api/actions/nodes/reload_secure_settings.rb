@@ -14,10 +14,10 @@ module Elasticsearch
         #
         #     client.nodes.reload_secure_settings(node_id: 'foo,bar')
         #
-        # @option arguments [ Array ] :node_id A comma-separated list of node IDs or names to perform the operation on
-        # @option arguments [ String ] :timeout Explicit operation timeout
+        # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
+        # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://elasticsearch.org/guide/reference/api/cluster-nodes-reload-secure-settings
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/6.x/secure-settings.html#reloadable-secure-settings
         #
         def reload_secure_settings(arguments={})
           valid_params = [
@@ -31,6 +31,12 @@ module Elasticsearch
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:reload_secure_settings, [
+            :timeout ].freeze)
       end
     end
   end

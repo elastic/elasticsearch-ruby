@@ -12,14 +12,13 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Hash] :body The template definition (*Required*)
-        # @option arguments [Boolean] :create Whether the index template should only be added for a new one, #                                     or can also replace an existing one (default: false)
-        # @option arguments [Number] :order The order for this template when merging multiple matching ones
-        #                                   (higher numbers are merged later, overriding the lower numbers)
+        # @option arguments [Number] :order The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
+        # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def put_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -36,7 +35,12 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:put_template, [ :create, :order, :timeout ].freeze)
+        ParamsRegistry.register(:put_template, [
+            :order,
+            :create,
+            :timeout,
+            :master_timeout,
+            :flat_settings ].freeze)
       end
     end
   end

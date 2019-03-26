@@ -16,13 +16,13 @@ module Elasticsearch
 
           perform_request(method, path, params, body).body
         end
-      end
 
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:remote_info, [
-      ].freeze)
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:remote_info, [
+        ].freeze)
+      end
     end
   end
 end

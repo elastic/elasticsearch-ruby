@@ -28,21 +28,7 @@ module Elasticsearch
         #                                char_filter: ['html_strip'] }
         #
         # @option arguments [String] :index The name of the index to scope the operation
-        # @option arguments [String] :body The text on which the analysis should be performed
-        # @option arguments [String] :analyzer The name of the analyzer to use
-        # @option arguments [String] :field Use the analyzer configured for this field
-        #                                   (instead of passing the analyzer name)
-        # @option arguments [List] :filters A comma-separated list of token filters to use for the analysis.
-        #                                   (Also available as the `:token_filters` option)
-        # @option arguments [List] :char_filters A comma-separated list of char filters to use for the analysis
-        # @option arguments [Boolean] :explain Whether to output further details (default: false)
-        # @option arguments [List] :attributes A comma-separated list of token attributes to output (use with `:explain`)
-        # @option arguments [String] :index The name of the index to scope the operation
-        # @option arguments [Boolean] :prefer_local With `true`, specify that a local shard should be used if available,
-        #                                           with `false`, use a random shard (default: true)
-        # @option arguments [String] :text The text on which the analysis should be performed
-        #                                  (when request body is not used)
-        # @option arguments [String] :tokenizer The name of the tokenizer to use for the analysis
+        # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
         #
@@ -59,21 +45,11 @@ module Elasticsearch
         end
 
         # Register this action with its valid params when the module is loaded.
+        # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
         ParamsRegistry.register(:analyze, [
-            :analyzer,
-            :char_filters,
-            :explain,
-            :attributes,
-            :field,
-            :filters,
-            :filter,
-            :index,
-            :prefer_local,
-            :text,
-            :tokenizer,
-            :token_filters ].freeze)
+            :index ].freeze)
       end
     end
   end

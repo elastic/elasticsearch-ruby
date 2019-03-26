@@ -13,18 +13,15 @@ module Elasticsearch
         #
         #     client.nodes.hot_threads threads: 10
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
-        #                                   use `_local` to return information from the node you're connecting to,
-        #                                   leave empty to get information from all nodes
+        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [Time] :interval The interval for the second sampling of threads
         # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)
         # @option arguments [Number] :threads Specify the number of threads to provide information for (default: 3)
+        # @option arguments [Boolean] :ignore_idle_threads Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
         # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @return [String]
-        #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments={})
           method = HTTP_GET
@@ -43,6 +40,7 @@ module Elasticsearch
             :interval,
             :snapshots,
             :threads,
+            :ignore_idle_threads,
             :type,
             :timeout ].freeze)
       end

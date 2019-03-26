@@ -6,11 +6,10 @@ module Elasticsearch
         # Execute a specific pipeline against the set of documents provided in the body of the request
         #
         # @option arguments [String] :id Pipeline ID
-        # @option arguments [Hash] :body The pipeline definition (*Required*)
-        # @option arguments [Boolean] :verbose Verbose mode. Display data output for each processor
-        #                                                    in executed pipeline
+        # @option arguments [Hash] :body The simulate definition (*Required*)
+        # @option arguments [Boolean] :verbose Verbose mode. Display data output for each processor in executed pipeline
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
         #
         def simulate(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -25,7 +24,8 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:simulate, [ :verbose ].freeze)
+        ParamsRegistry.register(:simulate, [
+            :verbose ].freeze)
       end
     end
   end

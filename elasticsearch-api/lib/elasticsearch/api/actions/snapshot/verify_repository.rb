@@ -9,7 +9,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def verify_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -26,7 +26,6 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:verify_repository, [
-            :repository,
             :master_timeout,
             :timeout ].freeze)
       end

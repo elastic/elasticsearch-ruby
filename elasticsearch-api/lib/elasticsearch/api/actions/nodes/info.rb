@@ -22,23 +22,12 @@ module Elasticsearch
         #
         #     client.nodes.info metric: ['http', 'network']
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information;
-        #                                   use `_local` to return information from the node you're connecting to, leave
-        #                                   empty to get information from all nodes
-        # @option arguments [Boolean] :_all Return all available information
-        # @option arguments [Boolean] :http Return information about HTTP
-        # @option arguments [Boolean] :jvm Return information about the JVM
-        # @option arguments [Boolean] :network Return information about network
-        # @option arguments [Boolean] :os Return information about the operating system
-        # @option arguments [Boolean] :plugins Return information about plugins
-        # @option arguments [Boolean] :process Return information about the Elasticsearch process
-        # @option arguments [Boolean] :settings Return information about node settings
-        # @option arguments [Boolean] :thread_pool Return information about the thread pool
-        # @option arguments [Boolean] :transport Return information about transport
+        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+        # @option arguments [List] :metric A comma-separated list of metrics you wish returned. Leave empty to return all. (options: settings,os,process,jvm,thread_pool,transport,http,plugins,ingest)
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html
         #
         def info(arguments={})
           arguments = arguments.clone
@@ -63,20 +52,11 @@ module Elasticsearch
         # @since 6.2.0
         ParamsRegistry.register(:info_params, [ :flat_settings, :timeout ].freeze)
 
-        # Register this action with its valid parts when the module is loaded.
+        # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:info_parts, [
-            :_all,
-            :http,
-            :jvm,
-            :network,
-            :os,
-            :plugins,
-            :process,
-            :settings,
-            :thread_pool,
-            :transport,
+        ParamsRegistry.register(:info, [
+            :flat_settings,
             :timeout ].freeze)
       end
     end

@@ -41,21 +41,6 @@ describe 'client.cluster#put_settings' do
     end
   end
 
-  context 'when parameters are specified' do
-
-    let(:params) do
-      { flat_settings: true }
-    end
-
-    let(:url) do
-      'foo/_settings'
-    end
-
-    it 'performs the request' do
-      expect(client_double.indices.put_settings(index: 'foo', flat_settings: true, body: {})).to eq({})
-    end
-  end
-
   context 'when an index is specified' do
 
     let(:url) do

@@ -66,21 +66,6 @@ describe 'client#mget' do
     it 'performs the request' do
       expect(client_double.mget(body: {}, refresh: true)).to eq({})
     end
-
-    context 'when the fields parameter is specified' do
-
-      let(:params) do
-        { fields: 'foo,bar' }
-      end
-
-      let(:body) do
-        {}
-      end
-
-      it 'performs the request' do
-        expect(client_double.mget(body: {}, fields: ['foo', 'bar'])).to eq({})
-      end
-    end
   end
 
   context 'when the request needs to be URL-escaped' do
