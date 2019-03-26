@@ -19,6 +19,7 @@ branches:
 env:
   global:
     - TEST_ES_SERVER=http://localhost:9250
+    - ELASTICSEARCH_VERSION=7.0.0-beta1
 
 matrix:
   include:
@@ -60,11 +61,11 @@ before_install:
   - bundle install
   - bundle exec rake setup
   - bundle exec rake elasticsearch:update
-  - curl -sS https://snapshots.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-SNAPSHOT.tar.gz | tar xz -C /tmp
-  - /tmp/elasticsearch-7.0.0-SNAPSHOT/bin/elasticsearch-keystore create
+  - curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz | tar xz -C /tmp
+  - /tmp/elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch-keystore create
   - >
     [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
-    TEST_CLUSTER_COMMAND=/tmp/elasticsearch-7.0.0-SNAPSHOT/bin/elasticsearch
+    TEST_CLUSTER_COMMAND=/tmp/elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch
     bundle exec rake -I elasticsearch-extensions/lib test:cluster:start &&
     curl http://localhost:9250/_cluster/health?level=shards || true
 
