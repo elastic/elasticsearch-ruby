@@ -4,7 +4,7 @@ module Elasticsearch
       module Actions
 
         # Display thread pool statistics across nodes (use the `help` parameter to display a list
-        # of avaialable thread pools)
+        # of available thread pools)
         #
         # @example Display information about all thread pools across nodes
         #
