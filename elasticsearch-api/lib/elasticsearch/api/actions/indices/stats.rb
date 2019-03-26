@@ -37,22 +37,53 @@ module Elasticsearch
         #
         #     client.indices.stats search: true, groups: ['groupA', 'groupB']
         #
-        # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [List] :metric Limit the information returned the specific metrics. (options: _all,completion,docs,fielddata,query_cache,flush,get,indexing,merge,request_cache,refresh,search,segments,store,warmer,suggest)
-        # @option arguments [List] :completion_fields A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-        # @option arguments [List] :fielddata_fields A comma-separated list of fields for `fielddata` index metric (supports wildcards)
-        # @option arguments [List] :fields A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
-        # @option arguments [List] :groups A comma-separated list of search groups for `search` index metric
-        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
-        # @option arguments [List] :types A comma-separated list of document types for the `indexing` index metric
-        # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+        # @option arguments [Boolean] :docs Return information about indexed and deleted documents
+        # @option arguments [Boolean] :fielddata Return information about field data
+        # @option arguments [Boolean] :fields A comma-separated list of fields for `fielddata` metric (supports wildcards)
+        # @option arguments [Boolean] :filter_cache Return information about filter cache
+        # @option arguments [Boolean] :flush Return information about flush operations
+        # @option arguments [Boolean] :get Return information about get operations
+        # @option arguments [Boolean] :groups A comma-separated list of search groups for `search` statistics
+        # @option arguments [Boolean] :id_cache Return information about ID cache
+        # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string
+        #                                 to perform the operation on all indices
+        # @option arguments [Boolean] :indexing Return information about indexing operations
+        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level
+        #                                   (Options: cluster, indices, shards)
+        # @option arguments [List] :types A comma-separated list of document types to include in the `indexing` info
+        # @option arguments [Boolean] :merge Return information about merge operations
+        # @option arguments [List] :metric Limit the information returned the specific metrics
+        #                                  (_all, completion, docs, fielddata, filter_cache, flush, get,
+        #                                  id_cache, indexing, merge, percolate, refresh, search, segments,
+        #                                  store, warmer, suggest)
+        # @option arguments [Boolean] :refresh Return information about refresh operations
+        # @option arguments [Boolean] :search Return information about search operations; use the `groups` parameter to
+        #                                     include information for specific search groups
+        # @option arguments [List] :groups A comma-separated list of search groups to include in the `search` statistics
+        # @option arguments [Boolean] :suggest Return information about suggest statistics
+        # @option arguments [Boolean] :store Return information about the size of the index
+        # @option arguments [Boolean] :warmer Return information about warmers
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
+        #                                                 unavailable (missing, closed, etc)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
+        #                                               no concrete indices. (This includes `_all` string or when no
+        #                                               indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
+        #                                              are open, closed or both. (options: open, closed)
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+        # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files. Only applies if segment stats are requested. (default: false)
+        #
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
         #
         def stats(arguments={})
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_stats"
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = HTTP_GET
+          parts  = Utils.__extract_parts arguments, ParamsRegistry.get(:stats_parts)
+          path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
+
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(:stats_params)
+          params[:fields] = Utils.__listify(params[:fields], :escape => false) if params[:fields]
+          params[:groups] = Utils.__listify(params[:groups], :escape => false) if params[:groups]
+
           body   = nil
 
           perform_request(method, path, params, body).body
@@ -61,16 +92,37 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:stats, [
+        ParamsRegistry.register(:stats_params, [
+            :fields,
             :completion_fields,
             :fielddata_fields,
-            :fields,
             :groups,
             :level,
             :types,
+            :ignore_indices,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards,
             :include_segment_file_sizes ].freeze)
+
+        # Register this action with its valid parts when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:stats_parts, [
+            :docs,
+            :fielddata,
+            :filter_cache,
+            :flush,
+            :get,
+            :indexing,
+            :merge,
+            :metric,
+            :refresh,
+            :search,
+            :suggest,
+            :store,
+            :warmer ].freeze)
       end
     end
   end
 end
-

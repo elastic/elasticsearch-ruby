@@ -51,6 +51,7 @@ module Elasticsearch
             :format,
             :size,
             :local,
+            :thread_pool_patterns,
             :master_timeout,
             :h,
             :help,
