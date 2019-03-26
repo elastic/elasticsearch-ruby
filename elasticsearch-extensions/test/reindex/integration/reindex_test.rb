@@ -79,7 +79,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     end
 
     should "return the number of errors" do
-      @client.indices.create index: 'test3', body: { mappings: { d: { properties: { category: { type: 'integer' } }}}}
+      @client.indices.create index: 'test3', body: { mappings: { properties: { category: { type: 'integer' } }}}
       @client.cluster.health wait_for_status: 'yellow'
 
       reindex = Elasticsearch::Extensions::Reindex.new \

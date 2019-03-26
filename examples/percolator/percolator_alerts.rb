@@ -41,14 +41,12 @@ client.indices.delete index: ['my-alerts','my-messages'], ignore: 404
 client.indices.create index: 'my-alerts',
   body: {
     mappings: {
-      doc: {
-        properties: {
-          query: {
-            type: 'percolator'
-          },
-          message: {
-            type: 'text'
-          }
+      properties: {
+        query: {
+          type: 'percolator'
+        },
+        message: {
+          type: 'text'
         }
       }
     }
