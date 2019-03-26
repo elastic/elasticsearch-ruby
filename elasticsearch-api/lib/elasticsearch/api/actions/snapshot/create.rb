@@ -19,10 +19,9 @@ module Elasticsearch
         # @option arguments [String] :snapshot A snapshot name (*Required*)
         # @option arguments [Hash] :body The snapshot definition
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :wait_for_completion Whether the request should block and wait until
-        #                                                  the operation has completed
+        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_snapshot
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

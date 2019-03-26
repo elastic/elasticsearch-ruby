@@ -59,14 +59,13 @@ module Elasticsearch
         #                           }
         #
         # @option arguments [String] :index The name of the index (*Required*)
-        # @option arguments [Hash] :body Optional configuration for the index (`settings` and `mappings`)
-        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
-        #                                               with the same name across all types
-        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
+        # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
+        # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for before the operation returns.
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :master_timeout Timeout for connection to master
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields with the same name across all types or not
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-create-index/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -83,10 +82,10 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:create, [
+            :wait_for_active_shards,
             :timeout,
             :master_timeout,
-            :update_all_types,
-            :wait_for_active_shards ].freeze)
+            :update_all_types ].freeze)
       end
     end
   end

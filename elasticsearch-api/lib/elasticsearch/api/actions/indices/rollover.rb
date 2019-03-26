@@ -9,10 +9,10 @@ module Elasticsearch
         # @option arguments [String] :alias The name of the alias to rollover (*Required*)
         # @option arguments [String] :new_index The name of the rollover index
         # @option arguments [Hash] :body The conditions that needs to be met for executing rollover
-        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :dry_run If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for on the newly created rollover index before the operation returns.
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html
         #
@@ -33,10 +33,10 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:rollover, [
-            :wait_for_active_shards,
             :timeout,
+            :dry_run,
             :master_timeout,
-            :dry_run ].freeze)
+            :wait_for_active_shards ].freeze)
       end
     end
   end

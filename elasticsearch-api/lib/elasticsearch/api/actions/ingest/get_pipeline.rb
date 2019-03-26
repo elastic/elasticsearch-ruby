@@ -5,7 +5,7 @@ module Elasticsearch
 
         # Return a specified pipeline
         #
-        # @option arguments [String] :id Comma separated list of pipeline ids (wildcards supported).
+        # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
@@ -22,7 +22,8 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:get_pipeline, [ :master_timeout ].freeze)
+        ParamsRegistry.register(:get_pipeline, [
+            :master_timeout ].freeze)
       end
     end
   end

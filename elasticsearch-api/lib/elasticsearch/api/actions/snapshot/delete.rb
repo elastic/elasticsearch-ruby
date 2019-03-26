@@ -14,9 +14,8 @@ module Elasticsearch
         # @option arguments [String] :repository A repository name (*Required*)
         # @option arguments [String] :snapshot A snapshot name (*Required*)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def delete(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -40,7 +39,8 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:delete, [ :master_timeout ].freeze)
+        ParamsRegistry.register(:delete, [
+            :master_timeout ].freeze)
       end
     end
   end

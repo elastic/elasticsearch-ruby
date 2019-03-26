@@ -15,13 +15,12 @@ module Elasticsearch
         #
         # @note Use the {Cluster::Actions#state} API to get a list of all templates.
         #
-        # @option arguments [String] :name The name of the template (supports wildcards)
+        # @option arguments [List] :name The comma separated names of the index templates
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def get_template(arguments={})
           method = HTTP_GET
@@ -36,7 +35,10 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:get_template, [ :flat_settings, :local, :master_timeout ].freeze)
+        ParamsRegistry.register(:get_template, [
+            :flat_settings,
+            :master_timeout,
+            :local ].freeze)
       end
     end
   end

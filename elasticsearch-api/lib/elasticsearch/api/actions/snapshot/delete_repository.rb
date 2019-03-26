@@ -12,9 +12,8 @@ module Elasticsearch
         # @option arguments [List] :repository A comma-separated list of repository names (*Required*)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def delete_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

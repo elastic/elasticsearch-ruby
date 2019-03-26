@@ -9,22 +9,15 @@ module Elasticsearch
         #
         #     client.indices.exists? index: 'myindex'
         #
-        # @option arguments [List] :index A comma-separated list of indices to check (*Required*)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
-        #                                               no concrete indices. (This includes `_all` string or when no
-        #                                               indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
-        #                                              are open, closed or both. (options: open, closed)
-        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
-        #                                            `missing` ones (options: none, missing) @until 1.0
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
-        #                                                 unavailable (missing, closed, etc)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
+        # @option arguments [List] :index A comma-separated list of index names (*Required*)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
+        # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, none, all)
+        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         #
-        # @return [true,false]
-        #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
         #
         def exists(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -43,11 +36,12 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:exists, [
-            :ignore_indices,
+            :local,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :local ].freeze)
+            :flat_settings,
+            :include_defaults ].freeze)
       end
     end
   end

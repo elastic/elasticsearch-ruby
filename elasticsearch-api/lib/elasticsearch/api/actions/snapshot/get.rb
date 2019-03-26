@@ -19,11 +19,11 @@ module Elasticsearch
         #
         # @option arguments [String] :repository A repository name (*Required*)
         # @option arguments [List] :snapshot A comma-separated list of snapshot names (*Required*)
-        # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to #                                                 false which means a SnapshotMissingException is thrown
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -48,8 +48,8 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:get, [
-            :ignore_unavailable,
             :master_timeout,
+            :ignore_unavailable,
             :verbose ].freeze)
       end
     end

@@ -61,21 +61,6 @@ describe 'client.cluster#segments' do
     end
   end
 
-  context 'when parameters are specified' do
-
-    let(:params) do
-      { ignore_indices: 'missing' }
-    end
-
-    let(:url) do
-      'foo/_segments'
-    end
-
-    it 'performs the request' do
-      expect(client_double.indices.segments(index: 'foo', ignore_indices: 'missing')).to eq({})
-    end
-  end
-
   context 'when the path needs to be URL-escaped' do
 
     let(:url) do
