@@ -1,6 +1,6 @@
 # Elasticsearch
 
-This repository contains Ruby integrations for [Elasticsearch](http://elasticsearch.org):
+This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch):
 
 * a client for connecting to an Elasticsearch cluster,
 * a Ruby API for the Elasticsearch's REST API,
@@ -49,7 +49,7 @@ The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/m
 library is a wrapper for two separate libraries:
 
 * [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport),
-  which provides a low-level Ruby client for connecting to an [Elasticsearch](http://elasticsearch.org) cluster
+  which provides a low-level Ruby client for connecting to an [Elasticsearch](https://www.elastic.co/products/elasticsearch) cluster
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
   which provides a Ruby API for the Elasticsearch RESTful API
 
@@ -81,9 +81,9 @@ This repository contains these additional Ruby libraries:
 * [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions),
    which provides a set of extensions to the base library,
 * [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
-  which provides a Ruby API for the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html),
-* [`elasticsearch-watcher`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-watcher),
-  which provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
+  which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
+* [`elasticsearch-xpack`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-xpack),
+  which provides Ruby API for the [_X-Pack_](https://www.elastic.co/products/x-pack) APIs.
 
 Please see their respective READMEs for information and documentation.
 
