@@ -57,7 +57,7 @@ module Elasticsearch
       #     client.cluster.put_settings body: { transient: { 'indices.ttl.interval' => '1s' } }
       #
       #     # Enable the `_ttl` property for all types within the index
-      #     client.indices.create index: 'myindex', body: { mappings: { mytype: { _ttl: { enabled: true } }  } }
+      #     client.indices.create index: 'myindex', body: { mappings: { properties: { _ttl: { enabled: true } }  } }
       #
       #     client.index index: 'myindex', type: 'mytype', id: '1', body: { title: 'TEST' }, ttl: '5s'
       #

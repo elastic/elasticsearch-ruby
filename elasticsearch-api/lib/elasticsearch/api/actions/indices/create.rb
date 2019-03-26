@@ -57,18 +57,16 @@ module Elasticsearch
         #                               }
         #                             },
         #                             mappings: {
-        #                               document: {
-        #                                 properties: {
-        #                                   title: {
-        #                                     type: 'multi_field',
-        #                                     fields: {
-        #                                         title:  { type: 'string', analyzer: 'snowball' },
-        #                                         exact:  { type: 'string', analyzer: 'keyword' },
-        #                                         ngram:  { type: 'string',
-        #                                                   index_analyzer: 'ngram',
-        #                                                   search_analyzer: 'ngram_search'
-        #                                         }
-        #                                     }
+        #                               properties: {
+        #                                 title: {
+        #                                   type: 'multi_field',
+        #                                   fields: {
+        #                                       title:  { type: 'string', analyzer: 'snowball' },
+        #                                       exact:  { type: 'string', analyzer: 'keyword' },
+        #                                       ngram:  { type: 'string',
+        #                                                 index_analyzer: 'ngram',
+        #                                                 search_analyzer: 'ngram_search'
+        #                                       }
         #                                   }
         #                                 }
         #                               }

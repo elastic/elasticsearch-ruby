@@ -26,12 +26,10 @@ module Elasticsearch
       #     client.indices.create index: 'my_index',
       #                           body: {
       #                             mappings: {
-      #                               my_type: {
-      #                                 properties: {
-      #                                   text: {
-      #                                     type: 'string',
-      #                                     term_vector: 'with_positions_offsets_payloads'
-      #                                   }
+      #                               properties: {
+      #                                 text: {
+      #                                   type: 'string',
+      #                                   term_vector: 'with_positions_offsets_payloads'
       #                                 }
       #                               }
       #                             }
@@ -89,7 +87,7 @@ module Elasticsearch
                                                   endpoint,
                                                   arguments[:id]
         end
-        
+
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
 

@@ -45,14 +45,12 @@ module Elasticsearch
       #         }
       #       },
       #       mappings: {
-      #         mytype: {
-      #           properties: {
-      #             title: {
-      #               type: 'string',
-      #               analyzer: 'title_synonym'
-      #             }
-      #           }
-      #         }
+      #          properties: {
+      #            title: {
+      #              type: 'string',
+      #              analyzer: 'title_synonym'
+      #            }
+      #          }
       #       }
       #     }
       #

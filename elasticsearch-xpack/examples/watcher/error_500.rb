@@ -153,10 +153,8 @@ client.xpack.watcher.put_watch id: 'error_500', body: {
 #
 client.indices.create index: 'test_errors', body: {
   mappings: {
-    d: {
-      properties: {
-        host: { type: 'keyword' }
-      }
+    properties: {
+      host: { type: 'keyword' }
     }
   }
 }
