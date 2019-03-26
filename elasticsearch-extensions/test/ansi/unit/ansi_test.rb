@@ -30,7 +30,7 @@ class Elasticsearch::Extensions::AnsiTest < Elasticsearch::Test::UnitTestCase
     should "call the 'awesome_inspect' method when available and no handler found" do
       @client.stubs(:perform_request).returns \
         Elasticsearch::Transport::Transport::Response.new(200, {"index-1"=>{"aliases"=>{}}})
-      response = @client.indices.get_aliases
+      response = @client.cat.aliases
 
       response.instance_eval do
         def awesome_inspect; "---PRETTY---"; end
@@ -41,7 +41,7 @@ class Elasticsearch::Extensions::AnsiTest < Elasticsearch::Test::UnitTestCase
     should "call `to_s` method when no pretty printer or handler found" do
       @client.stubs(:perform_request).returns \
         Elasticsearch::Transport::Transport::Response.new(200, {"index-1"=>{"aliases"=>{}}})
-      response = @client.indices.get_aliases
+      response = @client.cat.aliases
 
       assert_equal '{"index-1"=>{"aliases"=>{}}}', response.to_ansi
     end
