@@ -80,7 +80,7 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #
 url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
 url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}" unless url
-$client ||= Elasticsearch::Client.new url: url
+$client ||= Elasticsearch::Client.new url: url, tracer: tracer
 $helper_client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
@@ -143,7 +143,7 @@ module Elasticsearch
 
       def symbolize_keys(object)
         if object.is_a? Hash
-          object.reduce({}) { |memo,(k,v)| memo[k.to_sym] = symbolize_keys(v); memo }
+          object.reduce({}) { |memo,(k,v)| memo[k.to_s.to_sym] = symbolize_keys(v); memo }
         else
           object
         end
@@ -297,9 +297,7 @@ suites.each do |suite|
     #
     setup do
       $helper_client.indices.delete index: '_all', ignore: 404
-      $helper_client.indices.delete_template name: 'test_2', ignore: 404
-      $helper_client.indices.delete_template name: 'test', ignore: 404
-      $helper_client.indices.delete_template name: 'index_template', ignore: 404
+      $helper_client.indices.delete_template name: '*', ignore: 404
       $helper_client.snapshot.delete repository: 'test_repo_create_1',  snapshot: 'test_snapshot', ignore: 404
       $helper_client.snapshot.delete repository: 'test_repo_restore_1', snapshot: 'test_snapshot', ignore: 404
       $helper_client.snapshot.delete repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404
