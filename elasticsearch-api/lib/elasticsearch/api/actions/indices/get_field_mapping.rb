@@ -54,7 +54,8 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :local ].freeze)
+            :local,
+            :include_type_name ].freeze)
       end
     end
   end

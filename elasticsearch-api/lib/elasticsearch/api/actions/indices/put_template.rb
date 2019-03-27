@@ -40,7 +40,8 @@ module Elasticsearch
             :create,
             :timeout,
             :master_timeout,
-            :flat_settings ].freeze)
+            :flat_settings,
+            :include_type_name ].freeze)
       end
     end
   end

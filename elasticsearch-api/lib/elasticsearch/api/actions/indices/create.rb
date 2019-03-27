@@ -85,7 +85,8 @@ module Elasticsearch
             :wait_for_active_shards,
             :timeout,
             :master_timeout,
-            :update_all_types ].freeze)
+            :update_all_types,
+            :include_type_name ].freeze)
       end
     end
   end

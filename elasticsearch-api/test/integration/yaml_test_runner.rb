@@ -80,7 +80,7 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #
 url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
 url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}" unless url
-$client ||= Elasticsearch::Client.new url: url, tracer: tracer
+$client ||= Elasticsearch::Client.new url: url
 $helper_client ||= Elasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
