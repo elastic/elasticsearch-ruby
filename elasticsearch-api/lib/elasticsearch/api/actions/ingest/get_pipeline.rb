@@ -8,7 +8,7 @@ module Elasticsearch
         # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest.html
         #
         def get_pipeline(arguments={})
           method = 'GET'
