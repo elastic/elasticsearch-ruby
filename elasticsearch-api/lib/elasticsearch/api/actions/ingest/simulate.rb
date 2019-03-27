@@ -9,7 +9,7 @@ module Elasticsearch
         # @option arguments [Hash] :body The simulate definition (*Required*)
         # @option arguments [Boolean] :verbose Verbose mode. Display data output for each processor in executed pipeline
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest.html
         #
         def simulate(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

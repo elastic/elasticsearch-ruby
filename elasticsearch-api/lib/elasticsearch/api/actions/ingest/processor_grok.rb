@@ -7,7 +7,7 @@ module Elasticsearch
         #   matched fields from, as well as the grok pattern you expect will match.
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest.html
         #
         def processor_grok(arguments={})
           method = Elasticsearch::API::HTTP_GET
