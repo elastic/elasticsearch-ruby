@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
         #
         def get_mapping(arguments={})
           method = HTTP_GET

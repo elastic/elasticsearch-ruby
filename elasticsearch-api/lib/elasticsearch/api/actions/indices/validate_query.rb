@@ -53,7 +53,7 @@ module Elasticsearch
         # @option arguments [Boolean] :rewrite Provide a more detailed explanation showing the actual Lucene query that will be executed.
         # @option arguments [Boolean] :all_shards Execute validation on all shards instead of one random shard per index
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
         #
         def validate_query(arguments={})
           method = HTTP_GET

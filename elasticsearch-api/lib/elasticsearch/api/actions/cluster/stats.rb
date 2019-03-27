@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
         #
         def stats(arguments={})
           method = 'GET'

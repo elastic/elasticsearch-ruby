@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Specify whether the request should block until the all segments are upgraded (default: false)
         # @option arguments [Boolean] :only_ancient_segments If true, only ancient (an older Lucene major release) segments will be upgraded
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-upgrade.html
         #
         def upgrade(arguments={})
           method = HTTP_POST

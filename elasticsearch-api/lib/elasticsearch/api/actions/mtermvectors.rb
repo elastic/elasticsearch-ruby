@@ -26,7 +26,7 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
       #
       # @see #mget
       # @see #termvector

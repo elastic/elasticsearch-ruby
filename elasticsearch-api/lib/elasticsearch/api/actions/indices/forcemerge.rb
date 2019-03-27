@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Number] :max_num_segments The number of segments the index should be merged into (default: dynamic)
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-forcemerge.html
         #
         def forcemerge(arguments={})
           method = HTTP_POST

@@ -15,7 +15,7 @@ module Elasticsearch
         # @option arguments [String] :snapshot A snapshot name (*Required*)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def delete(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

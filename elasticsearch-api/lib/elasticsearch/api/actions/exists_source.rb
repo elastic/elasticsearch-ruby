@@ -18,7 +18,7 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
-      # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+      # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
       #
       def exists_source(arguments={})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

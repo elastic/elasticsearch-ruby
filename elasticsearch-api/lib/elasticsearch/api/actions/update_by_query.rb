@@ -54,7 +54,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in sub-requests per second. -1 means no throttle.
       # @option arguments [Number] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
       #
       def update_by_query(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

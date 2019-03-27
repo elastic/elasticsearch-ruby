@@ -9,7 +9,7 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes      
         # @option arguments [Time] :timeout Explicit operation timeout      
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-usage.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-usage.html
         #
         def usage(arguments={})
           method = Elasticsearch::API::HTTP_GET

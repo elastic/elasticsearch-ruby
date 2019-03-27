@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for on the newly created rollover index before the operation returns.
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-rollover-index.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html
         #
         def rollover(arguments={})
           raise ArgumentError, "Required argument 'alias' missing" unless arguments[:alias]

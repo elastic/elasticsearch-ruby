@@ -21,7 +21,7 @@ module Elasticsearch
         # @option arguments [Boolean] :detailed Whether to display detailed information about shard recovery
         # @option arguments [Boolean] :active_only Display only those recoveries that are currently on-going
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
         #
         def recovery(arguments={})
           method = HTTP_GET

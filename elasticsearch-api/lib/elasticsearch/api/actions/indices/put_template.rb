@@ -18,7 +18,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def put_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

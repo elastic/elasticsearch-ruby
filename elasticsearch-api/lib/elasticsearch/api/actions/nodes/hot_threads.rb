@@ -21,7 +21,7 @@ module Elasticsearch
         # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments={})
           method = HTTP_GET

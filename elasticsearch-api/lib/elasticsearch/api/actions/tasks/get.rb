@@ -9,7 +9,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def get(arguments={})
           arguments = arguments.clone

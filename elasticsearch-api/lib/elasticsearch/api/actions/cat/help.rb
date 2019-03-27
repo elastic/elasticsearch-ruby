@@ -8,7 +8,7 @@ module Elasticsearch
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat.html
         #
         def help(arguments={})
           method = HTTP_GET

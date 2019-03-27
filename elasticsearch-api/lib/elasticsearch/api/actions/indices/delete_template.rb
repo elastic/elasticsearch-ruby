@@ -17,7 +17,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def delete_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

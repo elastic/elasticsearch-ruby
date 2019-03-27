@@ -39,7 +39,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-allocation.html
         #
         def allocation(arguments={})
           node_id = arguments.delete(:node_id)

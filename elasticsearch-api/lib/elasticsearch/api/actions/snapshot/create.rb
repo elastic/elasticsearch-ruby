@@ -21,7 +21,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
