@@ -38,7 +38,8 @@ module Elasticsearch
         ParamsRegistry.register(:get_template, [
             :flat_settings,
             :master_timeout,
-            :local ].freeze)
+            :local,
+            :include_type_name ].freeze)
       end
     end
   end

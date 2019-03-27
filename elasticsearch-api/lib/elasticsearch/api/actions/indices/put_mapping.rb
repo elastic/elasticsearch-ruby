@@ -38,7 +38,6 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
         #
         def put_mapping(arguments={})
-          raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
           raise ArgumentError, "Required argument 'body' missing"  unless arguments[:body]
           method = HTTP_PUT
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_mapping', Utils.__escape(arguments[:type])
@@ -58,7 +57,8 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :update_all_types ].freeze)
+            :update_all_types,
+            :include_type_name ].freeze)
       end
     end
   end

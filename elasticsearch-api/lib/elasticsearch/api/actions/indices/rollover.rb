@@ -36,7 +36,8 @@ module Elasticsearch
             :timeout,
             :dry_run,
             :master_timeout,
-            :wait_for_active_shards ].freeze)
+            :wait_for_active_shards,
+            :include_type_name ].freeze)
       end
     end
   end

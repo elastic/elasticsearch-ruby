@@ -38,7 +38,8 @@ module Elasticsearch
             :expand_wildcards,
             :flat_settings,
             :include_defaults,
-            :master_timeout ].freeze)
+            :master_timeout,
+            :include_type_name ].freeze)
       end
     end
   end

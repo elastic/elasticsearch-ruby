@@ -47,7 +47,8 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards,
             :master_timeout,
-            :local ].freeze)
+            :local,
+            :include_type_name ].freeze)
       end
     end
   end

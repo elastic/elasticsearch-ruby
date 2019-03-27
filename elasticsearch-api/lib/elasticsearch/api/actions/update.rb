@@ -93,7 +93,10 @@ module Elasticsearch
           :routing,
           :timeout,
           :version,
-          :version_type ].freeze)
+          :version_type,
+          :if_seq_no,
+          :include_type_name,
+          :if_primary_term ].freeze)
     end
   end
 end
