@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [List] :fields A comma-separated list of fields to return in the output
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-fielddata.html
         #
         def fielddata(arguments={})
           fields = arguments.delete(:fields)

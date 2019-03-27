@@ -17,7 +17,7 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
         #
         def exists(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

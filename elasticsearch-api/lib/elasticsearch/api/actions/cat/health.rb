@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ts Set to false to disable timestamping
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-health.html
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-health.html
         #
         def health(arguments={})
           method = HTTP_GET

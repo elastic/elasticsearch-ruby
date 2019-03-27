@@ -7,7 +7,7 @@ module Elasticsearch
       # @option arguments [String] :id Script ID (*Required*)
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       #
-      # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+      # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
       #
       def get_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]

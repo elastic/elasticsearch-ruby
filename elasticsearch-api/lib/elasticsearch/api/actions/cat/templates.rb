@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-templates.html
         #
         def templates(arguments={})
           method = HTTP_GET

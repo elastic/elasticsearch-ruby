@@ -6,7 +6,7 @@ module Elasticsearch
         # Returns the configured remote cluster information
         #
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-remote-info.html
         #
         def remote_info(arguments={})
           method = Elasticsearch::API::HTTP_GET

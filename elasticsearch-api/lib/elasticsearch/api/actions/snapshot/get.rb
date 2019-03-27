@@ -23,7 +23,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def get(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

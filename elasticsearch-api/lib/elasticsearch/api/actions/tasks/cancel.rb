@@ -10,7 +10,7 @@ module Elasticsearch
         # @option arguments [List] :actions A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
         # @option arguments [String] :parent_task_id Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def cancel(arguments={})
           arguments = arguments.clone

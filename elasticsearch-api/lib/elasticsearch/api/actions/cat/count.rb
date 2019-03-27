@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html
+        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-count.html
         #
         def count(arguments={})
           index = arguments.delete(:index)

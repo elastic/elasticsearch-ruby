@@ -22,7 +22,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
         #
         def put_alias(arguments={})
           raise ArgumentError, "Required argument 'index' missing"  unless arguments[:index]

@@ -65,7 +65,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields with the same name across all types or not
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
         #
         def create(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

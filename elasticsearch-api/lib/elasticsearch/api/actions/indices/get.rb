@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
         #
         def get(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

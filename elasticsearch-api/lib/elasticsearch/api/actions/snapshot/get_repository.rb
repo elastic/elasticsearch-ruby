@@ -17,7 +17,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def get_repository(arguments={})
           repository = arguments.delete(:repository)

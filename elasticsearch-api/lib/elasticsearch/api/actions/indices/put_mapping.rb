@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields with the same name across all types or not
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html
         #
         def put_mapping(arguments={})
           raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]

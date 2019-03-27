@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
         #
         def put_settings(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

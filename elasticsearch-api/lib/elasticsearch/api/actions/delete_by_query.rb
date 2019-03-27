@@ -51,7 +51,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle for this request in sub-requests per second. -1 means no throttle.
       # @option arguments [Number] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
       #
       def delete_by_query(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

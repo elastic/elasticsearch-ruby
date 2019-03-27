@@ -13,7 +13,7 @@ module Elasticsearch
         # @option arguments [String] :group_by Group tasks by nodes or parent/child relationships (options: nodes, parents, none)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def list(arguments={})
           arguments = arguments.clone
