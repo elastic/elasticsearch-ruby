@@ -16,7 +16,13 @@ module Elasticsearch
         #
         def stats(arguments={})
           method = 'GET'
-          path   = "_cluster/stats"
+          node_id = arguments.delete(:node_id)
+
+          if node_id
+            path = Utils.__pathify("_cluster/stats/nodes", node_id)
+          else
+            path = "_cluster/stats"
+          end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
