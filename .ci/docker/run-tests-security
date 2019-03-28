@@ -52,6 +52,7 @@ docker run \
   --env "ELASTIC_PASSWORD=changeme" \
   --env "ELASTIC_USER=elastic" \
   --env "CODECOV_TOKEN" \
+  --env "TEST_SUITE=${TEST_SUITE}" \
   --volume $repo:/usr/src/app \
   --name elasticsearch-ruby \
   --rm \

@@ -30,6 +30,7 @@ docker run \
   --network=esnet \
   --env "TEST_ES_SERVER=http://elasticsearch:9200" \
   --env "CODECOV_TOKEN" \
+  --env "TEST_SUITE=${TEST_SUITE}" \
   --volume $repo:/usr/src/app \
   --name elasticsearch-ruby \
   --rm \
