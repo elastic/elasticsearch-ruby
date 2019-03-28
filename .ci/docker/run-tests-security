@@ -16,7 +16,6 @@ repo=$(pwd)
 testnodecrt="/.ci/certs/testnode.crt"
 testnodekey="/.ci/certs/testnode.key"
 cacrt="/.ci/certs/ca.crt"
-export CERT_DIR="/.ci/certs"
 
 docker run \
   --rm \
