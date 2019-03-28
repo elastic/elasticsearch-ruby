@@ -11,37 +11,6 @@
 #   - $TEST_SUITE
 #
 
-export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.6.1}
-export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-6.7.0}
-
-set -eo pipefail
-
-set +x
-export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
-export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-ruby/codecov)
-unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
-set -x
-
-function cleanup {
-  docker container rm --force --volumes elasticsearch > /dev/null 2>&1 || true
-  docker container rm --force --volumes elasticsearch-2 > /dev/null 2>&1 || true
-  docker container rm --force --volumes elasticsearch-ruby > /dev/null 2>&1 || true
-  docker network rm esnet > /dev/null
-}
-
-trap cleanup EXIT
-
-# create network and volume
-docker network create esnet
-
-# create client image
-docker build \
-  --file .ci/Dockerfile \
-  --tag elastic/elasticsearch-ruby \
-  --build-arg RUBY_TEST_VERSION=${RUBY_TEST_VERSION} \
-  .
-
-
 # run elasticsearch
 docker run \
   --rm \
