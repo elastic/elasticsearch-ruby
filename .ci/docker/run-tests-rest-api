@@ -8,9 +8,11 @@
 #
 #   - $ELASTICSEARCH_VERSION
 #   - $RUBY_TEST_VERSION
+#   - $TEST_SUITE
 #
-# Run with:
-# $ ELASTICSEARCH_VERSION=6.7.0 RUBY_TEST_VERSION=2.6 sh .ci/run-tests-raw
+
+export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.6.1}
+export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-6.7.0}
 
 set -eo pipefail
 
@@ -22,7 +24,6 @@ set -x
 
 function cleanup {
   docker container rm --force --volumes elasticsearch > /dev/null 2>&1 || true
-  docker container rm --force --volumes elasticsearch-2 > /dev/null 2>&1 || true
   docker container rm --force --volumes elasticsearch-ruby > /dev/null 2>&1 || true
   docker network rm esnet > /dev/null
 }
@@ -47,26 +48,12 @@ docker run \
   --env "path.repo=/tmp" \
   --env "repositories.url.allowed_urls=http://snapshot.*" \
   --env "http.port=9200" \
-  --env "discovery.zen.minimum_master_nodes=2" \
   --env "discovery.zen.ping.unicast.hosts=elasticsearch" \
   --network=esnet \
   --name=elasticsearch \
   --detach \
   docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
 
-# run elasticsearch-2
-docker run \
-  --rm \
-  --env "node.attr.testattr=test" \
-  --env "path.repo=/tmp" \
-  --env "repositories.url.allowed_urls=http://snapshot.*" \
-  --env "http.port=9201" \
-  --env "discovery.zen.minimum_master_nodes=2" \
-  --env "discovery.zen.ping.unicast.hosts=elasticsearch" \
-  --network=esnet \
-  --name=elasticsearch-2 \
-  --detach \
-  docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
 
 # run the client tests
 docker run \
@@ -77,6 +64,4 @@ docker run \
   --name elasticsearch-ruby \
   --rm \
   elastic/elasticsearch-ruby \
-  bundle exec rake test:client
-
-
+  bundle exec rake test:rest_api
