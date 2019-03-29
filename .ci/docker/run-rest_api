@@ -7,8 +7,6 @@
 # The required environment variables include:
 #
 #   - $ELASTICSEARCH_VERSION
-#   - $RUBY_TEST_VERSION
-#   - $TEST_SUITE
 #
 
 # run elasticsearch
@@ -29,7 +27,6 @@ docker run \
 docker run \
   --network=esnet \
   --env "TEST_ES_SERVER=http://elasticsearch:9200" \
-  --env "CODECOV_TOKEN" \
   --volume $repo:/usr/src/app \
   --name elasticsearch-ruby \
   --rm \
