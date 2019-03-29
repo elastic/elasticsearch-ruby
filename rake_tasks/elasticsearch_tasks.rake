@@ -19,6 +19,7 @@ namespace :elasticsearch do
         puts "Attempting to wait for green status: #{i + 1}"
         if admin_client.cluster.health(wait_for_status: 'green', timeout: '50s')
           ready = true
+          puts 'Connected to Elasticsearch'
           break
         end
       rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => ex
