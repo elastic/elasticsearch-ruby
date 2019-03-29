@@ -40,4 +40,4 @@ docker build \
   .
 
 
-sh .ci/docker/run-tests-${TEST_SUITE}
+sh .ci/docker/run-${TEST_SUITE}
