@@ -11,7 +11,6 @@
 #   - $TEST_SUITE
 #
 
-# run elasticsearch
 repo=$(pwd)
 testnodecrt="/.ci/certs/testnode.crt"
 testnodekey="/.ci/certs/testnode.key"
@@ -48,7 +47,7 @@ docker run \
 # run the client tests
 docker run \
   --network=esnet \
-  --env "TEST_ES_SERVER=http://elasticsearch:9200" \
+  --env "TEST_ES_SERVER=elasticsearch:9200" \
   --env "ELASTIC_PASSWORD=changeme" \
   --env "ELASTIC_USER=elastic" \
   --env "CODECOV_TOKEN" \
@@ -58,3 +57,4 @@ docker run \
   --rm \
   elastic/elasticsearch-ruby \
   bundle exec rake test:security
+
