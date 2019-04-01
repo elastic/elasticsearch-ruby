@@ -82,7 +82,7 @@ module Elasticsearch
                 # Find the cached values where the variable name is contained in the arguments.
                 if cached_value = test.cached_values.find { |k, v| value =~ /\$\{?#{k}\}?/ }
                   # The arguments may contain the variable in the form ${variable} or $variable
-                  args[key] = value.gsub(/\$\{?#{cached_value[0]}\}?/, cached_value[1])
+                  args[key] = value.gsub(/\$\{?#{cached_value[0]}\}?/, cached_value[1].to_s)
                 end
               end
             end
