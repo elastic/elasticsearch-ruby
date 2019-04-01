@@ -25,6 +25,7 @@ module Elasticsearch
         GROUP_TERMINATORS = [ 'length',
                               'gt',
                               'set',
+                              'transform_and_set',
                               'match',
                               'is_false',
                               'is_true'
@@ -98,6 +99,7 @@ module Elasticsearch
         # @since 6.2.0
         def cache_value(cache_key, value)
           @cached_values["#{cache_key}"] = value
+          @cached_values
         end
 
         # Get a cached value.
@@ -112,7 +114,7 @@ module Elasticsearch
         # @since 6.2.0
         def get_cached_value(key)
           return key unless key.is_a?(String)
-          @cached_values.fetch(key.gsub(/\$/, ''), key)
+          @cached_values.fetch(key.gsub(/[\$\{\}]/, ''), key)
         end
 
         # Run all the tasks in this test.
@@ -140,23 +142,26 @@ module Elasticsearch
         # @return [ true, false ] Whether this test should be skipped, given a list of unsupported features.
         #
         # @since 6.2.0
-        def skip_test?(client, features_to_skip = test_file.skip_features)
+        def skip_test?(client, features_to_skip = test_file.features_to_skip)
           return false if @skip.empty?
           range_partition =  /\s*-\s*/
           @skip.collect { |s| s['skip'] }.any? do |skip|
-            if features_to_skip.include?(skip['features'])
+            if !(features_to_skip &  ([skip['features']].flatten || [])).empty?
               true
             elsif skip['version'] == 'all'
               true
-            elsif versions = skip['version'].partition(range_partition)
+            elsif versions = skip['version'] && skip['version'].partition(range_partition)
               low = versions[0]
               high = versions[2] unless versions[2] == ''
               range = low..high
-              range.cover?(client.info['version']['number'])
+              begin
+                client_version = client.info['version']['number']
+              rescue
+                warn('Could not determine Elasticsearch version when checking if test should be skipped.')
+              end
+              range.cover?(client_version)
             end
           end
-        rescue
-          warn('Could not determine Elasticsearch version')
         end
 
         private

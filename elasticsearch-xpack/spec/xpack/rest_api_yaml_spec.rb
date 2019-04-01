@@ -138,6 +138,10 @@ RSpec::Matchers.define :match_response do |test, expected_pairs|
       split_key = split_and_parse_key(expected_key)
       actual_value = find_value_in_document(split_key, response)
 
+      # Sometimes the expected value is a cached value from a previous request.
+      # See test api_key/10_basic.yml
+      expected_value = test.get_cached_value(expected_value)
+
       # When you must match a regex. For example:
       #   match: {task: '/.+:\d+/'}
       if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"

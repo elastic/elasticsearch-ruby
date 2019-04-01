@@ -79,11 +79,26 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
 # 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
 
+# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
+
 # Searching the monitoring index returns no results.
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
 
-REST_API_YAML_FILES = Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
+# Operation times out "failed_node_exception"
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_mode.yml")
+
+# 'Test Deprecations' has non-zero length node_settings field
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/deprecations/10_basic.yml")
+
+SINGLE_TEST = nil
+# Uncomment the following line and set it to a file when a single test should be run.
+# SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
+#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/ml/jobs_crud.yml"]
+
+
+REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
 
