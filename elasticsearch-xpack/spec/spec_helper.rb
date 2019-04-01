@@ -90,7 +90,7 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_mode.yml")
 
 # 'Test Deprecations' has non-zero length node_settings field
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/deprecations/10_basic.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/deprecation/10_basic.yml")
 
 SINGLE_TEST = nil
 # Uncomment the following line and set it to a file when a single test should be run.
