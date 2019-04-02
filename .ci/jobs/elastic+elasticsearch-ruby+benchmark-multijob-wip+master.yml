@@ -7,7 +7,8 @@
     description: Benchmarking the elasticsearch-ruby master branch.
     node: flyweight
     # trigger on demand while work in progress
-    triggers: null
+    triggers:
+      - timed: '@hourly'
     builders:
       # override default
       - shell: null
