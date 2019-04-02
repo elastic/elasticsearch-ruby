@@ -1,3 +1,6 @@
+_Note: Up-to-date changelogs for each version can be found in their respective branches
+(e.g. [1.x/CHANGELOG.md](https://github.com/elastic/elasticsearch-ruby/blob/1.x/CHANGELOG.md))_
+
 ## 6.0.0
 
 Elasticsearch 6.0 compatibility.
