@@ -22,6 +22,8 @@ if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
   end
 
   TEST_HOST, TEST_PORT = split_hosts.first.split(':')
+else
+  TEST_HOST, TEST_PORT = 'localhost', 9200
 end
 
 raw_certificate = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.crt'))
@@ -56,49 +58,83 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
 end
 
 
-
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
                           "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
-skipped_files = []
+SINGLE_TEST = if ENV['SINGLE_TEST']
+                ["#{File.expand_path(File.dirname('..'), '..')}" +
+                     "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/#{ENV['SINGLE_TEST']}"]
+              end
 
-# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ssl/10_basic.yml")
+SKIPPED_TESTS = []
 
-# Current license is basic.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
-
-# ArgumentError for empty body
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
-
-# The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/snapshot/10_basic.yml")
-
-# The test inserts an invalid license, which makes all subsequent tests fail.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
-
-# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
-
-# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
+# Response from Elasticsearch includes the ca.crt, so length doesn't match.
+SKIPPED_TESTS << { file:        'ssl/10_basic.yml',
+                   description: 'Test get SSL certificates' }
 
 # Searching the monitoring index returns no results.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
+SKIPPED_TESTS << { file:        'monitoring/bulk/20_privileges.yml',
+                   description: 'Monitoring Bulk API' }
+
+# Searching the monitoring index returns no results.
+SKIPPED_TESTS << { file:        'monitoring/bulk/10_basic.yml',
+                   description: 'Bulk indexing of monitoring data on closed indices should throw an export exception' }
+
+# The test inserts an invalid license, which makes all subsequent tests fail.
+SKIPPED_TESTS << { file:        'xpack/15_basic.yml',
+                   description: '*' }
+
+# The test inserts an invalid license, which makes all subsequent tests fail.
+SKIPPED_TESTS << { file:        'license/20_put_license.yml',
+                   description: '*' }
+
+# The test inserts an invalid license, which makes all subsequent tests fail.
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate user's tokens" }
+
+# The test inserts an invalid license, which makes all subsequent tests fail.
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate realm's tokens" }
+
+# The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
+SKIPPED_TESTS << { file:        'snapshot/10_basic.yml',
+                   description: 'Create a source only snapshot and then restore it' }
+
+# ArgumentError for empty body
+SKIPPED_TESTS << { file:        'watcher/put_watch/10_basic.yml',
+                   description: 'Test empty body is rejected by put watch' }
 
 # Operation times out "failed_node_exception"
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_mode.yml")
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to enabled' }
 
-# 'Test Deprecations' has non-zero length node_settings field
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/deprecation/10_basic.yml")
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to disabled' }
 
-SINGLE_TEST = nil
-# Uncomment the following line and set it to a file when a single test should be run.
-# SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
-#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/ml/jobs_crud.yml"]
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade mode to disabled from enabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Attempt to open job when upgrade_mode is enabled' }
+
+# Non-zero length node_settings field
+SKIPPED_TESTS << { file:        'deprecation/10_basic.yml',
+                   description: 'Test Deprecations' }
 
 
-REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
+# TODO
+SKIPPED_TESTS << { file:        'ml/forecast.yml',
+                   description: 'Test forecast unknown job' }
+# TODO
+SKIPPED_TESTS << { file:        'ml/post_data.yml',
+                   description: 'Test POST data with invalid parameters' }
+# TODO
+SKIPPED_TESTS << { file:        'ml/post_data.yml',
+                   description: 'Test Flush data with invalid parameters' }
+
+REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
 
