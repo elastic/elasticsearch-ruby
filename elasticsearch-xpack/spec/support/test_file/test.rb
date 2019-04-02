@@ -12,6 +12,7 @@ module Elasticsearch
         attr_reader :description
         attr_reader :test_file
         attr_reader :cached_values
+        attr_reader :file_basename
 
         # Actions that if followed by a 'do' action, indicate that they complete their task group.
         # For example, consider this sequence of actions:
@@ -53,11 +54,14 @@ module Elasticsearch
         # @since 6.2.0
         def initialize(test_file, test_definition)
           @test_file = test_file
+          @file_basename = test_file.name.gsub("#{YAML_FILES_DIRECTORY}/", '')
           @description = test_definition.keys.first
-          @skip = test_definition[description].select { |doc| doc['skip'] }.compact
           @definition = test_definition[description].select { |doc| !doc.key?('skip') }
           @definition.delete_if { |doc| doc['skip'] }
           @cached_values = {}
+
+          skip_definitions = test_definition[description].select { |doc| doc['skip'] }.compact
+          @skip = skip_definitions unless skip_definitions.empty?
         end
 
         # Get the list of task groups in this test.
@@ -143,31 +147,42 @@ module Elasticsearch
         #
         # @since 6.2.0
         def skip_test?(client, features_to_skip = test_file.features_to_skip)
-          return false if @skip.empty?
-          range_partition =  /\s*-\s*/
-          @skip.collect { |s| s['skip'] }.any? do |skip|
-            if !(features_to_skip &  ([skip['features']].flatten || [])).empty?
-              true
-            elsif skip['version'] == 'all'
-              true
-            elsif versions = skip['version'] && skip['version'].partition(range_partition)
-              low = versions[0]
-              high = versions[2] unless versions[2] == ''
-              range = low..high
-              begin
-                client_version = client.info['version']['number']
-              rescue
-                warn('Could not determine Elasticsearch version when checking if test should be skipped.')
-              end
-              range.cover?(client_version)
+          return true if pre_defined_skip?
+
+          if @skip
+            @skip.collect { |s| s['skip'] }.any? do |skip|
+              contains_features_to_skip?(features_to_skip, skip) ||
+                  !version_requirement_met?(client, skip)
             end
           end
         end
 
         private
 
-        def meets_version_requirement?(version)
-          version >= MIN_REQUIRED_VERSION && version <= MAX_REQUIRED_VERSION
+        def contains_features_to_skip?(features_to_skip, skip_defintion)
+          !(features_to_skip &  ([skip_defintion['features']].flatten || [])).empty?
+        end
+
+        def pre_defined_skip?
+          SKIPPED_TESTS.find do |t|
+            file_basename == t[:file] && (description == t[:description] || t[:description] == '*')
+          end
+        end
+
+        def version_requirement_met?(client, skip_definition)
+          return false if skip_definition['version'] == 'all'
+          range_partition =  /\s*-\s*/
+          if versions = skip_definition['version'] && skip_definition['version'].partition(range_partition)
+            low = versions[0]
+            high = versions[2] unless versions[2] == ''
+            range = low..high
+            begin
+              client_version = client.info['version']['number']
+            rescue
+              warn('Could not determine Elasticsearch version when checking if test should be skipped.')
+            end
+            range.cover?(client_version)
+          end || true
         end
 
         def is_a_validation?(action)
