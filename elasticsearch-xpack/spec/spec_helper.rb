@@ -60,7 +60,7 @@ end
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
                           "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
-SINGLE_TEST = if ENV['SINGLE_TEST']
+SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 ["#{File.expand_path(File.dirname('..'), '..')}" +
                      "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/#{ENV['SINGLE_TEST']}"]
               end
