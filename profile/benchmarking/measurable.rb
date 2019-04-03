@@ -269,7 +269,8 @@ module Elasticsearch
         end
         res.results_doc
       rescue => ex
-        puts "Could not index results, due to #{ex.class}."
+        puts "Could not index results, due to #{ex.class}.\n"
+        puts "Error: #{ex}.\n"
         puts "#{ex.backtrace[0..15]}"
       end
 
