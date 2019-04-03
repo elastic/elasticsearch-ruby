@@ -147,6 +147,19 @@ Elasticsearch 6.0 compatibility.
 * Improved the documentation and error messsages for the test cluster
 * Updated the "Reindex" extension for Elasticsearch 5.x
 
+## 1.1.3
+
+### Client
+
+* Fixed MRI 2.4 compatibility for 1.x
+* Fixed failing integration test for keeping existing collections
+
+## 1.1.0
+
+### API
+
+* Added deprecation notices to API methods and arguments not supported on Elasticsearch 1.x
+
 ## DSL:0.1.4
 
 * Added correct implementation of `Sort#empty?`
