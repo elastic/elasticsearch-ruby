@@ -50,7 +50,7 @@ Perform the backup with the Backup gem's command line utility:
 
     $ backup perform -t elasticsearch_backup
 
-See more information in the [`Backup::Database::Elasticsearch`](lib/extensions/backup.rb)
+See more information in the [`Backup::Database::Elasticsearch`](lib/elasticsearch/extensions/backup.rb)
 class documentation.
 
 ### Reindex
@@ -99,7 +99,7 @@ You can also use the `Reindex` class directly:
 
     reindex.perform
 
-See more information in the [`Elasticsearch::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
+See more information in the [`Elasticsearch::Extensions::Reindex::Reindex`](lib/elasticsearch/extensions/reindex.rb)
 class documentation.
 
 ### ANSI
