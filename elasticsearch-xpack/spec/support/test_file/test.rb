@@ -152,7 +152,7 @@ module Elasticsearch
           if @skip
             @skip.collect { |s| s['skip'] }.any? do |skip|
               contains_features_to_skip?(features_to_skip, skip) ||
-                  !version_requirement_met?(client, skip)
+                  skip_version?(client, skip)
             end
           end
         end
@@ -169,20 +169,20 @@ module Elasticsearch
           end
         end
 
-        def version_requirement_met?(client, skip_definition)
-          return false if skip_definition['version'] == 'all'
+        def skip_version?(client, skip_definition)
+          return true if skip_definition['version'] == 'all'
           range_partition =  /\s*-\s*/
           if versions = skip_definition['version'] && skip_definition['version'].partition(range_partition)
             low = versions[0]
             high = versions[2] unless versions[2] == ''
             range = low..high
             begin
-              client_version = client.info['version']['number']
+              server_version = client.info['version']['number']
             rescue
               warn('Could not determine Elasticsearch version when checking if test should be skipped.')
             end
-            range.cover?(client_version)
-          end || true
+            range.cover?(server_version)
+          end
         end
 
         def is_a_validation?(action)
