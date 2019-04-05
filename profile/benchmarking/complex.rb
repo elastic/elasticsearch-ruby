@@ -48,7 +48,7 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = Time.now
+          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               slices.each do |slice|
@@ -56,7 +56,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Time.now
+          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           results
         end
 
@@ -96,13 +96,13 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = Time.now
+          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               client.search(request)
             end
           end
-          end_time = Time.now
+          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           results
         end
 
