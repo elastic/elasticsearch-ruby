@@ -45,7 +45,7 @@ module Elasticsearch
 
         warmup_repetitions.times { client.ping }
 
-        start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        start = current_time
         results = measured_repetitions.times.collect do
           Benchmark.realtime do
             action_iterations.times do
@@ -53,7 +53,7 @@ module Elasticsearch
             end
           end
         end
-        end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        end_time = current_time
 
         options = { duration: end_time - start,
                     operation: __method__,
@@ -82,7 +82,7 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -90,7 +90,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
@@ -122,7 +122,7 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -130,7 +130,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
@@ -165,7 +165,7 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -173,7 +173,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
@@ -208,7 +208,7 @@ module Elasticsearch
             client.get(index: INDEX, id: id)
           end
 
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -216,7 +216,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
@@ -251,7 +251,7 @@ module Elasticsearch
             client.get(index: INDEX, id: id)
           end
 
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -259,7 +259,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
         end
 
         options = { duration: end_time - start,
@@ -301,7 +301,7 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -309,7 +309,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
         end
 
         options = { duration: end_time - start,
@@ -350,7 +350,7 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do
@@ -358,7 +358,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
@@ -398,7 +398,7 @@ module Elasticsearch
                           body: { doc: { field:  "#{document[field]}-#{i}" } })
           end
 
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          start = current_time
           results = measured_repetitions.times.collect do
             Benchmark.realtime do
               action_iterations.times do |i|
@@ -408,7 +408,7 @@ module Elasticsearch
               end
             end
           end
-          end_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          end_time = current_time
           results
         end
 
