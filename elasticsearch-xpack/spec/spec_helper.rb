@@ -123,18 +123,10 @@ SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
 SKIPPED_TESTS << { file:        'deprecation/10_basic.yml',
                    description: 'Test Deprecations' }
 
-
-# TODO
-SKIPPED_TESTS << { file:        'ml/forecast.yml',
-                   description: 'Test forecast unknown job' }
-# TODO
-SKIPPED_TESTS << { file:        'ml/post_data.yml',
-                   description: 'Test POST data with invalid parameters' }
-# TODO
-SKIPPED_TESTS << { file:        'ml/post_data.yml',
-                   description: 'Test Flush data with invalid parameters' }
-
+# The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+
+# The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
 
