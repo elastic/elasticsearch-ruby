@@ -45,8 +45,8 @@ module Elasticsearch
 
         warmup_repetitions.times { client.ping }
 
+        start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         results = measured_repetitions.times.collect do
-          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
           Benchmark.realtime do
             action_iterations.times do
               client.ping
