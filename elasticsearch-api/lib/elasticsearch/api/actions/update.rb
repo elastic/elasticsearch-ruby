@@ -134,7 +134,8 @@ module Elasticsearch
           :ttl,
           :version,
           :version_type,
-          :if_seq_no ].freeze)
+          :if_seq_no,
+          :if_primary_term ].freeze)
     end
   end
 end

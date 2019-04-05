@@ -73,6 +73,7 @@ module Elasticsearch
           :consistency,
           :parent,
           :refresh,
+          :if_seq_no,
           :replication,
           :routing,
           :timeout,

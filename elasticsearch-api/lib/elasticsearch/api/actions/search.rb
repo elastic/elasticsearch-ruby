@@ -210,7 +210,8 @@ module Elasticsearch
           :allow_partial_search_results,
           :rest_total_hits_as_int,
           :track_total_hits,
-          :ignore_throttled ].freeze)
+          :ignore_throttled,
+          :seq_no_primary_term ].freeze)
     end
   end
 end

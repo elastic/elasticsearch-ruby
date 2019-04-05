@@ -52,6 +52,7 @@ module Elasticsearch
         ParamsRegistry.register(:rollover, [
             :wait_for_active_shards,
             :timeout,
+            :include_type_name,
             :master_timeout,
             :dry_run ].freeze)
       end
