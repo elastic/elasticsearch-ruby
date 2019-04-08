@@ -38,7 +38,7 @@ namespace :test do
   end
 
   desc "Run security (Platinum) rest api yaml tests"
-  task :security do
+  task :security => 'elasticsearch:update' do
     Rake::Task['elasticsearch:wait_for_green'].invoke
     Rake::Task['elasticsearch:checkout_build'].invoke
     puts '-' * 80
