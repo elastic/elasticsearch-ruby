@@ -33,7 +33,7 @@ RELEASE_TOGETHER = [ 'elasticsearch',
                      'elasticsearch-api',
                      'elasticsearch-xpack' ].freeze
 
-CERTS_PATH = '.ci/certs/'.freeze
+CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 
 def admin_client
   $admin_client ||= begin
@@ -50,7 +50,7 @@ def admin_client
 
     if test_suite == 'security'
       transport_options.merge!(:ssl => { verify: false,
-                                         ca_path: CERTS_PATH })
+                                         ca_path: CERT_DIR })
 
       password = ENV['ELASTIC_PASSWORD']
       user = ENV['ELASTIC_USER'] || 'elastic'
