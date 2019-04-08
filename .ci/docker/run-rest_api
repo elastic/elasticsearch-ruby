@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+#
+# Runs the client tests via Docker with the expectation that the required
+# environment variables have already been exported before running this script.
+#
+# The required environment variables include:
+#
+#   - $ELASTICSEARCH_VERSION
+#
+
+# run elasticsearch
+docker run \
+  --rm \
+  --env "node.attr.testattr=test" \
+  --env "path.repo=/tmp" \
+  --env "repositories.url.allowed_urls=http://snapshot.*" \
+  --env "discovery.type=single-node" \
+  --network=esnet \
+  --name=elasticsearch \
+  --detach \
+  docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
+
+
+# run the client tests
+docker run \
+  --network=esnet \
+  --env "TEST_ES_SERVER=http://elasticsearch:9200" \
+  --volume $repo:/usr/src/app \
+  --name elasticsearch-ruby \
+  --rm \
+  elastic/elasticsearch-ruby \
+  bundle exec rake test:rest_api
