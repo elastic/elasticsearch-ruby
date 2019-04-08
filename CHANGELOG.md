@@ -1,3 +1,39 @@
+## 6.3.0
+
+### API
+
+* Update bulk method
+* Generate code with params registry
+* Update cat.aliases method
+* Update cat.allocation method
+* Update cat.count method
+* Update cat.fielddata method
+* Update cat.health method
+* Update cat.help method
+* Update cat.indices method
+* Update cat API methods
+* Update clear_scroll API
+* Update cluster API endpoint methods
+* Update top-level API endpoint methods
+* Update all methods based on rest-api-spec
+* Fix minor issues with API methods
+* Add unfreeze and freeze endpoints back
+* Fix missing params for cat APIs
+* Add support for node_id in cluster/stats
+* Reference current version, not master
+* Keep create method as-is
+* Reference current version, not master for ingest/plugins
+* Account for indices.create/20_mix_typeless_typeful not cleaning up after itself
+* Add missing params
+
+### XPACK
+
+* Update API for 6.7.0
+* Updates to support 6.7.0
+* Blacklist individual tests, not entire files
+* Sometimes the SINGLE_TEST env variable is the empty string
+* Fix logic for checking if a verison should be skipped
+
 ## 6.2.0
 
 ### Client
