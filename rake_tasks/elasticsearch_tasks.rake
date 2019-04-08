@@ -35,7 +35,7 @@ namespace :elasticsearch do
   end
 
   desc "Update the submodule with Elasticsearch core repository"
-  task :update do
+  task :update => :setup do
     sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} fetch origin --quiet"
     begin
       %x[git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} pull]
