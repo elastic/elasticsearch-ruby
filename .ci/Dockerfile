@@ -1,13 +1,6 @@
 ARG RUBY_TEST_VERSION=2.6
 FROM ruby:${RUBY_TEST_VERSION}
 
-ARG TEST_SUITE=client
-ENV TEST_SUITE=${TEST_SUITE}
-
-ARG ELASTIC_PASSWORD=changeme
-ENV ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-
-
 ENV GEM_HOME="/usr/local/bundle"
 ENV PATH $GEM_HOME/bin:$GEM_HOME/gems/bin:$PATH
 ENV QUIET=true
@@ -23,9 +16,3 @@ RUN gem install bundler
 RUN bundle install
 RUN bundle exec rake bundle:clean
 RUN rake bundle:install
-RUN bundle exec rake setup
-RUN bundle exec rake elasticsearch:update
-
-
-
-CMD ["sh", "-c", "bundle exec rake test:$TEST_SUITE"]

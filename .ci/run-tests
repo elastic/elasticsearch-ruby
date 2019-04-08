@@ -6,33 +6,39 @@
 #
 # The required environment variables include:
 #
-#   - $ELASTICSEARCH_VERSION
-#   - $RUBY_TEST_VERSION
-#   - TEST_SUITE
+#   - $TEST_SUITE
 #
 
-export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION}
-export RUBY_TEST_VERSION=${RUBY_TEST_VERSION}
-export TEST_SUITE=${TEST_SUITE}
+set -eo pipefail
 
-function clean_docker_compose() {
-  # clean up the docker-compose environment
-  docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml down --volumes --remove-orphans
+export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.6.1}
+export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-7.0.0-rc2}
+export SINGLE_TEST=${SINGLE_TEST}
+
+set +x
+export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
+export CODECOV_TOKEN=$(vault read -field=token secret/clients-ci/elasticsearch-ruby/codecov)
+unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
+set -x
+
+function cleanup {
+  docker container rm --force --volumes elasticsearch > /dev/null 2>&1 || true
+  docker container rm --force --volumes elasticsearch-2 > /dev/null 2>&1 || true
+  docker container rm --force --volumes elasticsearch-ruby > /dev/null 2>&1 || true
+  docker network rm esnet > /dev/null
 }
 
-# build the client to ensure the proper version variables are used
-docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml --compatibility build client
-build_exit_code=$?
-if [[ $build_exit_code != 0 ]]; then
-  echo "The client container failed to build."
-  clean_docker_compose
-  exit $build_exit_code
-fi
+trap cleanup EXIT
 
-docker-compose -f .ci/docker-compose/${TEST_SUITE}.yml --compatibility run client
-test_exit_code=$?
+# create network and volume
+docker network create esnet
 
-clean_docker_compose
+# create client image
+docker build \
+  --file .ci/Dockerfile \
+  --tag elastic/elasticsearch-ruby \
+  --build-arg RUBY_TEST_VERSION=${RUBY_TEST_VERSION} \
+  .
 
-# exit with the exit code received from the test run
-exit $test_exit_code
+
+sh .ci/docker/run-${TEST_SUITE}
