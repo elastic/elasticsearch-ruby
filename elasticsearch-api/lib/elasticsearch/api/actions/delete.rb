@@ -79,6 +79,7 @@ module Elasticsearch
           :timeout,
           :version,
           :version_type,
+          :if_primary_term,
           :include_type_name ].freeze)
     end
   end
