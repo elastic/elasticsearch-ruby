@@ -9,6 +9,6 @@ RUBY_TEST_VERSION:
 TEST_SUITE:
 - rest_api
 - client
-#- security
+- security
 
 exclude: ~

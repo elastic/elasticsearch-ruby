@@ -47,13 +47,36 @@ module Elasticsearch
         @xpack_client ||= Elasticsearch::XPack::API::Client.new(self)
       end
 
-
       def security
         @security ||= xpack.security
       end
 
       def ml
         @ml ||= xpack.ml
+      end
+
+      def rollup
+        @rollup ||= xpack.rollup
+      end
+
+      def watcher
+        @watcher ||= xpack.watcher
+      end
+
+      def graph
+        @graph ||= xpack.graph
+      end
+
+      def migration
+        @migration ||= xpack.migration
+      end
+
+      def sql
+        @sql ||= xpack.sql
+      end
+
+      def deprecation
+        @deprecation ||= xpack.deprecation
       end
     end
   end
