@@ -91,13 +91,15 @@ skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/jobs_crud.yml")
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
 skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
 
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_model.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_mode.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/calendar_crud.yml")
+skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/delete_forecast.yml")
 
 
 SINGLE_TEST = nil
 # Uncomment the following line and set it to a file when a single test should be run.
 # SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
-#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/api_key/10_basic.yml"]
+#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/ml/delete_forecast.yml"]
 
 
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
