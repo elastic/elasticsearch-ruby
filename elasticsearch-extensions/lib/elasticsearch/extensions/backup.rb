@@ -182,11 +182,18 @@ module Backup
         while r = client.scroll(scroll_id: r['_scroll_id'], scroll: scroll) and not r['hits']['hits'].empty? do
           r['hits']['hits'].each do |hit|
             FileUtils.mkdir_p "#{path.join hit['_index'], hit['_type']}"
-            File.open("#{path.join hit['_index'], hit['_type'], hit['_id']}.json", 'w') do |file|
+            File.open("#{path.join hit['_index'], hit['_type'], __sanitize_filename(hit['_id'])}.json", 'w') do |file|
               file.write MultiJson.dump(hit)
             end
           end
         end
+      end
+
+      def __sanitize_filename name
+        name
+          .encode(Encoding::UTF_8, invalid: :replace, undef: :replace, replace: "�")
+          .strip
+          .tr("\u{202E}%$|:;/\t\r\n\\", "-")
       end
     end
   end
