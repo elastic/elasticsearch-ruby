@@ -14,7 +14,7 @@ module Elasticsearch
           def delete_forecast(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_forecast/#{arguments[:forecast_id]}"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_forecast/#{arguments[:forecast_id]}"
 
             valid_params = [
                 :forecast_id,
