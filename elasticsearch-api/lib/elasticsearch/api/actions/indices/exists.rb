@@ -60,11 +60,12 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:exists, [
-            :ignore_indices,
+            :local,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :local ].freeze)
+            :flat_settings,
+            :include_defaults ].freeze)
       end
     end
   end

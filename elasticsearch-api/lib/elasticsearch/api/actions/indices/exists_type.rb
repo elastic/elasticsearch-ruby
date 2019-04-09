@@ -60,7 +60,6 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:exists_type, [
-            :ignore_indices,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,

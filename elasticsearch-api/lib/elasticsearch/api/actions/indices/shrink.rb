@@ -25,11 +25,9 @@ module Elasticsearch
         # @option arguments [String] :index The name of the source index to shrink (*Required*)
         # @option arguments [String] :target The name of the target index to shrink into (*Required*)
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
-        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
-        # @option arguments [Boolean] :wait_for_no_relocating_shards Whether to wait until there are no relocating
-        #                                                            shards in the cluster
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for on the shrunken index before the operation returns.
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html
         #
@@ -52,10 +50,9 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:shrink, [
-            :wait_for_active_shards,
-            :wait_for_no_relocating_shards,
             :timeout,
-            :master_timeout ].freeze)
+            :master_timeout,
+            :wait_for_active_shards ].freeze)
       end
     end
   end

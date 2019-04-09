@@ -58,11 +58,12 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:close, [
-            :ignore_indices,
+            :timeout,
+            :master_timeout,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :timeout ].freeze)
+            :wait_for_active_shards ].freeze)
       end
     end
   end

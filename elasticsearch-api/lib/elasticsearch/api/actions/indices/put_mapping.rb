@@ -42,26 +42,15 @@ module Elasticsearch
         #       }
         #     }
         #
+        # @option arguments [List] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
+        # @option arguments [String] :type The name of the document type
         # @option arguments [Hash] :body The mapping definition (*Required*)
-        # @option arguments [List] :index A comma-separated list of index names; use `_all` or omit to
-        #                                 update the mapping for all indices
-        # @option arguments [String] :type The name of the document type (*Required*)
-        # @option arguments [Boolean] :ignore_conflicts Specify whether to ignore conflicts while updating the mapping
-        #                                               (default: false)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into
-        #                                               no concrete indices. (This includes `_all` string or when no
-        #                                               indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that
-        #                                              are open, closed or both. (options: open, closed)
-        # @option arguments [String] :ignore_indices When performed on multiple indices, allows to ignore
-        #                                            `missing` ones (options: none, missing) @until 1.0
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
-        #                                                 unavailable (missing, closed, etc)
         # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
-        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
-        #                                               with the same name across all types
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :master_timeout Timeout for connection to master
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-put-mapping/
         #
@@ -80,16 +69,12 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:put_mapping, [
-            :ignore_conflicts,
-            :ignore_indices,
-            :ignore_unavailable,
             :include_type_name,
-            :allow_no_indices,
-            :expand_wildcards,
-            :update_all_types,
-            :master_timeout,
             :timeout,
-            :include_type_name ].freeze)
+            :master_timeout,
+            :ignore_unavailable,
+            :allow_no_indices,
+            :expand_wildcards ].freeze)
       end
     end
   end

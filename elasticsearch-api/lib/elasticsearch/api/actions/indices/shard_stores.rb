@@ -27,7 +27,6 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
-        # @option arguments [String] :operation_threading
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html
         #
@@ -47,8 +46,7 @@ module Elasticsearch
             :status,
             :ignore_unavailable,
             :allow_no_indices,
-            :expand_wildcards,
-            :operation_threading ].freeze)
+            :expand_wildcards ].freeze)
       end
     end
   end

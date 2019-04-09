@@ -79,18 +79,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:analyze, [
-            :analyzer,
-            :char_filters,
-            :explain,
-            :attributes,
-            :field,
-            :filters,
-            :filter,
-            :index,
-            :prefer_local,
-            :text,
-            :tokenizer,
-            :token_filters ].freeze)
+            :index ].freeze)
       end
     end
   end

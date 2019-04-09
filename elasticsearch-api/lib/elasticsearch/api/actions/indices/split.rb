@@ -50,7 +50,6 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:split, [
-            :copy_settings,
             :timeout,
             :master_timeout,
             :wait_for_active_shards ].freeze)

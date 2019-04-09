@@ -70,7 +70,6 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:clear_cache, [
-            :field_data,
             :fielddata,
             :fields,
             :query,
@@ -78,8 +77,6 @@ module Elasticsearch
             :allow_no_indices,
             :expand_wildcards,
             :index,
-            :recycler,
-            :request_cache,
             :request ].freeze)
       end
     end
