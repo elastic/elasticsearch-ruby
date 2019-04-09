@@ -22,8 +22,9 @@ module Elasticsearch
 
         # Return information about a specific task
         #
-        # @option arguments [String] :task_id Return the task with specified id (node_id:task_number)
+        # @option arguments [String] :task_id Return the task with specified id (node_id:task_number) (*Required*)
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
+        # @option arguments [Time] :timeout Explicit operation timeout
         #
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
         #
@@ -41,7 +42,9 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:get, [ :wait_for_completion ].freeze)
+        ParamsRegistry.register(:get, [
+            :wait_for_completion,
+            :timeout ].freeze)
       end
     end
   end
