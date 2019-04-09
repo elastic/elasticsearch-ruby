@@ -11,7 +11,7 @@ module Elasticsearch
     # @since 6.1.1
     class TestFile
 
-      attr_reader :skip_features
+      attr_reader :features_to_skip
       attr_reader :name
 
       # Initialize a single test file.
@@ -23,13 +23,13 @@ module Elasticsearch
       # @param [ Array<Symbol> ] skip_features The names of features to skip.
       #
       # @since 6.1.0
-      def initialize(file_name, skip_features = [])
+      def initialize(file_name, features_to_skip = [])
         @name = file_name
         documents = YAML.load_stream(File.new(file_name))
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
         @teardown = documents.find { |doc| doc['teardown'] }
-        @skip_features = skip_features
+        @features_to_skip = REST_API_YAML_SKIP_FEATURES + features_to_skip
       end
 
       # Get a list of tests in the test file.

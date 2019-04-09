@@ -61,48 +61,82 @@ end
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
     "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
-skipped_files = []
+
+SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
+                ["#{File.expand_path(File.dirname('..'), '..')}" +
+                     "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/#{ENV['SINGLE_TEST']}"]
+              end
+
+SKIPPED_TESTS = []
 
 # Respone from Elasticsearch includes the ca.crt, so length doesn't match.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ssl/10_basic.yml")
+SKIPPED_TESTS << { file:        'ssl/10_basic.yml',
+                   description: 'Test get SSL certificates' }
 
 # Current license is basic.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/license/20_put_license.yml")
+SKIPPED_TESTS << { file:        'license/20_put_license.yml',
+                   description: '*' }
 
 # ArgumentError for empty body
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/put_watch/10_basic.yml")
+SKIPPED_TESTS << { file:        'watcher/put_watch/10_basic.yml',
+                   description: 'Test empty body is rejected by put watch' }
 
 # The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/snapshot/10_basic.yml")
+SKIPPED_TESTS << { file:        'snapshot/10_basic.yml',
+                   description: 'Create a source only snapshot and then restore it' }
 
 # The test inserts an invalid license, which makes all subsequent tests fail.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/xpack/15_basic.yml")
+SKIPPED_TESTS << { file:        'xpack/15_basic.yml',
+                   description: '*' }
 
 # 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/token/10_basic.yml")
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate user's tokens" }
 
-# Possible Docker issue. The IP from the response cannot be used to connect.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/watcher/execute_watch/60_http_input.yml")
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate realm's tokens" }
 
-# Error about creating a job that already exists.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/jobs_crud.yml")
+# Possible Docker issue. The IP from the response cannot be used to connect.HTTP input supports extracting of keys
+SKIPPED_TESTS << { file:        'watcher/execute_watch/60_http_input.yml',
+                   description: 'HTTP input supports extracting of keys' }
 
 # Searching the monitoring index returns no results.
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/10_basic.yml")
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/monitoring/bulk/20_privileges.yml")
+SKIPPED_TESTS << { file:        'monitoring/bulk/10_basic.yml',
+                   description: 'Bulk indexing of monitoring data on closed indices should throw an export exception' }
 
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/set_upgrade_mode.yml")
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/calendar_crud.yml")
-skipped_files += Dir.glob("#{YAML_FILES_DIRECTORY}/ml/delete_forecast.yml")
+# Searching the monitoring index returns no results.
+SKIPPED_TESTS << { file:        'monitoring/bulk/20_privileges.yml',
+                   description: 'Monitoring Bulk API' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to enabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to disabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade mode to disabled from enabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Attempt to open job when upgrade_mode is enabled' }
+
+# 'calendar3' in the field instead of 'calendar2'
+SKIPPED_TESTS << { file:        'ml/calendar_crud.yml',
+                   description: 'Test PageParams' }
+
+# Error about creating a job that already exists.
+SKIPPED_TESTS << { file:        'ml/jobs_crud.yml',
+                   description: 'Test close job with body params' }
 
 
-SINGLE_TEST = nil
-# Uncomment the following line and set it to a file when a single test should be run.
-# SINGLE_TEST = ["#{File.expand_path(File.dirname('..'), '..')}" +
-#  "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/ml/delete_forecast.yml"]
+# The directory of rest api YAML files.
+REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
-
-REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml") - skipped_files
+# The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
 
 
