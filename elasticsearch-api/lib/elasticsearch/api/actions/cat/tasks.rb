@@ -52,12 +52,11 @@ module Elasticsearch
             :node_id,
             :actions,
             :detailed,
-            :parent_node,
             :parent_task,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end

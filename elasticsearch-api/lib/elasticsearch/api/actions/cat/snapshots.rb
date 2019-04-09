@@ -39,7 +39,6 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-snapshots.html
         #
         def snapshots(arguments={})
-          raise ArgumentError, "Required argument 'repository' missing" if !arguments[:repository] && !arguments[:help]
           repository = arguments.delete(:repository)
 
           method = HTTP_GET
@@ -54,11 +53,13 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:snapshots, [
+            :format,
+            :ignore_unavailable,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end

@@ -45,12 +45,13 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:plugins, [
+            :format,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
