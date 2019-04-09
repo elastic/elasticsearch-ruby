@@ -30,17 +30,15 @@ module Elasticsearch
       #     client.delete index: 'myindex', type: 'mytype', id: '1', routing: 'abc123'
       #
       # @option arguments [String] :id The document ID (*Required*)
-      # @option arguments [Number,List] :ignore The list of HTTP errors to ignore; only `404` supported at the moment
       # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document (*Required*)
-      # @option arguments [String] :consistency Specific write consistency setting for the operation
-      #                                         (options: one, quorum, all)
-      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
+      # @option arguments [String] :type The type of the document
+      # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [String] :parent ID of parent document
-      # @option arguments [Boolean] :refresh Refresh the index after performing the operation
-      # @option arguments [String] :replication Specific replication type (options: sync, async)
+      # @option arguments [String] :refresh If `true` then refresh the effected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [Number] :if_seq_no only perform the delete operation if the last operation that has changed the document has the specified sequence number
+      # @option arguments [Number] :if_primary_term only perform the delete operation if the last operation that has changed the document has the specified primary term
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
@@ -70,17 +68,15 @@ module Elasticsearch
       #
       # @since 6.1.1
       ParamsRegistry.register(:delete, [
-          :consistency,
+          :wait_for_active_shards,
           :parent,
           :refresh,
-          :if_seq_no,
-          :replication,
           :routing,
           :timeout,
-          :version,
-          :version_type,
+          :if_seq_no,
           :if_primary_term,
-          :include_type_name ].freeze)
+          :version,
+          :version_type ].freeze)
     end
   end
 end

@@ -57,9 +57,11 @@ module Elasticsearch
       #       puts
       #     end
       #
+      # @option arguments [String] :scroll_id The scroll ID
       # @option arguments [Hash] :body The scroll ID if not passed by URL or query parameter.
-      # @option arguments [Duration] :scroll Specify how long a consistent view of the index
-      #                                      should be maintained for scrolled search
+      # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
+      # @option arguments [String] :scroll_id The scroll ID for scrolled search
+      # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/scan-scroll.html#scan-scroll
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-scroll.html

@@ -36,11 +36,11 @@ module Elasticsearch
       #     }
       #
       # @option arguments [String] :id Script ID (*Required*)
-      # @option arguments [String] :lang Script language
-      # @option arguments [Hash]   :body A JSON document containing the script (*Required*)
-      # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
-      # @option arguments [String] :op_type Explicit operation type (options: index, create)
+      # @option arguments [String] :context Script context
+      # @option arguments [Hash] :body The document (*Required*)
+      # @option arguments [Time] :timeout Explicit operation timeout
+      # @option arguments [Time] :master_timeout Specify timeout for connection to master
+      # @option arguments [String] :context Context name to compile script against
       #
       # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
@@ -61,9 +61,9 @@ module Elasticsearch
       #
       # @since 6.1.1
       ParamsRegistry.register(:put_script, [
-          :op_type,
-          :version,
-          :version_type ].freeze)
+          :timeout,
+          :master_timeout,
+          :context ].freeze)
     end
   end
 end

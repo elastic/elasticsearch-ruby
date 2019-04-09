@@ -44,20 +44,15 @@ module Elasticsearch
       #
       # @option arguments [String] :index The name of the index
       # @option arguments [String] :type The type of the document
-      # @option arguments [Hash] :body Document identifiers; can be either `docs` (containing full document information)
-      #                                or `ids` (when index and type is provided in the URL (*Required*)
-      # @option arguments [List] :fields A comma-separated list of fields to return in the response
-      # @option arguments [String] :parent The ID of the parent document
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on
-      #                                        (default: random)
+      # @option arguments [Hash] :body Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL. (*Required*)
+      # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
+      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
       # @option arguments [String] :routing Specific routing value
-      # @option arguments [String] :_source Specify whether the _source field should be returned,
-      #                                     or a list of fields to return
-      # @option arguments [String] :_source_excludes A list of fields to exclude from the returned _source field
-      # @option arguments [String] :_source_includes A list of fields to extract and return from the _source field
-      # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
+      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
+      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
+      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       #
       # @see http://elasticsearch.org/guide/reference/api/multi-get/
       #
@@ -80,16 +75,14 @@ module Elasticsearch
       #
       # @since 6.1.1
       ParamsRegistry.register(:mget, [
-          :fields,
-          :parent,
+          :stored_fields,
           :preference,
           :realtime,
           :refresh,
           :routing,
           :_source,
-          :_source_includes,
           :_source_excludes,
-          :stored_fields ].freeze)
+          :_source_includes ].freeze)
     end
   end
 end
