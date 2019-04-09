@@ -43,7 +43,6 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:verify_repository, [
-            :repository,
             :master_timeout,
             :timeout ].freeze)
       end
