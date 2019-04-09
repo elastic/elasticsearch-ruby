@@ -123,5 +123,9 @@ class Elasticsearch::Extensions::BackupTest < Elasticsearch::Test::UnitTestCase
 
       @subject.__perform_single
     end
+
+    should "sanitize filename" do
+      assert_equal "foo-bar-baz", @subject.__sanitize_filename("foo/bar\nbaz")
+    end
   end
 end
