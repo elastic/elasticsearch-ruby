@@ -54,6 +54,12 @@ describe 'client#index' do
     }.to raise_exception(ArgumentError)
   end
 
+  it 'requires the :type argument' do
+    expect {
+      client.index(index: 'foo')
+    }.to raise_exception(ArgumentError)
+  end
+
   it 'performs the request' do
     expect(client_double.index(index: 'foo', type: 'bar', body: { foo: 'bar' })).to eq({})
   end
@@ -136,7 +142,7 @@ describe 'client#index' do
 
   context 'when an invalid URL parameter is provided' do
 
-    it 'raises an ArgumentError' do
+    it 'raises and ArgumentError' do
       expect {
         client.index(index: 'foo', type: 'bar', id: '1', qwerty: 'yuiop')
       }.to raise_exception(ArgumentError)

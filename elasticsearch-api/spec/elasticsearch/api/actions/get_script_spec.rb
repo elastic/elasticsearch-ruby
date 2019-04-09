@@ -32,25 +32,18 @@ describe 'client#get_script' do
     { }
   end
 
-  context 'when the `lang` parameter is specificed' do
-
-    let(:url) do
-      '_scripts/groovy/foo'
-    end
-
-    it 'performs the request' do
-      expect(client_double.get_script(lang: 'groovy', id: 'foo')).to eq({})
-    end
+  let(:url) do
+    '_scripts/foo'
   end
 
-  context 'when the `lang` parameter is not specificed' do
+  context 'when the `lang` parameter is specificed' do
 
-    let(:url) do
-      '_scripts/foo'
+    let(:params) do
+      { master_timeout: '1s' }
     end
 
     it 'performs the request' do
-      expect(client_double.get_script(id: 'foo')).to eq({})
+      expect(client_double.get_script(master_timeout: '1s', id: 'foo')).to eq({})
     end
   end
 end

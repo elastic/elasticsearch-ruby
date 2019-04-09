@@ -49,21 +49,4 @@ describe 'client.cluster#state' do
       expect(client_double.cluster.state(metric: ['foo', 'bar'])).to eq({})
     end
   end
-
-  context 'when index templates are specified' do
-
-    let(:expected_args) do
-      [
-          'GET',
-          '_cluster/state',
-          { index_templates: 'foo,bar' },
-          nil,
-          nil
-      ]
-    end
-
-    it 'performs the request' do
-      expect(client_double.cluster.state(index_templates: ['foo', 'bar'])).to eq({})
-    end
-  end
 end
