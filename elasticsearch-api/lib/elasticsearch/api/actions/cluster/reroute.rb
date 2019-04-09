@@ -64,9 +64,9 @@ module Elasticsearch
         ParamsRegistry.register(:reroute, [
             :dry_run,
             :explain,
+            :retry_failed,
             :metric,
             :master_timeout,
-            :retry_failed,
             :timeout ].freeze)
       end
     end
