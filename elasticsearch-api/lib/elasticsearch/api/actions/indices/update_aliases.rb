@@ -42,8 +42,9 @@ module Elasticsearch
         #       ]
         #     }
         #
-        # @option arguments [Hash] :body The operations definition and other configuration (*Required*)
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Hash] :body The definition of `actions` to perform (*Required*)
+        # @option arguments [Time] :timeout Request timeout
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
         # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
         #
@@ -61,7 +62,9 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:update_aliases, [ :timeout ].freeze)
+        ParamsRegistry.register(:update_aliases, [
+            :timeout,
+            :master_timeout ].freeze)
       end
     end
   end

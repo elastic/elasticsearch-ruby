@@ -37,7 +37,6 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :detailed Whether to display detailed information about shard recovery
         # @option arguments [Boolean] :active_only Display only those recoveries that are currently on-going
-        # @option arguments [Boolean] :human Whether to return time and byte values in human readable format
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html
         #
@@ -55,8 +54,7 @@ module Elasticsearch
         # @since 6.1.1
         ParamsRegistry.register(:recovery, [
             :detailed,
-            :active_only,
-            :human ].freeze)
+            :active_only  ].freeze)
       end
     end
   end

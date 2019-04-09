@@ -23,20 +23,14 @@ module Elasticsearch
         # Retrieve information about one or more indices
         #
         # @option arguments [List] :index A comma-separated list of index names (*Required*)
-        # @option arguments [List] :feature A comma-separated list of features
-        #                                   (options: _settings, _mappings, _aliases]
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
+        # @option arguments [Boolean] :include_type_name Whether to add the type name to the response (default: false)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
-        # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete
-        #                                               indices (default: false)
-        # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded
-        #                                            to open or closed indices (default: open)
+        # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, none, all)
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Boolean] :human Whether to return version and creation date values in
-        #                                    human-readable format (default: false)
-        # @option arguments [Boolean] :include_defaults Whether to return all default setting
-        #                                               for each of the indices (default:false)
+        # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
         # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-get-index.html
         #
@@ -56,14 +50,14 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:get, [
+            :include_type_name,
             :local,
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
             :flat_settings,
-            :human,
             :include_defaults,
-            :include_type_name ].freeze)
+            :master_timeout  ].freeze)
       end
     end
   end

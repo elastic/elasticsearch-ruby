@@ -99,11 +99,10 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:create, [
-            :timeout,
-            :master_timeout,
-            :update_all_types,
+            :include_type_name,
             :wait_for_active_shards,
-            :include_type_name ].freeze)
+            :timeout,
+            :master_timeout ].freeze)
       end
     end
   end
