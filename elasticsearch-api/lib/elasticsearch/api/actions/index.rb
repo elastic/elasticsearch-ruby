@@ -67,36 +67,30 @@ module Elasticsearch
       #     sleep 3 and client.get index: 'myindex', type: 'mytype', id: '1'
       #     # => Elasticsearch::Transport::Transport::Errors::NotFound: [404] ...
       #
-      # @option arguments [String] :id Document ID (optional, will be auto-generated if missing)
+      # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document (*Required*)
-      # @option arguments [Hash] :body The document
-      # @option arguments [String] :consistency Explicit write consistency setting for the operation
-      #                                         (options: one, quorum, all)
-      # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
+      # @option arguments [String] :type The type of the document
+      # @option arguments [Hash] :body The document (*Required*)
+      # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [String] :op_type Explicit operation type (options: index, create)
       # @option arguments [String] :parent ID of the parent document
-      # @option arguments [String] :percolate Percolator queries to execute while indexing the document
-      # @option arguments [Boolean] :refresh Refresh the index after performing the operation
-      # @option arguments [String] :replication Specific replication type (options: sync, async)
+      # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Time] :timestamp Explicit timestamp for the document
-      # @option arguments [Duration] :ttl Expiration time for the document
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
+      # @option arguments [Number] :if_seq_no only perform the index operation if the last operation that has changed the document has the specified sequence number
+      # @option arguments [Number] :if_primary_term only perform the index operation if the last operation that has changed the document has the specified primary term
+      # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
       #
       def index(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        arguments[:type] ||= DEFAULT_DOC
-        method = arguments[:id] ? HTTP_PUT : HTTP_POST
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 Utils.__escape(arguments[:id])
-
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+        method = Elasticsearch::API::HTTP_POST
+        path   = "#{arguments[:index]}/_doc"
+        params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
         perform_request(method, path, params, body).body
       end
@@ -105,22 +99,17 @@ module Elasticsearch
       #
       # @since 6.1.1
       ParamsRegistry.register(:index, [
-          :consistency,
-          :include_type_name,
+          :wait_for_active_shards,
           :op_type,
           :parent,
-          :percolate,
-          :pipeline,
           :refresh,
-          :replication,
           :routing,
           :timeout,
-          :timestamp,
-          :ttl,
           :version,
           :version_type,
           :if_seq_no,
-          :if_primary_term ].freeze)
+          :if_primary_term,
+          :pipeline ].freeze)
     end
   end
 end

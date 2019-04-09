@@ -28,13 +28,20 @@ module Elasticsearch
       #
       def get_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
-        method = HTTP_GET
-        path   = "_scripts/#{arguments.has_key?(:lang) ? "#{arguments.delete(:lang)}/" : ''}#{arguments[:id]}"
-        params = {}
+        method = Elasticsearch::API::HTTP_GET
+        path   = "_scripts/#{arguments[:id]}"
+        params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = nil
 
         perform_request(method, path, params, body).body
       end
+
+
+      # Register this action with its valid params when the module is loaded.
+      #
+      # @since 6.1.1
+      ParamsRegistry.register(:get_script, [
+          :master_timeout ].freeze)
     end
   end
 end

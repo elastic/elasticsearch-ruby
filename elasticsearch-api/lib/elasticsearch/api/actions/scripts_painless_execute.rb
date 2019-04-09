@@ -19,23 +19,17 @@ module Elasticsearch
   module API
     module Actions
 
-      # Return a list of running benchmarks
+      # The Painless execute API allows an arbitrary script to be executed and a result to be returned.
       #
-      # @example
+      # @option arguments [Hash] :body The script to execute
       #
-      #     client.list_benchmarks
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
       #
-      # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string
-      #                                 to perform the operation on all indices
-      # @option arguments [String] :type The name of the document type
-      #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
-      #
-      def list_benchmarks(arguments={})
-        method = HTTP_GET
-        path   = "_bench"
+      def scripts_painless_execute(arguments={})
+        method = Elasticsearch::API::HTTP_GET
+        path   = "_scripts/painless/_execute"
         params = {}
-        body   = nil
+        body   = arguments[:body]
 
         perform_request(method, path, params, body).body
       end
