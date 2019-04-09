@@ -63,7 +63,7 @@ module Elasticsearch
         # -- Test helper
         copy_file "templates/ruby/test_helper.rb", @output.join('test').join('test_helper.rb') if options[:language] == 'ruby'
 
-        files = Dir.entries(@input.to_s).reject { |f| f.start_with?('.') }
+        files = Dir.entries(@input.to_s).reject { |f| f.start_with?('.') || f.start_with?('_') }
 
         files.each do |filepath|
           file    = @input.join(filepath)
