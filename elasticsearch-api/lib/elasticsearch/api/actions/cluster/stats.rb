@@ -43,7 +43,6 @@ module Elasticsearch
         # @since 6.1.1
         ParamsRegistry.register(:stats, [
             :flat_settings,
-            :human,
             :timeout ].freeze)
       end
     end

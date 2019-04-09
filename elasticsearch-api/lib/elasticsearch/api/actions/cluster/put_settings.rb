@@ -43,7 +43,10 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.1.1
-        ParamsRegistry.register(:put_settings, [ :flat_settings ].freeze)
+        ParamsRegistry.register(:put_settings, [
+            :flat_settings,
+            :master_timeout,
+            :timeout ].freeze)
       end
     end
   end

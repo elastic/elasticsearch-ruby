@@ -68,14 +68,14 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:state, [
-            :metric,
-            :index_templates,
             :local,
             :master_timeout,
             :flat_settings,
+            :wait_for_metadata_version,
+            :wait_for_timeout,
+            :ignore_unavailable,
             :allow_no_indices,
-            :expand_wildcards,
-            :ignore_unavailable ].freeze)
+            :expand_wildcards ].freeze)
       end
     end
   end

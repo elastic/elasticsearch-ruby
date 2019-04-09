@@ -46,6 +46,8 @@ module Elasticsearch
         # @since 6.1.1
         ParamsRegistry.register(:get_settings, [
             :flat_settings,
+            :master_timeout,
+            :timeout,
             :include_defaults ].freeze)
       end
     end
