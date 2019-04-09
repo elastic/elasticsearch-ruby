@@ -57,13 +57,14 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:fielddata, [
+            :format,
             :bytes,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
             :s,
+            :v,
             :fields ].freeze)
       end
     end

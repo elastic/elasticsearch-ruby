@@ -39,7 +39,8 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:help, [
-            :help ].freeze)
+            :help,
+            :s ].freeze)
       end
     end
   end

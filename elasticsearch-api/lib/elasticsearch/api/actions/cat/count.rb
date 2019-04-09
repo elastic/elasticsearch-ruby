@@ -73,12 +73,13 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:count, [
+            :format,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end

@@ -70,13 +70,14 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:nodes, [
+            :format,
             :full_id,
             :local,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end

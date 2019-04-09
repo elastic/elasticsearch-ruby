@@ -69,15 +69,14 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:thread_pool, [
-            :full_id,
+            :format,
             :size,
             :local,
-            :thread_pool_patterns,
             :master_timeout,
             :h,
             :help,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end

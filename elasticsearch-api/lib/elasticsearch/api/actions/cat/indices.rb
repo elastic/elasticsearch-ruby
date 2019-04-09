@@ -86,15 +86,16 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:indices, [
+            :format,
             :bytes,
+            :local,
+            :master_timeout,
             :h,
             :health,
             :help,
-            :local,
-            :master_timeout,
             :pri,
-            :v,
-            :s ].freeze)
+            :s,
+            :v ].freeze)
       end
     end
   end
