@@ -8,7 +8,7 @@ module Elasticsearch
 
     # Class representing a single test file, containing a setup, teardown, and multiple tests.
     #
-    # @since 6.1.1
+    # @since 6.2.0
     class TestFile
 
       attr_reader :features_to_skip
@@ -39,7 +39,7 @@ module Elasticsearch
       #
       # @return [ Array<Test> ] A list of Test objects.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def tests
         @test_definitions.collect do |test_definition|
           Test.new(self, test_definition)
@@ -55,7 +55,7 @@ module Elasticsearch
       #
       # @return [ self ]
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def setup(client)
         return unless @setup
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
@@ -74,7 +74,7 @@ module Elasticsearch
       #
       # @return [ self ]
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def teardown(client)
         return unless @teardown
         actions = @teardown['teardown'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
@@ -87,7 +87,7 @@ module Elasticsearch
         # Prepare Elasticsearch for a single test file.
         # This method deletes indices, roles, datafeeds, etc.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         def prepare(client)
           clear_indices(client)
           clear_roles(client)

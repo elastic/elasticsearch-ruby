@@ -8,7 +8,7 @@ module Elasticsearch
     #   2. Sending some request to Elasticsearch.
     #   3. Sending some request to Elasticsearch, expecting an exception.
     #
-    # @since 6.1.1
+    # @since 6.2.0
     class Action
 
       attr_reader :response
@@ -20,7 +20,7 @@ module Elasticsearch
       #
       # @param [ Hash ] definition The action definition.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def initialize(definition)
         @definition = definition
       end
@@ -37,7 +37,7 @@ module Elasticsearch
       # @return [ Elasticsearch::Client ] The client. It will be a new one than the one passed in,
       #   if the action is to set headers.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       def execute(client, test = nil)
         @definition.each.inject(client) do |client, (method_chain, args)|
           chain = method_chain.split('.')

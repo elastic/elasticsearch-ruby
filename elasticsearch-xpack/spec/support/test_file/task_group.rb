@@ -17,7 +17,7 @@ module Elasticsearch
         #   - match: { admin_role.metadata.key1:  "val1" }
         #   - match: { admin_role.metadata.key2:  "val2" }
         #
-        # @since 6.1.1
+        # @since 6.2.0
         class TaskGroup
 
           attr_reader :exception
@@ -31,7 +31,7 @@ module Elasticsearch
           #
           # @param [ Test ] test The test this task group is part of.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def initialize(test)
             @actions = []
             @exception = nil
@@ -49,7 +49,7 @@ module Elasticsearch
           #
           # @return [ self ]
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def add_action(action)
             @actions << action if ACTIONS.any? { |a| action[a] }
             self
@@ -64,7 +64,7 @@ module Elasticsearch
           #
           # @return [ self ]
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def run(client)
             # Allow the actions to be execute only once.
             return if @executed
@@ -88,7 +88,7 @@ module Elasticsearch
           #
           # @return [ Hash ] The response from the last action.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def response
             do_actions[-1].response
           end
@@ -97,7 +97,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group contains an action expected to raise an exception.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def catch_exception?
             !!expected_exception_message
           end
@@ -106,7 +106,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has match clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_match_clauses?
             !!match_clauses
           end
@@ -115,7 +115,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has match clauses on field value length.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_length_match_clauses?
             !!length_match_clauses
           end
@@ -124,7 +124,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has match clauses on a field value being true.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_true_clauses?
             !!true_clauses
           end
@@ -133,7 +133,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has match clauses on a field value being false.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_false_clauses?
             !!false_clauses
           end
@@ -142,7 +142,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has clauses on a field value being gte.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_gte_clauses?
             !!gte_clauses
           end
@@ -151,7 +151,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has clauses on a field value being gt.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_gt_clauses?
             !!gt_clauses
           end
@@ -160,7 +160,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has clauses on a field value being lte.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_lte_clauses?
             !!lte_clauses
           end
@@ -169,7 +169,7 @@ module Elasticsearch
           #
           # @return [ true, false ] If the task group has clauses on a field value being lt.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def has_lt_clauses?
             !!lt_clauses
           end
@@ -178,7 +178,7 @@ module Elasticsearch
           #
           # @return [ String ] The expected exception message.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def expected_exception_message
             @expected_exception_message ||= begin
               if do_definitions =  @actions.group_by { |a| a.keys.first }['do']
@@ -193,7 +193,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The match clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def match_clauses
             @match_actions ||= @actions.group_by { |a| a.keys.first }['match']
           end
@@ -202,7 +202,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The true match clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def true_clauses
             @true_clauses ||= @actions.group_by { |a| a.keys.first }['is_true']
           end
@@ -211,7 +211,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The false match clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def false_clauses
             @false_clauses ||= @actions.group_by { |a| a.keys.first }['is_false']
           end
@@ -220,7 +220,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The gte clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def gte_clauses
             @gte_clauses ||= @actions.group_by { |a| a.keys.first }['gte']
           end
@@ -229,7 +229,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The gt clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def gt_clauses
             @gt_clauses ||= @actions.group_by { |a| a.keys.first }['gt']
           end
@@ -238,7 +238,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The lte clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def lte_clauses
             @lte_clauses ||= @actions.group_by { |a| a.keys.first }['lte']
           end
@@ -247,7 +247,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The lt clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def lt_clauses
             @lt_clauses ||= @actions.group_by { |a| a.keys.first }['lt']
           end
@@ -256,7 +256,7 @@ module Elasticsearch
           #
           # @return [ Array<Hash> ] The field length match clauses.
           #
-          # @since 6.1.1
+          # @since 6.2.0
           def length_match_clauses
             @match_length ||= @actions.group_by { |a| a.keys.first }['length']
           end
