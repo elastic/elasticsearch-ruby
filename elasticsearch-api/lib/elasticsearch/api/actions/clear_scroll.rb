@@ -28,7 +28,7 @@ module Elasticsearch
       #
       def clear_scroll(arguments={})
         method = Elasticsearch::API::HTTP_DELETE
-        path   = "_search/scroll/#{arguments[:scroll_id]}"
+        path   = Utils.__pathify '_search/scroll', Utils.__listify(arguments.delete(:scroll_id))
         params = {}
         body   = arguments[:body]
 

@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
+#
 require 'spec_helper'
 
 describe 'client.indices#clear_cache' do
@@ -59,11 +59,11 @@ describe 'client.indices#clear_cache' do
   context 'when params are specified' do
 
     let(:params) do
-      { field_data: true }
+      { fielddata: true }
     end
 
     it 'performs the request' do
-      expect(client_double.indices.clear_cache(field_data: true)).to eq({})
+      expect(client_double.indices.clear_cache(fielddata: true)).to eq({})
     end
   end
 

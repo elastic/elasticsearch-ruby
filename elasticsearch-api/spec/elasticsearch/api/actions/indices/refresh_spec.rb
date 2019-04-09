@@ -78,21 +78,6 @@ describe 'client.cluster#refresh' do
     end
   end
 
-  context 'when parameters are specified' do
-
-    let(:params) do
-      { ignore_indices: 'missing' }
-    end
-
-    let(:url) do
-      'foo/_refresh'
-    end
-
-    it 'performs the request' do
-      expect(client_double.indices.refresh(index: 'foo', ignore_indices: 'missing')).to eq({})
-    end
-  end
-
   context 'when the path needs to be URL-escaped' do
 
     let(:url) do

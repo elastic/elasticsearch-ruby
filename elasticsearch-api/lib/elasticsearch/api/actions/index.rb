@@ -1,20 +1,3 @@
-# Licensed to Elasticsearch B.V. under one or more contributor
-# license agreements. See the NOTICE file distributed with
-# this work for additional information regarding copyright
-# ownership. Elasticsearch B.V. licenses this file to you under
-# the Apache License, Version 2.0 (the "License"); you may
-# not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#	http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
 module Elasticsearch
   module API
     module Actions
@@ -57,7 +40,7 @@ module Elasticsearch
       #     client.cluster.put_settings body: { transient: { 'indices.ttl.interval' => '1s' } }
       #
       #     # Enable the `_ttl` property for all types within the index
-      #     client.indices.create index: 'myindex', body: { mappings: { properties: { _ttl: { enabled: true } }  } }
+      #     client.indices.create index: 'myindex', body: { mappings: { mytype: { _ttl: { enabled: true } }  } }
       #
       #     client.index index: 'myindex', type: 'mytype', id: '1', body: { title: 'TEST' }, ttl: '5s'
       #
@@ -69,7 +52,7 @@ module Elasticsearch
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document
+      # @option arguments [String] :type The type of the document (*Required*)
       # @option arguments [Hash] :body The document (*Required*)
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [String] :op_type Explicit operation type (options: index, create)
@@ -87,17 +70,21 @@ module Elasticsearch
       #
       def index(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-        method = Elasticsearch::API::HTTP_POST
-        path   = "#{arguments[:index]}/_doc"
-        params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        raise ArgumentError, "Required argument 'type' missing"  unless arguments[:type]
+        method = arguments[:id] ? HTTP_PUT : HTTP_POST
+        path   = Utils.__pathify Utils.__escape(arguments[:index]),
+                                 Utils.__escape(arguments[:type]),
+                                 Utils.__escape(arguments[:id])
+
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = arguments[:body]
+
         perform_request(method, path, params, body).body
       end
 
       # Register this action with its valid params when the module is loaded.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       ParamsRegistry.register(:index, [
           :wait_for_active_shards,
           :op_type,
