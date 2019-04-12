@@ -57,7 +57,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -103,7 +102,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
