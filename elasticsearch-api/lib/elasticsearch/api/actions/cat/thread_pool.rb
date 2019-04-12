@@ -76,7 +76,8 @@ module Elasticsearch
             :h,
             :help,
             :s,
-            :v ].freeze)
+            :v,
+            :thread_pool_patterns].freeze)
       end
     end
   end
