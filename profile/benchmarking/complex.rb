@@ -36,8 +36,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_documents(opts = {})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         slices = dataset_slices
 
@@ -48,18 +47,18 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              slices.each do |slice|
-                client.bulk(body: slice)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                slices.each do |slice|
+                  client.bulk(body: slice)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: File.basename(DATASET_FILE),
                     dataset_size: ObjectSpace.memsize_of(dataset),
@@ -76,8 +75,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_documents(opts = {})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
 
         with_cleanup do
@@ -95,16 +93,16 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              client.search(request)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                client.search(request)
+              end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: File.basename(DATASET_FILE),
                     dataset_size: ObjectSpace.memsize_of(dataset),

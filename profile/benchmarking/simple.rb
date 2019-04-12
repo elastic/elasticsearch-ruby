@@ -38,24 +38,22 @@ module Elasticsearch
       #
       # @since 7.0.0
       def ping(opts = {})
-        start = 0
-        end_time = 0
         results = []
         action_iterations = 1_000
 
         warmup_repetitions.times { client.ping }
 
-        start = current_time
-        results = measured_repetitions.times.collect do
-          Benchmark.realtime do
-            action_iterations.times do
-              client.ping
+        duration = Benchmark.realtime do
+          results = measured_repetitions.times.collect do
+            Benchmark.realtime do
+              action_iterations.times do
+                client.ping
+              end
             end
           end
         end
-        end_time = current_time
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     action_iterations: action_iterations }
         index_results!(results, options)
@@ -72,8 +70,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_index(opts = {})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 10
 
@@ -82,19 +79,19 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = current_time
-          results = measured_repetitions.times.collect do |i|
-            index_names = action_iterations.times.collect { |j| (measured_repetitions*i) + j }
-            Benchmark.realtime do
-              action_iterations.times do |j|
-                client.indices.create(index: "benchmarking-#{index_names[j]}")
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do |i|
+              index_names = action_iterations.times.collect { |j| (measured_repetitions*i) + j }
+              Benchmark.realtime do
+                action_iterations.times do |j|
+                  client.indices.create(index: "benchmarking-#{index_names[j]}")
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     action_iterations: action_iterations }
         index_results!(results, options)
@@ -111,8 +108,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_document_small(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         document = small_document
         action_iterations = 10
@@ -122,18 +118,18 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.create(index: INDEX, body: document)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.create(index: INDEX, body: document)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
@@ -153,8 +149,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_document_large(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         document = large_document
         action_iterations = 1_000
@@ -164,18 +159,18 @@ module Elasticsearch
         end
 
         with_cleanup do
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.create(index: INDEX, body: document)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.create(index: INDEX, body: document)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
@@ -195,8 +190,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_small(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 1_000
 
@@ -206,18 +200,18 @@ module Elasticsearch
             client.get(index: INDEX, id: id)
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.get(index: INDEX, id: id)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.get(index: INDEX, id: id)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
@@ -237,8 +231,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_large(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 1_000
 
@@ -248,18 +241,18 @@ module Elasticsearch
             client.get(index: INDEX, id: id)
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.get(index: INDEX, id: id)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.get(index: INDEX, id: id)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
@@ -279,8 +272,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_small(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 1_000
 
@@ -298,18 +290,18 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.search(request)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.search(request)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
@@ -329,8 +321,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_large(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 1_000
 
@@ -347,18 +338,18 @@ module Elasticsearch
             client.search(request)
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do
-                client.search(request)
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do
+                  client.search(request)
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'large_document',
                     dataset_size: ObjectSpace.memsize_of(large_document),
@@ -378,8 +369,7 @@ module Elasticsearch
       #
       # @since 7.0.0
       def update_document(opts={})
-        start = 0
-        end_time = 0
+        duration = 0
         results = []
         action_iterations = 1_000
 
@@ -394,20 +384,20 @@ module Elasticsearch
                           body: { doc: { field:  "#{document[field]}-#{i}" } })
           end
 
-          start = current_time
-          results = measured_repetitions.times.collect do
-            Benchmark.realtime do
-              action_iterations.times do |i|
-                client.update(index: INDEX,
-                              id: id,
-                              body: { doc: { field:  "#{document[field]}-#{i}" } })
+          duration = Benchmark.realtime do
+            results = measured_repetitions.times.collect do
+              Benchmark.realtime do
+                action_iterations.times do |i|
+                  client.update(index: INDEX,
+                                id: id,
+                                body: { doc: { field:  "#{document[field]}-#{i}" } })
+                end
               end
             end
           end
-          end_time = current_time
         end
 
-        options = { duration: end_time - start,
+        options = { duration: duration,
                     operation: __method__,
                     dataset: 'small_document',
                     dataset_size: ObjectSpace.memsize_of(small_document),
