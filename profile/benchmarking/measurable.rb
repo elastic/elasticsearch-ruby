@@ -282,11 +282,6 @@ module Elasticsearch
           Elasticsearch::Client.new(opts)
         end
       end
-
-      def current_time
-        # Use monotonic time to provide problems with leap seconds, time changes, syncs etc.
-        Process.clock_gettime(Process::CLOCK_MONOTONIC)
-      end
     end
   end
 end
