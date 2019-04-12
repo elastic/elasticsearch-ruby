@@ -70,7 +70,6 @@ module Elasticsearch
       #
       # @since 7.0.0
       def create_index(opts = {})
-        duration = 0
         results = []
         action_iterations = 10
 
@@ -78,8 +77,8 @@ module Elasticsearch
           client.indices.create(index: "benchmarking-#{Time.now.to_f}")
         end
 
-        with_cleanup do
-          duration = Benchmark.realtime do
+        duration = with_cleanup do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do |i|
               index_names = action_iterations.times.collect { |j| (measured_repetitions*i) + j }
               Benchmark.realtime do
@@ -108,7 +107,6 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_document_small(opts={})
-        duration = 0
         results = []
         document = small_document
         action_iterations = 10
@@ -117,8 +115,8 @@ module Elasticsearch
           client.create(index: INDEX, body: document)
         end
 
-        with_cleanup do
-          duration = Benchmark.realtime do
+        duration = with_cleanup do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -149,7 +147,6 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_document_large(opts={})
-        duration = 0
         results = []
         document = large_document
         action_iterations = 1_000
@@ -158,8 +155,8 @@ module Elasticsearch
           client.create(index: INDEX, body: document)
         end
 
-        with_cleanup do
-          duration = Benchmark.realtime do
+        duration = with_cleanup do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -190,17 +187,16 @@ module Elasticsearch
       #
       # @since 7.0.0
       def get_document_small(opts={})
-        duration = 0
         results = []
         action_iterations = 1_000
 
-        with_cleanup do
+        duration = with_cleanup do
           id = client.create(index: INDEX, body: small_document)['_id']
           warmup_repetitions.times do
             client.get(index: INDEX, id: id)
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -235,13 +231,13 @@ module Elasticsearch
         results = []
         action_iterations = 1_000
 
-        with_cleanup do
+        duration = with_cleanup do
           id = client.create(index: INDEX, body: large_document)['_id']
           warmup_repetitions.times do
             client.get(index: INDEX, id: id)
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -276,7 +272,7 @@ module Elasticsearch
         results = []
         action_iterations = 1_000
 
-        with_cleanup do
+        duration = with_cleanup do
           client.create(index: INDEX, body: small_document)
           search_criteria = { match: { cuisine: 'mexican' } }
           request = { body: { query: search_criteria } }
@@ -290,7 +286,7 @@ module Elasticsearch
             client.search(request)
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -321,11 +317,10 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_document_large(opts={})
-        duration = 0
         results = []
         action_iterations = 1_000
 
-        with_cleanup do
+        duration = with_cleanup do
           client.create(index: INDEX, body: large_document)
           search_criteria = { match: { 'user.lang': 'en' } }
           request = { body: { query: search_criteria } }
@@ -338,7 +333,7 @@ module Elasticsearch
             client.search(request)
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do
@@ -369,11 +364,10 @@ module Elasticsearch
       #
       # @since 7.0.0
       def update_document(opts={})
-        duration = 0
         results = []
         action_iterations = 1_000
 
-        with_cleanup do
+        duration = with_cleanup do
           document = small_document
           id = client.create(index: INDEX, body: document)['_id']
           field = document.find { |k,v| k != 'id' && v.is_a?(String) }.first
@@ -384,7 +378,7 @@ module Elasticsearch
                           body: { doc: { field:  "#{document[field]}-#{i}" } })
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 action_iterations.times do |i|

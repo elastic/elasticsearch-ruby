@@ -36,7 +36,6 @@ module Elasticsearch
       #
       # @since 7.0.0
       def index_documents(opts = {})
-        duration = 0
         results = []
         slices = dataset_slices
 
@@ -46,8 +45,8 @@ module Elasticsearch
           end
         end
 
-        with_cleanup do
-          duration = Benchmark.realtime do
+        duration = with_cleanup do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 slices.each do |slice|
@@ -75,10 +74,9 @@ module Elasticsearch
       #
       # @since 7.0.0
       def search_documents(opts = {})
-        duration = 0
         results = []
 
-        with_cleanup do
+        duration = with_cleanup do
           slices = dataset_slices
           sample_slice = slices.collect do |slice|
             client.bulk(body: slice)
@@ -93,7 +91,7 @@ module Elasticsearch
             client.search(request)
           end
 
-          duration = Benchmark.realtime do
+          Benchmark.realtime do
             results = measured_repetitions.times.collect do
               Benchmark.realtime do
                 client.search(request)
