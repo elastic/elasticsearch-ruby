@@ -31,9 +31,9 @@ module Elasticsearch
             nodes = transport.perform_request('GET', '_nodes/http', {}, nil, nil,
                                               reload_on_failure: false).body
 
-            hosts = nodes['nodes'].map do |id,info|
+            hosts = nodes['nodes'].map do |id, info|
               if info[PROTOCOL]
-                host, port = info[PROTOCOL]['publish_address'].split(':')
+                host, port = parse_publish_address(info[PROTOCOL]['publish_address'])
 
                 { :id =>      id,
                   :name =>    info['name'],
@@ -47,6 +47,29 @@ module Elasticsearch
 
             hosts.shuffle! if transport.options[:randomize_hosts]
             hosts
+          end
+        end
+
+        private
+
+        def parse_publish_address(publish_address)
+          # publish_address is in the format hostname/ip:port
+          if publish_address =~ /\//
+            parts = publish_address.partition('/')
+            [ parts[0], parse_address_port(parts[2])[1] ]
+          else
+            parse_address_port(publish_address)
+          end
+        end
+
+        def parse_address_port(publish_address)
+          # address is ipv6
+          if publish_address =~ /[\[\]]/
+            if parts = publish_address.match(/\A\[(.+)\](?::(\d+))?\z/)
+              [ parts[1], parts[2] ]
+            end
+          else
+            publish_address.split(':')
           end
         end
       end
