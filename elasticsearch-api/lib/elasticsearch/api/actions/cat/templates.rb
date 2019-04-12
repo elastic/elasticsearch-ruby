@@ -46,6 +46,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:templates, [
+            :name,
             :format,
             :local,
             :master_timeout,
