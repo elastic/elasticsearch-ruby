@@ -83,15 +83,15 @@ module Elasticsearch
 
         with_cleanup do
           start = current_time
-          results = measured_repetitions.times.collect do
+          results = measured_repetitions.times.collect do |i|
+            index_names = action_iterations.times.collect { |j| (measured_repetitions*i) + j }
             Benchmark.realtime do
-              action_iterations.times do
-                client.indices.create(index: "benchmarking-#{Time.now.to_f}")
+              action_iterations.times do |j|
+                client.indices.create(index: "benchmarking-#{index_names[j]}")
               end
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -131,7 +131,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -174,7 +173,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -217,7 +215,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -337,7 +334,7 @@ module Elasticsearch
         results = []
         action_iterations = 1_000
 
-        results = with_cleanup do
+        with_cleanup do
           client.create(index: INDEX, body: large_document)
           search_criteria = { match: { 'user.lang': 'en' } }
           request = { body: { query: search_criteria } }
@@ -359,7 +356,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
@@ -409,7 +405,6 @@ module Elasticsearch
             end
           end
           end_time = current_time
-          results
         end
 
         options = { duration: end_time - start,
