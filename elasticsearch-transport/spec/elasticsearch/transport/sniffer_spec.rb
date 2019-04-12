@@ -229,6 +229,25 @@ describe Elasticsearch::Transport::Transport::Sniffer do
       it 'correctly parses the port' do
         expect(hosts[0][:port]).to eq('9250')
       end
+
+      context 'when the address is IPv6' do
+
+        let(:publish_address) do
+          'example.com/[::1]:9250'
+        end
+
+        it 'parses the response' do
+          expect(hosts.size).to eq(1)
+        end
+
+        it 'uses the hostname' do
+          expect(hosts[0][:host]).to eq('example.com')
+        end
+
+        it 'correctly parses the port' do
+          expect(hosts[0][:port]).to eq('9250')
+        end
+      end
     end
 
     context 'when the address is IPv6' do
