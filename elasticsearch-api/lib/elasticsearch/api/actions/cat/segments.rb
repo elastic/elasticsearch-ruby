@@ -48,6 +48,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:segments, [
+            :index,
             :format,
             :bytes,
             :h,
