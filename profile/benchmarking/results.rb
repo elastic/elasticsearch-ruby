@@ -111,7 +111,7 @@ module Elasticsearch
           category: category,
           action: action,
           duration: duration,
-          stastistics: statistics_doc,
+          statistics: statistics_doc,
           repetitions: repetitions_doc }.tap do |doc|
             doc.merge!(dataset: dataset,
                        dataset_details: dataset_details) if dataset
