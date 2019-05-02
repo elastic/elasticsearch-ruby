@@ -1,3 +1,29 @@
+## 6.3.1
+
+### API
+
+* Add delete_template back
+* Add field_stats back
+* Add get_template back
+* Add indices/delete_mapping back
+* Add indices/delete_warmer back
+* Add indices/get_aliases back
+* Add indices/get_warmer back
+* Add indices/optimize back
+* Add indices/put_warmer back
+* Add indices/seal back
+* Add indices/snapshot_index back
+* Add indices/status back
+* Add list_benchmarks back
+* Add mpercolate back
+* Add nodes/shutdown back
+* Add percolate back
+* Add put_template back
+* Add remote/info back
+* Add search_exists back
+* Add suggest back
+* Add mlt back
+
 ## 6.3.0
 
 ### API
