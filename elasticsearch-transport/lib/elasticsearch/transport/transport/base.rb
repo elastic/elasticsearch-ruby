@@ -284,7 +284,7 @@ module Elasticsearch
             __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
 
           rescue Elasticsearch::Transport::Transport::ServerError => e
-            if @retry_on_status.include?(response.status)
+            if response && @retry_on_status.include?(response.status)
               log_warn "[#{e.class}] Attempt #{tries} to get response from #{url}"
               if tries <= max_retries
                 retry
