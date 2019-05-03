@@ -6,7 +6,7 @@ please refer to it, unless you want to use this library standalone.**
 ----
 
 The `elasticsearch-transport` library provides a low-level Ruby client for connecting
-to an [Elasticsearch](http://elasticsearch.org) cluster.
+to an [Elasticsearch](http://elasticsearch.com) cluster.
 
 It handles connecting to multiple nodes in the cluster, rotating across connections,
 logging and tracing requests and responses, maintaining failed connections,
@@ -194,7 +194,7 @@ Elasticsearch by default dynamically discovers new nodes in the cluster. You can
 in the client, and periodically check for new nodes to spread the load.
 
 To retrieve and use the information from the
-[_Nodes Info API_](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/)
+[_Nodes Info API_](http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html)
 on every 10,000th request:
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
@@ -460,16 +460,19 @@ can use Ruby 2.x syntax and features.
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2013 Elasticsearch <http://www.elasticsearch.org>
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
+    Licensed to Elasticsearch B.V. under one or more contributor
+    license agreements. See the NOTICE file distributed with
+    this work for additional information regarding copyright
+    ownership. Elasticsearch B.V. licenses this file to you under
+    the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+    
+    	http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
