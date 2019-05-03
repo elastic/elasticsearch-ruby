@@ -1,7 +1,7 @@
 # Elasticsearch::DSL
 
 The `elasticsearch-dsl` library provides a Ruby API for
-the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html).
+the [Elasticsearch Query DSL](http://www.elasticsearch.com/guide/en/elasticsearch/reference/current/query-dsl.html).
 
 The library is compatible with Ruby 1.9 or higher and Elasticsearch 1.0 and higher.
 
@@ -26,7 +26,7 @@ or install it from a source code checkout:
 
 The library is designed as a group of standalone Ruby modules, classes and DSL methods,
 which provide an idiomatic way to build complex
-[search definitions](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html).
+[search definitions](http://www.elasticsearch.com/guide/en/elasticsearch/reference/current/search-request-body.html).
 
 Let's have a simple example using the declarative variant:
 
@@ -113,7 +113,7 @@ An example of a complex search definition is below.
 **NOTE:** In order to run the example, you have to allow restoring from the `data.elasticsearch.org` repository by adding the following configuration line to your `elasticsearch.yml`:
 
 ```yaml
-repositories.url.allowed_urls: ["https://s3.amazonaws.com/data.elasticsearch.org/*"]
+repositories.url.allowed_urls: ["https://s3.amazonaws.com/data.elasticsearch.com/*"]
 ```
 
 ```ruby
@@ -130,8 +130,8 @@ puts "Recovering the 'bicycles.stackexchange.com' index...".yellow
 
 client.indices.delete index: 'bicycles.stackexchange.com', ignore: 404
 
-client.snapshot.create_repository repository: 'data.elasticsearch.org', body: { type: 'url', settings: { url: 'https://s3.amazonaws.com/data.elasticsearch.org/bicycles.stackexchange.com/' } }
-client.snapshot.restore repository: 'data.elasticsearch.org', snapshot: 'bicycles.stackexchange.com', body: { indices: 'bicycles.stackexchange.com' }
+client.snapshot.create_repository repository: 'data.elasticsearch.com', body: { type: 'url', settings: { url: 'https://s3.amazonaws.com/data.elasticsearch.com/bicycles.stackexchange.com/' } }
+client.snapshot.restore repository: 'data.elasticsearch.com', snapshot: 'bicycles.stackexchange.com', body: { indices: 'bicycles.stackexchange.com' }
 until client.cluster.health(level: 'indices')['indices']['bicycles.stackexchange.com']['status'] == 'green'
   r = client.indices.recovery(index: 'bicycles.stackexchange.com', human: true)['bicycles.stackexchange.com']['shards'][0] rescue nil
   print "\r#{r['index']['size']['recovered'] rescue '0b'} of #{r['index']['size']['total'] rescue 'N/A'}".ljust(52).gray
@@ -263,16 +263,19 @@ see instructions in the main [README](../README.md#development).
 
 This software is licensed under the Apache 2 license, quoted below.
 
-    Copyright (c) 2015 Elasticsearch <http://www.elasticsearch.org>
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
+    Licensed to Elasticsearch B.V. under one or more contributor
+    license agreements. See the NOTICE file distributed with
+    this work for additional information regarding copyright
+    ownership. Elasticsearch B.V. licenses this file to you under
+    the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License.
     You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+    
+    	http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
