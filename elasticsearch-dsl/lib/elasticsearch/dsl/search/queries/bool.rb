@@ -58,21 +58,21 @@ module Elasticsearch
 
           def must(*args, &block)
             @hash[name][:must] ||= []
-            value = Query.new(*args, &block).to_hash
+            value = args.empty? ? Query.new(*args, &block).to_hash : args.first.to_hash
             @hash[name][:must].push(value).flatten! unless @hash[name][:must].include?(value)
             self
           end
 
           def must_not(*args, &block)
             @hash[name][:must_not] ||= []
-            value = Query.new(*args, &block).to_hash
+            value = args.empty? ? Query.new(*args, &block).to_hash : args.first.to_hash
             @hash[name][:must_not].push(value).flatten! unless @hash[name][:must_not].include?(value)
             self
           end
 
           def should(*args, &block)
             @hash[name][:should] ||= []
-            value = Query.new(*args, &block).to_hash
+            value = args.empty? ? Query.new(*args, &block).to_hash : args.first.to_hash
             @hash[name][:should].push(value).flatten! unless @hash[name][:should].include?(value)
             self
           end

@@ -32,6 +32,64 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
 
   describe '#initialize' do
 
+    context 'when an object instance is provided' do
+
+      let(:search) do
+        described_class.new.must(Elasticsearch::DSL::Search::Queries::Match.new foo: 'bar')
+      end
+
+      it 'executes the block' do
+        expect(search.to_hash).to eq(bool: {must: [ {match: { foo: 'bar' }} ] })
+      end
+
+      context 'when multiple option methods are called' do
+
+        let(:search) do
+          described_class.new do
+            should(Elasticsearch::DSL::Search::Queries::Term.new(tag: 'wow'))
+            should(Elasticsearch::DSL::Search::Queries::Term.new(tag: 'elasticsearch'))
+
+            minimum_should_match 1
+            boost 1.0
+          end
+        end
+
+        it 'defines all the options' do
+          expect(search.to_hash).to eq(bool: {
+            minimum_should_match: 1,
+            boost: 1.0,
+            should:     [ {term: { tag: 'wow' }}, {term: { tag: 'elasticsearch' }} ]})
+        end
+      end
+
+      context 'when multiple conditions are provided' do
+
+        let(:search) do
+          described_class.new do
+            must(Elasticsearch::DSL::Search::Queries::Match.new foo: 'bar')
+            must(Elasticsearch::DSL::Search::Queries::Match.new moo: 'bam')
+
+            should(Elasticsearch::DSL::Search::Queries::Match.new xoo: 'bax')
+            should(Elasticsearch::DSL::Search::Queries::Match.new zoo: 'baz')
+          end
+        end
+
+        it 'applies each condition' do
+          expect(search.to_hash).to eq(bool:
+                                         { must:     [ {match: { foo: 'bar' }}, {match: { moo: 'bam' }} ],
+                                           should:   [ {match: { xoo: 'bax' }}, {match: { zoo: 'baz' }} ]
+                                         })
+        end
+
+        context 'when #to_hash is called more than once' do
+
+          it 'does not alter the hash' do
+            expect(search.to_hash).to eq(search.to_hash)
+          end
+        end
+      end
+    end
+
     context 'when a block is provided' do
 
       let(:search) do
