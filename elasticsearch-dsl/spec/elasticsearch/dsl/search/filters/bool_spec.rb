@@ -32,6 +32,56 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
 
   describe '#initialize' do
 
+    context 'when an object instance is provided' do
+
+      let(:search) do
+        described_class.new.must( Elasticsearch::DSL::Search::Queries::Term.new foo: 'bar')
+      end
+
+      it 'executes the block' do
+        expect(search.to_hash).to eq(bool: { must: [ { term: { foo: 'bar' } } ] })
+      end
+
+      context 'when the block calls multiple methods' do
+
+        let(:search) do
+          described_class.new do
+            must(Elasticsearch::DSL::Search::Queries::Term.new foo: 'bar')
+            must_not(Elasticsearch::DSL::Search::Queries::Term.new moo: 'bam')
+            should(Elasticsearch::DSL::Search::Queries::Term.new xoo: 'bax')
+          end
+        end
+
+        it 'executes the block' do
+          expect(search.to_hash).to eq(bool:
+                                         { must:     [ { term: { foo: 'bar' } } ],
+                                           must_not: [ { term: { moo: 'bam' } } ],
+                                           should:   [ { term: { xoo: 'bax' } } ]
+                                         })
+        end
+      end
+
+      context 'when the block calls multiple conditions' do
+
+        let(:search) do
+          described_class.new do
+            must(Elasticsearch::DSL::Search::Queries::Term.new foo: 'bar')
+            must(Elasticsearch::DSL::Search::Queries::Term.new moo: 'bam')
+
+            should(Elasticsearch::DSL::Search::Queries::Term.new xoo: 'bax')
+            should(Elasticsearch::DSL::Search::Queries::Term.new zoo: 'baz')
+          end
+        end
+
+        it 'executes the block' do
+          expect(search.to_hash).to eq(bool:
+                                         { must:     [ { term: { foo: 'bar' } }, { term: { moo: 'bam' } } ],
+                                           should:   [ { term: { xoo: 'bax' } }, { term: { zoo: 'baz' } } ]
+                                         })
+        end
+      end
+    end
+
     context 'when a hash is provided' do
 
       let(:search) do
