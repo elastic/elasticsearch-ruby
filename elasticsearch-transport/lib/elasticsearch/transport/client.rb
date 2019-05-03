@@ -195,12 +195,20 @@ module Elasticsearch
         when String
           if host =~ /^[a-z]+\:\/\//
             uri = URI.parse(host)
+
+            # Handle when port is not specified
+            if host =~ /^#{uri.scheme}:\/\/#{uri.host}$/
+              port = nil
+            else
+              port = uri.port
+            end
+
             { :scheme => uri.scheme,
               :user => uri.user,
               :password => uri.password,
               :host => uri.host,
               :path => uri.path,
-              :port => uri.port }
+              :port => port }
           else
             host, port = host.split(':')
             { :host => host,
