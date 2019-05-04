@@ -301,6 +301,46 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
+      context 'when there is one host with a protocol and no port' do
+
+        let(:host) do
+          ['http://myhost']
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('myhost')
+          expect(hosts[0][:protocol]).to eq('http')
+          expect(hosts[0][:port]).to be(9200)
+        end
+      end
+
+      context 'when there is one host with a scheme, protocol and no port' do
+
+        let(:host) do
+          ['https://myhost']
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('myhost')
+          expect(hosts[0][:protocol]).to eq('https')
+          expect(hosts[0][:port]).to be(9200)
+        end
+      end
+
+      context 'when there is one host with a scheme, protocol and no port' do
+
+        let(:host) do
+          ['http://myhost/foo/bar']
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('myhost')
+          expect(hosts[0][:protocol]).to eq('http')
+          expect(hosts[0][:port]).to be(9200)
+          expect(hosts[0][:path]).to eq("/foo/bar")
+        end
+      end
+
       context 'when there is more than one host' do
 
         let(:host) do
