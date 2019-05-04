@@ -197,7 +197,7 @@ module Elasticsearch
             uri = URI.parse(host)
 
             # Handle when port is not specified
-            if host =~ /^#{uri.scheme}:\/\/#{uri.host}$/
+            if uri.port == uri.default_port
               port = nil
             else
               port = uri.port
