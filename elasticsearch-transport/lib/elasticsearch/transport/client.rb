@@ -194,17 +194,16 @@ module Elasticsearch
         host_parts = case host
         when String
           if host =~ /^[a-z]+\:\/\//
-            uri = URI.parse(host)
-
-            # Handle when port is not specified
-            port = uri.port unless uri.port == uri.default_port
+            # Construct a new `URI::Generic` directly from the array returned by URI::split.
+            # This avoids `URI::HTTP` and `URI::HTTPS`, which supply default ports.
+            uri = URI::Generic.new(*URI.split(host))
 
             { :scheme => uri.scheme,
               :user => uri.user,
               :password => uri.password,
               :host => uri.host,
               :path => uri.path,
-              :port => port }
+              :port => uri.port }
           else
             host, port = host.split(':')
             { :host => host,
