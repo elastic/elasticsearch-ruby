@@ -327,7 +327,7 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
-      context 'when there is one host with a scheme, protocol and no port' do
+      context 'when there is one host with a scheme, protocol, path, and no port' do
 
         let(:host) do
           ['http://myhost/foo/bar']

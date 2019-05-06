@@ -197,11 +197,7 @@ module Elasticsearch
             uri = URI.parse(host)
 
             # Handle when port is not specified
-            if uri.port == uri.default_port
-              port = nil
-            else
-              port = uri.port
-            end
+            port = uri.port unless uri.port == uri.default_port
 
             { :scheme => uri.scheme,
               :user => uri.user,
