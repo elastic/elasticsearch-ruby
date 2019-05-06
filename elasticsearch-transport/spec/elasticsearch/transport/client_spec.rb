@@ -314,6 +314,26 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
+      context 'when there is one host with a protocol and the default http port explicitly provided' do
+        let(:host) do
+          ['http://myhost:80']
+        end
+
+        it 'respects the explicit port' do
+          expect(hosts[0][:port]).to be(80)
+        end
+      end
+
+      context 'when there is one host with a protocol and the default https port explicitly provided' do
+        let(:host) do
+          ['https://myhost:443']
+        end
+
+        it 'respects the explicit port' do
+          expect(hosts[0][:port]).to be(443)
+        end
+      end
+
       context 'when there is one host with a scheme, protocol and no port' do
 
         let(:host) do
