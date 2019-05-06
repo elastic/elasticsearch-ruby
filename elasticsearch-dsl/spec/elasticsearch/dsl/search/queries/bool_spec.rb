@@ -38,7 +38,7 @@ describe Elasticsearch::DSL::Search::Queries::Bool do
         described_class.new.must(Elasticsearch::DSL::Search::Queries::Match.new foo: 'bar')
       end
 
-      it 'executes the block' do
+      it 'applies the condition' do
         expect(search.to_hash).to eq(bool: {must: [ {match: { foo: 'bar' }} ] })
       end
 
