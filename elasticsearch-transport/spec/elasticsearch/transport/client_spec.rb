@@ -141,6 +141,30 @@ describe Elasticsearch::Transport::Client do
         expect(hosts[0][:port]).to be(9200)
       end
 
+      context 'when IPv6 format is used' do
+
+        around do |example|
+          original_setting = Faraday.ignore_env_proxy
+          Faraday.ignore_env_proxy = true
+          example.run
+          Faraday.ignore_env_proxy = original_setting
+        end
+
+        let(:host) do
+          'https://[2090:db8:85a3:9811::1f]:8080'
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('[2090:db8:85a3:9811::1f]')
+          expect(hosts[0][:scheme]).to eq('https')
+          expect(hosts[0][:port]).to be(8080)
+        end
+
+        it 'creates the correct full url' do
+          expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://[2090:db8:85a3:9811::1f]:8080')
+        end
+      end
+
       context 'when a path is specified' do
 
         let(:host) do
@@ -220,6 +244,53 @@ describe Elasticsearch::Transport::Client do
         expect(hosts[0][:host]).to eq('myhost')
         expect(hosts[0][:scheme]).to eq('https')
         expect(hosts[0][:port]).to be(9200)
+      end
+
+      context 'when IPv6 format is used' do
+
+        around do |example|
+          original_setting = Faraday.ignore_env_proxy
+          Faraday.ignore_env_proxy = true
+          example.run
+          Faraday.ignore_env_proxy = original_setting
+        end
+
+        let(:host) do
+          { host: '[2090:db8:85a3:9811::1f]', scheme: 'https', port: '443' }
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('[2090:db8:85a3:9811::1f]')
+          expect(hosts[0][:scheme]).to eq('https')
+          expect(hosts[0][:port]).to be(443)
+        end
+
+        it 'creates the correct full url' do
+          expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://[2090:db8:85a3:9811::1f]:443')
+        end
+      end
+
+      context 'when the host is localhost as a IPv6 address' do
+
+        around do |example|
+          original_setting = Faraday.ignore_env_proxy
+          Faraday.ignore_env_proxy = true
+          example.run
+          Faraday.ignore_env_proxy = original_setting
+        end
+
+        let(:host) do
+          { host: '[::1]' }
+        end
+
+        it 'extracts the host' do
+          expect(hosts[0][:host]).to eq('[::1]')
+          expect(hosts[0][:port]).to be(9200)
+        end
+
+        it 'creates the correct full url' do
+          expect(client.transport.__full_url(client.transport.hosts[0])).to eq('http://[::1]:9200')
+        end
       end
 
       context 'when the port is specified as a String' do
