@@ -68,7 +68,22 @@ describe Elasticsearch::Transport::Client do
         described_class.new(adapter: :typhoeus)
       end
 
-      it 'uses Faraday' do
+      it 'uses Faraday with the adapter' do
+        expect(adapter).to include(Faraday::Adapter::Typhoeus)
+      end
+    end
+
+    context 'when the adapter is specified as a string key' do
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.handlers
+      end
+
+      let(:client) do
+        described_class.new('adapter' => :typhoeus)
+      end
+
+      it 'uses Faraday with the adapter' do
         expect(adapter).to include(Faraday::Adapter::Typhoeus)
       end
     end
@@ -426,7 +441,7 @@ describe Elasticsearch::Transport::Client do
   context 'when hosts are specified with the \'host\' key' do
 
     let(:client) do
-      described_class.new(hosts: ['host1', 'host2', 'host3', 'host4'], randomize_hosts: true)
+      described_class.new(host: ['host1', 'host2', 'host3', 'host4'], randomize_hosts: true)
     end
 
     let(:hosts) do
@@ -438,10 +453,25 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
-  context 'when hosts are specified with the \'host\' key' do
+  context 'when hosts are specified with the \'host\' key as a String' do
 
     let(:client) do
-      described_class.new(host: host)
+      described_class.new('host' => ['host1', 'host2', 'host3', 'host4'], 'randomize_hosts' => true)
+    end
+
+    let(:hosts) do
+      client.transport.hosts
+    end
+
+    it 'sets the hosts in random order' do
+      expect(hosts.all? { |host| client.transport.hosts.include?(host) }).to be(true)
+    end
+  end
+
+  context 'when hosts are specified with the \'hosts\' key' do
+
+    let(:client) do
+      described_class.new(hosts: host)
     end
 
     let(:hosts) do
@@ -451,10 +481,10 @@ describe Elasticsearch::Transport::Client do
     it_behaves_like 'a client that extracts hosts'
   end
 
-  context 'when hosts are specified with the \'hosts\' key' do
+  context 'when hosts are specified with the \'hosts\' key as a String' do
 
     let(:client) do
-      described_class.new(host: host)
+      described_class.new('hosts' => host)
     end
 
     let(:hosts) do
@@ -467,7 +497,20 @@ describe Elasticsearch::Transport::Client do
   context 'when hosts are specified with the \'url\' key' do
 
     let(:client) do
-      described_class.new(host: host)
+      described_class.new(url: host)
+    end
+
+    let(:hosts) do
+      client.transport.hosts
+    end
+
+    it_behaves_like 'a client that extracts hosts'
+  end
+
+  context 'when hosts are specified with the \'url\' key as a String' do
+
+    let(:client) do
+      described_class.new('url' => host)
     end
 
     let(:hosts) do
@@ -480,7 +523,20 @@ describe Elasticsearch::Transport::Client do
   context 'when hosts are specified with the \'urls\' key' do
 
     let(:client) do
-      described_class.new(host: host)
+      described_class.new(urls: host)
+    end
+
+    let(:hosts) do
+      client.transport.hosts
+    end
+
+    it_behaves_like 'a client that extracts hosts'
+  end
+
+  context 'when hosts are specified with the \'urls\' key as a String' do
+
+    let(:client) do
+      described_class.new('urls' => host)
     end
 
     let(:hosts) do
@@ -537,10 +593,47 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
+    context 'when scheme is specified as a String key' do
+
+      let(:client) do
+        described_class.new('scheme' => 'https')
+      end
+
+      it 'sets the scheme' do
+        expect(client.transport.connections[0].full_url('')).to match(/https/)
+      end
+    end
+
     context 'when user and password are specified' do
 
       let(:client) do
         described_class.new(user: 'USERNAME', password: 'PASSWORD')
+      end
+
+      it 'sets the user and password' do
+        expect(client.transport.connections[0].full_url('')).to match(/USERNAME/)
+        expect(client.transport.connections[0].full_url('')).to match(/PASSWORD/)
+      end
+
+      context 'when the connections are reloaded' do
+
+        before do
+          allow(client.transport.sniffer).to receive(:hosts).and_return([{ host: 'foobar', port: 4567, id: 'foobar4567' }])
+          client.transport.reload_connections!
+        end
+
+        it 'sets keeps user and password' do
+          expect(client.transport.connections[0].full_url('')).to match(/USERNAME/)
+          expect(client.transport.connections[0].full_url('')).to match(/PASSWORD/)
+          expect(client.transport.connections[0].full_url('')).to match(/foobar/)
+        end
+      end
+    end
+
+    context 'when user and password are specified as String keys' do
+
+      let(:client) do
+        described_class.new('user' => 'USERNAME', 'password' => 'PASSWORD')
       end
 
       it 'sets the user and password' do
@@ -641,6 +734,17 @@ describe Elasticsearch::Transport::Client do
 
       let(:client) do
         described_class.new(request_timeout: 120)
+      end
+
+      it 'sets the options on the transport' do
+        expect(client.transport.options[:transport_options][:request]).to eq(timeout: 120)
+      end
+    end
+
+    context 'when \'request_timeout\' is defined as a String key' do
+
+      let(:client) do
+        described_class.new('request_timeout' => 120)
       end
 
       it 'sets the options on the transport' do
