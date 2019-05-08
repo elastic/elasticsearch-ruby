@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'base64'
+
 module Elasticsearch
   module Transport
 
@@ -117,7 +119,8 @@ module Elasticsearch
         @arguments[:http]               ||= {}
         @options[:http]               ||= {}
 
-        @seeds = __extract_hosts(@arguments[:hosts] ||
+        @seeds = extract_cloud_creds(@arguments)
+        @seeds ||= __extract_hosts(@arguments[:hosts] ||
                                      @arguments[:host] ||
                                      @arguments[:url] ||
                                      @arguments[:urls] ||
@@ -155,6 +158,15 @@ module Elasticsearch
       end
 
       private
+
+      def extract_cloud_creds(arguments)
+        return unless arguments[:cloud_id]
+        cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub('name:', '')).split('$')
+        [ { :scheme => 'https',
+          :user => arguments[:user],
+          :password => arguments[:password],
+          :host => "#{elasticsearch_instance}.#{cloud_url}" } ]
+      end
 
       # Normalizes and returns hosts configuration.
       #
