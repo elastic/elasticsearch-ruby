@@ -270,6 +270,28 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
+  context 'when cloud credentials are provided' do
+
+    let(:client) do
+      described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme')
+    end
+
+    let(:hosts) do
+      client.transport.hosts
+    end
+
+    it 'extracts the cloud credentials' do
+      expect(hosts[0][:host]).to eq('abcd.localhost')
+      expect(hosts[0][:protocol]).to eq('https')
+      expect(hosts[0][:user]).to eq('elastic')
+      expect(hosts[0][:password]).to eq('changeme')
+    end
+
+    it 'creates the correct full url' do
+      expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost')
+    end
+  end
+
   shared_examples_for 'a client that extracts hosts' do
 
     context 'when the hosts are a String' do

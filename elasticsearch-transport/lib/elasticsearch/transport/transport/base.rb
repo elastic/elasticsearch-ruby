@@ -148,7 +148,7 @@ module Elasticsearch
           Connections::Collection.new \
             :connections => hosts.map { |host|
             host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
-            host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
+            host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT unless options[:cloud_id]
             if (options[:user] || options[:http][:user]) && !host[:user]
               host[:user] ||= options[:user] || options[:http][:user]
               host[:password] ||= options[:password] || options[:http][:password]
@@ -234,7 +234,8 @@ module Elasticsearch
         def __full_url(host)
           url  = "#{host[:protocol]}://"
           url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
-          url += "#{host[:host]}:#{host[:port]}"
+          url += "#{host[:host]}"
+          url += ":#{host[:port]}" if host[:port]
           url += "#{host[:path]}" if host[:path]
           url
         end
