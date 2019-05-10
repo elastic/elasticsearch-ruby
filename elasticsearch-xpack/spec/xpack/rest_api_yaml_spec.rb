@@ -112,7 +112,6 @@ RSpec::Matchers.define :match_lt_field do |expected_pairs|
           _response[key]
         end
       end
-      puts "actual: #{actual} and exected: #{expected_value}"
       actual_value < expected_value
     end
   end
