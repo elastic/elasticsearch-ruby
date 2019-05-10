@@ -28,7 +28,7 @@ RSpec::Matchers.define :match_true_field do |field|
   match do |response|
     # Handle is_true: ''
     return response == true if field == ''
-    !!find_value_in_document(split_and_parse_key(field) , response)
+    !!find_value_in_document(split_and_parse_key(field), response)
   end
 end
 
@@ -37,7 +37,7 @@ RSpec::Matchers.define :match_false_field do |field|
   match do |response|
     # Handle is_false: ''
     return response == false if field == ''
-    !find_value_in_document(split_and_parse_key(field) , response)
+    !find_value_in_document(split_and_parse_key(field), response)
   end
 end
 
