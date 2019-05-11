@@ -24,7 +24,7 @@ module Elasticsearch
       # @option arguments [String] :id Script ID (*Required*)
       # @option arguments [String] :lang Script language
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
       def get_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]

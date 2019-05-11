@@ -21,7 +21,7 @@ module Elasticsearch
 
       # Wraps the "extra" options of a search definition
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
       #
       class Options
         DSL_METHODS = [

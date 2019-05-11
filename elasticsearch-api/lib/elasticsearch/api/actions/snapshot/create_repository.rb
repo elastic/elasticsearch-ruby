@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :verify Whether to verify the repository after creation
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_repositories
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html#_repositories
         #
         def create_repository(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

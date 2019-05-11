@@ -24,7 +24,7 @@ module Elasticsearch
         #
         # @option arguments [Boolean] :help Return help information
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
         #
         def help(arguments={})
           method = HTTP_GET

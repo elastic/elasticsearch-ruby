@@ -33,7 +33,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-geo-shape-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-shape-query.html
         #
         class GeoShape
           include BaseComponent

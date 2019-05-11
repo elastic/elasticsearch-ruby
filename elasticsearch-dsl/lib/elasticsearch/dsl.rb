@@ -54,7 +54,7 @@ module Elasticsearch
   #     # => { query: { match: { title: "test"} } }
   #
   # @see Search
-  # @see http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/query-dsl-intro.html
+  # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/query-dsl-intro.html
   #
   module DSL
     def self.included(base)

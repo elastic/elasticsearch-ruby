@@ -33,7 +33,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
         # @see http://lucene.apache.org/core/2_9_4/queryparsersyntax.html
         #
         class QueryString

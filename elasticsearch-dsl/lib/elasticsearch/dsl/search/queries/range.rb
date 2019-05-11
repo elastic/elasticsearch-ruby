@@ -45,7 +45,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
         #
         class Range
           include BaseComponent

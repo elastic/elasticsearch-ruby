@@ -52,7 +52,7 @@ module Elasticsearch
         #
         # See the integration test for a working example.
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-bool-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-filter.html
         #
         class Bool
           include BaseComponent

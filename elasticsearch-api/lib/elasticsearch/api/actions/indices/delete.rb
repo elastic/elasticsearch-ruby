@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
         # @option arguments [List] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (options: open, closed, none, all) (default: open)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-delete-index/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-delete-index/
         #
         def delete(arguments={})
           method = HTTP_DELETE

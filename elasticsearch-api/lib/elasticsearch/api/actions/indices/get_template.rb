@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-templates/
         #
         def get_template(arguments={})
           method = HTTP_GET

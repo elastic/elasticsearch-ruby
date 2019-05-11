@@ -41,7 +41,7 @@ module Elasticsearch
         #
         # @return [true,false]
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-indices-exists/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-indices-exists/
         #
         def exists(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

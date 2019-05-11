@@ -52,7 +52,7 @@ module Elasticsearch
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
       #
       def search_template(arguments={})
         method = HTTP_GET

@@ -21,7 +21,7 @@ module Elasticsearch
 
       # Wraps the `highlight` part of a search definition
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-highlighting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-highlighting.html
       #
       class Highlight
         include BaseComponent

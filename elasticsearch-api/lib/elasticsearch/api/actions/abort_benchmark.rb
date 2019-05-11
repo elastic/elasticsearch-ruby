@@ -27,7 +27,7 @@ module Elasticsearch
       #
       # @option arguments [String] :name A benchmark name
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def abort_benchmark(arguments={})
         method = HTTP_POST

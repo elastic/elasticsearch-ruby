@@ -66,7 +66,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
         #
         def indices(arguments={})
           index = arguments.delete(:index)

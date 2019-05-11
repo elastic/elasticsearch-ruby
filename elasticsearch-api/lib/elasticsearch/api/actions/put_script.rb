@@ -42,7 +42,7 @@ module Elasticsearch
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       # @option arguments [String] :context Context name to compile script against
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
       #
       def put_script(arguments={})
         raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]

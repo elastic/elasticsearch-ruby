@@ -90,7 +90,7 @@ module Elasticsearch
         #
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files. Only applies if segment stats are requested. (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html
         #
         def stats(arguments={})
           method = HTTP_GET

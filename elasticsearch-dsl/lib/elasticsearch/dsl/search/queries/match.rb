@@ -34,7 +34,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
         #
         class Match
           include BaseComponent

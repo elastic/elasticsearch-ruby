@@ -46,7 +46,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Request timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-aliases/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-aliases/
         #
         def update_aliases(arguments={})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

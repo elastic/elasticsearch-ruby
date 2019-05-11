@@ -25,7 +25,7 @@ module Elasticsearch
 
       # Wraps the `query` part of a search definition
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
       #
       class Query
         def initialize(*args, &block)

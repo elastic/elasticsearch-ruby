@@ -40,7 +40,7 @@ module Elasticsearch
         #
         # @return [String]
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-hot-threads/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-nodes-hot-threads/
         #
         def hot_threads(arguments={})
           method = HTTP_GET

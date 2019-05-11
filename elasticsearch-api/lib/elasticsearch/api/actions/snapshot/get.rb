@@ -41,7 +41,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get(arguments={})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

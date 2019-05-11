@@ -43,7 +43,7 @@ module Elasticsearch
       #     definition.to_hash
       #     # => {:query=>{:match=>{:title=>"test"}}}
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html
       #
       def search(*args, &block)
         Search.new(*args, &block)

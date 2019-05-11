@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the template (*Required*)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-templates/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-templates/
         #
         def delete_template(arguments={})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

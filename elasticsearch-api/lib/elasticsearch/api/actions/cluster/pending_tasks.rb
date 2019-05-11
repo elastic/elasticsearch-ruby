@@ -31,7 +31,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-pending.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html
         #
         def pending_tasks(arguments={})
           method = HTTP_GET
