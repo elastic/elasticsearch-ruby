@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-open-close/
         #
         def open(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

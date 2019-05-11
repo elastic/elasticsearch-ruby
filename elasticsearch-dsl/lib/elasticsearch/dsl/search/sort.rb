@@ -21,7 +21,7 @@ module Elasticsearch
 
       # Wraps the `sort` part of a search definition
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
       #
       class Sort
         include BaseComponent

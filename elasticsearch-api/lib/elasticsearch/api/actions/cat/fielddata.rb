@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
         #
         def fielddata(arguments={})
           fields = arguments.delete(:fields)

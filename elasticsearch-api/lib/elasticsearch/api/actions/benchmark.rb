@@ -62,7 +62,7 @@ module Elasticsearch
       # @option arguments [Boolean] :verbose Specify whether to return verbose statistics about each iteration
       #                                      (default: false)
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
       def benchmark(arguments={})
         method = HTTP_PUT

@@ -37,7 +37,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get_repository(arguments={})
           repository = arguments.delete(:repository)

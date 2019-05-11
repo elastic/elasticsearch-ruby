@@ -61,7 +61,7 @@ module Elasticsearch
         #                                  (when request body is not used)
         # @option arguments [String] :tokenizer The name of the tokenizer to use for the analysis
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-analyze/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-analyze/
         #
         def analyze(arguments={})
           method = HTTP_GET

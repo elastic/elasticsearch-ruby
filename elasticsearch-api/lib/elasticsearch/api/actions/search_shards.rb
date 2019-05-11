@@ -36,7 +36,7 @@ module Elasticsearch
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices
       #                                              that are open, closed or both. (options: open, closed)
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html
       #
       def search_shards(arguments={})
         method = HTTP_GET

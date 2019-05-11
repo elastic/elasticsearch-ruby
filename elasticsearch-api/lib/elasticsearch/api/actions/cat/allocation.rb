@@ -57,7 +57,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
         #
         def allocation(arguments={})
           node_id = arguments.delete(:node_id)

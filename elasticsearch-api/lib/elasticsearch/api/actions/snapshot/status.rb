@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html#_snapshot_status
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html#_snapshot_status
         #
         def status(arguments={})
           repository = arguments.delete(:repository)

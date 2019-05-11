@@ -60,7 +60,7 @@ module Elasticsearch
         #                                    (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-aliases.html
         #
         def aliases(arguments={})
           name = arguments.delete(:name)

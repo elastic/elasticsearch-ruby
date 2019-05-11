@@ -38,7 +38,7 @@ module Elasticsearch
         #                                                 unavailable (missing, closed, etc)
         # @option arguments [Boolean] :wait_if_ongoing If set to true the flush operation will block until the flush can be executed if another flush operation is already executing. If set to false the flush will be skipped if another flush operation is already running. (Default: true)
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-flush/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-flush/
         #
         def flush(arguments={})
           method = HTTP_POST

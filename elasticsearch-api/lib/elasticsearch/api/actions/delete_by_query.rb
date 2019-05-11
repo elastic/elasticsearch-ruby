@@ -22,7 +22,7 @@ module Elasticsearch
       # Delete documents which match specified query.
       #
       # Provide the query either as a "query string" query in the `:q` argument, or using the Elasticsearch's
-      # [Query DSL](http://www.elasticsearch.org/guide/reference/query-dsl/) in the `:body` argument.
+      # [Query DSL](https://www.elastic.co/guide/reference/query-dsl/) in the `:body` argument.
       #
       # @example Deleting documents with a simple query
       #

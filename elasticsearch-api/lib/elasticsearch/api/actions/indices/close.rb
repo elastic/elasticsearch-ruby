@@ -41,7 +41,7 @@ module Elasticsearch
         #                                                 unavailable (missing, closed, etc)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-open-close/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-open-close/
         #
         def close(arguments={})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

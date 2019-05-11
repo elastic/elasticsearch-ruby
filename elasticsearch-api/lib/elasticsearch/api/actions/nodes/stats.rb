@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
         #
         def stats(arguments={})
           arguments = arguments.clone

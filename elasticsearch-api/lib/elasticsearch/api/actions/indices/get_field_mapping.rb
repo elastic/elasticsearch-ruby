@@ -44,7 +44,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments={})
           arguments = arguments.clone

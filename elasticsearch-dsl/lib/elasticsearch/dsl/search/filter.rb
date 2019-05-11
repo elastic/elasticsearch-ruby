@@ -25,7 +25,7 @@ module Elasticsearch
 
       # Wraps the `filter` part of a search definition, aggregation, etc
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filters.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-filters.html
       #
       class Filter
         def initialize(*args, &block)

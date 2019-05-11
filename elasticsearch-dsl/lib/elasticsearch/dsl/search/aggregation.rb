@@ -31,7 +31,7 @@ module Elasticsearch
 
       # Wraps the `aggregations` part of a search definition
       #
-      # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
       #
       class Aggregation
         def initialize(*args, &block)

@@ -32,7 +32,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
         #
         class Term
           include BaseComponent

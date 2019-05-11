@@ -48,7 +48,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         #
-        # @see http://www.elasticsearch.org/guide/reference/api/admin-indices-get-settings/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-get-settings/
         #
         def get_settings(arguments={})
           method = HTTP_GET
