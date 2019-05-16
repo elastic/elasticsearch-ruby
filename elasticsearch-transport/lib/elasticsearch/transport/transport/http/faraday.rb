@@ -51,7 +51,7 @@ module Elasticsearch
           # @return [Connections::Connection]
           #
           def __build_connection(host, options={}, block=nil)
-            client = ::Faraday::Connection.new(__full_url(host), options, &block)
+            client = ::Faraday.new(__full_url(host), options, &block)
             Connections::Connection.new :host => host, :connection => client
           end
 
