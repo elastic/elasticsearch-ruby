@@ -44,6 +44,7 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:upgrade, [
+            :index,
             :allow_no_indices,
             :expand_wildcards,
             :ignore_unavailable,
