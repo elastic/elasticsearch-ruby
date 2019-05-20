@@ -171,6 +171,7 @@ module Elasticsearch
           client.indices.delete(index: 'test_close_index', ignore: 404)
           client.indices.delete(index: 'test_index_3', ignore: 404)
           client.indices.delete(index: 'test_index_2', ignore: 404)
+          client.indices.delete(index: 'test-xyy', ignore: 404)
         end
       end
     end
