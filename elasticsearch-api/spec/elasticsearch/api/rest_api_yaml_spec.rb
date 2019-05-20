@@ -159,6 +159,8 @@ RSpec::Matchers.define :match_response do |expected_pairs, test|
       #   match: {task: '/.+:\d+/'}
       if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
         /#{expected_value.tr("/", "")}/ =~ actual_value
+      elsif expected_key == ''
+        expected_value == response
       else
         actual_value == expected_value
       end
@@ -234,6 +236,11 @@ describe 'Rest API YAML tests' do
             before(:all) do
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_index_templates, ADMIN_CLIENT)
+
+              ADMIN_CLIENT.snapshot.delete_repository(repository: 'test_repo_status_1', ignore: 404)
+              ADMIN_CLIENT.snapshot.delete_repository(repository: 'test_cat_snapshots_1', ignore: 404)
+              binding.pry
+              ADMIN_CLIENT.snapshot.delete(repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404)
               test_file.setup(ADMIN_CLIENT)
             end
 
