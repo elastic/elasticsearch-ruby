@@ -111,7 +111,7 @@ end
 
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
-    "/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test/indices.get_mapping"
+    "/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test"
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 ["#{File.expand_path(File.dirname('..'), '..')}" +
@@ -147,6 +147,30 @@ SKIPPED_TESTS << { file:        'delete/70_mix_typeless_typeful.yml',
 # Figure out how to match response when there is an error
 SKIPPED_TESTS << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
+
+SKIPPED_TESTS << { file:        'cat.repositories/10_basic.yml',
+                   description: '*' }
+
+SKIPPED_TESTS << { file:        'get_source/86_source_missing_with_types.yml',
+                   description: 'Missing document source with catch' }
+
+SKIPPED_TESTS << { file:        'get_source/40_routing.yml',
+                   description: 'Routing' }
+
+SKIPPED_TESTS << { file:        'get_source/61_realtime_refresh_with_types.yml',
+                   description: 'Realtime' }
+
+SKIPPED_TESTS << { file:        'get_source/81_missing_with_types.yml',
+                   description: 'Missing document with catch' }
+
+SKIPPED_TESTS << { file:        'get_source/41_routing_with_types.yml',
+                   description: 'Routing' }
+
+SKIPPED_TESTS << { file:        'get_source/85_source_missing.yml',
+                   description: 'Missing document source with catch' }
+
+SKIPPED_TESTS << { file:        'get_source/60_realtime_refresh.yml',
+                   description: 'Realtime' }
 
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")

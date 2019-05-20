@@ -132,7 +132,9 @@ module Elasticsearch
               end
             end
           when Array
-            key.collect { |k| @cached_values.fetch(k.gsub(/[\$\{\}]/, ''), k) }
+            key.collect do |k|
+              k.is_a?(String) ? @cached_values.fetch(k.gsub(/[\$\{\}]/, ''), k) : k
+            end
           else
             key
           end
