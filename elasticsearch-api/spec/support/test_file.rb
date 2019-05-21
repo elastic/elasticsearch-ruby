@@ -155,6 +155,15 @@ module Elasticsearch
           client.indices.delete_template(name: '*')
         end
 
+        def clear_snapshots_and_repositories(client)
+          client.snapshot.get_repository(repository: '_all').keys.each do |repository|
+            client.snapshot.get(repository: repository, snapshot: '_all')['snapshots'].each do |s|
+              client.snapshot.delete(repository: repository, snapshot: s['snapshot'])
+            end
+            client.snapshot.delete_repository(repository: repository)
+          end
+        end
+
         def clear_indices(client)
           indices = client.indices.get(index: '_all').keys.reject do |i|
             i.start_with?('.security') || i.start_with?('.watches')

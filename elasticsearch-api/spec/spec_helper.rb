@@ -148,9 +148,9 @@ SKIPPED_TESTS << { file:        'delete/70_mix_typeless_typeful.yml',
 SKIPPED_TESTS << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
 
-SKIPPED_TESTS << { file:        'cat.repositories/10_basic.yml',
-                   description: '*' }
 
+
+# Todo
 SKIPPED_TESTS << { file:        'get_source/86_source_missing_with_types.yml',
                    description: 'Missing document source with catch' }
 
