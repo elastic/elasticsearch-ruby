@@ -236,16 +236,13 @@ describe 'Rest API YAML tests' do
             before(:all) do
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_index_templates, ADMIN_CLIENT)
-
-              ADMIN_CLIENT.snapshot.delete_repository(repository: 'test_repo_status_1', ignore: 404)
-              ADMIN_CLIENT.snapshot.delete_repository(repository: 'test_cat_snapshots_1', ignore: 404)
-              binding.pry
-              ADMIN_CLIENT.snapshot.delete(repository: 'test_cat_snapshots_1', snapshot: 'snap1', ignore: 404)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_snapshots_and_repositories, ADMIN_CLIENT)
               test_file.setup(ADMIN_CLIENT)
             end
 
             after(:all) do
               test_file.teardown(ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_snapshots_and_repositories, ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|
