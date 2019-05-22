@@ -31,7 +31,7 @@ namespace :test do
   end
 
   desc "Run rest api tests"
-  task :rest_api => 'elasticsearch:update' do
+  task :rest_api => ['elasticsearch:update', 'elasticsearch:wait_for_green'] do
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:integration"
     puts "\n"
