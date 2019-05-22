@@ -42,9 +42,13 @@ namespace :test do
 
   RSpec::Core::RakeTask.new(:spec)
 
+  RSpec::Core::RakeTask.new(:rest_api) do |t|
+    t.pattern = 'spec/**{,/*/**}/rest_api_yaml.rb'
+  end
+
   desc "Update the repository with YAML tests"
   task :update do
-    git_specs "fetch origin --verbose", :verbose => true
+    git_specs "fetch origin", :verbose => true
   end
 
   Rake::TestTask.new(:unit) do |test|
@@ -56,7 +60,7 @@ namespace :test do
   end
 
   desc "Run integration tests"
-  task :integration => :wait_for_green do
+  task :integration => :update do
     require 'elasticsearch'
 
     branches = `git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} branch --no-color`
@@ -71,15 +75,6 @@ namespace :test do
     unless current_branch
       STDERR.puts "[!] Unable to determine current branch, defaulting to 'master'"
       current_branch = 'master'
-    end
-
-    # Define the task
-    t = Rake::TestTask.new(:integration) do |test|
-      test.deps = [ :wait_for_green ]
-      test.libs << 'lib' << 'test'
-      test.test_files = FileList["test/integration/yaml_test_runner.rb", "test/integration/**/*_test.rb"]
-      test.verbose = false
-      test.warning = false
     end
 
     # Check if a test cluster is running
@@ -116,16 +111,7 @@ namespace :test do
         git_specs "checkout #{checkout_build_hash} --force --quiet"
       end
 
-      # Run the task
-      args = [t.ruby_opts_string, t.run_code, t.file_list_string, t.option_list].join(' ')
-
-      ruby args do |ok, status|
-        if !ok && status.respond_to?(:signaled?) && status.signaled?
-          raise SignalException.new(status.termsig)
-        elsif !ok
-          fail "Command failed with status (#{status.exitstatus}): " + "[ruby #{args}]"
-        end
-      end
+      Rake::Task['test:rest_api'].invoke
 
     ensure
       git_specs "checkout #{current_branch} --force --quiet" if checkout_specs_version && current_branch
