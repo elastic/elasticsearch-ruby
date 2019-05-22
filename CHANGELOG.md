@@ -1,3 +1,35 @@
+## 7.1.0
+
+### Client
+
+* Update elasticsearch-transport README
+* Use default port when host and protocol are specified but no port
+* Verify that we have a response object before checking its status
+* Make code more succinct for supporting host with path and no port
+* Support options specified with String keys
+* Update elasticsearch-transport/lib/elasticsearch/transport/client.rb
+* Add tests showing IPv6 host specified when creating client
+
+### API
+
+* Update links in elasticsearch-api README
+
+### DSL
+
+* Update links in elasticsearch-dsl README
+* Allow Bool query and Bool filter methods to take objects as arguments
+* Edit tests on bool query / filter to match context
+
+### EXT:7.1.0
+
+* Update elasticsearch-ext README
+
+### XPACK
+
+* Update elasticsearch-xpack README
+* Minor formatting fix
+* Remove puts line
+
 ## 7.0.0.pre
 
 * Added `elastic_ruby_console` executable
