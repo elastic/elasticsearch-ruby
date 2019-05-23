@@ -30,6 +30,8 @@ namespace :test do
     end
   end
 
+  # Note start Elasticsearch with the following command if Docker is not used.
+  # bin/elasticsearch -Erepositories.url.allowed_urls=http://* -Epath.repo=/tmp -Enode.attr.testattr=test
   desc "Run rest api tests"
   task :rest_api => ['elasticsearch:update', 'elasticsearch:wait_for_green'] do
     puts '-' * 80

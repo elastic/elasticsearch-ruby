@@ -1,3 +1,20 @@
+# Licensed to Elasticsearch B.V. under one or more contributor
+# license agreements. See the NOTICE file distributed with
+# this work for additional information regarding copyright
+# ownership. Elasticsearch B.V. licenses this file to you under
+# the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
 module Elasticsearch
 
   module RestAPIYAMLTests
@@ -84,7 +101,7 @@ module Elasticsearch
             @exception = ex
           end
 
-          # Consider the response from the last action the response of interest.
+          # Consider the response of interest the one resulting from the last action.
           #
           # @return [ Hash ] The response from the last action.
           #
@@ -269,17 +286,7 @@ module Elasticsearch
 
           private
 
-          ACTIONS = [ 'do',
-                      'match',
-                      'length',
-                      'set',
-                      'transform_and_set',
-                      'is_true',
-                      'is_false',
-                      'gte',
-                      'gt',
-                      'lte',
-                      'lt' ].freeze
+          ACTIONS = (Test::GROUP_TERMINATORS + ['do']).freeze
 
           def do_actions
             @do_actions ||= @actions.group_by { |a| a.keys.first }['do'].map { |definition| Action.new(definition['do']) }
