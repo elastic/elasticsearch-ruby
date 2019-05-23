@@ -256,7 +256,11 @@ module Elasticsearch
             @arguments[:network_host]      ||= ENV.fetch('TEST_CLUSTER_NETWORK_HOST', __default_network_host)
             @arguments[:quiet]             ||= ! ENV.fetch('QUIET', '').empty?
 
-            @clear_cluster = !!@arguments[:clear_cluster] || (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
+            @clear_cluster = if @arguments[:clear_cluster].nil?
+                               (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
+                             else
+		               !!@arguments[:clear_cluster]
+                             end
 
             # Make sure `cluster_name` is not dangerous
             raise ArgumentError, "The `cluster_name` argument cannot be empty string or a slash" \
