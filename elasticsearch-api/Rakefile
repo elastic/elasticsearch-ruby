@@ -40,10 +40,12 @@ namespace :test do
     sh '../scripts/wait-cluster.sh'
   end
 
-  RSpec::Core::RakeTask.new(:spec)
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
+  end
 
   RSpec::Core::RakeTask.new(:rest_api) do |t|
-    t.pattern = 'spec/**{,/*/**}/rest_api_yaml.rb'
+    t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
   desc "Update the repository with YAML tests"
