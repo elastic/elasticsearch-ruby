@@ -96,17 +96,20 @@ describe Elasticsearch::Transport::Transport::Connections::Selector do
       context 'when multiple threads are used' do
 
         let(:connections) do
-          (1..100).to_a
+          (0..19).to_a
         end
 
         it 'allows threads to select connections in parallel' do
-          threads = []
-          threads << Thread.new do
-            2000.times do |i|
-              selector.select
+          expect(10.times.collect do
+            threads = []
+            20.times do
+              threads << Thread.new do
+                selector.select
+              end
             end
-          end
-          threads.collect {|t| t.join}
+            threads.map { |t| t.join }
+            selector.select
+          end).to eq((0..9).to_a)
         end
       end
     end
