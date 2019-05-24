@@ -61,18 +61,30 @@ module Elasticsearch
           class RoundRobin
             include Base
 
+            # @option arguments [Connections::Collection] :connections Collection with connections.
+            #
+            def initialize(arguments = {})
+              super
+              @mutex = Mutex.new
+              @current = nil
+            end
+
             # Returns the next connection from the collection, rotating them in round-robin fashion.
             #
             # @return [Connections::Connection]
             #
             def select(options={})
-              # On Ruby 1.9, Array#rotate could be used instead
-              @current = !defined?(@current) || @current.nil? ? 0 : @current+1
-              @current = 0 if @current >= connections.size
-              connections[@current]
+              @mutex.synchronize do
+                conns = connections
+                if @current && (@current < conns.size-1)
+                  @current += 1
+                else
+                  @current = 0
+                end
+                conns[@current]
+              end
             end
           end
-
         end
       end
     end
