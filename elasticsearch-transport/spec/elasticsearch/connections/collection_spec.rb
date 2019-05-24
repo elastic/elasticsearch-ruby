@@ -228,7 +228,7 @@ describe Elasticsearch::Transport::Transport::Connections::Collection do
     context 'when multiple threads are used' do
 
       let(:connections) do
-        100.times.collect do |i|
+        20.times.collect do |i|
           Elasticsearch::Transport::Transport::Connections::Connection.new(host: { host: i })
         end
       end
@@ -238,13 +238,16 @@ describe Elasticsearch::Transport::Transport::Connections::Collection do
       end
 
       it 'allows threads to select connections in parallel' do
-        threads = []
-        threads << Thread.new do
-          2000.times do |i|
-            collection.get_connection
+        expect(10.times.collect do
+          threads = []
+          20.times do
+            threads << Thread.new do
+              collection.get_connection
+            end
           end
-        end
-        threads.collect {|t| t.join}
+          threads.collect { |t| t.join }
+          collection.get_connection.host[:host]
+        end).to all(eq(0))
       end
     end
   end
