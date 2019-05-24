@@ -17,6 +17,8 @@
 
 require 'pry-nav'
 require 'yaml'
+require 'jbuilder'
+require 'jsonify'
 require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
