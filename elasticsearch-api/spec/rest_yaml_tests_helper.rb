@@ -81,30 +81,6 @@ skipped_tests << { file:        'delete/70_mix_typeless_typeful.yml',
 skipped_tests << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
 
-
-
-# Todo
-skipped_tests << { file:        'get_source/86_source_missing_with_types.yml',
-                   description: 'Missing document source with catch' }
-
-skipped_tests << { file:        'get_source/40_routing.yml',
-                   description: 'Routing' }
-
-skipped_tests << { file:        'get_source/61_realtime_refresh_with_types.yml',
-                   description: 'Realtime' }
-
-skipped_tests << { file:        'get_source/81_missing_with_types.yml',
-                   description: 'Missing document with catch' }
-
-skipped_tests << { file:        'get_source/41_routing_with_types.yml',
-                   description: 'Routing' }
-
-skipped_tests << { file:        'get_source/85_source_missing.yml',
-                   description: 'Missing document source with catch' }
-
-skipped_tests << { file:        'get_source/60_realtime_refresh.yml',
-                   description: 'Realtime' }
-
 SKIPPED_TESTS = skipped_tests
 
 # The directory of rest api YAML files.
