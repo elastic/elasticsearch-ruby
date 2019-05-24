@@ -9,5 +9,3 @@
         default: refs/heads/master
         description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
           &lt;commitId&gt;, etc.)
-    triggers:
-    - github
