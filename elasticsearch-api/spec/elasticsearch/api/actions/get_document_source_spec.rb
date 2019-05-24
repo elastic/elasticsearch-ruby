@@ -91,8 +91,10 @@ describe 'client#get_source' do
       expect(client).to receive(:perform_request).and_raise(NotFound)
     end
 
-    it 'returns false' do
-      expect(client.get_source(index: 'foo', id: '1')).to eq(false)
+    it 'raises the error' do
+      expect {
+        client.get_source(index: 'foo', id: '1')
+      }.to raise_exception(NotFound)
     end
   end
 end

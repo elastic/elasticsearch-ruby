@@ -69,9 +69,7 @@ module Elasticsearch
 
         params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
 
-        Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body).body
-        end
+        perform_request(method, path, params, body).body
       end
 
       # Register this action with its valid params when the module is loaded.
