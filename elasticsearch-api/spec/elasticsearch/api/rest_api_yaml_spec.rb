@@ -241,11 +241,6 @@ describe 'Rest API YAML tests' do
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
 
-      before(:all) do
-        # Runs once before all tests in a test file
-        Elasticsearch::RestAPIYAMLTests::TestFile.prepare(ADMIN_CLIENT)
-      end
-
       test_file.tests.each do |test|
 
         context "#{test.description}" do
@@ -261,15 +256,14 @@ describe 'Rest API YAML tests' do
 
             # Runs once before each test in a test file
             before(:all) do
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_index_templates, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_snapshots_and_repositories, ADMIN_CLIENT)
+              # Runs once before each test in a test file
+              Elasticsearch::RestAPIYAMLTests::TestFile.clear_data(ADMIN_CLIENT)
               test_file.setup(ADMIN_CLIENT)
             end
 
             after(:all) do
               test_file.teardown(ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_snapshots_and_repositories, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.clear_data(ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|
