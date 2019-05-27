@@ -105,8 +105,10 @@ module Elasticsearch
         # This method deletes indices, roles, datafeeds, etc.
         #
         # @since 6.2.0
-        def prepare(client)
+        def clear_data(client)
           clear_indices(client)
+          clear_index_templates(client)
+          clear_snapshots_and_repositories(client)
         end
 
         private
