@@ -41,15 +41,23 @@ describe Elasticsearch::Transport::Transport::Connections::Selector do
 
   describe 'the Random selector' do
 
+    let(:connections) do
+      [1, 2]
+    end
+
     let(:selector) do
-      described_class::Random.new(connections: [1, 2])
+      described_class::Random.new(connections: connections)
     end
 
     it 'is initialized with connections' do
-      expect(selector.connections).to eq([1, 2])
+      expect(selector.connections).to eq(connections)
     end
 
     describe '#select' do
+
+      let(:connections) do
+        (0..19).to_a
+      end
 
       it 'returns a connection' do
         expect(selector.select).to be_a(Integer)
@@ -58,13 +66,16 @@ describe Elasticsearch::Transport::Transport::Connections::Selector do
       context 'when multiple threads are used' do
 
         it 'allows threads to select connections in parallel' do
-          threads = []
-          threads << Thread.new do
-            50.times do
-              selector.select
+          expect(10.times.collect do
+            threads = []
+            20.times do
+              threads << Thread.new do
+                selector.select
+              end
             end
-          end
-          threads.collect {|t| t.join}
+            threads.map { |t| t.join }
+            selector.select
+          end).to all(be_a(Integer))
         end
       end
     end
@@ -97,6 +108,10 @@ describe Elasticsearch::Transport::Transport::Connections::Selector do
 
         let(:connections) do
           (0..19).to_a
+        end
+
+        it 'returns a connection' do
+          expect(selector.select).to be_a(Integer)
         end
 
         it 'allows threads to select connections in parallel' do
