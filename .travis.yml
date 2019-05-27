@@ -29,7 +29,7 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.6.1
+    - rvm: 2.6.2
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
@@ -37,12 +37,12 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: jruby-9.2.5.0
+    - rvm: jruby-9.2.7.0
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
     # Integration tests
-    - rvm: 2.6.1
+    - rvm: 2.6.2
       jdk: oraclejdk8
       env: QUIET=y TEST_SUITE=integration
 
