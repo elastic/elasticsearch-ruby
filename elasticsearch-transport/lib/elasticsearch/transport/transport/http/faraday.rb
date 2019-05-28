@@ -52,6 +52,7 @@ module Elasticsearch
           #
           def __build_connection(host, options={}, block=nil)
             client = ::Faraday.new(__full_url(host), options, &block)
+            apply_headers(client, options)
             Connections::Connection.new :host => host, :connection => client
           end
 
@@ -61,6 +62,19 @@ module Elasticsearch
           #
           def host_unreachable_exceptions
             [::Faraday::Error::ConnectionFailed, ::Faraday::Error::TimeoutError]
+          end
+
+          private
+
+          def user_agent_header(client)
+            @user_agent ||= begin
+              meta = ["RUBY_VERSION: #{RUBY_VERSION}"]
+              if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+                meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+              end
+              meta << "#{client.headers[USER_AGENT_STR]}"
+              "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
+            end
           end
         end
       end

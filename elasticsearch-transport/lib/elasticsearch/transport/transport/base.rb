@@ -202,7 +202,7 @@ module Elasticsearch
               ( params.empty? ? '' : "&#{::Faraday::Utils::ParamsHash[params].to_query}" )
           trace_body = body ? " -d '#{__convert_to_json(body, :pretty => true)}'" : ''
           trace_command = "curl -X #{method.to_s.upcase}"
-          trace_command += " -H '#{headers.inject('') { |memo,item| memo << item[0] + ': ' + item[1] }}'" if headers && !headers.empty?
+          trace_command += " -H '#{headers.collect { |k,v| "#{k}: #{v}" }.join(", ")}'" if headers && !headers.empty?
           trace_command += " '#{trace_url}'#{trace_body}\n"
           tracer.info trace_command
           tracer.debug "# #{Time.now.iso8601} [#{response.status}] (#{format('%.3f', duration)}s)\n#"
@@ -328,7 +328,7 @@ module Elasticsearch
 
           if response.status.to_i >= 300
             __log_response    method, path, params, body, url, response, nil, 'N/A', duration
-            __trace  method, path, params, headers, body, url, response, nil, 'N/A', duration if tracer
+            __trace  method, path, params, connection.connection.headers, body, url, response, nil, 'N/A', duration if tracer
 
             # Log the failure only when `ignore` doesn't match the response status
             unless ignore.include?(response.status.to_i)
@@ -345,7 +345,7 @@ module Elasticsearch
             __log_response   method, path, params, body, url, response, json, took, duration
           end
 
-          __trace method, path, params, headers, body, url, response, json, took, duration if tracer
+          __trace  method, path, params, connection.connection.headers, body, url, response, nil, 'N/A', duration if tracer
 
           Response.new response.status, json || response.body, response.headers
         ensure
@@ -359,6 +359,35 @@ module Elasticsearch
         #
         def host_unreachable_exceptions
           [Errno::ECONNREFUSED]
+        end
+
+        private
+
+        USER_AGENT_STR = 'User-Agent'.freeze
+        CONTENT_TYPE_STR = 'Content-Type'.freeze
+
+        def apply_headers(client, options)
+          headers = (options[:headers] || {}).inject({}) do |h, (k, v)|
+            if k.to_s.downcase =~ /content\-?\_?type/
+              h[CONTENT_TYPE_STR] = v
+            else
+              h[k] = v
+            end
+            h
+          end
+          headers[CONTENT_TYPE_STR] = 'application/json' unless headers[CONTENT_TYPE_STR]
+          headers[USER_AGENT_STR] = user_agent_header(client) unless headers[USER_AGENT_STR]
+          client.headers.merge!(headers)
+        end
+
+        def user_agent_header(client)
+          @user_agent ||= begin
+            meta = ["RUBY_VERSION: #{RUBY_VERSION}"]
+            if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+              meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+            end
+            "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
+          end
         end
       end
     end

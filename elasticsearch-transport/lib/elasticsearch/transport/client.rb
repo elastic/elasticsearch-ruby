@@ -130,12 +130,6 @@ module Elasticsearch
           @arguments[:transport_options][:request] = { :timeout => @arguments[:request_timeout] }
         end
 
-        @arguments[:transport_options][:headers] ||= {}
-
-        unless @arguments[:transport_options][:headers].keys.any? {|k| k.to_s.downcase =~ /content\-?\_?type/}
-          @arguments[:transport_options][:headers]['Content-Type'] = 'application/json'
-        end
-
         if @arguments[:transport]
           @transport = @arguments[:transport]
         else
