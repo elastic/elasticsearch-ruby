@@ -110,14 +110,8 @@ module Elasticsearch
           #
           def __build_connections
             @request_options = {}
-
-            if options[:transport_options] && options[:transport_options][:headers]
-              @request_options[:headers] = options[:transport_options][:headers]
-            end
-
-            if options.key?(:headers)
-              @request_options[:headers] = options[:headers]
-            end
+            apply_headers(@request_options, options[:transport_options])
+            apply_headers(@request_options, options[:headers])
 
             Connections::Collection.new \
               :connections => hosts.map { |host|
@@ -156,6 +150,33 @@ module Elasticsearch
               ::Manticore::ClientProtocolException,
               ::Manticore::ResolutionFailure
             ]
+          end
+
+          private
+
+          def apply_headers(request_options, options)
+            headers = (options[:headers] || {}).inject({}) do |h, (k, v)|
+              if k.to_s.downcase =~ /content\-?\_?type/
+                h[CONTENT_TYPE_STR] = v
+              else
+                h[k] = v
+              end
+              h
+            end
+            headers[CONTENT_TYPE_STR] = 'application/json' unless headers[CONTENT_TYPE_STR]
+            headers[USER_AGENT_STR] = user_agent_header(request_options) unless headers[USER_AGENT_STR]
+            request_options.merge!(headers)
+          end
+
+          def user_agent_header
+            @user_agent ||= begin
+              meta = ["RUBY_VERSION: #{JRUBY_VERSION}"]
+              if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+                meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+              end
+              meta << "Manticore #{Manticore::Manticore}"
+              "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
+            end
           end
         end
       end

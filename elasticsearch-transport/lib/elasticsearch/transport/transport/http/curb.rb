@@ -65,10 +65,7 @@ module Elasticsearch
           def __build_connection(host, options={}, block=nil)
             client = ::Curl::Easy.new
 
-            headers = options[:headers] || {}
-            headers.update('User-Agent' => "Curb #{Curl::CURB_VERSION}")
-
-            client.headers = headers
+            apply_headers(client, options)
             client.url     = __full_url(host)
 
             if host[:user]
@@ -96,8 +93,20 @@ module Elasticsearch
               ::Curl::Err::TimeoutError
             ]
           end
-        end
 
+          private
+
+          def user_agent_header(client)
+            @user_agent ||= begin
+              meta = ["RUBY_VERSION: #{RUBY_VERSION}"]
+              if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+                meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+              end
+              meta << "Curb #{Curl::CURB_VERSION}"
+              "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
+            end
+          end
+        end
       end
     end
   end

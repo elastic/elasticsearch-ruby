@@ -33,16 +33,136 @@ describe Elasticsearch::Transport::Client do
     expect(client.transport).to be_a(Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS)
   end
 
-  it 'uses Faraday as the default transport' do
+  it 'preserves the Faraday default user agent header' do
     expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/Faraday/)
   end
 
+  it 'identifies the Ruby client in the User-Agent header' do
+    expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/elasticsearch-ruby\/#{Elasticsearch::Transport::VERSION}/)
+  end
+
+  it 'identifies the Ruby version in the User-Agent header' do
+    expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RUBY_VERSION}/)
+  end
+
+  it 'identifies the host_os in the User-Agent header' do
+    expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase}/)
+  end
+
+  it 'identifies the target_cpu in the User-Agent header' do
+    expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['target_cpu']}/)
+  end
+
   it 'sets the \'Content-Type\' header to \'application/json\' by default' do
-    expect(client.transport.options[:transport_options][:headers]['Content-Type']).to eq('application/json')
+    expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
   end
 
   it 'uses localhost by default' do
     expect(client.transport.hosts[0][:host]).to eq('localhost')
+  end
+
+  context 'when a User-Agent header is specified as client option' do
+
+    let(:client) do
+      described_class.new(transport_options: { headers: { 'User-Agent' => 'testing' } })
+    end
+
+    it 'sets the specified User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to eq('testing')
+    end
+  end
+
+  context 'when a Content-Type header is specified as client option' do
+
+    let(:client) do
+      described_class.new(transport_options: { headers: { 'Content-Type' => 'testing' } })
+    end
+
+    it 'sets the specified Content-Type header' do
+      expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('testing')
+    end
+  end
+
+  context 'when a content-type header is specified as client option in lower-case' do
+
+    let(:client) do
+      described_class.new(transport_options: { headers: { 'content-type' => 'testing' } })
+    end
+
+    it 'sets the specified Content-Type header' do
+      expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('testing')
+    end
+  end
+
+  context 'when the Curb transport class is used' do
+
+    let(:client) do
+      described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
+    end
+
+    it 'preserves the Curb default user agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/Curb/)
+    end
+
+    it 'identifies the Ruby client in the User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/elasticsearch-ruby\/#{Elasticsearch::Transport::VERSION}/)
+    end
+
+    it 'identifies the Ruby version in the User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RUBY_VERSION}/)
+    end
+
+    it 'identifies the host_os in the User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase}/)
+    end
+
+    it 'identifies the target_cpu in the User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['target_cpu']}/)
+    end
+
+    it 'sets the \'Content-Type\' header to \'application/json\' by default' do
+      expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+    end
+
+    it 'uses localhost by default' do
+      expect(client.transport.hosts[0][:host]).to eq('localhost')
+    end
+
+    context 'when a User-Agent header is specified as a client option' do
+
+      let(:client) do
+        described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
+                            transport_options: { headers: { 'User-Agent' => 'testing' } })
+      end
+
+      it 'sets the specified User-Agent header' do
+        expect(client.transport.connections.first.connection.headers['User-Agent']).to eq('testing')
+      end
+    end
+
+    context 'when a Content-Type header is specified as client option' do
+
+      let(:client) do
+        described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
+                            transport_options: { headers: { 'Content-Type' => 'testing' } })
+      end
+
+      it 'sets the specified Content-Type header' do
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('testing')
+      end
+    end
+
+    context 'when a content-type header is specified as client option in lower-case' do
+
+      let(:client) do
+        described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
+                            transport_options: { headers: { 'content-type' => 'testing' } })
+      end
+
+      it 'sets the specified Content-Type header' do
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('testing')
+      end
+    end
   end
 
   describe 'adapter' do
