@@ -285,10 +285,30 @@ describe Elasticsearch::Transport::Client do
       expect(hosts[0][:protocol]).to eq('https')
       expect(hosts[0][:user]).to eq('elastic')
       expect(hosts[0][:password]).to eq('changeme')
+      expect(hosts[0][:port]).to eq(9243)
     end
 
     it 'creates the correct full url' do
-      expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost')
+      expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost:9243')
+    end
+
+    context 'when a port is specified' do
+
+      let(:client) do
+        described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme', port: 9200 )
+      end
+
+      it 'sets the specified port along with the cloud credentials' do
+        expect(hosts[0][:host]).to eq('abcd.localhost')
+        expect(hosts[0][:protocol]).to eq('https')
+        expect(hosts[0][:user]).to eq('elastic')
+        expect(hosts[0][:password]).to eq('changeme')
+        expect(hosts[0][:port]).to eq(9200)
+      end
+
+      it 'creates the correct full url' do
+        expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost:9200')
+      end
     end
   end
 

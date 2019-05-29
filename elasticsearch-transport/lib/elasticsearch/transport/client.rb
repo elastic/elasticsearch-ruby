@@ -48,6 +48,11 @@ module Elasticsearch
       # @since 7.0.0
       DEFAULT_HOST = 'localhost:9200'.freeze
 
+      # The default port to use if connecting using a Cloud ID.
+      #
+      # @since 7.2.0
+      DEFAULT_CLOUD_PORT = 9243
+
       # Returns the transport object.
       #
       # @see Elasticsearch::Transport::Transport::Base
@@ -162,10 +167,11 @@ module Elasticsearch
       def extract_cloud_creds(arguments)
         return unless arguments[:cloud_id]
         cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub('name:', '')).split('$')
-        [ { :scheme => 'https',
-          :user => arguments[:user],
-          :password => arguments[:password],
-          :host => "#{elasticsearch_instance}.#{cloud_url}" } ]
+        [ { scheme: 'https',
+            user: arguments[:user],
+            password: arguments[:password],
+            host: "#{elasticsearch_instance}.#{cloud_url}",
+            port: arguments[:port] || DEFAULT_CLOUD_PORT } ]
       end
 
       # Normalizes and returns hosts configuration.
