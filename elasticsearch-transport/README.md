@@ -106,6 +106,17 @@ Another way to configure the URL(s) is to export the `ELASTICSEARCH_URL` variabl
 The client will automatically round-robin across the hosts
 (unless you select or implement a different [connection selector](#connection-selector)).
 
+### Connect using an Elastic Cloud ID
+
+If you are using [Elastic Cloud](https://www.elastic.co/cloud), you can provide your cloud id to the client.
+You must supply your username and password separately, and optionally a port. If no port is supplied,
+port 9243 will be used.
+
+Note: Do not enable sniffing when using Elastic Cloud. The nodes are behind a load balancer so
+Elastic Cloud will take care of everything for you.
+
+    Elasticsearch::Client.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme')
+
 ### Authentication
 
 You can pass the authentication credentials, scheme and port in the host configuration hash:
