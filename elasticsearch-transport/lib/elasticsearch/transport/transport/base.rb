@@ -371,12 +371,12 @@ module Elasticsearch
 
         def apply_headers(client, options)
           headers = options[:headers] || {}
-          headers[CONTENT_TYPE_STR] = find_key_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
-          headers[USER_AGENT_STR] = find_key_value(headers, USER_AGENT_REGEX) || user_agent_header(client)
+          headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
+          headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header(client)
           client.headers.merge!(headers)
         end
 
-        def find_key_value(hash, regex)
+        def find_value(hash, regex)
           key_value = hash.find { |k,v| k.to_s.downcase =~ regex }
           if key_value
             hash.delete(key_value[0])

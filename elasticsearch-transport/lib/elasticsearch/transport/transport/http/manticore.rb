@@ -156,8 +156,8 @@ module Elasticsearch
 
           def apply_headers(request_options, options)
             headers = (options && options[:headers]) || {}
-            headers[CONTENT_TYPE_STR] = find_key_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
-            headers[USER_AGENT_STR] = find_key_value(headers, USER_AGENT_REGEX) || user_agent_header
+            headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
+            headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header
             request_options.merge!(headers: headers)
           end
 
