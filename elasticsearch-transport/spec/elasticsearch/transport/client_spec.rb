@@ -72,6 +72,17 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
+  context 'when a user-agent header is specified as client option in lower-case' do
+
+    let(:client) do
+      described_class.new(transport_options: { headers: { 'user-agent' => 'testing' } })
+    end
+
+    it 'sets the specified User-Agent header' do
+      expect(client.transport.connections.first.connection.headers['User-Agent']).to eq('testing')
+    end
+  end
+
   context 'when a Content-Type header is specified as client option' do
 
     let(:client) do
@@ -133,6 +144,18 @@ describe Elasticsearch::Transport::Client do
       let(:client) do
         described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
                             transport_options: { headers: { 'User-Agent' => 'testing' } })
+      end
+
+      it 'sets the specified User-Agent header' do
+        expect(client.transport.connections.first.connection.headers['User-Agent']).to eq('testing')
+      end
+    end
+
+    context 'when a user-agent header is specified as a client option as lower-case' do
+
+      let(:client) do
+        described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
+                            transport_options: { headers: { 'user-agent' => 'testing' } })
       end
 
       it 'sets the specified User-Agent header' do
