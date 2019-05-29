@@ -111,7 +111,7 @@ module Elasticsearch
           def __build_connections
             @request_options = {}
             apply_headers(@request_options, options[:transport_options])
-            apply_headers(@request_options, options[:headers])
+            apply_headers(@request_options, options)
 
             Connections::Collection.new \
               :connections => hosts.map { |host|
@@ -155,17 +155,10 @@ module Elasticsearch
           private
 
           def apply_headers(request_options, options)
-            headers = (options[:headers] || {}).inject({}) do |h, (k, v)|
-              if k.to_s.downcase =~ /content\-?\_?type/
-                h[CONTENT_TYPE_STR] = v
-              else
-                h[k] = v
-              end
-              h
-            end
-            headers[CONTENT_TYPE_STR] = 'application/json' unless headers[CONTENT_TYPE_STR]
-            headers[USER_AGENT_STR] = user_agent_header(request_options) unless headers[USER_AGENT_STR]
-            request_options.merge!(headers)
+            headers = (options && options[:headers]) || {}
+            headers[CONTENT_TYPE_STR] = find_key_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
+            headers[USER_AGENT_STR] = find_key_value(headers, USER_AGENT_REGEX) || user_agent_header
+            request_options.merge!(headers: headers)
           end
 
           def user_agent_header
@@ -174,7 +167,7 @@ module Elasticsearch
               if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
                 meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
               end
-              meta << "Manticore #{Manticore::Manticore}"
+              meta << "Manticore #{::Manticore::VERSION}"
               "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
             end
           end
