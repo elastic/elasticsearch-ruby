@@ -23,6 +23,7 @@ just use a release matching major version of Elasticsearch.
 | 2.x           | → | 2.x           |
 | 5.x           | → | 5.x           |
 | 6.x           | → | 6.x           |
+| 7.x           | → | 7.x           |
 | master        | → | master        |
 
 ## Installation
