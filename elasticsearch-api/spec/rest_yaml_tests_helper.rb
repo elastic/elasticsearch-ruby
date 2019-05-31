@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
+
 TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 

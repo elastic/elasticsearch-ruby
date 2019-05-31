@@ -3,8 +3,8 @@ require 'yaml'
 require 'elasticsearch'
 require 'elasticsearch/xpack'
 require 'logger'
-require 'support/test_file'
 require 'openssl'
+require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
 
 RSpec.configure do |config|
   config.formatter = 'documentation'

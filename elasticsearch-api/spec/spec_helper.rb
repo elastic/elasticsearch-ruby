@@ -22,7 +22,6 @@ require 'jsonify'
 require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
-require 'support/test_file'
 
 require 'ansi'
 tracer = ::Logger.new(STDERR)
