@@ -53,6 +53,11 @@ module Elasticsearch
       # @since 7.2.0
       DEFAULT_CLOUD_PORT = 9243
 
+      # The default port to use if not otherwise specified.
+      #
+      # @since 7.2.0
+      DEFAULT_PORT = 9200
+
       # Returns the transport object.
       #
       # @see Elasticsearch::Transport::Transport::Base
@@ -210,12 +215,14 @@ module Elasticsearch
             # This avoids `URI::HTTP` and `URI::HTTPS`, which supply default ports.
             uri = URI::Generic.new(*URI.split(host))
 
+            default_port = uri.scheme == 'https' ? 443 : DEFAULT_PORT
+
             { :scheme => uri.scheme,
               :user => uri.user,
               :password => uri.password,
               :host => uri.host,
               :path => uri.path,
-              :port => uri.port }
+              :port => uri.port || default_port }
           else
             host, port = host.split(':')
             { :host => host,
