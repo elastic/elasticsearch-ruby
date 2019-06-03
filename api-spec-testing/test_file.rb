@@ -15,9 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'support/test_file/action'
-require 'support/test_file/test'
-require 'support/test_file/task_group'
+require_relative 'test_file/action'
+require_relative 'test_file/test'
+require_relative 'test_file/task_group'
 
 module Elasticsearch
 
@@ -115,8 +115,7 @@ module Elasticsearch
         # This method deletes indices, roles, datafeeds, etc.
         #
         # @since 6.2.0
-        def prepare(client)
-          clear_indices(client)
+        def clear_data_xpack(client)
           clear_roles(client)
           clear_users(client)
           clear_privileges(client)
@@ -126,6 +125,7 @@ module Elasticsearch
           clear_tasks(client)
           clear_machine_learning_indices(client)
           create_x_pack_rest_user(client)
+          clear_data(client)
         end
 
         private
