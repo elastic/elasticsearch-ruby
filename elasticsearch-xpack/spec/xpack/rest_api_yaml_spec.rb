@@ -16,6 +16,7 @@
 # under the License.
 
 require 'spec_helper'
+require 'rest_yaml_tests_helper'
 
 RSpec::Matchers.define :match_response_field_length do |expected_pairs|
 
@@ -227,7 +228,7 @@ describe 'XPack Rest API YAML tests' do
 
       before(:all) do
         # Runs once before all tests in a test file
-        Elasticsearch::RestAPIYAMLTests::TestFile.prepare(ADMIN_CLIENT)
+        Elasticsearch::RestAPIYAMLTests::TestFile.clear_data_xpack(ADMIN_CLIENT)
       end
 
       test_file.tests.each do |test|

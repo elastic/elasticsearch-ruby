@@ -1,0 +1,180 @@
+# Licensed to Elasticsearch B.V. under one or more contributor
+# license agreements. See the NOTICE file distributed with
+# this work for additional information regarding copyright
+# ownership. Elasticsearch B.V. licenses this file to you under
+# the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
+
+PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
+
+TRANSPORT_OPTIONS = {}
+TEST_SUITE = ENV['TEST_SUITE'].freeze
+
+if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+  split_hosts = hosts.split(',').map do |host|
+    /(http\:\/\/)?(\S+)/.match(host)[2]
+  end
+
+  TEST_HOST, TEST_PORT = split_hosts.first.split(':')
+else
+  TEST_HOST, TEST_PORT = 'localhost', '9200'
+end
+
+raw_certificate = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.crt'))
+certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+
+raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
+key = OpenSSL::PKey::RSA.new(raw_key)
+
+
+if defined?(TEST_HOST) && defined?(TEST_PORT)
+  if TEST_SUITE == 'security'
+    TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
+                                       client_cert: certificate,
+                                       client_key: key,
+                                       ca_file: '.ci/certs/ca.crt'})
+
+    password = ENV['ELASTIC_PASSWORD']
+    URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
+  else
+    URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+  end
+
+  ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+
+  if ENV['QUIET'] == 'true'
+    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+  else
+    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                               transport_options: TRANSPORT_OPTIONS,
+                                               tracer: Logger.new($stdout))
+  end
+end
+
+
+
+YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
+    "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
+
+SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
+                ["#{File.expand_path(File.dirname('..'), '..')}" +
+                     "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test/#{ENV['SINGLE_TEST']}"]
+              end
+
+SKIPPED_TESTS = []
+
+# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
+SKIPPED_TESTS << { file:        'ssl/10_basic.yml',
+                   description: 'Test get SSL certificates' }
+
+# Current license is basic.
+SKIPPED_TESTS << { file:        'license/20_put_license.yml',
+                   description: '*' }
+
+# ArgumentError for empty body
+SKIPPED_TESTS << { file:        'watcher/put_watch/10_basic.yml',
+                   description: 'Test empty body is rejected by put watch' }
+
+# The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
+SKIPPED_TESTS << { file:        'snapshot/10_basic.yml',
+                   description: 'Create a source only snapshot and then restore it' }
+
+# The test inserts an invalid license, which makes all subsequent tests fail.
+SKIPPED_TESTS << { file:        'xpack/15_basic.yml',
+                   description: '*' }
+
+# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate user's tokens" }
+
+SKIPPED_TESTS << { file:        'token/10_basic.yml',
+                   description: "Test invalidate realm's tokens" }
+
+# Possible Docker issue. The IP from the response cannot be used to connect.HTTP input supports extracting of keys
+SKIPPED_TESTS << { file:        'watcher/execute_watch/60_http_input.yml',
+                   description: 'HTTP input supports extracting of keys' }
+
+# Searching the monitoring index returns no results.
+SKIPPED_TESTS << { file:        'monitoring/bulk/10_basic.yml',
+                   description: 'Bulk indexing of monitoring data on closed indices should throw an export exception' }
+
+# Searching the monitoring index returns no results.
+SKIPPED_TESTS << { file:        'monitoring/bulk/20_privileges.yml',
+                   description: 'Monitoring Bulk API' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to enabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade_mode to disabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Setting upgrade mode to disabled from enabled' }
+
+# Operation times out "failed_node_exception"
+SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
+                   description: 'Attempt to open job when upgrade_mode is enabled' }
+
+# 'calendar3' in the field instead of 'calendar2'
+SKIPPED_TESTS << { file:        'ml/calendar_crud.yml',
+                   description: 'Test PageParams' }
+
+# Error about creating a job that already exists.
+SKIPPED_TESTS << { file:        'ml/jobs_crud.yml',
+                   description: 'Test close job with body params' }
+
+
+# The directory of rest api YAML files.
+REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+
+# The features to skip
+REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
+
+
+# Given a list of keys, find the value in a recursively nested document.
+#
+# @param [ Array<String> ] chain The list of nested document keys.
+# @param [ Hash ] document The document to find the value in.
+#
+# @return [ Object ] The value at the nested key.
+#
+# @since 6.2.0
+def find_value_in_document(chain, document)
+  return document[chain[0]] unless chain.size > 1
+  find_value_in_document(chain[1..-1], document[chain[0]]) if document[chain[0]]
+end
+
+# Given a string representing a nested document key using dot notation,
+#   split it, keeping escaped dots as part of a key name and replacing
+#   numerics with a Ruby Integer.
+#
+# For example:
+#   "joe.metadata.2.key2" => ['joe', 'metadata', 2, 'key2']
+#   "jobs.0.node.attributes.ml\\.enabled" => ["jobs", 0, "node", "attributes", "ml\\.enabled"]
+#
+# @param [ String ] chain The list of nested document keys.
+# @param [ Hash ] document The document to find the value in.
+#
+# @return [ Array<Object> ] A list of the nested keys.
+#
+# @since 6.2.0
+def split_and_parse_key(key)
+  key.split(/(?<!\\)\./).map do |key|
+    (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
+  end.reject { |k| k == '$body' }
+end
