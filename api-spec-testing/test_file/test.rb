@@ -26,6 +26,47 @@ module Elasticsearch
       # @since 6.2.0
       class Test
 
+        class << self
+
+          # Given a list of keys, find the value in a recursively nested document.
+          #
+          # @param [ Array<String> ] chain The list of nested document keys.
+          # @param [ Hash ] document The document to find the value in.
+          #
+          # @return [ Object ] The value at the nested key.
+          #
+          # @since 6.2.0
+          def find_value_in_document(chain, document)
+            return document[chain[0]] unless chain.size > 1
+            # a number can be a string key in a Hash or indicate an element in a list
+            if document.is_a?(Hash)
+              find_value_in_document(chain[1..-1], document[chain[0].to_s]) if document[chain[0].to_s]
+            elsif document[chain[0]]
+              find_value_in_document(chain[1..-1], document[chain[0]]) if document[chain[0]]
+            end
+          end
+
+          # Given a string representing a nested document key using dot notation,
+          #   split it, keeping escaped dots as part of a key name and replacing
+          #   numerics with a Ruby Integer.
+          #
+          # For example:
+          #   "joe.metadata.2.key2" => ['joe', 'metadata', 2, 'key2']
+          #   "jobs.0.node.attributes.ml\\.enabled" => ["jobs", 0, "node", "attributes", "ml\\.enabled"]
+          #
+          # @param [ String ] chain The list of nested document keys.
+          # @param [ Hash ] document The document to find the value in.
+          #
+          # @return [ Array<Object> ] A list of the nested keys.
+          #
+          # @since 6.2.0
+          def split_and_parse_key(key)
+            key.split(/(?<!\\)\./).map do |key|
+              (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
+            end.reject { |k| k == '$body' }
+          end
+        end
+
         attr_reader :description
         attr_reader :test_file
         attr_reader :cached_values
@@ -189,6 +230,23 @@ module Elasticsearch
             @skip.collect { |s| s['skip'] }.any? do |skip|
               contains_features_to_skip?(features_to_skip, skip) || skip_version?(client, skip)
             end
+          end
+        end
+
+        # Replace the `$master` substring in a key with the cached master node's id.
+        #
+        # @param [ String ] expected_key The expected key, containing the substring `$master` that needs to be replaced.
+        #
+        # See test xpack/10_basic.yml
+        
+        # @return [ String ] The altered key.
+        #
+        # @since 7.2.0
+        def inject_master_node_id(expected_key)
+          if cached_values['master']
+            expected_key.gsub(/\$master/, cached_values['master'])
+          else
+            expected_key
           end
         end
 
