@@ -136,7 +136,7 @@ Please see below for an exception to this when connecting using an Elastic Cloud
 
 If you are using [Elastic Cloud](https://www.elastic.co/cloud), you can provide your cloud id to the client.
 You must supply your username and password separately, and optionally a port. If no port is supplied,
-port 9243 will be used.
+port 443 will be used.
 
 Note: Do not enable sniffing when using Elastic Cloud. The nodes are behind a load balancer so
 Elastic Cloud will take care of everything for you.
