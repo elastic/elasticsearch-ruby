@@ -49,9 +49,15 @@ module Elasticsearch
       DEFAULT_HOST = 'localhost:9200'.freeze
 
       # The default port to use if connecting using a Cloud ID.
+      # Updated from 9243 to 443 in client version 7.10.1
       #
       # @since 7.2.0
-      DEFAULT_CLOUD_PORT = 9243
+      DEFAULT_CLOUD_PORT = 443
+
+      # The default port to use if not otherwise specified.
+      #
+      # @since 7.2.0
+      DEFAULT_PORT = 9200
 
       # Returns the transport object.
       #
@@ -243,36 +249,38 @@ module Elasticsearch
 
       def __parse_host(host)
         host_parts = case host
-        when String
-          if host =~ /^[a-z]+\:\/\//
-            # Construct a new `URI::Generic` directly from the array returned by URI::split.
-            # This avoids `URI::HTTP` and `URI::HTTPS`, which supply default ports.
-            uri = URI::Generic.new(*URI.split(host))
-
-            { :scheme => uri.scheme,
-              :user => uri.user,
-              :password => uri.password,
-              :host => uri.host,
-              :path => uri.path,
-              :port => uri.port }
-          else
-            host, port = host.split(':')
-            { :host => host,
-              :port => port }
-          end
-        when URI
-          { :scheme => host.scheme,
-            :user => host.user,
-            :password => host.password,
-            :host => host.host,
-            :path => host.path,
-            :port => host.port }
-        when Hash
-          host
-        else
-          raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
-        end
-
+                     when String
+                       if host =~ /^[a-z]+\:\/\//
+                         # Construct a new `URI::Generic` directly from the array returned by URI::split.
+                         # This avoids `URI::HTTP` and `URI::HTTPS`, which supply default ports.
+                         uri = URI::Generic.new(*URI.split(host))
+                         default_port = uri.scheme == 'https' ? 443 : DEFAULT_PORT
+                         {
+                           scheme: uri.scheme,
+                           user: uri.user,
+                           password: uri.password,
+                           host: uri.host,
+                           path: uri.path,
+                           port: uri.port || default_port
+                         }
+                       else
+                         host, port = host.split(':')
+                         { host: host, port: port }
+                       end
+                     when URI
+                       {
+                         scheme: host.scheme,
+                         user: host.user,
+                         password: host.password,
+                         host: host.host,
+                         path: host.path,
+                         port: host.port
+                       }
+                     when Hash
+                       host
+                     else
+                       raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
+                     end
         if @api_key
           # Remove Basic Auth if using API KEY
           host_parts.delete(:user)
