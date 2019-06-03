@@ -27,8 +27,8 @@ RSpec::Matchers.define :match_response_field_length do |expected_pairs, test|
       # ssl test returns results at '$body' key. See ssl/10_basic.yml
       expected_pairs = expected_pairs['$body'] if expected_pairs['$body']
 
-      expected_key = inject_master_node_id(expected_key, test)
-      split_key = split_and_parse_key(expected_key)
+      expected_key = test.inject_master_node_id(expected_key)
+      split_key = Test.split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
@@ -49,8 +49,8 @@ RSpec::Matchers.define :match_true_field do |field, test|
   match do |response|
     # Handle is_true: ''
     return !!response if field == ''
-    split_key = split_and_parse_key(field).collect { |k| test.get_cached_value(k) }
-    !!find_value_in_document(split_key, response)
+    split_key = Test.split_and_parse_key(field).collect { |k| test.get_cached_value(k) }
+    !!Test.find_value_in_document(split_key, response)
   end
 end
 
@@ -60,8 +60,8 @@ RSpec::Matchers.define :match_false_field do |field, test|
   match do |response|
     # Handle is_false: ''
     return !response if field == ''
-    split_key = split_and_parse_key(field).collect { |k| test.get_cached_value(k) }
-    value_in_doc = find_value_in_document(split_key, response)
+    split_key = Test.split_and_parse_key(field).collect { |k| test.get_cached_value(k) }
+    value_in_doc = Test.find_value_in_document(split_key, response)
     value_in_doc == 0 || !value_in_doc
   end
 end
@@ -72,8 +72,8 @@ RSpec::Matchers.define :match_gte_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
-      expected_key = inject_master_node_id(expected_key, test)
-      split_key = split_and_parse_key(expected_key)
+      expected_key = test.inject_master_node_id(expected_key)
+      split_key = Test.split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
 
@@ -95,8 +95,8 @@ RSpec::Matchers.define :match_gt_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
-      expected_key = inject_master_node_id(expected_key, test)
-      split_key = split_and_parse_key(expected_key)
+      expected_key = test.inject_master_node_id(expected_key)
+      split_key = Test.split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
@@ -117,8 +117,8 @@ RSpec::Matchers.define :match_lte_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
-      expected_key = inject_master_node_id(expected_key, test)
-      split_key = split_and_parse_key(expected_key)
+      expected_key = test.inject_master_node_id(expected_key)
+      split_key = Test.split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
@@ -139,8 +139,8 @@ RSpec::Matchers.define :match_lt_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
-      expected_key = inject_master_node_id(expected_key, test)
-      split_key = split_and_parse_key(expected_key)
+      expected_key = test.inject_master_node_id(expected_key)
+      split_key = Test.split_and_parse_key(expected_key)
 
       actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
@@ -172,10 +172,10 @@ RSpec::Matchers.define :match_response do |expected_pairs, test|
 
       # See test xpack/10_basic.yml
       # The master node id must be injected in the keys of match clauses
-      expected_key = inject_master_node_id(expected_key, test)
+      expected_key = test.inject_master_node_id(expected_key)
 
-      split_key = split_and_parse_key(expected_key)
-      actual_value = find_value_in_document(split_key, response)
+      split_key = Test.split_and_parse_key(expected_key)
+      actual_value = Test.find_value_in_document(split_key, response)
 
       # Sometimes the expected value is a cached value from a previous request.
       # See test api_key/10_basic.yml

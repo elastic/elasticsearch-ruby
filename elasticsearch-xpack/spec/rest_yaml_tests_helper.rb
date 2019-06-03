@@ -144,37 +144,3 @@ REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml"
 
 # The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
-
-
-# Given a list of keys, find the value in a recursively nested document.
-#
-# @param [ Array<String> ] chain The list of nested document keys.
-# @param [ Hash ] document The document to find the value in.
-#
-# @return [ Object ] The value at the nested key.
-#
-# @since 6.2.0
-def find_value_in_document(chain, document)
-  return document[chain[0]] unless chain.size > 1
-  find_value_in_document(chain[1..-1], document[chain[0]]) if document[chain[0]]
-end
-
-# Given a string representing a nested document key using dot notation,
-#   split it, keeping escaped dots as part of a key name and replacing
-#   numerics with a Ruby Integer.
-#
-# For example:
-#   "joe.metadata.2.key2" => ['joe', 'metadata', 2, 'key2']
-#   "jobs.0.node.attributes.ml\\.enabled" => ["jobs", 0, "node", "attributes", "ml\\.enabled"]
-#
-# @param [ String ] chain The list of nested document keys.
-# @param [ Hash ] document The document to find the value in.
-#
-# @return [ Array<Object> ] A list of the nested keys.
-#
-# @since 6.2.0
-def split_and_parse_key(key)
-  key.split(/(?<!\\)\./).map do |key|
-    (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
-  end.reject { |k| k == '$body' }
-end
