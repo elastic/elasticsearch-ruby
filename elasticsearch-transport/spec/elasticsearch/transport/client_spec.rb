@@ -295,7 +295,7 @@ describe Elasticsearch::Transport::Client do
     context 'when a port is specified' do
 
       let(:client) do
-        described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme', port: 9200 )
+        described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme', port: 9250 )
       end
 
       it 'sets the specified port along with the cloud credentials' do
@@ -303,7 +303,7 @@ describe Elasticsearch::Transport::Client do
         expect(hosts[0][:protocol]).to eq('https')
         expect(hosts[0][:user]).to eq('elastic')
         expect(hosts[0][:password]).to eq('changeme')
-        expect(hosts[0][:port]).to eq(9200)
+        expect(hosts[0][:port]).to eq(9250)
       end
 
       it 'creates the correct full url' do
@@ -314,112 +314,248 @@ describe Elasticsearch::Transport::Client do
 
   shared_examples_for 'a client that extracts hosts' do
 
-    context 'when the hosts are a String' do
+    context 'when the host is a String' do
 
-      let(:host) do
-        'myhost'
-      end
+      context 'when there is a protocol specified' do
 
-      it 'extracts the host' do
-        expect(hosts[0][:host]).to eq('myhost')
-        expect(hosts[0][:protocol]).to eq('http')
-        expect(hosts[0][:port]).to be(9200)
-      end
+        context 'when credentials are specified \'http://USERNAME:PASSWORD@myhost:8080\'' do
 
-      context 'when IPv6 format is used' do
+          let(:host) do
+            'http://USERNAME:PASSWORD@myhost:8080'
+          end
 
-        around do |example|
-          original_setting = Faraday.ignore_env_proxy
-          Faraday.ignore_env_proxy = true
-          example.run
-          Faraday.ignore_env_proxy = original_setting
+          it 'extracts the credentials' do
+            expect(hosts[0][:user]).to eq('USERNAME')
+            expect(hosts[0][:password]).to eq('PASSWORD')
+          end
+
+          it 'extracts the host' do
+            expect(hosts[0][:host]).to eq('myhost')
+          end
+
+          it 'extracts the port' do
+            expect(hosts[0][:port]).to be(8080)
+          end
         end
+
+        context 'when there is a trailing slash \'http://myhost/\'' do
+
+          let(:host) do
+            'http://myhost/'
+          end
+
+          it 'extracts the host' do
+            expect(hosts[0][:host]).to eq('myhost')
+            expect(hosts[0][:scheme]).to eq('http')
+            expect(hosts[0][:path]).to eq('')
+          end
+
+          it 'extracts the scheme' do
+            expect(hosts[0][:scheme]).to eq('http')
+          end
+
+          it 'extracts the path' do
+            expect(hosts[0][:path]).to eq('')
+          end
+        end
+
+        context 'when there is a trailing slash with a path \'http://myhost/foo/bar/\'' do
+
+          let(:host) do
+            'http://myhost/foo/bar/'
+          end
+
+          it 'extracts the host' do
+            expect(hosts[0][:host]).to eq('myhost')
+            expect(hosts[0][:scheme]).to eq('http')
+            expect(hosts[0][:path]).to eq('/foo/bar')
+          end
+        end
+
+        context 'when the protocol is http' do
+
+          context 'when there is no port specified \'http://myhost\'' do
+
+            let(:host) do
+              'http://myhost'
+            end
+
+            it 'extracts the host' do
+              expect(hosts[0][:host]).to eq('myhost')
+            end
+
+            it 'extracts the protocol' do
+              expect(hosts[0][:protocol]).to eq('http')
+            end
+
+            it 'defaults to port 9200' do
+              expect(hosts[0][:port]).to be(9200)
+            end
+          end
+
+          context 'when there is a port specified \'http://myhost:7101\'' do
+
+            let(:host) do
+              'http://myhost:7101'
+            end
+
+            it 'extracts the host' do
+              expect(hosts[0][:host]).to eq('myhost')
+            end
+
+            it 'extracts the protocol' do
+              expect(hosts[0][:protocol]).to eq('http')
+            end
+
+            it 'extracts the port' do
+              expect(hosts[0][:port]).to be(7101)
+            end
+
+            context 'when there is a path specified \'http://myhost:7101/api\'' do
+
+              let(:host) do
+                'http://myhost:7101/api'
+              end
+
+              it 'sets the path' do
+                expect(hosts[0][:host]).to eq('myhost')
+                expect(hosts[0][:protocol]).to eq('http')
+                expect(hosts[0][:path]).to eq('/api')
+                expect(hosts[0][:port]).to be(7101)
+              end
+
+              it 'extracts the host' do
+                expect(hosts[0][:host]).to eq('myhost')
+              end
+
+              it 'extracts the protocol' do
+                expect(hosts[0][:protocol]).to eq('http')
+              end
+
+              it 'extracts the port' do
+                expect(hosts[0][:port]).to be(7101)
+              end
+
+              it 'extracts the path' do
+                expect(hosts[0][:path]).to eq('/api')
+              end
+            end
+          end
+        end
+
+        context 'when the protocol is https' do
+
+          context 'when there is no port specified \'https://myhost\'' do
+
+            let(:host) do
+              'https://myhost'
+            end
+
+            it 'extracts the host' do
+              expect(hosts[0][:host]).to eq('myhost')
+            end
+
+            it 'extracts the protocol' do
+              expect(hosts[0][:protocol]).to eq('https')
+            end
+
+            it 'defaults to port 443' do
+              expect(hosts[0][:port]).to be(443)
+            end
+          end
+
+          context 'when there is a port specified \'https://myhost:7101\'' do
+
+            let(:host) do
+              'https://myhost:7101'
+            end
+
+            it 'extracts the host' do
+              expect(hosts[0][:host]).to eq('myhost')
+            end
+
+            it 'extracts the protocol' do
+              expect(hosts[0][:protocol]).to eq('https')
+            end
+
+            it 'extracts the port' do
+              expect(hosts[0][:port]).to be(7101)
+            end
+
+            context 'when there is a path specified \'https://myhost:7101/api\'' do
+
+              let(:host) do
+                'https://myhost:7101/api'
+              end
+
+              it 'extracts the host' do
+                expect(hosts[0][:host]).to eq('myhost')
+              end
+
+              it 'extracts the protocol' do
+                expect(hosts[0][:protocol]).to eq('https')
+              end
+
+              it 'extracts the port' do
+                expect(hosts[0][:port]).to be(7101)
+              end
+
+              it 'extracts the path' do
+                expect(hosts[0][:path]).to eq('/api')
+              end
+            end
+          end
+
+          context 'when IPv6 format is used' do
+
+            around do |example|
+              original_setting = Faraday.ignore_env_proxy
+              Faraday.ignore_env_proxy = true
+              example.run
+              Faraday.ignore_env_proxy = original_setting
+            end
+
+            let(:host) do
+              'https://[2090:db8:85a3:9811::1f]:8080'
+            end
+
+            it 'extracts the host' do
+              expect(hosts[0][:host]).to eq('[2090:db8:85a3:9811::1f]')
+            end
+
+            it 'extracts the protocol' do
+              expect(hosts[0][:protocol]).to eq('https')
+            end
+
+            it 'extracts the port' do
+              expect(hosts[0][:port]).to be(8080)
+            end
+
+            it 'creates the correct full url' do
+              expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://[2090:db8:85a3:9811::1f]:8080')
+            end
+          end
+        end
+      end
+
+      context 'when no protocol is specified \'myhost\'' do
 
         let(:host) do
-          'https://[2090:db8:85a3:9811::1f]:8080'
+          'myhost'
         end
 
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('[2090:db8:85a3:9811::1f]')
-          expect(hosts[0][:scheme]).to eq('https')
-          expect(hosts[0][:port]).to be(8080)
-        end
-
-        it 'creates the correct full url' do
-          expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://[2090:db8:85a3:9811::1f]:8080')
-        end
-      end
-
-      context 'when a path is specified' do
-
-        let(:host) do
-          'https://myhost:8080/api'
-        end
-
-        it 'extracts the host' do
+        it 'defaults to http' do
           expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:scheme]).to eq('https')
-          expect(hosts[0][:path]).to eq('/api')
-          expect(hosts[0][:port]).to be(8080)
-        end
-      end
-
-      context 'when a scheme is specified' do
-
-        let(:host) do
-          'https://myhost:8080'
+          expect(hosts[0][:protocol]).to eq('http')
         end
 
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:scheme]).to eq('https')
-          expect(hosts[0][:port]).to be(8080)
-        end
-      end
-
-      context 'when credentials are specified' do
-
-        let(:host) do
-          'http://USERNAME:PASSWORD@myhost:8080'
-        end
-
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:scheme]).to eq('http')
-          expect(hosts[0][:user]).to eq('USERNAME')
-          expect(hosts[0][:password]).to eq('PASSWORD')
-          expect(hosts[0][:port]).to be(8080)
-        end
-      end
-
-      context 'when there is a trailing slash' do
-
-        let(:host) do
-          'http://myhost/'
-        end
-
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:scheme]).to eq('http')
-          expect(hosts[0][:path]).to eq('')
-        end
-      end
-
-      context 'when there is a trailing slash with a path' do
-
-        let(:host) do
-          'http://myhost/foo/bar/'
-        end
-
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:scheme]).to eq('http')
-          expect(hosts[0][:path]).to eq('/foo/bar')
+        it 'uses port 9200' do
+          expect(hosts[0][:port]).to be(9200)
         end
       end
     end
 
-    context 'when the hosts are a Hash' do
+    context 'when the host is a Hash' do
 
       let(:host) do
         { :host => 'myhost', :scheme => 'https' }
@@ -427,7 +563,13 @@ describe Elasticsearch::Transport::Client do
 
       it 'extracts the host' do
         expect(hosts[0][:host]).to eq('myhost')
-        expect(hosts[0][:scheme]).to eq('https')
+      end
+
+      it 'extracts the protocol' do
+        expect(hosts[0][:protocol]).to eq('https')
+      end
+
+      it 'extracts the port' do
         expect(hosts[0][:port]).to be(9200)
       end
 
@@ -486,7 +628,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
+        end
+
+        it 'extracts the protocol' do
           expect(hosts[0][:scheme]).to eq('https')
+        end
+
+        it 'converts the port to an integer' do
           expect(hosts[0][:port]).to be(443)
         end
       end
@@ -499,7 +647,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
+        end
+
+        it 'extracts the protocol' do
           expect(hosts[0][:scheme]).to eq('https')
+        end
+
+        it 'extracts port as an integer' do
           expect(hosts[0][:port]).to be(443)
         end
       end
@@ -513,7 +667,13 @@ describe Elasticsearch::Transport::Client do
 
       it 'extracts the host' do
         expect(hosts[0][:host]).to eq('myhost')
+      end
+
+      it 'extracts the protocol' do
         expect(hosts[0][:scheme]).to eq('https')
+      end
+
+      it 'converts the port to an integer' do
         expect(hosts[0][:port]).to be(9200)
       end
 
@@ -525,7 +685,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
+        end
+
+        it 'extracts the protocol' do
           expect(hosts[0][:scheme]).to eq('https')
+        end
+
+        it 'converts the port to an integer' do
           expect(hosts[0][:port]).to be(443)
         end
       end
@@ -538,7 +704,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
+        end
+
+        it 'extracts the protocol' do
           expect(hosts[0][:scheme]).to eq('https')
+        end
+
+        it 'extracts port as an integer' do
           expect(hosts[0][:port]).to be(443)
         end
       end
@@ -554,7 +726,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
+        end
+
+        it 'extracts the protocol' do
           expect(hosts[0][:protocol]).to eq('http')
+        end
+
+        it 'defaults to port 9200' do
           expect(hosts[0][:port]).to be(9200)
         end
       end
@@ -567,20 +745,13 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:protocol]).to eq('http')
-          expect(hosts[0][:port]).to be(9200)
-        end
-      end
-
-      context 'when there is one host with a protocol and no port' do
-
-        let(:host) do
-          ['http://myhost']
         end
 
-        it 'extracts the host' do
-          expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:protocol]).to eq('http')
+        it 'extracts the protocol' do
+          expect(hosts[0][:scheme]).to eq('http')
+        end
+
+        it 'defaults to port 9200' do
           expect(hosts[0][:port]).to be(9200)
         end
       end
@@ -605,7 +776,7 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
-      context 'when there is one host with a scheme, protocol and no port' do
+      context 'when there is one host with a protocol and no port' do
 
         let(:host) do
           ['https://myhost']
@@ -613,12 +784,18 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:protocol]).to eq('https')
-          expect(hosts[0][:port]).to be(9200)
+        end
+
+        it 'extracts the protocol' do
+          expect(hosts[0][:scheme]).to eq('https')
+        end
+
+        it 'defaults to port 443' do
+          expect(hosts[0][:port]).to be(443)
         end
       end
 
-      context 'when there is one host with a scheme, protocol, path, and no port' do
+      context 'when there is one host with a protocol, path, and no port' do
 
         let(:host) do
           ['http://myhost/foo/bar']
@@ -626,9 +803,18 @@ describe Elasticsearch::Transport::Client do
 
         it 'extracts the host' do
           expect(hosts[0][:host]).to eq('myhost')
-          expect(hosts[0][:protocol]).to eq('http')
+        end
+
+        it 'extracts the protocol' do
+          expect(hosts[0][:scheme]).to eq('http')
+        end
+
+        it 'defaults to port 9200' do
           expect(hosts[0][:port]).to be(9200)
-          expect(hosts[0][:path]).to eq("/foo/bar")
+        end
+
+        it 'extracts the path' do
+          expect(hosts[0][:path]).to eq('/foo/bar')
         end
       end
 
@@ -638,7 +824,7 @@ describe Elasticsearch::Transport::Client do
           ['host1', 'host2']
         end
 
-        it 'extracts the host' do
+        it 'extracts the hosts' do
           expect(hosts[0][:host]).to eq('host1')
           expect(hosts[0][:protocol]).to eq('http')
           expect(hosts[0][:port]).to be(9200)
@@ -654,7 +840,7 @@ describe Elasticsearch::Transport::Client do
           ['host1:1000', 'host2:2000']
         end
 
-        it 'extracts the host' do
+        it 'extracts the hosts' do
           expect(hosts[0][:host]).to eq('host1')
           expect(hosts[0][:protocol]).to eq('http')
           expect(hosts[0][:port]).to be(1000)
