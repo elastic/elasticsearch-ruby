@@ -238,7 +238,7 @@ module Elasticsearch
         # @param [ String ] expected_key The expected key, containing the substring `$master` that needs to be replaced.
         #
         # See test xpack/10_basic.yml
-        
+
         # @return [ String ] The altered key.
         #
         # @since 7.2.0
