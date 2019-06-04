@@ -40,13 +40,14 @@ certificate = OpenSSL::X509::Certificate.new(raw_certificate)
 raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
 key = OpenSSL::PKey::RSA.new(raw_key)
 
+ca_file = File.join(PROJECT_PATH, '/.ci/certs/ca.crt')
 
 if defined?(TEST_HOST) && defined?(TEST_PORT)
   if TEST_SUITE == 'security'
     TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
                                        client_cert: certificate,
                                        client_key: key,
-                                       ca_file: '.ci/certs/ca.crt'})
+                                       ca_file: ca_file })
 
     password = ENV['ELASTIC_PASSWORD']
     URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
