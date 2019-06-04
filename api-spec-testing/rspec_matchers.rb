@@ -46,7 +46,10 @@ RSpec::Matchers.define :match_true_field do |field, test|
   match do |response|
     # Handle is_true: ''
     return !!response if field == ''
-    split_key = TestFile::Test.split_and_parse_key(field).collect { |k| test.get_cached_value(k) }
+    split_key = TestFile::Test.split_and_parse_key(field)
+    return true if TestFile::Test.find_value_in_document(split_key, response)
+
+    split_key = split_key.collect { |k| test.get_cached_value(k) }
     !!TestFile::Test.find_value_in_document(split_key, response)
   end
 end
