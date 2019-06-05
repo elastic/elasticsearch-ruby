@@ -2,12 +2,13 @@
 - job:
     project-type: freestyle
     name: elastic+elasticsearch-ruby+ping-testing
+    disabled: true
     concurrent: false
     display-name: 'elastic / elasticsearch-ruby ping-testing'
     description: Recording network latency from a dynamic worker to static machines.
     node: 'immutable && ubuntu-16.04'
     triggers:
-      #- timed: '@hourly'
+      - timed: '@hourly'
     builders:
       - shell: |-
           #!/usr/local/bin/runbld --script-only
