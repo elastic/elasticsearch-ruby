@@ -1,3 +1,12 @@
+### DSL 0.1.8
+
+* Swap links elasticsearch.org->elastic.co (@harry-wood)
+* Add a composite aggregation (@watsonjon)
+* Don't specify a type when creating mappings in tests
+* Update links in elasticsearch-dsl README
+* Allow Bool query and Bool filter methods to take objects as arguments
+* Edit tests on bool query / filter to match context
+
 ## 7.0.0.pre
 
 * Added `elastic_ruby_console` executable
