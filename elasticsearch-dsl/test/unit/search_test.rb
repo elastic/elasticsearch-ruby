@@ -213,6 +213,13 @@ module Elasticsearch
             subject.sort :foo
             assert_instance_of Elasticsearch::DSL::Search::Sort, subject.sort
           end
+
+          should "have a setter method" do
+            sort_object = Elasticsearch::DSL::Search::Sort.new foo: { order: 'desc' }, bar: { order: 'asc' }
+            subject.sort = sort_object
+            assert_not_nil subject.sort
+            assert_equal( { sort: [ { foo: { order: "desc" }, bar: { order: "asc" } } ] }, subject.to_hash )
+          end
         end
 
         context "with suggest" do
