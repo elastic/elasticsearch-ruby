@@ -178,6 +178,12 @@ module Elasticsearch
           end
         end
 
+        # Set the sort part of a search definition
+        #
+        def sort=(value)
+          @sort = value
+        end
+
         # DSL method for building the `stored_fields` part of a search definition
         #
         # @return [self]
