@@ -307,7 +307,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'creates the correct full url' do
-        expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost:9200')
+        expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost:9250')
       end
     end
   end
