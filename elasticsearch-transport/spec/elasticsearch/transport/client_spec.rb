@@ -1424,6 +1424,64 @@ describe Elasticsearch::Transport::Client do
           }.to raise_exception(Elasticsearch::Transport::Transport::Errors::BadRequest)
         end
       end
+
+      context 'when \'transport_options\' are defined with \'accept_encoding\' specified' do
+
+        context 'when using the Net::HTTP adapter' do
+
+          let!(:client) do
+            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http)
+          end
+
+          it 'sets the options on the transport' do
+            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          end
+        end
+
+        context 'when using the HTTPClient adapter' do
+
+          let!(:client) do
+            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :httpclient)
+          end
+
+          it 'sets the options on the transport' do
+            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          end
+        end
+
+        context 'when using the Patron adapter' do
+
+          let!(:client) do
+            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :patron)
+          end
+
+          it 'sets the options on the transport' do
+            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          end
+        end
+
+        context 'when using the Net::HTTP::Persistent adapter' do
+
+          let!(:client) do
+            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http_persistent)
+          end
+
+          it 'sets the options on the transport' do
+            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          end
+        end
+
+        context 'when using the Typhoeus adapter' do
+
+          let!(:client) do
+            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :typhoeus)
+          end
+
+          it 'sets the options on the transport' do
+            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          end
+        end
+      end
     end
 
     describe '#perform_request' do

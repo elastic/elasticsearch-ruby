@@ -35,4 +35,5 @@ end
 group :development do
   gem 'rspec'
   gem 'pry-nav'
+  gem 'httpclient'
 end
