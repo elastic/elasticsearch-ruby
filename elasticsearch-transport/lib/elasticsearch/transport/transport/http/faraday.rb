@@ -42,7 +42,7 @@ module Elasticsearch
                                                            ( body ? __convert_to_json(body) : nil ),
                                                            headers)
 
-              Response.new response.status, decompress_response!(response), response.headers
+              Response.new response.status, decompress_response(response), response.headers
             end
           end
 
@@ -71,7 +71,7 @@ module Elasticsearch
           HEX_STRING_DIRECTIVE = 'H*'.freeze
           RUBY_ENCODING = '1.9'.respond_to?(:force_encoding)
 
-          def decompress_response!(response)
+          def decompress_response(response)
             body = response.body
             return body unless response.headers['content-encoding'] == GZIP
             return body unless gzipped?(body)
