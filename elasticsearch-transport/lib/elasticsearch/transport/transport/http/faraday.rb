@@ -42,7 +42,7 @@ module Elasticsearch
                                                            ( body ? __convert_to_json(body) : nil ),
                                                            headers)
 
-              Response.new response.status, response.body, response.headers
+              Response.new response.status, decompress_response!(response), response.headers
             end
           end
 
@@ -65,6 +65,29 @@ module Elasticsearch
           end
 
           private
+
+          GZIP = 'gzip'.freeze
+          GZIP_FIRST_TWO_BYTES = '1f8b'.freeze
+          HEX_STRING_DIRECTIVE = 'H*'.freeze
+          RUBY_ENCODING = '1.9'.respond_to?(:force_encoding)
+
+          def decompress_response!(response)
+            body = response.body
+            return body unless response.headers['content-encoding'] == GZIP
+            return body unless gzipped?(body)
+
+            io = StringIO.new(body)
+            gzip_reader = if RUBY_ENCODING
+                            Zlib::GzipReader.new(io, :encoding => 'ASCII-8BIT')
+                          else
+                            Zlib::GzipReader.new(io)
+                          end
+            gzip_reader.read
+          end
+
+          def gzipped?(body)
+            body[0..1].unpack(HEX_STRING_DIRECTIVE)[0] == GZIP_FIRST_TWO_BYTES
+          end
 
           def user_agent_header(client)
             @user_agent ||= begin
