@@ -73,7 +73,7 @@ module Elasticsearch
 
           def decompress_response(response)
             body = response.body
-            return body unless response.headers['content-encoding'] == GZIP
+            return body unless response.headers && response.headers['content-encoding'] == GZIP
             return body unless gzipped?(body)
 
             io = StringIO.new(body)
