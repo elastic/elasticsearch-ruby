@@ -78,6 +78,10 @@ module Elasticsearch
       def deprecation
         @deprecation ||= xpack.deprecation
       end
+
+      def data_frame
+        @data_frame ||= xpack.data_frame
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
