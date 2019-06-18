@@ -107,6 +107,9 @@ module Elasticsearch
                     # The arguments may contain the variable in the form ${variable} or $variable
                     args[key] = value.gsub(/\$\{?#{cached_value[0]}\}?/, cached_value[1].to_s)
                   end
+                when Time
+                  # The YAML parser reads in dates as Time objects, reconvert to a format Elasticsearch accepts
+                  args[key] = (value.to_f * 1000).to_i
                 end
               end
             elsif args.is_a?(String)

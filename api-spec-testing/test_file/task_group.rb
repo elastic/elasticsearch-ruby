@@ -293,11 +293,11 @@ module Elasticsearch
           end
 
           def variables_to_set
-            @actions.group_by { |a| a.keys.first }['set'] || []
+            @variables_to_set ||= (@actions.group_by { |a| a.keys.first }['set'] || [])
           end
 
           def variables_to_transform_and_set
-            @actions.group_by { |a| a.keys.first }['transform_and_set'] || []
+            @variables_to_transform_and_set ||= (@actions.group_by { |a| a.keys.first }['transform_and_set'] || [])
           end
 
           def transform_and_set_variable(action)
@@ -334,6 +334,8 @@ module Elasticsearch
           end
 
           def find_value(chain, document)
+            # Return the first key if an 'arbitrary key' should be return
+            return document.keys[0] if chain[0] == '_arbitrary_key_'
             return document[chain[0]] unless chain.size > 1
             find_value(chain[1..-1], document[chain[0]]) if document[chain[0]]
           end
