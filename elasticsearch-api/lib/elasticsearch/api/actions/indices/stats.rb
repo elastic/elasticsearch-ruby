@@ -120,7 +120,9 @@ module Elasticsearch
             :ignore_unavailable,
             :allow_no_indices,
             :expand_wildcards,
-            :include_segment_file_sizes ].freeze)
+            :include_segment_file_sizes,
+            :include_unloaded_segments,
+            :forbid_closed_indices ].freeze)
 
         # Register this action with its valid parts when the module is loaded.
         #

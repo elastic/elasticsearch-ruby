@@ -50,7 +50,8 @@ module Elasticsearch
           :fields,
           :ignore_unavailable,
           :allow_no_indices,
-          :expand_wildcards ].freeze)
+          :expand_wildcards,
+          :include_unmapped ].freeze)
     end
   end
 end
