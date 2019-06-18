@@ -180,7 +180,7 @@ module Elasticsearch
         def get_cached_value(key)
           case key
           when String
-            @cached_values.fetch(key.gsub(/[\$\{\}]/, ''), key)
+            key =~ /^\$/ ? @cached_values.fetch(key.gsub(/[\$\{\}]/, ''), key) : key
           when Hash
             key.inject({}) do |hash, (k, v)|
               if v.is_a?(String)
