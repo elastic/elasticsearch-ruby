@@ -30,6 +30,7 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform.html
           #
+          # @since 7.2.0
           def get_data_frame_transform(arguments={})
             arguments = arguments.clone
             transform_id = URI.escape(arguments.delete(:transform_id))
@@ -39,8 +40,8 @@ module Elasticsearch
                 :size]
 
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify( '_data_frame/transforms', Elasticsearch::API::Utils.__listify(transform_id) )
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            path   = Elasticsearch::API::Utils.__pathify('_data_frame/transforms', Elasticsearch::API::Utils.__listify(transform_id))
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, valid_params)
             body   = nil
 
             perform_request(method, path, params, body).body
