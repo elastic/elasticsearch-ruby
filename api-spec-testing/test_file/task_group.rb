@@ -334,7 +334,7 @@ module Elasticsearch
           end
 
           def find_value(chain, document)
-            # Return the first key if an 'arbitrary key' should be return
+            # Return the first key if an 'arbitrary key' should be returned
             return document.keys[0] if chain[0] == '_arbitrary_key_'
             return document[chain[0]] unless chain.size > 1
             find_value(chain[1..-1], document[chain[0]]) if document[chain[0]]
