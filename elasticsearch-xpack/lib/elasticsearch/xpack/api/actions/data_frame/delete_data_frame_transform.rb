@@ -23,14 +23,14 @@ module Elasticsearch
 
           # Deletes an existing data frame transform.
           #
-          # @option arguments [String] :transform_id The id of the transform to delete
+          # @option arguments [String] :transform_id The id of the transform to delete. *Required*
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
           #
+          # @since 7.2.0
           def delete_data_frame_transform(arguments={})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
-            arguments = arguments.clone
-            transform_id = URI.escape(arguments.delete(:transform_id))
+            transform_id = URI.escape(arguments[:transform_id])
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_data_frame/transforms/#{transform_id}"

@@ -21,9 +21,9 @@ module Elasticsearch
       module DataFrame
         module Actions
 
-          # Start a data frame analytics job.
+          # Stops one or more data frame transforms.
           #
-          # @option arguments [String] :transform_id The id of the transform to stop.
+          # @option arguments [String] :transform_id The id of the transform(s) to stop.
           # @option arguments [String] :timeout Controls the time to wait until the transform has stopped.
           #   Default to 30 seconds.
           # @option arguments [String] :wait_for_completion Whether to wait for the transform to fully stop before
@@ -31,6 +31,7 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html
           #
+          # @since 7.2.0
           def stop_data_frame_transform(arguments={})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
             arguments = arguments.clone
@@ -41,8 +42,8 @@ module Elasticsearch
                 :wait_for_completion ]
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_data_frame/transforms/#{transform_id}/_stop"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            path   = "_data_frame/transforms/#{Elasticsearch::API::Utils.__listify(transform_id)}/_stop"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, valid_params)
             body   = nil
 
             perform_request(method, path, params, body).body
