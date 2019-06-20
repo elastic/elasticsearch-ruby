@@ -23,11 +23,12 @@ module Elasticsearch
 
           # Start a data frame analytics job.
           #
-          # @option arguments [String] :transform_id The id of the transform to start.
+          # @option arguments [String] :transform_id The id of the transform to start. *Required*
           # @option arguments [String] :timeout Controls the time to wait for the transform to start.
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-data-frame-transform.html
           #
+          # @since 7.2.0
           def start_data_frame_transform(arguments={})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
             arguments = arguments.clone

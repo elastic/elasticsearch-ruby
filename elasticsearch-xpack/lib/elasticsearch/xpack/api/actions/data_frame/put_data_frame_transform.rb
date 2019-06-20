@@ -21,20 +21,20 @@ module Elasticsearch
       module DataFrame
         module Actions
 
-          # Deletes an existing data frame transform.
+          # Instantiates a data frame transform.
           #
-          # @option arguments [Hash] :transform_id The id of the new transform
-          # @option arguments [Hash] :body The data frame transform definition
+          # @option arguments [Hash] :transform_id The id of the new transform. *Required*
+          # @option arguments [Hash] :body The data frame transform definition. *Required*
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
           #
+          # @since 7.2.0
           def put_data_frame_transform(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
-            arguments = arguments.clone
-            transform_id = URI.escape(arguments.delete(:transform_id))
-            body = arguments.delete(:body)
+            transform_id = URI.escape(arguments[:transform_id])
+            body = arguments[:body]
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_data_frame/transforms/#{transform_id}"
