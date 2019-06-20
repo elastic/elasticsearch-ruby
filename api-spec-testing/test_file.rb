@@ -209,6 +209,7 @@ module Elasticsearch
             client.indices.delete(index: index, ignore: 404)
           end
           # See cat.aliases/10_basic.yml, test_index is not return in client.indices.get(index: '_all')
+          client.indices.delete(index: 'test_close', ignore: 404)
           client.indices.delete(index: 'test_closed', ignore: 404)
           client.indices.delete(index: 'index', ignore: 404)
           client.indices.delete(index: 'index2', ignore: 404)
