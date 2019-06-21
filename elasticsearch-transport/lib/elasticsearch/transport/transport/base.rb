@@ -56,6 +56,7 @@ module Elasticsearch
           @options[:retry_on_status] ||= []
 
           @block       = block
+          @compression = !!@options[:compression]
           @connections = __build_connections
 
           @serializer  = options[:serializer] || ( options[:serializer_class] ? options[:serializer_class].new(self) : DEFAULT_SERIALIZER_CLASS.new(self) )
@@ -369,6 +370,11 @@ module Elasticsearch
         CONTENT_TYPE_STR = 'Content-Type'.freeze
         CONTENT_TYPE_REGEX = /content\-?\_?type/
         DEFAULT_CONTENT_TYPE = 'application/json'.freeze
+        GZIP = 'gzip'.freeze
+
+        def use_compression?
+          @compression
+        end
 
         def apply_headers(client, options)
           headers = options[:headers] || {}
