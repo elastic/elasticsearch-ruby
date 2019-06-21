@@ -51,6 +51,7 @@ module Elasticsearch
           # @return [Connections::Connection]
           #
           def __build_connection(host, options={}, block=nil)
+            options.merge!(headers: { accept_encoding: 'gzip' }) if use_compression?
             client = ::Faraday.new(__full_url(host), options, &block)
             apply_headers(client, options)
             Connections::Connection.new :host => host, :connection => client
@@ -73,7 +74,7 @@ module Elasticsearch
 
           def decompress_response(response)
             body = response.body
-            return body unless response.headers && response.headers['content-encoding'] == GZIP
+            return body unless use_compression?
             return body unless gzipped?(body)
 
             io = StringIO.new(body)
