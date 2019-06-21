@@ -1430,7 +1430,8 @@ describe Elasticsearch::Transport::Client do
         context 'when using the Net::HTTP adapter' do
 
           let!(:client) do
-            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http)
+            #described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http)
+            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http)
           end
 
           it 'sets the options on the transport' do
@@ -1441,7 +1442,7 @@ describe Elasticsearch::Transport::Client do
         context 'when using the HTTPClient adapter' do
 
           let!(:client) do
-            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :httpclient)
+            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient)
           end
 
           it 'sets the options on the transport' do
@@ -1452,7 +1453,7 @@ describe Elasticsearch::Transport::Client do
         context 'when using the Patron adapter' do
 
           let!(:client) do
-            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :patron)
+            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
           end
 
           it 'sets the options on the transport' do
@@ -1463,7 +1464,7 @@ describe Elasticsearch::Transport::Client do
         context 'when using the Net::HTTP::Persistent adapter' do
 
           let!(:client) do
-            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http_persistent)
+            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http_persistent)
           end
 
           it 'sets the options on the transport' do
@@ -1474,7 +1475,7 @@ describe Elasticsearch::Transport::Client do
         context 'when using the Typhoeus adapter' do
 
           let!(:client) do
-            described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :typhoeus)
+            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :typhoeus)
           end
 
           it 'sets the options on the transport' do
@@ -1493,7 +1494,7 @@ describe Elasticsearch::Transport::Client do
           client.perform_request('DELETE', 'myindex') rescue
           client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 2, number_of_replicas: 0 } })
           client.perform_request('PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, { foo: 'bar' })
-          client.perform_request('GET', '_cluster/health?wait_for_status=green', {})
+          client.perform_request('GET', '_cluster/health?wait_for_status=green&timeout=2s', {})
         end
 
         let(:response) do
