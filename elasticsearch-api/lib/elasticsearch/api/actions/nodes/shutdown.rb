@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Time] :delay Set the delay for the operation (default: 1s)
         # @option arguments [Boolean] :exit Exit the JVM as well (default: true)
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-nodes-shutdown/
         #
         def shutdown(arguments={})
           method = HTTP_POST

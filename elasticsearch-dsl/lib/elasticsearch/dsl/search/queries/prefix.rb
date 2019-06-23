@@ -32,7 +32,7 @@ module Elasticsearch
         #   end
         # end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-prefix-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-prefix-query.html
         #
         class Prefix
           include BaseComponent

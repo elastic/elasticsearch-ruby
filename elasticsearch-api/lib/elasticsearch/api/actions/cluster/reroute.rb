@@ -46,7 +46,7 @@ module Elasticsearch
         # @option arguments [Boolean] :retry_failed Retries allocation of shards that are blocked due to too many
         #                                           subsequent allocation failures
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-reroute/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-reroute/
         #
         def reroute(arguments={})
           method = HTTP_POST

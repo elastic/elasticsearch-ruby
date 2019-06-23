@@ -55,7 +55,7 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-nodes-info/
         #
         def info(arguments={})
           arguments = arguments.clone

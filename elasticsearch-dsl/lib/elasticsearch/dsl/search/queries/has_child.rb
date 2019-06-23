@@ -35,7 +35,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-has-child-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-child-query.html
         #
         class HasChild
           include BaseComponent

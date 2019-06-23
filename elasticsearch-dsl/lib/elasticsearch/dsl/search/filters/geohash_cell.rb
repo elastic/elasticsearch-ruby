@@ -42,7 +42,7 @@ module Elasticsearch
         #
         # See the integration test for a working example.
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geohash-cell-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/geohash-cell-filter.html
         #
         class GeohashCell
           include BaseComponent

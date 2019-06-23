@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when
         #                                                 unavailable (missing, closed, etc)
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-state/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-state/
         #
         def state(arguments={})
           arguments = arguments.clone

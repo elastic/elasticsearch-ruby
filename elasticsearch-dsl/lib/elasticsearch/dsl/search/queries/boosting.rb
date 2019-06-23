@@ -34,7 +34,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html
         #
         class Boosting
           include BaseComponent

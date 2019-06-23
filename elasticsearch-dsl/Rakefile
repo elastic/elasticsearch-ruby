@@ -122,7 +122,7 @@ namespace :generate do
       hits     = JSON.load(response)['hits']['hits']
 
       if hit = hits.first
-        doc_url = ("http://elasticsearch.org" + hit['fields']['url']).gsub(/#.+$/, '') if hit['_score'] > 0.2
+        doc_url = ("https://www.elastic.co" + hit['fields']['url']).gsub(/#.+$/, '') if hit['_score'] > 0.2
       end
     rescue Exception => e
       puts "[!] ERROR: #{e.inspect}"

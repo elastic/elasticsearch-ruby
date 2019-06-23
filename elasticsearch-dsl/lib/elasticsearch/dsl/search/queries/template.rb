@@ -33,7 +33,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-template-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-template-query.html
         #
         class Template
           include BaseComponent

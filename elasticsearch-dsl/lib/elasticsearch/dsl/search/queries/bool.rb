@@ -48,7 +48,7 @@ module Elasticsearch
         #
         # See the integration test for a working example.
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html
         #
         class Bool
           include BaseComponent
