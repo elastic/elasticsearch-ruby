@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Boolean] :verbose Includes detailed memory usage by Lucene.
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-indices-segments/
+        # @see https://www.elastic.co/guide/reference/api/admin-indices-segments/
         #
         def segments(arguments={})
           method = HTTP_GET

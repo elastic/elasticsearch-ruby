@@ -25,7 +25,7 @@ module Elasticsearch
       #
       #     client.ping
       #
-      # @see http://elasticsearch.org/guide/
+      # @see https://www.elastic.co/guide/
       #
       def ping(arguments={})
         method = HTTP_HEAD

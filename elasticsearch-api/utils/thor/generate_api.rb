@@ -115,7 +115,7 @@ module Elasticsearch
     # * Extract the URL parts (eg. `{index}`) from the URLs
     # * Extract the URL parameters (eg. `{timeout}`) from the `request.param("ABC")` statements
     # * Detect whether HTTP body is allowed for the API from `request.hasContent()` statements
-    # * Search the <http://elasticsearch.org> website to get proper documentation URLs
+    # * Search the <https://www.elastic.co> website to get proper documentation URLs
     # * Assemble the JSON format for the API spec
     #
     class JsonGenerator < Thor
@@ -158,7 +158,7 @@ module Elasticsearch
               if hit = hits.first
                 if hit['_score'] > 0.2
                   doc_title = hit['fields']['title']
-                  doc_url   = "http://elasticsearch.org" + hit['fields']['url']
+                  doc_url   = "https://www.elastic.co" + hit['fields']['url']
                 end
               end
             rescue Exception => e

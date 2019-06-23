@@ -49,7 +49,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-not-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-not-filter.html
         #
         class Not
           include BaseComponent

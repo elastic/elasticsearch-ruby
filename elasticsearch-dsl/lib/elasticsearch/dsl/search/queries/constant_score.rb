@@ -34,7 +34,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/ignoring-tfidf.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/ignoring-tfidf.html
         #
         class ConstantScore
           include BaseComponent

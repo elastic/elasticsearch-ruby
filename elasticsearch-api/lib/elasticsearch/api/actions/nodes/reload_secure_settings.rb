@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [ Array ] :node_id A comma-separated list of node IDs or names to perform the operation on
         # @option arguments [ String ] :timeout Explicit operation timeout
         #
-        # @see http://elasticsearch.org/guide/reference/api/cluster-nodes-reload-secure-settings
+        # @see https://www.elastic.co/guide/reference/api/cluster-nodes-reload-secure-settings
         #
         def reload_secure_settings(arguments={})
           valid_params = [

@@ -36,7 +36,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/_best_fields.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/_best_fields.html
         #
         class DisMax
           include BaseComponent

@@ -46,7 +46,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geo-bounds-agg.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/geo-bounds-agg.html
         #
         class GeoBounds
           include BaseComponent

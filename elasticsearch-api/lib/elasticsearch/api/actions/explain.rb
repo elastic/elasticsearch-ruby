@@ -50,7 +50,7 @@ module Elasticsearch
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       #
-      # @see http://elasticsearch.org/guide/reference/api/explain/
+      # @see https://www.elastic.co/guide/reference/api/explain/
       #
       def explain(arguments={})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

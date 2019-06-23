@@ -38,7 +38,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/function-score-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/function-score-query.html
         #
         class FunctionScore
           include BaseComponent

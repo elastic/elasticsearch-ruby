@@ -39,7 +39,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-has-parent-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-parent-filter.html
         #
         class HasParent
           include BaseComponent

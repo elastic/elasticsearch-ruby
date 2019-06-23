@@ -30,7 +30,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-span-or-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-or-query.html
         # @see https://lucene.apache.org/core/5_0_0/core/org/apache/lucene/search/spans/package-summary.html
         #
         class SpanOr

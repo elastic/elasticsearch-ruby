@@ -33,7 +33,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-flt-field-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-flt-field-query.html
         #
         class FuzzyLikeThisField
           include BaseComponent

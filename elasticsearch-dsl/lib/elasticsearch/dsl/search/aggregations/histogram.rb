@@ -33,7 +33,7 @@ module Elasticsearch
         #      end
         #    end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html
         #
         class Histogram
           include BaseAggregationComponent

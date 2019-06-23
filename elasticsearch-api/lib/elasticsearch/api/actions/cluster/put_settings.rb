@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :body The settings to be updated. Can be either `transient` or `persistent`
         #                                (survives cluster restart).
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-update-settings/
         #
         def put_settings(arguments={})
           method = HTTP_PUT

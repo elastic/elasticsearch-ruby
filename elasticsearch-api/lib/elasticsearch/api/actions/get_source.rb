@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       #
-      # @see http://elasticsearch.org/guide/reference/api/get/
+      # @see https://www.elastic.co/guide/reference/api/get/
       #
       # @since 0.90.1
       #

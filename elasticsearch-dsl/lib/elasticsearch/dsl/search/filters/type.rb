@@ -37,7 +37,7 @@ module Elasticsearch
         #     end
         #
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-type-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-filter.html
         #
         class Type
           include BaseComponent

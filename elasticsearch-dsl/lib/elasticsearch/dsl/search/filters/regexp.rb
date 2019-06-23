@@ -36,7 +36,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-regexp-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-filter.html
         #
         class Regexp
           include BaseComponent

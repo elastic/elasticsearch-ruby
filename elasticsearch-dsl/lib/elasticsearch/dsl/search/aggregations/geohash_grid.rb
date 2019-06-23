@@ -35,7 +35,7 @@ module Elasticsearch
         #
         # See the integration test for a full example.
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geohash-grid-agg.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/geohash-grid-agg.html
         #
         class GeohashGrid
           include BaseAggregationComponent

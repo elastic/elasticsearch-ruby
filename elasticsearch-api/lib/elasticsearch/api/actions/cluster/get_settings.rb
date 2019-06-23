@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting
         #                                               (default: false)
         #
-        # @see http://elasticsearch.org/guide/reference/api/admin-cluster-update-settings/
+        # @see https://www.elastic.co/guide/reference/api/admin-cluster-update-settings/
         #
         def get_settings(arguments={})
           method = HTTP_GET

@@ -30,7 +30,7 @@ module Elasticsearch
         #       end
         #     end
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html
         #
         class Ids
           include BaseComponent

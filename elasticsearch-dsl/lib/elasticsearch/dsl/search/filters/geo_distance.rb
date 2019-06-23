@@ -52,7 +52,7 @@ module Elasticsearch
         #
         # See the integration test for a working example.
         #
-        # @see http://elasticsearch.org/guide/en/elasticsearch/guide/current/geo-distance.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/guide/current/geo-distance.html
         #
         class GeoDistance
           include BaseComponent
