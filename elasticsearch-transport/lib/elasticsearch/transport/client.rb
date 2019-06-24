@@ -108,6 +108,8 @@ module Elasticsearch
       #
       # @option arguments [String] :send_get_body_as Specify the HTTP method to use for GET requests with a body.
       #                                              (Default: GET)
+      # @option arguments [true, false] :compression Whether to compress requests. Responses will automatically be
+      #   inflated if they are compressed. Gzip compression will be used. The default is false.
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
