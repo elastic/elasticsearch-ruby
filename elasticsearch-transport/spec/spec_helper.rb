@@ -4,7 +4,9 @@ require 'logger'
 require 'ansi/code'
 require 'hashie/mash'
 require 'pry-nav'
-unless defined?(JRUBY_VERSION)
+if defined?(JRUBY_VERSION)
+  require 'elasticsearch/transport/transport/http/manticore'
+else
   require 'elasticsearch/transport/transport/http/curb'
   require 'curb'
 end
