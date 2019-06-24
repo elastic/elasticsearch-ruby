@@ -1239,7 +1239,7 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
-      context 'when \'transport_options\' are defined with \'accept_encoding\' specified' do
+      context 'when the \'compression\' option is set to true' do
 
         context 'when using Faraday as the transport' do
 
@@ -1249,7 +1249,7 @@ describe Elasticsearch::Transport::Client do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http)
             end
 
-            it 'sets the options on the transport' do
+            it 'compresses the request and decompresses the response' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
 
@@ -1268,7 +1268,7 @@ describe Elasticsearch::Transport::Client do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient)
             end
 
-            it 'sets the options on the transport' do
+            it 'compresses the request and decompresses the response' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
 
@@ -1287,7 +1287,7 @@ describe Elasticsearch::Transport::Client do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
             end
 
-            it 'sets the options on the transport' do
+            it 'compresses the request and decompresses the response' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
 
@@ -1306,8 +1306,16 @@ describe Elasticsearch::Transport::Client do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http_persistent)
             end
 
-            it 'sets the options on the transport' do
+            it 'compresses the request and decompresses the response' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
+
+            it 'sets the Accept-Encoding header' do
+              expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+            end
+
+            it 'preserves the other headers' do
+              expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
           end
 
@@ -1317,7 +1325,7 @@ describe Elasticsearch::Transport::Client do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :typhoeus)
             end
 
-            it 'sets the options on the transport' do
+            it 'compresses the request and decompresses the response' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
 
@@ -1340,16 +1348,16 @@ describe Elasticsearch::Transport::Client do
                               transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
         end
 
+        it 'compresses the request and decompresses the response' do
+          expect(client.perform_request('GET', '/').body).to be_a(Hash)
+        end
+
         it 'sets the Accept-Encoding header' do
           expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
         end
 
         it 'preserves the other headers' do
           expect(client.transport.connections[0].connection.headers['User-Agent'])
-        end
-
-        it 'sets the options on the transport' do
-          expect(client.perform_request('GET', '/').body).to be_a(Hash)
         end
       end
 
@@ -1361,7 +1369,7 @@ describe Elasticsearch::Transport::Client do
                               transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore)
         end
 
-        it 'sets the options on the transport' do
+        it 'compresses the request and decompresses the response' do
           expect(client.perform_request('GET', '/').body).to be_a(Hash)
         end
       end
