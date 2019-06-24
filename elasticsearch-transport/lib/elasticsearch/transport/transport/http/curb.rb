@@ -104,18 +104,6 @@ module Elasticsearch
 
           private
 
-          def apply_headers(client, options)
-            super
-
-            if use_compression?
-              if client.headers
-                client.headers[ACCEPT_ENCODING] = GZIP
-              else
-                client.headers = { ACCEPT_ENCODING => GZIP }
-              end
-            end
-          end
-
           def user_agent_header(client)
             @user_agent ||= begin
               meta = ["RUBY_VERSION: #{RUBY_VERSION}"]

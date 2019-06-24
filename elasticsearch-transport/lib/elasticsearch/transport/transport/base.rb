@@ -401,6 +401,7 @@ module Elasticsearch
           headers = options[:headers] || {}
           headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
           headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header(client)
+          client.headers[ACCEPT_ENCODING] = GZIP if use_compression?
           client.headers.merge!(headers)
         end
 
