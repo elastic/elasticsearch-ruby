@@ -57,7 +57,7 @@ else
       should "perform request with headers" do
         @transport.connections.first.connection.expects(:put_data=).with('{"foo":"bar"}')
         @transport.connections.first.connection.expects(:http).with(:POST).returns(stub_everything)
-        @transport.connections.first.connection.expects(:headers=).with({"Content-Type" => "application/x-ndjson"})
+        @transport.connections.first.connection.headers.expects(:merge!).with("Content-Type" => "application/x-ndjson")
 
         @transport.perform_request 'POST', '/', {}, {:foo => 'bar'}, {"Content-Type" => "application/x-ndjson"}
       end

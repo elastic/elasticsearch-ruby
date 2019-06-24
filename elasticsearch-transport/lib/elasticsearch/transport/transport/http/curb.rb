@@ -46,7 +46,7 @@ module Elasticsearch
 
                   if headers
                     if connection.connection.headers
-                      connection.connection.headers.merge(headers)
+                      connection.connection.headers.merge!(headers)
                     else
                       connection.connection.headers = headers
                     end
