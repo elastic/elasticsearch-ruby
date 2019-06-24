@@ -43,7 +43,15 @@ module Elasticsearch
                   connection.connection.set :nobody, false
 
                   connection.connection.put_data = __convert_to_json(body) if body
-                  connection.connection.headers = headers if headers
+
+                  if headers
+                    if connection.connection.headers
+                      connection.connection.headers.merge(headers)
+                    else
+                      connection.connection.headers = headers
+                    end
+                  end
+
                 else raise ArgumentError, "Unsupported HTTP method: #{method}"
               end
 
@@ -53,7 +61,7 @@ module Elasticsearch
               response_headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
 
               Response.new connection.connection.response_code,
-                           connection.connection.body_str,
+                           decompress_response(connection.connection.body_str),
                            response_headers
             end
           end
@@ -95,6 +103,18 @@ module Elasticsearch
           end
 
           private
+
+          def apply_headers(client, options)
+            super
+
+            if use_compression?
+              if client.headers
+                client.headers[ACCEPT_ENCODING] = GZIP
+              else
+                client.headers = { ACCEPT_ENCODING => GZIP }
+              end
+            end
+          end
 
           def user_agent_header(client)
             @user_agent ||= begin

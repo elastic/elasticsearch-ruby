@@ -105,7 +105,7 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
-  context 'when the Curb transport class is used' do
+  context 'when the Curb transport class is used', unless: jruby? do
 
     let(:client) do
       described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
@@ -1252,6 +1252,14 @@ describe Elasticsearch::Transport::Client do
             it 'sets the options on the transport' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
+
+            it 'sets the Accept-Encoding header' do
+              expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+            end
+
+            it 'preserves the other headers' do
+              expect(client.transport.connections[0].connection.headers['User-Agent'])
+            end
           end
 
           context 'when using the HTTPClient adapter' do
@@ -1263,9 +1271,17 @@ describe Elasticsearch::Transport::Client do
             it 'sets the options on the transport' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
+
+            it 'sets the Accept-Encoding header' do
+              expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+            end
+
+            it 'preserves the other headers' do
+              expect(client.transport.connections[0].connection.headers['User-Agent'])
+            end
           end
 
-          context 'when using the Patron adapter' do
+          context 'when using the Patron adapter', unless: jruby? do
 
             let(:client) do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
@@ -1273,6 +1289,14 @@ describe Elasticsearch::Transport::Client do
 
             it 'sets the options on the transport' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
+
+            it 'sets the Accept-Encoding header' do
+              expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+            end
+
+            it 'preserves the other headers' do
+              expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
           end
 
@@ -1296,7 +1320,49 @@ describe Elasticsearch::Transport::Client do
             it 'sets the options on the transport' do
               expect(client.perform_request('GET', '/').body).to be_a(Hash)
             end
+
+            it 'sets the Accept-Encoding header' do
+              expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+            end
+
+            it 'preserves the other headers' do
+              expect(client.transport.connections[0].connection.headers['User-Agent'])
+            end
           end
+        end
+      end
+
+      context 'when using Curb as the transport', unless: jruby? do
+
+        let(:client) do
+          described_class.new(hosts: ELASTICSEARCH_HOSTS,
+                              compression: true,
+                              transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
+        end
+
+        it 'sets the Accept-Encoding header' do
+          expect(client.transport.connections[0].connection.headers['Accept-Encoding'])
+        end
+
+        it 'preserves the other headers' do
+          expect(client.transport.connections[0].connection.headers['User-Agent'])
+        end
+
+        it 'sets the options on the transport' do
+          expect(client.perform_request('GET', '/').body).to be_a(Hash)
+        end
+      end
+
+      context 'when using Manticore as the transport', if: jruby? do
+
+        let(:client) do
+          described_class.new(hosts: ELASTICSEARCH_HOSTS,
+                              compression: true,
+                              transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore)
+        end
+
+        it 'sets the options on the transport' do
+          expect(client.perform_request('GET', '/').body).to be_a(Hash)
         end
       end
     end
