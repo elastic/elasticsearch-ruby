@@ -1427,59 +1427,61 @@ describe Elasticsearch::Transport::Client do
 
       context 'when \'transport_options\' are defined with \'accept_encoding\' specified' do
 
-        context 'when using the Net::HTTP adapter' do
+        context 'when using Faraday as the transport' do
 
-          let!(:client) do
-            #described_class.new(transport_options: { headers: { accept_encoding: 'gzip' } }, adapter: :net_http)
-            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http)
+          context 'when using the Net::HTTP adapter' do
+
+            let(:client) do
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http)
+            end
+
+            it 'sets the options on the transport' do
+              expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
           end
 
-          it 'sets the options on the transport' do
-            expect(client.perform_request('GET', '/').body).to be_a(Hash)
-          end
-        end
+          context 'when using the HTTPClient adapter' do
 
-        context 'when using the HTTPClient adapter' do
+            let(:client) do
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient)
+            end
 
-          let!(:client) do
-            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient)
-          end
-
-          it 'sets the options on the transport' do
-            expect(client.perform_request('GET', '/').body).to be_a(Hash)
-          end
-        end
-
-        context 'when using the Patron adapter' do
-
-          let!(:client) do
-            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
+            it 'sets the options on the transport' do
+              expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
           end
 
-          it 'sets the options on the transport' do
-            expect(client.perform_request('GET', '/').body).to be_a(Hash)
-          end
-        end
+          context 'when using the Patron adapter' do
 
-        context 'when using the Net::HTTP::Persistent adapter' do
+            let(:client) do
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
+            end
 
-          let!(:client) do
-            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http_persistent)
-          end
-
-          it 'sets the options on the transport' do
-            expect(client.perform_request('GET', '/').body).to be_a(Hash)
-          end
-        end
-
-        context 'when using the Typhoeus adapter' do
-
-          let!(:client) do
-            described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :typhoeus)
+            it 'sets the options on the transport' do
+              expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
           end
 
-          it 'sets the options on the transport' do
-            expect(client.perform_request('GET', '/').body).to be_a(Hash)
+          context 'when using the Net::HTTP::Persistent adapter' do
+
+            let(:client) do
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http_persistent)
+            end
+
+            it 'sets the options on the transport' do
+              expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
+          end
+
+          context 'when using the Typhoeus adapter' do
+
+            let(:client) do
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :typhoeus)
+            end
+
+            it 'sets the options on the transport' do
+              expect(client.perform_request('GET', '/').body).to be_a(Hash)
+            end
           end
         end
       end
