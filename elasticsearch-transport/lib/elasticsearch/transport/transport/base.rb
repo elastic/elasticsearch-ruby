@@ -371,6 +371,27 @@ module Elasticsearch
         CONTENT_TYPE_REGEX = /content\-?\_?type/
         DEFAULT_CONTENT_TYPE = 'application/json'.freeze
         GZIP = 'gzip'.freeze
+        ACCEPT_ENCODING = 'Accept-Encoding'.freeze
+        GZIP_FIRST_TWO_BYTES = '1f8b'.freeze
+        HEX_STRING_DIRECTIVE = 'H*'.freeze
+        RUBY_ENCODING = '1.9'.respond_to?(:force_encoding)
+
+        def decompress_response(body)
+          return body unless use_compression?
+          return body unless gzipped?(body)
+
+          io = StringIO.new(body)
+          gzip_reader = if RUBY_ENCODING
+                          Zlib::GzipReader.new(io, :encoding => 'ASCII-8BIT')
+                        else
+                          Zlib::GzipReader.new(io)
+                        end
+          gzip_reader.read
+        end
+
+        def gzipped?(body)
+          body[0..1].unpack(HEX_STRING_DIRECTIVE)[0] == GZIP_FIRST_TWO_BYTES
+        end
 
         def use_compression?
           @compression
