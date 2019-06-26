@@ -1,3 +1,56 @@
+## 7.2.0
+
+### Client
+
+* Support User-Agent header client team specification
+* Improve code handling headers
+* Handle headers when using JRuby and Manticore
+* Rename method for clarity
+* Test selecting connections using multiple threads
+* Synchronize access to the connections collection and mutation of @current instance variable
+* Fix specs for selecting a connection
+* Further fixes to specs for testing selecting connections in parallel
+* Support providing a cloud id
+* Allow a port to be set with a Cloud id and use default if no port is provided
+* Remove unnecessary check for cloud_id when setting default port
+* Add documentation for creating client with cloud_id
+* Allow compression with Faraday and supported http adapters
+* Put development gem dependencies in gemspec
+* No reason to use ! for decompress method name
+* Check for the existence of headers before checking headers
+* Apply compression headers manually based on general :compression option
+* Use GZIP constant
+* Group tests into their transport adapters
+* Support compression when using Curb adapter
+* Support compression when using Manticore adapter with JRuby
+* Fix Curb unit test, expecting headers to be merged and not set
+* Update test descriptions for compression settings
+* Add documentation of 'compression' option on client
+* Improve client documentation for compression option
+* Centralize header handling into one method
+* Only add Accept-Encoding header if compression option is true
+
+### API
+
+* Use rewritten test harness from XPACK for rest API tests
+* Include skipped tests and further updates
+* Delete all repositories and snapshots in a method
+* Further updates to the rest API test runner
+* Add erroneously removed constants and gems
+* Updates to rest api yaml rspec tasks
+* The get_source endpoint should raise an error if the resource is not found
+* Rename method to clear data in tests and consolidate tasks into one method
+* Update api for 7.2
+
+### EXT:7.2.0
+
+
+
+### XPACK
+
+* Add data_frame API
+* Update data frame files
+
 ## 7.1.0
 
 ### Client

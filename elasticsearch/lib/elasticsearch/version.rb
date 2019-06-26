@@ -16,5 +16,5 @@
 # under the License.
 
 module Elasticsearch
-  VERSION = "7.1.0"
+  VERSION = "7.2.0"
 end
