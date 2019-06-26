@@ -23,8 +23,8 @@ module Elasticsearch
         include BaseComponent
 
         def initialize(field, &block)
-          @value = { field: field }
-          super
+          @hash = { field: field }
+          @block = block
         end
 
         def inner_hits(name=nil, &block)
@@ -37,12 +37,11 @@ module Elasticsearch
         end
 
         def max_concurrent_group_searches(max)
-          @value[:max_concurrent_group_searches] = max
+          @hash[:max_concurrent_group_searches] = max
         end
 
         def to_hash
           call
-          @hash = @value
           @hash[:inner_hits] = @inner_hits.to_hash if @inner_hits
           @hash
         end
