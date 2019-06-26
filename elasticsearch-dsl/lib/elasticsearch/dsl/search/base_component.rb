@@ -141,7 +141,9 @@ module Elasticsearch
           # @return [self]
           #
           def call
-            @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self) if @block
+            if @block
+              @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self)
+            end
             self
           end
 
