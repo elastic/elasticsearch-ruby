@@ -55,7 +55,7 @@ module Elasticsearch
         #
         # @since 0.1.9
         def inner_hits(name, &block)
-          @inner_hits = InnerHits.new(name, &block)
+          @inner_hits = Queries::InnerHits.new(name, &block)
           self
         end
 
