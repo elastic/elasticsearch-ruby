@@ -167,7 +167,7 @@ module Elasticsearch
 
         # DSL method for building the `collapse` part of a search definition
         #
-        # @return [self]
+        # @return [self, Collapse]
         #
         def collapse(*args, &block)
           if !args.empty? || block
