@@ -179,6 +179,16 @@ module Elasticsearch
                 @hash
             end
           end
+
+          private
+
+          def method_missing(name, *args, &block)
+            if @block && _self = @block.binding.eval('self') && _self.respond_to?(name)
+              _self.send(name, *args, &block)
+            else
+              super
+            end
+          end
         end
       end
     end

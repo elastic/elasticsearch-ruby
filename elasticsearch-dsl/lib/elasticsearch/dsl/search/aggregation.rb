@@ -46,8 +46,10 @@ module Elasticsearch
           klass = Utils.__camelize(name)
           if Aggregations.const_defined? klass
             @value = Aggregations.const_get(klass).new *args, &block
+          elsif @block && _self = @block.binding.eval('self') && _self.respond_to?(name)
+            _self.send(name, *args, &block)
           else
-            raise NoMethodError, "undefined method '#{name}' for #{self}"
+            super
           end
         end
 
