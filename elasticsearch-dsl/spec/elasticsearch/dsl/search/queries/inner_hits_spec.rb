@@ -16,7 +16,6 @@
 # under the License.
 
 require 'spec_helper'
-require 'pry-nav'
 
 describe Elasticsearch::DSL::Search::Queries::InnerHits do
 
