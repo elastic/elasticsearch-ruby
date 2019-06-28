@@ -141,6 +141,22 @@ SKIPPED_TESTS << { file:        'ml/calendar_crud.yml',
 SKIPPED_TESTS << { file:        'ml/jobs_crud.yml',
                    description: 'Test close job with body params' }
 
+# Feature is currently experimental.
+SKIPPED_TESTS << { file:        'ml/evaluate_data_frame.yml',
+                   description: '*' }
+
+# Feature is currently experimental.
+SKIPPED_TESTS << { file:        'ml/start_data_frame_analytics.yml',
+                   description: '*' }
+
+# Feature is currently experimental.
+SKIPPED_TESTS << { file:        'ml/stop_data_frame_analytics.yml',
+                   description: '*' }
+
+# Feature is currently experimental.
+SKIPPED_TESTS << { file:        'ml/data_frame_analytics_crud.yml',
+                   description: '*' }
+
 
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
