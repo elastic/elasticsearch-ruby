@@ -103,8 +103,10 @@ module Elasticsearch
             klass = Utils.__camelize(name)
             if Filters.const_defined? klass
               @value << Filters.const_get(klass).new(*args, &block)
+            elsif @block
+              @block.binding.eval('self').send(name, *args, &block)
             else
-              raise NoMethodError, "undefined method '#{name}' for #{self}"
+              super
             end
           end
         end

@@ -58,7 +58,8 @@ module Elasticsearch
 
         def initialize(*args, &block)
           @options = Options.new *args
-          block.arity < 1 ? self.instance_eval(&block) : block.call(self) if block
+          @block = block
+          @block.arity < 1 ? self.instance_eval(&@block) : @block.call(self) if @block
         end
 
         # DSL method for building or accessing the `query` part of a search definition
@@ -263,6 +264,8 @@ module Elasticsearch
           if @options.respond_to? name
             @options.__send__ name, *args, &block
             self
+          elsif @block
+            @block.binding.eval('self').send(name, *args, &block)
           else
             super
           end
