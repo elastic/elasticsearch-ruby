@@ -239,6 +239,56 @@ NOTE: You have to enable dynamic scripting to be able to execute the `function_s
 
 **Please see the extensive RDoc examples in the source code and the integration tests.**
 
+## Accessing methods outside DSL blocks' scopes
+
+Methods can be defined and called from within a block. This can be done for values like a `Hash`,
+`String`, `Array`, etc. For example:
+
+```ruby
+def match_criteria
+  { title: 'test' }
+end
+
+s = search do
+  query do
+    match match_criteria
+  end
+end
+
+s.to_hash
+# => { query: { match: { title: 'test' } } }
+
+```
+
+To define subqueries in other methods, `self` must be passed to the method and the subquery must be defined in a block
+passed to `instance_eval` called on the object argument. Otherwise, the subquery does not have access to the scope of 
+the block from which the method was called. For example:
+
+```ruby
+def not_clause(obj)
+  obj.instance_eval do
+    _not do
+      term color: 'red'
+    end
+  end
+end
+
+s = search do
+  query do
+    filtered do
+      filter do
+        not_clause(self)
+      end
+    end
+  end
+end
+
+s.to_hash
+# => { query: { filtered: { filter: { not: { term: { color: 'red' } } } } } }
+
+```
+
+
 ## Development
 
 To work on the code, clone the repository and install the dependencies:
