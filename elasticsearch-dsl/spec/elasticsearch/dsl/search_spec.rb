@@ -42,57 +42,241 @@ describe Elasticsearch::DSL::Search do
 
   context 'when a block is provided' do
 
-    context 'when the containing scope is accessed in the block' do
+    context 'when the top-level scope is accessed in the block' do
 
-      let(:s) do
-        def query_value
-          { title: 'test' }
-        end
+      context 'when the method is accessed from within a \'query\' block' do
 
-        search do
-          query do
-            match query_value
+        let(:s) do
+          def query_value
+            { title: 'test' }
           end
-        end
-      end
 
-      let(:expected_hash) do
-        { query: { match: { title: 'test' } } }
-      end
-
-      it 'allows access to the containing scope' do
-        expect(s.to_hash).to eq(expected_hash)
-      end
-    end
-
-    context 'when other methods are used to construct the query' do
-
-      def bool_query(obj)
-        obj.instance_eval do
-          bool do
-            must do
-              match foo: 'bar'
-            end
-            filter do
-              term foo: 'bar'
+          search do
+            query do
+              match query_value
             end
           end
         end
-      end
 
-      let(:my_search) do
-        search do
-          query do
-            bool_query(self)
-          end
+        let(:expected_hash) do
+          { query: { match: { title: 'test' } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
         end
       end
 
-      it 'finds the correct bindings' do
-        expect(my_search.to_hash).to eq(query: { bool: { filter: [{ term: { foo: 'bar' } }],
-                                                         must: [{ match: { foo: 'bar' } }] } })
+      context 'when the method is accessed from within a \'base_component\' block' do
+
+        let(:s) do
+          def sort_field
+            :category
+          end
+
+          search do
+            query do
+              match title: 'test'
+            end
+            sort do
+              by sort_field, order: 'desc'
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { query: { match: { title: 'test' } }, sort: [{ category: { order: 'desc'} }] }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
+      end
+
+      context 'when the method is accessed from within a \'_not\' block' do
+
+        let(:s) do
+          def term_field
+            :color
+          end
+
+          search do
+            query do
+              filtered do
+                filter do
+                  _not do
+                    term term_field => 'red'
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { query: { filtered: { filter: { not: { term: { color: 'red' } } } } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
+      end
+
+      context 'when the method is accessed from within a \'aggregation\' block' do
+
+        let(:s) do
+          def sum_field
+            'clicks'
+          end
+
+          def aggregation_name
+            :sum_clicks
+          end
+
+          search do
+            aggregation :clicks_for_tag_one do
+              filter terms: { tags: ['one'] } do
+                aggregation aggregation_name do
+                  sum field: sum_field
+                end
+              end
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { aggregations: { clicks_for_tag_one: { filter: { terms: { tags: ['one'] } },
+                                                  aggregations: { sum_clicks: { sum: { field: 'clicks' } } } } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
+      end
+
+      context 'when the method is accessed from within a \'filter\' block' do
+
+        let(:s) do
+
+          def term_field
+            :color
+          end
+
+          def not_clause(obj)
+            obj.instance_eval do
+              _not do
+                term term_field => 'red'
+              end
+            end
+          end
+
+          search do
+            query do
+              filtered do
+                filter do
+                  not_clause(self)
+                end
+              end
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { query: { filtered: { filter: { not: { term: { color: 'red' } } } } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
+      end
+
+      context 'when the method is accessed from within a \'base_aggregation_component\' block' do
+
+        let(:s) do
+
+          def term_field
+            :body
+          end
+
+          search do
+            aggregation :interesting_terms do
+              significant_terms do
+                field :body
+              end
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { aggregations: { interesting_terms: { significant_terms: { field: :body } } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
+      end
+
+      context 'when the method is accessed from within a \'base_compound_filter_component\' block' do
+
+        let(:s) do
+
+          def term_field
+            'red'
+          end
+
+          search do
+            query do
+              filtered do
+                filter do
+                  _and do
+                    term color: term_field
+                    term size: 'xxl'
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        let(:expected_hash) do
+          { query: { filtered: { filter: { and: [{ term: { color: 'red' } },
+                                                 { term: { size: 'xxl' } }] } } } }
+        end
+
+        it 'allows access to the containing scope' do
+          expect(s.to_hash).to eq(expected_hash)
+        end
       end
     end
+
+  context 'when other methods are used to construct the query' do
+
+    def bool_query(obj)
+      obj.instance_eval do
+        bool do
+          must do
+            match foo: 'bar'
+          end
+          filter do
+            term foo: 'bar'
+          end
+        end
+      end
+    end
+
+    let(:my_search) do
+      search do
+        query do
+          bool_query(self)
+        end
+      end
+    end
+
+    it 'finds the correct bindings' do
+      expect(my_search.to_hash).to eq(query: { bool: { filter: [{ term: { foo: 'bar' } }],
+                                                     must: [{ match: { foo: 'bar' } }] } })
+    end
+  end
   end
 
   describe '#collapse' do
