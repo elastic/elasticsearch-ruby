@@ -41,7 +41,7 @@ module Elasticsearch
           if Queries.const_defined? klass
             @value = Queries.const_get(klass).new *args, &block
           elsif @block
-            @value = @block.binding.eval('self').send(name, *args, &block)
+           @block.binding.eval('self').send(name, *args, &block)
           else
             super
           end
