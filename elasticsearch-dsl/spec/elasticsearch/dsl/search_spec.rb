@@ -158,14 +158,10 @@ describe Elasticsearch::DSL::Search do
 
         let(:s) do
 
-          def term_field
-            :color
-          end
-
           def not_clause(obj)
             obj.instance_eval do
               _not do
-                term term_field => 'red'
+                term color: 'red'
               end
             end
           end
@@ -272,7 +268,7 @@ describe Elasticsearch::DSL::Search do
       end
     end
 
-    it 'finds the correct bindings' do
+    it 'allows the subquery to be defined on the calling scope' do
       expect(my_search.to_hash).to eq(query: { bool: { filter: [{ term: { foo: 'bar' } }],
                                                      must: [{ match: { foo: 'bar' } }] } })
     end
