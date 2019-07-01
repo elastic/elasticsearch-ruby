@@ -183,8 +183,8 @@ module Elasticsearch
           private
 
           def method_missing(name, *args, &block)
-            if @block && _self = @block.binding.eval('self') && _self.respond_to?(name)
-              _self.send(name, *args, &block)
+            if @block
+              @block.binding.eval('self').send(name, *args, &block)
             else
               super
             end
