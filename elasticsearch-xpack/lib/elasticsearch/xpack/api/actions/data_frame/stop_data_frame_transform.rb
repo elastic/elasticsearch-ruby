@@ -39,7 +39,8 @@ module Elasticsearch
 
             valid_params = [
                 :timeout,
-                :wait_for_completion ]
+                :wait_for_completion,
+                :allow_no_match ]
 
             method = Elasticsearch::API::HTTP_POST
             path   = "_data_frame/transforms/#{Elasticsearch::API::Utils.__listify(transform_id)}/_stop"
