@@ -44,6 +44,19 @@ module Elasticsearch
         class BucketSort
           include BaseAggregationComponent
 
+          # Add a sort clause to the search definition.
+          #
+          # @example
+          #
+          #   bucket_sort do
+          #     sort do
+          #       by :total_sales, order: 'desc'
+          #     end
+          #   end
+          #
+          # @return [ Sort, Hash ] The sort definition.
+          #
+          # @since 0.1.9
           def sort(*args, &block)
             if !args.empty? || block
               @sort = Sort.new(*args, &block)
@@ -53,6 +66,25 @@ module Elasticsearch
             end
           end
 
+          # Get a hash representation of the aggregation.
+          #
+          # @example
+          #
+          #   s = search do
+          #     aggregation do
+          #       bucket_sort do
+          #         sort do
+          #           by :total_sales, order: 'desc'
+          #         end
+          #       end
+          #     end
+          #   end
+          #
+          # client.search(body: s.to_hash)
+          #
+          # @return [ Hash ] The hash representation of the aggregation.
+          #
+          # @since 0.1.9
           def to_hash
             call
 
