@@ -37,7 +37,8 @@ module Elasticsearch
 
             valid_params = [
                 :from,
-                :size]
+                :size,
+                :allow_no_match]
 
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify('_data_frame/transforms', Elasticsearch::API::Utils.__listify(transform_id))
