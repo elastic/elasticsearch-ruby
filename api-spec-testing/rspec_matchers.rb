@@ -182,7 +182,8 @@ RSpec::Matchers.define :match_response do |expected_pairs, test|
     @mismatched_values ||= begin
 
       if pairs.is_a?(String)
-        pairs unless compare_string_response(pairs, response)
+        # Must return an empty list if there are no mismatched values
+        compare_string_response(pairs, response) ? [] : [ pairs ]
       else
         pairs.select do |expected_key, expected_value|
           # Select the values that don't match, used for the failure message.
