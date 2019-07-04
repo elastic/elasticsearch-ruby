@@ -165,39 +165,52 @@ end
 RSpec::Matchers.define :match_response do |expected_pairs, test|
 
   match do |response|
+    mismatched_values(sanitize_pairs(expected_pairs), test, response).empty?
+  end
 
+  failure_message do |response|
+    "the pair/value #{mismatched_values(sanitize_pairs(expected_pairs), test, response)}" +
+        " does not match the pair/value in the response #{response}"
+  end
+
+  def sanitize_pairs(expected_pairs)
     # sql test returns results at '$body' key. See sql/translate.yml
-    expected_pairs = expected_pairs['$body'] if expected_pairs['$body']
+    @pairs ||= expected_pairs['$body'] ? expected_pairs['$body'] : expected_pairs
+  end
 
-    # sql test has a String response. See sql/sql.yml
-    if expected_pairs.is_a?(String)
-      return compare_string_response(response, expected_pairs)
-    end
+  def mismatched_values(pairs, test, response)
+    @mismatched_values ||= begin
 
-    expected_pairs.all? do |expected_key, expected_value|
-
-      split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
-        test.get_cached_value(k)
-      end
-      actual_value = TestFile::Test.find_value_in_document(split_key, response)
-
-      # Sometimes the expected value is a cached value from a previous request.
-      # See test api_key/10_basic.yml
-      expected_value = test.get_cached_value(expected_value)
-
-      # When you must match a regex. For example:
-      #   match: {task: '/.+:\d+/'}
-      if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
-        /#{expected_value.tr("/", "")}/ =~ actual_value
-      elsif expected_key == ''
-        expected_value == response
+      if pairs.is_a?(String)
+        pairs unless compare_string_response(pairs, response)
       else
-        actual_value == expected_value
+        pairs.select do |expected_key, expected_value|
+          # Select the values that don't match, used for the failure message.
+
+          split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
+            test.get_cached_value(k)
+          end
+          actual_value = TestFile::Test.find_value_in_document(split_key, response)
+
+          # Sometimes the expected value is a cached value from a previous request.
+          # See test api_key/10_basic.yml
+          expected_value = test.get_cached_value(expected_value)
+
+          # When you must match a regex. For example:
+          #   match: {task: '/.+:\d+/'}
+          if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
+           !( /#{expected_value.tr("/", "")}/ =~ actual_value)
+          elsif expected_key == ''
+            expected_value != response
+          else
+            actual_value != expected_value
+          end
+        end
       end
     end
   end
 
-  def compare_string_response(response, expected_string)
+  def compare_string_response(expected_string, response)
     regexp = Regexp.new(expected_string.strip[1..-2], Regexp::EXTENDED|Regexp::MULTILINE)
     regexp =~ response
   end
