@@ -33,7 +33,7 @@ module Elasticsearch
             valid_params = [ :debug ]
             method = Elasticsearch::API::HTTP_PUT
 
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/watcher/watch", arguments.delete(:id), "_execute"
+            path   = Elasticsearch::API::Utils.__pathify "_watcher/watch", arguments.delete(:id), "_execute"
 
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]

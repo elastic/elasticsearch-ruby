@@ -28,7 +28,7 @@ module Elasticsearch
           #
           def stop(arguments={})
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/watcher/_stop"
+            path   = "_watcher/_stop"
             params = {}
             body   = nil
 

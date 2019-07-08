@@ -35,7 +35,7 @@ module Elasticsearch
               :master_timeout,
               :force ]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/watcher/watch/#{arguments[:id]}"
+            path   = "_watcher/watch/#{arguments[:id]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

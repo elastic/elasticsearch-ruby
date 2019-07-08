@@ -28,7 +28,7 @@ module Elasticsearch
           #
           def start(arguments={})
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/watcher/_start"
+            path   = "_watcher/_start"
             params = {}
             body   = nil
 
