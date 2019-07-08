@@ -37,7 +37,7 @@ module Elasticsearch
               :ignore_unavailable ]
 
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/migration/assistance"
+            path   = "_migration/assistance"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 
