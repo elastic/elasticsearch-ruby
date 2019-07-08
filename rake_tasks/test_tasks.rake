@@ -2,6 +2,7 @@ UNIT_TESTED_PROJECTS = [ 'elasticsearch',
                          'elasticsearch-transport',
                          'elasticsearch-dsl',
                          'elasticsearch-api',
+                         'elasticsearch-xpack',
                          'elasticsearch-extensions' ].freeze
 
 INTEGRATION_TESTED_PROJECTS = (UNIT_TESTED_PROJECTS - ['elasticsearch-api']).freeze
