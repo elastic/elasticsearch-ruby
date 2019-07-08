@@ -28,7 +28,7 @@ module Elasticsearch
             params = {}
             body   = nil
 
-            perform_request(method, '_xpack/security/user/_privileges', params, body).body
+            perform_request(method, '_security/user/_privileges', params, body).body
           end
         end
       end

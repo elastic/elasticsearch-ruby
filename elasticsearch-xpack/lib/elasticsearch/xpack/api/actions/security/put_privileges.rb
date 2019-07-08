@@ -33,7 +33,7 @@ module Elasticsearch
             valid_params = [ :refresh ]
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/privilege"
+            path   = "_security/privilege"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 

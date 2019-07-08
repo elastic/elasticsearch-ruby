@@ -29,7 +29,7 @@ module Elasticsearch
           #
           def get_privileges(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/security/privilege",
+            path   = Elasticsearch::API::Utils.__pathify "_security/privilege",
                                                          arguments[:application],
                                                          Elasticsearch::API::Utils.__listify(arguments[:name])
             params = {}

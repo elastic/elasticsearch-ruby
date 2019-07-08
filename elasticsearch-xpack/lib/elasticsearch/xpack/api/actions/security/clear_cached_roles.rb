@@ -31,7 +31,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/role/#{arguments[:name]}/_clear_cache"
+            path   = "_security/role/#{arguments[:name]}/_clear_cache"
             params = {}
             body   = nil
 

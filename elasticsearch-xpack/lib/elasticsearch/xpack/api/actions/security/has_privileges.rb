@@ -33,7 +33,7 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_GET
 
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/security/user", arguments[:user], "_has_privileges"
+            path   = Elasticsearch::API::Utils.__pathify "_security/user", arguments[:user], "_has_privileges"
 
             perform_request(method, path, {}, arguments[:body]).body
           end

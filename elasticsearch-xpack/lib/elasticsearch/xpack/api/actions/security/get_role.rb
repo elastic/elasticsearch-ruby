@@ -29,7 +29,7 @@ module Elasticsearch
           #
           def get_role(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/security/role", Elasticsearch::API::Utils.__listify(arguments[:name])
+            path   = Elasticsearch::API::Utils.__pathify "_security/role", Elasticsearch::API::Utils.__listify(arguments[:name])
             params = {}
             body   = nil
 
