@@ -31,7 +31,7 @@ module Elasticsearch
             valid_params = [
               :acknowledge ]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/license/start_basic"
+            path   = "_license/start_basic"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

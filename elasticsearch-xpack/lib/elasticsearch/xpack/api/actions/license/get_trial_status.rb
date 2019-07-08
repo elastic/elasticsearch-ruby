@@ -28,7 +28,7 @@ module Elasticsearch
           #
           def get_trial_status(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/license/trial_status"
+            path   = "_license/trial_status"
             params = {}
             body   = nil
 

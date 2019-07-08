@@ -27,7 +27,7 @@ module Elasticsearch
           #
           def delete(arguments={})
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/license"
+            path   = "_license"
             params = {}
             body   = nil
 

@@ -30,7 +30,7 @@ module Elasticsearch
           def get(arguments={})
             valid_params = [ :local ]
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/license"
+            path   = "_license"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

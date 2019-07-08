@@ -28,7 +28,7 @@ module Elasticsearch
           #
           def get_basic_status(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/license/basic_status"
+            path   = "_license/basic_status"
             params = {}
             body   = nil
 
