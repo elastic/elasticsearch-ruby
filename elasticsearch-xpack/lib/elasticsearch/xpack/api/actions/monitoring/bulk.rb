@@ -45,7 +45,7 @@ module Elasticsearch
             body = arguments.delete(:body)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = Elasticsearch::API::Utils.__pathify '_xpack/monitoring', type, '_bulk'
+            path   = Elasticsearch::API::Utils.__pathify '_monitoring', type, 'bulk'
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
 
             if body.is_a? Array
