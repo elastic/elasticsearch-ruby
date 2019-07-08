@@ -43,11 +43,7 @@ namespace :test do
   end
 
   desc "Run integration tests"
-  task :integration do
-    sh <<-COMMAND
-      bundle exec ruby -I ../elasticsearch/lib:../elasticsearch-transport/lib:../elasticsearch-api/lib:./lib:./test test/integration/yaml_test_runner.rb
-    COMMAND
-  end
+  task :integration
 
   desc "Run Elasticsearch with X-Pack installed (Docker)"
     task :elasticsearch do
