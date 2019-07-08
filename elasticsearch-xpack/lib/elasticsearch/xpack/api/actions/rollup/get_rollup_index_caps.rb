@@ -30,7 +30,7 @@ module Elasticsearch
           def get_rollup_index_caps(arguments={})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
             method = Elasticsearch::API::HTTP_GET
-            path   = "#{arguments[:index]}/_xpack/rollup/data"
+            path   = "#{arguments[:index]}/_rollup/data"
             params = {}
             body   = nil
 

@@ -30,7 +30,7 @@ module Elasticsearch
           def start_job(arguments={})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/rollup/job/#{arguments[:id]}/_start"
+            path   = "_rollup/job/#{arguments[:id]}/_start"
             params = {}
             body   = nil
 
