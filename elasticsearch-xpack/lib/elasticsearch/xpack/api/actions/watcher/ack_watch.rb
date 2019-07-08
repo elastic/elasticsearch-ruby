@@ -41,7 +41,7 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_PUT
 
-            path   = "_xpack/watcher/watch/#{watch_id}/_ack"
+            path   = "_watcher/watch/#{watch_id}/_ack"
             path << "/#{action_id}" if action_id
 
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params

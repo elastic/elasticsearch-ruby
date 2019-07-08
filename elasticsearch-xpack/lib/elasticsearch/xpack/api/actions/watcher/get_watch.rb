@@ -31,7 +31,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/watcher/watch/#{arguments[:id]}"
+            path   = "_watcher/watch/#{arguments[:id]}"
             params = {}
             body   = nil
 

@@ -36,7 +36,7 @@ module Elasticsearch
             watch_id  = arguments.delete(:watch_id)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/watcher/watch/#{watch_id}/_activate"
+            path   = "_watcher/watch/#{watch_id}/_activate"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

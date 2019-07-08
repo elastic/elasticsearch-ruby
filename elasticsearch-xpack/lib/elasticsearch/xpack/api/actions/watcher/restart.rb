@@ -27,7 +27,7 @@ module Elasticsearch
           #
           def restart(arguments={})
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/watcher/_restart"
+            path   = "_watcher/_restart"
             params = {}
             body   = nil
 

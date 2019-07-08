@@ -27,7 +27,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/watcher/watch/foo/_execute', url
+            assert_equal '_watcher/watch/foo/_execute', url
             assert_equal Hash.new, params
             assert_equal nil, body
             true
@@ -39,7 +39,7 @@ module Elasticsearch
         should "perform correct request with no id specified" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/watcher/watch/_execute', url
+            assert_equal '_watcher/watch/_execute', url
             assert_equal Hash.new, params
             assert_equal nil, body
             true
