@@ -33,7 +33,7 @@ module Elasticsearch
               :type,
               :acknowledge ]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/license/start_trial"
+            path   = "_license/start_trial"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

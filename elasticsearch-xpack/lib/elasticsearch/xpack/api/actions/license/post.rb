@@ -32,7 +32,7 @@ module Elasticsearch
           def post(arguments={})
             valid_params = [ :acknowledge ]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/license"
+            path   = "_license"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 
