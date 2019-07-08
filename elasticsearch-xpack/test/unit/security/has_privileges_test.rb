@@ -10,7 +10,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_xpack/security/user/_has_privileges', url
+            assert_equal '_security/user/_has_privileges', url
             assert_equal Hash.new, params
             assert_equal({ cluster: [], index: [], application: [] }, body)
             true
@@ -22,7 +22,7 @@ module Elasticsearch
         should "check privileges for a specific user" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_xpack/security/user/foo/_has_privileges', url
+            assert_equal '_security/user/foo/_has_privileges', url
             assert_equal Hash.new, params
             assert_equal({ cluster: [], index: [], application: [] }, body)
             true

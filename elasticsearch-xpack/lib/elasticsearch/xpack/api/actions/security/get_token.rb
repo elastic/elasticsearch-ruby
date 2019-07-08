@@ -30,7 +30,7 @@ module Elasticsearch
           def get_token(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/security/oauth2/token"
+            path   = "_security/oauth2/token"
             params = {}
             body   = arguments[:body]
 

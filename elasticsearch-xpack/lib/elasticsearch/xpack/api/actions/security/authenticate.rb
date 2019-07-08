@@ -28,7 +28,7 @@ module Elasticsearch
           def authenticate(arguments={})
             valid_params = []
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/security/_authenticate"
+            path   = "_security/_authenticate"
             params = {}
             body   = nil
 

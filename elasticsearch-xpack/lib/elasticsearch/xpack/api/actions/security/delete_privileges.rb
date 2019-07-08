@@ -31,7 +31,7 @@ module Elasticsearch
             valid_params = [ :refresh ]
 
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/security/privilege/#{arguments.delete(:application)}/#{arguments[:name]}"
+            path   = "_security/privilege/#{arguments.delete(:application)}/#{arguments[:name]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

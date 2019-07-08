@@ -30,7 +30,7 @@ module Elasticsearch
           def invalidate_token(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/security/oauth2/token"
+            path   = "_security/oauth2/token"
             params = {}
             body   = arguments[:body]
 

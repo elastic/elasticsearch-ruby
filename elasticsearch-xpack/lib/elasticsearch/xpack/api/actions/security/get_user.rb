@@ -29,7 +29,7 @@ module Elasticsearch
           #
           def get_user(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/security/user", Elasticsearch::API::Utils.__listify(arguments[:username])
+            path   = Elasticsearch::API::Utils.__pathify "_security/user", Elasticsearch::API::Utils.__listify(arguments[:username])
             params = {}
             body   = nil
 

@@ -37,7 +37,7 @@ module Elasticsearch
             username = arguments.delete(:username)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/user/#{username}/_disable"
+            path   = "_security/user/#{username}/_disable"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

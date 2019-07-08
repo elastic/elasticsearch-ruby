@@ -27,7 +27,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/security/user/foo', url
+            assert_equal '_security/user/foo', url
             assert_equal Hash.new, params
             assert_equal Hash.new, body
             true
