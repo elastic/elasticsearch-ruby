@@ -33,7 +33,7 @@ module Elasticsearch
             valid_params = [
               :format ]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/sql"
+            path   = "_sql"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 
