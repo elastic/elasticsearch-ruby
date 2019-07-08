@@ -30,7 +30,7 @@ module Elasticsearch
           #
           def deprecations(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify arguments[:index], "_xpack/migration/deprecations"
+            path   = Elasticsearch::API::Utils.__pathify arguments[:index], "_migration/deprecations"
             params = {}
             body   = nil
 

@@ -35,7 +35,7 @@ module Elasticsearch
               :wait_for_completion ]
 
             method = Elasticsearch::API::HTTP_POST
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/migration/upgrade", arguments[:index]
+            path   = Elasticsearch::API::Utils.__pathify "_migration/upgrade", arguments[:index]
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 
