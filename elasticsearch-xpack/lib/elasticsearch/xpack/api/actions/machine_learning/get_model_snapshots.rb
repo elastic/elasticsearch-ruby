@@ -45,7 +45,7 @@ module Elasticsearch
               :sort,
               :desc ]
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 

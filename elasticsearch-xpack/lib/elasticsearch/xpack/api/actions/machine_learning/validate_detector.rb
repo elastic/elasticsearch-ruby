@@ -26,7 +26,7 @@ module Elasticsearch
           def validate_detector(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/_validate/detector"
+            path   = "_ml/anomaly_detectors/_validate/detector"
             params = {}
             body   = arguments[:body]
 

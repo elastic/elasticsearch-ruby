@@ -14,7 +14,7 @@ module Elasticsearch
           def find_file_structure(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/find_file_structure"
+            path   = "_ml/find_file_structure"
             body = Elasticsearch::API::Utils.__bulkify(arguments.delete(:body))
 
             perform_request(method, path, arguments, body).body

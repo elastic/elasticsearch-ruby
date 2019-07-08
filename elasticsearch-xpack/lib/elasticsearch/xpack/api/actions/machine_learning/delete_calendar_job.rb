@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/ml/calendars/#{arguments[:calendar_id]}/jobs/#{arguments[:job_id]}"
+            path   = "_ml/calendars/#{arguments[:calendar_id]}/jobs/#{arguments[:job_id]}"
             params = {}
             body   = nil
 

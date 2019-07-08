@@ -46,7 +46,7 @@ module Elasticsearch
             calendar_id = arguments.delete(:calendar_id)
 
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/calendars/#{calendar_id}/events"
+            path   = "_ml/calendars/#{calendar_id}/events"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

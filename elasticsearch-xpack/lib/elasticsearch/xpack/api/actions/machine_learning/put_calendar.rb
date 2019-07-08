@@ -31,7 +31,7 @@ module Elasticsearch
           def put_calendar(arguments={})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/ml/calendars/#{arguments[:calendar_id]}"
+            path   = "_ml/calendars/#{arguments[:calendar_id]}"
             params = {}
             body   = arguments[:body]
 

@@ -33,7 +33,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_update"
+            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}/_update"
             params = {}
             body   = arguments[:body]
 

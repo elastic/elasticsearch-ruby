@@ -33,7 +33,7 @@ module Elasticsearch
               :allow_no_datafeeds ]
 
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/datafeeds", arguments[:datafeed_id], "/_stats"
+            path   = Elasticsearch::API::Utils.__pathify "_ml/datafeeds", arguments[:datafeed_id], "/_stats"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

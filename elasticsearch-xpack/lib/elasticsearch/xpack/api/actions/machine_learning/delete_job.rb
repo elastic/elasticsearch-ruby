@@ -33,7 +33,7 @@ module Elasticsearch
             valid_params = [
               :force ]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 
