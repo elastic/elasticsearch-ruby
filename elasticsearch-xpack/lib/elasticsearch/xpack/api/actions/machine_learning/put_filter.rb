@@ -28,7 +28,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/ml/filters/#{arguments[:filter_id]}"
+            path   = "_ml/filters/#{arguments[:filter_id]}"
             params = {}
             body   = arguments[:body]
 

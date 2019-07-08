@@ -33,7 +33,7 @@ module Elasticsearch
             valid_params = [
               :force ]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}"
+            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

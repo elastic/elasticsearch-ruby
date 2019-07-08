@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}"
+            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}"
             params = {}
             body   = arguments[:body]
 

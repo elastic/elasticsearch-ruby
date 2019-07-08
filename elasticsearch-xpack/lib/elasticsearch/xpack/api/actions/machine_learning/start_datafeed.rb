@@ -40,7 +40,7 @@ module Elasticsearch
               :timeout ]
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_start"
+            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}/_start"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 

@@ -32,7 +32,7 @@ module Elasticsearch
           def open_job(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_open"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_open"
             params = {}
             body   = nil
 

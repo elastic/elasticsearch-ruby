@@ -30,7 +30,7 @@ module Elasticsearch
               :from,
               :size ]
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/filters", arguments[:filter_id]
+            path   = Elasticsearch::API::Utils.__pathify "_ml/filters", arguments[:filter_id]
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

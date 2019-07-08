@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/calendars/#{arguments[:calendar_id]}/events"
+            path   = "_ml/calendars/#{arguments[:calendar_id]}/events"
             params = {}
             body   = arguments[:body]
 

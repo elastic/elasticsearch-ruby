@@ -35,7 +35,7 @@ module Elasticsearch
               :duration,
               :expires_in ]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_forecast"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_forecast"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

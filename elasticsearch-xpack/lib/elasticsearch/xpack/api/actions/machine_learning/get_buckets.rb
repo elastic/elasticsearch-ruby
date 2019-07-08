@@ -56,7 +56,7 @@ module Elasticsearch
             timestamp = arguments.delete(:timestamp)
 
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/anomaly_detectors", arguments[:job_id], "results/buckets", timestamp
+            path   = Elasticsearch::API::Utils.__pathify "_ml/anomaly_detectors", arguments[:job_id], "results/buckets", timestamp
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = arguments[:body]
 

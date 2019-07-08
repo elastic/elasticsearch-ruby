@@ -28,7 +28,7 @@ module Elasticsearch
           #
           def info(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/info"
+            path   = "_ml/info"
             params = {}
             body   = nil
 

@@ -33,7 +33,7 @@ module Elasticsearch
               :allow_no_jobs ]
 
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_stats"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_stats"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
             body   = nil
 

@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_update"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_update"
             params = {}
             body   = arguments[:body]
 

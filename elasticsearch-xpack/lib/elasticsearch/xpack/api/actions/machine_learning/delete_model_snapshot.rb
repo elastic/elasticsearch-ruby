@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}"
+            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}"
             params = {}
             body   = nil
 
