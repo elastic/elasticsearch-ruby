@@ -23,7 +23,7 @@ module Elasticsearch
 
           def certificates(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ssl/certificates"
+            path   = "_ssl/certificates"
             params = {}
             body   = nil
 
