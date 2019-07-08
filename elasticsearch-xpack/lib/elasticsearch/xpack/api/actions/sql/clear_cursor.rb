@@ -30,7 +30,7 @@ module Elasticsearch
           def clear_cursor(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/sql/close"
+            path   = "_sql/close"
             params = {}
             body   = arguments[:body]
 
