@@ -27,7 +27,7 @@ module Elasticsearch
           #
           def get_rollup_caps(arguments={})
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/rollup/data/#{arguments[:id]}"
+            path   = "_rollup/data/#{arguments[:id]}"
             params = {}
             body   = nil
 

@@ -32,7 +32,7 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/rollup/job/#{arguments[:id]}"
+            path   = "_rollup/job/#{arguments[:id]}"
             params = {}
             body   = arguments[:body]
 
