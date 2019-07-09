@@ -195,8 +195,10 @@ module Elasticsearch
         def clear_snapshots_and_repositories(client)
           if repositories = client.snapshot.get_repository
             repositories.keys.each do |repository|
-              client.snapshot.get(repository: repository, snapshot: '_all')['snapshots'].each do |s|
-                client.snapshot.delete(repository: repository, snapshot: s['snapshot'])
+              if snapshots = client.snapshot.get(repository: repository, snapshot: '_all')['snapshots']
+                snapshots.each do |s|
+                  client.snapshot.delete(repository: repository, snapshot: s['snapshot'])
+                end
               end
               client.snapshot.delete_repository(repository: repository)
             end
