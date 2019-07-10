@@ -106,6 +106,10 @@ Another way to configure the URL(s) is to export the `ELASTICSEARCH_URL` variabl
 The client will automatically round-robin across the hosts
 (unless you select or implement a different [connection selector](#connection-selector)).
 
+### Default port
+
+The default port is `9200`. Please specify a port for your host(s) if they differ from this default.
+
 ### Connect using an Elastic Cloud ID
 
 If you are using [Elastic Cloud](https://www.elastic.co/cloud), you can provide your cloud id to the client.
@@ -155,7 +159,7 @@ You can customize the default logger or tracer:
     client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
     client.transport.logger.level = Logger::INFO
 
-Or, you can use a custom {::Logger} instance:
+Or, you can use a custom `::Logger` instance:
 
     Elasticsearch::Client.new logger: Logger.new(STDERR)
 
