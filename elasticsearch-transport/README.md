@@ -109,6 +109,7 @@ The client will automatically round-robin across the hosts
 ### Default port
 
 The default port is `9200`. Please specify a port for your host(s) if they differ from this default.
+Please see below for an exception to this when connecting using an Elastic Cloud ID.
 
 ### Connect using an Elastic Cloud ID
 
