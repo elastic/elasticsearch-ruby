@@ -161,7 +161,8 @@ module Elasticsearch
 
       def extract_cloud_creds(arguments)
         return unless arguments[:cloud_id]
-        cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub('name:', '')).split('$')
+        name = arguments[:cloud_id].split(':')[0]
+        cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub("#{name}:", '')).split('$')
         [ { scheme: 'https',
             user: arguments[:user],
             password: arguments[:password],
