@@ -297,6 +297,30 @@ describe Elasticsearch::Transport::Client do
         expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elastic:changeme@abcd.localhost:9200')
       end
     end
+
+    context 'when the cluster has alternate names' do
+
+      let(:client) do
+        described_class.new(cloud_id: 'myCluster:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elasticfantastic', password: 'tobechanged')
+      end
+
+      let(:hosts) do
+        client.transport.hosts
+      end
+
+      it 'extracts the cloud credentials' do
+        expect(hosts[0][:host]).to eq('abcd.localhost')
+        expect(hosts[0][:protocol]).to eq('https')
+        expect(hosts[0][:user]).to eq('elasticfantastic')
+        expect(hosts[0][:password]).to eq('tobechanged')
+        expect(hosts[0][:port]).to eq(9243)
+      end
+
+      it 'creates the correct full url' do
+        expect(client.transport.__full_url(client.transport.hosts[0])).to eq('https://elasticfantastic:tobechanged@abcd.localhost:9243')
+      end
+
+    end
   end
 
   shared_examples_for 'a client that extracts hosts' do
