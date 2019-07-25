@@ -1,3 +1,10 @@
+## 7.2.1
+
+### Client
+
+* Cluster name is variable in cloud id
+
+
 ## 7.2.0
 
 ### Client
