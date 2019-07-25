@@ -42,7 +42,7 @@ docker run \
   docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
 
 
-# run the client tests
+# run the security (xpack) tests
 docker run \
   --network=esnet \
   --env "TEST_ES_SERVER=elasticsearch:9200" \
