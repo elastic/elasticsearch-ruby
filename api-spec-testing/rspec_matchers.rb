@@ -40,6 +40,10 @@ RSpec::Matchers.define :match_true_field do |field, test|
     end
     !!TestFile::Test.find_value_in_document(split_key, response)
   end
+
+  failure_message do |response|
+    "the response `#{response}` does not have `true` in the field `#{field}`"
+  end
 end
 
 # Validate that a field is `false`.
@@ -53,6 +57,10 @@ RSpec::Matchers.define :match_false_field do |field, test|
     end
     value_in_doc = TestFile::Test.find_value_in_document(split_key, response)
     value_in_doc == 0 || !value_in_doc
+  end
+
+  failure_message do |response|
+    "the response `#{response}` does not have `false` in the field `#{field}`"
   end
 end
 
@@ -234,5 +242,9 @@ RSpec::Matchers.define :match_error do |expected_error|
     else
       message =~ /#{expected_error}/
     end
+  end
+
+  failure_message do |actual_error|
+    "the error `#{actual_error}` does not match the expected error `#{expected_error}`"
   end
 end
