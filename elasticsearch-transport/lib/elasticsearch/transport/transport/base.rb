@@ -22,7 +22,7 @@ module Elasticsearch
         attr_reader   :hosts, :options, :connections, :counter, :last_request_at, :protocol
         attr_accessor :serializer, :sniffer, :logger, :tracer,
                       :reload_connections, :reload_after,
-                      :resurrect_after, :max_retries
+                      :resurrect_after
 
         # Creates a new transport object
         #
@@ -59,7 +59,6 @@ module Elasticsearch
           @reload_connections = options[:reload_connections]
           @reload_after    = options[:reload_connections].is_a?(Integer) ? options[:reload_connections] : DEFAULT_RELOAD_AFTER
           @resurrect_after = options[:resurrect_after] || DEFAULT_RESURRECT_AFTER
-          @max_retries     = options[:retry_on_failure].is_a?(Integer)   ? options[:retry_on_failure]   : DEFAULT_MAX_RETRIES
           @retry_on_status = Array(options[:retry_on_status]).map { |d| d.to_i }
         end
 
@@ -246,10 +245,17 @@ module Elasticsearch
         # @raise  [ServerError]   If request failed on server
         # @raise  [Error]         If no connection is available
         #
-        def perform_request(method, path, params={}, body=nil, headers=nil, &block)
+        def perform_request(method, path, params={}, body=nil, headers=nil, opts={}, &block)
           raise NoMethodError, "Implement this method in your transport class" unless block_given?
           start = Time.now
           tries = 0
+          reload_on_failure = opts.fetch(:reload_on_failure, @options[:reload_on_failure])
+
+          max_retries = if opts.key?(:retry_on_failure)
+            opts[:retry_on_failure] === true ? DEFAULT_MAX_RETRIES : opts[:retry_on_failure]
+          elsif options.key?(:retry_on_failure)
+            options[:retry_on_failure] === true ? DEFAULT_MAX_RETRIES : options[:retry_on_failure]
+          end
 
           params = params.clone
 
@@ -275,7 +281,7 @@ module Elasticsearch
           rescue Elasticsearch::Transport::Transport::ServerError => e
             if response && @retry_on_status.include?(response.status)
               log_warn "[#{e.class}] Attempt #{tries} to get response from #{url}"
-              if tries <= max_retries
+              if tries <= (max_retries || DEFAULT_MAX_RETRIES)
                 retry
               else
                 log_fatal "[#{e.class}] Cannot get response from #{url} after #{tries} tries"
@@ -290,12 +296,12 @@ module Elasticsearch
 
             connection.dead!
 
-            if @options[:reload_on_failure] and tries < connections.all.size
+            if reload_on_failure and tries < connections.all.size
               log_warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.all.size})"
               reload_connections! and retry
             end
 
-            if @options[:retry_on_failure]
+            if max_retries
               log_warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}"
               if tries <= max_retries
                 retry
