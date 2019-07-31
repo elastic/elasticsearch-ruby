@@ -8,6 +8,7 @@ retriever: modernSCM(
   remote: 'git@github.com:elastic/apm-pipeline-library.git'])
 
 pipeline {
+  // Telling Jenkins which kind of machine should be used to run the test.
   agent {
     label 'docker && immutable'
   }
@@ -15,6 +16,7 @@ pipeline {
   environment {
     REPO = 'elasticsearch-ruby'
     BASE_DIR = "src/github.com/elastic/${env.REPO}"
+    HOME = "${env.WORKSPACE}"
   }
 
   options {
@@ -36,21 +38,21 @@ pipeline {
       steps {
         deleteDir()
         gitCheckout(basedir: "${BASE_DIR}", githubNotifyFirstTimeContributor: false)
+        // Stashes the git checkout
         stash allowEmpty: true, name: 'source', useDefaultExcludes: false
       }
     }
 
     stage('Install dependencies') {
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-      }
       steps {
         deleteDir()
+        // Acceses the stash
         unstash 'source'
         script {
           docker.image('ruby:2.6').inside(){
             dir("${BASE_DIR}"){
+              sh 'git --version'
               sh '''gem update --system
                     gem uninstall bundler
                     gem install bundler'''
@@ -60,15 +62,13 @@ pipeline {
             }
           }
         }
+        // Stashes dependencies
         stash allowEmpty: true, name: 'source-dependencies', useDefaultExcludes: false
       }
     }
 
     stage('Unit test') {
       options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-      }
       steps {
         deleteDir()
         unstash 'source-dependencies'
@@ -85,7 +85,6 @@ pipeline {
     stage('OSS integration test') {
       options { skipDefaultCheckout() }
       environment {
-        HOME = "${env.WORKSPACE}"
         TEST_ES_SERVER = 'http://elasticsearch:9200'
       }
       steps {
@@ -94,57 +93,50 @@ pipeline {
         dir("${BASE_DIR}"){
           sh(label: 'Start Elasticsearch', script: './scripts/es-docker.sh --detach')
         }
-        // script {
-        // What's this?
-        //  rubyImage() {
-        //    dir("${BASE_DIR}"){
-        // label?
-        //      sh(label: 'Integration test', script: 'bundle exec rake test:rest_api')
-        //    }
-        //  }
-        // }
-        script {
-                  docker.image('ruby:2.6').inside(){
-                    dir("${BASE_DIR}"){
-                      curl -X GET http://elasticsearch:9200
-                    }
-                  }
-                }
+         script {
+          rubyImage() {
+            dir("${BASE_DIR}"){
+              sh(label: 'Run Rest API test rake task', script: 'bundle exec rake test:rest_api')
+            }
+          }
+         }
         sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
       }
     }
 
-    stage('xPack integration test') {
-      options { skipDefaultCheckout() }
-      environment {
-        HOME = "${env.WORKSPACE}"
-        TEST_ES_SERVER = 'elasticsearch:9200'
-        ELASTIC_PASSWORD=changeme'
-        ELASTIC_USER=elastic
-        TEST_SUITE=security
-      }
-      steps {
-        deleteDir()
-        unstash 'source-dependencies'
-        dir("${BASE_DIR}"){
-          sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
-        }
-        //script {
-        //  rubyImage() {
-        //    dir("${BASE_DIR}"){
-        //      sh(label: 'Integration test', script: 'bundle exec rake test:security')
-        //    }
-        //  }
-        //}
-        sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
-      }
-    }
+   // stage('xPack integration test') {
+   //  options { skipDefaultCheckout() }
+   //  environment {
+   //    TEST_ES_SERVER = 'elasticsearch:9200'
+   //    ELASTIC_PASSWORD=changeme'
+   //    ELASTIC_USER=elastic
+   //    TEST_SUITE=security
+   //  }
+   //  steps {
+   //    deleteDir()
+   //    unstash 'source-dependencies'
+   //    dir("${BASE_DIR}"){
+   //      sh(label: 'Start Elasticsearch', script: './scripts/es-docker-platinum.sh --detach')
+   //    }
+   //    //script {
+   //    //  rubyImage() {
+   //    //    dir("${BASE_DIR}"){
+   //    //      sh(label: 'Integration test', script: 'bundle exec rake test:security')
+   //    //    }
+   //    //  }
+   //    //}
+   //    sh(label: 'Stop Elasticsearch', script: 'docker kill $(docker ps -q)')
+   //  }
+   //}
   }
 }
 
 def rubyImage(Closure body){
+  /// Building the docker image. The following path should contain a Dockerfile
   def rubyDocker = docker.build('elasticsearch-ruby', "--build-arg RUBY_TEST_VERSION=2.6 ${BASE_DIR}/.ci/docker")
   rubyDocker.inside('--network=elastic'){
     body()
   }
 }
+
+//retry: https://github.com/elastic/elasticsearch-js/commit/c9905c6d241340242b6ccf1e676e27b8f11cb8af
