@@ -35,6 +35,7 @@ module Elasticsearch
           option_method :max_boost
           option_method :score_mode
           option_method :boost_mode
+          option_method :min_score
 
           def initialize(*args, &block)
             super
