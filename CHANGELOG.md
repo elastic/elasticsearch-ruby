@@ -1,3 +1,20 @@
+## 7.3.0
+
+### Client
+
+* Add note to readme about the default port value
+* Add note about exception to default port rule when connecting using Elastic Cloud ID
+* Cluster name is variable in cloud id
+
+### XPACK
+
+* Support allow_no_match parameter in stop_data_frame_transform
+* Add allow_no_match to get_data_frame_transform API
+* Add missing headers
+* Support get_builtin_privileges API
+* Update tests for changed xpack paths
+* test:integration task in xpack gem shouldn't do anything in favor of test:rest_api
+
 ## 7.2.0
 
 ### Client
