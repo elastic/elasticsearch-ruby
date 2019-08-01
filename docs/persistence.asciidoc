@@ -21,29 +21,6 @@ The `Elasticsearch::Persistence::Repository` module provides an implementation o
 * Providing access to the Elasticsearch response for search results (aggregations, total, ...)
 * Defining the methods for serialization and deserialization
 
-[[persistence]]
-== Persistence
-
-The `elasticsearch-persistence` http://rubygems.org/gems/elasticsearch-persistence[Rubygem]
-provides persistence layer for Ruby domain objects.
-
-It supports the repository design patterns. Versions before 6.0 also supported the _active record_ design pattern.
-
-=== Repository
-
-The `Elasticsearch::Persistence::Repository` module provides an implementation of the repository pattern and allows to save, delete, find and search objects stored in Elasticsearch, as well as configure mappings and settings for the index.
-
-==== Features At a Glance
-
-* Access to the Elasticsearch client
-* Setting the index name, document type, and object class for deserialization
-* Composing mappings and settings for the index
-* Creating, deleting or refreshing the index
-* Finding or searching for documents
-* Providing access both to domain objects and hits for search results
-* Providing access to the Elasticsearch response for search results (aggregations, total, ...)
-* Defining the methods for serialization and deserialization
-
 ==== Usage
 
 Let's have a simple plain old Ruby object (PORO):
