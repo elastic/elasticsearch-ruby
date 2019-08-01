@@ -15,15 +15,17 @@ The Elasticsearch client is compatible with Ruby 1.9 and higher.
 The client's API is compatible with Elasticsearch's API versions from 0.90 till current,
 just use a release matching major version of Elasticsearch.
 
-| Gem Version   |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+|===
+| Gem Version   |   | Elasticsearch Version
+
+| 0.90          | → | 0.90
+| 1.x           | → | 1.x
+| 2.x           | → | 2.x
+| 5.x           | → | 5.x
+| 6.x           | → | 6.x
+| 7.x           | → | 7.x
+| master        | → | master
+|===
 
 === Installation
 
