@@ -69,7 +69,7 @@ n = repository.find(1)
 # GET http://localhost:9200/repository/_doc/1 [status:200, request:0.003s, query:n/a]
 # < {"_index":"repository","_type":"note","_id":"1","_version":2,"found":true, "_source" : {"id":1,"text":"Test"}}
 => <Note:0x007fcbfc0c4980 @attributes={"id"=>1, "text"=>"Test"}>
-------------------------------------`
+------------------------------------
 
 ...search for it...
 
