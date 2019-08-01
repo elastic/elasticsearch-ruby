@@ -121,6 +121,17 @@ describe Elasticsearch::DSL::Search::Queries::FunctionScore do
         expect(search.to_hash[:function_score][:boost_mode]).to eq('bar')
       end
     end
+
+    describe '#min_scoore' do
+
+      before do
+        search.min_score('bar')
+      end
+
+      it 'applies the option' do
+        expect(search.to_hash[:function_score][:min_score]).to eq('bar')
+      end
+    end
   end
 
   describe '#initialize' do
