@@ -74,7 +74,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
     let(:arguments) do
       {
-          hosts: ['http://unavabilable:9200', 'http://unavabilable:9201'],
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
           reload_on_failure: true,
           sniffer_timeout: 5
       }
@@ -95,7 +95,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
     let(:arguments) do
       {
-          hosts: ['http://unavabilable:9200', 'http://unavabilable:9201'],
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
           retry_on_failure: 2
       }
     end
@@ -135,7 +135,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
     let(:arguments) do
       {
-          hosts: ['http://unavabilable:9200', 'http://unavabilable:9201'],
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
           retry_on_failure: true
       }
     end
@@ -175,7 +175,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
     let(:arguments) do
       {
-          hosts: ['http://unavabilable:9200', 'http://unavabilable:9201'],
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
           retry_on_failure: false
       }
     end
@@ -215,7 +215,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
     let(:arguments) do
       {
-          hosts: ['http://unavabilable:9200', 'http://unavabilable:9201'],
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
       }
     end
 
