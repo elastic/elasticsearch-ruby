@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9'
 
   s.add_dependency "multi_json"
-  s.add_dependency "faraday"
+  s.add_dependency "faraday", '>= 0.14', "< 2"
 
   if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
     s.add_dependency "system_timer"
