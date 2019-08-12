@@ -17,20 +17,22 @@ module Elasticsearch
           #
           def delete_role_mapping(arguments={})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
-            valid_params = [
-              :name,
-              :refresh ]
-
             arguments = arguments.clone
             name = arguments.delete(:name)
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_xpack/security/role_mapping/#{name}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_role_mapping, [ :name,
+                                                          :refresh ].freeze)
         end
       end
     end

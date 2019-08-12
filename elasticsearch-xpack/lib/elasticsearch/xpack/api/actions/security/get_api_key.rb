@@ -21,18 +21,20 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
           #
           def get_api_key(arguments={})
-
-            valid_params = [ :id,
-                             :name,
-                             :username,
-                             :realm_name ]
-
             method = Elasticsearch::API::HTTP_GET
             path   = "_security/api_key"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             perform_request(method, path, params).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:get_api_key, [ :id,
+                                                  :name,
+                                                  :username,
+                                                  :realm_name ].freeze)
         end
       end
     end
