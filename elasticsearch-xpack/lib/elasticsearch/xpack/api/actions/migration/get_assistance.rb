@@ -18,18 +18,20 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
           #
           def get_assistance(arguments={})
-            valid_params = [
-              :allow_no_indices,
-              :expand_wildcards,
-              :ignore_unavailable ]
-
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/migration/assistance"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:get_assistance, [ :allow_no_indices,
+                                                     :expand_wildcards,
+                                                     :ignore_unavailable ].freeze)
         end
       end
     end
