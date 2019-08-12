@@ -21,21 +21,23 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/graph/current/explore.html
           #
           def explore(arguments={})
-            valid_params = [
-              :routing,
-              :timeout ]
-
             arguments = arguments.clone
             index = arguments.delete(:index)
             type  = arguments.delete(:type)
 
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), Elasticsearch::API::Utils.__listify(type), '_graph/explore'
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:explore, [ :routing,
+                                              :timeout ].freeze)
         end
       end
     end
