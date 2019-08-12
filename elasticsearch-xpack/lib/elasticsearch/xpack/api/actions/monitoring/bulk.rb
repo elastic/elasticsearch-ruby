@@ -20,20 +20,13 @@ module Elasticsearch
           #
           def bulk(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
-            valid_params = [
-              :system_id,
-              :system_api_version,
-              :system_version,
-              :interval ]
-
             arguments = arguments.clone
             type = arguments.delete(:type)
             body = arguments.delete(:body)
 
             method = Elasticsearch::API::HTTP_POST
             path   = Elasticsearch::API::Utils.__pathify '_xpack/monitoring', type, '_bulk'
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             if body.is_a? Array
               payload = Elasticsearch::API::Utils.__bulkify(body)
@@ -43,6 +36,14 @@ module Elasticsearch
 
             perform_request(method, path, params, payload).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:bulk, [ :system_id,
+                                           :system_api_version,
+                                           :system_version,
+                                           :interval ].freeze)
         end
       end
     end
