@@ -22,17 +22,19 @@ module Elasticsearch
             arguments = arguments.clone
             transform_id = URI.escape(arguments.delete(:transform_id))
 
-            valid_params = [
-                :from,
-                :size]
-
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify('_data_frame/transforms', Elasticsearch::API::Utils.__listify(transform_id), '_stats')
-            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, valid_params)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, ParamsRegistry.get(__method__))
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:info, [ :from,
+                                           :size ].freeze)
         end
       end
     end
