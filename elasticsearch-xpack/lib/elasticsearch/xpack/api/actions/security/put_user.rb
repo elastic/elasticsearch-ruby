@@ -19,19 +19,21 @@ module Elasticsearch
           def put_user(arguments={})
             raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
-            valid_params = [ :refresh ]
-
             arguments = arguments.clone
             username = arguments.delete(:username)
 
             method = Elasticsearch::API::HTTP_PUT
             path   = Elasticsearch::API::Utils.__pathify "_security/user", username
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:put_user, [ :refresh ].freeze)
         end
       end
     end
