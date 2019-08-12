@@ -17,14 +17,18 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/license-management.html
           #
           def post(arguments={})
-            valid_params = [ :acknowledge ]
             method = Elasticsearch::API::HTTP_PUT
             path   = "_license"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 8.0.0
+          ParamsRegistry.register(:post, [ :acknowledge ].freeze)
         end
       end
     end
