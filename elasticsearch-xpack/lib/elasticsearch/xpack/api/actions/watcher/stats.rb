@@ -16,14 +16,19 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/watcher-api-stats.html
           #
           def stats(arguments={})
-            valid_params = [ :metric, :emit_stacktraces ]
             method = Elasticsearch::API::HTTP_GET
             path   = "_watcher/stats"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:stats, [ :metric,
+                                            :emit_stacktraces ].freeze)
         end
       end
     end

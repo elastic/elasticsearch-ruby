@@ -18,12 +18,9 @@ module Elasticsearch
           #
           def delete_watch(arguments={})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
-            valid_params = [
-              :master_timeout,
-              :force ]
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_watcher/watch/#{arguments[:id]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             if Array(arguments[:ignore]).include?(404)
@@ -32,6 +29,12 @@ module Elasticsearch
               perform_request(method, path, params, body).body
             end
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_watch, [ :master_timeout,
+                                                   :force ].freeze)
         end
       end
     end
