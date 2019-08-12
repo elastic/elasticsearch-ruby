@@ -20,15 +20,19 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            valid_params = [ :typed_keys, :rest_total_hits_as_int ]
-
             method = Elasticsearch::API::HTTP_GET
             path   = "#{arguments[:index]}/_rollup_search"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:rollup_search, [ :typed_keys,
+                                                    :rest_total_hits_as_int ].freeze)
         end
       end
     end
