@@ -20,15 +20,17 @@ module Elasticsearch
           #
           def create_api_key(arguments={})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
-            valid_params = [ :refresh ]
-
             method = Elasticsearch::API::HTTP_PUT
             path   = "_security/api_key"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             perform_request(method, path, params, arguments[:body]).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:create_api_key, [ :refresh ].freeze)
         end
       end
     end

@@ -17,19 +17,21 @@ module Elasticsearch
           #
           def clear_cached_realms(arguments={})
             raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
-
-            valid_params = [ :usernames ]
-
             arguments = arguments.clone
             realms = arguments.delete(:realms)
 
             method = Elasticsearch::API::HTTP_POST
             path   = Elasticsearch::API::Utils.__pathify "_security/realm/", Elasticsearch::API::Utils.__listify(realms), "_clear_cache"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:clear_cached_realms, [ :usernames ].freeze)
         end
       end
     end

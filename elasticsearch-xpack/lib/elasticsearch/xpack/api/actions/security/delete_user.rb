@@ -16,16 +16,12 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/security-api-users.html#security-api-delete-user
           #
           def delete_user(arguments={})
-            valid_params = [
-              :username,
-              :refresh ]
-
             arguments = arguments.clone
             username  = arguments.delete(:username)
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_security/user/#{username}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             if Array(arguments[:ignore]).include?(404)
@@ -34,6 +30,12 @@ module Elasticsearch
               perform_request(method, path, params, body).body
             end
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_user, [ :username,
+                                                  :refresh ].freeze)
         end
       end
     end

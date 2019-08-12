@@ -13,7 +13,6 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/security-api-authenticate.html
           #
           def authenticate(arguments={})
-            valid_params = []
             method = Elasticsearch::API::HTTP_GET
             path   = "_security/_authenticate"
             params = {}
