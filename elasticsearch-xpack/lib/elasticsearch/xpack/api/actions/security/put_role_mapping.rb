@@ -12,27 +12,31 @@ module Elasticsearch
           #
           # @option arguments [String] :name Role-mapping name (*Required*)
           # @option arguments [Hash] :body The role to add (*Required*)
-          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this
+          # operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search,
+          # if `false` then do nothing with refreshes. (options: true, false, wait_for)
           #
           # @see https://www.elastic.co/guide/en/x-pack/master/security-api-role-mapping.html#security-api-put-role-mapping
           #
           def put_role_mapping(arguments={})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            valid_params = [
-              :name,
-              :refresh ]
-
             arguments = arguments.clone
             name = arguments.delete(:name)
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_xpack/security/role_mapping/#{name}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:put_role_mapping, [ :name,
+                                                       :refresh ].freeze)
         end
       end
     end

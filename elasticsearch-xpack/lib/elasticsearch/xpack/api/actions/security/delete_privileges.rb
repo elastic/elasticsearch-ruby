@@ -15,15 +15,18 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
             raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
 
-            valid_params = [ :refresh ]
-
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_xpack/security/privilege/#{arguments.delete(:application)}/#{arguments[:name]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_privileges, [ :refresh ].freeze)
         end
       end
     end
