@@ -33,8 +33,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:info, [ :from,
-                                           :size ].freeze)
+          ParamsRegistry.register(:get_data_frame_transform_stats, [ :from,
+                                                                     :size ].freeze)
         end
       end
     end
