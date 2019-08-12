@@ -17,17 +17,19 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/x-pack/current/info-api.html
         #
         def info(arguments={})
-          valid_params = [
-            :human,
-            :categories ]
-
           method = Elasticsearch::API::HTTP_GET
           path   = "_xpack"
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 7.4.0
+        ParamsRegistry.register(:info, [ :human,
+                                         :categories ].freeze)
       end
     end
   end
