@@ -16,16 +16,18 @@ module Elasticsearch
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
           #
           def get_datafeeds(arguments={})
-            valid_params = [
-              :allow_no_datafeeds ]
-
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/datafeeds", arguments[:datafeed_id]
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:get_datafeeds, [ :allow_no_datafeeds ].freeze)
         end
       end
     end

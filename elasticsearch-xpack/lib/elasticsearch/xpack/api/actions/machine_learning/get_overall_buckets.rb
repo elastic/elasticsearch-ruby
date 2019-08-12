@@ -24,23 +24,24 @@ module Elasticsearch
           #
           def get_overall_buckets(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
-
-            valid_params = [
-              :top_n,
-              :bucket_span,
-              :overall_score,
-              :exclude_interim,
-              :start,
-              :end,
-              :allow_no_jobs ]
-
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/results/overall_buckets"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:get_overall_buckets, [ :top_n,
+                                                          :bucket_span,
+                                                          :overall_score,
+                                                          :exclude_interim,
+                                                          :start,
+                                                          :end,
+                                                          :allow_no_jobs ].freeze)
         end
       end
     end

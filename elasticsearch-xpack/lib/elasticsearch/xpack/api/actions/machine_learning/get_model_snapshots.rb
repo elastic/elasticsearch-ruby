@@ -24,20 +24,23 @@ module Elasticsearch
           #
           def get_model_snapshots(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
-            valid_params = [
-              :from,
-              :size,
-              :start,
-              :end,
-              :sort,
-              :desc ]
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:get_model_snapshots, [ :from,
+                                                          :size,
+                                                          :start,
+                                                          :end,
+                                                          :sort,
+                                                          :desc ].freeze)
         end
       end
     end
