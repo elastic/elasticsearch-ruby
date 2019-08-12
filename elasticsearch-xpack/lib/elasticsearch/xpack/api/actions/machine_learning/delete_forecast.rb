@@ -16,16 +16,18 @@ module Elasticsearch
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_forecast/#{arguments[:forecast_id]}"
 
-            valid_params = [
-                :forecast_id,
-                :allow_no_forecasts,
-                :timeout ]
-
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_forecast, [ :forecast_id,
+                                                      :allow_no_forecasts,
+                                                      :timeout ].freeze)
         end
       end
     end

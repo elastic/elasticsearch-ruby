@@ -19,17 +19,18 @@ module Elasticsearch
           #
           def revert_model_snapshot(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
-
-            valid_params = [
-              :delete_intervening_results ]
-
             method = Elasticsearch::API::HTTP_POST
             path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/anomaly_detectors", arguments[:job_id], "model_snapshots", arguments[:snapshot_id], "_revert"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:revert_model_snapshot, [ :delete_intervening_results ].freeze)
         end
       end
     end

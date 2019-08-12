@@ -23,19 +23,22 @@ module Elasticsearch
           #
           def flush_job(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
-            valid_params = [
-              :calc_interim,
-              :start,
-              :end,
-              :advance_time,
-              :skip_time ]
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_flush"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:flush_job, [ :calc_interim,
+                                                :start,
+                                                :end,
+                                                :advance_time,
+                                                :skip_time ].freeze)
         end
       end
     end

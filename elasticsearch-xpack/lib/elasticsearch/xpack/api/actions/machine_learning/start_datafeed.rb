@@ -20,19 +20,20 @@ module Elasticsearch
           #
           def start_datafeed(arguments={})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
-
-            valid_params = [
-              :start,
-              :end,
-              :timeout ]
-
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_start"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:start_datafeed, [ :start,
+                                                     :end,
+                                                     :timeout ].freeze)
         end
       end
     end
