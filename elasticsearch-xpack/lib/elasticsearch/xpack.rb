@@ -4,7 +4,9 @@
 
 require "elasticsearch/api"
 require "elasticsearch/xpack/version"
+require "elasticsearch/xpack/api/actions/params_registry"
 
+Dir[ File.expand_path('../xpack/actions/**/params_registry.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../xpack/api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../xpack/api/namespace/**/*.rb', __FILE__) ].each { |f| require f }
 

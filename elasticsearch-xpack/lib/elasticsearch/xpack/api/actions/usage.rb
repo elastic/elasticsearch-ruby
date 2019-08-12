@@ -13,14 +13,19 @@ module Elasticsearch
         #
         #
         def usage(arguments={})
-          valid_params = [ :master_timeout ]
           method = Elasticsearch::API::HTTP_GET
           path   = "_xpack/usage"
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           body   = nil
 
           perform_request(method, path, params, body).body
         end
+
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 7.4.0
+        ParamsRegistry.register(:usage, [ :master_timeout ].freeze)
       end
     end
   end
