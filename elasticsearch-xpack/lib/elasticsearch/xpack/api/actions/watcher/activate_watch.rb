@@ -17,18 +17,21 @@ module Elasticsearch
           #
           def activate_watch(arguments={})
             raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
-            valid_params = [ :master_timeout ]
-
             arguments = arguments.clone
             watch_id  = arguments.delete(:watch_id)
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_watcher/watch/#{watch_id}/_activate"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:activate_watch, [ :master_timeout ].freeze)
         end
       end
     end
