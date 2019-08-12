@@ -17,15 +17,18 @@ module Elasticsearch
           #
           def delete_datafeed(arguments={})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
-            valid_params = [
-              :force ]
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_ml/datafeeds/#{arguments[:datafeed_id]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_datafeed, [ :force ].freeze)
         end
       end
     end

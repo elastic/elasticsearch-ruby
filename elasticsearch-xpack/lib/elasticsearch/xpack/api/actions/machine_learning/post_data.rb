@@ -20,16 +20,19 @@ module Elasticsearch
           def post_data(arguments={})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            valid_params = [
-              :reset_start,
-              :reset_end ]
             method = Elasticsearch::API::HTTP_POST
             path   = "_ml/anomaly_detectors/#{arguments[:job_id]}/_data"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:post_data, [ :reset_start,
+                                                :reset_end ].freeze)
         end
       end
     end

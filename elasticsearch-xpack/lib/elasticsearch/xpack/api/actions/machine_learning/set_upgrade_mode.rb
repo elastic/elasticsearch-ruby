@@ -18,17 +18,19 @@ module Elasticsearch
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
           #
           def set_upgrade_mode(arguments={})
-
-            valid_params = [
-                :enabled,
-                :timeout ]
-
             method = Elasticsearch::API::HTTP_POST
             path   = '_ml/set_upgrade_mode'
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             perform_request(method, path, params).body
           end
+
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:set_upgrade_mode, [ :enabled,
+                                                       :timeout ].freeze)
         end
       end
     end
