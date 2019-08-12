@@ -15,15 +15,18 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/x-pack/current/license-management.html
           #
           def post_start_basic(arguments={})
-            valid_params = [
-              :acknowledge ]
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/license/start_basic"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:post_start_basic, [ :acknowledge ].freeze)
         end
       end
     end
