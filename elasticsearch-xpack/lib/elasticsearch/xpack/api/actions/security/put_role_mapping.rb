@@ -26,7 +26,7 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_xpack/security/role_mapping/#{name}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
             perform_request(method, path, params, body).body
