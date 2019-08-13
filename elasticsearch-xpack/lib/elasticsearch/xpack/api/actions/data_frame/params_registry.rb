@@ -24,7 +24,7 @@ module Elasticsearch
             # @param [ Symbol ] action The action to register.
             # @param [ Array[Symbol] ] valid_params The list of valid params.
             #
-            # @since 6.1.1
+            # @since 7.4.0
             def register(action, valid_params)
               PARAMS[action.to_sym] = valid_params
             end
@@ -38,7 +38,7 @@ module Elasticsearch
             #
             # @return [ Array<Symbol> ] The list of valid params for the action.
             #
-            # @since 6.1.1
+            # @since 7.4.0
             def get(action)
               PARAMS.fetch(action, [])
             end
