@@ -26,15 +26,18 @@ module Elasticsearch
             transform_id = URI.escape(arguments.delete(:transform_id))
             body = arguments.delete(:body)
 
-            valid_params = [
-                :defer_validation]
-
             method = Elasticsearch::API::HTTP_PUT
             path   = "_data_frame/transforms/#{transform_id}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, valid_params)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, ParamsRegistry.get(__method__))
 
             perform_request(method, path, params, body).body
           end
+
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 8.0.0
+          ParamsRegistry.register(:put_data_frame_transform, [ :defer_validation ].freeze)
         end
       end
     end
