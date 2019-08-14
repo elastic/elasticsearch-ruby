@@ -25,7 +25,7 @@ module Elasticsearch
             name = arguments.delete(:name)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/role_mapping/#{name}"
+            path   = "_security/role_mapping/#{name}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = arguments[:body]
 
