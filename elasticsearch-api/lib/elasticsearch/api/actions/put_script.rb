@@ -11,7 +11,7 @@ module Elasticsearch
       #
       # @example Storing an Mvel script in Elasticsearch and using it in function score
       #
-      #     client.put_script lang: 'groovy', id: 'my_score', body: { script: 'log(_score * factor)' }
+      #     client.put_script id: 'my_score', body: { script: { lang: 'groovy', source: 'log(_score * factor)' } }
       #
       #     client.search body: {
       #       query: {
