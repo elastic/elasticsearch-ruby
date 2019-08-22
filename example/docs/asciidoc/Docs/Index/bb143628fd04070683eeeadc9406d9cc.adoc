@@ -1,0 +1,4 @@
+[source,ruby]
+----
+include::./../../../spec/index_spec.rb[tag=bb143628fd04070683eeeadc9406d9cc,indent=0]
+----

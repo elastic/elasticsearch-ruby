@@ -230,3 +230,16 @@ task :update_version, :old, :new do |task, args|
         "rake release"
         "\n"
 end
+
+require 'rake/testtask'
+require 'rspec'
+require 'rspec/core/rake_task'
+
+desc 'Run code examples for documentation'
+task :doc_examples do
+
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = 'example/docs/spec/**{,/*/**}/*_spec.rb'
+  end
+  Rake::Task['spec'].execute
+end
