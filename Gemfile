@@ -27,3 +27,7 @@ end
 if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
   gem "test-unit", '~> 2'
 end
+
+group :development do
+  gem 'rspec'
+end

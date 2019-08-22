@@ -1,0 +1,4 @@
+[source,ruby]
+----
+include::./../../../spec/delete_spec.rb[tag=47b5ff897f26e9c943cee5c06034181d,indent=0]
+----
