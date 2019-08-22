@@ -1,0 +1,4 @@
+[source,ruby]
+----
+include::./../../../spec/check_running_spec.rb[tag=048d8abd42d094bbdcf4452a58ccb35b,indent=0]
+----
