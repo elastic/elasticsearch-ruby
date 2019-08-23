@@ -239,7 +239,7 @@ desc 'Run code examples for documentation'
 task :doc_examples do
 
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = 'example/docs/spec/**{,/*/**}/*_spec.rb'
+    t.pattern = 'examples/docs/spec/**{,/*/**}/*_spec.rb'
   end
   Rake::Task['spec'].execute
 end
