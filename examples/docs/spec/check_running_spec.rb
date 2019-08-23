@@ -9,7 +9,7 @@ describe 'CheckRunning documentation examples' do
     DEFAULT_CLIENT
   end
 
-  it 'executes the example code - d1ff6097e2359f927c88c2ccdb36252' do
+  it 'executes the example code - 3d1ff6097e2359f927c88c2ccdb36252' do
     # tag::3d1ff6097e2359f927c88c2ccdb36252[]
     response = client.info
     # end::3d1ff6097e2359f927c88c2ccdb36252[]
