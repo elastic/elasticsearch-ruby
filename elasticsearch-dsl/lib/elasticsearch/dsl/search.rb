@@ -204,6 +204,15 @@ module Elasticsearch
           end
         end; alias_method :size=, :size
 
+        def track_total_hits(value=nil)
+          if value
+            @track_total_hits = value
+            self
+          else
+            @track_total_hits
+          end
+        end
+
         # DSL method for building the `from` part of a search definition
         #
         # @return [self]
@@ -265,6 +274,7 @@ module Elasticsearch
           hash.update(from: @from) if @from
           hash.update(suggest: @suggest.reduce({}) { |sum,item| sum.update item.last.to_hash }) if @suggest
           hash.update(highlight: @highlight.to_hash) if @highlight
+          hash.update(track_total_hits: @track_total_hits) if @track_total_hits
           hash.update(@options) unless @options.empty?
           hash
         end
