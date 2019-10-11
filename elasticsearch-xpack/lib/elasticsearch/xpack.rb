@@ -27,7 +27,7 @@ module Elasticsearch
   end
 end
 
-Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snapshot_id, :category_id
+Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snapshot_id, :category_id, :policy_id
 
 module Elasticsearch
   module Transport
@@ -70,6 +70,10 @@ module Elasticsearch
 
       def data_frame
         @data_frame ||= xpack.data_frame
+      end
+
+      def ilm
+        @ilm ||= xpack.ilm
       end
     end
   end
