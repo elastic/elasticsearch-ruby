@@ -64,6 +64,14 @@ module Elasticsearch
           assert_equal( { version: true }, subject.to_hash )
         end
 
+        should "encode track_total_hits" do
+          subject.track_total_hits 123
+          assert_equal( { track_total_hits: 123 }, subject.to_hash )
+
+          subject.track_total_hits true
+          assert_equal( { track_total_hits: true }, subject.to_hash )
+        end
+
         should "encode indices_boost" do
           subject.indices_boost foo: 'bar'
           assert_equal( { indices_boost: { foo: 'bar' } }, subject.to_hash )
