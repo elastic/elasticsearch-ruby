@@ -1,7 +1,7 @@
 ---
 ELASTICSEARCH_VERSION:
-- 7.2.0
 - 7.3.0
+- 7.4.0
 
 RUBY_TEST_VERSION:
 - 2.6.1
