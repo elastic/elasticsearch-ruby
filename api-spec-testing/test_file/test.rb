@@ -24,6 +24,7 @@ module Elasticsearch
           #
           # @since 6.2.0
           def find_value_in_document(chain, document)
+            return document[chain] unless chain.is_a?(Array)
             return document[chain[0]] unless chain.size > 1
             # a number can be a string key in a Hash or indicate an element in a list
             if document.is_a?(Hash)

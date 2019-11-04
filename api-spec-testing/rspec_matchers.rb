@@ -157,15 +157,16 @@ RSpec::Matchers.define :match_lt_field do |expected_pairs, test|
 end
 
 # Match an arbitrary field of a response to a given value.
-RSpec::Matchers.define :match_response do |expected_pairs, test|
+RSpec::Matchers.define :match_response do |pairs, test|
 
   match do |response|
-    mismatched_values(sanitize_pairs(expected_pairs), test, response).empty?
+    pairs = sanitize_pairs(pairs)
+    compare_pairs(pairs, response, test).empty?
   end
 
   failure_message do |response|
-    "the pair/value #{mismatched_values(sanitize_pairs(expected_pairs), test, response)}" +
-        " does not match the pair/value in the response #{response}"
+    "the actual response pair/value(s) #{@mismatched_pairs}" +
+        " does not match the pair/value(s) in the response #{response}"
   end
 
   def sanitize_pairs(expected_pairs)
@@ -173,42 +174,73 @@ RSpec::Matchers.define :match_response do |expected_pairs, test|
     @pairs ||= expected_pairs['$body'] ? expected_pairs['$body'] : expected_pairs
   end
 
-  def mismatched_values(pairs, test, response)
-    @mismatched_values ||= begin
-      if pairs.is_a?(String)
-        # Must return an empty list if there are no mismatched values
-        compare_string_response(pairs, response) ? [] : [ pairs ]
+  def compare_pairs(expected_pairs, response, test)
+    @mismatched_pairs = {}
+    if expected_pairs.is_a?(String)
+      @mismatched_pairs = expected_pairs unless compare_string_response(expected_pairs, response)
+    else
+      compare_hash(expected_pairs, response, test)
+    end
+    @mismatched_pairs
+  end
+
+  def compare_hash(expected_pairs, actual_hash, test)
+    expected_pairs.each do |expected_key, expected_value|
+      # Select the values that don't match, used for the failure message.
+
+      # Find the value to compare in the response
+      split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
+        # Sometimes the expected *key* is a cached value from a previous request.
+        test.get_cached_value(k)
+      end
+      actual_value = TestFile::Test.find_value_in_document(split_key, actual_hash)
+      # Sometimes the key includes dots. See watcher/put_watch/60_put_watch_with_action_condition.yml
+      actual_value = TestFile::Test.find_value_in_document(expected_key, actual_hash) if actual_value.nil?
+
+      # Sometimes the expected *value* is a cached value from a previous request.
+      # See test api_key/10_basic.yml
+      expected_value = test.get_cached_value(expected_value)
+
+      case expected_value
+      when Hash
+        compare_hash(expected_value, actual_value, test)
+      when Array
+        unless compare_array(expected_value, actual_value, test, actual_hash)
+          @mismatched_pairs.merge!(expected_key => expected_value)
+        end
+      when String
+        unless compare_string(expected_value, actual_value, test, actual_hash)
+          @mismatched_pairs.merge!(expected_key => expected_value)
+        end
       else
-        compare_hash(pairs, response, test)
+        unless expected_value == actual_value
+          @mismatched_pairs.merge!(expected_key => expected_value)
+        end
       end
     end
   end
 
-  def compare_hash(expected_keys_values, response, test)
-    expected_keys_values.reject do |expected_key, expected_value|
-      # Select the values that don't match, used for the failure message.
+  def compare_string(expected, actual_value, test, response)
+    # When you must match a regex. For example:
+    #   match: {task: '/.+:\d+/'}
+    if expected[0] == "/" && expected[-1] == "/"
+      /#{expected.tr("/", "")}/ =~ actual_value
+    elsif expected == ''
+      actual_value == response
+    else
+      expected == actual_value
+    end
+  end
 
-      if expected_value.is_a?(Hash)
-        compare_hash(response[expected_key], expected_value, test)
-      elsif expected_value.is_a?(String)
-        split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
-          test.get_cached_value(k)
-        end
-        actual_value = TestFile::Test.find_value_in_document(split_key, response)
-
-        # Sometimes the expected value is a cached value from a previous request.
-        # See test api_key/10_basic.yml
-        expected_value = test.get_cached_value(expected_value)
-
-        # When you must match a regex. For example:
-        #   match: {task: '/.+:\d+/'}
-        if expected_value.is_a?(String) && expected_value[0] == "/" && expected_value[-1] == "/"
-           /#{expected_value.tr("/", "")}/ =~ actual_value
-        elsif expected_key == ''
-          expected_value == response
-        else
-          actual_value == expected_value
-        end
+  def compare_array(expected, actual, test, response)
+    expected.each_with_index do |value, i|
+      case value
+      when Hash
+        return false unless compare_hash(value, actual[i], test)
+      when Array
+        return false unless compare_array(value, actual[i], test, response)
+      when String
+        return false unless compare_string(value, actual[i], test, response)
       end
     end
   end

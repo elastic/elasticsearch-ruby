@@ -10,7 +10,6 @@
 ## 7.0.0.pre
 
 * Added `elastic_ruby_console` executable
-
 ### Client
 
 * Fixed failing integration test
