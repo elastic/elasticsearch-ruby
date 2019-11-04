@@ -11,21 +11,29 @@ module Elasticsearch
           # Deletes an existing data frame transform.
           #
           # @option arguments [String] :transform_id The id of the transform to delete. *Required*
+          # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state.
+          #   The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-data-frame-transform.html
           #
           # @since 7.2.0
           def delete_data_frame_transform(arguments={})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
-            transform_id = URI.escape(arguments[:transform_id])
+            arguments.clone
+            transform_id = URI.escape(arguments.delete(:transform_id))
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_data_frame/transforms/#{transform_id}"
-            params = {}
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, ParamsRegistry.get(__method__))
             body   = nil
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:delete_data_frame_transform, [ :force ].freeze)
         end
       end
     end

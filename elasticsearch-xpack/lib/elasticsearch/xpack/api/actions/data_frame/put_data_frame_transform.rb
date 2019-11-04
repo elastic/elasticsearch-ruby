@@ -12,6 +12,8 @@ module Elasticsearch
           #
           # @option arguments [Hash] :transform_id The id of the new transform. *Required*
           # @option arguments [Hash] :body The data frame transform definition. *Required*
+          # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts,
+          #   defaults to false.
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
           #
@@ -20,15 +22,21 @@ module Elasticsearch
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
-            transform_id = URI.escape(arguments[:transform_id])
+            arguments = arguments.clone
+            transform_id = URI.escape(arguments.delete(:transform_id))
             body = arguments[:body]
 
             method = Elasticsearch::API::HTTP_PUT
             path   = "_data_frame/transforms/#{transform_id}"
-            params = {}
+            params = Elasticsearch::API::Utils.__validate_and_extract_params(arguments, ParamsRegistry.get(__method__))
 
             perform_request(method, path, params, body).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 7.4.0
+          ParamsRegistry.register(:put_data_frame_transform, [ :defer_validation ].freeze)
         end
       end
     end
