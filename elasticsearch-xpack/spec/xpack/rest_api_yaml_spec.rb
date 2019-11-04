@@ -23,7 +23,7 @@ describe 'XPack Rest API YAML tests' do
         context "#{test.description}" do
 
           if test.skip_test?(ADMIN_CLIENT)
-            skip 'Test contains feature(s) not yet support or version is not satisfied'
+            skip 'Test contains feature(s) not yet supported or version is not satisfied'
 
           else
 
