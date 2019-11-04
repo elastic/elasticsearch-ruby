@@ -186,8 +186,6 @@ RSpec::Matchers.define :match_response do |pairs, test|
 
   def compare_hash(expected_pairs, actual_hash, test)
     expected_pairs.each do |expected_key, expected_value|
-      # Select the values that don't match, used for the failure message.
-
       # Find the value to compare in the response
       split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
         # Sometimes the expected *key* is a cached value from a previous request.
