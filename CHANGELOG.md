@@ -1,3 +1,37 @@
+## 7.4.0
+
+### Client
+
+* Accept options passed to #perform_request to avoid infinite retry loop
+* Fix minor typo
+
+### API
+
+* Update documentation of put_script method
+
+### EXT:7.4.0
+
+
+
+### XPACK
+
+* Add ParamsRegistry in each direcotry and for Xpack top-level API
+* Add ParamsRegistry for Xpack data_frame API
+* Add ParamsRegistry for Xpack graph API
+* Add ParamsRegistry for Xpack license API
+* Add ParamsRegistry for Xpack MachineLearning API
+* Fix path for loading params_registry files
+* Add ParamsRegistry for Xpack Migration API
+* Add ParamsRegistry for Xpack Monitoring API
+* Add ParamsRegistry for Xpack Rollup API
+* Add ParamsRegistry for Xpack security API
+* Add ParamsRegistry for Xpack sql API
+* Add ParamsRegistry for Xpack watcher API
+* Update missed file with ParamsRegistry
+* Update versions in params registry files
+* Add update_data_frame_transform
+* Support Index Lifecycle Management(ILM) API
+
 ## 7.3.0
 
 ### Client
