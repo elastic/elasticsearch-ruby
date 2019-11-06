@@ -42,6 +42,7 @@ module Elasticsearch
           option_method :boost
           option_method :analyze_wildcard
           option_method :auto_generate_phrase_queries
+          option_method :auto_generate_synonyms_phrase_query
           option_method :minimum_should_match
           option_method :lenient
           option_method :locale

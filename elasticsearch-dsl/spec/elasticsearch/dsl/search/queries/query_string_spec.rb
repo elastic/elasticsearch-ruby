@@ -38,6 +38,7 @@ describe Elasticsearch::DSL::Search::Queries::QueryString do
       'boost',
       'analyze_wildcard',
       'auto_generate_phrase_queries',
+      'auto_generate_synonyms_phrase_query',
       'minimum_should_match',
       'lenient',
       'locale',
