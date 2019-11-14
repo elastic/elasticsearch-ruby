@@ -14,9 +14,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
       #
       def update_by_query_rethrottle(arguments={})
-        raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
+        task_id = arguments.delete(:task_id)
+        raise ArgumentError, "Required argument 'task_id' missing" unless task_id
         method = Elasticsearch::API::HTTP_POST
-        path   = "_update_by_query/#{arguments[:task_id]}/_rethrottle"
+        path   = "_update_by_query/#{task_id}/_rethrottle"
         params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
         body   = nil
 
@@ -27,6 +28,7 @@ module Elasticsearch
       #
       # @since 6.2.0
       ParamsRegistry.register(:update_by_query_rethrottle, [
+          :task_id,
           :requests_per_second ].freeze)
     end
   end
