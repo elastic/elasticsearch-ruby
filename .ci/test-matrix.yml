@@ -1,11 +1,11 @@
 ---
 ELASTICSEARCH_VERSION:
-- 7.3.0
 - 8.0.0-SNAPSHOT
 
 RUBY_TEST_VERSION:
-- 2.6.1
-#- 2.4.5
+- 2.6.5
+- 2.5.7
+- 2.4.9
 
 TEST_SUITE:
 - rest_api
