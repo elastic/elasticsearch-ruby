@@ -1,12 +1,4 @@
 - view:
-    name: 'Main'
-    regex: '^.*$'
-    view-type: list
-- view:
-    name: 'Benchmark'
-    regex: '^.*benchmark.*$'
-    view-type: list
-- view:
     name: 'Ruby'
     regex: '^.*elasticsearch-ruby.*$'
     view-type: list
