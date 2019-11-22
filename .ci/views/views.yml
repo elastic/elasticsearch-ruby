@@ -18,3 +18,11 @@
     name: 'Python'
     regex: '^.*elasticsearch-py.*$'
     view-type: list
+- view:
+    name: 'Go'
+    regex: '^.*go-elasticsearch.*$'
+    view-type: list
+- view:
+    name: '.NET'
+    regex: '^.*elasticsearch-net.*$'
+    view-type: list
