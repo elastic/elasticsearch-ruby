@@ -32,14 +32,15 @@ module Elasticsearch
 
       include Thor::Actions
 
+      SRC_PATH = '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/'.freeze
       __root = Pathname( File.expand_path('../../..', __FILE__) )
 
       desc "generate", "Generate source code and tests from the REST API JSON specification"
-      method_option :language,  default: 'ruby',                                          desc: 'Programming language'
-      method_option :force,     type: :boolean, default: false,                           desc: 'Overwrite the output'
-      method_option :verbose,   type: :boolean, default: false,                           desc: 'Output more information'
-      method_option :input,     default: File.expand_path('../../../../tmp/elasticsearch/rest-api-spec/api/**/*.json', __FILE__), desc: 'Path to directory with JSON API specs'
-      method_option :output,    default: File.expand_path('../../../tmp/out', __FILE__),        desc: 'Path to output directory'
+      method_option :language, default: 'ruby',                              desc: 'Programming language'
+      method_option :force,    type: :boolean,                               default: false, desc: 'Overwrite the output'
+      method_option :verbose,  type: :boolean,                               default: false, desc: 'Output more information'
+      method_option :input,    default: File.expand_path(SRC_PATH,           __FILE__),      desc: 'Path to directory with JSON API specs'
+      method_option :output,   default: File.expand_path('../../../tmp/out', __FILE__),      desc: 'Path to output directory'
 
       def generate(*files)
         self.class.source_root File.expand_path('../', __FILE__)
@@ -50,19 +51,23 @@ module Elasticsearch
         # -- Test helper
         copy_file "templates/ruby/test_helper.rb", @output.join('test').join('test_helper.rb') if options[:language] == 'ruby'
 
-        files = Dir.entries(@input.to_s).reject { |f| f.start_with?('.') || f.start_with?('_') }
+        # Remove unwanted files
+        files = Dir.entries(@input.to_s).reject do |f|
+          f.start_with?('.') ||
+            f.start_with?('_') ||
+            File.extname(f) != '.json'
+        end
 
         files.each do |filepath|
           file    = @input.join(filepath)
 
           @path   = Pathname(file)
           @json   = MultiJson.load( File.read(@path) )
+
           @spec   = @json.values.first
           say_status 'json', @path, :yellow
 
           @spec['url'] ||= {}
-          @spec['url']['parts']  ||= []
-          @spec['url']['params'] ||= {}
 
           # say_status 'JSON', @spec.inspect, options[:verbose]
 
@@ -70,9 +75,15 @@ module Elasticsearch
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size-1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
-          @http_method      = "Elasticsearch::API::HTTP_#{@spec['methods'].first}"
-          @http_path        = unless @spec['url']['parts'].empty?
-                                @spec['url']['path']
+
+          @parts            = __endpoint_parts
+          @params           = @spec['params'] || {}
+
+          method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
+          @http_method      = "HTTP_#{method}"
+          @http_path_params = __path_params
+          @http_path        = unless false
+                                @spec['url']['paths'].first['path']
                                   .split('/')
                                   .compact
                                   .reject { |p| p =~ /^\s*$/ }
@@ -80,9 +91,8 @@ module Elasticsearch
                                   .join('/')
                                   .gsub(/^\//, '')
                               else
-                                @spec['url']['path'].gsub(/^\//, '')
+                                @spec['url']['paths'].first.gsub(/^\//, '')
                               end
-
           # -- Ruby files
 
           @path_to_file = @output.join('api').join( @module_namespace.join('/') ).join("#{@method_name}.rb")
@@ -135,6 +145,24 @@ module Elasticsearch
           empty_directory @output.join(key)
           create_directory_hierarchy *value.to_a.first
         end
+      end
+
+      def __endpoint_parts
+        parts = @spec['url']['paths'].select do |a|
+          a.keys.include?('parts')
+        end.map do |part|
+          part&.[]('parts')
+        end
+        (parts.first || [])
+      end
+
+      def __path_params
+        return nil if @parts.empty? || @parts.nil?
+        params = []
+        @parts.each do |name, _|
+          params << "Utils.__listify(_#{name})"
+        end
+        ', ' + params.join(', ')
       end
 
     end
