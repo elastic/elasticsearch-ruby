@@ -23,10 +23,6 @@ module Elasticsearch
     # module namespace, method names, and RDoc documentation,
     # as well as test files for each endpoint.
     #
-    # Currently it only generates Ruby source, but can easily be
-    # extended and adapted to generate source code for other
-    # programming languages.
-    #
     class SourceGenerator < Thor
       namespace 'api:code'
 
@@ -36,7 +32,6 @@ module Elasticsearch
       __root = Pathname( File.expand_path('../../..', __FILE__) )
 
       desc "generate", "Generate source code and tests from the REST API JSON specification"
-      method_option :language, default: 'ruby',                              desc: 'Programming language'
       method_option :force,    type: :boolean,                               default: false, desc: 'Overwrite the output'
       method_option :verbose,  type: :boolean,                               default: false, desc: 'Output more information'
       method_option :input,    default: File.expand_path(SRC_PATH,           __FILE__),      desc: 'Path to directory with JSON API specs'
@@ -49,7 +44,7 @@ module Elasticsearch
         @output = Pathname(options[:output])
 
         # -- Test helper
-        copy_file "templates/ruby/test_helper.rb", @output.join('test').join('test_helper.rb') if options[:language] == 'ruby'
+        copy_file "templates/test_helper.rb", @output.join('test').join('test_helper.rb')
 
         # Remove unwanted files
         files = Dir.entries(@input.to_s).reject do |f|
@@ -99,12 +94,12 @@ module Elasticsearch
 
           empty_directory @output.join('api').join( @module_namespace.join('/') )
 
-          template "templates/#{options[:language]}/method.erb", @path_to_file
+          template "templates/method.erb", @path_to_file
 
           if options[:verbose]
             colorized_output   = CodeRay.scan_file(@path_to_file, :ruby).terminal
             lines              =  colorized_output.split("\n")
-            say_status options[:language].downcase,
+            say_status 'ruby',
                        lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
                        :yellow
           end
@@ -115,12 +110,12 @@ module Elasticsearch
           @test_file      = @test_directory.join("#{@method_name}_test.rb")
 
           empty_directory @test_directory
-          template "templates/#{options[:language]}/test.erb", @test_file
+          template "templates/test.erb", @test_file
 
           if options[:verbose]
             colorized_output   = colorized_output   = CodeRay.scan_file(@test_file, :ruby).terminal
             lines              =  colorized_output.split("\n")
-            say_status options[:language].downcase,
+            say_status 'ruby',
                        lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
                        :yellow
             say '▬'*terminal_width
