@@ -14,9 +14,7 @@ require 'coderay'
 require 'pry'
 
 module Elasticsearch
-
   module API
-
     # A command line application based on [Thor](https://github.com/wycats/thor),
     # which will read the JSON API spec file(s), and generate
     # the Ruby source code (one file per API endpoint) with correct
@@ -55,40 +53,28 @@ module Elasticsearch
 
         files.each do |filepath|
           file    = @input.join(filepath)
-
           @path   = Pathname(file)
           @json   = MultiJson.load( File.read(@path) )
-
           @spec   = @json.values.first
           say_status 'json', @path, :yellow
 
           @spec['url'] ||= {}
 
-          # say_status 'JSON', @spec.inspect, options[:verbose]
-
           @full_namespace   = @json.keys.first.split('.')
-          @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size-1 : 0
+          @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
 
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
-
           method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
           @http_method      = "HTTP_#{method}"
-          @http_path_params = __path_params
-          @http_path        = unless false
-                                @spec['url']['paths'].first['path']
-                                  .split('/')
-                                  .compact
-                                  .reject { |p| p =~ /^\s*$/ }
-                                  .map { |p| p =~ /\{/ ? "\#\{arguments[:#{p.tr('{}', '')}]\}" : p }
-                                  .join('/')
-                                  .gsub(/^\//, '')
-                              else
-                                @spec['url']['paths'].first.gsub(/^\//, '')
-                              end
-          # -- Ruby files
+          @paths            = @spec['url']['paths'].reject { |p| p['path'].include? 'type' }.map { |b| b['path'] }
+          # TODO : Temporary Hack for deprecated method
+          next if @method_name == 'exists_type'
+
+          @http_path        = __http_path
+          @required_parts   = __required_parts
 
           @path_to_file = @output.join('api').join( @module_namespace.join('/') ).join("#{@method_name}.rb")
 
@@ -98,7 +84,7 @@ module Elasticsearch
 
           if options[:verbose]
             colorized_output   = CodeRay.scan_file(@path_to_file, :ruby).terminal
-            lines              =  colorized_output.split("\n")
+            lines              = colorized_output.split("\n")
             say_status 'ruby',
                        lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
                        :yellow
@@ -142,6 +128,8 @@ module Elasticsearch
         end
       end
 
+      # Extract parts from each path
+      #
       def __endpoint_parts
         parts = @spec['url']['paths'].select do |a|
           a.keys.include?('parts')
@@ -151,15 +139,55 @@ module Elasticsearch
         (parts.first || [])
       end
 
-      def __path_params
-        return nil if @parts.empty? || @parts.nil?
-        params = []
-        @parts.each do |name, _|
-          params << "Utils.__listify(_#{name})"
+      def __http_path
+        return "\"#{__parse_path(@paths.first)}\"" if @paths.size == 1
+        result = ''
+
+        @paths.sort { |a, b| b.length <=> a.length }.each_with_index do |path, i|
+          var_string = __extract_path_variables(path).map { |var| "_#{var}" }.join(' && ')
+          result += if i == 0
+                      "if #{var_string}\n"
+                    elsif i == @paths.size - 1
+                      "else\n"
+                    else
+                      "elsif #{var_string}\n"
+                    end
+          result += "\"#{__parse_path(path)}\"\n"
         end
-        ', ' + params.join(', ')
+        result += 'end'
+        result
       end
 
+      def __parse_path(path)
+        path.gsub(/^\//, '')
+            .gsub('{', '#{Utils.__listify(_')
+            .gsub('}', ')}')
+      end
+
+      def __path_variables
+        @paths.map do |path|
+          __extract_path_variables(path)
+        end
+      end
+
+      # extract values that are in the {var} format:
+      def __extract_path_variables(path)
+        path.scan(/{(\w+)}/).flatten
+      end
+
+      # Find parts that are definitely required and should raise an error if
+      # they're not present
+      #
+      def __required_parts
+        required = []
+        # TODO Looks like this is not right:
+        required << 'body' if (@spec['body'] && @spec['body']['required'])
+
+        # Get required variables from paths:
+        req_variables = __path_variables.inject(:&) # find intersection
+        required << req_variables unless req_variables.empty?
+        required.flatten
+      end
     end
   end
 end
