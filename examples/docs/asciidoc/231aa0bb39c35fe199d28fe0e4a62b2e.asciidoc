@@ -1,0 +1,11 @@
+[source, ruby]
+----
+client.search(
+  index: 'bank',
+  body: {
+    query: {
+      match_phrase: { address: "mill lane" }
+    }
+  }
+)
+----
