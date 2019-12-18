@@ -55,7 +55,6 @@ matrix:
 before_install:
   - ls $PWD
   - pkill -9 -f elasticsearch || true
-  - gem update --system
   - gem --version
   - gem update bundler -q
   - bundle version
