@@ -1,0 +1,19 @@
+[source, ruby]
+----
+client.search(
+  index: 'bank',
+  size: 0,
+  body: {
+    aggregations: {
+      group_by_state: {
+        terms: { field: "state.keyword" },
+        aggregations: {
+          average_balance: {
+            avg: { field: "balance" }
+          }
+        }
+      }
+    }
+  }
+)
+----
