@@ -1,0 +1,10 @@
+[source, ruby]
+----
+client.search(
+  index: 'bank',
+  body: {
+    query: { match_all: {} },
+    sort: { account_number: 'asc' }
+  }
+)
+----
