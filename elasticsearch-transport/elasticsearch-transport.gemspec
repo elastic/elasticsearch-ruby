@@ -35,11 +35,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler"
 
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "rake", "~> 11.1"
-  else
-    s.add_development_dependency "rake", "< 11.0"
-  end
+  s.add_development_dependency "rake"
+
 
   s.add_development_dependency "ansi"
   s.add_development_dependency "shoulda-context"
@@ -56,26 +53,16 @@ Gem::Specification.new do |s|
   s.add_development_dependency "manticore", '~> 0.6' if defined? JRUBY_VERSION
   s.add_development_dependency "hashie"
 
-  # Prevent unit test failures on Ruby 1.8
-  if defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
-    s.add_development_dependency "test-unit", '~> 2'
-    s.add_development_dependency "json", '~> 1.8'
-  end
+  s.add_development_dependency "minitest"
+  s.add_development_dependency "minitest-reporters"
+  s.add_development_dependency "elasticsearch-extensions"
+  s.add_development_dependency "ruby-prof"    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  s.add_development_dependency "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  s.add_development_dependency "simplecov"
+  s.add_development_dependency "simplecov-rcov"
+  s.add_development_dependency "cane"
 
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "minitest"
-    s.add_development_dependency "minitest-reporters"
-    s.add_development_dependency "elasticsearch-extensions"
-    s.add_development_dependency "ruby-prof"    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-    s.add_development_dependency "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-    s.add_development_dependency "simplecov"
-    s.add_development_dependency "simplecov-rcov"
-    s.add_development_dependency "cane"
-  end
-
-  if defined?(RUBY_VERSION) && RUBY_VERSION > '2.2'
-    s.add_development_dependency "test-unit", '~> 2'
-  end
+  s.add_development_dependency "test-unit", '~> 2'
 
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby client for Elasticsearch. See the `elasticsearch` gem for full integration.
