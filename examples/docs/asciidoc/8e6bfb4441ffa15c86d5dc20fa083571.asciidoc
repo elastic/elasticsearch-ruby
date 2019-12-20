@@ -1,0 +1,10 @@
+[source, ruby]
+----
+client.cluster.put_settings(
+    body: {
+        transient: {
+          'logger.org.elasticsearch.transport': 'trace'
+        }
+    }
+)
+----

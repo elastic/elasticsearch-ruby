@@ -1,0 +1,6 @@
+[source, ruby]
+----
+client.cat.health
+
+client.cat.recovery
+----
