@@ -1,0 +1,10 @@
+[source, ruby]
+----
+client.cluster.put_settings(
+  body: {
+    persistent: {
+      'cluster.routing.allocation.enable' => 'primaries'
+    }
+  }
+)
+----
