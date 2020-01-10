@@ -1,0 +1,15 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      tags: {
+        terms: {
+          field: "tags",
+          missing: "N/A"
+        }
+      }
+    }
+  }
+)
+---

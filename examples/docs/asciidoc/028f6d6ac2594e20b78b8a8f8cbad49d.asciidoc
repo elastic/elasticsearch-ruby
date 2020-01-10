@@ -1,0 +1,26 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      countries: {
+        terms: {
+          field: "artist.country",
+          order: [
+            { "rock>playback_stats.avg": "desc" },
+            { "_count": "desc" }
+          ]
+        },
+        aggregations: {
+          rock: {
+            filter: { term: { genre: "rock" } },
+            aggregations: {
+              playback_stats: { stats: { field: "play_count" } }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+----

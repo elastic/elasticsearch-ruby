@@ -1,0 +1,21 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      "JapaneseCars": {
+        terms: {
+          field: "make",
+          include: ["mazda", "honda"]
+        }
+      },
+      "ActiveCarManufacturers": {
+        terms: {
+          field: "make",
+          exclude: ["rover", "jensen"]
+        }
+      }
+    }
+  }
+)
+----
