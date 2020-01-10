@@ -1,0 +1,16 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    query: {
+      constant_score: {
+        filter: {
+          term: {
+            status: "active"
+          }
+        }
+      }
+    }
+  }
+)
+----
