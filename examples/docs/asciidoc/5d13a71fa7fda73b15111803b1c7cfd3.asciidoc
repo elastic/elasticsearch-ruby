@@ -1,0 +1,16 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    query: {
+      range: {
+        timestamp: {
+          time_zone:  "+01:00",
+          gte: "2015-01-01 00:00:00",
+          lte: "now"
+        }
+      }
+    }
+  }
+)
+----
