@@ -1,0 +1,20 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      genres: {
+        terms: {
+          field: "genre",
+          order: { max_play_count: "desc" }
+        },
+        aggregations: {
+          max_play_count: {
+            max: { field: "play_count" }
+          }
+        }
+      }
+    }
+  }
+)
+----

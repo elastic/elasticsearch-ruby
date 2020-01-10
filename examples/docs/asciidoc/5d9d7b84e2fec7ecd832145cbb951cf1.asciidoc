@@ -1,0 +1,30 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      expired_sessions: {
+        terms: {
+          field: "account_id",
+          include: {
+            partition: 0,
+            num_partitions: 20
+          },
+          size: 10000,
+          order: {
+            last_access: "asc"
+          }
+        },
+        aggregations: {
+          last_access: {
+            max: {
+              field: "access_date"
+            }
+          }
+        }
+      }
+    }
+  }
+)
+----

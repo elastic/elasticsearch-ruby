@@ -1,0 +1,23 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      actors: {
+        terms: {
+          field: "actors",
+          size: 10
+        },
+        aggregations: {
+          costars: {
+            terms: {
+              field: "actors",
+              size: 5
+            }
+          }
+        }
+      }
+    }
+  }
+)
+----

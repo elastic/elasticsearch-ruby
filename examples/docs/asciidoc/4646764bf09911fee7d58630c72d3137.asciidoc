@@ -1,0 +1,21 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      genres: {
+        tags: {
+          terms: {
+            script: {
+              id: "my_script",
+              params: {
+                field: "genre"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+----

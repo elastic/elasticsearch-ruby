@@ -1,0 +1,19 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      genres: {
+        tags: {
+          terms: {
+            script: {
+              source: "doc['genre'].value",
+              lang: "painless"
+            }
+          }
+        }
+      }
+    }
+  }
+)
+----

@@ -1,0 +1,16 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    aggregations: {
+      tags: {
+        terms: {
+          field: "tags",
+          include: ".*sport.*",
+          exclude: "water_.*"
+        }
+      }
+    }
+  }
+)
+----
