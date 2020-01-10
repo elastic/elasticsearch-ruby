@@ -1,0 +1,19 @@
+[source, ruby]
+----
+client.search(
+  body: {
+    query: {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          term: {
+            status: "active"
+          }
+        }
+      }
+    }
+  }
+)
+----
