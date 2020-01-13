@@ -9,16 +9,16 @@ require 'thor'
 require 'pathname'
 
 module Elasticsearch
-
   module API
-
     class Lister < Thor
       namespace 'api'
+
+      DEFAULT_PATH = '../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/'.freeze
 
       desc "list <PATH DIRECTORY WITH JSON SPEC FILES>", "List all the REST API endpoints from the JSON specification"
       method_option :verbose,  type: :boolean, default: false, desc: 'Output more information'
       method_option :format,   default: 'text', desc: 'Output format (text, json)'
-      def list(directory)
+      def list(directory = DEFAULT_PATH)
         input = Pathname(directory).join('*.json')
         apis = Dir[input.to_s].map do |f|
           File.basename(f, '.json')
@@ -40,6 +40,5 @@ module Elasticsearch
         end
       end
     end
-
   end
 end
