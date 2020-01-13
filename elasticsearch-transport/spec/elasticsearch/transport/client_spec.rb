@@ -1388,7 +1388,7 @@ describe Elasticsearch::Transport::Client do
           expect(client.perform_request('GET', '_nodes/_local'))
           expect {
             client.perform_request('GET', '_nodes/_local')
-          }.to raise_exception(Faraday::Error::ConnectionFailed)
+          }.to raise_exception(Faraday::ConnectionFailed)
         end
       end
 
