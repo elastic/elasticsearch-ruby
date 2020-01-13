@@ -30,10 +30,10 @@ module Elasticsearch
       __root = Pathname( File.expand_path('../../..', __FILE__) )
 
       desc "generate", "Generate source code and tests from the REST API JSON specification"
-      method_option :force,    type: :boolean,                               default: false, desc: 'Overwrite the output'
-      method_option :verbose,  type: :boolean,                               default: false, desc: 'Output more information'
-      method_option :input,    default: File.expand_path(SRC_PATH,           __FILE__),      desc: 'Path to directory with JSON API specs'
-      method_option :output,   default: File.expand_path('../../../tmp/out', __FILE__),      desc: 'Path to output directory'
+      method_option :force,   type: :boolean,                               default: false, desc: 'Overwrite the output'
+      method_option :verbose, type: :boolean,                               default: false, desc: 'Output more information'
+      method_option :input,   default: File.expand_path(SRC_PATH,           __FILE__),      desc: 'Path to directory with JSON API specs'
+      method_option :output,  default: File.expand_path('../../../tmp/out', __FILE__),      desc: 'Path to output directory'
 
       def generate(*files)
         self.class.source_root File.expand_path('../', __FILE__)
@@ -100,7 +100,7 @@ module Elasticsearch
 
           if options[:verbose]
             colorized_output   = colorized_output   = CodeRay.scan_file(@test_file, :ruby).terminal
-            lines              =  colorized_output.split("\n")
+            lines              = colorized_output.split("\n")
             say_status 'ruby',
                        lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
                        :yellow
@@ -122,10 +122,10 @@ module Elasticsearch
       # Create the hierarchy of directories based on API namespaces
       #
       def __create_directories(key, value)
-        unless value['documentation']
-          empty_directory @output.join(key)
-          create_directory_hierarchy *value.to_a.first
-        end
+        return if value['documentation']
+
+        empty_directory @output.join(key)
+        create_directory_hierarchy * value.to_a.first
       end
 
       # Extract parts from each path
@@ -133,21 +133,25 @@ module Elasticsearch
       def __endpoint_parts
         parts = @spec['url']['paths'].select do |a|
           a.keys.include?('parts')
-        end.map do |part|
-          part&.[]('parts')
+        end.map do |path|
+          path&.[]('parts')
         end
-        (parts.first || [])
+        (parts.inject(&:merge) || [])
       end
 
       def __http_path
         return "\"#{__parse_path(@paths.first)}\"" if @paths.size == 1
-        result = ''
 
+        result = ''
+        anchor_string = ''
         @paths.sort { |a, b| b.length <=> a.length }.each_with_index do |path, i|
           var_string = __extract_path_variables(path).map { |var| "_#{var}" }.join(' && ')
-          result += if i == 0
+          next if anchor_string == var_string
+
+          anchor_string = var_string
+          result += if i.zero?
                       "if #{var_string}\n"
-                    elsif i == @paths.size - 1
+                    elsif (i == @paths.size - 1) || var_string.empty?
                       "else\n"
                     else
                       "elsif #{var_string}\n"
