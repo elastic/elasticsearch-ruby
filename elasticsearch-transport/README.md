@@ -90,7 +90,7 @@ Instead of Strings, you can pass host information as an array of Hashes:
 
     Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
-**NOTE:** When specifying multiple hosts, you probably want to enable the `retry_on_failure` option to
+**NOTE:** When specifying multiple hosts, you probably want to enable the `retry_on_failure` or `retry_on_status` options to
           perform a failed request on another node (see the _Retrying on Failures_ chapter).
 
 Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -- are handled automatically:
@@ -203,6 +203,10 @@ You can specify how many times should the client retry the request before it rai
 (the default is 3 times):
 
     Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+
+You can also use `retry_on_status` to retry when specific status codes are returned:
+
+    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503]
 
 ### Reloading Hosts
 
