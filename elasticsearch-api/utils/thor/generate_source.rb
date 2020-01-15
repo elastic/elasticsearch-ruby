@@ -69,9 +69,7 @@ module Elasticsearch
           @params           = @spec['params'] || {}
           method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
           @http_method      = "HTTP_#{method}"
-          @paths            = @spec['url']['paths'].reject { |p| p['path'].include? 'type' }.map { |b| b['path'] }
-          # TODO : Temporary Hack for deprecated method
-          next if @method_name == 'exists_type'
+          @paths            = @spec['url']['paths'].map { |b| b['path'] }
 
           @http_path        = __http_path
           @required_parts   = __required_parts
