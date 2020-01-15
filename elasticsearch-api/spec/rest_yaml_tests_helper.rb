@@ -73,6 +73,10 @@ skipped_tests << { file:        'delete/70_mix_typeless_typeful.yml',
 skipped_tests << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
 
+# node_selector is not supported yet
+skipped_tests << { file: 'cat.aliases/10_basic.yml',
+                   description: '*' }
+
 SKIPPED_TESTS = skipped_tests
 
 # The directory of rest api YAML files.

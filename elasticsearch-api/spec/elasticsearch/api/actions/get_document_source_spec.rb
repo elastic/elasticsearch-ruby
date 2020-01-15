@@ -42,7 +42,7 @@ describe 'client#get_source' do
   context 'when the type parameter is not provided' do
 
     let(:url) do
-      'foo/_doc/1/_source'
+      'foo/_source/1'
     end
 
     it 'performs the request' do

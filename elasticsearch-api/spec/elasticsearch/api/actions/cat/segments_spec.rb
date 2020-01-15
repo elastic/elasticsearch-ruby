@@ -8,16 +8,16 @@ describe 'client.cat#segments' do
 
   let(:expected_args) do
     [
-        'GET',
-        '_cat/segments',
-        params,
-        nil,
-        nil
+      'GET',
+      url,
+      {},
+      nil,
+      nil
     ]
   end
 
-  let(:params) do
-    {}
+  let(:url) do
+    '_cat/segments'
   end
 
   it 'performs the request' do
@@ -25,10 +25,8 @@ describe 'client.cat#segments' do
   end
 
   context 'when index is specified' do
-
-
-    let(:params) do
-      { index: 'foo' }
+    let(:url) do
+      '_cat/segments/foo'
     end
 
     it 'performs the request' do

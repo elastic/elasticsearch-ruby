@@ -8,10 +8,10 @@ describe 'client#delete_by_query' do
 
   let(:expected_args) do
     [
-        'POST',
-        'foo/_delete_by_query',
-        {},
-        { term: {} }
+      'POST',
+      'foo/_delete_by_query',
+      {},
+      { term: {} }
     ]
   end
 
@@ -42,18 +42,23 @@ describe 'client#delete_by_query' do
   end
 
   context 'when a query is provided' do
-
     let(:expected_args) do
       [
         'POST',
         'foo/_delete_by_query',
         { q: 'foo:bar' },
-        nil
+        { query: 'query' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.delete_by_query(index: 'foo', q: 'foo:bar')).to eq({})
+      expect(
+        client_double.delete_by_query(
+          index: 'foo',
+          q: 'foo:bar',
+          body: { query: 'query' }
+        )
+      ).to eq({})
     end
   end
 end
