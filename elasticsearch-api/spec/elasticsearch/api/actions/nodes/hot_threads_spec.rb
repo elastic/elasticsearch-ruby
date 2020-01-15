@@ -17,7 +17,7 @@ describe 'client.nodes#hot_threads' do
   end
 
   let(:url) do
-    '_nodes/hot_threads'
+    '_cluster/nodes/hot_threads'
   end
 
   it 'performs the request' do
@@ -27,7 +27,7 @@ describe 'client.nodes#hot_threads' do
   context 'when the node id is specified' do
 
     let(:url) do
-      '_nodes/foo/hot_threads'
+      '_cluster/nodes/foo/hot_threads'
     end
 
     it 'performs the request' do
@@ -38,7 +38,7 @@ describe 'client.nodes#hot_threads' do
   context 'when the path must be URL-escaped' do
 
     let(:url) do
-      '_nodes/foo%5Ebar/hot_threads'
+      '_cluster/nodes/foo%5Ebar/hot_threads'
     end
 
     it 'performs the request' do

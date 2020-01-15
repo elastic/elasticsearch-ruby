@@ -49,7 +49,7 @@ describe 'client.indices#delete_alias' do
   context 'when an index and name are specified' do
 
     let(:url) do
-      'foo/_alias/bar'
+      'foo/_aliases/bar'
     end
 
     it 'performs the request' do
@@ -60,7 +60,7 @@ describe 'client.indices#delete_alias' do
   context 'when the path must be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/_alias/bar%2Fbam'
+      'foo%5Ebar/_aliases/bar%2Fbam'
     end
 
     it 'performs the request' do
