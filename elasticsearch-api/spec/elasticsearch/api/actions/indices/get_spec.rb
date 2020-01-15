@@ -38,15 +38,4 @@ describe 'client.indices#get' do
       expect(client_double.indices.get(index: 'foo', ignore_unavailable: 1)).to eq({})
     end
   end
-
-  context 'when features are specified' do
-
-    let(:url) do
-      'foo/_settings'
-    end
-
-    it 'includes them in the URL' do
-      expect(client_double.indices.get(index: 'foo', feature: '_settings')).to eq({})
-    end
-  end
 end

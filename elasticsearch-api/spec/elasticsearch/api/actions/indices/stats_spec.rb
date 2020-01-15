@@ -66,7 +66,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when parameters are specified' do
-
     let(:params) do
       { expand_wildcards: true }
     end

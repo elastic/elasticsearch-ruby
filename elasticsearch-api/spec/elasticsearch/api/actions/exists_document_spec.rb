@@ -42,7 +42,7 @@ describe 'client#exists' do
   context 'when the type parameter is not provided' do
 
     let(:url) do
-      'foo/_all/1'
+      'foo/_doc/1'
     end
 
     it 'performs the request' do

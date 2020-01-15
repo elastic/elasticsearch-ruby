@@ -23,10 +23,10 @@ describe 'client#count' do
 
     let(:expected_args) do
       [
-          'GET',
-          'foo,bar/t1,t2/_count',
-          {},
-          nil
+        'GET',
+        'foo,bar/t1,t2/_count',
+        {},
+        nil
       ]
     end
 
@@ -39,10 +39,10 @@ describe 'client#count' do
 
     let(:expected_args) do
       [
-          'GET',
-          '_count',
-          {},
-          { match: { foo: 'bar' } }
+        'POST',
+        '_count',
+        {},
+        { match: { foo: 'bar' } }
       ]
     end
 

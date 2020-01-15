@@ -17,7 +17,7 @@ describe 'client.cluster#put_alias' do
   end
 
   let(:url) do
-    'foo/_alias/bar'
+    'foo/_aliases/bar'
   end
 
   let(:body) do
@@ -55,7 +55,7 @@ describe 'client.cluster#put_alias' do
   context 'when multiple indices are specified' do
 
     let(:url) do
-      'foo,bar/_alias/bam'
+      'foo,bar/_aliases/bam'
     end
 
     it 'performs the request' do
@@ -66,7 +66,7 @@ describe 'client.cluster#put_alias' do
   context 'when the path needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/_alias/bar%2Fbam'
+      'foo%5Ebar/_aliases/bar%2Fbam'
     end
 
     it 'performs the request' do

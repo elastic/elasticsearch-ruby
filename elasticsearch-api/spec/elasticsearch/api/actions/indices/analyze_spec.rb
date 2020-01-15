@@ -38,10 +38,6 @@ describe 'client.indices#analyze' do
       'foo/_analyze'
     end
 
-    let(:params) do
-      { index: 'foo' }
-    end
-
     it 'performs the request' do
       expect(client_double.indices.analyze(index: 'foo')).to eq({})
     end

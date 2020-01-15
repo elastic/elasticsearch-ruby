@@ -34,10 +34,6 @@ describe 'client.indices#clear_cache' do
       'foo/_cache/clear'
     end
 
-    let(:params) do
-      { index: 'foo' }
-    end
-
     it 'performs the request' do
       expect(client_double.indices.clear_cache(index: 'foo')).to eq({})
     end
@@ -61,7 +57,7 @@ describe 'client.indices#clear_cache' do
     end
 
     let(:params) do
-      { index: 'foo^bar' }
+      { }
     end
 
     it 'performs the request' do

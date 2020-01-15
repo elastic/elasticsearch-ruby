@@ -28,7 +28,7 @@ describe 'client#index' do
   end
 
   let(:body) do
-    { :foo => 'bar' }
+    { foo: 'bar' }
   end
 
   let(:client) do
@@ -42,7 +42,7 @@ describe 'client#index' do
   end
 
   it 'performs the request' do
-    expect(client_double.index(index: 'foo', type: 'bar', body: { foo: 'bar' })).to eq({})
+    expect(client_double.index(index: 'foo', type: 'bar', body: body)).to eq({})
   end
 
   context 'when a specific id is provided' do
@@ -56,7 +56,7 @@ describe 'client#index' do
     end
 
     it 'performs the request' do
-      expect(client_double.index(index: 'foo', type: 'bar', id: '1', body: { foo: 'bar' })).to eq({})
+      expect(client_double.index(index: 'foo', type: 'bar', id: '1', body: body)).to eq({})
     end
   end
 
@@ -74,12 +74,8 @@ describe 'client#index' do
       { op_type: 'create' }
     end
 
-    let(:body) do
-      nil
-    end
-
     it 'passes the URL params' do
-      expect(client_double.index(index: 'foo', type: 'bar', op_type: 'create')).to eq({})
+      expect(client_double.index(index: 'foo', type: 'bar', op_type: 'create', body: body)).to eq({})
     end
 
     context 'when a specific id is provided' do
@@ -97,13 +93,12 @@ describe 'client#index' do
       end
 
       it 'passes the URL params' do
-        expect(client_double.index(index: 'foo', type: 'bar', id: '1', op_type: 'create')).to eq({})
+        expect(client_double.index(index: 'foo', type: 'bar', id: '1', op_type: 'create', body: body)).to eq({})
       end
     end
   end
 
   context 'when the request needs to be URL-escaped' do
-
     let(:request_type) do
       'PUT'
     end
@@ -112,12 +107,8 @@ describe 'client#index' do
       'foo/bar%2Fbam/123'
     end
 
-    let(:body) do
-      nil
-    end
-
     it 'URL-escapes the parts' do
-      expect(client_double.index(index: 'foo', type: 'bar/bam', id: '123')).to eq({})
+      expect(client_double.index(index: 'foo', type: 'bar/bam', id: '123', body: body)).to eq({})
     end
   end
 

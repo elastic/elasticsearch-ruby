@@ -4,34 +4,34 @@
 
 require 'spec_helper'
 
-describe 'client#render_search_template' do
-  context 'when no id is specified' do
+describe 'client#scroll' do
+  context 'with scroll_id as a param' do
     let(:expected_args) do
       [
         'GET',
-        '_render/template',
+        '_search/scroll/cXVlcn...',
         {},
-        { foo: 'bar' }
+        nil
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.render_search_template(body: { foo: 'bar' })).to eq({})
+      expect(client_double.scroll(scroll_id: 'cXVlcn...')).to eq({})
     end
   end
 
-  context 'when id is specified' do
+  context 'with scroll_id in the body' do
     let(:expected_args) do
       [
         'GET',
-        '_render/template/foo',
+        '_search/scroll',
         {},
-        { foo: 'bar' }
+        { scroll_id: 'cXVlcn...' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.render_search_template(id: 'foo', body: { foo: 'bar' })).to eq({})
+      expect(client_double.scroll(body: { scroll_id: 'cXVlcn...' })).to eq({})
     end
   end
 end
