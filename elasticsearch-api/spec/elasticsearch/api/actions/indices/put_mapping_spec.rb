@@ -17,7 +17,7 @@ describe 'client.cluster#put_mapping' do
   end
 
   let(:url) do
-    'foo/_mapping/bar'
+    'foo/bar/_mappings'
   end
 
   let(:body) do
@@ -68,7 +68,7 @@ describe 'client.cluster#put_mapping' do
   context 'when multiple indices are specified' do
 
     let(:url) do
-      'foo,bar/_mapping/bam'
+      'foo,bar/bam/_mappings'
     end
 
     it 'performs the request' do
@@ -79,7 +79,7 @@ describe 'client.cluster#put_mapping' do
   context 'when the path needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/_mapping/bar%2Fbam'
+      'foo%5Ebar/bar%2Fbam/_mappings'
     end
 
     it 'performs the request' do

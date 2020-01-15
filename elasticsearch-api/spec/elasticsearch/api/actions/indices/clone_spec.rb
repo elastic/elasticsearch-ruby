@@ -8,7 +8,7 @@ describe 'client.indices#clone' do
 
   let(:expected_args) do
     [
-        'POST',
+        'PUT',
         url,
         params,
         body,
