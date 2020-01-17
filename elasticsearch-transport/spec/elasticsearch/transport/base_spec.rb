@@ -5,11 +5,8 @@
 require 'spec_helper'
 
 describe Elasticsearch::Transport::Transport::Base do
-
   context 'when a host is printed in a logged message' do
-
     shared_examples_for 'a redacted string' do
-
       let(:client) do
         Elasticsearch::Transport::Client.new(arguments)
       end
@@ -20,6 +17,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
       it 'does not include the password in the logged string' do
         expect(logger).not_to receive(:error).with(/secret_password/)
+
         expect {
           client.cluster.stats
         }.to raise_exception(Faraday::ConnectionFailed)
@@ -34,7 +32,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when the user and password are provided as separate arguments' do
-
       let(:arguments) do
         { hosts: 'fake',
           logger: logger,
@@ -46,9 +43,8 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when the user and password are provided in the string URI' do
-
       let(:arguments) do
-        { hosts: 'http://test:secret_password@fake.com',
+        { hosts: 'https://test:secret_password@fake_local_elasticsearch',
           logger: logger }
       end
 
@@ -56,9 +52,8 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when the user and password are provided in the URI object' do
-
       let(:arguments) do
-        { hosts: URI.parse('http://test:secret_password@fake.com'),
+        { hosts: URI.parse('https://test:secret_password@fake_local_elasticsearch'),
           logger: logger }
       end
 
