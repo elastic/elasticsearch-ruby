@@ -98,7 +98,7 @@ module Elasticsearch
         @arguments[:randomize_hosts]    ||= false
         @arguments[:transport_options]  ||= {}
         @arguments[:http]               ||= {}
-        @options[:http]               ||= {}
+        @options[:http]                 ||= {}
 
         @seeds = __extract_hosts(@arguments[:hosts] ||
                                      @arguments[:host] ||
