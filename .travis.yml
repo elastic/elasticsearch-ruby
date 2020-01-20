@@ -30,15 +30,15 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
+    - rvm: 2.7.0
+      jdk: oraclejdk8
+      env: TEST_SUITE=unit
+
     - rvm: 2.6.5
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
     - rvm: 2.5.7
-      jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    - rvm: 2.4.9
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
