@@ -119,6 +119,18 @@ SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
 SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
                    description: 'Attempt to open job when upgrade_mode is enabled' }
 
+# Expecting "missing" error and getting 409 Conflict
+SKIPPED_TESTS << { file:        'ml/post_data.yml',
+                   description: 'Test POST data with invalid parameters' }
+
+# Expecting "missing" error and getting 409 Conflict
+SKIPPED_TESTS << { file:        'ml/post_data.yml',
+                   description: 'Test Flush data with invalid parameters' }
+
+# Expecting "missing" error and getting 409 Conflict
+SKIPPED_TESTS << { file:        'ml/forecast.yml',
+                   description: 'Test forecast unknown job' }
+
 # Non-zero length node_settings field
 SKIPPED_TESTS << { file:        'deprecation/10_basic.yml',
                    description: 'Test Deprecations' }
