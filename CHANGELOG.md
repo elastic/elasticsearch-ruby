@@ -1,3 +1,14 @@
+## 6.8.1
+
+* Lock the version of Faraday: Faraday 1.0 was released with breaking changes. Thank you @taylorthurlow :+1: (#752)
+* Add support for Ruby 2.7
+* 6.x releases are now tested in the latests Ruby versions: 2.4.9, 2.5.7, 2.6.5 and 2.7.0
+* Fix bad range value error
+
+## 6.8.0
+
+* Supports Elasticsearch 6 up to v6.8.0
+
 ## 6.3.1
 
 ### API
