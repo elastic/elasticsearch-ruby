@@ -12,6 +12,7 @@ require 'active_support/inflector'
 require 'multi_json'
 require 'coderay'
 require 'pry'
+require_relative 'generator/files_helper'
 
 module Elasticsearch
   module API
@@ -23,39 +24,23 @@ module Elasticsearch
     #
     class SourceGenerator < Thor
       namespace 'api:code'
-
       include Thor::Actions
 
-      SRC_PATH = '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/'.freeze
-      __root = Pathname( File.expand_path('../../..', __FILE__) )
+      __root = Pathname(File.expand_path('../../..', __FILE__))
 
-      desc "generate", "Generate source code and tests from the REST API JSON specification"
-      method_option :force,   type: :boolean,                               default: false, desc: 'Overwrite the output'
-      method_option :verbose, type: :boolean,                               default: false, desc: 'Output more information'
-      method_option :input,   default: File.expand_path(SRC_PATH,           __FILE__),      desc: 'Path to directory with JSON API specs'
-      method_option :output,  default: File.expand_path('../../../tmp/out', __FILE__),      desc: 'Path to output directory'
+      desc 'generate', 'Generate source code and tests from the REST API JSON specification'
+      method_option :verbose, type: :boolean, default: false, desc: 'Output more information'
+      method_option :tests,   type: :boolean, default: false, desc: 'Generate test files'
 
-      def generate(*files)
-        self.class.source_root File.expand_path('../', __FILE__)
+      def generate
+        self.class.source_root File.expand_path(__dir__)
+        @input = FilesHelper.input_dir
+        @output = FilesHelper.output_dir
 
-        @input  = Pathname(options[:input])
-        @output = Pathname(options[:output])
-
-        # -- Test helper
-        copy_file "templates/test_helper.rb", @output.join('test').join('test_helper.rb')
-
-        # Remove unwanted files
-        files = Dir.entries(@input.to_s).reject do |f|
-          f.start_with?('.') ||
-            f.start_with?('_') ||
-            File.extname(f) != '.json'
-        end
-
-        files.each do |filepath|
-          file    = @input.join(filepath)
-          @path   = Pathname(file)
-          @json   = MultiJson.load( File.read(@path) )
-          @spec   = @json.values.first
+        FilesHelper.files.each do |filepath|
+          @path = Pathname(@input.join(filepath))
+          @json = MultiJson.load(File.read(@path))
+          @spec = @json.values.first
           say_status 'json', @path, :yellow
 
           @spec['url'] ||= {}
@@ -74,45 +59,25 @@ module Elasticsearch
           @http_path        = __http_path
           @required_parts   = __required_parts
 
-          @path_to_file = @output.join('api').join( @module_namespace.join('/') ).join("#{@method_name}.rb")
+          @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
 
-          empty_directory @output.join('api').join( @module_namespace.join('/') )
+          dir = @output.join(@module_namespace.join('/'))
+          empty_directory(dir, verbose: false)
 
-          template "templates/method.erb", @path_to_file
+          # Write the file with the ERB template:
+          template('templates/method.erb', @path_to_file, { force: true })
 
-          if options[:verbose]
-            colorized_output   = CodeRay.scan_file(@path_to_file, :ruby).terminal
-            lines              = colorized_output.split("\n")
-            say_status 'ruby',
-                       lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
-                       :yellow
-          end
+          print_source_code(@path_to_file) if options[:verbose]
 
-          # --- Test files
+          generate_tests if options[:tests]
 
-          @test_directory = @output.join('test/api').join( @module_namespace.join('/') )
-          @test_file      = @test_directory.join("#{@method_name}_test.rb")
-
-          empty_directory @test_directory
-          template "templates/test.erb", @test_file
-
-          if options[:verbose]
-            colorized_output   = colorized_output   = CodeRay.scan_file(@test_file, :ruby).terminal
-            lines              = colorized_output.split("\n")
-            say_status 'ruby',
-                       lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n"),
-                       :yellow
-            say '▬'*terminal_width
-          end
+          puts
         end
+
+        run_rubocop
 
         # -- Tree output
-
-        if options[:verbose] && `which tree > /dev/null 2>&1; echo $?`.to_i < 1
-          lines = `tree #{@output}`.split("\n")
-          say_status 'tree',
-                     lines.first  + "\n" + lines[1, lines.size].map { |l| ' '*14 + l }.join("\n")
-        end
+        print_tree if options[:verbose]
       end
 
       private
@@ -182,13 +147,43 @@ module Elasticsearch
       #
       def __required_parts
         required = []
-        # TODO Looks like this is not right:
         required << 'body' if (@spec['body'] && @spec['body']['required'])
 
         # Get required variables from paths:
         req_variables = __path_variables.inject(:&) # find intersection
         required << req_variables unless req_variables.empty?
         required.flatten
+      end
+
+      def generate_tests
+        copy_file 'templates/test_helper.rb', @output.join('test').join('test_helper.rb')
+
+        @test_directory = @output.join('test/api').join(@module_namespace.join('/'))
+        @test_file      = @test_directory.join("#{@method_name}_test.rb")
+
+        empty_directory @test_directory
+        template 'templates/test.erb', @test_file
+
+        print_source_code(@test_file) if options[:verbose]
+      end
+
+      def print_source_code(path_to_file)
+        colorized_output = CodeRay.scan_file(path_to_file, :ruby).terminal
+        lines            = colorized_output.split("\n")
+        formatted        = lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n")
+
+        say_status('ruby', formatted, :yellow)
+      end
+
+      def print_tree
+        return unless `which tree > /dev/null 2>&1; echo $?`.to_i < 1
+
+        lines = `tree #{@output}`.split("\n")
+        say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
+      end
+
+      def run_rubocop
+        system("rubocop -x #{FilesHelper::OUTPUT_DIR}")
       end
     end
   end
