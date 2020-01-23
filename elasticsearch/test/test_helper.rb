@@ -53,7 +53,7 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/profiling' unless JRUBY
 end
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new(color: true)
 
 module Minitest
   module Assertions
