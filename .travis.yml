@@ -13,8 +13,7 @@ branches:
     - master
     - 7.x
     - 6.x
-    - 5.x
-    - 2.x
+    - 7.x
     - travis
 
 env:
