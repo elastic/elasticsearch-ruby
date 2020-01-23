@@ -3,6 +3,7 @@
     name: elastic+elasticsearch-ruby+master
     display-name: 'elastic / elasticsearch-ruby # master'
     description: Testing the elasticsearch-ruby master branch.
+    junit_results: "*-junit.xml"
     parameters:
     - string:
         name: branch_specifier

@@ -25,7 +25,6 @@ DEFAULT_CLIENT = Elasticsearch::Client.new(host: ELASTICSEARCH_URL,
 
 module HelperModule
   def self.included(context)
-
     context.let(:client_double) do
       Class.new { include Elasticsearch::API }.new.tap do |client|
         expect(client).to receive(:perform_request).with(*expected_args).and_return(response_double)
@@ -46,8 +45,9 @@ end
 
 RSpec.configure do |config|
   config.include(HelperModule)
-  config.formatter = 'documentation'
-  config.color = true
+  config.add_formatter('documentation')
+  config.add_formatter('RspecJunitFormatter', '/tmp/elasticsearch-api-junit.xml')
+  config.color_mode = :on
 end
 
 class NotFound < StandardError; end

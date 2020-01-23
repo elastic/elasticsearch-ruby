@@ -21,12 +21,14 @@ docker run \
   --detach \
   docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
 
+repo=`pwd`
 
 # run the client tests
 docker run \
   --network=esnet \
   --env "TEST_ES_SERVER=http://elasticsearch:9200" \
   --volume $repo:/usr/src/app \
+  --volume=/tmp:/tmp \
   --name elasticsearch-ruby \
   --rm \
   elastic/elasticsearch-ruby \
