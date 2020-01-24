@@ -49,9 +49,9 @@ module Elasticsearch
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
-
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
+          @specific_params  = @module_namespace.first == 'cat' ? specific_params : []
           method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
           @http_method      = "HTTP_#{method}"
           @paths            = @spec['url']['paths'].map { |b| b['path'] }
@@ -180,6 +180,15 @@ module Elasticsearch
 
         lines = `tree #{@output}`.split("\n")
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
+      end
+
+      def specific_params
+        params = []
+        if ['aliases', 'allocation', 'count', 'health', 'indices', 'nodes', 'pending_tasks',
+          'recovery', 'shards', 'thread_pool'].include? @method_name
+          params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
+        end
+        params
       end
 
       def run_rubocop

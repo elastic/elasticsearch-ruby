@@ -53,6 +53,9 @@ module Elasticsearch
 <%- else -%>
   <%= '  '*(@namespace_depth+4) %>params = {}
 <%- end -%>
+<% @specific_params.each do |param| %>
+  <%= param %>
+<% end %>
 <%# Perform request %>
 <%= '  '*(@namespace_depth+4) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <% if ['bulk', 'msearch', 'msearch_template'].include? @method_name %>
