@@ -38,7 +38,7 @@ module Elasticsearch
           assert_nothing_raised do
             # Index a document
             #
-            @client.index index: 'test-index', type: 'test-type', id: '1', body: { title: 'Test' }
+            @client.index index: 'test-index', id: '1', body: { title: 'Test', type: 'test-type' }
 
             # Refresh the index
             #
