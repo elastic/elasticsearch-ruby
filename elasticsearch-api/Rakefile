@@ -2,7 +2,7 @@
 # Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 # See the LICENSE file in the project root for more information
 
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 def __current__
   Pathname( File.expand_path('..', __FILE__) )
@@ -12,8 +12,8 @@ def git_specs(command, options={})
   sh "git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} #{command}", options
 end
 
-task(:default) { system "rake --tasks" }
-task  :test    => 'test:unit'
+task(:default) { system 'rake --tasks' }
+task test: 'test:unit'
 
 # ----- Test tasks ------------------------------------------------------------
 
@@ -21,35 +21,30 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 
 namespace :test do
-
-  desc "Wait for Elasticsearch to be in a green state"
+  desc 'Wait for Elasticsearch to be in a green state'
   task :wait_for_green do
     sh '../scripts/wait-cluster.sh'
   end
 
+  # Unit tests - rake test:unit
+  #
+  task unit: :spec
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
+  # Rest API Spec tests - rake test:rest_api
   RSpec::Core::RakeTask.new(:rest_api) do |t|
     t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
-  desc "Update the repository with YAML tests"
+  desc 'Update the repository with YAML tests'
   task :update do
-    git_specs "fetch origin", :verbose => true
-  end
-
-  Rake::TestTask.new(:unit) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb"]
-    test.deps = [ :spec ]
-    # test.verbose = true
-    # test.warning = true
+    git_specs 'fetch origin', verbose: true
   end
 
   desc "Run integration tests"
-  task :integration => :update do
+  task integration: :update do
     require 'elasticsearch'
 
     branches = `git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} branch --no-color`
@@ -107,7 +102,7 @@ namespace :test do
     end
   end
 
-  desc "Run unit and integration tests"
+  desc 'Run unit and integration tests'
   task :all do
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
@@ -139,10 +134,8 @@ end
 
 # ----- Code analysis tasks ---------------------------------------------------
 
-if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  require 'cane/rake_task'
-  Cane::RakeTask.new(:quality) do |cane|
-    cane.abc_max = 15
-    cane.no_style = true
-  end
+require 'cane/rake_task'
+Cane::RakeTask.new(:quality) do |cane|
+  cane.abc_max = 15
+  cane.no_style = true
 end
