@@ -17,7 +17,14 @@ module Elasticsearch
 <%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
   <%- @parts.each do |name, info| -%>
     <%- info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings' -%>
-    <%= '  '*(@namespace_depth+3) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" + ( info['required'] ? ' (*Required*)' : '' ) -%>
+    <%= '  '*(@namespace_depth+3) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" + ( info['required'] ? ' (*Required*)' : '' ) + (info['deprecated'] ? ' *Deprecated*' : '')-%>
+    <% if @deprecation_note %>
+      #
+      # *Deprecation notice*:
+      # <%=  @deprecation_note['description'] %>
+      # Deprecated since version <%=  @deprecation_note['version'] %>
+      #
+    <% end %>
     <%= " (options: #{info['options'].join(', '.strip)})" if info['options'] -%>
     <%= "\n" -%>
   <%- end -%>

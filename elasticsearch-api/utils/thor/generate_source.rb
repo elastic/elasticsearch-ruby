@@ -55,7 +55,8 @@ module Elasticsearch
           method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
           @http_method      = "HTTP_#{method}"
           @paths            = @spec['url']['paths'].map { |b| b['path'] }
-
+          # Using Ruby's safe operator on array:
+          @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
           @http_path        = __http_path
           @required_parts   = __required_parts
 
