@@ -4,37 +4,39 @@
 
 module Elasticsearch
   module API
-    module Cluster
+    module Snapshot
       module Actions
-        # Returns cluster settings.
+        # Removes stale data from repository.
         #
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [String] :repository A repository name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
 
+        # @option arguments [Hash] :body TODO: Description
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
-        def get_settings(arguments = {})
+        def cleanup_repository(arguments = {})
+          raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
+
           arguments = arguments.clone
 
-          method = HTTP_GET
-          path   = "_cluster/settings"
+          _repository = arguments.delete(:repository)
+
+          method = HTTP_POST
+          path   = "_snapshot/#{Utils.__listify(_repository)}/_cleanup"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body = arguments[:body]
           perform_request(method, path, params, body).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:get_settings, [
-          :flat_settings,
+        ParamsRegistry.register(:cleanup_repository, [
           :master_timeout,
-          :timeout,
-          :include_defaults
+          :timeout
         ].freeze)
 end
       end

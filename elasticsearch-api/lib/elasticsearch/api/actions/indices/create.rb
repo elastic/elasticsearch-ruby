@@ -6,91 +6,43 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-
-        # Create an index.
+        # Creates an index with optional settings and mappings.
         #
-        # Pass the index `settings` and `mappings` in the `:body` attribute.
-        #
-        # @example Create an index with specific settings, custom analyzers and mappings
-        #
-        #     client.indices.create index: 'test',
-        #                           body: {
-        #                             settings: {
-        #                               index: {
-        #                                 number_of_shards: 1,
-        #                                 number_of_replicas: 0,
-        #                                 'routing.allocation.include.name' => 'node-1'
-        #                               },
-        #                               analysis: {
-        #                                 filter: {
-        #                                   ngram: {
-        #                                     type: 'nGram',
-        #                                     min_gram: 3,
-        #                                     max_gram: 25
-        #                                   }
-        #                                 },
-        #                                 analyzer: {
-        #                                   ngram: {
-        #                                     tokenizer: 'whitespace',
-        #                                     filter: ['lowercase', 'stop', 'ngram'],
-        #                                     type: 'custom'
-        #                                   },
-        #                                   ngram_search: {
-        #                                     tokenizer: 'whitespace',
-        #                                     filter: ['lowercase', 'stop'],
-        #                                     type: 'custom'
-        #                                   }
-        #                                 }
-        #                               }
-        #                             },
-        #                             mappings: {
-        #                               properties: {
-        #                                 title: {
-        #                                   type: 'multi_field',
-        #                                   fields: {
-        #                                       title:  { type: 'string', analyzer: 'snowball' },
-        #                                       exact:  { type: 'string', analyzer: 'keyword' },
-        #                                       ngram:  { type: 'string',
-        #                                                 index_analyzer: 'ngram',
-        #                                                 search_analyzer: 'ngram_search'
-        #                                       }
-        #                                   }
-        #                                 }
-        #                               }
-        #                             }
-        #                           }
-        #
-        # @option arguments [String] :index The name of the index (*Required*)
-        # @option arguments [Hash] :body Optional configuration for the index (`settings` and `mappings`)
+        # @option arguments [String] :index The name of the index
         # @option arguments [Boolean] :include_type_name Whether a type should be expected in the body of the mappings.
-        # @option arguments [Boolean] :update_all_types Whether to update the mapping for all fields
-        #                                               with the same name across all types
-        # @option arguments [Number] :wait_for_active_shards Wait until the specified number of shards is active
+        # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for before the operation returns.
         # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :master_timeout Timeout for connection to master
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+
+        # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
         #
-        # @see https://www.elastic.co/guide/reference/api/admin-indices-create-index/
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
         #
-        def create(arguments={})
+        def create(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+          arguments = arguments.clone
+
+          _index = arguments.delete(:index)
+
           method = HTTP_PUT
-          path   = Utils.__pathify Utils.__escape(arguments[:index])
-
+          path   = "#{Utils.__listify(_index)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-          body   = arguments[:body]
 
+          body = arguments[:body]
           perform_request(method, path, params, body).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:create, [
-            :include_type_name,
-            :wait_for_active_shards,
-            :timeout,
-            :master_timeout ].freeze)
+          :include_type_name,
+          :wait_for_active_shards,
+          :timeout,
+          :master_timeout
+        ].freeze)
+end
       end
-    end
   end
 end

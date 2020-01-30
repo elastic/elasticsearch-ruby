@@ -6,35 +6,40 @@ module Elasticsearch
   module API
     module Ingest
       module Actions
-
-        # Add or update a specified pipeline
+        # Creates or updates a pipeline.
         #
-        # @option arguments [String] :id Pipeline ID (*Required*)
-        # @option arguments [Hash] :body The ingest definition (*Required*)
+        # @option arguments [String] :id Pipeline ID
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
+
+        # @option arguments [Hash] :body The ingest definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/plugins/master/ingest.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html
         #
-        def put_pipeline(arguments={})
-          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+        def put_pipeline(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          method = 'PUT'
-          path   = Utils.__pathify "_ingest/pipeline", Utils.__escape(arguments[:id])
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
+          arguments = arguments.clone
+
+          _id = arguments.delete(:id)
+
+          method = HTTP_PUT
+          path   = "_ingest/pipeline/#{Utils.__listify(_id)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-          body   = arguments[:body]
 
+          body = arguments[:body]
           perform_request(method, path, params, body).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:put_pipeline, [
-            :master_timeout,
-            :timeout ].freeze)
+          :master_timeout,
+          :timeout
+        ].freeze)
+end
       end
-    end
   end
 end
