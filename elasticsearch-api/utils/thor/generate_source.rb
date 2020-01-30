@@ -61,12 +61,11 @@ module Elasticsearch
           @required_parts   = __required_parts
 
           @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
-
           dir = @output.join(@module_namespace.join('/'))
           empty_directory(dir, verbose: false)
 
           # Write the file with the ERB template:
-          template('templates/method.erb', @path_to_file, { force: true })
+          template('templates/method.erb', @path_to_file, force: true)
 
           print_source_code(@path_to_file) if options[:verbose]
 
@@ -193,7 +192,7 @@ module Elasticsearch
       end
 
       def run_rubocop
-        system("rubocop -x #{FilesHelper::OUTPUT_DIR}")
+        system("rubocop --format autogenconf -x #{FilesHelper::OUTPUT_DIR}")
       end
     end
   end
