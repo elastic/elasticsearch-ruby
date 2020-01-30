@@ -3,13 +3,13 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
-<%= '  '*(@namespace_depth+1) %>module API
+<%= '  '*(@namespace_depth) %>module API
 <%- @module_namespace.each_with_index do |name, i| -%>
   <%= '  '*i %>module <%= name == 'xpack' ? 'XPack' : name.capitalize %>
 <%- end -%>
 <%= '  '*(@namespace_depth+2) %>module Actions
 <%- if @spec['documentation']['description']  %>
-  <%= '  '*(@namespace_depth+3) %># <%= @spec['documentation']['description'].gsub("\n", "\n#{'  '*(@namespace_depth+3)}# ") %>
+  <%= '  '*(@namespace_depth+3) %># <%= @spec['documentation']['description'].gsub("\n", "\n#{'  '*(@namespace_depth+3)}# ") -%>
 <%- else %>
   <%= '  '*(@namespace_depth+3) %># TODO: Description
 <%- end %>
@@ -17,14 +17,14 @@ module Elasticsearch
 <%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
   <%- @parts.each do |name, info| -%>
     <%- info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings' -%>
-    <%= '  '*(@namespace_depth+3) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" + ( info['required'] ? ' (*Required*)' : '' ) + (info['deprecated'] ? ' *Deprecated*' : '')-%>
-    <% if @deprecation_note %>
+    <%= '  '*(@namespace_depth+1) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" + ( info['required'] ? ' (*Required*)' : '' ) + (info['deprecated'] ? ' *Deprecated*' : '')-%>
+    <% if @deprecation_note -%>
       #
       # *Deprecation notice*:
       # <%=  @deprecation_note['description'] %>
       # Deprecated since version <%=  @deprecation_note['version'] %>
       #
-    <% end %>
+    <% end -%>
     <%= " (options: #{info['options'].join(', '.strip)})" if info['options'] -%>
     <%= "\n" -%>
   <%- end -%>
