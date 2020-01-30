@@ -6,7 +6,6 @@ module Elasticsearch
   module API
     module Nodes
       module Actions
-
         # Shutdown one or all nodes
         #
         # @example Shut down node named _Bloke_
@@ -21,7 +20,7 @@ module Elasticsearch
         #
         # @see http://elasticsearch.org/guide/reference/api/admin-cluster-nodes-shutdown/
         #
-        def shutdown(arguments={})
+        def shutdown(arguments = {})
           method = HTTP_POST
           path   = Utils.__pathify '_cluster/nodes', Utils.__listify(arguments[:node_id]), '_shutdown'
 
@@ -35,8 +34,9 @@ module Elasticsearch
         #
         # @since 6.1.1
         ParamsRegistry.register(:shutdown, [
-            :delay,
-            :exit ].freeze)
+          :delay,
+          :exit
+        ].freeze)
       end
     end
   end

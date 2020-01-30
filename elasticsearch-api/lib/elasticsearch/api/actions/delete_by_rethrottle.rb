@@ -5,7 +5,6 @@
 module Elasticsearch
   module API
     module Actions
-
       # The value of requests_per_second can be changed on a running delete by query using the _rethrottle API
       #
       # @option arguments [String] :task_id The task id to rethrottle (*Required*)
@@ -13,8 +12,9 @@ module Elasticsearch
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
       #
-      def delete_by_query_rethrottle(arguments={})
+      def delete_by_query_rethrottle(arguments = {})
         raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
+
         method = Elasticsearch::API::HTTP_POST
         path   = "_delete_by_query/#{arguments[:task_id]}/_rethrottle"
         params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -27,7 +27,8 @@ module Elasticsearch
       #
       # @since 6.2.0
       ParamsRegistry.register(:delete_by_query_rethrottle, [
-          :requests_per_second ].freeze)
+        :requests_per_second
+      ].freeze)
     end
   end
 end

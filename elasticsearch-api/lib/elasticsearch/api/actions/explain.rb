@@ -5,81 +5,76 @@
 module Elasticsearch
   module API
     module Actions
-
-      # Return information if and how well a document matches a query.
+      # Returns information about why a specific matches (or doesn't match) a query.
       #
-      # The returned information contains a `_score` and its explanation, if the document matches the query.
-      #
-      # @example Passing the query in the Lucene query syntax as the `:q` URL parameter
-      #
-      #     client.explain index: 'myindex', type: 'mytype', id: '1', q: 'test'
-      #
-      # @example Passing the query in the Query DSL as the request `:body`
-      #
-      #     client.explain index: 'myindex', type: 'mytype', id: '1',
-      #                    body: { query: { match: { title: 'test' } } }
-      #
-      # @option arguments [String] :id The document ID (*Required*)
-      # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document
-      # @option arguments [Hash] :body The query definition using the Query DSL
+      # @option arguments [String] :id The document ID
+      # @option arguments [String] :index The name of the index
+      # @option arguments [String] :type The type of the document   *Deprecated*
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
       # @option arguments [String] :analyzer The analyzer for the query string query
-      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
+      # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
+      #   (options: AND,OR)
+
       # @option arguments [String] :df The default field for query string query (default: _all)
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-      # @option arguments [String] :parent The ID of the parent document
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [String] :q Query in the Lucene query string syntax
       # @option arguments [String] :routing Specific routing value
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
+
+      # @option arguments [Hash] :body The query definition using the Query DSL
       #
-      # @see http://elasticsearch.org/guide/reference/api/explain/
+      # *Deprecation notice*:
+      # Specifying types in urls has been deprecated
+      # Deprecated since version 7.0.0
       #
-      def explain(arguments={})
+      #
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
+      #
+      def explain(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
+        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        arguments = arguments.clone
+
+        _id = arguments.delete(:id)
+
+        _index = arguments.delete(:index)
+
+        _type = arguments.delete(:type)
+
         method = HTTP_GET
-
-        if arguments[:type]
-          path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                   Utils.__escape(arguments[:type]),
-                                   Utils.__escape(arguments[:id]),
-                                   '_explain'
-        else
-          path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                   '_explain',
-                                   Utils.__escape(arguments[:id])
-        end
-
+        path   = if _index && _type && _id
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_explain"
+                 else
+                   "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
+  end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-        body   = arguments[:body]
 
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
+        body = arguments[:body]
         perform_request(method, path, params, body).body
       end
 
       # Register this action with its valid params when the module is loaded.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       ParamsRegistry.register(:explain, [
-          :analyze_wildcard,
-          :analyzer,
-          :default_operator,
-          :df,
-          :stored_fields,
-          :lenient,
-          :parent,
-          :preference,
-          :q,
-          :routing,
-          :_source,
-          :_source_excludes,
-          :_source_includes ].freeze)
+        :analyze_wildcard,
+        :analyzer,
+        :default_operator,
+        :df,
+        :stored_fields,
+        :lenient,
+        :preference,
+        :q,
+        :routing,
+        :_source,
+        :_source_excludes,
+        :_source_includes
+      ].freeze)
     end
-  end
+    end
 end

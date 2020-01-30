@@ -5,33 +5,10 @@
 module Elasticsearch
   module API
     module Actions
-
-      # Return multiple documents from one or more indices in a single request.
-      #
-      # Pass the request definition in the `:body` argument, either as an Array of `docs` specifications,
-      # or `ids`, when the `:index` and document `:type` are specified.
-      #
-      # @example Get multiple documents fully specified in the `docs` definition
-      #
-      #     client.mget body: {
-      #       docs: [
-      #         { _index: 'myindex', _type: 'mytype', _id: '1' },
-      #         { _index: 'myindex', _type: 'mytype', _id: '2' },
-      #         { _index: 'myindex', _type: 'mytype', _id: '3' }
-      #       ]
-      #     }
-      #
-      # @example Get multiple documents specified by `ids` while passing `:index` and `:type`
-      #
-      #     client.mget index: 'myindex', type: 'mytype', body: { ids: ['1', '2', '3'] }
-      #
-      # @example Get only specific fields from documents
-      #
-      #     client.mget index: 'myindex', type: 'mytype', body: { ids: ['1', '2', '3'] }, fields: ['title']
+      # Allows to get multiple documents in one request.
       #
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document
-      # @option arguments [Hash] :body Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL. (*Required*)
+      # @option arguments [String] :type The type of the document   *Deprecated*
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
@@ -40,36 +17,52 @@ module Elasticsearch
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
+
+      # @option arguments [Hash] :body Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL. (*Required*)
       #
-      # @see http://elasticsearch.org/guide/reference/api/multi-get/
+      # *Deprecation notice*:
+      # Specifying types in urls has been deprecated
+      # Deprecated since version 7.0.0
       #
-      def mget(arguments={})
+      #
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html
+      #
+      def mget(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        arguments = arguments.clone
+
+        _index = arguments.delete(:index)
+
+        _type = arguments.delete(:type)
+
         method = HTTP_GET
-        path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                 Utils.__escape(arguments[:type]),
-                                 '_mget'
-
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mget"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_mget"
+                 else
+                   "_mget"
+  end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-        body   = arguments[:body]
 
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
+        body = arguments[:body]
         perform_request(method, path, params, body).body
       end
 
       # Register this action with its valid params when the module is loaded.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       ParamsRegistry.register(:mget, [
-          :stored_fields,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing,
-          :_source,
-          :_source_excludes,
-          :_source_includes ].freeze)
+        :stored_fields,
+        :preference,
+        :realtime,
+        :refresh,
+        :routing,
+        :_source,
+        :_source_excludes,
+        :_source_includes
+      ].freeze)
     end
-  end
+    end
 end

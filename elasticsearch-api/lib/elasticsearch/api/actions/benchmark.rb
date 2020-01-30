@@ -5,7 +5,6 @@
 module Elasticsearch
   module API
     module Actions
-
       # Run a single query, or a set of queries, and return statistics on their performance
       #
       # @example Return statistics for a single query
@@ -51,7 +50,7 @@ module Elasticsearch
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
-      def benchmark(arguments={})
+      def benchmark(arguments = {})
         method = HTTP_PUT
         path   = "_bench"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -63,7 +62,7 @@ module Elasticsearch
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.1.1
-      ParamsRegistry.register(:benchmark, [ :verbose ].freeze)
+      ParamsRegistry.register(:benchmark, [:verbose].freeze)
     end
   end
 end

@@ -5,7 +5,6 @@
 module Elasticsearch
   module API
     module Actions
-
       # Abort a running benchmark
       #
       # @example
@@ -16,7 +15,7 @@ module Elasticsearch
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-benchmark.html
       #
-      def abort_benchmark(arguments={})
+      def abort_benchmark(arguments = {})
         method = HTTP_POST
         path   = "_bench/abort/#{arguments[:name]}"
         params = {}
