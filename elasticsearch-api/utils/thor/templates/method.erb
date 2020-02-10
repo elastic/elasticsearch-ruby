@@ -81,7 +81,9 @@ module Elasticsearch
 <% end %>
 <%= '  '*(@namespace_depth+3) %>end
 <%# Method, path, params, body  -%>
-
+<%- if @method_name.match?(/^exists\S*/) -%>
+  alias_method :<%= @method_name %>?, :<%= @method_name %>
+<%- end -%>
 <%= '  '*(@namespace_depth+3) %># Register this action with its valid params when the module is loaded.
 <%= '  '*(@namespace_depth+3) %>#
 <%= '  '*(@namespace_depth+3) %># @since 6.2.0
