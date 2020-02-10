@@ -26,6 +26,21 @@ module Elasticsearch
       namespace 'api:code'
       include Thor::Actions
 
+      IGNORE_404 = ['exists', 'indices.exists', 'indices.exists_alias', 'indices.exists_template', 'indices.exists_type'].freeze
+      COMPLEX_IGNORE_404 = [
+        'delete',
+        'get',
+        'indices.flush_synced',
+        'indices.delete_template',
+        'indices.delete',
+        'snapshot.status',
+        'snapshot.get',
+        'snapshot.get_repository',
+        'snapshot.delete_repository',
+        'snapshot.delete',
+        'update'
+      ].freeze
+
       __root = Pathname(File.expand_path('../../..', __FILE__))
 
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
@@ -189,6 +204,14 @@ module Elasticsearch
           params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
         end
         params
+      end
+
+      def needs_ignore_404?
+        IGNORE_404.include? @json.keys.first
+      end
+
+      def needs_complex_ignore_404?
+        COMPLEX_IGNORE_404.include? @json.keys.first
       end
 
       def run_rubocop

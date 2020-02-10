@@ -70,14 +70,26 @@ module Elasticsearch
 <%= '  '*(@namespace_depth+4) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <% if ['bulk', 'msearch', 'msearch_template'].include? @method_name %>
   if body.is_a? Array
-    payload = Utils.__bulkify(body)
+  payload = Utils.__bulkify(body)
   else
-    payload = body
+  payload = body
   end
 
   <%= '  '*(@namespace_depth+3) %>  perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
 <% else %>
-  <%= '  '*(@namespace_depth+3) %>perform_request(method, path, params, body).body
+  <%- if needs_ignore_404? %>
+    Utils.__rescue_from_not_found do
+      perform_request(method, path, params, body).status == 200 ? true : false
+    end
+  <%- elsif needs_complex_ignore_404? %>
+    if Array(arguments[:ignore]).include?(404)
+      Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+    else
+      perform_request(method, path, params, body).body
+    end
+  <%- else -%>
+      perform_request(method, path, params, body).body
+  <%- end -%>
 <% end %>
 <%= '  '*(@namespace_depth+3) %>end
 <%# Method, path, params, body  -%>
