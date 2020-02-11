@@ -55,8 +55,10 @@ module Elasticsearch
   <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
 <%- end -%>
 
-<%# This is where I need to check what's available %>
 <%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
+<%- if @method_name == 'termvectors' %>
+  endpoint = arguments.delete(:endpoint) || '_termvectors'
+<%- end -%>
 <%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
 <%- unless @params.empty? -%>
   <%= '  '*(@namespace_depth+4) %>params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -95,6 +97,15 @@ module Elasticsearch
 <%# Method, path, params, body  -%>
 <%- if @method_name.match?(/^exists\S*/) -%>
   alias_method :<%= @method_name %>?, :<%= @method_name %>
+<%- end -%>
+<%- if @method_name == 'termvectors' %>
+
+  # Deprecated: Use the plural version, {#termvectors}
+  #
+  def termvector(arguments={})
+    termvectors(arguments.merge endpoint: '_termvector')
+  end
+
 <%- end -%>
 <%= '  '*(@namespace_depth+3) %># Register this action with its valid params when the module is loaded.
 <%= '  '*(@namespace_depth+3) %>#
