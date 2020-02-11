@@ -68,34 +68,10 @@ module Elasticsearch
 <% @specific_params.each do |param| %>
   <%= param %>
 <% end %>
-<%# Perform request %>
-<%= '  '*(@namespace_depth+4) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
-<% if ['bulk', 'msearch', 'msearch_template'].include? @method_name %>
-  if body.is_a? Array
-    payload = Utils.__bulkify(body)
-  else
-    payload = body
-  end
 
-  <%= '  '*(@namespace_depth+3) %>  perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
-<%- elsif @method_name == 'ping' %>
-  <%= ping_perform_request %>
-<% else %>
-  <%- if needs_ignore_404?(@json.keys.first) %>
-    Utils.__rescue_from_not_found do
-      perform_request(method, path, params, body).status == 200 ? true : false
-    end
-  <%- elsif needs_complex_ignore_404?(@json.keys.first) %>
-    if Array(arguments[:ignore]).include?(404)
-      Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-    else
-      perform_request(method, path, params, body).body
-    end
-  <%- else -%>
-      perform_request(method, path, params, body).body
-  <%- end -%>
-<% end %>
-<%= '  '*(@namespace_depth+3) %>end
+<%# Perform request %>
+<%= ERB.new(File.new("./thor/templates/_perform_request.erb").read).result(binding) %>
+
 <%# Method, path, params, body  -%>
 <%- if @method_name.match?(/^exists\S*/) -%>
   alias_method :<%= @method_name %>?, :<%= @method_name %>
@@ -107,16 +83,9 @@ module Elasticsearch
   def termvector(arguments={})
     termvectors(arguments.merge endpoint: '_termvector')
   end
-
 <%- end -%>
-<%= '  '*(@namespace_depth+3) %># Register this action with its valid params when the module is loaded.
-<%= '  '*(@namespace_depth+3) %>#
-<%= '  '*(@namespace_depth+3) %># @since 6.2.0
-<%- unless @params.empty? -%>
-<%= '  '*(@namespace_depth+3) %>ParamsRegistry.register(:<%= @method_name %>, [
-<%= '  '*(@namespace_depth+4) %><%= @params.keys.map { |k| ":#{k}" }.join(",\n#{'  '*(@namespace_depth+4)}") %>
-<%= '  '*(@namespace_depth+3) %>].freeze)
-<%- end -%>
+<%# Params Registry Template -%>
+<%= ERB.new(File.new("./thor/templates/_params_registry.erb").read).result(binding) %>
 
 <%- @namespace_depth.downto(1) do |i| -%>
 <%= '  '*(i-1) %>end

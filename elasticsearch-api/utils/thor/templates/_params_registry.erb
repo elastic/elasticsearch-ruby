@@ -1,0 +1,8 @@
+<% unless @params.empty? %>
+  <%= '  '*(@namespace_depth+3) %># Register this action with its valid params when the module is loaded.
+  <%= '  '*(@namespace_depth+3) %>#
+  <%= '  '*(@namespace_depth+3) %># @since 6.2.0
+  <%= '  '*(@namespace_depth+3) %>ParamsRegistry.register(:<%= @method_name %>, [
+  <%= '  '*(@namespace_depth+4) %><%= @params.keys.map { |k| ":#{k}" }.join(",\n#{'  '*(@namespace_depth+4)}") %>
+  <%= '  '*(@namespace_depth+3) %>].freeze)
+<% end %>
