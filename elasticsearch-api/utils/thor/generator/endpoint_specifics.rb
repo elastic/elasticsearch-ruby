@@ -8,7 +8,8 @@ module Elasticsearch
   module API
     # Handles specific exceptional parameters and code snippets that need to be
     # included in the generated code. This module is included in SourceGenerator
-    # so its methods can be used from the ERB template (method.erb).
+    # so its methods can be used from the ERB template (method.erb). This will
+    # potentially be refactored into different templates.
     module EndpointSpecifics
       # Endpoints that need Utils.__rescue_from_not_found
       IGNORE_404 = %w[
@@ -53,6 +54,20 @@ module Elasticsearch
 
       def needs_complex_ignore_404?(endpoint)
         COMPLEX_IGNORE_404.include? endpoint
+      end
+
+      def termvectors_path
+        <<~SRC
+          if _index && _type && _id
+            "\#{Utils.__listify(_index)}/\#{Utils.__listify(_type)}/\#{Utils.__listify(_id)}/\#{endpoint}"
+          elsif _index && _type
+            "\#{Utils.__listify(_index)}/\#{Utils.__listify(_type)}/\#{endpoint}"
+          elsif _index && _id
+            "\#{Utils.__listify(_index)}/\#{endpoint}/\#{Utils.__listify(_id)}"
+          else
+            "\#{Utils.__listify(_index)}/\#{endpoint}"
+          end
+        SRC
       end
     end
   end
