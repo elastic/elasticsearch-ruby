@@ -3,9 +3,7 @@
 # See the LICENSE file in the project root for more information
 
 # encoding: UTF-8
-
 require 'thor'
-
 require 'pathname'
 require 'active_support/core_ext/hash/deep_merge'
 require 'active_support/inflector'
@@ -13,6 +11,7 @@ require 'multi_json'
 require 'coderay'
 require 'pry'
 require_relative 'generator/files_helper'
+require_relative 'generator/endpoint_specifics'
 
 module Elasticsearch
   module API
@@ -22,24 +21,14 @@ module Elasticsearch
     # module namespace, method names, and RDoc documentation,
     # as well as test files for each endpoint.
     #
+    # Specific exceptions and code snippets that need to be included are written
+    # in EndpointSpecifics (generator/endpoint_specifics) and the module is included
+    # here.
+    #
     class SourceGenerator < Thor
       namespace 'api:code'
       include Thor::Actions
-
-      IGNORE_404 = ['exists', 'indices.exists', 'indices.exists_alias', 'indices.exists_template', 'indices.exists_type'].freeze
-      COMPLEX_IGNORE_404 = [
-        'delete',
-        'get',
-        'indices.flush_synced',
-        'indices.delete_template',
-        'indices.delete',
-        'snapshot.status',
-        'snapshot.get',
-        'snapshot.get_repository',
-        'snapshot.delete_repository',
-        'snapshot.delete',
-        'update'
-      ].freeze
+      include EndpointSpecifics
 
       __root = Pathname(File.expand_path('../../..', __FILE__))
 
@@ -66,7 +55,7 @@ module Elasticsearch
           @method_name      = @full_namespace.last
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
-          @specific_params  = @module_namespace.first == 'cat' ? specific_params : []
+          @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
           method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
           @http_method      = "HTTP_#{method}"
           @paths            = @spec['url']['paths'].map { |b| b['path'] }
@@ -195,23 +184,6 @@ module Elasticsearch
 
         lines = `tree #{@output}`.split("\n")
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
-      end
-
-      def specific_params
-        params = []
-        if ['aliases', 'allocation', 'count', 'health', 'indices', 'nodes', 'pending_tasks',
-          'recovery', 'shards', 'thread_pool'].include? @method_name
-          params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
-        end
-        params
-      end
-
-      def needs_ignore_404?
-        IGNORE_404.include? @json.keys.first
-      end
-
-      def needs_complex_ignore_404?
-        COMPLEX_IGNORE_404.include? @json.keys.first
       end
 
       def run_rubocop
