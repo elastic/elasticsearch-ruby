@@ -47,35 +47,11 @@ module Elasticsearch
 <%- @required_parts.each do |required| %><%# Arguments -%>
   <%= '  '*(@namespace_depth+4) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
 <%- end -%>
-<%= '  '*(@namespace_depth+4) %>arguments = arguments.clone
-<%- if @method_name == 'mtermvectors' -%>
-  ids = arguments.delete(:ids)
-<%- end -%>
-<%- if @method_name == 'search' -%>
-  arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
-<%- end -%>
-<%- @parts.each do |name, info| %>
-  <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
-<%- end -%>
+<%- # Method setup -%>
+<%= ERB.new(File.new("./thor/templates/_method_setup.erb").read, trim_mode: '-').result(binding) %>
+<%- # Perform request -%>
+<%= ERB.new(File.new("./thor/templates/_perform_request.erb").read, trim_mode: '-').result(binding) %>
 
-<%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
-<%- if @method_name == 'termvectors' %>
-  endpoint = arguments.delete(:endpoint) || '_termvectors'
-<%- end -%>
-<%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
-<%- unless @params.empty? -%>
-  <%= '  '*(@namespace_depth+4) %>params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-<%- else -%>
-  <%= '  '*(@namespace_depth+4) %>params = {}
-<%- end -%>
-<% @specific_params.each do |param| %>
-  <%= param %>
-<% end %>
-
-<%# Perform request %>
-<%= ERB.new(File.new("./thor/templates/_perform_request.erb").read).result(binding) %>
-
-<%# Method, path, params, body -%>
 <%- if @method_name.match?(/^exists\S*/) -%>
   alias_method :<%= @method_name %>?, :<%= @method_name %>
 <%- end -%>
@@ -88,7 +64,7 @@ module Elasticsearch
   end
 <%- end -%>
 <%# Params Registry Template -%>
-<%= ERB.new(File.new("./thor/templates/_params_registry.erb").read).result(binding) %>
+<%= ERB.new(File.new("./thor/templates/_params_registry.erb").read, trim_mode: '-').result(binding) %>
 
 <%- @namespace_depth.downto(1) do |i| -%>
 <%= '  '*(i-1) %>end
