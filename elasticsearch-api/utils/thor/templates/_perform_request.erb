@@ -1,13 +1,13 @@
-<% if @method_name == 'mtermvectors' %>
+<%- if @method_name == 'mtermvectors' -%>
   if ids
     body = { :ids => ids }
   else
     body = arguments[:body]
   end
-<% else %>
+<%- else -%>
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
-<% end %>
-<% if ['bulk', 'msearch', 'msearch_template'].include? @method_name %>
+<%- end -%>
+<%- if ['bulk', 'msearch', 'msearch_template'].include? @method_name -%>
   if body.is_a? Array
     payload = Utils.__bulkify(body)
   else
@@ -15,21 +15,21 @@
   end
 
   <%= '  '*(@namespace_depth+4) %>perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
-<% elsif @method_name == 'ping' %>
+<%- elsif @method_name == 'ping' -%>
   <%= ping_perform_request %>
-<% else %>
+<%- else -%>
   <%- if needs_ignore_404?(@json.keys.first) %>
     Utils.__rescue_from_not_found do
       perform_request(method, path, params, body).status == 200 ? true : false
     end
-  <% elsif needs_complex_ignore_404?(@json.keys.first) %>
+  <%- elsif needs_complex_ignore_404?(@json.keys.first) -%>
     if Array(arguments[:ignore]).include?(404)
       Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
     else
       perform_request(method, path, params, body).body
     end
-  <% else %>
+  <%- else -%>
       perform_request(method, path, params, body).body
-  <% end %>
-<% end %>
+  <%- end -%>
+<%- end -%>
 <%= '  '*(@namespace_depth+3) %>end

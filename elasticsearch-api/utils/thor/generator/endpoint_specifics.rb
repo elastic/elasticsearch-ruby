@@ -40,6 +40,7 @@ module Elasticsearch
       H_PARAMS = %w[aliases allocation count health indices nodes pending_tasks
                     recovery shards thread_pool].freeze
 
+      # Function that adds the listified h param code
       def specific_params(namespace)
         params = []
         if H_PARAMS.include?(@method_name) && namespace == 'cat'
