@@ -48,6 +48,9 @@ module Elasticsearch
   <%= '  '*(@namespace_depth+4) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
 <%- end -%>
 <%= '  '*(@namespace_depth+4) %>arguments = arguments.clone
+<%- if @method_name == 'mtermvectors' -%>
+  ids = arguments.delete(:ids)
+<%- end -%>
 <%- if @method_name == 'search' -%>
   arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
 <%- end -%>
@@ -72,7 +75,7 @@ module Elasticsearch
 <%# Perform request %>
 <%= ERB.new(File.new("./thor/templates/_perform_request.erb").read).result(binding) %>
 
-<%# Method, path, params, body  -%>
+<%# Method, path, params, body -%>
 <%- if @method_name.match?(/^exists\S*/) -%>
   alias_method :<%= @method_name %>?, :<%= @method_name %>
 <%- end -%>

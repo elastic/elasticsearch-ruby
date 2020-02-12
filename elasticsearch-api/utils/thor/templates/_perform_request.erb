@@ -1,4 +1,12 @@
-<%= '  '*(@namespace_depth+4) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
+<% if @method_name == 'mtermvectors' %>
+  if ids
+    body = { :ids => ids }
+  else
+    body = arguments[:body]
+  end
+<% else %>
+  <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
+<% end %>
 <% if ['bulk', 'msearch', 'msearch_template'].include? @method_name %>
   if body.is_a? Array
     payload = Utils.__bulkify(body)
