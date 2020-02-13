@@ -8,40 +8,7 @@ module Elasticsearch
   <%= '  '*i %>module <%= name == 'xpack' ? 'XPack' : name.capitalize %>
 <%- end -%>
 <%= '  '*(@namespace_depth+2) %>module Actions
-<%- if @spec['documentation']['description']  %>
-  <%= '  '*(@namespace_depth+3) %># <%= @spec['documentation']['description'].gsub("\n", "\n#{'  '*(@namespace_depth+3)}# ") -%>
-<%- else %>
-  <%= '  '*(@namespace_depth+3) %># TODO: Description
-<%- end %>
-<%= '  '*(@namespace_depth+3) %>#
-<%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
-  <%- @parts.each do |name, info| -%>
-    <%- info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings' -%>
-    <%= '  '*(@namespace_depth+1) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" + ( info['required'] ? ' (*Required*)' : '' ) + (info['deprecated'] ? ' *Deprecated*' : '')-%>
-    <% if @deprecation_note -%>
-      #
-      # *Deprecation notice*:
-      # <%=  @deprecation_note['description'] %>
-      # Deprecated since version <%=  @deprecation_note['version'] %>
-      #
-    <% end -%>
-    <%= " (options: #{info['options'].join(', '.strip)})" if info['options'] -%>
-    <%= "\n" -%>
-  <%- end -%>
-<%- end -%><%# Body -%>
-<%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] ? @spec['body']['description'].strip : 'TODO: Description') + (@spec['body']['required'] ? ' (*Required*)' : '') + "\n" if @spec['body'] -%>
-
-<%# URL parameters -%>
-<%- @params.each do |name,info| -%>
-  <%- info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings' -%>
-  <%= '  '*(@namespace_depth+5) + "# @option arguments [#{info['type'] ? info['type'].capitalize : 'String'}] :#{name} #{info['description'] ? info['description'].strip : '[TODO]'}" -%>
-  <%= '  '*(@namespace_depth+5) +" (options: #{info['options'].join(', ')})" if info['options'] -%>
-  <%=  "\n" -%>
-<%- end if @spec['url']['parts'] -%>
-<%= '  '*(@namespace_depth+3) -%>#
-<%# Documentation link -%>
-<%= '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'] : "[TODO]" %>
-<%= '  '*(@namespace_depth+3) %>#
+<%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
 <%# Method definition -%>
 <%= '  '*(@namespace_depth+3) -%>def <%= @method_name %>(arguments={})
 <%- @required_parts.each do |required| %><%# Arguments -%>
