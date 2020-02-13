@@ -160,6 +160,16 @@ module Elasticsearch
         required.flatten
       end
 
+      def docs_helper(name, info)
+        info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
+        tipo = info['type'] ? info['type'].capitalize : 'String'
+        description = info['description'] ? info['description'].strip : '[TODO]'
+        options = info['options'] ? "\n    #   (options: #{info['options'].join(', '.strip)})\n" : ''
+        required = info['required'] ? ' (*Required*)' : ''
+        deprecated = info['deprecated'] ? ' *Deprecated*' : ''
+        "# @option arguments [#{tipo}] :#{name} #{description} #{required} #{deprecated} #{options}\n"
+      end
+
       def generate_tests
         copy_file 'templates/test_helper.rb', @output.join('test').join('test_helper.rb')
 

@@ -1,0 +1,27 @@
+<%- if @spec['documentation']['description'] -%>
+  <%= '  '*(@namespace_depth+3) %># <%= @spec['documentation']['description'].gsub("\n", "\n#{'  '*(@namespace_depth+3)}# ") -%>
+<%- else %>
+  <%= '  '*(@namespace_depth+3) %># TODO: Description
+<%- end %>
+<%= '  '*(@namespace_depth+3) %>#
+<%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
+  <%- @parts.each do |name, info| -%>
+    <%= docs_helper(name, info) -%>
+  <%- end -%>
+<%- end -%><%# Body -%>
+<%# URL parameters -%>
+<%- @params.each do |name, info| -%>
+  <%= docs_helper(name, info) -%>
+<%- end %>
+<%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] ? @spec['body']['description'].strip : 'TODO: Description') + (@spec['body']['required'] ? ' (*Required*)' : '') + "\n" if @spec['body'] -%>
+<% if @deprecation_note -%>
+  #
+  # *Deprecation notice*:
+  # <%=  @deprecation_note['description'] %>
+  # Deprecated since version <%=  @deprecation_note['version'] %>
+  #
+<% end -%>
+<%= '  '*(@namespace_depth+3) -%>#
+<%# Documentation link -%>
+<%= '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'] : "[TODO]" %>
+<%= '  '*(@namespace_depth+3) %>#
