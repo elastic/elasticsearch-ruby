@@ -38,7 +38,7 @@ module Elasticsearch
 
       # Endpoints that need params[:h] listified
       H_PARAMS = %w[aliases allocation count health indices nodes pending_tasks
-                    recovery shards thread_pool].freeze
+        recovery shards thread_pool].freeze
 
       # Function that adds the listified h param code
       def specific_params(namespace)
