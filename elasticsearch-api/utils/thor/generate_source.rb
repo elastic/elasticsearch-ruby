@@ -56,8 +56,7 @@ module Elasticsearch
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
           @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
-          method            = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
-          @http_method      = "HTTP_#{method}"
+          @http_method      = __http_method
           @paths            = @spec['url']['paths'].map { |b| b['path'] }
           # Using Ruby's safe operator on array:
           @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
@@ -104,6 +103,15 @@ module Elasticsearch
           path&.[]('parts')
         end
         (parts.inject(&:merge) || [])
+      end
+
+      def __http_method
+        if @method_name == 'index'
+          '_id ? HTTP_PUT : HTTP_POST'
+        else
+          "HTTP_#{@spec['url']['paths'].map { |a| a['methods'] }.flatten.first}"
+        end
+
       end
 
       def __http_path
