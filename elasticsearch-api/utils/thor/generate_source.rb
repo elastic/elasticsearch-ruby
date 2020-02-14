@@ -49,7 +49,8 @@ module Elasticsearch
 
           @spec['url'] ||= {}
 
-          @full_namespace   = @json.keys.first.split('.')
+          @endpoint_name    = @json.keys.first
+          @full_namespace   = @endpoint_name.split('.')
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
