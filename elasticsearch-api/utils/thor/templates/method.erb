@@ -11,19 +11,27 @@ module Elasticsearch
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
 <%# Method definition -%>
 <%= '  '*(@namespace_depth+3) -%>def <%= @method_name %>(arguments={})
-<%- if @method_name == 'get_field_mapping' %>
-  _fields = arguments.delete(:field) || arguments.delete(:fields)
-  raise ArgumentError, "Required argument 'field' missing" unless _fields
+<%- if @endpoint_name == 'create' -%>
+  <%= '  '*(@namespace_depth+3) %>if arguments[:id]
+  <%= '  '*(@namespace_depth+3) %>  index arguments.update op_type: 'create'
+  <%= '  '*(@namespace_depth+3) %>else
+  <%= '  '*(@namespace_depth+3) %>  index arguments
+  <%= '  '*(@namespace_depth+3) %>end
+  <%= '  '*(@namespace_depth+2) %>end
 <%- else -%>
-  <%- @required_parts.each do |required| %><%# Arguments -%>
-    <%= '  '*(@namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
-  <%- end -%>
+  <%- if @method_name == 'get_field_mapping' %>
+    _fields = arguments.delete(:field) || arguments.delete(:fields)
+    raise ArgumentError, "Required argument 'field' missing" unless _fields
+  <%- else -%>
+    <%- @required_parts.each do |required| %><%# Arguments -%>
+      <%= '  '*(@namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
+    <%- end -%>
+    <%- end -%>
+    <%- # Method setup -%>
+    <%= ERB.new(File.new("./thor/templates/_method_setup.erb").read, trim_mode: '-').result(binding) %>
+    <%- # Perform request -%>
+    <%= ERB.new(File.new("./thor/templates/_perform_request.erb").read, trim_mode: '-').result(binding) %>
 <%- end -%>
-<%- # Method setup -%>
-<%= ERB.new(File.new("./thor/templates/_method_setup.erb").read, trim_mode: '-').result(binding) %>
-<%- # Perform request -%>
-<%= ERB.new(File.new("./thor/templates/_perform_request.erb").read, trim_mode: '-').result(binding) %>
-
 <%- if @method_name.match?(/^exists\S*/) -%>
   alias_method :<%= @method_name %>?, :<%= @method_name %>
 <%- end -%>
@@ -36,7 +44,9 @@ module Elasticsearch
   end
 <%- end -%>
 <%# Params Registry Template -%>
-<%= ERB.new(File.new("./thor/templates/_params_registry.erb").read, trim_mode: '-').result(binding) %>
+<%- unless @endpoint_name == 'create' -%>
+  <%= ERB.new(File.new("./thor/templates/_params_registry.erb").read, trim_mode: '-').result(binding) %>
+<%- end -%>
 
 <%- @namespace_depth.downto(1) do |i| -%>
 <%= '  '*(i-1) %>end
