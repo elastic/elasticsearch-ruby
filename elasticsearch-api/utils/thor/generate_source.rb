@@ -107,12 +107,20 @@ module Elasticsearch
       end
 
       def __http_method
-        if @method_name == 'index'
+        case @endpoint_name
+        when 'index'
           '_id ? HTTP_PUT : HTTP_POST'
+        when 'count'
+          <<~SRC
+            if arguments[:body]
+              HTTP_POST
+            else
+              HTTP_GET
+            end
+          SRC
         else
           "HTTP_#{@spec['url']['paths'].map { |a| a['methods'] }.flatten.first}"
         end
-
       end
 
       def __http_path
