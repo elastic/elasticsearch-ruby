@@ -13,8 +13,10 @@
   <%- if @method_name == 'search' -%>
     arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
   <%- end -%>
-  <%- @parts.each do |name, info| %>
-    <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
+  <%- @parts.each do |name, _| %>
+    <%- unless @method_name == 'get_field_mapping' && name == 'fields' %>
+      <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
+    <%- end -%>
   <%- end -%>
 
   <%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
