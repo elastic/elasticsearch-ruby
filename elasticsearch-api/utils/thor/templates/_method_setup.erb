@@ -1,4 +1,4 @@
-<%- if @json.keys.first == 'indices.stats' %>
+<%- if @endpoint_name == 'indices.stats' %>
   method = HTTP_GET
   parts  = Utils.__extract_parts arguments, ParamsRegistry.get(:stats_parts)
   path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)

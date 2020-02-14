@@ -2,7 +2,7 @@
   <%= '  '*(@namespace_depth+3) %># Register this action with its valid params when the module is loaded.
   <%= '  '*(@namespace_depth+3) %>#
   <%= '  '*(@namespace_depth+3) %># @since 6.2.0
-  <%- if @json.keys.first == 'indices.stats' -%>
+  <%- if @endpoint_name == 'indices.stats' -%>
     <%= indices_stats_params_registry %>
   <%- else -%>
     <%= '  '*(@namespace_depth+3) %>ParamsRegistry.register(:<%= @method_name %>, [
