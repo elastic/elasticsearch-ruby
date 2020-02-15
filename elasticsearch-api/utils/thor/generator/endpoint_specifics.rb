@@ -38,7 +38,7 @@ module Elasticsearch
 
       # Endpoints that need params[:h] listified
       H_PARAMS = %w[aliases allocation count health indices nodes pending_tasks
-        recovery shards thread_pool].freeze
+                    recovery shards thread_pool].freeze
 
       # Function that adds the listified h param code
       def specific_params(namespace)
@@ -94,6 +94,55 @@ module Elasticsearch
           ParamsRegistry.register(:stats_parts, [
             #{@parts['metric']['options'].push('metric').map { |k| ":#{k}" }.join(",\n")}
           ].freeze)
+        SRC
+      end
+
+      def msearch_body_helper
+        <<~SRC
+          case
+          when body.is_a?(Array) && body.any? { |d| d.has_key? :search }
+            payload = body.
+              inject([]) do |sum, item|
+                meta = item
+                data = meta.delete(:search)
+
+                sum << meta
+                sum << data
+                sum
+              end.
+              map { |item| Elasticsearch::API.serializer.dump(item) }
+            payload << "" unless payload.empty?
+            payload = payload.join("\n")
+          when body.is_a?(Array)
+            payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
+            payload << "" unless payload.empty?
+            payload = payload.join("\n")
+          else
+            payload = body
+          end
+        SRC
+      end
+
+      def msearch_template_body_helper
+        <<~SRC
+          case
+          when body.is_a?(Array)
+            payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
+            payload << "" unless payload.empty?
+            payload = payload.join("\n")
+          else
+            payload = body
+          end
+        SRC
+      end
+
+      def bulk_body_helper
+        <<~SRC
+          if body.is_a? Array
+            payload = Utils.__bulkify(body)
+          else
+            payload = body
+          end
         SRC
       end
     end

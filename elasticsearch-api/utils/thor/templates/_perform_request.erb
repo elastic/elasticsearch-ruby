@@ -13,12 +13,7 @@ when 'mtermvectors'
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <%- end -%>
 <%- if ['bulk', 'msearch', 'msearch_template'].include? @method_name -%>
-  if body.is_a? Array
-    payload = Utils.__bulkify(body)
-  else
-    payload = body
-  end
-
+  <%= self.send("#{@method_name}_body_helper".to_s) %>
   <%= '  '*(@namespace_depth+4) %>perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
 <%- elsif @method_name == 'ping' -%>
   <%= ping_perform_request %>
