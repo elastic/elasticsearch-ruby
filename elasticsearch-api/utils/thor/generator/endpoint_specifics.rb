@@ -44,7 +44,11 @@ module Elasticsearch
       def specific_params(namespace)
         params = []
         if H_PARAMS.include?(@method_name) && namespace == 'cat'
-          params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
+          if @method_name == 'nodes'
+            params << 'params[:h] = Utils.__listify(params[:h], escape: false) if params[:h]'
+          else
+            params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
+          end
         end
         params
       end
