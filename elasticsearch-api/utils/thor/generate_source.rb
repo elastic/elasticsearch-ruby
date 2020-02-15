@@ -169,8 +169,9 @@ module Elasticsearch
       #
       def __required_parts
         required = []
-        required << 'body' if (@spec['body'] && @spec['body']['required'])
+        return required if @endpoint_name == 'tasks.get'
 
+        required << 'body' if (@spec['body'] && @spec['body']['required'])
         # Get required variables from paths:
         req_variables = __path_variables.inject(:&) # find intersection
         required << req_variables unless req_variables.empty?
