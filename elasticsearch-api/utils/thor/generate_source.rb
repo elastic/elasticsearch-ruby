@@ -3,6 +3,7 @@
 # See the LICENSE file in the project root for more information
 
 # encoding: UTF-8
+
 require 'thor'
 require 'pathname'
 require 'active_support/core_ext/hash/deep_merge'
@@ -35,13 +36,16 @@ module Elasticsearch
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false, desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false, desc: 'Generate test files'
+      method_option :xpack,   type: :boolean, default: false, desc: 'Generate X-Pack'
 
       def generate
         self.class.source_root File.expand_path(__dir__)
-        @input = FilesHelper.input_dir
-        @output = FilesHelper.output_dir
+        @xpack = options[:xpack]
 
-        FilesHelper.files.each do |filepath|
+        @input = FilesHelper.input_dir(@xpack)
+        @output = FilesHelper.output_dir(@xpack)
+
+        FilesHelper.files(@xpack).each do |filepath|
           @path = Pathname(@input.join(filepath))
           @json = MultiJson.load(File.read(@path))
           @spec = @json.values.first
@@ -216,7 +220,7 @@ module Elasticsearch
       end
 
       def run_rubocop
-        system("rubocop --format autogenconf -x #{FilesHelper::OUTPUT_DIR}")
+        system("rubocop --format autogenconf -x #{FilesHelper::output_dir(@xpack)}")
       end
     end
   end
