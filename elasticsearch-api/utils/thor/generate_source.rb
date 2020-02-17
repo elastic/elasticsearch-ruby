@@ -54,7 +54,7 @@ module Elasticsearch
           @spec['url'] ||= {}
 
           @endpoint_name    = @json.keys.first
-          @full_namespace   = @endpoint_name.split('.')
+          @full_namespace   = __full_namespace
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
           @method_name      = @full_namespace.last
@@ -89,6 +89,13 @@ module Elasticsearch
       end
 
       private
+
+      def __full_namespace
+        names = @endpoint_name.split('.')
+        return names unless @xpack
+
+        names.first == 'xpack' ? names : ['xpack', names].flatten
+      end
 
       # Create the hierarchy of directories based on API namespaces
       #
