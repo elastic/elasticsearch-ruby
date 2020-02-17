@@ -85,6 +85,14 @@ skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
 skipped_tests << { file: 'indices.put_mapping/10_basic.yml',
                    description: 'Put mappings with explicit _doc type bwc' }
 
+# Responses are there but not equal (eg.: yellow status)
+skipped_tests << { file: 'cluster.health/10_basic.yml',
+                   description: 'cluster health with closed index (pre 7.2.0)' }
+
+# Regular expression not catching exact match:
+skipped_tests << { file: 'cat.indices/10_basic.yml',
+                   description: 'Test cat indices output for closed index (pre 7.2.0)' }
+
 SKIPPED_TESTS = skipped_tests
 
 # The directory of rest api YAML files.
