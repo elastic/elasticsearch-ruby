@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve job results for one or more influencers
           #
           # @option arguments [String] :job_id [TODO] (*Required*)
@@ -23,8 +22,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
           #
-          def get_influencers(arguments={})
+          def get_influencers(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/results/influencers"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -36,14 +36,14 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_influencers, [ :exclude_interim,
-                                                      :from,
-                                                      :size,
-                                                      :start,
-                                                      :end,
-                                                      :influencer_score,
-                                                      :sort,
-                                                      :desc ].freeze)
+          ParamsRegistry.register(:get_influencers, [:exclude_interim,
+                                                     :from,
+                                                     :size,
+                                                     :start,
+                                                     :end,
+                                                     :influencer_score,
+                                                     :sort,
+                                                     :desc].freeze)
         end
       end
     end

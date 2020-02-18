@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve job results for one or more categories
           #
           # @option arguments [String] :job_id The name of the job (*Required*)
@@ -18,8 +17,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
           #
-          def get_categories(arguments={})
+          def get_categories(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/anomaly_detectors", arguments[:job_id], "results/categories", arguments[:category_id]
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -31,8 +31,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_categories, [ :from,
-                                                     :size ].freeze)
+          ParamsRegistry.register(:get_categories, [:from,
+                                                    :size].freeze)
         end
       end
     end

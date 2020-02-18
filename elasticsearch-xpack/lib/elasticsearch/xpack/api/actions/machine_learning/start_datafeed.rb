@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Start a datafeed
           #
           # @option arguments [String] :datafeed_id The ID of the datafeed to start (*Required*)
@@ -18,8 +17,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
           #
-          def start_datafeed(arguments={})
+          def start_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_start"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -31,9 +31,9 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:start_datafeed, [ :start,
-                                                     :end,
-                                                     :timeout ].freeze)
+          ParamsRegistry.register(:start_datafeed, [:start,
+                                                    :end,
+                                                    :timeout].freeze)
         end
       end
     end

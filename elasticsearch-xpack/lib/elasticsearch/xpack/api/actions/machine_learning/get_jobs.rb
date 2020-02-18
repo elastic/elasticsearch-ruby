@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve configuration information for jobs
           #
           # @option arguments [String] :job_id The ID of the jobs to fetch
@@ -15,7 +14,7 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
           #
-          def get_jobs(arguments={})
+          def get_jobs(arguments = {})
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -27,7 +26,7 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_jobs, [ :allow_no_jobs ].freeze)
+          ParamsRegistry.register(:get_jobs, [:allow_no_jobs].freeze)
         end
       end
     end

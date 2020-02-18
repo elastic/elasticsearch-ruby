@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # TODO: Description
           #
           # @option arguments [String] :job_id The name of the job to close (*Required*)
@@ -17,8 +16,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
           #
-          def close_job(arguments={})
+          def close_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_close"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -30,9 +30,9 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:close_job, [ :allow_no_jobs,
-                                                :force,
-                                                :timeout ].freeze)
+          ParamsRegistry.register(:close_job, [:allow_no_jobs,
+                                               :force,
+                                               :timeout].freeze)
         end
       end
     end

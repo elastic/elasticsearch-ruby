@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Force any buffered data to be processed by the job
           #
           # @option arguments [String] :job_id The name of the job to flush (*Required*)
@@ -21,8 +20,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
           #
-          def flush_job(arguments={})
+          def flush_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_flush"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -34,11 +34,11 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:flush_job, [ :calc_interim,
-                                                :start,
-                                                :end,
-                                                :advance_time,
-                                                :skip_time ].freeze)
+          ParamsRegistry.register(:flush_job, [:calc_interim,
+                                               :start,
+                                               :end,
+                                               :advance_time,
+                                               :skip_time].freeze)
         end
       end
     end

@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # TODO: Description
           #
           # @option arguments [String] :calendar_id The ID of the calendar to modify (*Required*)
@@ -15,9 +14,10 @@ module Elasticsearch
           #
           # @see [TODO]
           #
-          def post_calendar_events(arguments={})
+          def post_calendar_events(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/calendars/#{arguments[:calendar_id]}/events"
             params = {}

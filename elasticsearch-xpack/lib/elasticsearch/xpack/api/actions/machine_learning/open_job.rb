@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Open a job to receive and analyze data
           #
           # @option arguments [String] :job_id The ID of the job to open (*Required*)
@@ -16,8 +15,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
           #
-          def open_job(arguments={})
+          def open_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_open"
             params = {}

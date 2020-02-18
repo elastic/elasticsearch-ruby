@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # TODO: Description
           #
           # @option arguments [String] :calendar_id The ID of the calendar containing the events (*Required*)
@@ -19,8 +18,9 @@ module Elasticsearch
           #
           # @see [TODO]
           #
-          def get_calendar_events(arguments={})
+          def get_calendar_events(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+
             arguments = arguments.clone
             calendar_id = arguments.delete(:calendar_id)
 
@@ -35,12 +35,12 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_calendar_events, [ :calendar_id,
-                                                          :job_id,
-                                                          :start,
-                                                          :end,
-                                                          :from,
-                                                          :size ].freeze)
+          ParamsRegistry.register(:get_calendar_events, [:calendar_id,
+                                                         :job_id,
+                                                         :start,
+                                                         :end,
+                                                         :from,
+                                                         :size].freeze)
         end
       end
     end

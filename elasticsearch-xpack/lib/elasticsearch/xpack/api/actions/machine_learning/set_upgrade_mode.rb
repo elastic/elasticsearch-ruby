@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Temporarily halt tasks associated with the jobs and datafeeds and prevent new jobs from opening.
           # When enabled=true this API temporarily halts all job and datafeed tasks and prohibits new job and
           #   datafeed tasks from starting.
@@ -17,7 +16,7 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
           #
-          def set_upgrade_mode(arguments={})
+          def set_upgrade_mode(arguments = {})
             method = Elasticsearch::API::HTTP_POST
             path   = '_ml/set_upgrade_mode'
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -25,12 +24,11 @@ module Elasticsearch
             perform_request(method, path, params).body
           end
 
-
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:set_upgrade_mode, [ :enabled,
-                                                       :timeout ].freeze)
+          ParamsRegistry.register(:set_upgrade_mode, [:enabled,
+                                                      :timeout].freeze)
         end
       end
     end

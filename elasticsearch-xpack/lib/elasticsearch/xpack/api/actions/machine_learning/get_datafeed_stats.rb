@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve usage information for datafeeds
           #
           # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
@@ -15,7 +14,7 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
           #
-          def get_datafeed_stats(arguments={})
+          def get_datafeed_stats(arguments = {})
             method = Elasticsearch::API::HTTP_GET
             path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/datafeeds", arguments[:datafeed_id], "/_stats"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -27,7 +26,7 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_datafeed_stats, [ :allow_no_datafeeds ].freeze)
+          ParamsRegistry.register(:get_datafeed_stats, [:allow_no_datafeeds].freeze)
         end
       end
     end

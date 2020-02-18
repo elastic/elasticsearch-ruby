@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Send data to an anomaly detection job for analysis
           #
           # @option arguments [String] :job_id The name of the job receiving the data (*Required*)
@@ -17,9 +16,10 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
           #
-          def post_data(arguments={})
+          def post_data(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_data"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -31,8 +31,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:post_data, [ :reset_start,
-                                                :reset_end ].freeze)
+          ParamsRegistry.register(:post_data, [:reset_start,
+                                               :reset_end].freeze)
         end
       end
     end
