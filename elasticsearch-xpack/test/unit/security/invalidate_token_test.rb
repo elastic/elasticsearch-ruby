@@ -14,7 +14,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'DELETE', method
-            assert_equal "_xpack/security/oauth2/token", url
+            assert_equal "_security/oauth2/token", url
             assert_equal Hash.new, params
             assert_equal Hash.new, body
             true

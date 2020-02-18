@@ -10,7 +10,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/security/privilege', url
+            assert_equal '_security/privilege', url
             assert_equal Hash.new, params
             assert_equal({ "app-allow": { read: { actions: [ "data:read/*" ] } } }, body)
             true

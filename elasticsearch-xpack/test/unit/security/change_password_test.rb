@@ -14,7 +14,7 @@ module Elasticsearch
         should "perform correct request for a specific user" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/security/user/foo/_password', url
+            assert_equal '_security/user/foo/_password', url
             assert_equal Hash.new, params
             assert_equal 'bar', body[:password]
             true
@@ -26,7 +26,7 @@ module Elasticsearch
         should "perform correct request for current user" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'PUT', method
-            assert_equal '_xpack/security/user/_password', url
+            assert_equal '_security/user/_password', url
             assert_equal Hash.new, params
             assert_equal 'bar', body[:password]
             true

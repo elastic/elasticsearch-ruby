@@ -23,7 +23,7 @@ module Elasticsearch
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_security/privilege/"
+            path   = "_security/privilege"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]

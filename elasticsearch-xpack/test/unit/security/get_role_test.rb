@@ -14,7 +14,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_xpack/security/role', url
+            assert_equal '_security/role', url
             assert_equal Hash.new, params
             assert_nil   body
             true
@@ -26,7 +26,7 @@ module Elasticsearch
         should "perform correct request for multiple roles" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_xpack/security/role/foo,bar', url
+            assert_equal '_security/role/foo,bar', url
             assert_equal Hash.new, params
             assert_nil   body
             true
