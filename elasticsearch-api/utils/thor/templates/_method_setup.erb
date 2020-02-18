@@ -25,7 +25,7 @@
   <%- end -%>
   <%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
   <%- unless @params.empty? -%>
-    <%= '  '*(@namespace_depth+4) %>params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+    <%= '  '*(@namespace_depth+4) %>params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
   <%- else -%>
     <%= '  '*(@namespace_depth+4) %>params = {}
   <%- end -%>
