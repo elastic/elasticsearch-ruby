@@ -7,16 +7,22 @@ module Elasticsearch
     module API
       module SSL
         module Actions
+          # TODO: Description
 
-          def certificates(arguments={})
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
+          #
+          def certificates(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ssl/certificates"
+            path   = "_ssl/certificates"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
+      end
       end
     end
   end
