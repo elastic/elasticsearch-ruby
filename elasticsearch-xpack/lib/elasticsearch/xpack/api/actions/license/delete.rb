@@ -7,21 +7,23 @@ module Elasticsearch
     module API
       module License
         module Actions
+          # TODO: Description
 
-          # Delete a license
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/license-management.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html
           #
-          def delete(arguments={})
+          def delete(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/license"
+            path   = "_license"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end
