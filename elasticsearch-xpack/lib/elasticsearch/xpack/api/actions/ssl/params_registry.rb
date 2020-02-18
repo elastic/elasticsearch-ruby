@@ -8,7 +8,6 @@ module Elasticsearch
       module SSL
         module Actions
           module ParamsRegistry
-
             extend self
 
             # A Mapping of all the actions to their list of valid params.
