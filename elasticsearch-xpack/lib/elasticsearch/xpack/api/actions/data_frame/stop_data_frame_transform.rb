@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module DataFrame
         module Actions
-
           # Stops one or more data frame transforms.
           #
           # @option arguments [String] :transform_id The id of the transform(s) to stop.
@@ -19,8 +18,9 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-data-frame-transform.html
           #
           # @since 7.2.0
-          def stop_data_frame_transform(arguments={})
+          def stop_data_frame_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
+
             arguments = arguments.clone
             transform_id = URI.escape(arguments.delete(:transform_id))
 
@@ -32,13 +32,12 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
 
-
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:stop_data_frame_transform, [ :timeout,
-                                                                :wait_for_completion,
-                                                                :allow_no_match ].freeze)
+          ParamsRegistry.register(:stop_data_frame_transform, [:timeout,
+                                                               :wait_for_completion,
+                                                               :allow_no_match].freeze)
         end
       end
     end

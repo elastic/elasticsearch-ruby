@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module DataFrame
         module Actions
-
           # Instantiates a data frame transform.
           #
           # @option arguments [Hash] :transform_id The id of the new transform. *Required*
@@ -18,7 +17,7 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-data-frame-transform.html
           #
           # @since 7.2.0
-          def put_data_frame_transform(arguments={})
+          def put_data_frame_transform(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
@@ -36,7 +35,7 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:put_data_frame_transform, [ :defer_validation ].freeze)
+          ParamsRegistry.register(:put_data_frame_transform, [:defer_validation].freeze)
         end
       end
     end
