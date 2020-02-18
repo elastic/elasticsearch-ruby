@@ -3,9 +3,12 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
+<%- if @xpack -%>
+  <%= '  '*(@namespace_depth) %>module XPack
+<%- end %>
 <%= '  '*(@namespace_depth) %>module API
 <%- @module_namespace.each_with_index do |name, i| -%>
-  <%= '  '*i %>module <%= name == 'xpack' ? 'XPack' : name.capitalize %>
+  <%= '  '*i %>module <%= name.capitalize %>
 <%- end -%>
 <%= '  '*(@namespace_depth+2) %>module Actions
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
