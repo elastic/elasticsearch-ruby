@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Start the index lifecycle management (ILM) plugin
           #
           # @option arguments [Time] :master_timeout Specifies the period of time to wait for a connection to the master node
@@ -15,7 +14,7 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
           #
-          def start(arguments={})
+          def start(arguments = {})
             method = Elasticsearch::API::HTTP_POST
             path   = "_ilm/start"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -26,9 +25,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:start, [ :master_timeout,
-                                            :timeout ].freeze)
-
+          ParamsRegistry.register(:start, [:master_timeout,
+                                           :timeout].freeze)
         end
       end
     end

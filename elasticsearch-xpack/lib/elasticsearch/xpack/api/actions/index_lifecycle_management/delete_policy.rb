@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Deletes a lifecycle policy
           #
           # @option arguments [String] :policy_id Identifier for the policy
@@ -16,8 +15,9 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
           #
-          def delete_policy(arguments={})
+          def delete_policy(arguments = {})
             raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
+
             method = Elasticsearch::API::HTTP_DELETE
             path   = Elasticsearch::API::Utils.__pathify "_ilm/policy",
                                                          Elasticsearch::API::Utils.__escape(arguments[:policy_id])
@@ -29,9 +29,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:delete_policy, [ :master_timeout,
-                                                    :timeout ].freeze)
-
+          ParamsRegistry.register(:delete_policy, [:master_timeout,
+                                                   :timeout].freeze)
         end
       end
     end

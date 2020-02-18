@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Shows an index’s current lifecycle status
           #
           # @option arguments [String] :index The target index (*Required*)
@@ -16,8 +15,9 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
           #
-          def explain(arguments={})
+          def explain(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
             index = Elasticsearch::API::Utils.__escape(arguments.delete(:index))
 
             method = Elasticsearch::API::HTTP_GET
@@ -30,9 +30,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:explain, [ :master_timeout,
-                                              :timeout ].freeze)
-
+          ParamsRegistry.register(:explain, [:master_timeout,
+                                             :timeout].freeze)
         end
       end
     end

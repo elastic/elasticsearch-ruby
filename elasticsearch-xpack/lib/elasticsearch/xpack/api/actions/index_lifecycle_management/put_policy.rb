@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Register a new watch in or update an existing one
           #
           # @option arguments [String] :policy_id Identifier for the policy (*Required*)
@@ -17,9 +16,10 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
           #
-          def put_policy(arguments={})
+          def put_policy(arguments = {})
             raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             method = Elasticsearch::API::HTTP_PUT
             path   = Elasticsearch::API::Utils.__pathify "_ilm/policy",
                                                          Elasticsearch::API::Utils.__escape(arguments[:policy_id])
@@ -31,8 +31,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:put_policy, [ :master_timeout,
-                                                 :timeout ].freeze)
+          ParamsRegistry.register(:put_policy, [:master_timeout,
+                                                :timeout].freeze)
         end
       end
     end
