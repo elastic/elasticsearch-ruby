@@ -7,11 +7,11 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # @option arguments [String] :filter_id The ID of the filter to delete (*Required*)
           #
-          def delete_filter(arguments={})
+          def delete_filter(arguments = {})
             raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_xpack/ml/filters/#{arguments[:filter_id]}"
             params = {}

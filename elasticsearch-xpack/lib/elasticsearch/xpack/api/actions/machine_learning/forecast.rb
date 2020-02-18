@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Predict the future behavior of a time series
           #
           # @option arguments [String] :job_id The ID of the job to forecast for (*Required*)
@@ -16,8 +15,9 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
           #
-          def forecast(arguments={})
+          def forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_forecast"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -29,8 +29,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:forecast, [ :duration,
-                                               :expires_in ].freeze)
+          ParamsRegistry.register(:forecast, [:duration,
+                                              :expires_in].freeze)
         end
       end
     end

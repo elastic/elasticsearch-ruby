@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve job results for one or more buckets
           #
           # @option arguments [String] :job_id ID of the job to get bucket results from (*Required*)
@@ -25,8 +24,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
           #
-          def get_buckets(arguments={})
+          def get_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             arguments = arguments.clone
             timestamp = arguments.delete(:timestamp)
 
@@ -41,16 +41,16 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_buckets, [ :timestamp,
-                                                  :expand,
-                                                  :exclude_interim,
-                                                  :from,
-                                                  :size,
-                                                  :start,
-                                                  :end,
-                                                  :anomaly_score,
-                                                  :sort,
-                                                  :desc ].freeze)
+          ParamsRegistry.register(:get_buckets, [:timestamp,
+                                                 :expand,
+                                                 :exclude_interim,
+                                                 :from,
+                                                 :size,
+                                                 :start,
+                                                 :end,
+                                                 :anomaly_score,
+                                                 :sort,
+                                                 :desc].freeze)
         end
       end
     end

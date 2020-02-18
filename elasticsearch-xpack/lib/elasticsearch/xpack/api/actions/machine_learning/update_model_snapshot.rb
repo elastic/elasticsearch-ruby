@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Update certain properties of a snapshot
           #
           # @option arguments [String] :job_id The ID of the job to fetch (*Required*)
@@ -16,7 +15,7 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
           #
-          def update_model_snapshot(arguments={})
+          def update_model_snapshot(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

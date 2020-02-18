@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Retrieve overall bucket results that summarize the bucket results of multiple jobs
           #
           # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results (*Required*)
@@ -22,8 +21,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
           #
-          def get_overall_buckets(arguments={})
+          def get_overall_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/results/overall_buckets"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -35,13 +35,13 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_overall_buckets, [ :top_n,
-                                                          :bucket_span,
-                                                          :overall_score,
-                                                          :exclude_interim,
-                                                          :start,
-                                                          :end,
-                                                          :allow_no_jobs ].freeze)
+          ParamsRegistry.register(:get_overall_buckets, [:top_n,
+                                                         :bucket_span,
+                                                         :overall_score,
+                                                         :exclude_interim,
+                                                         :start,
+                                                         :end,
+                                                         :allow_no_jobs].freeze)
         end
       end
     end

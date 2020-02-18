@@ -7,13 +7,12 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # TODO: Description
           #
           #
           # @see [TODO]
           #
-          def info(arguments={})
+          def info(arguments = {})
             method = Elasticsearch::API::HTTP_GET
             path   = "_xpack/ml/info"
             params = {}

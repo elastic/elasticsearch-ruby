@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Stop a datafeed
           #
           # @option arguments [String] :datafeed_id The ID of the datafeed to stop (*Required*)
@@ -17,8 +16,9 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
           #
-          def stop_datafeed(arguments={})
+          def stop_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_stop"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -30,9 +30,9 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:stop_datafeed, [ :allow_no_datafeeds,
-                                                    :force,
-                                                    :timeout ].freeze)
+          ParamsRegistry.register(:stop_datafeed, [:allow_no_datafeeds,
+                                                   :force,
+                                                   :timeout].freeze)
         end
       end
     end

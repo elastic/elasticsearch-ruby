@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # TODO: Description
           #
           # @option arguments [String] :calendar_id The ID of the calendar to fetch
@@ -16,7 +15,7 @@ module Elasticsearch
           #
           # @see [TODO]
           #
-          def get_calendars(arguments={})
+          def get_calendars(arguments = {})
             arguments = arguments.clone
             calendar_id = arguments.delete(:calendar_id)
 
@@ -31,9 +30,9 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_calendars, [ :calendar_id,
-                                                    :from,
-                                                    :size ].freeze)
+          ParamsRegistry.register(:get_calendars, [:calendar_id,
+                                                   :from,
+                                                   :size].freeze)
         end
       end
     end

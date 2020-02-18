@@ -7,15 +7,15 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Estimates memory usage for the given data frame analytics config.
           #
           # @option arguments [Hash] :body Memory usage estimation definition (*Required*)
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/estimate-memory-usage-dfanalytics.html
           #
-          def estimate_memory_usage(arguments={})
+          def estimate_memory_usage(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_ml/data_frame/analytics/_estimate_memory_usage"
             params = {}

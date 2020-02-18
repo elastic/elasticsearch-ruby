@@ -7,10 +7,9 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # @option arguments [Hash] :body The job config (*Required*)
           #
-          def validate(arguments={})
+          def validate(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
             method = Elasticsearch::API::HTTP_POST

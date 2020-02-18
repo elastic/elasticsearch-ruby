@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Create a new job
           #
           # @option arguments [String] :job_id The ID of the job to create (*Required*)
@@ -15,9 +14,10 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
           #
-          def put_job(arguments={})
+          def put_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             method = Elasticsearch::API::HTTP_PUT
             path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}"
             params = {}

@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Update certain properties of a datafeed
           #
           # @option arguments [String] :datafeed_id The ID of the datafeed to update (*Required*)
@@ -15,7 +14,7 @@ module Elasticsearch
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
           #
-          def update_datafeed(arguments={})
+          def update_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
