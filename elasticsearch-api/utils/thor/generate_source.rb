@@ -68,6 +68,7 @@ module Elasticsearch
           @http_path        = __http_path
           @required_parts   = __required_parts
 
+          @module_namespace.shift if @module_namespace.first == 'xpack'
           @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
           dir = @output.join(@module_namespace.join('/'))
           empty_directory(dir, verbose: false)
