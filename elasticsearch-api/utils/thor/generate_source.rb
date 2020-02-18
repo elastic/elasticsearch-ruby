@@ -121,17 +121,17 @@ module Elasticsearch
       def __http_method
         case @endpoint_name
         when 'index'
-          '_id ? HTTP_PUT : HTTP_POST'
+          '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST'
         when 'count'
           <<~SRC
             if arguments[:body]
-              HTTP_POST
+              Elasticsearch::API::HTTP_POST
             else
-              HTTP_GET
+              Elasticsearch::API::HTTP_GET
             end
           SRC
         else
-          "HTTP_#{@spec['url']['paths'].map { |a| a['methods'] }.flatten.first}"
+          "Elasticsearch::API::HTTP_#{@spec['url']['paths'].map { |a| a['methods'] }.flatten.first}"
         end
       end
 
@@ -161,7 +161,7 @@ module Elasticsearch
 
       def __parse_path(path)
         path.gsub(/^\//, '')
-            .gsub('{', '#{Utils.__listify(_')
+            .gsub('{', '#{Elasticsearch::API::Utils.__listify(_')
             .gsub('}', ')}')
       end
 
