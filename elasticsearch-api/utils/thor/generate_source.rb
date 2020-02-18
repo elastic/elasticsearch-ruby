@@ -161,6 +161,7 @@ module Elasticsearch
 
       def __parse_path(path)
         path.gsub(/^\//, '')
+            .gsub(/\/$/, '')
             .gsub('{', '#{Elasticsearch::API::Utils.__listify(_')
             .gsub('}', ')}')
       end
