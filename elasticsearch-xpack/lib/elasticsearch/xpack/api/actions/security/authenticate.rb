@@ -7,21 +7,23 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Retrieve details about the currently authenticated user
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-authenticate.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
           #
-          def authenticate(arguments={})
+          def authenticate(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/security/_authenticate"
+            path   = "_security/_authenticate"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

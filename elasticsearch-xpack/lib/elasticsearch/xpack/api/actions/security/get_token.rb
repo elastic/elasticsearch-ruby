@@ -7,24 +7,26 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Obtain a token for OAuth 2.0 auhentication
-          #
           # @option arguments [Hash] :body The token request to get (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/x-pack/master/security-api-tokens.html#security-api-get-token
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
           #
-          def get_token(arguments={})
+          def get_token(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/security/oauth2/token"
-            params = {}
-            body   = arguments[:body]
 
+            arguments = arguments.clone
+
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_security/oauth2/token"
+            params = {}
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

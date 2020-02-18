@@ -7,18 +7,23 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Get user privileges
           #
-          def get_user_privileges(arguments={})
-            method = Elasticsearch::API::HTTP_GET
-            params = {}
-            body   = nil
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
+          #
+          def get_user_privileges(arguments = {})
+            arguments = arguments.clone
 
-            perform_request(method, '_xpack/security/user/_privileges', params, body).body
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_security/user/_privileges"
+            params = {}
+
+            body = nil
+            perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end
