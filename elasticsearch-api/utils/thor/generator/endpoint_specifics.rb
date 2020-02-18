@@ -28,6 +28,8 @@ module Elasticsearch
         indices.flush_synced
         indices.delete_template
         indices.delete
+        security.get_role
+        security.get_user
         snapshot.status
         snapshot.get
         snapshot.get_repository
