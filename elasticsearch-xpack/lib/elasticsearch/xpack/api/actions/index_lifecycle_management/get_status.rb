@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Retrieves the current index lifecycle management (ILM) status
           #
           # @option arguments [Time] :master_timeout Specifies the period of time to wait for a connection to the master node
@@ -15,7 +14,7 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
           #
-          def get_status(arguments={})
+          def get_status(arguments = {})
             method = Elasticsearch::API::HTTP_GET
             path   = "_ilm/status"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -26,9 +25,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:get_status, [ :master_timeout,
-                                                 :timeout ].freeze)
-
+          ParamsRegistry.register(:get_status, [:master_timeout,
+                                                :timeout].freeze)
         end
       end
     end

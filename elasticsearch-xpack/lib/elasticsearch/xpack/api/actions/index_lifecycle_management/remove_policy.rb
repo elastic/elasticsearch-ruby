@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Removes the assigned lifecycle policy from an index
           #
           # @option arguments [String] :index The target index (*Required*)
@@ -16,11 +15,12 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
           #
-          def remove_policy(arguments={})
+          def remove_policy(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
             method = Elasticsearch::API::HTTP_POST
             index = Elasticsearch::API::Utils.__escape(arguments.delete(:index))
-            path   = Elasticsearch::API::Utils.__pathify index, "_ilm/remove"
+            path = Elasticsearch::API::Utils.__pathify index, "_ilm/remove"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
@@ -29,8 +29,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:remove_policy, [ :master_timeout,
-                                                    :timeout ].freeze)
+          ParamsRegistry.register(:remove_policy, [:master_timeout,
+                                                   :timeout].freeze)
         end
       end
     end

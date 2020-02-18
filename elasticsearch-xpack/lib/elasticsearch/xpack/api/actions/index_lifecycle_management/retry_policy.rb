@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-
           # Retry executing the policy for an index that is in the ERROR step
           #
           # @option arguments [String] :index The target index (*Required*)
@@ -16,11 +15,12 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
           #
-          def retry_policy(arguments={})
+          def retry_policy(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
             method = Elasticsearch::API::HTTP_POST
             index = Elasticsearch::API::Utils.__escape(arguments.delete(:index))
-            path   = Elasticsearch::API::Utils.__pathify index, "_ilm/retry"
+            path = Elasticsearch::API::Utils.__pathify index, "_ilm/retry"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
             body   = nil
 
@@ -29,8 +29,8 @@ module Elasticsearch
 
           # Register this action with its valid params when the module is loaded.
           #
-          ParamsRegistry.register(:retry_policy, [ :master_timeout,
-                                                   :timeout ].freeze)
+          ParamsRegistry.register(:retry_policy, [:master_timeout,
+                                                  :timeout].freeze)
         end
       end
     end
