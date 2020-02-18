@@ -19,12 +19,12 @@ when 'mtermvectors'
   <%= ping_perform_request %>
 <%- else -%>
   <%- if needs_ignore_404?(@endpoint_name) %>
-    Utils.__rescue_from_not_found do
+    Elasticsearch::API::Utils.__rescue_from_not_found do
       perform_request(method, path, params, body).status == 200 ? true : false
     end
   <%- elsif needs_complex_ignore_404?(@endpoint_name) -%>
     if Array(arguments[:ignore]).include?(404)
-      Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+      Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
     else
       perform_request(method, path, params, body).body
     end
