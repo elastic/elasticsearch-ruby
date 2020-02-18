@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module DataFrame
         module Actions
-
           # Retrieves usage information for data frame transforms.
           #
           # @option arguments [Integer] :transform_id The id or comma delimited list of id expressions of the
@@ -18,7 +17,7 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-data-frame-transform-stats.html
           #
           # @since 7.2.0
-          def get_data_frame_transform_stats(arguments={})
+          def get_data_frame_transform_stats(arguments = {})
             arguments = arguments.clone
             transform_id = URI.escape(arguments.delete(:transform_id))
 
@@ -33,8 +32,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_data_frame_transform_stats, [ :from,
-                                                                     :size ].freeze)
+          ParamsRegistry.register(:get_data_frame_transform_stats, [:from,
+                                                                    :size].freeze)
         end
       end
     end
