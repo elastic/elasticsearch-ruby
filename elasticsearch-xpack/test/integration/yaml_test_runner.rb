@@ -30,7 +30,8 @@ default_skip_patterns = [
   '/token/',                  # Tokens require full SSL setup (TODO)
   '/ssl/10_basic',            # (?) Test relies on some external setup
   '/ml/jobs_crud.yml',        # (?) Test expects settings?
-  '/ml/ml_info.yml'           # Test doesn't reset itself in teardown
+  '/ml/ml_info.yml',          # Test doesn't reset itself in teardown
+  '/transform/'               # Skipping until transform is supported
 ].join('|')
 
 SKIP_PATTERNS = Regexp.new( [default_skip_patterns, ENV['TEST_SKIP_PATTERNS'] ].compact.join('|') )
