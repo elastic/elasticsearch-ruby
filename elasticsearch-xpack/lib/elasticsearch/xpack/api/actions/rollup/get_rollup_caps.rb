@@ -7,21 +7,32 @@ module Elasticsearch
     module API
       module Rollup
         module Actions
-
           # TODO: Description
+
           #
           # @option arguments [String] :id The ID of the index to check rollup capabilities on, or left blank for all jobs
-          #
-          def get_rollup_caps(arguments={})
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/rollup/data/#{arguments[:id]}"
-            params = {}
-            body   = nil
 
+          #
+          # @see
+          #
+          def get_rollup_caps(arguments = {})
+            arguments = arguments.clone
+
+            _id = arguments.delete(:id)
+
+            method = Elasticsearch::API::HTTP_GET
+            path   = if _id
+                       "_rollup/data/#{Elasticsearch::API::Utils.__listify(_id)}"
+                     else
+                       "_rollup/data"
+  end
+            params = {}
+
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end
