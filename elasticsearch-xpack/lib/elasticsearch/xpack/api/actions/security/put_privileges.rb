@@ -7,29 +7,37 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Add a privilege
           #
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
+
           # @option arguments [Hash] :body The privilege(s) to add (*Required*)
-          # @option arguments [Boolean] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search,
-          #   if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
           #
-          def put_privileges(arguments={})
+          # @see TODO
+          #
+          def put_privileges(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/privilege"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            arguments = arguments.clone
+
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_security/privilege/"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:put_privileges, [ :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:put_privileges, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

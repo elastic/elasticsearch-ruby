@@ -7,35 +7,39 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Disable a user
           #
           # @option arguments [String] :username The username of the user to disable
-          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this
-          # operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search,
-          # if `false` then do nothing with refreshes. (options: true, false, wait_for)
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
+
           #
-          # @see https://www.elastic.co/guide/en/x-pack/5.4/security-api-users.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
           #
-          def disable_user(arguments={})
+          def disable_user(arguments = {})
+            raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
+
             arguments = arguments.clone
-            username = arguments.delete(:username)
+
+            _username = arguments.delete(:username)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/security/user/#{username}/_disable"
+            path   = "_security/user/#{Elasticsearch::API::Utils.__listify(_username)}/_disable"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:disable_user, [ :username,
-                                                   :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:disable_user, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

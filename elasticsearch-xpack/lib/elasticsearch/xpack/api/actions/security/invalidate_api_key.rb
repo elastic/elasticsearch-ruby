@@ -7,24 +7,26 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # TODO: Description
 
-          # Creates an API key for access without requiring basic authentication.
-          #
-          # @option arguments [Hash] :body The api key request to invalidate API key(s). (*Required*)
+          # @option arguments [Hash] :body The api key request to invalidate API key(s) (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
           #
-          def invalidate_api_key(arguments={})
+          def invalidate_api_key(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_security/api_key"
             params = {}
 
-            perform_request(method, path, params, arguments[:body]).body
+            body = arguments[:body]
+            perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end
