@@ -7,36 +7,30 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
+          # TODO: Description
 
-          # Remove a watch
           #
-          # @option arguments [String] :id Watch ID (*Required*)
-          # @option arguments [Duration] :master_timeout Specify timeout for watch write operation
-          # @option arguments [Boolean] :force Specify if this request should be forced and ignore locks
+          # @option arguments [String] :id Watch ID
+
           #
-          # @see http://www.elastic.co/guide/en/x-pack/current/appendix-api-delete-watch.html
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
           #
-          def delete_watch(arguments={})
+          def delete_watch(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            arguments = arguments.clone
+
+            _id = arguments.delete(:id)
+
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_xpack/watcher/watch/#{arguments[:id]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
+            path   = "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_id)}"
+            params = {}
 
-            if Array(arguments[:ignore]).include?(404)
-              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
-            else
-              perform_request(method, path, params, body).body
-            end
+            body = nil
+            perform_request(method, path, params, body).body
           end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 7.4.0
-          ParamsRegistry.register(:delete_watch, [ :master_timeout,
-                                                   :force ].freeze)
-        end
       end
+    end
     end
   end
 end
