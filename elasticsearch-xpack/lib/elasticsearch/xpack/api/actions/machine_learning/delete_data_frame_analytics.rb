@@ -10,13 +10,20 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @see [TODO]
+          # @option arguments [String] :id The ID of the data frame analytics to delete
+
           #
-          def info(arguments = {})
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
+          #
+          def delete_data_frame_analytics(arguments = {})
+            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
             arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/info"
+            _id = arguments.delete(:id)
+
+            method = Elasticsearch::API::HTTP_DELETE
+            path   = "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
             params = {}
 
             body = nil

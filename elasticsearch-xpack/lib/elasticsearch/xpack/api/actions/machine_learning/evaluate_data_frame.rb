@@ -9,22 +9,17 @@ module Elasticsearch
         module Actions
           # TODO: Description
 
+          # @option arguments [Hash] :body The evaluation definition (*Required*)
           #
-          # @option arguments [String] :calendar_id The ID of the calendar to create
-
-          # @option arguments [Hash] :body The calendar details
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
           #
-          # @see [TODO]
-          #
-          def put_calendar(arguments = {})
-            raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+          def evaluate_data_frame(arguments = {})
+            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
             arguments = arguments.clone
 
-            _calendar_id = arguments.delete(:calendar_id)
-
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_ml/data_frame/_evaluate"
             params = {}
 
             body = arguments[:body]

@@ -10,28 +10,32 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @option arguments [Boolean] :enabled Whether to enable upgrade_mode ML setting or not. Defaults to false.
-          # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
+          # @option arguments [String] :id The ID of the data frame analytics to start
+          # @option arguments [Time] :timeout Controls the time to wait until the task has started. Defaults to 20 seconds
 
+          # @option arguments [Hash] :body The start data frame analytics parameters
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
           #
-          def set_upgrade_mode(arguments = {})
+          def start_data_frame_analytics(arguments = {})
+            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
             arguments = arguments.clone
 
+            _id = arguments.delete(:id)
+
             method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/set_upgrade_mode"
+            path   = "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_start"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
           # @since 6.2.0
-          ParamsRegistry.register(:set_upgrade_mode, [
-            :enabled,
+          ParamsRegistry.register(:start_data_frame_analytics, [
             :timeout
           ].freeze)
       end
