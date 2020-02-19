@@ -5,7 +5,7 @@
 module Elasticsearch
   module XPack
     module API
-      module DataFrame
+      module DataFrameTransformDeprecated
         module Actions
           module ParamsRegistry
             extend self
