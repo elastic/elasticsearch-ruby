@@ -10,13 +10,12 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @option arguments [String] :index The name of the index whose lifecycle step is to change
+          # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
 
-          # @option arguments [Hash] :body The new lifecycle step to move to
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
           #
-          def move_to_step(arguments = {})
+          def retry(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
             arguments = arguments.clone
@@ -24,10 +23,10 @@ module Elasticsearch
             _index = arguments.delete(:index)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_ilm/move/#{Elasticsearch::API::Utils.__listify(_index)}"
+            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ilm/retry"
             params = {}
 
-            body = arguments[:body]
+            body = nil
             perform_request(method, path, params, body).body
           end
       end
