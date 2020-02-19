@@ -9,6 +9,8 @@ when 'mtermvectors'
   end
 <%- when 'cluster.reroute', 'cluster.put_settings' %>
   body = arguments[:body] || {}
+<%- when 'ml.find_file_structure' %>
+  body = Elasticsearch::API::Utils.__bulkify(arguments.delete(:body))
 <%- else -%>
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <%- end -%>
