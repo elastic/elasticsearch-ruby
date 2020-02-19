@@ -9,7 +9,7 @@ module Elasticsearch
         module Actions; end
 
         class DataFrameClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, DataFrame::Actions
+          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, DataFrameTransformDeprecated::Actions
         end
 
         def data_frame
