@@ -93,9 +93,18 @@ module Elasticsearch
 
       def __full_namespace
         names = @endpoint_name.split('.')
-        return names unless @xpack
-
-        names.first == 'xpack' ? names : ['xpack', names].flatten
+        if @xpack
+          names = (names.first == 'xpack' ? names : ['xpack', names].flatten)
+          # Return an array with 'ml' renamed to 'machine_learning' and 'ilm' to
+          # 'index_lifecycle_management'
+          names.map do |name|
+            name
+              .gsub(/^ml$/, 'machine_learning')
+              .gsub(/^ilm$/, 'index_lifecycle_management')
+          end
+        else
+          names
+        end
       end
 
       # Create the hierarchy of directories based on API namespaces
