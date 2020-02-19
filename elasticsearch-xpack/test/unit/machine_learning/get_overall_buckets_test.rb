@@ -14,7 +14,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_xpack/ml/anomaly_detectors/foo/results/overall_buckets', url
+            assert_equal '_ml/anomaly_detectors/foo/results/overall_buckets', url
             assert_equal Hash.new, params
             assert_equal nil, body
             true

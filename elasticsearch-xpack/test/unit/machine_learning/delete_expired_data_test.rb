@@ -14,7 +14,7 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'DELETE', method
-            assert_equal "_xpack/ml/_delete_expired_data", url
+            assert_equal "_ml/_delete_expired_data", url
             assert_equal Hash.new, params
             assert_nil   body
             true
