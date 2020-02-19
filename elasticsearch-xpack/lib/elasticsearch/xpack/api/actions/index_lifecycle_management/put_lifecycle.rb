@@ -10,21 +10,21 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @option arguments [String] :index The name of the index whose lifecycle step is to change
+          # @option arguments [String] :policy The name of the index lifecycle policy
 
-          # @option arguments [Hash] :body The new lifecycle step to move to
+          # @option arguments [Hash] :body The lifecycle policy definition to register
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-move-to-step.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
           #
-          def move_to_step(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          def put_lifecycle(arguments = {})
+            raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
 
             arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+            _policy = arguments.delete(:policy)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ilm/move/#{Elasticsearch::API::Utils.__listify(_index)}"
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_ilm/policy/#{Elasticsearch::API::Utils.__listify(_policy)}"
             params = {}
 
             body = arguments[:body]
