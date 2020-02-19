@@ -40,7 +40,7 @@ module Elasticsearch
             path   = "_ml/find_file_structure"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = arguments[:body]
+            body = Elasticsearch::API::Utils.__bulkify(arguments.delete(:body))
             perform_request(method, path, params, body).body
           end
 
