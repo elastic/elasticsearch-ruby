@@ -12,7 +12,7 @@ module Elasticsearch
             assert_equal 'POST', method
             assert_equal "_ml/find_file_structure", url
             assert_equal Hash.new, params
-            assert_equal [], body
+            assert_equal "", body
             true
           end.returns(FakeResponse.new)
 
