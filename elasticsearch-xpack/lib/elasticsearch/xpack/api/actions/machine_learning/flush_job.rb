@@ -7,40 +7,47 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Force any buffered data to be processed by the job
+          # TODO: Description
+
           #
-          # @option arguments [String] :job_id The name of the job to flush (*Required*)
-          # @option arguments [Hash] :body Flush parameters
+          # @option arguments [String] :job_id The name of the job to flush
           # @option arguments [Boolean] :calc_interim Calculates interim results for the most recent bucket or all buckets within the latency period
           # @option arguments [String] :start When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
           # @option arguments [String] :end When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results
-          # @option arguments [String] :advance_time Setting this tells the Engine API that no data prior to advance_time is expected
+          # @option arguments [String] :advance_time Advances time to the given value generating results and updating the model for the advanced interval
           # @option arguments [String] :skip_time Skips time to the given value without generating results or updating the model for the skipped interval
-          #
+
+          # @option arguments [Hash] :body Flush parameters
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
           #
           def flush_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_flush"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
+            arguments = arguments.clone
 
+            _job_id = arguments.delete(:job_id)
+
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_flush"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:flush_job, [:calc_interim,
-                                               :start,
-                                               :end,
-                                               :advance_time,
-                                               :skip_time].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:flush_job, [
+            :calc_interim,
+            :start,
+            :end,
+            :advance_time,
+            :skip_time
+          ].freeze)
       end
+    end
     end
   end
 end

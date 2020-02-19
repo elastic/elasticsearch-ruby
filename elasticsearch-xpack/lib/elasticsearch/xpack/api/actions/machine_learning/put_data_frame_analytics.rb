@@ -10,22 +10,22 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @option arguments [String] :filter_id The ID of the filter to update
+          # @option arguments [String] :id The ID of the data frame analytics to create
 
-          # @option arguments [Hash] :body The filter update (*Required*)
+          # @option arguments [Hash] :body The data frame analytics configuration (*Required*)
           #
-          # @see [TODO]
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
           #
-          def update_filter(arguments = {})
+          def put_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
             arguments = arguments.clone
 
-            _filter_id = arguments.delete(:filter_id)
+            _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}/_update"
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
             params = {}
 
             body = arguments[:body]

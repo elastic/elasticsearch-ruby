@@ -7,26 +7,32 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Update certain properties of a datafeed
+          # TODO: Description
+
           #
-          # @option arguments [String] :datafeed_id The ID of the datafeed to update (*Required*)
+          # @option arguments [String] :datafeed_id The ID of the datafeed to update
+
           # @option arguments [Hash] :body The datafeed update settings (*Required*)
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
           #
           def update_datafeed(arguments = {})
-            raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+
+            arguments = arguments.clone
+
+            _datafeed_id = arguments.delete(:datafeed_id)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/datafeeds/#{arguments[:datafeed_id]}/_update"
+            path   = "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_update"
             params = {}
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

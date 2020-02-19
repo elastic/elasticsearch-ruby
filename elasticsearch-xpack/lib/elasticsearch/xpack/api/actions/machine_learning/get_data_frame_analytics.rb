@@ -10,23 +10,24 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @option arguments [String] :filter_id The ID of the filter to fetch
-          # @option arguments [Int] :from skips a number of filters
-          # @option arguments [Int] :size specifies a max number of filters to get
+          # @option arguments [String] :id The ID of the data frame analytics to fetch
+          # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
+          # @option arguments [Int] :from skips a number of analytics
+          # @option arguments [Int] :size specifies a max number of analytics to get
 
           #
-          # @see [TODO]
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
           #
-          def get_filters(arguments = {})
+          def get_data_frame_analytics(arguments = {})
             arguments = arguments.clone
 
-            _filter_id = arguments.delete(:filter_id)
+            _id = arguments.delete(:id)
 
             method = Elasticsearch::API::HTTP_GET
-            path   = if _filter_id
-                       "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
+            path   = if _id
+                       "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
                      else
-                       "_ml/filters"
+                       "_ml/data_frame/analytics"
   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
@@ -37,7 +38,8 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 6.2.0
-          ParamsRegistry.register(:get_filters, [
+          ParamsRegistry.register(:get_data_frame_analytics, [
+            :allow_no_match,
             :from,
             :size
           ].freeze)

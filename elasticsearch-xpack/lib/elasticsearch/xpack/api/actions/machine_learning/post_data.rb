@@ -7,34 +7,42 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Send data to an anomaly detection job for analysis
+          # TODO: Description
+
           #
-          # @option arguments [String] :job_id The name of the job receiving the data (*Required*)
-          # @option arguments [Hash] :body The data to process (*Required*)
+          # @option arguments [String] :job_id The name of the job receiving the data
           # @option arguments [String] :reset_start Optional parameter to specify the start of the bucket resetting range
           # @option arguments [String] :reset_end Optional parameter to specify the end of the bucket resetting range
+
+          # @option arguments [Hash] :body The data to process (*Required*)
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
           #
           def post_data(arguments = {})
-            raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            arguments = arguments.clone
+
+            _job_id = arguments.delete(:job_id)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_data"
+            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_data"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:post_data, [:reset_start,
-                                               :reset_end].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:post_data, [
+            :reset_start,
+            :reset_end
+          ].freeze)
       end
+    end
     end
   end
 end

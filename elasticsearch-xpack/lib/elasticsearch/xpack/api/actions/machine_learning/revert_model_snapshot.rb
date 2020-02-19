@@ -7,32 +7,43 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Revert to a specific snapshot (eg. before a highly-anomalous, but insignificant event)
+          # TODO: Description
+
           #
-          # @option arguments [String] :job_id The ID of the job to fetch (*Required*)
+          # @option arguments [String] :job_id The ID of the job to fetch
           # @option arguments [String] :snapshot_id The ID of the snapshot to revert to
-          # @option arguments [Hash] :body Reversion options
           # @option arguments [Boolean] :delete_intervening_results Should we reset the results back to the time of the snapshot?
+
+          # @option arguments [Hash] :body Reversion options
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
           #
           def revert_model_snapshot(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+            raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
+
+            arguments = arguments.clone
+
+            _job_id = arguments.delete(:job_id)
+
+            _snapshot_id = arguments.delete(:snapshot_id)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = Elasticsearch::API::Utils.__pathify "_xpack/ml/anomaly_detectors", arguments[:job_id], "model_snapshots", arguments[:snapshot_id], "_revert"
+            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots/#{Elasticsearch::API::Utils.__listify(_snapshot_id)}/_revert"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:revert_model_snapshot, [:delete_intervening_results].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:revert_model_snapshot, [
+            :delete_intervening_results
+          ].freeze)
       end
+    end
     end
   end
 end

@@ -7,10 +7,10 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Retrieve overall bucket results that summarize the bucket results of multiple jobs
+          # TODO: Description
+
           #
-          # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results (*Required*)
-          # @option arguments [Hash] :body Overall bucket selection details if not provided in URI
+          # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results
           # @option arguments [Int] :top_n The number of top job bucket scores to be used in the overall_score calculation
           # @option arguments [String] :bucket_span The span of the overall buckets. Defaults to the longest job bucket_span
           # @option arguments [Double] :overall_score Returns overall buckets with overall scores higher than this value
@@ -18,32 +18,40 @@ module Elasticsearch
           # @option arguments [String] :start Returns overall buckets with timestamps after this time
           # @option arguments [String] :end Returns overall buckets with timestamps earlier than this time
           # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
+          # @option arguments [Hash] :body Overall bucket selection details if not provided in URI
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
           #
           def get_overall_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/results/overall_buckets"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
+            arguments = arguments.clone
 
+            _job_id = arguments.delete(:job_id)
+
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/overall_buckets"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:get_overall_buckets, [:top_n,
-                                                         :bucket_span,
-                                                         :overall_score,
-                                                         :exclude_interim,
-                                                         :start,
-                                                         :end,
-                                                         :allow_no_jobs].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:get_overall_buckets, [
+            :top_n,
+            :bucket_span,
+            :overall_score,
+            :exclude_interim,
+            :start,
+            :end,
+            :allow_no_jobs
+          ].freeze)
       end
+    end
     end
   end
 end

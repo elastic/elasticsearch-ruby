@@ -7,22 +7,32 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # @option arguments [String] :filter_id The ID of the filter to create (*Required*)
+          # TODO: Description
+
+          #
+          # @option arguments [String] :filter_id The ID of the filter to create
+
           # @option arguments [Hash] :body The filter details (*Required*)
           #
+          # @see [TODO]
+          #
           def put_filter(arguments = {})
-            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+
+            arguments = arguments.clone
+
+            _filter_id = arguments.delete(:filter_id)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_xpack/ml/filters/#{arguments[:filter_id]}"
+            path   = "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
             params = {}
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

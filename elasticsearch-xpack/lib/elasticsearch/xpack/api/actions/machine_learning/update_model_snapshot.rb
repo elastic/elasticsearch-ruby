@@ -7,28 +7,36 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # Update certain properties of a snapshot
+          # TODO: Description
+
           #
-          # @option arguments [String] :job_id The ID of the job to fetch (*Required*)
-          # @option arguments [String] :snapshot_id The ID of the snapshot to update (*Required*)
+          # @option arguments [String] :job_id The ID of the job to fetch
+          # @option arguments [String] :snapshot_id The ID of the snapshot to update
+
           # @option arguments [Hash] :body The model snapshot properties to update (*Required*)
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
           #
           def update_model_snapshot(arguments = {})
+            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
             raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            arguments = arguments.clone
+
+            _job_id = arguments.delete(:job_id)
+
+            _snapshot_id = arguments.delete(:snapshot_id)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/model_snapshots/#{arguments[:snapshot_id]}/_update"
+            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots/#{Elasticsearch::API::Utils.__listify(_snapshot_id)}/_update"
             params = {}
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

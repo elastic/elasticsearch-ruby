@@ -8,27 +8,39 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # TODO: Description
+
           #
           # @option arguments [String] :job_id The ID of the jobs stats to fetch
           # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+
           #
-          # @see http://www.elastic.co/guide/en/x-pack/current/ml-get-job-stats.html
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
           #
           def get_job_stats(arguments = {})
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_xpack/ml/anomaly_detectors/#{arguments[:job_id]}/_stats"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
+            arguments = arguments.clone
 
+            _job_id = arguments.delete(:job_id)
+
+            method = Elasticsearch::API::HTTP_GET
+            path   = if _job_id
+                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_stats"
+                     else
+                       "_ml/anomaly_detectors/_stats"
+  end
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:get_job_stats, [:allow_no_jobs].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:get_job_stats, [
+            :allow_no_jobs
+          ].freeze)
       end
+    end
     end
   end
 end
