@@ -22,7 +22,7 @@ describe 'client#update_data_frame_transform' do
 
   it 'performs the request' do
     expect(client_double.data_frame.
-        update_data_frame_transform(transform_id: 'foo', body: {})).to eq({})
+        update_transform(transform_id: 'foo', body: {})).to eq({})
   end
 
   context 'when body is not provided' do
@@ -33,7 +33,7 @@ describe 'client#update_data_frame_transform' do
 
     it 'raises an exception' do
       expect {
-        client.data_frame.update_data_frame_transform(transform_id: 'foo')
+        client.data_frame.update_transform(transform_id: 'foo')
       }.to raise_exception(ArgumentError)
     end
   end
@@ -46,7 +46,7 @@ describe 'client#update_data_frame_transform' do
 
     it 'raises an exception' do
       expect {
-        client.data_frame.update_data_frame_transform(body: {})
+        client.data_frame.update_transform(body: {})
       }.to raise_exception(ArgumentError)
     end
   end
@@ -59,7 +59,7 @@ describe 'client#update_data_frame_transform' do
 
     it 'performs the request' do
       expect(client_double.data_frame.
-          update_data_frame_transform(transform_id: 'foo', body: {}, defer_validation: true)).to eq({})
+          update_transform(transform_id: 'foo', body: {}, defer_validation: true)).to eq({})
     end
   end
 end
