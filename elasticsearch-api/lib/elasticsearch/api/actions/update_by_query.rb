@@ -61,7 +61,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-update-by-query.html
       #
       def update_by_query(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -72,7 +72,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_update_by_query"
                  else

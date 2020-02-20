@@ -15,14 +15,14 @@ module Elasticsearch
         #   (options: open,closed,none,all)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-upgrade.html
         #
         def get_upgrade(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "#{Utils.__listify(_index)}/_upgrade"
                    else

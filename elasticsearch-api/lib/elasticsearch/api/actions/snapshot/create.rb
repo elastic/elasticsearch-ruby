@@ -15,7 +15,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The snapshot definition
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def create(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -27,7 +27,7 @@ module Elasticsearch
 
           _snapshot = arguments.delete(:snapshot)
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

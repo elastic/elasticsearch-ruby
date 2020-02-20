@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-aliases.html
         #
         def delete_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -26,7 +26,7 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          method = HTTP_DELETE
+          method = Elasticsearch::API::HTTP_DELETE
           path   = if _index && _name
                      "#{Utils.__listify(_index)}/_aliases/#{Utils.__listify(_name)}"
   end

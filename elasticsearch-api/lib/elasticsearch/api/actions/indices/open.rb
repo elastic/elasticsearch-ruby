@@ -19,7 +19,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-open-close.html
         #
         def open(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -28,7 +28,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = "#{Utils.__listify(_index)}/_open"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

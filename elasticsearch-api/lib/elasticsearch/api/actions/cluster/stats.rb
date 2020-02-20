@@ -13,14 +13,14 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-stats.html
         #
         def stats(arguments = {})
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
                      "_cluster/stats/nodes/#{Utils.__listify(_node_id)}"
                    else

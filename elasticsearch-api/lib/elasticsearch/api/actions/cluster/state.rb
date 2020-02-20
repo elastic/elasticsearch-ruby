@@ -23,7 +23,7 @@ module Elasticsearch
         #   (options: open,closed,none,all)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-state.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-state.html
         #
         def state(arguments = {})
           arguments = arguments.clone
@@ -32,7 +32,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _metric && _index
                      "_cluster/state/#{Utils.__listify(_metric)}/#{Utils.__listify(_index)}"
                    elsif _metric

@@ -31,7 +31,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-update.html
       #
       def update(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,7 +46,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
         path   = if _index && _type && _id
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_update"
                  else

@@ -18,7 +18,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-types-exists.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-types-exists.html
         #
         def exists_type(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -30,7 +30,7 @@ module Elasticsearch
 
           _type = arguments.delete(:type)
 
-          method = HTTP_HEAD
+          method = Elasticsearch::API::HTTP_HEAD
           path   = "#{Utils.__listify(_index)}/_mapping/#{Utils.__listify(_type)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

@@ -14,12 +14,12 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-update-settings.html
         #
         def get_settings(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cluster/settings"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

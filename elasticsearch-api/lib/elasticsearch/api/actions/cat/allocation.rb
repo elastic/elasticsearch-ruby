@@ -21,14 +21,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-allocation.html
         #
         def allocation(arguments = {})
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
                      "_cat/allocation/#{Utils.__listify(_node_id)}"
                    else

@@ -15,7 +15,7 @@ module Elasticsearch
 
       # @option arguments [Hash] :body The ranking evaluation search definition, including search requests, document ratings and ranking metric definition. (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-rank-eval.html
       #
       def rank_eval(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -24,7 +24,7 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = if _index
                    "#{Utils.__listify(_index)}/_rank_eval"
                  else

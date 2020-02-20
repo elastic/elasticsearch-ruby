@@ -12,7 +12,7 @@ module Elasticsearch
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
 
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-scripting.html
       #
       def delete_script(arguments = {})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -21,7 +21,7 @@ module Elasticsearch
 
         _id = arguments.delete(:id)
 
-        method = HTTP_DELETE
+        method = Elasticsearch::API::HTTP_DELETE
         path   = "_scripts/#{Utils.__listify(_id)}"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

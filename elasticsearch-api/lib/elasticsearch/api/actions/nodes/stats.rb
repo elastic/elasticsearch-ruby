@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-nodes-stats.html
         #
         def stats(arguments = {})
           arguments = arguments.clone
@@ -38,7 +38,7 @@ module Elasticsearch
 
           _index_metric = arguments.delete(:index_metric)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _node_id && _metric && _index_metric
                      "_nodes/#{Utils.__listify(_node_id)}/stats/#{Utils.__listify(_metric)}/#{Utils.__listify(_index_metric)}"
                    elsif _metric && _index_metric

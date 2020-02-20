@@ -19,14 +19,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-segments.html
         #
         def segments(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "_cat/segments/#{Utils.__listify(_index)}"
                    else

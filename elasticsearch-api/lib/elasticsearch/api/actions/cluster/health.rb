@@ -29,14 +29,14 @@ module Elasticsearch
         #   (options: green,yellow,red)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-health.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-health.html
         #
         def health(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "_cluster/health/#{Utils.__listify(_index)}"
                    else

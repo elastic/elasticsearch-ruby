@@ -17,12 +17,12 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-repositories.html
         #
         def repositories(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat/repositories"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

@@ -19,12 +19,12 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-reroute.html
         #
         def reroute(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = "_cluster/reroute"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

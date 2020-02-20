@@ -14,7 +14,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The ingest definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/put-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/put-pipeline-api.html
         #
         def put_pipeline(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -24,7 +24,7 @@ module Elasticsearch
 
           _id = arguments.delete(:id)
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "_ingest/pipeline/#{Utils.__listify(_id)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

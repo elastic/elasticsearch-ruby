@@ -17,12 +17,12 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodeattrs.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-nodeattrs.html
         #
         def nodeattrs(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat/nodeattrs"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

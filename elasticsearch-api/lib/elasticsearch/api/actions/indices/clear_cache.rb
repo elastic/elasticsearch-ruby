@@ -21,14 +21,14 @@ module Elasticsearch
         # @option arguments [Boolean] :request Clear request cache
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-clearcache.html
         #
         def clear_cache(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = if _index
                      "#{Utils.__listify(_index)}/_cache/clear"
                    else

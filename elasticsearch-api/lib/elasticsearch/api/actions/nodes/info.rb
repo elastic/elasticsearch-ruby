@@ -16,7 +16,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-nodes-info.html
         #
         def info(arguments = {})
           arguments = arguments.clone
@@ -25,7 +25,7 @@ module Elasticsearch
 
           _metric = arguments.delete(:metric)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _node_id && _metric
                      "_nodes/#{Utils.__listify(_node_id)}/#{Utils.__listify(_metric)}"
                    elsif _node_id

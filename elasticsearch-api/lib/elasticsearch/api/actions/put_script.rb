@@ -15,7 +15,7 @@ module Elasticsearch
 
       # @option arguments [Hash] :body The document (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-scripting.html
       #
       def put_script(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -27,7 +27,7 @@ module Elasticsearch
 
         _context = arguments.delete(:context)
 
-        method = HTTP_PUT
+        method = Elasticsearch::API::HTTP_PUT
         path   = if _id && _context
                    "_scripts/#{Utils.__listify(_id)}/#{Utils.__listify(_context)}"
                  else

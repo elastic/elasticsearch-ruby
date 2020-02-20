@@ -15,7 +15,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -27,7 +27,7 @@ module Elasticsearch
 
           _snapshot = arguments.delete(:snapshot)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

@@ -12,12 +12,12 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat.html
         #
         def help(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

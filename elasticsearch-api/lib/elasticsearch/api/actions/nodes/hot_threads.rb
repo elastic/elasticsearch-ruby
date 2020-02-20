@@ -24,14 +24,14 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments = {})
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
                      "_cluster/nodes/#{Utils.__listify(_node_id)}/hot_threads"
                    else

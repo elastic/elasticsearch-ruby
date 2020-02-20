@@ -17,7 +17,7 @@ module Elasticsearch
         #   (options: open,closed,none,all)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-delete-index.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -26,7 +26,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = HTTP_DELETE
+          method = Elasticsearch::API::HTTP_DELETE
           path   = "#{Utils.__listify(_index)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

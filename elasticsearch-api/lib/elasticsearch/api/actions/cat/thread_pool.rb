@@ -22,14 +22,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
           arguments = arguments.clone
 
           _thread_pool_patterns = arguments.delete(:thread_pool_patterns)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _thread_pool_patterns
                      "_cat/thread_pool/#{Utils.__listify(_thread_pool_patterns)}"
                    else

@@ -35,7 +35,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-count.html
       #
       def count(arguments = {})
         arguments = arguments.clone
@@ -45,9 +45,9 @@ module Elasticsearch
         _type = arguments.delete(:type)
 
         method = if arguments[:body]
-                   HTTP_POST
+                   Elasticsearch::API::HTTP_POST
                  else
-                   HTTP_GET
+                   Elasticsearch::API::HTTP_GET
 end
 
         path = if _index && _type

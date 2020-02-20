@@ -14,14 +14,14 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The settings to be updated. Can be either `transient` or `persistent` (survives cluster restart). (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-update-settings.html
         #
         def put_settings(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "_cluster/settings"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

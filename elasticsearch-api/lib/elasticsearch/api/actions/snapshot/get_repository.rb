@@ -13,14 +13,14 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def get_repository(arguments = {})
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _repository
                      "_snapshot/#{Utils.__listify(_repository)}"
                    else

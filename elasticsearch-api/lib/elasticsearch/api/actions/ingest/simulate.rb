@@ -13,7 +13,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The simulate definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/simulate-pipeline-api.html
         #
         def simulate(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -22,7 +22,7 @@ module Elasticsearch
 
           _id = arguments.delete(:id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _id
                      "_ingest/pipeline/#{Utils.__listify(_id)}/_simulate"
                    else

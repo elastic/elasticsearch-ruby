@@ -29,14 +29,14 @@ module Elasticsearch
         # @option arguments [Boolean] :include_unloaded_segments If set to true segment stats will include stats for segments that are not currently loaded into memory
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-indices.html
         #
         def indices(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "_cat/indices/#{Utils.__listify(_index)}"
                    else

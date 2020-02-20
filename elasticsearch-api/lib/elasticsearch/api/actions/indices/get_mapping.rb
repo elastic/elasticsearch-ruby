@@ -25,7 +25,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-get-mapping.html
         #
         def get_mapping(arguments = {})
           arguments = arguments.clone
@@ -34,7 +34,7 @@ module Elasticsearch
 
           _type = arguments.delete(:type)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index && _type
                      "#{Utils.__listify(_index)}/_mapping/#{Utils.__listify(_type)}"
                    elsif _index

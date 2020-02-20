@@ -18,14 +18,14 @@ module Elasticsearch
         # @option arguments [Boolean] :only_ancient_segments If true, only ancient (an older Lucene major release) segments will be upgraded
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-upgrade.html
         #
         def upgrade(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = if _index
                      "#{Utils.__listify(_index)}/_upgrade"
                    else

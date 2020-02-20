@@ -30,7 +30,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-termvectors.html
       #
       def termvectors(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -43,7 +43,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
 
         endpoint = arguments.delete(:endpoint) || '_termvectors'
         path = if _index && _type && _id

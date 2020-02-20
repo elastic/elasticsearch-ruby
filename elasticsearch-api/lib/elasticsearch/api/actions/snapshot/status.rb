@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def status(arguments = {})
           arguments = arguments.clone
@@ -23,7 +23,7 @@ module Elasticsearch
 
           _snapshot = arguments.delete(:snapshot)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _repository && _snapshot
                      "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}/_status"
                    elsif _repository

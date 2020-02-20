@@ -18,7 +18,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The template definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-templates.html
         #
         def put_template(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -28,7 +28,7 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "_template/#{Utils.__listify(_name)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
