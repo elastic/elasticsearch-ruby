@@ -171,7 +171,7 @@ module Elasticsearch
       def __parse_path(path)
         path.gsub(/^\//, '')
             .gsub(/\/$/, '')
-            .gsub('{', '#{Elasticsearch::API::Utils.__listify(_')
+            .gsub('{', "\#{#{__utils}.__listify(_")
             .gsub('}', ')}')
       end
 
@@ -235,6 +235,10 @@ module Elasticsearch
 
         lines = `tree #{@output}`.split("\n")
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
+      end
+
+      def __utils
+        @xpack ? 'Elasticsearch::API::Utils' : 'Utils'
       end
 
       def run_rubocop
