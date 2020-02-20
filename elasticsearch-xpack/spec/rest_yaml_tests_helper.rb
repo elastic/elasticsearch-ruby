@@ -156,6 +156,14 @@ SKIPPED_TESTS << { file:        'transform/transforms_crud.yml',
 SKIPPED_TESTS << { file:        'transform/preview_transforms.yml',
                    description: '*'}
 
+# https://github.com/elastic/clients-team/issues/142
+SKIPPED_TESTS << { file: 'ml/forecast.yml',
+                   description: 'Test forecast unknown job' }
+SKIPPED_TESTS << { file: 'ml/post_data.yml',
+                   description: 'Test POST data with invalid parameters' }
+SKIPPED_TESTS << { file: 'ml/post_data.yml',
+                   description: 'Test Flush data with invalid parameters' }
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
