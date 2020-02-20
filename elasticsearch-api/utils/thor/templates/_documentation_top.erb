@@ -23,5 +23,5 @@
 <% end -%>
 <%= '  '*(@namespace_depth+3) -%>#
 <%# Documentation link -%>
-<%= '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'] : "[TODO]" %>
+<%=  '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'].gsub!(/\/(current|master)\//, '/7.5/') : "[TODO]" %>
 <%= '  '*(@namespace_depth+3) %>#
