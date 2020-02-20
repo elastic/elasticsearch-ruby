@@ -10,7 +10,7 @@ when 'mtermvectors'
 <%- when 'cluster.reroute', 'cluster.put_settings' %>
   body = arguments[:body] || {}
 <%- when 'ml.find_file_structure' %>
-  body = Elasticsearch::API::Utils.__bulkify(arguments.delete(:body))
+  body = <%= __utils %>.__bulkify(arguments.delete(:body))
 <%- else -%>
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <%- end -%>
@@ -21,12 +21,12 @@ when 'mtermvectors'
   <%= ping_perform_request %>
 <%- else -%>
   <%- if needs_ignore_404?(@endpoint_name) %>
-    Elasticsearch::API::Utils.__rescue_from_not_found do
+    <%= __utils %>.__rescue_from_not_found do
       perform_request(method, path, params, body).status == 200 ? true : false
     end
   <%- elsif needs_complex_ignore_404?(@endpoint_name) -%>
     if Array(arguments[:ignore]).include?(404)
-      Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+      <%= __utils %>.__rescue_from_not_found { perform_request(method, path, params, body).body }
     else
       perform_request(method, path, params, body).body
     end
