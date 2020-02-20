@@ -33,7 +33,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-template.html
       #
       def search_template(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -44,7 +44,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_search/template"
                  elsif _index

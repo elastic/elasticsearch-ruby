@@ -30,7 +30,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
         arguments = arguments.clone
@@ -40,7 +40,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mtermvectors"
                  elsif _index

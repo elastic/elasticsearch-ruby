@@ -9,12 +9,12 @@ module Elasticsearch
       #
 
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/index.html
       #
       def ping(arguments = {})
         arguments = arguments.clone
 
-        method = HTTP_HEAD
+        method = Elasticsearch::API::HTTP_HEAD
         path   = ""
         params = {}
 

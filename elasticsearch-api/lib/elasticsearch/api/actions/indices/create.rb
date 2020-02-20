@@ -16,7 +16,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-create-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-create-index.html
         #
         def create(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -25,7 +25,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "#{Utils.__listify(_index)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

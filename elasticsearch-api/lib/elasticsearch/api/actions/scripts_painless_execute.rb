@@ -9,14 +9,13 @@ module Elasticsearch
       #
 
       # @option arguments [Hash] :body The script to execute
-
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/7.5/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
         arguments = arguments.clone
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = "_scripts/painless/_execute"
         params = {}
 

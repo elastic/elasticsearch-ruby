@@ -13,12 +13,12 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-pending.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-pending.html
         #
         def pending_tasks(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cluster/pending_tasks"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

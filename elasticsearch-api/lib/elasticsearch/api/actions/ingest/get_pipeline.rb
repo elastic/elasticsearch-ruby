@@ -12,14 +12,14 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/get-pipeline-api.html
         #
         def get_pipeline(arguments = {})
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _id
                      "_ingest/pipeline/#{Utils.__listify(_id)}"
                    else

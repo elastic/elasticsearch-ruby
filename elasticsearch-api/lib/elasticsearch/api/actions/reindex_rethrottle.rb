@@ -11,7 +11,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle.  (*Required*)
 
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-reindex.html
       #
       def reindex_rethrottle(arguments = {})
         raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
@@ -20,7 +20,7 @@ module Elasticsearch
 
         _task_id = arguments.delete(:task_id)
 
-        method = HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
         path   = "_reindex/#{Utils.__listify(_task_id)}/_rethrottle"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

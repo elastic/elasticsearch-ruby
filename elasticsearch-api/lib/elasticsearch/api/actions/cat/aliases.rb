@@ -17,14 +17,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-alias.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-alias.html
         #
         def aliases(arguments = {})
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _name
                      "_cat/aliases/#{Utils.__listify(_name)}"
                    else

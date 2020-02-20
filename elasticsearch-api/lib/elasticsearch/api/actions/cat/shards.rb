@@ -24,14 +24,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-shards.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-shards.html
         #
         def shards(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "_cat/shards/#{Utils.__listify(_index)}"
                    else

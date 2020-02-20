@@ -18,14 +18,14 @@ module Elasticsearch
         #   (options: open,closed,none,all)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shards-stores.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-shards-stores.html
         #
         def shard_stores(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "#{Utils.__listify(_index)}/_shard_stores"
                    else

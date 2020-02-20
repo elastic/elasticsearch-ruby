@@ -18,7 +18,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-aliases.html
         #
         def exists_alias(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -29,7 +29,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = HTTP_HEAD
+          method = Elasticsearch::API::HTTP_HEAD
           path   = if _index && _name
                      "#{Utils.__listify(_index)}/_alias/#{Utils.__listify(_name)}"
                    else

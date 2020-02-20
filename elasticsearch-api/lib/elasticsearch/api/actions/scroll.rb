@@ -19,14 +19,14 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
         arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = if _scroll_id
                    "_search/scroll/#{Utils.__listify(_scroll_id)}"
                  else

@@ -24,12 +24,12 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-nodes.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-nodes.html
         #
         def nodes(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat/nodes"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h], escape: false) if params[:h]

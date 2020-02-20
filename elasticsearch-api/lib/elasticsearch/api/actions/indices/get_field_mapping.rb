@@ -26,7 +26,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
           _fields = arguments.delete(:field) || arguments.delete(:fields)
@@ -38,7 +38,7 @@ module Elasticsearch
 
           _type = arguments.delete(:type)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index && _type && _fields
                      "#{Utils.__listify(_index)}/_mapping/#{Utils.__listify(_type)}/field/#{Utils.__listify(_fields)}"
                    elsif _index && _fields

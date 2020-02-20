@@ -34,7 +34,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-validate.html
         #
         def validate_query(arguments = {})
           arguments = arguments.clone
@@ -43,7 +43,7 @@ module Elasticsearch
 
           _type = arguments.delete(:type)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index && _type
                      "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
                    elsif _index

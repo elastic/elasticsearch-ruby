@@ -13,7 +13,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-templates.html
         #
         def delete_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -22,7 +22,7 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          method = HTTP_DELETE
+          method = Elasticsearch::API::HTTP_DELETE
           path   = "_template/#{Utils.__listify(_name)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

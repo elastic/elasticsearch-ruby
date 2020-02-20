@@ -13,7 +13,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def delete_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -22,7 +22,7 @@ module Elasticsearch
 
           _repository = arguments.delete(:repository)
 
-          method = HTTP_DELETE
+          method = Elasticsearch::API::HTTP_DELETE
           path   = "_snapshot/#{Utils.__listify(_repository)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

@@ -23,7 +23,7 @@ module Elasticsearch
 
       # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-bulk.html
       #
       def bulk(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -34,7 +34,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_bulk"
                  elsif _index

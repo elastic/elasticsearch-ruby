@@ -13,12 +13,12 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-allocation-explain.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-allocation-explain.html
         #
         def allocation_explain(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cluster/allocation/explain"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

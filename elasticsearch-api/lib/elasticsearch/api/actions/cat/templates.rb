@@ -18,14 +18,14 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-templates.html
         #
         def templates(arguments = {})
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _name
                      "_cat/templates/#{Utils.__listify(_name)}"
                    else

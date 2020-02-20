@@ -15,14 +15,14 @@ module Elasticsearch
         #   (options: open,closed,none,all)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-synced-flush-api.html
         #
         def flush_synced(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = if _index
                      "#{Utils.__listify(_index)}/_flush/synced"
                    else

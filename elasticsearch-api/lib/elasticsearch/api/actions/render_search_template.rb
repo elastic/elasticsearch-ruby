@@ -11,14 +11,14 @@ module Elasticsearch
 
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-template.html#_validating_templates
       #
       def render_search_template(arguments = {})
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
 
-        method = HTTP_GET
+        method = Elasticsearch::API::HTTP_GET
         path   = if _id
                    "_render/template/#{Utils.__listify(_id)}"
                  else

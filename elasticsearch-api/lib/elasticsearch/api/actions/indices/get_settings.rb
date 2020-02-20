@@ -21,7 +21,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-get-settings.html
         #
         def get_settings(arguments = {})
           arguments = arguments.clone
@@ -30,7 +30,7 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index && _name
                      "#{Utils.__listify(_index)}/_settings/#{Utils.__listify(_name)}"
                    elsif _index

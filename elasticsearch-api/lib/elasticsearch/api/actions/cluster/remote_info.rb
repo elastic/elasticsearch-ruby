@@ -10,12 +10,12 @@ module Elasticsearch
         #
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-remote-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-remote-info.html
         #
         def remote_info(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_remote/info"
           params = {}
 

@@ -20,14 +20,14 @@ module Elasticsearch
         # @option arguments [List] :fields A comma-separated list of fields to return in the output
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-fielddata.html
         #
         def fielddata(arguments = {})
           arguments = arguments.clone
 
           _fields = arguments.delete(:fields)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _fields
                      "_cat/fielddata/#{Utils.__listify(_fields)}"
                    else

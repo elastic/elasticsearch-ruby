@@ -22,12 +22,12 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/tasks.html
         #
         def tasks(arguments = {})
           arguments = arguments.clone
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat/tasks"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

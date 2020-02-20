@@ -27,7 +27,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-get.html
       #
       def exists_source(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -41,7 +41,7 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = HTTP_HEAD
+        method = Elasticsearch::API::HTTP_HEAD
         path   = if _index && _type && _id
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_source"
                  else

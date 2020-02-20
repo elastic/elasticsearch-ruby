@@ -16,7 +16,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clone-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-clone-index.html
         #
         def clone(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -28,7 +28,7 @@ module Elasticsearch
 
           _target = arguments.delete(:target)
 
-          method = HTTP_PUT
+          method = Elasticsearch::API::HTTP_PUT
           path   = "#{Utils.__listify(_index)}/_clone/#{Utils.__listify(_target)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

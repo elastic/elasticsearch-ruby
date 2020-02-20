@@ -16,14 +16,14 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-request-body.html#_clear_scroll_api
       #
       def clear_scroll(arguments = {})
         arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
 
-        method = HTTP_DELETE
+        method = Elasticsearch::API::HTTP_DELETE
         path   = if _scroll_id
                    "_search/scroll/#{Utils.__listify(_scroll_id)}"
                  else

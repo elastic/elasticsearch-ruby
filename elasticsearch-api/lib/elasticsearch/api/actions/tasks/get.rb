@@ -13,14 +13,14 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/tasks.html
         #
         def get(arguments = {})
           arguments = arguments.clone
 
           _task_id = arguments.delete(:task_id)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = "_tasks/#{Utils.__listify(_task_id)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

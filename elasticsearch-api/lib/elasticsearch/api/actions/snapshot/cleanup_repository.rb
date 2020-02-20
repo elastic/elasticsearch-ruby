@@ -14,7 +14,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :body TODO: Description
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
         #
         def cleanup_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -23,7 +23,7 @@ module Elasticsearch
 
           _repository = arguments.delete(:repository)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = "_snapshot/#{Utils.__listify(_repository)}/_cleanup"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

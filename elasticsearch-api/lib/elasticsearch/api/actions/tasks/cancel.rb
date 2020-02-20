@@ -14,14 +14,14 @@ module Elasticsearch
         # @option arguments [String] :parent_task_id Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/tasks.html
         #
         def cancel(arguments = {})
           arguments = arguments.clone
 
           _task_id = arguments.delete(:task_id)
 
-          method = HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
           path   = if _task_id
                      "_tasks/#{Utils.__listify(_task_id)}/_cancel"
                    else

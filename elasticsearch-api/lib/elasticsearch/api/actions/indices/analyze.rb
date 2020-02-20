@@ -13,14 +13,14 @@ module Elasticsearch
 
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-analyze.html
         #
         def analyze(arguments = {})
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = HTTP_GET
+          method = Elasticsearch::API::HTTP_GET
           path   = if _index
                      "#{Utils.__listify(_index)}/_analyze"
                    else

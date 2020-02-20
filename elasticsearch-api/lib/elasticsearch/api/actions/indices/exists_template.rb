@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
 
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-templates.html
         #
         def exists_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -23,7 +23,7 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          method = HTTP_HEAD
+          method = Elasticsearch::API::HTTP_HEAD
           path   = "_template/#{Utils.__listify(_name)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
