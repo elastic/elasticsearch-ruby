@@ -113,7 +113,7 @@ module Elasticsearch
           clear_machine_learning_indices(client)
           create_x_pack_rest_user(client)
           clear_data(client)
-          clear_data_frame_transforms(client)
+          clear_transforms(client)
         end
 
         private
@@ -188,9 +188,9 @@ module Elasticsearch
           end
         end
 
-        def clear_data_frame_transforms(client)
-          client.data_frame.get_data_frame_transform(transform_id: '*')['transforms'].each do |transform|
-            client.data_frame.delete_data_frame_transform(transform_id: transform[:id])
+        def clear_transforms(client)
+          client.data_frame.get_transform(transform_id: '*')['transforms'].each do |transform|
+            client.data_frame.delete_transform(transform_id: transform[:id])
           end
         end
 
