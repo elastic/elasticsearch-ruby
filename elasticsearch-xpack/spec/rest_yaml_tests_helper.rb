@@ -164,6 +164,10 @@ SKIPPED_TESTS << { file: 'ml/post_data.yml',
 SKIPPED_TESTS << { file: 'ml/post_data.yml',
                    description: 'Test Flush data with invalid parameters' }
 
+# TODO: To be fixed with a release patch
+SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
+                   description: 'Test get api key' }
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
