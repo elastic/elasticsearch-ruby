@@ -1,3 +1,13 @@
+## 7.5.0-pre
+
+Pre-release version of 7.5 client.
+
+* Support for Elasticsearch `7.5`.
+* Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the [rest api spec](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/api).
+* Specs have been updated to address new/deprecated parameters.
+* This is a pre-release, full Changelog details will be published with the final release of 7.5.0
+
+
 ## 7.4.0
 
 ### Client
