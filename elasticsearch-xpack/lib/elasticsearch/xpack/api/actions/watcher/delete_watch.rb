@@ -27,7 +27,11 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            if Array(arguments[:ignore]).include?(404)
+              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+            else
+              perform_request(method, path, params, body).body
+            end
           end
       end
     end
