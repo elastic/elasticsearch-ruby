@@ -36,6 +36,7 @@ module Elasticsearch
         snapshot.delete_repository
         snapshot.delete
         update
+        watcher.delete_watch
       ].freeze
 
       # Endpoints that need params[:h] listified
