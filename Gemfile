@@ -19,7 +19,7 @@ gem "yard"
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   gem "ruby-prof"    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   gem "require-prof" unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-  gem "simplecov"
+  gem "simplecov", '~> 0.17', '< 0.18'
   gem "simplecov-rcov"
   gem "cane"
 end
