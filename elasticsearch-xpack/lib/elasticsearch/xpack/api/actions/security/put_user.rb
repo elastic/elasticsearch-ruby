@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [Hash] :body The user to add (*Required*)
           # @option arguments [Boolean] :refresh Refresh the index after performing the operation
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-users.html#security-api-put-user
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
           #
           def put_user(arguments={})
             raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
