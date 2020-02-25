@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'minitest', '~> 5'
   s.add_development_dependency 'minitest-reporters', '~> 1'
-  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'cane'
   s.add_development_dependency 'pry'
