@@ -1,3 +1,58 @@
+## 7.5.0
+
+- Support for Elasticsearch 7.5.
+- Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.
+- Specs have been updated to address new/deprecated parameters.
+- Ruby versions tested: 2.3.8, 2.4.9, 2.5.7, 2.6.5 and 2.7.0 (new).
+
+### API
+
+Endpoints that changed:
+- `_bulk`: body is now required as an argument.
+- `cat`: `local` and `master_timeout` parameters are gone.
+  - `health`: New parameter `health`.
+  - `indices`: Adds `time` and `include_unload_segments` parameters.
+  - `nodes`: Adds `bytes`, `time` parameters.
+  - `pending_tasks`: Adds `time` parameter.
+  - `recovery`: Adds `active_only`, `detailed`, `index`, `time` parameters.
+  - `segments`: Removes `index` parameter and it's now a url part.
+  - `shards`: Adds `time` parameter.
+  - `snapshots`: Adds `time` parameter.
+  - `tasks`: Adds `time` parameter.
+  - `templates`: The `name` parameter is now passed in as a part but not a parameter.
+  - `thread_pool`: The `thread_pool_patterns` parameter is now passed in as a part but not as a parameter.
+- `cluster`
+  - `put_settings`: body is required.
+  - `state`: `index_templates` is gone.
+  - `node_id` is now a url part.
+- `delete` - `parent` parameter is gone.
+- `delete_by_query`: `analyzer`  parameters are gone, `max_docs` is a new parameter, `body` is now a required parameter.
+- `delete_by_query_rethrottle` new endpoint.
+- `delete_by_rethrottle` - uses `delete_by_query_rethrottle` and hasn't changed.
+- `exists`, `exists_source`, `explain`: `parent` parameter is gone.
+- `field_caps`: `fields` param is no longer required.
+- `get`: `parent` parameter is gone
+- `get_source`: `parent` parameter is gone
+- `index`: `body` parameter is required, `wait_for_shard` is a new parameter, `consistency`, `include_type_name`, `parent`, `percolate`, `replication`, `timestamp`, `ttl` parameters are gone
+- `indices`
+  - `get`: `feature` paramatere was deprecated and is gone.
+  - `delete_aliases`, `put_alias`: URL changed internally to 'aliases' instead of 'alias' but shouldn't affect the client's API.
+- `render_search_template`: `id` is now a part not a parameter
+- `search`: `fielddata_fields`, `include_type_name`, `fields`, `ignore_indices`, `lowercase_expanded_terms`, `query_cache`, `source` parameters are gone, `ccs_minimize_roundtrips`, `track_scores` are new parameters.
+- `tasks` - `list`: task_id is not supported anymore, it's in get now.
+- `termvectors`: `parent` parameter is gone.
+- `update`: `version` parameter is not supported anymore.
+
+### X-PACK
+
+Some urls changed internally to remove `_xpack`, but it shouldn't affect the client's API.
+
+- `explore`: `index` is now required.
+- `info`: `human` parameter is gone.
+- `migration`: some endpoints are gone: `get_assistance`, `get_assistance_test` and `upgrade_test`.
+- `watcher`: `restart` endpoint is gone.
+
+
 ## 7.4.0
 
 ### Client
