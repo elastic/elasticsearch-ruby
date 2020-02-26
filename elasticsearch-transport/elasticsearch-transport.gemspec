@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = [ "README.md", "LICENSE" ]
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
-  s.required_ruby_version = '>= 1.9'
+  s.required_ruby_version = '>= 2.5'
 
   s.add_dependency "multi_json"
   s.add_dependency "faraday", '~>1'
