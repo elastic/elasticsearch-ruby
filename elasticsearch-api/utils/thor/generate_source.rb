@@ -34,18 +34,27 @@ module Elasticsearch
       __root = Pathname(File.expand_path('../../..', __FILE__))
 
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
-      method_option :verbose, type: :boolean, default: false, desc: 'Output more information'
-      method_option :tests,   type: :boolean, default: false, desc: 'Generate test files'
-      method_option :xpack,   type: :boolean, default: false, desc: 'Generate X-Pack'
-
+      method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
+      method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
+      method_option :api,    type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
       def generate
         self.class.source_root File.expand_path(__dir__)
-        @xpack = options[:xpack]
+        @xpack = options[:api].include? 'xpack'
+        @oss   = options[:api].include? 'oss'
 
-        @input = FilesHelper.input_dir(@xpack)
-        @output = FilesHelper.output_dir(@xpack)
+        __generate_source(:xpack) if @xpack
+        __generate_source(:oss) if @oss
+        # -- Tree output
+        print_tree if options[:verbose]
+      end
 
-        FilesHelper.files(@xpack).each do |filepath|
+      private
+
+      def __generate_source(api)
+        @input = FilesHelper.input_dir(api)
+        @output = FilesHelper.output_dir(api)
+
+        FilesHelper.files(api).each do |filepath|
           @path = Pathname(@input.join(filepath))
           @json = MultiJson.load(File.read(@path))
           @spec = @json.values.first
@@ -83,13 +92,8 @@ module Elasticsearch
           puts
         end
 
-        run_rubocop
-
-        # -- Tree output
-        print_tree if options[:verbose]
+        run_rubocop(api)
       end
-
-      private
 
       def __full_namespace
         names = @endpoint_name.split('.')
@@ -241,8 +245,8 @@ module Elasticsearch
         @xpack ? 'Elasticsearch::API::Utils' : 'Utils'
       end
 
-      def run_rubocop
-        system("rubocop --format autogenconf -x #{FilesHelper::output_dir(@xpack)}")
+      def run_rubocop(api)
+        system("rubocop --format autogenconf -x #{FilesHelper::output_dir(api)}")
       end
     end
   end
