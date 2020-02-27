@@ -10,8 +10,8 @@ module Elasticsearch
       XPACK_OUTPUT_DIR = '../../elasticsearch-xpack/lib/elasticsearch/xpack/api/actions'.freeze
 
       # Path to directory with JSON API specs
-      def self.input_dir(xpack = false)
-        input_dir = if xpack
+      def self.input_dir(api)
+        input_dir = if api == :xpack
                       File.expand_path(XPACK_SRC_PATH, __FILE__)
                     else
                       File.expand_path(OSS_SRC_PATH, __FILE__)
@@ -20,13 +20,13 @@ module Elasticsearch
       end
 
       # Path to directory to copy generated files
-      def self.output_dir(xpack = false)
-        xpack ? Pathname(XPACK_OUTPUT_DIR) : Pathname(OSS_OUTPUT_DIR)
+      def self.output_dir(api)
+        api == :xpack ? Pathname(XPACK_OUTPUT_DIR) : Pathname(OSS_OUTPUT_DIR)
       end
 
       # Only get JSON files and remove hidden files
-      def self.files(xpack = false)
-        Dir.entries(input_dir(xpack).to_s).reject do |f|
+      def self.files(api)
+        Dir.entries(input_dir(api).to_s).reject do |f|
           f.start_with?('.') ||
             f.start_with?('_') ||
             File.extname(f) != '.json'
