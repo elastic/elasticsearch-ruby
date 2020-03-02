@@ -1,6 +1,7 @@
 ---
 ELASTICSEARCH_VERSION:
-- 8.0.0-SNAPSHOT
+  - 8.0.0-SNAPSHOT
+  - 7.x-SNAPSHOT
 
 RUBY_TEST_VERSION:
 - 2.7.0
@@ -8,8 +9,7 @@ RUBY_TEST_VERSION:
 - 2.5.7
 
 TEST_SUITE:
-- rest_api
-- client
-- security
+- oss
+- xpack
 
 exclude: ~
