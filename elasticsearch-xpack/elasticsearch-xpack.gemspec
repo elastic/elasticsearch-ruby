@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake', '~> 11.1'
+  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
 
   spec.add_dependency 'elasticsearch-api', '>= 6'
