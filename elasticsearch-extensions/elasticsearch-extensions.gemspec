@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rake', '~> 11.1'
+  s.add_development_dependency 'rake', '~> 12.3'
   s.add_development_dependency 'awesome_print'
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'mocha'
