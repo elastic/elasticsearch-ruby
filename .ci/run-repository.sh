@@ -44,11 +44,6 @@ export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.7.0}
 export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-8.0.0-SNAPSHOT}
 export SINGLE_TEST=${SINGLE_TEST}
 
-set +x
-export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
-unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
-set -x
-
 echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 # create client image
 docker build \
@@ -59,4 +54,29 @@ docker build \
 
 echo -e "\033[1m>>>>> Run [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
-sh .ci/docker/run-${TEST_SUITE}
+repo=`pwd`
+
+# run the client tests
+if [[ $TEST_SUITE != "xpack" ]]; then
+    docker run \
+           --network="${NETWORK_NAME}" \
+           --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+           --volume $repo:/usr/src/app \
+           --volume=/tmp:/tmp \
+           --name elasticsearch-ruby \
+           --rm \
+           elastic/elasticsearch-ruby \
+           bundle exec rake test:rest_api
+else
+    docker run \
+           --network="${NETWORK_NAME}" \
+           --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+           --env "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}" \
+           --env "ELASTIC_USER=elastic" \
+           --env "SINGLE_TEST=${SINGLE_TEST}" \
+           --volume $repo:/usr/src/app \
+           --name elasticsearch-ruby \
+           --rm \
+           elastic/elasticsearch-ruby \
+           bundle exec rake test:security
+fi
