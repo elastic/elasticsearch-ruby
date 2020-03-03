@@ -13,7 +13,6 @@ branches:
     - master
     - 7.x
     - 6.x
-    - 7.x
     - travis
 
 env:
@@ -27,33 +26,28 @@ matrix:
     # Unit tests
     - rvm: ruby-head
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: TEST_SUITE=client
 
     - rvm: 2.7.0
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: TEST_SUITE=client
 
     - rvm: 2.6.5
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: TEST_SUITE=client
 
     - rvm: 2.5.7
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: TEST_SUITE=client
 
-    - rvm: jruby-9.2.9.0
+    - rvm: jruby-9.2.11.0
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
-
-    # Integration tests
-    - rvm: 2.6.5
-      jdk: oraclejdk8
-      env: QUIET=y TEST_SUITE=integration
+      env: TEST_SUITE=client
 
   allow_failures:
     - rvm: ruby-head
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: TEST_SUITE=client
 
 before_install:
   - ls $PWD
@@ -67,7 +61,7 @@ before_install:
   - curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${ELASTICSEARCH_VERSION}-linux-x86_64.tar.gz | tar xz -C /tmp
   - /tmp/elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch-keystore create
   - >
-    [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "integration" ]] &&
+    [[ -n "$TEST_SUITE" ]] && [[ "$TEST_SUITE" == "client" ]] &&
     TEST_CLUSTER_COMMAND=/tmp/elasticsearch-${ELASTICSEARCH_VERSION}/bin/elasticsearch
     bundle exec rake -I elasticsearch-extensions/lib test:cluster:start &&
     curl http://localhost:9250/_cluster/health?level=shards || true
