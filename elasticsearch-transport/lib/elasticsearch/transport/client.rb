@@ -129,6 +129,13 @@ module Elasticsearch
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
 
+        if (api_key = @arguments[:api_key])
+          api_key = __encode(api_key) if api_key.is_a? Hash
+          @arguments[:transport_options].merge!(
+            headers: { 'Authorization' => "ApiKey #{api_key}" }
+          )
+        end
+
         if @arguments[:request_timeout]
           @arguments[:transport_options][:request] = { :timeout => @arguments[:request_timeout] }
         end
@@ -261,6 +268,13 @@ module Elasticsearch
         else
           ::Faraday.default_adapter
         end
+      end
+
+      # Encode credentials for the Authorization Header
+      # Credentials is the base64 encoding of id and api_key joined by a colon
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
+      def __encode(api_key)
+        Base64.encode64([api_key[:id], api_key[:api_key]].join(':'))
       end
     end
   end
