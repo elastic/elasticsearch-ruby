@@ -40,7 +40,7 @@ echo -e "\033[32;1mSUCCESS:\033[0m successfully started the ${ELASTICSEARCH_VERS
 
 # Ruby client setup:
 
-export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.6.5}
+export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.7.0}
 export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-8.0.0-SNAPSHOT}
 export SINGLE_TEST=${SINGLE_TEST}
 
@@ -48,9 +48,6 @@ set +x
 export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
 unset VAULT_ROLE_ID VAULT_SECRET_ID VAULT_TOKEN
 set -x
-
-# create network and volume
-docker network create esnet
 
 echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 # create client image
