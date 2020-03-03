@@ -61,6 +61,7 @@ if [[ $TEST_SUITE != "xpack" ]]; then
     docker run \
            --network="${NETWORK_NAME}" \
            --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+           --env "TEST_SUITE=${TEST_SUITE}" \
            --volume $repo:/usr/src/app \
            --volume=/tmp:/tmp \
            --name elasticsearch-ruby \
@@ -72,6 +73,7 @@ else
            --network="${NETWORK_NAME}" \
            --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
            --env "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}" \
+           --env "TEST_SUITE=${TEST_SUITE}" \
            --env "ELASTIC_USER=elastic" \
            --env "SINGLE_TEST=${SINGLE_TEST}" \
            --volume $repo:/usr/src/app \
