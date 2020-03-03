@@ -13,10 +13,11 @@ TEST_SUITE = ENV['TEST_SUITE'].freeze
 
 if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
   split_hosts = hosts.split(',').map do |host|
-    /(http\:\/\/)?(\S+)/.match(host)[2]
+    /(http\:\/\/)?\S+/.match(host)
   end
-
-  TEST_HOST, TEST_PORT = split_hosts.first.split(':')
+  uri = URI.parse(split_hosts.first[0])
+  TEST_HOST = uri.host
+  TEST_PORT = uri.port
 else
   TEST_HOST, TEST_PORT = 'localhost', '9200'
 end

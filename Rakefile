@@ -29,22 +29,26 @@ def admin_client
 
     if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
       split_hosts = hosts.split(',').map do |host|
-        /(http\:\/\/)?(\S+)/.match(host)[2]
+        /(http\:\/\/)?\S+/.match(host)
       end
-
-      host, port = split_hosts.first.split(':')
+      uri = URI.parse(split_hosts.first[0])
     end
 
-    if test_suite == 'security'
-      transport_options.merge!(:ssl => { verify: false,
-                                         ca_path: CERT_DIR })
+    if test_suite == 'xpack'
+      transport_options.merge!(
+        ssl: {
+          verify: false,
+          ca_path: CERT_DIR
+        }
+      )
 
       password = ENV['ELASTIC_PASSWORD']
-      user = ENV['ELASTIC_USER'] || 'elastic'
-      url = "https://#{user}:#{password}@#{host}:#{port}"
+      user     = ENV['ELASTIC_USER'] || 'elastic'
+      url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
     else
-      url = "http://#{host || 'localhost'}:#{port || 9200}"
+      url = "http://#{uri.host || 'localhost'}:#{uri.port || 9200}"
     end
+    puts "Elasticsearch Client url: #{url}"
     Elasticsearch::Client.new(host: url, transport_options: transport_options)
   end
 end
