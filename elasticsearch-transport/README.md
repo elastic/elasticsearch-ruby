@@ -359,17 +359,7 @@ To configure the _Faraday_ instance directly, use a block:
       f.adapter  :typhoeus
     end
 
-You can use any standard Faraday middleware and plugins in the configuration block,
-for example sign the requests for the [AWS Elasticsearch service](https://aws.amazon.com/elasticsearch-service/):
-
-    require 'faraday_middleware/aws_signers_v4'
-
-    client = Elasticsearch::Client.new url: 'https://search-my-cluster-abc123....es.amazonaws.com' do |f|
-      f.request :aws_signers_v4,
-                credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_ACCESS_KEY']),
-                service_name: 'es',
-                region: 'us-east-1'
-    end
+You can use any standard Faraday middleware and plugins in the configuration block, for example sign the requests for the [AWS Elasticsearch service](https://aws.amazon.com/elasticsearch-service/). See [the AWS documentation](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html#es-request-signing-ruby) for an example.
 
 You can also initialize the transport class yourself, and pass it to the client constructor
 as the `transport` argument:
