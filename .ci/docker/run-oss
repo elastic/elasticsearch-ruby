@@ -8,25 +8,14 @@
 #
 #   - $ELASTICSEARCH_VERSION
 #
-
-# run elasticsearch
-docker run \
-  --rm \
-  --env "node.attr.testattr=test" \
-  --env "path.repo=/tmp" \
-  --env "repositories.url.allowed_urls=http://snapshot.*" \
-  --env "discovery.type=single-node" \
-  --network=esnet \
-  --name=elasticsearch \
-  --detach \
-  docker.elastic.co/elasticsearch/elasticsearch-oss:${ELASTICSEARCH_VERSION}
-
+repo=`pwd`
 
 # run the client tests
 docker run \
-  --network=esnet \
+  --network="${NETWORK_NAME}" \
   --env "TEST_ES_SERVER=http://elasticsearch:9200" \
   --volume $repo:/usr/src/app \
+  --volume=/tmp:/tmp \
   --name elasticsearch-ruby \
   --rm \
   elastic/elasticsearch-ruby \
