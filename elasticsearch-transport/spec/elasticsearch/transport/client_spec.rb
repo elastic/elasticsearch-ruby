@@ -45,6 +45,28 @@ describe Elasticsearch::Transport::Client do
     expect(client.transport.hosts[0][:host]).to eq('localhost')
   end
 
+  context 'when an encoded api_key is provided' do
+    let(:client) do
+      described_class.new(api_key: 'an_api_key')
+    end
+
+    it 'Adds the ApiKey header to the connection' do
+      expect(client.transport.connections.first.connection.headers['Authorization']).to eq('ApiKey an_api_key')
+    end
+  end
+
+  context 'when an un-encoded api_key is provided' do
+    let(:client) do
+      described_class.new(api_key: {id: 'my_id', api_key: 'my_api_key'})
+    end
+
+    it 'Adds the ApiKey header to the connection' do
+      expect(
+        client.transport.connections.first.connection.headers['Authorization']
+      ).to eq("ApiKey #{Base64.encode64('my_id:my_api_key')}")
+    end
+  end
+
   describe 'adapter' do
 
     context 'when no adapter is specified' do
