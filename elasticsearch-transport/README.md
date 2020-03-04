@@ -144,6 +144,26 @@ use the `transport_options` option:
     Elasticsearch::Client.new url: 'https://username:password@example.com:9200',
                               transport_options: { ssl: { ca_file: '/path/to/cacert.pem' } }
 
+You can also use [**API Key authentication**](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html):
+
+``` ruby
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: credentials
+)
+```
+
+Where credentials is either the base64 encoding of `id` and `api_key` joined by a colon or a hash with the `id` and `api_key`:
+
+``` ruby
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: {id: 'my_id', api_key: 'my_api_key'}
+)
+```
+
 ### Logging
 
 To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
