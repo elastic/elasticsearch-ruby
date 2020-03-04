@@ -100,7 +100,17 @@ module Elasticsearch
         @arguments[:http]               ||= {}
         @options[:http]                 ||= {}
 
-        @seeds = __extract_hosts(@arguments[:hosts] ||
+        if (@api_key = @arguments[:api_key])
+          @api_key = __encode(@api_key) if @api_key.is_a? Hash
+          @arguments[:transport_options].merge!(
+            headers: { 'Authorization' => "ApiKey #{@api_key}" }
+          )
+          @arguments.delete(:user)
+          @arguments.delete(:password)
+        end
+
+
+        @seeds ||= __extract_hosts(@arguments[:hosts] ||
                                      @arguments[:host] ||
                                      @arguments[:url] ||
                                      @arguments[:urls] ||
@@ -108,13 +118,6 @@ module Elasticsearch
                                      DEFAULT_HOST)
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
-
-        if (api_key = @arguments[:api_key])
-          api_key = __encode(api_key) if api_key.is_a? Hash
-          @arguments[:transport_options].merge!(
-            headers: { 'Authorization' => "ApiKey #{api_key}" }
-          )
-        end
 
         if @arguments[:request_timeout]
           @arguments[:transport_options][:request] = { :timeout => @arguments[:request_timeout] }
@@ -209,8 +212,14 @@ module Elasticsearch
                        raise ArgumentError, "Please pass host as a String, URI or Hash -- #{host.class} given."
                      end
 
-        @options[:http][:user] ||= host_parts[:user]
-        @options[:http][:password] ||= host_parts[:password]
+        if @api_key
+          # Remove Basic Auth if using API KEY
+          host_parts.delete(:user)
+          host_parts.delete(:password)
+        else
+          @options[:http][:user] ||= host_parts[:user]
+          @options[:http][:password] ||= host_parts[:password]
+        end
 
         host_parts[:port] = host_parts[:port].to_i if host_parts[:port]
         host_parts[:path].chomp!('/') if host_parts[:path]
