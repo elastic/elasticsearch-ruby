@@ -25,5 +25,9 @@ end
 
 group :development do
   gem 'rspec'
-  gem 'pry-nav'
+  if defined?(JRUBY_VERSION)
+    gem 'pry-nav'
+  else
+    gem 'pry-byebug'
+  end
 end
