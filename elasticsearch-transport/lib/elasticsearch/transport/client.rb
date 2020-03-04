@@ -244,7 +244,7 @@ module Elasticsearch
       # Credentials is the base64 encoding of id and api_key joined by a colon
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
       def __encode(api_key)
-        Base64.encode64([api_key[:id], api_key[:api_key]].join(':'))
+        Base64.strict_encode64([api_key[:id], api_key[:api_key]].join(':'))
       end
     end
   end
