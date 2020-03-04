@@ -8,8 +8,12 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'pry-nav'
   gem 'rspec'
+  if defined?(JRUBY_VERSION)
+    gem 'pry-nav'
+  else
+    gem 'pry-byebug'
+  end
 end
 
 if File.exist? File.expand_path('../../elasticsearch-api/elasticsearch-api.gemspec', __FILE__)
