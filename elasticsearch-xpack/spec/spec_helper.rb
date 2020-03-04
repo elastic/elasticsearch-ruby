@@ -1,4 +1,8 @@
-require 'pry-nav'
+if defined?(JRUBY_VERSION)
+  require 'pry-nav'
+else
+  require 'pry-byebug'
+end
 require 'yaml'
 require 'elasticsearch'
 require 'elasticsearch/xpack'

@@ -2,7 +2,11 @@
 # Elasticsearch B.V licenses this file to you under the Apache 2.0 License.
 # See the LICENSE file in the project root for more information
 
-require 'pry-nav'
+if defined?(JRUBY_VERSION)
+  require 'pry-nav'
+else
+  require 'pry-byebug'
+end
 require 'yaml'
 require 'jbuilder'
 require 'jsonify'
