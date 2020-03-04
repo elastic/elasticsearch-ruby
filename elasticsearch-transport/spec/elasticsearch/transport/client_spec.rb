@@ -76,7 +76,7 @@ describe Elasticsearch::Transport::Client do
     it 'Adds the ApiKey header to the connection' do
       expect(
         client.transport.connections.first.connection.headers['Authorization']
-      ).to eq("ApiKey #{Base64.encode64('my_id:my_api_key')}")
+      ).to eq("ApiKey #{Base64.strict_encode64('my_id:my_api_key')}")
     end
   end
 
