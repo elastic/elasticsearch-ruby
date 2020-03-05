@@ -99,6 +99,9 @@ module Elasticsearch
       #   The default is false. Responses will automatically be inflated if they are compressed.
       #   If a custom transport object is used, it must handle the request compression and response inflation.
       #
+      # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
+      #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
+      #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
       def initialize(arguments={}, &block)
