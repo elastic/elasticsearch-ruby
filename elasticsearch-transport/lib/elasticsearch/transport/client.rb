@@ -85,6 +85,9 @@ module Elasticsearch
       # @option arguments [String] :send_get_body_as Specify the HTTP method to use for GET requests with a body.
       #                                              (Default: GET)
       #
+      # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
+      #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
+      #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
       def initialize(arguments={}, &block)
