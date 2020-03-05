@@ -1,17 +1,13 @@
-name: Ruby
+name: 7.x
 on:
   push:
     branches:
-      - master
       - 7.x
-      - 6.x
   pull_request:
     branches:
-      - master
       - 7.x
-      - 6.x
 jobs:
-  test:
+  test-7.x:
     strategy:
       fail-fast: false
       matrix:
