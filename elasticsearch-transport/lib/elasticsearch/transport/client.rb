@@ -103,14 +103,7 @@ module Elasticsearch
         @arguments[:http]               ||= {}
         @options[:http]                 ||= {}
 
-        if (@api_key = @arguments[:api_key])
-          @api_key = __encode(@api_key) if @api_key.is_a? Hash
-          @arguments[:transport_options].merge!(
-            headers: { 'Authorization' => "ApiKey #{@api_key}" }
-          )
-          @arguments.delete(:user)
-          @arguments.delete(:password)
-        end
+        set_api_key if (@api_key = @arguments[:api_key])
 
 
         @seeds ||= __extract_hosts(@arguments[:hosts] ||
@@ -157,6 +150,17 @@ module Elasticsearch
       end
 
       private
+
+      def set_api_key
+        @api_key = __encode(@api_key) if @api_key.is_a? Hash
+        headers = @arguments[:transport_options]&.[](:headers) || {}
+        headers.merge!('Authorization' => "ApiKey #{@api_key}")
+        @arguments[:transport_options].merge!(
+          headers: headers
+        )
+        @arguments.delete(:user)
+        @arguments.delete(:password)
+      end
 
       # Normalizes and returns hosts configuration.
       #
