@@ -17,29 +17,29 @@ branches:
 env:
   global:
     - TEST_ES_SERVER=http://localhost:9250
-    - ELASTICSEARCH_VERSION=6.7.0
+    - ELASTICSEARCH_VERSION=6.8.8
 
 matrix:
   include:
     - rvm: ruby-head
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
     - rvm: 2.3.8
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
     - rvm: 2.4.9
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
     - rvm: 2.5.7
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
     - rvm: 2.6.5
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
     - rvm: jruby-9.2.9.0
       jdk: oraclejdk8
@@ -52,7 +52,7 @@ matrix:
   allow_failures:
     - rvm: ruby-head
       jdk: oraclejdk8
-      env: TEST_SUITE=unit
+      env: QUIET=y TEST_SUITE=integration
 
 before_install:
   - ls $PWD
