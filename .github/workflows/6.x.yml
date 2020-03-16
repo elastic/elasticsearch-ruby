@@ -1,3 +1,4 @@
+
 name: 6.x
 on:
   push:
@@ -15,6 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Increase system limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 6.8.7
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
@@ -24,4 +34,4 @@ jobs:
         ruby -v
         rake bundle:clean
         rake bundle:install
-        rake test:unit
+        rake test:client
