@@ -7,13 +7,13 @@ on:
     branches:
       - 7.x
 jobs:
-  test:
+  test-ruby:
     env:
       TEST_ES_SERVER: http://localhost:9200
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ 2.4, 2.5, 2.6, 2.7, jruby ]
+        ruby: [ 2.4, 2.5, 2.6, 2.7 ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -36,3 +36,21 @@ jobs:
         rake bundle:clean
         rake bundle:install
         rake test:client
+  test-jruby:
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [ jruby-9.2 ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Build and test with Rake
+      run: |
+        sudo apt-get install libcurl4-openssl-dev
+        ruby -v
+        rake bundle:clean
+        rake bundle:install
+        rake test:unit
