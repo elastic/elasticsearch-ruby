@@ -69,6 +69,21 @@ Full documentation is available at <http://rubydoc.info/gems/elasticsearch-trans
 
 ## Configuration
 
+* [Setting Hosts](#setting-hosts)
+* [Default port](#default-port)
+* [Connect using an Elastic Cloud ID](#connect-using-an-elastic-cloud-id)
+* [Authentication](#authentication)
+* [Logging](#logging)
+* [Setting Timeouts](#setting-timeouts)
+* [Randomizing Hosts](#randomizing-hosts)
+* [Retrying on Failures](#retrying-on-failures)
+* [Reloading Hosts](#reloading-hosts)
+* [Connection Selector](#connection-selector)
+* [Transport Implementations](#transport-implementations)
+* [Serializer implementations](#serializer-implementations)
+* [Exception Handling](#exception-handling)
+* [Development and Community](#development-and-community)
+
 The client supports many configurations options for setting up and managing connections,
 configuring logging, customizing the transport library, etc.
 
