@@ -69,6 +69,22 @@ Full documentation is available at <http://rubydoc.info/gems/elasticsearch-trans
 
 ## Configuration
 
+* [Setting Hosts](#setting-hosts)
+* [Default port](#default-port)
+* [Connect using an Elastic Cloud ID](#connect-using-an-elastic-cloud-id)
+* [Authentication](#authentication)
+* [Logging](#logging)
+* [Identifying running tasks with X-Opaque-Id](#identifying-running-tasks-with-x-opaque-id)
+* [Setting Timeouts](#setting-timeouts)
+* [Randomizing Hosts](#randomizing-hosts)
+* [Retrying on Failures](#retrying-on-failures)
+* [Reloading Hosts](#reloading-hosts)
+* [Connection Selector](#connection-selector)
+* [Transport Implementations](#transport-implementations)
+* [Serializer implementations](#serializer-implementations)
+* [Exception Handling](#exception-handling)
+* [Development and Community](#development-and-community)
+
 The client supports many configurations options for setting up and managing connections,
 configuring logging, customizing the transport library, etc.
 
@@ -177,6 +193,33 @@ You can pass the client any conforming logger implementation:
     log.level = :info
 
     client = Elasticsearch::Client.new logger: log
+
+### Identifying running tasks with X-Opaque-Id
+
+The X-Opaque-Id header allows to track certain calls, or associate certain tasks with the client that started them ([more on the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks)). To use this feature, you need to set an id for `opaque_id` on the client before each request. Example:
+
+```ruby
+client = Elasticsearch::Client.new
+client.opaque_id = '123456'
+client.search(index: 'myindex', q: 'title:test')
+```
+The search request will include the following HTTP Header:
+```
+X-Opaque-Id: 123456
+```
+
+Please note that `opaque_id` will be set to nil after every request, so you need to set it on the client for every individual request.
+
+You can also set a prefix for X-Opaque-Id when initializing the client. This will be prepended to the id you set before each request if you're using X-Opaque-Id. Example:
+```ruby
+client = Elasticsearch::Client.new(opaque_id_prefix: 'eu-west1')
+client.opaque_id = '123456'
+client.search(index: 'myindex', q: 'title:test')
+```
+The request will include the following HTTP Header:
+```
+X-Opaque-Id: eu-west1_123456
+```
 
 ### Setting Timeouts
 
