@@ -1296,6 +1296,24 @@ describe Elasticsearch::Transport::Client do
         expect(client.perform_request('GET', '/').headers).not_to include('x-opaque-id')
       end
     end
+
+    context 'when an x-opaque-id prefix is set on initialization' do
+      let(:prefix) { 'elastic_cloud' }
+      let(:client) do
+        described_class.new(host: hosts, opaque_id_prefix: prefix)
+      end
+
+      it 'uses x-opaque-id on a request' do
+        client.opaque_id = '12345'
+        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq("#{prefix}12345")
+      end
+
+      it 'deletes x-opaque-id on a second request' do
+        client.opaque_id = 'asdfg'
+        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq("#{prefix}_asdfg")
+        expect(client.perform_request('GET', '/').headers).not_to include('x-opaque-id')
+      end
+    end
   end
 
   context 'when the client connects to Elasticsearch' do
