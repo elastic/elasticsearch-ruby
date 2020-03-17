@@ -130,7 +130,7 @@ module Elasticsearch
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
 
         if @arguments[:request_timeout]
-          @arguments[:transport_options][:request] = { :timeout => @arguments[:request_timeout] }
+          @arguments[:transport_options][:request] = { timeout: @arguments[:request_timeout] }
         end
 
         if @arguments[:transport]
@@ -138,21 +138,21 @@ module Elasticsearch
         else
           transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
           if transport_class == Transport::HTTP::Faraday
-            @transport = transport_class.new(:hosts => @seeds, :options => @arguments) do |faraday|
+            @transport = transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
               block.call faraday if block
               unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
                 faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
               end
             end
           else
-            @transport = transport_class.new(:hosts => @seeds, :options => @arguments)
+            @transport = transport_class.new(hosts: @seeds, options: @arguments)
           end
         end
       end
 
       # Performs a request through delegation to {#transport}.
       #
-      def perform_request(method, path, params={}, body=nil, headers=nil)
+      def perform_request(method, path, params = {}, body = nil, headers = nil)
         method = @send_get_body_as if 'GET' == method && body
         transport.perform_request(method, path, params, body, headers)
       end
