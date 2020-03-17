@@ -87,6 +87,8 @@ module Elasticsearch
       #
       # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
       #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
+      # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client. This
+      # will be prepended to the id you set before each request if you're using X-Opaque-Id
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
@@ -114,6 +116,7 @@ module Elasticsearch
                                      DEFAULT_HOST)
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
+        @opaque_id_prefix = @arguments[:opaque_id_prefix] || nil
 
         if @arguments[:request_timeout]
           @arguments[:transport_options][:request] = { timeout: @arguments[:request_timeout] }
@@ -148,7 +151,8 @@ module Elasticsearch
         method = @send_get_body_as if 'GET' == method && body
         if @opaque_id
           headers = {} if headers.nil?
-          headers.merge!('X-Opaque-Id' => @opaque_id)
+          opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{@opaque_id}" : @opaque_id
+          headers.merge!('X-Opaque-Id' => opaque_id)
           @opaque_id = nil # Remove Opaque id after each request
         end
         transport.perform_request(method, path, params, body, headers)
