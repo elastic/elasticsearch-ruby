@@ -246,25 +246,21 @@ client = Elasticsearch::Client.new logger: log
 
 ### Identifying running tasks with X-Opaque-Id
 
-The X-Opaque-Id header allows to track certain calls, or associate certain tasks with the client that started them ([more on the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks)). To use this feature, you need to set an id for `opaque_id` on the client before each request. Example:
+The X-Opaque-Id header allows to track certain calls, or associate certain tasks with the client that started them ([more on the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks)). To use this feature, you need to set an id for `opaque_id` on the client on each request. Example:
 
 ```ruby
 client = Elasticsearch::Client.new
-client.opaque_id = '123456'
-client.search(index: 'myindex', q: 'title:test')
+client.search(index: 'myindex', q: 'title:test', opaque_id: '123456')
 ```
 The search request will include the following HTTP Header:
 ```
 X-Opaque-Id: 123456
 ```
 
-Please note that `opaque_id` will be set to nil after every request, so you need to set it on the client for every individual request.
-
 You can also set a prefix for X-Opaque-Id when initializing the client. This will be prepended to the id you set before each request if you're using X-Opaque-Id. Example:
 ```ruby
-client = Elasticsearch::Client.new(opaque_id_prefix: 'eu-west1')
-client.opaque_id = '123456'
-client.search(index: 'myindex', q: 'title:test')
+client = Elasticsearch::Client.new(opaque_id_prefix: 'eu-west1_')
+client.search(index: 'myindex', q: 'title:test', opaque_id: '123456')
 ```
 The request will include the following HTTP Header:
 ```

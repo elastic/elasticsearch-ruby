@@ -162,16 +162,13 @@ module Elasticsearch
       #
       def perform_request(method, path, params = {}, body = nil, headers = nil)
         method = @send_get_body_as if 'GET' == method && body
-        if @opaque_id
+        if (opaque_id = params.delete(:opaque_id))
           headers = {} if headers.nil?
-          opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{@opaque_id}" : @opaque_id
+          opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
           headers.merge!('X-Opaque-Id' => opaque_id)
-          @opaque_id = nil # Remove Opaque id after each request
         end
         transport.perform_request(method, path, params, body, headers)
       end
-
-      attr_accessor :opaque_id
 
       private
 
