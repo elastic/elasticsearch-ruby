@@ -32,7 +32,8 @@ module Elasticsearch
       :format,                        # Search, Cat, ...
       :pretty,                        # Pretty-print the response
       :human,                         # Return numeric values in human readable format
-      :filter_path                    # Filter the JSON response
+      :filter_path,                   # Filter the JSON response
+      :opaque_id                      # Use X-Opaque-Id
     ]
 
     HTTP_GET          = 'GET'.freeze
