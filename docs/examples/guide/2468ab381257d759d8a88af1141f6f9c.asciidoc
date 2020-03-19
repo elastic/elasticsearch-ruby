@@ -1,0 +1,4 @@
+[source, ruby]
+----
+response = client.exists_source(index: 'twitter', id: 1, type: '_doc')
+----

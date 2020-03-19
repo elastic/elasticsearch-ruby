@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.create(index: 'twitter', body: {
+    mappings: {properties: {
+        counter: {type: 'integer',
+                  store: false},
+        tags: {type: 'keyword',
+               store: true}
+    }
+    }
+})
+----

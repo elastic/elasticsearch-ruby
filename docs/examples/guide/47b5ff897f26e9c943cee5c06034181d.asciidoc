@@ -1,0 +1,4 @@
+[source, ruby]
+----
+response = client.delete(index: 'twitter', id: 1, routing: 'kimchy')
+----
