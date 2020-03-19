@@ -653,18 +653,11 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
-    context 'when x-opaque-id is set before calling a method' do
+    context 'when x-opaque-id is set' do
       let(:client) { described_class.new(host: hosts) }
 
       it 'uses x-opaque-id on a request' do
-        client.opaque_id = '12345'
-        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq('12345')
-      end
-
-      it 'deletes x-opaque-id on a second request' do
-        client.opaque_id = 'asdfg'
-        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq('asdfg')
-        expect(client.perform_request('GET', '/').headers).not_to include('x-opaque-id')
+        expect(client.perform_request('GET', '/', { opaque_id: '12345' }).headers['x-opaque-id']).to eq('12345')
       end
     end
 
@@ -675,20 +668,27 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'uses x-opaque-id on a request' do
-        client.opaque_id = '12345'
-        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq("#{prefix}12345")
+        expect(client.perform_request('GET', '/', { opaque_id: '12345' }).headers['x-opaque-id']).to eq("#{prefix}12345")
       end
 
-      it 'deletes x-opaque-id on a second request' do
-        client.opaque_id = 'asdfg'
-        expect(client.perform_request('GET', '/').headers['x-opaque-id']).to eq("#{prefix}_asdfg")
-        expect(client.perform_request('GET', '/').headers).not_to include('x-opaque-id')
+      context 'when using an API call' do
+        let(:client) { described_class.new(host: hosts) }
+
+        it 'doesnae raise an ArgumentError' do
+          expect { client.search(opaque_id: 'no_error') }.not_to raise_error
+        end
+
+        it 'uses X-Opaque-Id in the header' do
+          allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
+          expect { client.search(opaque_id: 'opaque_id') }.not_to raise_error
+          expect(client).to have_received(:perform_request)
+            .with('GET', '_search', { opaque_id: 'opaque_id' }, nil)
+        end
       end
     end
   end
 
   context 'when the client connects to Elasticsearch' do
-
     let(:logger) do
       Logger.new(STDERR).tap do |logger|
         logger.formatter = proc do |severity, datetime, progname, msg|
