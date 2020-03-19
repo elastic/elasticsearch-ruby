@@ -3,7 +3,7 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
-<%- if @xpack -%>
+<%- if @current_api == :xpack -%>
   <%= '  '*(@namespace_depth) %>module XPack
 <%- end %>
 <%= '  '*(@namespace_depth) %>module API
