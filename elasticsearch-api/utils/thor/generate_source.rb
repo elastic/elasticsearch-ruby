@@ -36,7 +36,7 @@ module Elasticsearch
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
-      method_option :api,    type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
+      method_option :api,     type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
       def generate
         self.class.source_root File.expand_path(__dir__)
         @xpack = options[:api].include? 'xpack'
@@ -51,6 +51,7 @@ module Elasticsearch
       private
 
       def __generate_source(api)
+        @current_api = api
         @input = FilesHelper.input_dir(api)
         @output = FilesHelper.output_dir(api)
 
@@ -97,7 +98,7 @@ module Elasticsearch
 
       def __full_namespace
         names = @endpoint_name.split('.')
-        if @xpack
+        if @current_api == :xpack
           names = (names.first == 'xpack' ? names : ['xpack', names].flatten)
           # Return an array with 'ml' renamed to 'machine_learning' and 'ilm' to
           # 'index_lifecycle_management'
@@ -242,7 +243,7 @@ module Elasticsearch
       end
 
       def __utils
-        @xpack ? 'Elasticsearch::API::Utils' : 'Utils'
+        (@current_api == :xpack) ? 'Elasticsearch::API::Utils' : 'Utils'
       end
 
       def run_rubocop(api)
