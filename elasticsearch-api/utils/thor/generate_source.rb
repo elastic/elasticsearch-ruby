@@ -154,12 +154,12 @@ module Elasticsearch
         return termvectors_path if @method_name == 'termvectors'
 
         result = ''
-        anchor_string = ''
+        anchor_string = []
         @paths.sort { |a, b| b.length <=> a.length }.each_with_index do |path, i|
           var_string = __extract_path_variables(path).map { |var| "_#{var}" }.join(' && ')
-          next if anchor_string == var_string
+          next if anchor_string.include? var_string
 
-          anchor_string = var_string
+          anchor_string << var_string
           result += if i.zero?
                       "if #{var_string}\n"
                     elsif (i == @paths.size - 1) || var_string.empty?
