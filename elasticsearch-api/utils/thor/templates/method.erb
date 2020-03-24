@@ -8,7 +8,7 @@ module Elasticsearch
 <%- end %>
 <%= '  '*(@namespace_depth) %>module API
 <%- @module_namespace.each_with_index do |name, i| -%>
-  <%= '  '*i %>module <%= name.split("_").map(&:capitalize).join %>
+  <%= '  '*i %>module <%= module_name_helper(name) %>
 <%- end -%>
 <%= '  '*(@namespace_depth+2) %>module Actions
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
