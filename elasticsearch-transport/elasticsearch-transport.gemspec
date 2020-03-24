@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4'
 
   s.add_dependency 'multi_json'
-  s.add_dependency 'faraday', '>= 0.14', '< 1'
+  s.add_dependency 'faraday', '~> 1'
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'curb'   unless defined? JRUBY_VERSION
