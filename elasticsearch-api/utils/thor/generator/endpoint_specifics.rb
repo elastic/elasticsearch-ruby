@@ -64,6 +64,12 @@ module Elasticsearch
         COMPLEX_IGNORE_404.include? endpoint
       end
 
+      def module_name_helper(name)
+        return name.upcase if %w[sql ssl].include? name
+
+        name.split("_").map(&:capitalize).join
+      end
+
       def termvectors_path
         <<~SRC
           if _index && _type && _id
