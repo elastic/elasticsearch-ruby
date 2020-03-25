@@ -28,12 +28,16 @@ Features overview:
 * Node reloading (based on cluster state) on errors or on demand
 
 For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections,
-such as [Typhoeus](https://github.com/typhoeus/typhoeus).
-Just require the library (`require 'typhoeus'; require 'typhoeus/adapters/faraday'`) in your code,
-and it will be automatically used; currently these libraries will be automatically detected and used:
-[Patron](https://github.com/toland/patron),
-[HTTPClient](https://rubygems.org/gems/httpclient) and
-[Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent).
+such as [patron](https://github.com/toland/patron).
+Just require the library (`require 'patron'`) in your code,
+and it will be automatically used.
+
+Currently these libraries will be automatically detected and used:
+- [Patron](https://github.com/toland/patron)
+- [HTTPClient](https://rubygems.org/gems/httpclient)
+- [Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent)
+
+**Note on [Typhoeus](https://github.com/typhoeus/typhoeus)**: Typhoeus is compatible and will be automatically detected too. However, the latest release (v1.3.1 at the moment of writing this) is not compatible with Faraday 1.0. [It still uses the deprecated `Faraday::Error` namespace](https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100). If you want to use it with this gem, we suggest getting `master` from GitHub, since this has been fixed for v1.4.0. We'll update this if/when v1.4.0 is released.a
 
 For detailed information, see example configurations [below](#transport-implementations).
 
@@ -436,12 +440,11 @@ client = Elasticsearch::Client.new transport_options: {
 To configure the _Faraday_ instance directly, use a block:
 
 ```ruby
-require 'typhoeus'
-require 'typhoeus/adapters/faraday'
+require 'patron'
 
 client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
   f.response :logger
-  f.adapter  :typhoeus
+  f.adapter  :patron
 end
 ```
 
@@ -451,12 +454,11 @@ You can also initialize the transport class yourself, and pass it to the client 
 as the `transport` argument:
 
 ```ruby
-require 'typhoeus'
-require 'typhoeus/adapters/faraday'
+require 'patron'
 
 transport_configuration = lambda do |f|
   f.response :logger
-  f.adapter  :typhoeus
+  f.adapter  :patron
 end
 
 transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
