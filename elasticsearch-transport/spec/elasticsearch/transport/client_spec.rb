@@ -91,26 +91,41 @@ describe Elasticsearch::Transport::Client do
   describe 'adapter' do
     context 'when no adapter is specified' do
       let(:adapter) do
-        client.transport.connections.all.first.connection.builder.handlers
+        client.transport.connections.all.first.connection.builder.adapter
       end
 
       it 'uses Faraday NetHttp' do
-        expect(adapter).to include(Faraday::Adapter::NetHttp)
+        expect(adapter).to eq Faraday::Adapter::NetHttp
       end
     end
 
     context 'when the adapter is specified' do
 
       let(:adapter) do
-        client.transport.connections.all.first.connection.builder.handlers
+        client.transport.connections.all.first.connection.builder.adapter
       end
 
       let(:client) do
-        described_class.new(adapter: :typhoeus)
+        described_class.new(adapter: :patron)
       end
 
-      it 'uses Faraday' do
-        expect(adapter).to include(Faraday::Adapter::Typhoeus)
+      it 'uses Faraday with the adapter' do
+        expect(adapter).to eq Faraday::Adapter::Patron
+      end
+    end
+
+    context 'when the adapter is specified as a string key' do
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.adapter
+      end
+
+      let(:client) do
+        described_class.new('adapter' => :patron)
+      end
+
+      it 'uses Faraday with the adapter' do
+        expect(adapter).to eq Faraday::Adapter::Patron
       end
     end
 
@@ -122,11 +137,11 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:adapter) do
-        client.transport.connections.all.first.connection.builder.handlers
+        client.transport.connections.all.first.connection.builder.adapter
       end
 
       it 'uses the detected adapter' do
-        expect(adapter).to include(Faraday::Adapter::Patron)
+        expect(adapter).to eq Faraday::Adapter::Patron
       end
     end
 
@@ -134,9 +149,13 @@ describe Elasticsearch::Transport::Client do
 
       let(:client) do
         described_class.new do |faraday|
-          faraday.adapter :typhoeus
+          faraday.adapter :patron
           faraday.response :logger
         end
+      end
+
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.adapter
       end
 
       let(:handlers) do
@@ -144,7 +163,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'sets the adapter' do
-        expect(handlers).to include(Faraday::Adapter::Typhoeus)
+        expect(adapter).to eq Faraday::Adapter::Patron
       end
 
       it 'sets the logger' do
@@ -766,15 +785,14 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when the Faraday adapter is set in the block' do
-
           let(:client) do
             Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
               client.adapter(:net_http_persistent)
             end
           end
 
-          let(:connection_handler) do
-            client.transport.connections.first.connection.builder.handlers.first
+          let(:handler_name) do
+            client.transport.connections.first.connection.builder.adapter.name
           end
 
           let(:response) do
@@ -782,7 +800,7 @@ describe Elasticsearch::Transport::Client do
           end
 
           it 'sets the adapter' do
-            expect(connection_handler.name).to eq('Faraday::Adapter::NetHttpPersistent')
+            expect(handler_name).to eq('Faraday::Adapter::NetHttpPersistent')
           end
 
           it 'uses the adapter to connect' do
@@ -981,12 +999,12 @@ describe Elasticsearch::Transport::Client do
           { adapter: :patron }
         end
 
-        let(:connection_handler) do
-          client.transport.connections.first.connection.builder.handlers.first
+        let(:adapter) do
+          client.transport.connections.first.connection.builder.adapter
         end
 
         it 'uses the patron connection handler' do
-          expect(connection_handler).to eq('Faraday::Adapter::Patron')
+          expect(adapter).to eq('Faraday::Adapter::Patron')
         end
 
         it 'keeps connections open' do
