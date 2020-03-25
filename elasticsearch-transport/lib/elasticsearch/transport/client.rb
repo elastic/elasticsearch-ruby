@@ -142,10 +142,8 @@ module Elasticsearch
           transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
           if transport_class == Transport::HTTP::Faraday
             @transport = transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
-              block.call faraday if block
-              unless (h = faraday.builder.handlers.last) && h.name.start_with?("Faraday::Adapter")
-                faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
-              end
+              faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
+              block&.call faraday
             end
           else
             @transport = transport_class.new(hosts: @seeds, options: @arguments)
