@@ -6,22 +6,17 @@ require 'spec_helper'
 require 'rest_yaml_tests_helper'
 
 describe 'Rest API YAML tests' do
-
+  # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
-
     test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
-
       test_file.tests.each do |test|
 
         context "#{test.description}" do
-
           if test.skip_test?(ADMIN_CLIENT)
             skip 'Test contains feature(s) not yet supported or version is not satisfied'
-
           else
-
             let(:client) do
               DEFAULT_CLIENT
             end
@@ -39,7 +34,6 @@ describe 'Rest API YAML tests' do
             end
 
             test.task_groups.each do |task_group|
-
               before do
                 task_group.run(client)
               end
