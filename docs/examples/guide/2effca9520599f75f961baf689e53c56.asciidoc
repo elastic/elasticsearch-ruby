@@ -1,8 +1,0 @@
-[source, ruby]
-----
-client = Elasticsearch::Client.new(
-  host: host,
-  user: 'USERNAME',
-  password: 'PASSWORD',
-)
-----
