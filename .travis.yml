@@ -25,27 +25,27 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.3.8
+    - rvm: 2.3
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.4.9
+    - rvm: 2.4
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.5.7
+    - rvm: 2.5
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.6.5
+    - rvm: 2.6
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: jruby-9.2.9.0
+    - rvm: jruby-9.2
       jdk: oraclejdk8
       env: TEST_SUITE=unit
 
-    - rvm: 2.6.5
+    - rvm: 2.6
       jdk: oraclejdk8
       env: QUIET=y TEST_SUITE=integration
 
