@@ -12,19 +12,15 @@ describe 'XPack Rest API YAML tests' do
     test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
-
       before(:all) do
         # Runs once before all tests in a test file
         Elasticsearch::RestAPIYAMLTests::TestFile.clear_data_xpack(ADMIN_CLIENT)
       end
 
       test_file.tests.each do |test|
-
         context "#{test.description}" do
-
           if test.skip_test?(ADMIN_CLIENT)
             skip 'Test contains feature(s) not yet supported or version is not satisfied'
-
           else
 
             let(:client) do
