@@ -195,31 +195,7 @@ module Elasticsearch
         end
 
         def clear_indices(client)
-          indices = client.indices.get(index: '_all').keys.reject do |i|
-            i.start_with?('.security') || i.start_with?('.watches')
-          end
-          indices.each do |index|
-            client.indices.delete_alias(index: index, name: '*', ignore: 404)
-            client.indices.delete(index: index, ignore: 404)
-          end
-          # See cat.aliases/10_basic.yml, test_index is not return in client.indices.get(index: '_all')
-          client.indices.delete(index: 'index_to_monitor', ignore: 404)
-          client.indices.delete(index: 'index3', ignore: 404)
-          client.indices.delete(index: 'test-close', ignore: 404)
-          client.indices.delete(index: 'test_closed', ignore: 404)
-          client.indices.delete(index: 'index', ignore: 404)
-          client.indices.delete(index: 'index2', ignore: 404)
-          client.indices.delete(index: 'test', ignore: 404)
-          client.indices.delete(index: 'test_2', ignore: 404)
-          client.indices.delete(index: 'index-2', ignore: 404)
-          client.indices.delete(index: 'test_index', ignore: 404)
-          client.indices.delete(index: 'index1', ignore: 404)
-          client.indices.delete(index: 'index_closed', ignore: 404)
-          client.indices.delete(index: 'bar', ignore: 404)
-          client.indices.delete(index: 'test_close_index', ignore: 404)
-          client.indices.delete(index: 'test_index_3', ignore: 404)
-          client.indices.delete(index: 'test_index_2', ignore: 404)
-          client.indices.delete(index: 'test-xyy', ignore: 404)
+          client.indices.delete(index: '*')
         end
       end
     end
