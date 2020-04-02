@@ -68,10 +68,6 @@ SKIPPED_TESTS = []
 SKIPPED_TESTS << { file:        'ssl/10_basic.yml',
                    description: 'Test get SSL certificates' }
 
-# Current license is basic.
-SKIPPED_TESTS << { file:        'license/20_put_license.yml',
-                   description: '*' }
-
 # ArgumentError for empty body
 SKIPPED_TESTS << { file:        'watcher/put_watch/10_basic.yml',
                    description: 'Test empty body is rejected by put watch' }
