@@ -5,21 +5,27 @@
 module Elasticsearch
   module XPack
     module API
-      module SQL
+      module MachineLearning
         module Actions
           # TODO: Description
 
-          # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
           #
-          # @see Translate SQL into Elasticsearch queries
+          # @option arguments [String] :model_id The ID of the trained models to store
+
+          # @option arguments [Hash] :body The trained model configuration (*Required*)
           #
-          def translate(arguments = {})
+          # @see TODO
+          #
+          def put_trained_model(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
             arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_sql/translate"
+            _model_id = arguments.delete(:model_id)
+
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}"
             params = {}
 
             body = arguments[:body]
