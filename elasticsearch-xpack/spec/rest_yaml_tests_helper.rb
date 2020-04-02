@@ -54,8 +54,6 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-
-
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
     "/tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/test"
 
