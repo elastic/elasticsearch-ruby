@@ -55,13 +55,19 @@ module Elasticsearch
           _method = chain[-1]
           case _method
           when 'headers'
+            headers = prepare_arguments(args, test)
+            # TODO: Remove Authorization headers while x_pack_rest_user is fixed
+            if headers[:Authorization] == 'Basic eF9wYWNrX3Jlc3RfdXNlcjp4LXBhY2stdGVzdC1wYXNzd29yZA=='
+              headers.delete(:Authorization)
+            end
             if ENV['QUIET'] == 'true'
               # todo: create a method on Elasticsearch::Client that can clone the client with new options
               Elasticsearch::Client.new(host: URL,
-                                        transport_options: TRANSPORT_OPTIONS.merge( headers: prepare_arguments(args, test)))
+                                        transport_options: TRANSPORT_OPTIONS.merge( headers: headers))
             else
-              Elasticsearch::Client.new(host: URL, tracer: Logger.new($stdout),
-                                        transport_options: TRANSPORT_OPTIONS.merge( headers: prepare_arguments(args, test)))
+              Elasticsearch::Client.new(host: URL,
+                                        tracer: Logger.new($stdout),
+                                        transport_options: TRANSPORT_OPTIONS.merge( headers: headers))
             end
           when 'catch'
             client
