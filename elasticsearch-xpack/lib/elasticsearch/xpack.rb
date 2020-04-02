@@ -75,6 +75,10 @@ module Elasticsearch
       def ilm
         @ilm ||= xpack.ilm
       end
+
+      def license
+        @license ||= xpack.license
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
