@@ -26,7 +26,7 @@ module Elasticsearch
             perform_request(method, path, params, body).body
           end
       end
-      end
+    end
     end
   end
 end

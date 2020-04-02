@@ -36,7 +36,7 @@ module Elasticsearch
             :format
           ].freeze)
       end
-      end
+    end
     end
   end
 end

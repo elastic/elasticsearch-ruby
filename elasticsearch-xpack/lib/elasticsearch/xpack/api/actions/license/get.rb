@@ -11,6 +11,7 @@ module Elasticsearch
 
           #
           # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+          # @option arguments [Boolean] :accept_enterprise If the active license is an enterprise license, return type as 'enterprise' (default: false)
 
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
@@ -30,7 +31,8 @@ module Elasticsearch
           #
           # @since 6.2.0
           ParamsRegistry.register(:get, [
-            :local
+            :local,
+            :accept_enterprise
           ].freeze)
       end
     end

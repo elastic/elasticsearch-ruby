@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
 
         #
-        # @see Retrieve information about xpack features usage
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
         #
         def usage(arguments = {})
           arguments = arguments.clone
