@@ -71,6 +71,9 @@ module Elasticsearch
             end
           when 'catch'
             client
+          when 'warnings'
+            # TODO warn the users
+            client
           else
             @response = client.send(_method, prepare_arguments(args, test))
             client
