@@ -6,7 +6,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs a synced flush operation on one or more indices.
+        # Performs a synced flush operation on one or more indices. Synced flush is deprecated and will be removed in 8.0. Use flush instead
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string for all indices
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

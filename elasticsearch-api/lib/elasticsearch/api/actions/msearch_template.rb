@@ -15,6 +15,7 @@ module Elasticsearch
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+      # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
 
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       #
@@ -65,7 +66,8 @@ module Elasticsearch
         :search_type,
         :typed_keys,
         :max_concurrent_searches,
-        :rest_total_hits_as_int
+        :rest_total_hits_as_int,
+        :ccs_minimize_roundtrips
       ].freeze)
     end
     end
