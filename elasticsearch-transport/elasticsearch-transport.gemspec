@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'net-http-persistent'
   s.add_development_dependency 'patron' unless defined? JRUBY_VERSION
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rake', '~> 11.1'
+  s.add_development_dependency 'rake', '~> 13'
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'ruby-prof'    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'shoulda-context'
