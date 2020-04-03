@@ -123,4 +123,15 @@ describe 'client#bulk' do
       expect(client_double.bulk(index: 'myindex', type: 'mytype', body: [])).to eq({})
     end
   end
+
+  context 'when additional HTTP header is provided' do
+
+    let(:headers) do
+      {'Content-Type'=>'application/x-ndjson', 'foo'=>'bar'}
+    end
+
+    it 'performs the request' do
+      expect(client_double.bulk(headers: { 'foo'=>'bar' }, body: [])).to eq({})
+    end
+  end
 end
