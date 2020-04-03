@@ -71,7 +71,7 @@ module Elasticsearch
             end
           when 'catch'
             client
-          when 'warnings'
+          when 'warnings', 'allowed_warnings'
             # TODO warn the users
             client
           else
