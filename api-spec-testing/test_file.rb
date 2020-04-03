@@ -179,6 +179,10 @@ module Elasticsearch
 
         def clear_index_templates(client)
           client.indices.delete_template(name: '*')
+          templates = client.indices.get_index_template
+          templates['index_templates'].each do |template|
+            client.indices.delete_index_template(name: template['name'])
+          end
         end
 
         def clear_snapshots_and_repositories(client)
