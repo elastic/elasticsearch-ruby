@@ -13,7 +13,7 @@ module Elasticsearch
       # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-      #   (options: open,closed,none,all)
+      #   (options: open,closed,hidden,none,all)
 
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [List] :routing A comma-separated list of specific routing values

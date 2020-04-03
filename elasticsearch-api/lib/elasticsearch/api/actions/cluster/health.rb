@@ -10,7 +10,7 @@ module Elasticsearch
         #
         # @option arguments [List] :index Limit the information returned to a specific index
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-        #   (options: open,closed,none,all)
+        #   (options: open,closed,hidden,none,all)
 
         # @option arguments [String] :level Specify the level of detail for returned information
         #   (options: cluster,indices,shards)

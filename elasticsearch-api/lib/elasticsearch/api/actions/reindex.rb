@@ -15,7 +15,7 @@ module Elasticsearch
       # @option arguments [Boolean] :wait_for_completion Should the request should block until the reindex is complete.
       # @option arguments [Number] :requests_per_second The throttle to set on this request in sub-requests per second. -1 means no throttle.
       # @option arguments [Time] :scroll Control how long to keep the search context alive
-      # @option arguments [Number] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+      # @option arguments [Number|string] :slices The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
 
       # @option arguments [Hash] :body The search definition using the Query DSL and the prototype for the index request. (*Required*)

@@ -20,7 +20,7 @@ module Elasticsearch
         # @option arguments [List] :index Comma-separated list or wildcard expression of index names to limit the returned information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values
-        #   (options: d (Days),h (Hours),m (Minutes),s (Seconds),ms (Milliseconds),micros (Microseconds),nanos (Nanoseconds))
+        #   (options: d,h,m,s,ms,micros,nanos)
 
         # @option arguments [Boolean] :v Verbose mode. Display column headers
 

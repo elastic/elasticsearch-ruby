@@ -23,10 +23,12 @@ module Elasticsearch
         # @option arguments [Boolean] :pri Set to true to return stats only for primary shards
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values
-        #   (options: d (Days),h (Hours),m (Minutes),s (Seconds),ms (Milliseconds),micros (Microseconds),nanos (Nanoseconds))
+        #   (options: d,h,m,s,ms,micros,nanos)
 
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Boolean] :include_unloaded_segments If set to true segment stats will include stats for segments that are not currently loaded into memory
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        #   (options: open,closed,hidden,none,all)
 
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-indices.html
@@ -64,7 +66,8 @@ end
           :s,
           :time,
           :v,
-          :include_unloaded_segments
+          :include_unloaded_segments,
+          :expand_wildcards
         ].freeze)
 end
       end
