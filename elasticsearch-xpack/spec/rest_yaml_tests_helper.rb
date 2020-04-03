@@ -139,6 +139,17 @@ SKIPPED_TESTS << { file:        'ml/stop_data_frame_analytics.yml',
 SKIPPED_TESTS << { file:        'ml/data_frame_analytics_crud.yml',
                    description: '*' }
 
+# https://github.com/elastic/clients-team/issues/142
+SKIPPED_TESTS << { file: 'ml/forecast.yml',
+                   description: 'Test forecast unknown job' }
+SKIPPED_TESTS << { file: 'ml/post_data.yml',
+                   description: 'Test POST data with invalid parameters' }
+SKIPPED_TESTS << { file: 'ml/post_data.yml',
+                   description: 'Test Flush data with invalid parameters' }
+
+# TODO: To be fixed with a release patch
+SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
+                   description: 'Test get api key' }
 
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
