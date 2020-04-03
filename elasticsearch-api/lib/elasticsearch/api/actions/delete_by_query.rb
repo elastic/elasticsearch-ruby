@@ -22,7 +22,7 @@ module Elasticsearch
       #   (options: abort,proceed)
 
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-      #   (options: open,closed,none,all)
+      #   (options: open,closed,hidden,none,all)
 
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
@@ -49,7 +49,7 @@ module Elasticsearch
       # @option arguments [Number] :scroll_size Size on the scroll request powering the delete by query
       # @option arguments [Boolean] :wait_for_completion Should the request should block until the delete by query is complete.
       # @option arguments [Number] :requests_per_second The throttle for this request in sub-requests per second. -1 means no throttle.
-      # @option arguments [Number] :slices The number of slices this task should be divided into. Defaults to 1 meaning the task isn't sliced into subtasks.
+      # @option arguments [Number|string] :slices The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
 
       # @option arguments [Hash] :body The search definition using the Query DSL (*Required*)
       #
