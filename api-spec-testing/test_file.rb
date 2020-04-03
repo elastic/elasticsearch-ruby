@@ -196,7 +196,7 @@ module Elasticsearch
         end
 
         def clear_indices(client)
-          client.indices.delete(index: '*')
+          client.indices.delete(index: '*', expand_wildcards: 'all')
         end
 
         def clear_indices_xpack(client)
