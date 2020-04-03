@@ -1,3 +1,11 @@
+## 7.6.0.pre
+
+Pre-release version of 7.6 client.
+
+* Support for Elasticsearch version `7.6`.
+* New features: [API Key Support](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#authentication), [X-Opaque-Id](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#identifying-running-tasks-with-x-opaque-id) and [Faraday 1.0](https://github.com/elastic/elasticsearch-ruby/pull/808).
+* This is a pre-release, full Changelog details will be published with the final release of 7.6.0
+
 ## 7.5.0
 
 - Support for Elasticsearch 7.5.
