@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'elasticsearch-extensions'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'rake', '~> 11.1'
+  s.add_development_dependency 'rake', '~> 13'
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'ruby-prof'    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
