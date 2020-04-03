@@ -3,10 +3,10 @@ ELASTICSEARCH_VERSION:
 - 7.x-SNAPSHOT
 
 RUBY_TEST_VERSION:
-- 2.7.0
-- 2.6.5
-- 2.5.7
-- 2.4.9
+- 2.7
+- 2.6
+- 2.5
+- 2.4
 
 TEST_SUITE:
 - oss
