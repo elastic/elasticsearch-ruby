@@ -26,7 +26,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_cat/health"
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body = nil

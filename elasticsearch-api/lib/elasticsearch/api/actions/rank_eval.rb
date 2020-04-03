@@ -13,6 +13,9 @@ module Elasticsearch
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
       #   (options: open,closed,none,all)
 
+      # @option arguments [String] :search_type Search operation type
+      #   (options: query_then_fetch,dfs_query_then_fetch)
+
       # @option arguments [Hash] :body The ranking evaluation search definition, including search requests, document ratings and ranking metric definition. (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-rank-eval.html
@@ -42,7 +45,8 @@ module Elasticsearch
       ParamsRegistry.register(:rank_eval, [
         :ignore_unavailable,
         :allow_no_indices,
-        :expand_wildcards
+        :expand_wildcards,
+        :search_type
       ].freeze)
     end
     end

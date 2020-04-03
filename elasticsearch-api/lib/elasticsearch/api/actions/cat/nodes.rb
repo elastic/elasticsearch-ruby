@@ -13,7 +13,7 @@ module Elasticsearch
 
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Boolean] :local Calculate the selected nodes using the local cluster state rather than the state from master node (default: false)   *Deprecated*
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
