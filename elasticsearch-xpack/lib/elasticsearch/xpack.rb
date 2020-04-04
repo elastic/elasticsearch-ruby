@@ -83,6 +83,10 @@ module Elasticsearch
       def transform
         @transform ||= xpack.transform
       end
+
+      def async_search
+        @async_search ||= xpack.async_search
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
