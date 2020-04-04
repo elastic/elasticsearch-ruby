@@ -79,6 +79,10 @@ module Elasticsearch
       def license
         @license ||= xpack.license
       end
+
+      def transform
+        @transform ||= xpack.transform
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
