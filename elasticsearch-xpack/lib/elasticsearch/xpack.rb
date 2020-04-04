@@ -87,6 +87,10 @@ module Elasticsearch
       def async_search
         @async_search ||= xpack.async_search
       end
+
+      def cat
+        @cat ||= xpack.cat
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
