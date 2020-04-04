@@ -7,14 +7,13 @@ module Elasticsearch
     module API
       module SQL
         module Actions
-          # TODO: Description
-
+          # Executes an SQL request
           #
           # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
 
           # @option arguments [Hash] :body Use the `query` element to start a query. Use the `cursor` element to continue a query. (*Required*)
           #
-          # @see Execute SQL
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-rest-overview.html
           #
           def query(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

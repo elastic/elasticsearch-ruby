@@ -16,7 +16,7 @@ module Elasticsearch
           #   (options: true,false,wait_for)
 
           #
-          # @see TODO
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
           #
           def delete_privileges(arguments = {})
             raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]

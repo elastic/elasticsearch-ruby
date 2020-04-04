@@ -16,7 +16,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body The data to process (*Required*)
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
           #
           def post_data(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

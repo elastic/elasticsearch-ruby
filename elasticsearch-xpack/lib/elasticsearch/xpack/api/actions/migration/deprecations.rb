@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [String] :index Index pattern
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
           #
           def deprecations(arguments = {})
             arguments = arguments.clone

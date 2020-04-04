@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [Boolean] :force True if the datafeed should be forcefully deleted
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
           #
           def delete_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]

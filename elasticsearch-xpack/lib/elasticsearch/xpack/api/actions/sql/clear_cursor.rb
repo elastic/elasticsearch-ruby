@@ -7,11 +7,12 @@ module Elasticsearch
     module API
       module SQL
         module Actions
-          # TODO: Description
+          # Clears the SQL cursor
+          #
 
           # @option arguments [Hash] :body Specify the cursor value in the `cursor` element to clean the cursor. (*Required*)
           #
-          # @see Clear SQL cursor
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-pagination.html
           #
           def clear_cursor(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

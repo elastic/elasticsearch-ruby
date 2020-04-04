@@ -7,11 +7,12 @@ module Elasticsearch
     module API
       module SQL
         module Actions
-          # TODO: Description
+          # Translates SQL into Elasticsearch queries
+          #
 
           # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
           #
-          # @see Translate SQL into Elasticsearch queries
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate.html
           #
           def translate(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -9,23 +9,17 @@ module Elasticsearch
         module Actions
           # TODO: Description
 
+          # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
           #
-          # @option arguments [String] :id The ID of the data frame analytics to create
-
-          # @option arguments [Hash] :body The data frame analytics configuration (*Required*)
+          # @see [TODO]
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
-          #
-          def put_data_frame_analytics(arguments = {})
+          def estimate_model_memory(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
             arguments = arguments.clone
 
-            _id = arguments.delete(:id)
-
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_ml/anomaly_detectors/_estimate_model_memory"
             params = {}
 
             body = arguments[:body]

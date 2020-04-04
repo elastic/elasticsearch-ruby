@@ -17,7 +17,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body The URL params optionally sent in the body
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
           #
           def close_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [String] :snapshot_id The ID of the snapshot to delete
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
           #
           def delete_model_snapshot(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
