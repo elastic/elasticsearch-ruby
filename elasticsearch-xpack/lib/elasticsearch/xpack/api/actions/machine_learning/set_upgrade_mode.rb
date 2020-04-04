@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
           #
           def set_upgrade_mode(arguments = {})
             arguments = arguments.clone

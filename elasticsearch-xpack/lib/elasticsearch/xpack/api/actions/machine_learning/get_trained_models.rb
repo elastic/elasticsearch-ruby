@@ -16,6 +16,7 @@ module Elasticsearch
           # @option arguments [Boolean] :decompress_definition Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true.
           # @option arguments [Int] :from skips a number of trained models
           # @option arguments [Int] :size specifies a max number of trained models to get
+          # @option arguments [List] :tags A comma-separated list of tags that the model must have.
 
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference.html
@@ -45,7 +46,8 @@ module Elasticsearch
             :include_model_definition,
             :decompress_definition,
             :from,
-            :size
+            :size,
+            :tags
           ].freeze)
       end
     end

@@ -19,7 +19,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Flush parameters
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
           #
           def flush_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

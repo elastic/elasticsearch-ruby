@@ -22,7 +22,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Record selection criteria
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
           #
           def get_records(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

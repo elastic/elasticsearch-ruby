@@ -18,7 +18,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body The watch
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
           #
           def put_watch(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

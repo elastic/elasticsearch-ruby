@@ -21,7 +21,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Model snapshot selection criteria
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
           #
           def get_model_snapshots(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

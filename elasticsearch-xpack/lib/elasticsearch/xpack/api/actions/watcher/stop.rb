@@ -10,7 +10,7 @@ module Elasticsearch
           # TODO: Description
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
           #
           def stop(arguments = {})
             arguments = arguments.clone

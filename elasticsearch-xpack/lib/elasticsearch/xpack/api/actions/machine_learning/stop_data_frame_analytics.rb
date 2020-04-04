@@ -17,7 +17,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body The stop data frame analytics parameters
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
           #
           def stop_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

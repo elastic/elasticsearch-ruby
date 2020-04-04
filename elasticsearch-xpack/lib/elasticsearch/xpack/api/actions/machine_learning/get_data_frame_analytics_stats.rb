@@ -16,7 +16,7 @@ module Elasticsearch
           # @option arguments [Int] :size specifies a max number of analytics to get
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics-stats.html
           #
           def get_data_frame_analytics_stats(arguments = {})
             arguments = arguments.clone

@@ -16,7 +16,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Reversion options
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
           #
           def revert_model_snapshot(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

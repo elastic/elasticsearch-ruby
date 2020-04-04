@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
 
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
           #
           def get_datafeed_stats(arguments = {})
             arguments = arguments.clone

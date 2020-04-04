@@ -15,7 +15,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Execution control
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
           #
           def execute_watch(arguments = {})
             arguments = arguments.clone

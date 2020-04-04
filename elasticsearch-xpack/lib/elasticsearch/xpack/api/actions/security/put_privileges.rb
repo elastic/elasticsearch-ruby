@@ -15,7 +15,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body The privilege(s) to add (*Required*)
           #
-          # @see TODO
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-privileges.html
           #
           def put_privileges(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -22,7 +22,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :body Influencer selection criteria
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
           #
           def get_influencers(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
