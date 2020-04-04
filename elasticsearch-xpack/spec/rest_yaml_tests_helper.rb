@@ -139,18 +139,6 @@ SKIPPED_TESTS << { file:        'ml/stop_data_frame_analytics.yml',
 SKIPPED_TESTS << { file:        'ml/data_frame_analytics_crud.yml',
                    description: '*' }
 
-# Feature 'transform' not supported yet
-SKIPPED_TESTS << { file:        'transform/transforms_update.yml',
-                   description: '*'}
-SKIPPED_TESTS << { file:        'transform/transforms_stats.yml',
-                   description: '*'}
-SKIPPED_TESTS << { file:        'transform/transforms_start_stop.yml',
-                   description: '*'}
-SKIPPED_TESTS << { file:        'transform/transforms_crud.yml',
-                   description: '*'}
-SKIPPED_TESTS << { file:        'transform/preview_transforms.yml',
-                   description: '*'}
-
 # https://github.com/elastic/clients-team/issues/142
 SKIPPED_TESTS << { file: 'ml/forecast.yml',
                    description: 'Test forecast unknown job' }
