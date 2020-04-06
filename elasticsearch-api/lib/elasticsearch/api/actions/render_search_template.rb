@@ -5,28 +5,30 @@
 module Elasticsearch
   module API
     module Actions
-
-      # Pre-render search requests before they are executed and fill existing templates with template parameters
+      # Allows to use the Mustache language to pre-render a search definition.
       #
       # @option arguments [String] :id The id of the stored search template
+
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates
       #
-      def render_search_template(arguments={})
-        method = 'GET'
-        path   = "_render/template"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-        body   = arguments[:body]
+      def render_search_template(arguments = {})
+        arguments = arguments.clone
 
+        _id = arguments.delete(:id)
+
+        method = Elasticsearch::API::HTTP_GET
+        path   = if _id
+                   "_render/template/#{Utils.__listify(_id)}"
+                 else
+                   "_render/template"
+end
+        params = {}
+
+        body = arguments[:body]
         perform_request(method, path, params, body).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.1.1
-      ParamsRegistry.register(:render_search_template, [
-          :id ].freeze)
     end
-  end
+    end
 end

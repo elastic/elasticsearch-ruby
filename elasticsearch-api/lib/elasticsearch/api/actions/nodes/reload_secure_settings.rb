@@ -6,36 +6,38 @@ module Elasticsearch
   module API
     module Nodes
       module Actions
+        # Reloads secure settings.
+        #
+        # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
+        # @option arguments [Time] :timeout Explicit operation timeout
 
-        # Re-read the local node's encrypted keystore. Specifically, it will prompt the keystore
-        # decryption and reading across the cluster.
         #
-        # @example Reload secure settings for all nodes
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings
         #
-        #     client.nodes.reload_secure_settings
-        #
-        # @example Reload secure settings for a list of nodes
-        #
-        #     client.nodes.reload_secure_settings(node_id: 'foo,bar')
-        #
-        # @option arguments [ Array ] :node_id A comma-separated list of node IDs or names to perform the operation on
-        # @option arguments [ String ] :timeout Explicit operation timeout
-        #
-        # @see https://www.elastic.co/guide/reference/api/cluster-nodes-reload-secure-settings
-        #
-        def reload_secure_settings(arguments={})
-          valid_params = [
-              :timeout ]
+        def reload_secure_settings(arguments = {})
+          arguments = arguments.clone
 
-          method = HTTP_POST
-          path   = Utils.__pathify '_nodes', Utils.__listify(arguments[:node_id]), 'reload_secure_settings'
+          _node_id = arguments.delete(:node_id)
 
-          params = Utils.__validate_and_extract_params arguments, valid_params
-          body   = nil
+          method = Elasticsearch::API::HTTP_POST
+          path   = if _node_id
+                     "_nodes/#{Utils.__listify(_node_id)}/reload_secure_settings"
+                   else
+                     "_nodes/reload_secure_settings"
+end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
+          body = nil
           perform_request(method, path, params, body).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:reload_secure_settings, [
+          :timeout
+        ].freeze)
+end
       end
-    end
   end
 end

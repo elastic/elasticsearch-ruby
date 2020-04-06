@@ -6,34 +6,30 @@ module Elasticsearch
   module API
     module Snapshot
       module Actions
-
-        # Delete a snapshot from the repository
+        # Deletes a snapshot.
         #
-        # @note Will also abort a currently running snapshot.
-        #
-        # @example Delete the `snapshot-1` snapshot
-        #
-        #     client.snapshot.delete repository: 'my-backups', snapshot: 'snapshot-1'
-        #
-        # @option arguments [String] :repository A repository name (*Required*)
-        # @option arguments [String] :snapshot A snapshot name (*Required*)
+        # @option arguments [String] :repository A repository name
+        # @option arguments [String] :snapshot A snapshot name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Number,List] :ignore The list of HTTP errors to ignore
+
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
-        def delete(arguments={})
+        def delete(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
-          raise ArgumentError, "Required argument 'snapshot' missing"   unless arguments[:snapshot]
-          repository = arguments.delete(:repository)
-          snapshot   = arguments.delete(:snapshot)
+          raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
 
-          method = HTTP_DELETE
-          path   = Utils.__pathify( '_snapshot', Utils.__escape(repository), Utils.__listify(snapshot) )
+          arguments = arguments.clone
 
+          _repository = arguments.delete(:repository)
+
+          _snapshot = arguments.delete(:snapshot)
+
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-          body   = nil
 
+          body = nil
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
           else
@@ -43,9 +39,11 @@ module Elasticsearch
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
-        ParamsRegistry.register(:delete, [ :master_timeout ].freeze)
+        # @since 6.2.0
+        ParamsRegistry.register(:delete, [
+          :master_timeout
+        ].freeze)
+end
       end
-    end
   end
 end
