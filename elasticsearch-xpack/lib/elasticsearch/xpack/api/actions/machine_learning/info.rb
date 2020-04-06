@@ -7,22 +7,24 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Returns defaults and limits used by machine learning.
+          #
 
-          # TODO: Description
           #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
           #
-          # @see [TODO]
-          #
-          def info(arguments={})
+          def info(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_GET
             path   = "_ml/info"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

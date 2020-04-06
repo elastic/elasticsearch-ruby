@@ -7,20 +7,29 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
-          # @option arguments [String] :filter_id The ID of the filter to delete (*Required*)
+          # Deletes a filter.
           #
-          def delete_filter(arguments={})
-            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_ml/filters/#{arguments[:filter_id]}"
-            params = {}
-            body   = nil
+          # @option arguments [String] :filter_id The ID of the filter to delete
 
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
+          #
+          def delete_filter(arguments = {})
+            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+
+            arguments = arguments.clone
+
+            _filter_id = arguments.delete(:filter_id)
+
+            method = Elasticsearch::API::HTTP_DELETE
+            path   = "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
+            params = {}
+
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

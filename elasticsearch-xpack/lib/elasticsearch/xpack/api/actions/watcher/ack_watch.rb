@@ -7,38 +7,36 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
+          # Acknowledges a watch, manually throttling the execution of the watch's actions.
+          #
+          # @option arguments [String] :watch_id Watch ID
+          # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
 
-          # Acknowledge watch actions to throttle their executions
           #
-          # @option arguments [String] :watch_id Watch ID (*Required*)
-          # @option arguments [List] :action_id A comma-separated list of the action ids to be acked (default: all)
-          # @option arguments [Duration] :master_timeout Specify timeout for watch write operation
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
           #
-          # @see http://www.elastic.co/guide/en/x-pack/current/watcher-api-ack-watch.html
-          #
-          def ack_watch(arguments={})
+          def ack_watch(arguments = {})
             raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
+
             arguments = arguments.clone
-            watch_id  = arguments.delete(:watch_id)
-            action_id  = arguments.delete(:action_id)
+
+            _watch_id = arguments.delete(:watch_id)
+
+            _action_id = arguments.delete(:action_id)
 
             method = Elasticsearch::API::HTTP_PUT
+            path   = if _watch_id && _action_id
+                       "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_watch_id)}/_ack/#{Elasticsearch::API::Utils.__listify(_action_id)}"
+                     else
+                       "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_watch_id)}/_ack"
+  end
+            params = {}
 
-            path   = "_watcher/watch/#{watch_id}/_ack"
-            path << "/#{action_id}" if action_id
-
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
-
+            body = nil
             perform_request(method, path, params, body).body
           end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 7.4.0
-          ParamsRegistry.register(:ack_watch, [ :master_timeout ].freeze)
-        end
       end
+    end
     end
   end
 end

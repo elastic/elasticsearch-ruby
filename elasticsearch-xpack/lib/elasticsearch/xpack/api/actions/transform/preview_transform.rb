@@ -7,7 +7,8 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
+          # Previews a transform.
+          #
 
           # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
           #

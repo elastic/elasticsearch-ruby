@@ -7,17 +7,24 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Deletes expired and unused machine learning data.
+          #
 
-          def delete_expired_data(arguments={})
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
+          #
+          def delete_expired_data(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_ml/_delete_expired_data"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

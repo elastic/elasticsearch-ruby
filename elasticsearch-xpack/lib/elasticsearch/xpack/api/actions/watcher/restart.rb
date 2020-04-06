@@ -7,12 +7,11 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
-
           # Start and stop the Watcher service
           #
           # @see http://www.elastic.co/guide/en/x-pack/current/watcher-api-restart.html
           #
-          def restart(arguments={})
+          def restart(arguments = {})
             method = Elasticsearch::API::HTTP_POST
             path   = "_watcher/_restart"
             params = {}

@@ -7,24 +7,29 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Deletes a calendar.
+          #
+          # @option arguments [String] :calendar_id The ID of the calendar to delete
 
-          # TODO: Description
           #
-          # @option arguments [String] :calendar_id The ID of the calendar to delete (*Required*)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar.html
           #
-          # @see [TODO]
-          #
-          def delete_calendar(arguments={})
+          def delete_calendar(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_ml/calendars/#{arguments[:calendar_id]}"
-            params = {}
-            body   = nil
 
+            arguments = arguments.clone
+
+            _calendar_id = arguments.delete(:calendar_id)
+
+            method = Elasticsearch::API::HTTP_DELETE
+            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
+            params = {}
+
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

@@ -7,29 +7,39 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
-          # Retrieve configuration information for jobs
+          # Retrieves configuration information for anomaly detection jobs.
           #
           # @option arguments [String] :job_id The ID of the jobs to fetch
           # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-          #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
-          #
-          def get_jobs(arguments={})
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/anomaly_detectors/#{arguments[:job_id]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+          #
+          def get_jobs(arguments = {})
+            arguments = arguments.clone
+
+            _job_id = arguments.delete(:job_id)
+
+            method = Elasticsearch::API::HTTP_GET
+            path   = if _job_id
+                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}"
+                     else
+                       "_ml/anomaly_detectors"
+  end
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:get_jobs, [ :allow_no_jobs ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:get_jobs, [
+            :allow_no_jobs
+          ].freeze)
       end
+    end
     end
   end
 end

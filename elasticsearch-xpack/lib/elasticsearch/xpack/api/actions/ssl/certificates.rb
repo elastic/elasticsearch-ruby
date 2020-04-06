@@ -7,17 +7,24 @@ module Elasticsearch
     module API
       module SSL
         module Actions
+          # Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
+          #
 
-          def certificates(arguments={})
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
+          #
+          def certificates(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_GET
             path   = "_ssl/certificates"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

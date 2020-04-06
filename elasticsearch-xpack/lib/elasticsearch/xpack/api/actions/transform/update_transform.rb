@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Updates certain properties of a transform.
           #
           # @option arguments [String] :transform_id The id of the transform.  (*Required*)
           # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.

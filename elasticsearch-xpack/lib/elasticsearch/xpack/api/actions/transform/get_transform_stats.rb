@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Retrieves usage information for transforms.
           #
           # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
           # @option arguments [Number] :from skips a number of transform stats, defaults to 0

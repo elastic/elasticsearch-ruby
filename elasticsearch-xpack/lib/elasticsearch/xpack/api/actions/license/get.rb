@@ -7,28 +7,34 @@ module Elasticsearch
     module API
       module License
         module Actions
+          # Retrieves licensing information for the cluster
+          #
+          # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+          # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true   *Deprecated*
 
-          # Get a license
           #
-          # @option arguments [Boolean] :local Return local information (default: false)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/license-management.html
-          #
-          def get(arguments={})
+          def get(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_GET
             path   = "_license"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 8.0.0
-          ParamsRegistry.register(:get, [ :local ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:get, [
+            :local,
+            :accept_enterprise
+          ].freeze)
       end
+    end
     end
   end
 end

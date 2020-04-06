@@ -7,34 +7,38 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # Removes role mappings.
+          #
+          # @option arguments [String] :name Role-mapping name
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
 
-          # Delete a role mapping
           #
-          # @option arguments [String] :name Role-mapping name (*Required*)
-          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
           #
-          # @see https://www.elastic.co/guide/en/x-pack/master/security-api-role-mapping.html#security-api-delete-role-mapping
-          #
-          def delete_role_mapping(arguments={})
+          def delete_role_mapping(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
             arguments = arguments.clone
-            name = arguments.delete(:name)
+
+            _name = arguments.delete(:name)
 
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_security/role_mapping/#{name}"
+            path   = "_security/role_mapping/#{Elasticsearch::API::Utils.__listify(_name)}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:delete_role_mapping, [ :name,
-                                                          :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:delete_role_mapping, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

@@ -7,24 +7,29 @@ module Elasticsearch
     module API
       module Rollup
         module Actions
+          # Deletes an existing rollup job.
+          #
+          # @option arguments [String] :id The ID of the job to delete
 
-          # TODO: Description
           #
-          # @option arguments [String] :id The ID of the job to delete (*Required*)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-delete-job.html
           #
-          # @see
-          #
-          def delete_job(arguments={})
+          def delete_job(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_rollup/job/#{arguments[:id]}"
-            params = {}
-            body   = nil
 
+            arguments = arguments.clone
+
+            _id = arguments.delete(:id)
+
+            method = Elasticsearch::API::HTTP_DELETE
+            path   = "_rollup/job/#{Elasticsearch::API::Utils.__listify(_id)}"
+            params = {}
+
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

@@ -5,10 +5,9 @@
 module Elasticsearch
   module XPack
     module API
-      module DataFrame
+      module DataFrameTransformDeprecated
         module Actions
           module ParamsRegistry
-
             extend self
 
             # A Mapping of all the actions to their list of valid params.

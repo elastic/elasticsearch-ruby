@@ -7,24 +7,29 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Previews a datafeed.
+          #
+          # @option arguments [String] :datafeed_id The ID of the datafeed to preview
 
-          # Preview a datafeed
           #
-          # @option arguments [String] :datafeed_id The ID of the datafeed to preview (*Required*)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
-          #
-          def preview_datafeed(arguments={})
+          def preview_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}/_preview"
-            params = {}
-            body   = nil
 
+            arguments = arguments.clone
+
+            _datafeed_id = arguments.delete(:datafeed_id)
+
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
+            params = {}
+
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Starts one or more transforms.
           #
           # @option arguments [String] :transform_id The id of the transform to start
           # @option arguments [Time] :timeout Controls the time to wait for the transform to start

@@ -7,32 +7,34 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
+          #
+          # @option arguments [Boolean] :enabled Whether to enable upgrade_mode ML setting or not. Defaults to false.
+          # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
 
-          # Temporarily halt tasks associated with the jobs and datafeeds and prevent new jobs from opening.
-          # When enabled=true this API temporarily halts all job and datafeed tasks and prohibits new job and
-          #   datafeed tasks from starting.
           #
-          # @option arguments [ true, false ] :enabled Whether to enable upgrade_mode ML setting or not. Defaults to false.
-          # @option arguments [String] :timeout Controls the time to wait before action times out. Defaults to 30 seconds.
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
-          #
-          def set_upgrade_mode(arguments={})
+          def set_upgrade_mode(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_POST
-            path   = '_ml/set_upgrade_mode'
+            path   = "_ml/set_upgrade_mode"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            perform_request(method, path, params).body
+            body = nil
+            perform_request(method, path, params, body).body
           end
-
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:set_upgrade_mode, [ :enabled,
-                                                       :timeout ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:set_upgrade_mode, [
+            :enabled,
+            :timeout
+          ].freeze)
       end
+    end
     end
   end
 end

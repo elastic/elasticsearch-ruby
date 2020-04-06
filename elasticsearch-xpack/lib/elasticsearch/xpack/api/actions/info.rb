@@ -6,31 +6,31 @@ module Elasticsearch
   module XPack
     module API
       module Actions
+        # Retrieves information about the installed X-Pack features.
+        #
+        # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
 
-        # Retrieve information about xpack, including build number/timestamp and license status
         #
-        # @option arguments [Boolean] :human Presents additional info for humans
-        #                                   (feature descriptions and X-Pack tagline)
-        # @option arguments [List] :categories Comma-separated list of info categories.
-        #                                      (Options: build, license, features)
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
         #
-        # @see https://www.elastic.co/guide/en/x-pack/current/info-api.html
-        #
-        def info(arguments={})
+        def info(arguments = {})
+          arguments = arguments.clone
+
           method = Elasticsearch::API::HTTP_GET
           path   = "_xpack"
           params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-          body   = nil
 
+          body = nil
           perform_request(method, path, params, body).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 7.4.0
-        ParamsRegistry.register(:info, [ :human,
-                                         :categories ].freeze)
-      end
-    end
+        # @since 6.2.0
+        ParamsRegistry.register(:info, [
+          :categories
+        ].freeze)
   end
+      end
+end
 end

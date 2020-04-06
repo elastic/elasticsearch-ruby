@@ -7,27 +7,46 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
-          # Update certain properties of a datafeed
+          # Updates certain properties of a datafeed.
           #
-          # @option arguments [String] :datafeed_id The ID of the datafeed to update (*Required*)
+          # @option arguments [String] :datafeed_id The ID of the datafeed to update
+          # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
+          # @option arguments [Boolean] :allow_no_indices Ignore if the source indices expressions resolves to no concrete indices (default: true)
+          # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true)
+          # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open)
+          #   (options: open,closed,hidden,none,all)
+
           # @option arguments [Hash] :body The datafeed update settings (*Required*)
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
           #
-          def update_datafeed(arguments={})
-            raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+          def update_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+
+            arguments = arguments.clone
+
+            _datafeed_id = arguments.delete(:datafeed_id)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/datafeeds/#{arguments[:datafeed_id]}/_update"
-            params = {}
-            body   = arguments[:body]
+            path   = "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_update"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 6.2.0
+          ParamsRegistry.register(:update_datafeed, [
+            :ignore_unavailable,
+            :allow_no_indices,
+            :ignore_throttled,
+            :expand_wildcards
+          ].freeze)
       end
+    end
     end
   end
 end

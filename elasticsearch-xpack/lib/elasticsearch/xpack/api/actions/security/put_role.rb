@@ -7,32 +7,40 @@ module Elasticsearch
     module API
       module Security
         module Actions
-
-          # Update or create a role for the native shield realm
+          # Adds and updates roles in the native realm.
           #
-          # @option arguments [String] :name Role name (*Required*)
+          # @option arguments [String] :name Role name
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
+
           # @option arguments [Hash] :body The role to add (*Required*)
-          # @option arguments [Boolean] :refresh Refresh the index after performing the operation
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-roles.html#security-api-put-role
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
           #
-          def put_role(arguments={})
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          def put_role(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_security/role/#{arguments[:name]}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
+            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
+            arguments = arguments.clone
+
+            _name = arguments.delete(:name)
+
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_security/role/#{Elasticsearch::API::Utils.__listify(_name)}"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:put_role, [ :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:put_role, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

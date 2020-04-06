@@ -7,22 +7,24 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
+          # Stops Watcher if it is running.
+          #
 
-          # Stop the Watcher service
           #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
           #
-          # @see http://www.elastic.co/guide/en/x-pack/current/watcher-api-stop.html
-          #
-          def stop(arguments={})
+          def stop(arguments = {})
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_watcher/_stop"
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end
