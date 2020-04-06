@@ -112,7 +112,7 @@ module Elasticsearch
           clear_tasks(client)
           clear_machine_learning_indices(client)
           create_x_pack_rest_user(client)
-          clear_data_frame_transforms(client)
+          clear_transforms(client)
           clear_indices_xpack(client)
           clear_index_templates(client)
           clear_snapshots_and_repositories(client)
@@ -198,9 +198,9 @@ module Elasticsearch
           end
         end
 
-        def clear_data_frame_transforms(client)
-          client.data_frame.get_data_frame_transform(transform_id: '*')['transforms'].each do |transform|
-            client.data_frame.delete_data_frame_transform(transform_id: transform[:id])
+        def clear_transforms(client)
+          client.transform.get_transform(transform_id: '*')['transforms'].each do |transform|
+            client.transform.delete_transform(transform_id: transform[:id])
           end
         end
 
