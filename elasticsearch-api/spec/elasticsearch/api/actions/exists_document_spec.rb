@@ -20,7 +20,7 @@ describe 'client#exists' do
   end
 
   let(:url) do
-    'foo/bar/1'
+    'foo/_doc/1'
   end
 
   let(:client) do
@@ -29,29 +29,18 @@ describe 'client#exists' do
 
   it 'requires the :index argument' do
     expect {
-      client.exists(type: 'bar', id: '1')
+      client.exists(id: '1')
     }.to raise_exception(ArgumentError)
   end
 
   it 'requires the :id argument' do
     expect {
-      client.exists(index: 'foo', type: 'bar')
+      client.exists(index: 'foo')
     }.to raise_exception(ArgumentError)
   end
 
-  context 'when the type parameter is not provided' do
-
-    let(:url) do
-      'foo/_doc/1'
-    end
-
-    it 'performs the request' do
-      expect(client_double.exists(index: 'foo', id: '1')).to eq(true)
-    end
-  end
-
   it 'is aliased to a predicated method' do
-    expect(client_double.exists?(index: 'foo', type: 'bar', id: '1')).to eq(true)
+    expect(client_double.exists?(index: 'foo', id: '1')).to eq(true)
   end
 
   context 'when URL parameters are provided' do
@@ -61,18 +50,18 @@ describe 'client#exists' do
     end
 
     it 'passes the parameters' do
-      expect(client_double.exists(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to eq(true)
+      expect(client_double.exists(index: 'foo', id: '1', routing: 'abc123')).to eq(true)
     end
   end
 
   context 'when the request needs to be URL-escaped' do
 
     let(:url) do
-      'foo/bar%2Fbam/1'
+      'foo/_doc/1'
     end
 
     it 'URL-escapes the characters' do
-      expect(client_double.exists(index: 'foo', type: 'bar/bam', id: '1')).to eq(true)
+      expect(client_double.exists(index: 'foo', id: '1')).to eq(true)
     end
   end
 
@@ -83,7 +72,7 @@ describe 'client#exists' do
     end
 
     it 'returns false' do
-      expect(client_double.exists(index: 'foo', type: 'bar', id: '1')).to eq(false)
+      expect(client_double.exists(index: 'foo', id: '1')).to eq(false)
     end
   end
 
@@ -94,7 +83,7 @@ describe 'client#exists' do
     end
 
     it 'returns false' do
-      expect(client_double.exists(index: 'foo', type: 'bar', id: '1')).to eq(false)
+      expect(client_double.exists(index: 'foo', id: '1')).to eq(false)
     end
   end
 
@@ -106,7 +95,7 @@ describe 'client#exists' do
 
     it 'raises the error' do
       expect {
-        client_double.exists(index: 'foo', type: 'bar', id: '1')
+        client_double.exists(index: 'foo', id: '1')
       }.to raise_exception(StandardError)
     end
   end

@@ -9,14 +9,14 @@ describe 'client#create_document' do
   let(:expected_args) do
     [
         'PUT',
-        'foo/bar/123',
+        'foo/_doc/123',
         { op_type: 'create' },
         { foo: 'bar' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.create(index: 'foo', type: 'bar', id: '123', body: { foo: 'bar'})).to eq({})
+    expect(client_double.create(index: 'foo', id: '123', body: { foo: 'bar'})).to eq({})
   end
 
   context 'when the request needs to be URL-escaped' do
@@ -24,14 +24,14 @@ describe 'client#create_document' do
     let(:expected_args) do
       [
           'PUT',
-          'foo/bar%2Fbam/123',
+          'foo/_doc/123',
           { op_type: 'create' },
           { }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.create(index: 'foo', type: 'bar/bam', id: '123', body: {})).to eq({})
+      expect(client_double.create(index: 'foo', id: '123', body: {})).to eq({})
     end
   end
 
@@ -40,14 +40,14 @@ describe 'client#create_document' do
     let(:expected_args) do
       [
           'PUT',
-          'foo/bar/1',
+          'foo/_doc/1',
           { op_type: 'create' },
           { foo: 'bar' }
       ]
     end
 
     it 'updates the arguments with the `op_type`' do
-      expect(client_double.create(index: 'foo', type: 'bar', id: 1, body: { foo: 'bar' })).to eq({})
+      expect(client_double.create(index: 'foo', id: 1, body: { foo: 'bar' })).to eq({})
     end
   end
 
@@ -56,14 +56,14 @@ describe 'client#create_document' do
     let(:expected_args) do
       [
           'POST',
-          'foo/bar',
+          'foo/_doc',
           { },
           { foo: 'bar' }
       ]
     end
 
     it 'updates the arguments with the `op_type`' do
-      expect(client_double.create(index: 'foo', type: 'bar', body: { foo: 'bar' })).to eq({})
+      expect(client_double.create(index: 'foo', body: { foo: 'bar' })).to eq({})
     end
   end
 end

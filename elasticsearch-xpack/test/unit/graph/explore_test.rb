@@ -14,13 +14,13 @@ module Elasticsearch
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal 'GET', method
-            assert_equal '_graph/explore', url
+            assert_equal 'my_index/_graph/explore', url
             assert_equal Hash.new, params
             assert_equal nil, body
             true
           end.returns(FakeResponse.new)
 
-          subject.xpack.graph.explore
+          subject.xpack.graph.explore(index: 'my_index')
         end
 
       end

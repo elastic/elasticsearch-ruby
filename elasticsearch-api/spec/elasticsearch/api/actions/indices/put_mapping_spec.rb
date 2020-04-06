@@ -17,7 +17,7 @@ describe 'client.cluster#put_mapping' do
   end
 
   let(:url) do
-    'foo/bar/_mappings'
+    'foo/_mapping'
   end
 
   let(:body) do
@@ -25,7 +25,7 @@ describe 'client.cluster#put_mapping' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_mapping(index: 'foo', type: 'bar', body: {})).to eq({})
+    expect(client_double.indices.put_mapping(index: 'foo', body: {})).to eq({})
   end
 
   context 'when there is no type specified' do
@@ -68,7 +68,7 @@ describe 'client.cluster#put_mapping' do
   context 'when multiple indices are specified' do
 
     let(:url) do
-      'foo,bar/bam/_mappings'
+      'foo,bar/_mapping'
     end
 
     it 'performs the request' do
@@ -79,7 +79,7 @@ describe 'client.cluster#put_mapping' do
   context 'when the path needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/_mappings'
+      'foo%5Ebar/_mapping'
     end
 
     it 'performs the request' do

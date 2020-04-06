@@ -16,7 +16,7 @@ describe 'client#termvectors' do
   end
 
   let(:url) do
-    'foo/bar/123/_termvectors'
+    'foo/_termvectors/123'
   end
 
   let(:params) do
@@ -33,22 +33,22 @@ describe 'client#termvectors' do
 
   it 'requires the :index argument' do
     expect {
-      client.termvectors(type: 'bar', id: '1')
+      client.termvectors(id: '1')
     }.to raise_exception(ArgumentError)
   end
 
   it 'performs the request' do
-    expect(client_double.termvectors(index: 'foo', type: 'bar', id: '123', body: {})).to eq({})
+    expect(client_double.termvectors(index: 'foo', id: '123', body: {})).to eq({})
   end
 
   context 'when the older api name \'termvector\' is used' do
 
     let(:url) do
-      'foo/bar/123/_termvector'
+      'foo/_termvectors/123'
     end
 
     it 'performs the request' do
-      expect(client_double.termvector(index: 'foo', type: 'bar', id: '123', body: {})).to eq({})
+      expect(client_double.termvector(index: 'foo', id: '123', body: {})).to eq({})
     end
   end
 end

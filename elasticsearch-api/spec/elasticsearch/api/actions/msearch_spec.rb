@@ -90,10 +90,10 @@ describe 'client#msearch' do
     end
   end
 
-  context 'when a type and index are specified' do
+  context 'when multiple indices are specified' do
 
     let(:url) do
-      'foo/bar/_msearch'
+      'foo,bar/_msearch'
     end
 
     let(:body) do
@@ -101,29 +101,14 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(index: 'foo', type: 'bar', body: []))
-    end
-  end
-
-  context 'when multiple indices and multiple types are specified' do
-
-    let(:url) do
-      'foo,bar/lam,bam/_msearch'
-    end
-
-    let(:body) do
-      ''
-    end
-
-    it 'performs the request' do
-      expect(client_double.msearch(index: ['foo', 'bar'], type: ['lam', 'bam'], body: []))
+      expect(client_double.msearch(index: ['foo', 'bar'], body: []))
     end
   end
 
   context 'when the request needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/_msearch'
+      'foo%5Ebar/_msearch'
     end
 
     let(:body) do
@@ -131,7 +116,7 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(index: 'foo^bar', type: 'bar/bam', body: [])).to eq({})
+      expect(client_double.msearch(index: 'foo^bar', body: [])).to eq({})
     end
   end
 

@@ -20,7 +20,7 @@ describe 'client#get_source' do
   end
 
   let(:url) do
-    'foo/bar/1/_source'
+    'foo/_source/1'
   end
 
   let(:client) do
@@ -29,46 +29,34 @@ describe 'client#get_source' do
 
   it 'requires the :index argument' do
     expect {
-      client.get_source(type: 'bar', id: '1')
+      client.get_source(id: '1')
     }.to raise_exception(ArgumentError)
   end
 
   it 'requires the :id argument' do
     expect {
-      client.get_source(index: 'foo', type: 'bar')
+      client.get_source(index: 'foo')
     }.to raise_exception(ArgumentError)
   end
 
-  context 'when the type parameter is not provided' do
-
-    let(:url) do
-      'foo/_source/1'
-    end
-
-    it 'performs the request' do
-      expect(client_double.get_source(index: 'foo', id: '1')).to eq({})
-    end
-  end
-
   context 'when URL parameters are provided' do
-
     let(:params) do
       { routing: 'abc123' }
     end
 
     it 'Passes the URL params' do
-      expect(client_double.get_source(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to eq({})
+      expect(client_double.get_source(index: 'foo', id: '1', routing: 'abc123')).to eq({})
     end
   end
 
   context 'when the request needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/1/_source'
+      'foo%5Ebar/_source/1'
     end
 
     it 'URL-escapes the parts' do
-      expect(client_double.get_source(index: 'foo^bar', type: 'bar/bam', id: '1')).to eq({})
+      expect(client_double.get_source(index: 'foo^bar', id: '1')).to eq({})
     end
   end
 

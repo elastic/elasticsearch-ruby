@@ -24,14 +24,14 @@ describe 'client#count' do
     let(:expected_args) do
       [
         'GET',
-        'foo,bar/t1,t2/_count',
+        'foo,bar/_count',
         {},
         nil
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.count(index: ['foo','bar'], type: ['t1','t2'])).to eq({})
+      expect(client_double.count(index: ['foo','bar'])).to eq({})
     end
   end
 
