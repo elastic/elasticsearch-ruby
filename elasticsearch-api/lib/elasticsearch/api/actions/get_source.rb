@@ -5,19 +5,10 @@
 module Elasticsearch
   module API
     module Actions
-
-      # Return a specified document's `_source`.
+      # Returns the source of a document.
       #
-      # The response contains just the original document, as passed to Elasticsearch during indexing.
-      #
-      # @example Get a document `_source`
-      #
-      #     client.get_source index: 'myindex', type: 'mytype', id: '1'
-      #
-      # @option arguments [String] :id The document ID (*Required*)
-      # @option arguments [String] :index The name of the index (*Required*)
-      # @option arguments [String] :type The type of the document; deprecated and optional starting with 7.0
-      # @option arguments [String] :parent The ID of the parent document
+      # @option arguments [String] :id The document ID
+      # @option arguments [String] :index The name of the index
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
@@ -26,53 +17,44 @@ module Elasticsearch
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
+      # @option arguments [String] :version_type Specific version type
+      #   (options: internal,external,external_gte)
+
       #
-      # @see https://www.elastic.co/guide/reference/api/get/
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
       #
-      # @since 0.90.1
-      #
-      def get_source(arguments={})
+      def get_source(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-        raise ArgumentError, "Required argument 'id' missing"    unless arguments[:id]
-        arguments[:type] ||= DEFAULT_DOC
+        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-        method = HTTP_GET
+        arguments = arguments.clone
 
-        if arguments[:type]
-          path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                   Utils.__escape(arguments[:type]),
-                                   Utils.__escape(arguments[:id]),
-                                   '_source'
-        else
-          path   = Utils.__pathify Utils.__escape(arguments[:index]),
-                                   '_source',
-                                   Utils.__escape(arguments[:id])
-        end
+        _id = arguments.delete(:id)
 
+        _index = arguments.delete(:index)
 
+        method = Elasticsearch::API::HTTP_GET
+        path   = "#{Utils.__listify(_index)}/_source/#{Utils.__listify(_id)}"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-        body   = nil
 
-        params[:fields] = Utils.__listify(params[:fields]) if params[:fields]
-
+        body = nil
         perform_request(method, path, params, body).body
       end
 
       # Register this action with its valid params when the module is loaded.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       ParamsRegistry.register(:get_source, [
-          :parent,
-          :preference,
-          :realtime,
-          :refresh,
-          :routing,
-          :_source,
-          :_source_excludes,
-          :_source_includes,
-          :version,
-          :version_type ].freeze)
+        :preference,
+        :realtime,
+        :refresh,
+        :routing,
+        :_source,
+        :_source_excludes,
+        :_source_includes,
+        :version,
+        :version_type
+      ].freeze)
     end
-  end
+    end
 end

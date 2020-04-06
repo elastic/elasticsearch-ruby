@@ -5,30 +5,35 @@
 module Elasticsearch
   module API
     module Actions
+      # Returns a script.
+      #
+      # @option arguments [String] :id Script ID
+      # @option arguments [Time] :master_timeout Specify timeout for connection to master
 
-      # Retrieve an indexed script from Elasticsearch
       #
-      # @option arguments [String] :id Script ID (*Required*)
-      # @option arguments [String] :lang Script language
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html#_indexed_scripts
-      #
-      def get_script(arguments={})
-        raise ArgumentError, "Required argument 'id' missing"   unless arguments[:id]
+      def get_script(arguments = {})
+        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        arguments = arguments.clone
+
+        _id = arguments.delete(:id)
+
         method = Elasticsearch::API::HTTP_GET
-        path   = "_scripts/#{arguments[:id]}"
-        params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-        body   = nil
+        path   = "_scripts/#{Utils.__listify(_id)}"
+        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
+        body = nil
         perform_request(method, path, params, body).body
       end
 
-
       # Register this action with its valid params when the module is loaded.
       #
-      # @since 6.1.1
+      # @since 6.2.0
       ParamsRegistry.register(:get_script, [
-          :master_timeout ].freeze)
+        :master_timeout
+      ].freeze)
     end
-  end
+    end
 end

@@ -6,56 +6,46 @@ module Elasticsearch
   module API
     module Cat
       module Actions
-
-        # Display a terse version of the {Elasticsearch::API::Cluster::Actions#health} API output
+        # Returns a concise representation of the cluster health.
         #
-        # @example Display cluster health
-        #
-        #     puts client.cat.health
-        #
-        # @example Display header names in the output
-        #
-        #     puts client.cat.health v: true
-        #
-        # @example Return the information as Ruby objects
-        #
-        #     client.cat.health format: 'json'
-        #
-        # @option arguments [Boolean] :ts Whether to display timestamp information
-        # @option arguments [List] :h Comma-separated list of column names to display -- see the `help` argument
-        # @option arguments [Boolean] :v Display column headers as part of the output
+        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
+        # @option arguments [List] :h Comma-separated list of column names to display
+        # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :format The output format. Options: 'text', 'json'; default: 'text'
-        # @option arguments [Boolean] :help Return information about headers
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node
-        #                                    (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :time The unit in which to display time values
+        #   (options: d,h,m,s,ms,micros,nanos)
+
+        # @option arguments [Boolean] :ts Set to false to disable timestamping
+        # @option arguments [Boolean] :v Verbose mode. Display column headers
+
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
         #
-        def health(arguments={})
-          method = HTTP_GET
+        def health(arguments = {})
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_GET
           path   = "_cat/health"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
-          body   = nil
 
+          body = nil
           perform_request(method, path, params, body).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
-        # @since 6.1.1
+        # @since 6.2.0
         ParamsRegistry.register(:health, [
-            :format,
-            :local,
-            :master_timeout,
-            :h,
-            :help,
-            :s,
-            :ts,
-            :v ].freeze)
+          :format,
+          :h,
+          :help,
+          :s,
+          :time,
+          :ts,
+          :v
+        ].freeze)
+end
       end
-    end
   end
 end
