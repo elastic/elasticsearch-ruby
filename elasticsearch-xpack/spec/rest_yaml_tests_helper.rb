@@ -151,6 +151,10 @@ SKIPPED_TESTS << { file: 'ml/post_data.yml',
 SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
                    description: 'Test get api key' }
 
+# TODO: Failing due to processing of regexp in test
+SKIPPED_TESTS << { file: 'ml/explain_data_frame_analytics.yml',
+                   description: 'Test non-empty data frame given body'}
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
