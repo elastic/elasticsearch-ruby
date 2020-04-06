@@ -20,7 +20,7 @@ describe 'client#get' do
   end
 
   let(:url) do
-    'foo/bar/1'
+    'foo/_doc/1'
   end
 
   let(:client) do
@@ -29,25 +29,14 @@ describe 'client#get' do
 
   it 'requires the :index argument' do
     expect {
-      client.get(type: 'bar', id: '1')
+      client.get(id: '1')
     }.to raise_exception(ArgumentError)
   end
 
   it 'requires the :id argument' do
     expect {
-      client.get(index: 'foo', type: 'bar')
+      client.get(index: 'foo')
     }.to raise_exception(ArgumentError)
-  end
-
-  context 'when the type parameter is not provided' do
-
-    let(:url) do
-      'foo/_doc/1'
-    end
-
-    it 'performs the request' do
-      expect(client_double.get(index: 'foo', id: '1')).to eq({})
-    end
   end
 
   context 'when URL parameters are provided' do
@@ -57,7 +46,7 @@ describe 'client#get' do
     end
 
     it 'Passes the URL params' do
-      expect(client_double.get(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to eq({})
+      expect(client_double.get(index: 'foo', id: '1', routing: 'abc123')).to eq({})
     end
   end
 
@@ -65,7 +54,7 @@ describe 'client#get' do
 
     it 'Passes the URL params' do
       expect {
-        client.get(index: 'foo', type: 'bar', id: '1', qwert: 'abc123')
+        client.get(index: 'foo', id: '1', qwert: 'abc123')
       }.to raise_exception(ArgumentError)
     end
   end
@@ -73,11 +62,11 @@ describe 'client#get' do
   context 'when the request needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/1'
+      'foo%5Ebar/_doc/1'
     end
 
     it 'URL-escapes the parts' do
-      expect(client_double.get(index: 'foo^bar', type: 'bar/bam', id: '1')).to eq({})
+      expect(client_double.get(index: 'foo^bar', id: '1')).to eq({})
     end
   end
 

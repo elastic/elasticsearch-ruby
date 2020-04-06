@@ -35,32 +35,21 @@ describe 'client.cluster#get_mapping' do
     end
   end
 
-  context 'when an index and type are specified' do
+  context 'when multiple indices are specified' do
 
     let(:url) do
-      'foo/_mapping/bar'
+      'foo,bar/_mapping'
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: 'foo', type: 'bar')).to eq({})
-    end
-  end
-
-  context 'when multiple indices and types are specified' do
-
-    let(:url) do
-      'foo,bar/_mapping/bam,baz'
-    end
-
-    it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: ['foo', 'bar'], type: ['bam', 'baz'])).to eq({})
+      expect(client_double.indices.get_mapping(index: ['foo', 'bar'])).to eq({})
     end
   end
 
   context 'when the path must be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/_mapping/bar%2Fbam'
+      'foo%5Ebar/_mapping'
     end
 
     it 'performs the request' do

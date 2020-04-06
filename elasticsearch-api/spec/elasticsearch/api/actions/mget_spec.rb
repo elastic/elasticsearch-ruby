@@ -42,21 +42,6 @@ describe 'client#mget' do
     end
   end
 
-  context 'when a type is specified' do
-
-    let(:url) do
-      'foo/bar/_mget'
-    end
-
-    let(:body) do
-      { ids: [ '1', '2' ]}
-    end
-
-    it 'performs the request' do
-      expect(client_double.mget(index: 'foo', type: 'bar', body: { :ids => [ '1', '2'] })).to eq({})
-    end
-  end
-
   context 'when url parameters are provided' do
 
     let(:params) do
@@ -75,7 +60,7 @@ describe 'client#mget' do
   context 'when the request needs to be URL-escaped' do
 
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/_mget'
+      'foo%5Ebar/_mget'
     end
 
     let(:body) do
@@ -83,7 +68,7 @@ describe 'client#mget' do
     end
 
     it 'performs the request' do
-      expect(client_double.mget(index: 'foo^bar', type: 'bar/bam', body: { :ids => [ '1', '2'] })).to eq({})
+      expect(client_double.mget(index: 'foo^bar', body: { :ids => [ '1', '2'] })).to eq({})
     end
   end
 end

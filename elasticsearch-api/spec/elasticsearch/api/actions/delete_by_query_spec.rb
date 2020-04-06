@@ -25,22 +25,6 @@ describe 'client#delete_by_query' do
     expect(client_double.delete_by_query(index: 'foo', body: { term: {} })).to eq({})
   end
 
-  context 'when the type argument is provided' do
-
-    let(:expected_args) do
-      [
-        'POST',
-        'foo/tweet,post/_delete_by_query',
-        {},
-        { term: {} }
-      ]
-    end
-
-    it 'performs the request' do
-      expect(client_double.delete_by_query(index: 'foo', type: ['tweet', 'post'], body: { term: {} })).to eq({})
-    end
-  end
-
   context 'when a query is provided' do
     let(:expected_args) do
       [
