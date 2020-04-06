@@ -70,20 +70,6 @@ module Elasticsearch
         name.split("_").map(&:capitalize).join
       end
 
-      def termvectors_path
-        <<~SRC
-          if _index && _type && _id
-            "\#{Utils.__listify(_index)}/\#{Utils.__listify(_type)}/\#{Utils.__listify(_id)}/\#{endpoint}"
-          elsif _index && _type
-            "\#{Utils.__listify(_index)}/\#{Utils.__listify(_type)}/\#{endpoint}"
-          elsif _index && _id
-            "\#{Utils.__listify(_index)}/\#{endpoint}/\#{Utils.__listify(_id)}"
-          else
-            "\#{Utils.__listify(_index)}/\#{endpoint}"
-          end
-        SRC
-      end
-
       def ping_perform_request
         <<~SRC
           begin
