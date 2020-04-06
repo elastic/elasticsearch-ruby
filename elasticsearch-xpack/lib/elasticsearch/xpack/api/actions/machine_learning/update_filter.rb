@@ -7,24 +7,31 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
           # Updates the description of a filter, adds items, or removes items.
           #
-          # @option arguments [String] :filter_id The ID of the filter to update (*Required*)
+          # @option arguments [String] :filter_id The ID of the filter to update
+
           # @option arguments [Hash] :body The filter update (*Required*)
           #
-          def update_filter(arguments={})
-            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter.html
+          #
+          def update_filter(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            method = Elasticsearch::API::HTTP_POST
-            path = "_ml/filters/#{arguments[:filter_id]}/_update"
-            params = {}
-            body   = arguments[:body]
+            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
 
+            arguments = arguments.clone
+
+            _filter_id = arguments.delete(:filter_id)
+
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}/_update"
+            params = {}
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

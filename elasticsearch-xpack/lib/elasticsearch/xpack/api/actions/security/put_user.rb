@@ -7,35 +7,40 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # Adds and updates users in the native realm. These users are commonly referred to as native users.
+          #
+          # @option arguments [String] :username The username of the User
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
 
-          # Update or create a user for the native realm
-          #
-          # @option arguments [String] :username The username of the User (*Required*)
           # @option arguments [Hash] :body The user to add (*Required*)
-          # @option arguments [Boolean] :refresh Refresh the index after performing the operation
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-users.html#security-api-put-user
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-user.html
           #
-          def put_user(arguments={})
-            raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
+          def put_user(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
+
             arguments = arguments.clone
-            username = arguments.delete(:username)
+
+            _username = arguments.delete(:username)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = Elasticsearch::API::Utils.__pathify "_security/user", username
+            path   = "_security/user/#{Elasticsearch::API::Utils.__listify(_username)}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:put_user, [ :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:put_user, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

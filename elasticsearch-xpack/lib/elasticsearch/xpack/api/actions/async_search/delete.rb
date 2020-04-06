@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module AsyncSearch
         module Actions
-          # TODO: Description
-
+          # Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
           #
           # @option arguments [String] :id The async search ID
 

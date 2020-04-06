@@ -7,32 +7,40 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
-
-          # Force the execution of a stored watch
+          # Forces the execution of a stored watch.
           #
           # @option arguments [String] :id Watch ID
-          # @option arguments [Hash] :body Execution control
           # @option arguments [Boolean] :debug indicates whether the watch should execute in debug mode
+
+          # @option arguments [Hash] :body Execution control
           #
-          # @see http://www.elastic.co/guide/en/x-pack/current/watcher-api-execute-watch.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
           #
-          def execute_watch(arguments={})
+          def execute_watch(arguments = {})
+            arguments = arguments.clone
+
+            _id = arguments.delete(:id)
+
             method = Elasticsearch::API::HTTP_PUT
-
-            path   = Elasticsearch::API::Utils.__pathify "_watcher/watch", arguments.delete(:id), "_execute"
-
+            path   = if _id
+                       "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_id)}/_execute"
+                     else
+                       "_watcher/watch/_execute"
+  end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:execute_watch, [ :debug ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:execute_watch, [
+            :debug
+          ].freeze)
       end
+    end
     end
   end
 end

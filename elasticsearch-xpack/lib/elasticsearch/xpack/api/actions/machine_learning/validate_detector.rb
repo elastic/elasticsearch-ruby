@@ -7,20 +7,27 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
+          # Validates an anomaly detection detector.
+          #
 
           # @option arguments [Hash] :body The detector (*Required*)
           #
-          def validate_detector(arguments={})
+          # @see [TODO]
+          #
+          def validate_detector(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_POST
             path   = "_ml/anomaly_detectors/_validate/detector"
             params = {}
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

@@ -7,30 +7,45 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
+          # Retrieves the current Watcher metrics.
+          #
+          # @option arguments [List] :metric Controls what additional stat metrics should be include in the response
+          #   (options: _all,queued_watches,current_watches,pending_watches)
 
-          # Return the current Watcher metrics
+          # @option arguments [List] :metric Controls what additional stat metrics should be include in the response
+          #   (options: _all,queued_watches,current_watches,pending_watches)
+
+          # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
+
           #
-          # @option arguments [String] :metric Additional metrics to be included in the response
-          #                                   (options: _all, queued_watches, pending_watches)
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/watcher-api-stats.html
-          #
-          def stats(arguments={})
+          def stats(arguments = {})
+            arguments = arguments.clone
+
+            _metric = arguments.delete(:metric)
+
             method = Elasticsearch::API::HTTP_GET
-            path   = "_watcher/stats"
+            path   = if _metric
+                       "_watcher/stats/#{Elasticsearch::API::Utils.__listify(_metric)}"
+                     else
+                       "_watcher/stats"
+  end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:stats, [ :metric,
-                                            :emit_stacktraces ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:stats, [
+            :metric,
+            :emit_stacktraces
+          ].freeze)
       end
+    end
     end
   end
 end

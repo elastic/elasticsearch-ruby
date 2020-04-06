@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Deletes an existing transform.
           #
           # @option arguments [String] :transform_id The id of the transform to delete
           # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.

@@ -7,33 +7,37 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # Evicts users from the user cache. Can completely clear the cache or evict specific users.
+          #
+          # @option arguments [List] :realms Comma-separated list of realms to clear
+          # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
 
-          # Clears the internal user caches for specified realms
           #
-          # @option arguments [String] :realms Comma-separated list of realms to clear (*Required*)
-          # @option arguments [String] :usernames Comma-separated list of usernames to clear from the cache
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-clear-cache.html
-          #
-          def clear_cached_realms(arguments={})
+          def clear_cached_realms(arguments = {})
             raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
+
             arguments = arguments.clone
-            realms = arguments.delete(:realms)
+
+            _realms = arguments.delete(:realms)
 
             method = Elasticsearch::API::HTTP_POST
-            path   = Elasticsearch::API::Utils.__pathify "_security/realm/", Elasticsearch::API::Utils.__listify(realms), "_clear_cache"
+            path   = "_security/realm/#{Elasticsearch::API::Utils.__listify(_realms)}/_clear_cache"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:clear_cached_realms, [ :usernames ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:clear_cached_realms, [
+            :usernames
+          ].freeze)
       end
+    end
     end
   end
 end

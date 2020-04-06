@@ -7,24 +7,27 @@ module Elasticsearch
     module API
       module Security
         module Actions
-
-          # Delete a token for OAuth 2.0 auhentication
+          # Invalidates one or more access tokens or refresh tokens.
           #
+
           # @option arguments [Hash] :body The token to invalidate (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/x-pack/master/security-api-tokens.html#security-api-invalidate-token
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
           #
-          def invalidate_token(arguments={})
+          def invalidate_token(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            arguments = arguments.clone
+
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_security/oauth2/token"
             params = {}
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

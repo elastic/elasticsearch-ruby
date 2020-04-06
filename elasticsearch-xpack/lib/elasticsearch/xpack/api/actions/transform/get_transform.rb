@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Retrieves configuration information for transforms.
           #
           # @option arguments [String] :transform_id The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
           # @option arguments [Int] :from skips a number of transform configs, defaults to 0

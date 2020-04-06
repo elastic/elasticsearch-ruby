@@ -7,7 +7,6 @@ module Elasticsearch
     module API
       module Migration
         module Actions
-
           # Returns the information about indices that require some changes before the cluster can be upgraded to the next major version
           #
           # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
@@ -17,7 +16,7 @@ module Elasticsearch
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-assistance.html
           #
-          def get_assistance(arguments={})
+          def get_assistance(arguments = {})
             method = Elasticsearch::API::HTTP_GET
             path   = "_migration/assistance"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
@@ -29,9 +28,9 @@ module Elasticsearch
           # Register this action with its valid params when the module is loaded.
           #
           # @since 7.4.0
-          ParamsRegistry.register(:get_assistance, [ :allow_no_indices,
-                                                     :expand_wildcards,
-                                                     :ignore_unavailable ].freeze)
+          ParamsRegistry.register(:get_assistance, [:allow_no_indices,
+                                                    :expand_wildcards,
+                                                    :ignore_unavailable].freeze)
         end
       end
     end

@@ -7,28 +7,42 @@ module Elasticsearch
     module API
       module Security
         module Actions
-
-          # @option arguments [String] :application Application name (*Required*)
-          # @option arguments [Boolean] :name Privilege name (*Required*)
+          # Removes application privileges.
           #
-          def delete_privileges(arguments={})
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          # @option arguments [String] :application Application name
+          # @option arguments [String] :name Privilege name
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
+          #   (options: true,false,wait_for)
+
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
+          #
+          def delete_privileges(arguments = {})
             raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
+            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+            arguments = arguments.clone
+
+            _application = arguments.delete(:application)
+
+            _name = arguments.delete(:name)
 
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_security/privilege/#{arguments.delete(:application)}/#{arguments[:name]}"
+            path   = "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}/#{Elasticsearch::API::Utils.__listify(_name)}"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:delete_privileges, [ :refresh ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:delete_privileges, [
+            :refresh
+          ].freeze)
       end
+    end
     end
   end
 end

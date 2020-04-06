@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Cat
         module Actions
-          # TODO: Description
-
+          # Gets configuration and usage information about inference trained models.
           #
           # @option arguments [String] :model_id The ID of the trained models stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
@@ -22,7 +21,7 @@ module Elasticsearch
           # @option arguments [Boolean] :help Return help information
           # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
           # @option arguments [String] :time The unit in which to display time values
-          #   (options: d (Days),h (Hours),m (Minutes),s (Seconds),ms (Milliseconds),micros (Microseconds),nanos (Nanoseconds))
+          #   (options: d,h,m,s,ms,micros,nanos)
 
           # @option arguments [Boolean] :v Verbose mode. Display column headers
 

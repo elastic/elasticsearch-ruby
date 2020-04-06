@@ -7,25 +7,36 @@ module Elasticsearch
     module API
       module Security
         module Actions
+          # Retrieves application privileges.
+          #
+          # @option arguments [String] :application Application name
+          # @option arguments [String] :name Privilege name
 
-          # Retrieve one or more roles from the native realm
           #
-          # @option arguments [String] :name Role name
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
           #
-          # @see https://www.elastic.co/guide/en/x-pack/current/security-api-roles.html#security-api-get-role
-          #
-          def get_privileges(arguments={})
+          def get_privileges(arguments = {})
+            arguments = arguments.clone
+
+            _application = arguments.delete(:application)
+
+            _name = arguments.delete(:name)
+
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify "_security/privilege",
-                                                         arguments[:application],
-                                                         Elasticsearch::API::Utils.__listify(arguments[:name])
+            path   = if _application && _name
+                       "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}/#{Elasticsearch::API::Utils.__listify(_name)}"
+                     elsif _application
+                       "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}"
+                     else
+                       "_security/privilege"
+  end
             params = {}
-            body   = nil
 
+            body = nil
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

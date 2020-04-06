@@ -7,25 +7,30 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-
-          # TODO: Description
+          # Instantiates a calendar.
           #
-          # @option arguments [String] :calendar_id The ID of the calendar to create (*Required*)
+          # @option arguments [String] :calendar_id The ID of the calendar to create
+
           # @option arguments [Hash] :body The calendar details
           #
-          # @see [TODO]
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
           #
-          def put_calendar(arguments={})
+          def put_calendar(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/calendars/#{arguments[:calendar_id]}"
-            params = {}
-            body   = arguments[:body]
 
+            arguments = arguments.clone
+
+            _calendar_id = arguments.delete(:calendar_id)
+
+            method = Elasticsearch::API::HTTP_PUT
+            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
+            params = {}
+
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
-        end
       end
+    end
     end
   end
 end

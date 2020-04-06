@@ -7,39 +7,40 @@ module Elasticsearch
     module API
       module Graph
         module Actions
-
-          # Get structured information about the vertices and connections in a dataset
+          # Explore extracted and summarized information about the documents and terms in an index.
           #
-          # @option arguments [List] :index A comma-separated list of index names to search;
-          #                                 use `_all` or empty string to perform the operation on all indices
-          # @option arguments [List] :type A comma-separated list of document types to search;
-          #                                leave empty to perform the operation on all types
-          # @option arguments [Hash] :body The Graph Query DSL definition
+          # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
           # @option arguments [String] :routing Specific routing value
           # @option arguments [Time] :timeout Explicit operation timeout
+
+          # @option arguments [Hash] :body Graph Query DSL
           #
-          # @see https://www.elastic.co/guide/en/graph/current/explore.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
           #
-          def explore(arguments={})
+          def explore(arguments = {})
+            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
             arguments = arguments.clone
-            index = arguments.delete(:index)
-            type  = arguments.delete(:type)
+
+            _index = arguments.delete(:index)
 
             method = Elasticsearch::API::HTTP_GET
-            path   = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), Elasticsearch::API::Utils.__listify(type), '_graph/explore'
+            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-            body   = arguments[:body]
 
+            body = arguments[:body]
             perform_request(method, path, params, body).body
           end
 
           # Register this action with its valid params when the module is loaded.
           #
-          # @since 7.4.0
-          ParamsRegistry.register(:explore, [ :routing,
-                                              :timeout ].freeze)
-        end
+          # @since 6.2.0
+          ParamsRegistry.register(:explore, [
+            :routing,
+            :timeout
+          ].freeze)
       end
+    end
     end
   end
 end
