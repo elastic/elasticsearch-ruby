@@ -151,7 +151,6 @@ module Elasticsearch
 
       def __http_path
         return "\"#{__parse_path(@paths.first)}\"" if @paths.size == 1
-        return termvectors_path if @method_name == 'termvectors'
 
         result = ''
         anchor_string = []
