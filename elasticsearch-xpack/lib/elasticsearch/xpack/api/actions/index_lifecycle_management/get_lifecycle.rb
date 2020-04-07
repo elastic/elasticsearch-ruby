@@ -7,15 +7,16 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-          # TODO: Description
-
+          # Returns the specified policy definition. Includes the policy version and last modified date.
           #
           # @option arguments [String] :policy The name of the index lifecycle policy
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
           #
           def get_lifecycle(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _policy = arguments.delete(:policy)
@@ -25,11 +26,11 @@ module Elasticsearch
                        "_ilm/policy/#{Elasticsearch::API::Utils.__listify(_policy)}"
                      else
                        "_ilm/policy"
-  end
+            end
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-          # TODO: Description
-
+          # Retries executing the policy for an index that is in the ERROR step.
           #
           # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
           #
           def retry(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -27,7 +28,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

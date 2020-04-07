@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
           #
           # @option arguments [String] :model_id The ID of the trained model to delete
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference.html
           #
           def delete_trained_model(arguments = {})
             raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -27,7 +28,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

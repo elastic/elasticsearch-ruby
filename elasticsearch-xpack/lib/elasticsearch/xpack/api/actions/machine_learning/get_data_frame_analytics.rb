@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves configuration information for data frame analytics jobs.
           #
           # @option arguments [String] :id The ID of the data frame analytics to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
           # @option arguments [Int] :from skips a number of analytics
           # @option arguments [Int] :size specifies a max number of analytics to get
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
           #
           def get_data_frame_analytics(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _id = arguments.delete(:id)
@@ -28,11 +29,11 @@ module Elasticsearch
                        "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
                      else
                        "_ml/data_frame/analytics"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

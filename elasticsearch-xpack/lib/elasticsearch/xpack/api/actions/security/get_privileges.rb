@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # TODO: Description
-
+          # Retrieves application privileges.
           #
           # @option arguments [String] :application Application name
           # @option arguments [String] :name Privilege name
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
           #
           def get_privileges(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _application = arguments.delete(:application)
@@ -30,11 +31,11 @@ module Elasticsearch
                        "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}"
                      else
                        "_security/privilege"
-  end
+            end
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

@@ -7,14 +7,13 @@ module Elasticsearch
     module API
       module Monitoring
         module Actions
-          # TODO: Description
-
+          # Used by the monitoring features to send monitoring data.
           #
           # @option arguments [String] :type Default document type for items which don't provide one   *Deprecated*
           # @option arguments [String] :system_id Identifier of the monitored system
           # @option arguments [String] :system_api_version API Version of the monitored system
           # @option arguments [String] :interval Collection interval (e.g., '10s' or '10000ms') of the payload
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
           #
           # *Deprecation notice*:
@@ -26,6 +25,8 @@ module Elasticsearch
           #
           def bulk(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -46,7 +47,8 @@ module Elasticsearch
               payload = body
           end
 
-            perform_request(method, path, params, payload, { "Content-Type" => "application/x-ndjson" }).body
+            headers.merge!("Content-Type" => "application/x-ndjson")
+            perform_request(method, path, params, payload, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

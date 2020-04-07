@@ -7,19 +7,20 @@ module Elasticsearch
     module API
       module AsyncSearch
         module Actions
-          # TODO: Description
-
+          # Retrieves the results of a previously submitted async search request given its ID.
           #
           # @option arguments [String] :id The async search ID
           # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
           # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
           # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
           #
           def get(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -30,7 +31,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

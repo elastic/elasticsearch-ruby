@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Predicts the future behavior of a time series by using its historical behavior.
           #
           # @option arguments [String] :job_id The ID of the job to forecast for
           # @option arguments [Time] :duration The duration of the forecast
           # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see [TODO]
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
           #
           def forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves configuration information for datafeeds.
           #
           # @option arguments [String] :datafeed_id The ID of the datafeeds to fetch
           # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
           #
           def get_datafeeds(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _datafeed_id = arguments.delete(:datafeed_id)
@@ -26,11 +27,11 @@ module Elasticsearch
                        "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}"
                      else
                        "_ml/datafeeds"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

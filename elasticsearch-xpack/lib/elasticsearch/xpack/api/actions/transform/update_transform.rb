@@ -7,12 +7,11 @@ module Elasticsearch
     module API
       module Transform
         module Actions
-          # TODO: Description
-
+          # Updates certain properties of a transform.
           #
           # @option arguments [String] :transform_id The id of the transform.  (*Required*)
           # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The update transform definition (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
@@ -20,6 +19,8 @@ module Elasticsearch
           def update_transform(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -30,7 +31,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

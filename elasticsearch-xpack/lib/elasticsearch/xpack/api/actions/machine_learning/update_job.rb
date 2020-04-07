@@ -7,11 +7,10 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Updates certain properties of an anomaly detection job.
           #
           # @option arguments [String] :job_id The ID of the job to create
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The job update settings (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
@@ -19,6 +18,8 @@ module Elasticsearch
           def update_job(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

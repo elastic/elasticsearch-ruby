@@ -7,12 +7,15 @@ module Elasticsearch
     module API
       module License
         module Actions
-          # TODO: Description
-
+          # Deletes licensing information for the cluster
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html
           #
           def delete(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_DELETE
@@ -20,7 +23,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

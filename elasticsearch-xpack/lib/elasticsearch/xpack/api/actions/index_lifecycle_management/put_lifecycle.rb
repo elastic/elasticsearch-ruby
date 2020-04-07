@@ -7,17 +7,18 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-          # TODO: Description
-
+          # Creates a lifecycle policy
           #
           # @option arguments [String] :policy The name of the index lifecycle policy
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The lifecycle policy definition to register
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-put-lifecycle.html
           #
           def put_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -28,7 +29,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

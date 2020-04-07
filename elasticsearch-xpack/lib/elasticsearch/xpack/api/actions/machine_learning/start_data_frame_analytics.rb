@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Starts a data frame analytics job.
           #
           # @option arguments [String] :id The ID of the data frame analytics to start
           # @option arguments [Time] :timeout Controls the time to wait until the task has started. Defaults to 20 seconds
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The start data frame analytics parameters
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
           #
           def start_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

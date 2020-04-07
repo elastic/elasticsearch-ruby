@@ -7,17 +7,18 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
-          # TODO: Description
-
+          # Acknowledges a watch, manually throttling the execution of the watch's actions.
           #
           # @option arguments [String] :watch_id Watch ID
           # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
           #
           def ack_watch(arguments = {})
             raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -34,7 +35,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end
