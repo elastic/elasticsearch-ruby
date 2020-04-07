@@ -12,14 +12,16 @@ module Elasticsearch
         # @option arguments [String] :name The name of the alias to be created or updated
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings for the alias, such as `routing` or `filter`
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
         #
         def put_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -34,7 +36,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

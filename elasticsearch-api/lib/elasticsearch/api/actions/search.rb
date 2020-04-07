@@ -59,7 +59,7 @@ module Elasticsearch
       # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
       # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL
       #
       # *Deprecation notice*:
@@ -67,9 +67,11 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
       #
       def search(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
         arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
 
@@ -84,11 +86,11 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/_search"
                  else
                    "_search"
-end
+    end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

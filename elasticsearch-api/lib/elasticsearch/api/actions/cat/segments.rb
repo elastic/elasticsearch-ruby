@@ -17,11 +17,13 @@ module Elasticsearch
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-segments.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-segments.html
         #
         def segments(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -31,11 +33,11 @@ module Elasticsearch
                      "_cat/segments/#{Utils.__listify(_index)}"
                    else
                      "_cat/segments"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

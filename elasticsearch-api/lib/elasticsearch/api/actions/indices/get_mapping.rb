@@ -18,16 +18,18 @@ module Elasticsearch
 
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # *Deprecation notice*:
         # Specifying types in urls has been deprecated
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-get-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-mapping.html
         #
         def get_mapping(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -43,11 +45,11 @@ module Elasticsearch
                      "_mapping/#{Utils.__listify(_type)}"
                    else
                      "_mapping"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

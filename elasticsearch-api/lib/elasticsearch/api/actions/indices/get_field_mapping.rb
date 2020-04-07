@@ -19,18 +19,20 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # *Deprecation notice*:
         # Specifying types in urls has been deprecated
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
           _fields = arguments.delete(:field) || arguments.delete(:fields)
           raise ArgumentError, "Required argument 'field' missing" unless _fields
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -51,7 +53,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

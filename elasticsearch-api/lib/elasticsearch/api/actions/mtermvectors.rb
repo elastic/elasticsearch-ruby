@@ -23,6 +23,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte,force)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
       #
       # *Deprecation notice*:
@@ -30,9 +31,11 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-multi-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
         ids = arguments.delete(:ids)
 
@@ -47,7 +50,7 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/_mtermvectors"
                  else
                    "_mtermvectors"
-end
+    end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         if ids
@@ -55,7 +58,7 @@ end
         else
           body = arguments[:body]
     end
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

@@ -11,13 +11,14 @@ module Elasticsearch
         # @option arguments [String] :repository A repository name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
-
-        # @option arguments [Hash] :body TODO: Description
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def cleanup_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -27,8 +28,8 @@ module Elasticsearch
           path   = "_snapshot/#{Utils.__listify(_repository)}/_cleanup"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = arguments[:body]
-          perform_request(method, path, params, body).body
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

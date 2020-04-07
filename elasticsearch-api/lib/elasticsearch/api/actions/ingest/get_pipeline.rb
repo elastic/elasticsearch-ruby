@@ -10,11 +10,13 @@ module Elasticsearch
         #
         # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/get-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html
         #
         def get_pipeline(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -24,11 +26,11 @@ module Elasticsearch
                      "_ingest/pipeline/#{Utils.__listify(_id)}"
                    else
                      "_ingest/pipeline"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

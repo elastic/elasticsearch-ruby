@@ -23,6 +23,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte,force)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define parameters and or supply a document to get termvectors for. See documentation.
       #
       # *Deprecation notice*:
@@ -30,10 +31,12 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-termvectors.html
       #
       def termvectors(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -59,7 +62,7 @@ module Elasticsearch
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Deprecated: Use the plural version, {#termvectors}

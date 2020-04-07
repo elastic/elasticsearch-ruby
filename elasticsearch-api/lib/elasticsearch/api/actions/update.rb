@@ -23,7 +23,7 @@ module Elasticsearch
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
       # *Deprecation notice*:
@@ -31,12 +31,14 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-update.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
       #
       def update(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -56,9 +58,9 @@ module Elasticsearch
 
         body = arguments[:body]
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+          Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
         else
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
       end
 

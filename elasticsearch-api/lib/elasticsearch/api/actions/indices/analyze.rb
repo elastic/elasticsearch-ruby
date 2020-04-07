@@ -10,12 +10,14 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [String] :index The name of the index to scope the operation
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-analyze.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
         #
         def analyze(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -25,11 +27,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_analyze"
                    else
                      "_analyze"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

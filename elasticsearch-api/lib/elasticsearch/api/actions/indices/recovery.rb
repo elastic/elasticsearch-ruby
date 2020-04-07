@@ -11,11 +11,13 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :detailed Whether to display detailed information about shard recovery
         # @option arguments [Boolean] :active_only Display only those recoveries that are currently on-going
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-recovery.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-recovery.html
         #
         def recovery(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -25,11 +27,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_recovery"
                    else
                      "_recovery"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

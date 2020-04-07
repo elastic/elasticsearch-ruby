@@ -14,10 +14,13 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         #   (options: open,closed,none,all)
 
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-synced-flush-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush-api.html
         #
         def flush_synced(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -27,14 +30,14 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_flush/synced"
                    else
                      "_flush/synced"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
         end
 

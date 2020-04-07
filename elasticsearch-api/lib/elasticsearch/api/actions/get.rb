@@ -22,17 +22,20 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte,force)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       #
       # *Deprecation notice*:
       # Specifying types in urls has been deprecated
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
       #
       def get(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -52,9 +55,9 @@ module Elasticsearch
 
         body = nil
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+          Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
         else
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
       end
 
