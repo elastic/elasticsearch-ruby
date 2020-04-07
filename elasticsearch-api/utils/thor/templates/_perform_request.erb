@@ -16,22 +16,23 @@ when 'mtermvectors'
 <%- end -%>
 <%- if ['bulk', 'msearch', 'msearch_template'].include? @method_name -%>
   <%= self.send("#{@method_name}_body_helper".to_s) %>
-  <%= '  '*(@namespace_depth+4) %>perform_request(method, path, params, payload, {"Content-Type" => "application/x-ndjson"}).body
+  headers.merge!("Content-Type" => "application/x-ndjson")
+  <%= '  '*(@namespace_depth+4) %>perform_request(method, path, params, payload, headers).body
 <%- elsif @method_name == 'ping' -%>
   <%= ping_perform_request %>
 <%- else -%>
   <%- if needs_ignore_404?(@endpoint_name) %>
     <%= __utils %>.__rescue_from_not_found do
-      perform_request(method, path, params, body).status == 200 ? true : false
+      perform_request(method, path, params, body, headers).status == 200 ? true : false
     end
   <%- elsif needs_complex_ignore_404?(@endpoint_name) -%>
     if Array(arguments[:ignore]).include?(404)
-      <%= __utils %>.__rescue_from_not_found { perform_request(method, path, params, body).body }
+      <%= __utils %>.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
     else
-      perform_request(method, path, params, body).body
+      perform_request(method, path, params, body, headers).body
     end
   <%- else -%>
-      perform_request(method, path, params, body).body
+      perform_request(method, path, params, body, headers).body
   <%- end -%>
 <%- end -%>
 <%= '  '*(@namespace_depth+3) %>end

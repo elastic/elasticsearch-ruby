@@ -73,7 +73,7 @@ module Elasticsearch
       def ping_perform_request
         <<~SRC
           begin
-            perform_request(method, path, params, body).status == 200 ? true : false
+            perform_request(method, path, params, body, headers).status == 200 ? true : false
           rescue Exception => e
             if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not\s*Found|404|ConnectionFailed/i
               false
