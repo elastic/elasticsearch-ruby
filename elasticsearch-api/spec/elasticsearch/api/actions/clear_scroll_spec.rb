@@ -11,7 +11,8 @@ describe 'client#clear_scroll' do
       'DELETE',
       '_search/scroll/abc123',
       {},
-      nil
+      nil,
+      {}
     ]
   end
 
@@ -26,7 +27,8 @@ describe 'client#clear_scroll' do
           'DELETE',
           '_search/scroll/abc123,def456',
           {},
-          nil
+          nil,
+          {}
       ]
     end
 

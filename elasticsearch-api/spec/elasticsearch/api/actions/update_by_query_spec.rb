@@ -10,8 +10,9 @@ describe 'client#update_by_query' do
     [
         'POST',
         'foo/_update_by_query',
-        { },
-        nil
+        {},
+        nil,
+        {}
     ]
   end
 

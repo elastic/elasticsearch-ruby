@@ -12,7 +12,7 @@ describe 'client.cluster#segments' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

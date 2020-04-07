@@ -12,7 +12,7 @@ describe 'client.cat#fielddata' do
         '_cat/fielddata',
         {},
         nil,
-        nil
+        {}
     ]
   end
 
@@ -28,7 +28,7 @@ describe 'client.cat#fielddata' do
           '_cat/fielddata/foo,bar',
           {},
           nil,
-          nil
+          {}
       ]
     end
 

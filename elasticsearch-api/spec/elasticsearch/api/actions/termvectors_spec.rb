@@ -11,7 +11,8 @@ describe 'client#termvectors' do
         'GET',
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 

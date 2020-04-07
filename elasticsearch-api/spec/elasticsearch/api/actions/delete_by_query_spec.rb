@@ -11,7 +11,8 @@ describe 'client#delete_by_query' do
       'POST',
       'foo/_delete_by_query',
       {},
-      { term: {} }
+      { term: {} },
+      {}
     ]
   end
 
@@ -31,7 +32,8 @@ describe 'client#delete_by_query' do
         'POST',
         'foo/_delete_by_query',
         { q: 'foo:bar' },
-        { query: 'query' }
+        { query: 'query' },
+        {}
       ]
     end
 

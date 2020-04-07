@@ -12,7 +12,7 @@ describe 'client.snapshot#restore' do
         '_snapshot/foo/bar/_restore',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

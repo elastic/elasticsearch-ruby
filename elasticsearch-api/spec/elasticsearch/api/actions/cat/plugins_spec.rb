@@ -12,7 +12,7 @@ describe 'client.cat#plugins' do
         '_cat/plugins',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

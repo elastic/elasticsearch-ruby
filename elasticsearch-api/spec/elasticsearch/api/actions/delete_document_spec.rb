@@ -11,7 +11,8 @@ describe 'client#delete' do
         'DELETE',
         'foo/bar/1',
         params,
-        nil
+        nil,
+        {}
     ]
   end
 
@@ -66,7 +67,8 @@ describe 'client#delete' do
           'DELETE',
           'foo%5Ebar/bar%2Fbam/1',
           params,
-          nil
+          nil,
+          {}
       ]
     end
 

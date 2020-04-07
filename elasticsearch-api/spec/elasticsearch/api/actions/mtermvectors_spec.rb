@@ -12,6 +12,7 @@ describe 'client#mtermvectors' do
         'my-index/_mtermvectors',
         { },
         body
+        {}
     ]
   end
 

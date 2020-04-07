@@ -11,7 +11,8 @@ describe 'client#create_document' do
         'PUT',
         'foo/_doc/123',
         { op_type: 'create' },
-        { foo: 'bar' }
+        { foo: 'bar' },
+        {}
     ]
   end
 
@@ -26,7 +27,8 @@ describe 'client#create_document' do
           'PUT',
           'foo/_doc/123',
           { op_type: 'create' },
-          { }
+          {},
+          {}
       ]
     end
 
@@ -42,7 +44,8 @@ describe 'client#create_document' do
           'PUT',
           'foo/_doc/1',
           { op_type: 'create' },
-          { foo: 'bar' }
+          { foo: 'bar' },
+          {}
       ]
     end
 
@@ -58,7 +61,8 @@ describe 'client#create_document' do
           'POST',
           'foo/_doc',
           { },
-          { foo: 'bar' }
+          { foo: 'bar' },
+          {}
       ]
     end
 

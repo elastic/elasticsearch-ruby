@@ -12,7 +12,7 @@ describe 'client.cat#shards' do
         '_cat/shards',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

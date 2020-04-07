@@ -10,8 +10,9 @@ describe 'client#reindex' do
     [
         'POST',
         '_reindex',
-        { },
-        { }
+        {},
+        {},
+        {}
     ]
   end
 

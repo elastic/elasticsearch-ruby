@@ -11,7 +11,8 @@ describe 'client#search_template' do
         'GET',
         'foo/_search/template',
         { },
-        { foo: 'bar' }
+        { foo: 'bar' },
+        {}
     ]
   end
 

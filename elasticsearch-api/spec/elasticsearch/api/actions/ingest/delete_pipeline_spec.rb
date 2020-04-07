@@ -12,7 +12,7 @@ describe 'client.ingest#delete_pipeline' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

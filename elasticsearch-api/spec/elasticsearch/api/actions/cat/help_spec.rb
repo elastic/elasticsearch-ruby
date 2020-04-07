@@ -12,7 +12,7 @@ describe 'client.cat#help' do
         '_cat',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

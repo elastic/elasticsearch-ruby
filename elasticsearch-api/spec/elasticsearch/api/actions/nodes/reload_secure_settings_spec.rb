@@ -12,7 +12,7 @@ describe 'client#reload_secure_settings' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

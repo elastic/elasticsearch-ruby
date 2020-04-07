@@ -12,7 +12,7 @@ describe 'client.cluster#split' do
         'foo/_split/bar',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

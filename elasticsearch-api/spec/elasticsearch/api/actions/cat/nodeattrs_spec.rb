@@ -12,7 +12,7 @@ describe 'client.cat#nodeattrs' do
         '_cat/nodeattrs',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

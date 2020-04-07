@@ -12,7 +12,7 @@ describe 'client.ingest#get_pipeline' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

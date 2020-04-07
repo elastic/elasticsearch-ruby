@@ -12,7 +12,7 @@ describe 'client.cluster#shard_stores' do
         '_shard_stores',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

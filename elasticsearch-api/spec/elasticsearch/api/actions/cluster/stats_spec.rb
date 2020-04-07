@@ -12,7 +12,7 @@ describe 'client.cluster#stats' do
         '_cluster/stats',
         {},
         nil,
-        nil
+        {}
     ]
   end
 
