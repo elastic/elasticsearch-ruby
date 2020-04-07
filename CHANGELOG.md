@@ -1,3 +1,60 @@
+## 7.6.0
+
+### Client
+
+- Support for Elasticsearch version `7.6`.
+- Last release supporting Ruby 2.4. Ruby 2.4 has reached it's end of life and no more security updates will be provided, users are suggested to update to a newer version of Ruby.
+
+#### API Key Support
+The client now supports API Key Authentication, check "Authentication" on the [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#authentication) for information on how to use it.
+
+#### X-Opaque-Id Support
+
+The client now supports identifying running tasks with X-Opaque-Id. Check [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#identifying-running-tasks-with-x-opaque-id) for information on how to use X-Opaque-Id.
+
+#### Faraday migrated to 1.0
+
+We're now using version 1.0 of Faraday:
+- The client initializer was modified but this should not disrupt final users at all, check [this commit](https://github.com/elastic/elasticsearch-ruby/commit/0fdc6533f4621a549a4cb99e778bbd827461a2d0) for more information.
+- Migrated error checking to remove the deprecated `Faraday::Error` namespace.
+- **This change is not compatible with [Typhoeus](https://github.com/typhoeus/typhoeus)**. The latest release is 1.3.1, but it's [still using the deprecated `Faraday::Error` namespace](https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100). This has been fixed on master, but the last release was November 6, 2018. Version 1.4.0 should be ok once it's released.
+- Note: Faraday 1.0 drops official support for JRuby. It installs fine on the tests we run with JRuby in this repo, but it's something we should pay attention to.
+
+Reference: [Upgrading - Faraday 1.0](https://github.com/lostisland/faraday/blob/master/UPGRADING.md)
+
+[Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/808)
+
+### API
+
+#### API Changes:
+- `cat.indices`: argument `bytes` options were: `b,k,m,g` and are now `b,k,kb,m,mb,g,gb,t,tb,p,pb`.
+- `delete_by_query`: New parameter `analyzer` - The analyzer to use for the query string.
+- `indices.put_template`: Removed parameters: `timeout`, `flat_settings`.
+- `msearch_template`: New Parameter `ccs_minimize_roundtrips` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+- `rank_eval`: New parameter `search_type` - Search operation type (options: `query_then_fetch,dfs_query_then_fetch`).
+- `search_template`: New parameter `ccs_minimize_roundtrips` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+
+#### New API endpoints:
+- `get_script_context`
+- `get_script_languages`
+
+#### Warnings:
+Synced flush is deprecated and will be removed in 8.0.
+
+### X-Pack
+
+#### New API endpoints:
+- `ml/delete_trained_model`
+- `ml/explain_data_frame_analytics`
+- `ml/get_trained_models`
+- `ml/get_trained_models_stats`
+- `ml/put_trained_model`
+
+#### API changes:
+- `license/get`: Added parameter `accept_enterprise`.
+- `ml/delete_data_frame_analytics` Added parameter `force`.
+-  `monitoring/bulk` - Removed parameter `system_version`.
+
 ## 7.5.0
 
 - Support for Elasticsearch 7.5.
