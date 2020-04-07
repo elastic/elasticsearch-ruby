@@ -78,6 +78,7 @@ Full documentation is available at <http://rubydoc.info/gems/elasticsearch-trans
 * [Connect using an Elastic Cloud ID](#connect-using-an-elastic-cloud-id)
 * [Authentication](#authentication)
 * [Logging](#logging)
+* [Custom HTTP Headers](#custom-http-headers)
 * [Identifying running tasks with X-Opaque-Id](#identifying-running-tasks-with-x-opaque-id)
 * [Setting Timeouts](#setting-timeouts)
 * [Randomizing Hosts](#randomizing-hosts)
@@ -189,30 +190,55 @@ Elasticsearch::Client.new(
 To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
 set the `log` argument:
 
-    Elasticsearch::Client.new log: true
+```ruby
+Elasticsearch::Client.new log: true
+```
+
 
 To trace requests and responses in the _Curl_ format, set the `trace` argument:
 
-    Elasticsearch::Client.new trace: true
+```ruby
+Elasticsearch::Client.new trace: true
+```
 
 You can customize the default logger or tracer:
 
+```ruby
     client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
     client.transport.logger.level = Logger::INFO
+```
 
 Or, you can use a custom `::Logger` instance:
 
-    Elasticsearch::Client.new logger: Logger.new(STDERR)
+```ruby
+Elasticsearch::Client.new logger: Logger.new(STDERR)
+```
 
 You can pass the client any conforming logger implementation:
 
-    require 'logging' # https://github.com/TwP/logging/
+```ruby
+require 'logging' # https://github.com/TwP/logging/
 
-    log = Logging.logger['elasticsearch']
-    log.add_appenders Logging.appenders.stdout
-    log.level = :info
+log = Logging.logger['elasticsearch']
+log.add_appenders Logging.appenders.stdout
+log.level = :info
 
-    client = Elasticsearch::Client.new logger: log
+client = Elasticsearch::Client.new logger: log
+```
+
+### Custom HTTP Headers
+
+You can set a custom HTTP header on the client's initializer:
+
+```ruby
+client = Elasticsearch::Client.new(
+  transport_options: {
+    headers:
+      {user_agent: "My Ruby App"}
+  }
+)
+```
+
 ### Identifying running tasks with X-Opaque-Id
 
 The X-Opaque-Id header allows to track certain calls, or associate certain tasks with the client that started them ([more on the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks)). To use this feature, you need to set an id for `opaque_id` on the client on each request. Example:
@@ -330,25 +356,29 @@ preferring HTTP clients with support for persistent connections.
 
 To use the [_Patron_](https://github.com/toland/patron) HTTP, for example, just require it:
 
-    require 'patron'
+```ruby
+require 'patron'
+```
 
 Then, create a new client, and the _Patron_  gem will be used as the "driver":
 
-    client = Elasticsearch::Client.new
+```ruby
+client = Elasticsearch::Client.new
 
-    client.transport.connections.first.connection.builder.handlers
-    # => [Faraday::Adapter::Patron]
+client.transport.connections.first.connection.builder.adapter
+# => Faraday::Adapter::Patron
 
-    10.times do
-      client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
-        puts "#{n['name']} : #{n['http']['total_opened']}"
-      end
-    end
+10.times do
+  client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
+    puts "#{n['name']} : #{n['http']['total_opened']}"
+  end
+end
 
-    # => Stiletoo : 24
-    # => Stiletoo : 24
-    # => Stiletoo : 24
-    # => ...
+# => Stiletoo : 24
+# => Stiletoo : 24
+# => Stiletoo : 24
+# => ...
+```
 
 To use a specific adapter for _Faraday_, pass it as the `adapter` argument:
 
