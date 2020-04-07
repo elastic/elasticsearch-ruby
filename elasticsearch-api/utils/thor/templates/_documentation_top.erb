@@ -12,7 +12,8 @@
 <%# URL parameters -%>
 <%- @params.each do |name, info| -%>
   <%= docs_helper(name, info) -%>
-<%- end %>
+<%- end -%>
+# @option arguments [Hash] :headers Custom HTTP headers
 <%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] ? @spec['body']['description'].strip : 'TODO: Description') + (@spec['body']['required'] ? ' (*Required*)' : '') + "\n" if @spec['body'] -%>
 <% if @deprecation_note -%>
   #
