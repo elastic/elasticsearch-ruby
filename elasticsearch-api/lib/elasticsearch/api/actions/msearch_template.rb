@@ -16,7 +16,7 @@ module Elasticsearch
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       #
       # *Deprecation notice*:
@@ -24,10 +24,12 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-multi-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
       #
       def msearch_template(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -56,7 +58,8 @@ module Elasticsearch
           payload = body
       end
 
-        perform_request(method, path, params, payload, { "Content-Type" => "application/x-ndjson" }).body
+        headers.merge!("Content-Type" => "application/x-ndjson")
+        perform_request(method, path, params, payload, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

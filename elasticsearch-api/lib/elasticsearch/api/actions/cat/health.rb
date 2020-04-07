@@ -13,15 +13,17 @@ module Elasticsearch
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values
-        #   (options: d (Days),h (Hours),m (Minutes),s (Seconds),ms (Milliseconds),micros (Microseconds),nanos (Nanoseconds))
+        #   (options: d,h,m,s,ms,micros,nanos)
 
         # @option arguments [Boolean] :ts Set to false to disable timestamping
         # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cat-health.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-health.html
         #
         def health(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
@@ -30,7 +32,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

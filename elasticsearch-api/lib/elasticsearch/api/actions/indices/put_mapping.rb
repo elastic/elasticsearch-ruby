@@ -18,6 +18,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         #   (options: open,closed,hidden,none,all)
 
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The mapping definition (*Required*)
         #
         # *Deprecation notice*:
@@ -25,10 +26,12 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-put-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
         #
         def put_mapping(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -47,7 +50,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

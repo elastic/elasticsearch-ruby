@@ -12,14 +12,16 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :verify Whether to verify the repository after creation
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The repository definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def create_repository(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -30,7 +32,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

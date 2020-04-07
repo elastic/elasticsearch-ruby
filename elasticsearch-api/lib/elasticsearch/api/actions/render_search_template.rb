@@ -8,12 +8,14 @@ module Elasticsearch
       # Allows to use the Mustache language to pre-render a search definition.
       #
       # @option arguments [String] :id The id of the stored search template
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-template.html#_validating_templates
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates
       #
       def render_search_template(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -23,11 +25,11 @@ module Elasticsearch
                    "_render/template/#{Utils.__listify(_id)}"
                  else
                    "_render/template"
-end
+    end
         params = {}
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
     end
     end

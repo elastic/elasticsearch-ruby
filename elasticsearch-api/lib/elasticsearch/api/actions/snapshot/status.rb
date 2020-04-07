@@ -12,11 +12,13 @@ module Elasticsearch
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def status(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
@@ -30,14 +32,14 @@ module Elasticsearch
                      "_snapshot/#{Utils.__listify(_repository)}/_status"
                    else
                      "_snapshot/_status"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
         end
 

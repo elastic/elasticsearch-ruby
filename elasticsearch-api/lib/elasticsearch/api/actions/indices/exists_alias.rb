@@ -16,12 +16,14 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
         #
         def exists_alias(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -40,7 +42,7 @@ module Elasticsearch
           body = nil
 
           Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
+            perform_request(method, path, params, body, headers).status == 200 ? true : false
           end
         end
 

@@ -26,7 +26,7 @@ module Elasticsearch
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params (*Required*)
       #
       # *Deprecation notice*:
@@ -34,10 +34,12 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
       #
       def search_template(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -56,7 +58,7 @@ module Elasticsearch
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

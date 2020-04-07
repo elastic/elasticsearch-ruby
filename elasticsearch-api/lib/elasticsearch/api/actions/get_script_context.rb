@@ -7,11 +7,13 @@ module Elasticsearch
     module Actions
       # Returns all script contexts.
       #
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see [TODO]
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html
       #
       def get_script_context(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_GET
@@ -19,7 +21,7 @@ module Elasticsearch
         params = {}
 
         body = nil
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
     end
     end

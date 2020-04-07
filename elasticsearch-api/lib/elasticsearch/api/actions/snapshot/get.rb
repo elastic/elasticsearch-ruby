@@ -13,13 +13,15 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -33,9 +35,9 @@ module Elasticsearch
 
           body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
         end
 

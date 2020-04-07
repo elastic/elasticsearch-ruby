@@ -14,14 +14,16 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for on the shrunken index before the operation returns.
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-shrink-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-shrink-index.html
         #
         def shrink(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'target' missing" unless arguments[:target]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -34,7 +36,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

@@ -12,13 +12,15 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of aliases to delete (supports wildcards); use `_all` to delete all aliases for the specified indices.
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-aliases.html
         #
         def delete_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -33,7 +35,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

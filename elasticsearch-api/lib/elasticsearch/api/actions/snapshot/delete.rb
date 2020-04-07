@@ -11,13 +11,15 @@ module Elasticsearch
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot A snapshot name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -31,9 +33,9 @@ module Elasticsearch
 
           body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
         end
 

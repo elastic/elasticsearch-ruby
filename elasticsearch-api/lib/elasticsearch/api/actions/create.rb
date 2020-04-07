@@ -23,7 +23,7 @@ module Elasticsearch
       #   (options: internal,external,external_gte)
 
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
       # *Deprecation notice*:
@@ -31,7 +31,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-index_.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
       #
       def create(arguments = {})
         if arguments[:id]

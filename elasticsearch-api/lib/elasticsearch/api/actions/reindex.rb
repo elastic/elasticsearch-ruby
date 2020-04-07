@@ -17,13 +17,15 @@ module Elasticsearch
       # @option arguments [Time] :scroll Control how long to keep the search context alive
       # @option arguments [Number|string] :slices The number of slices this task should be divided into. Defaults to 1, meaning the task isn't sliced into subtasks. Can be set to `auto`.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL and the prototype for the index request. (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docs-reindex.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html
       #
       def reindex(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -32,7 +34,7 @@ module Elasticsearch
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

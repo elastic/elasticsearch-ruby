@@ -11,13 +11,15 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings to be updated. Can be either `transient` or `persistent` (survives cluster restart). (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.5/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
         #
         def put_settings(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -26,7 +28,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body] || {}
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
