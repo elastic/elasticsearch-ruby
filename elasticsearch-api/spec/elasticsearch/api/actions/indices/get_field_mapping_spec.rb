@@ -12,7 +12,7 @@ describe 'client.cluster#get_field_mapping' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

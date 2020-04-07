@@ -12,7 +12,7 @@ describe 'client.cluster#put_settings' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

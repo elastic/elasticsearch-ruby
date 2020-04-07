@@ -12,7 +12,7 @@ describe 'client.cluster#pending_tasks' do
         '_cluster/pending_tasks',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

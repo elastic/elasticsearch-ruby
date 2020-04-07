@@ -12,7 +12,7 @@ describe 'client.ingest#simulate' do
         url,
         {},
         {},
-        nil
+        {}
     ]
   end
 

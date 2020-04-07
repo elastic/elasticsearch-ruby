@@ -12,7 +12,7 @@ describe 'client.cluster#put_mapping' do
         url,
         {},
         body,
-        nil
+        {}
     ]
   end
 

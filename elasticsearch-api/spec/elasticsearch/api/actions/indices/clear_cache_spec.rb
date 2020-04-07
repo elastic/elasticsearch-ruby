@@ -12,7 +12,7 @@ describe 'client.indices#clear_cache' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

@@ -15,7 +15,8 @@ describe 'client#put_script' do
         'PUT',
         url,
         {},
-        { script: 'bar', lang: 'groovy' }
+        { script: 'bar', lang: 'groovy' },
+        {}
       ]
     end
 
@@ -30,7 +31,8 @@ describe 'client#put_script' do
         'PUT',
         url,
         {},
-        { script: 'bar' }
+        { script: 'bar' },
+        {}
       ]
     end
 

@@ -11,7 +11,8 @@ describe 'client#render_search_template' do
         'GET',
         '_render/template',
         {},
-        { foo: 'bar' }
+        { foo: 'bar' },
+        {}
       ]
     end
 
@@ -26,7 +27,8 @@ describe 'client#render_search_template' do
         'GET',
         '_render/template/foo',
         {},
-        { foo: 'bar' }
+        { foo: 'bar' },
+        {}
       ]
     end
 

@@ -12,7 +12,7 @@ describe 'client.tasks#cancel' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -11,7 +11,8 @@ describe 'client#field_caps' do
         'GET',
         'foo/_field_caps',
         { fields: 'bar' },
-        nil
+        nil,
+        {}
     ]
   end
 

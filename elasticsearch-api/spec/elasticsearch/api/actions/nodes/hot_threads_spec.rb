@@ -12,7 +12,7 @@ describe 'client.nodes#hot_threads' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

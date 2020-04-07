@@ -11,7 +11,8 @@ describe 'client#scroll' do
         'GET',
         '_search/scroll/cXVlcn...',
         {},
-        nil
+        nil,
+        {}
       ]
     end
 
@@ -26,7 +27,8 @@ describe 'client#scroll' do
         'GET',
         '_search/scroll',
         {},
-        { scroll_id: 'cXVlcn...' }
+        { scroll_id: 'cXVlcn...' },
+        {}
       ]
     end
 

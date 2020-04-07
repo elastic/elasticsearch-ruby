@@ -12,7 +12,7 @@ describe 'client.cluster#upgrade' do
         '_upgrade',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.cluster#state' do
         '_cluster/state',
         {},
         nil,
-        nil
+        {}
     ]
   end
 
@@ -28,7 +28,7 @@ describe 'client.cluster#state' do
           '_cluster/state/foo,bar',
           {},
           nil,
-          nil
+          {}
       ]
     end
 

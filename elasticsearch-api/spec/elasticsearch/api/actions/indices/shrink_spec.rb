@@ -12,7 +12,7 @@ describe 'client.cluster#shrink' do
         'foo/_shrink/bar',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -10,8 +10,9 @@ describe 'client#search_shards' do
     [
         'GET',
         '_search_shards',
-        { },
-        nil
+        {},
+        nil,
+        {}
     ]
   end
 

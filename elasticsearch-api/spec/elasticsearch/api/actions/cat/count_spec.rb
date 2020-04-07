@@ -12,7 +12,7 @@ describe 'client.cat#count' do
         '_cat/count',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

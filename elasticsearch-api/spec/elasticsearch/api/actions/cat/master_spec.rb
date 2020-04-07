@@ -12,7 +12,7 @@ describe 'client.cat#master' do
         '_cat/master',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

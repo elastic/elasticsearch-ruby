@@ -12,7 +12,7 @@ describe 'client.cluster#refresh' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

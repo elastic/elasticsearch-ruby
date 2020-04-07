@@ -12,7 +12,7 @@ describe 'client.tasks#get' do
         '_tasks/foo1',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -11,7 +11,8 @@ describe 'client#get' do
         'GET',
         url,
         params,
-        nil
+        nil,
+        {}
     ]
   end
 

@@ -11,7 +11,8 @@ describe 'client#mget' do
         'GET',
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 

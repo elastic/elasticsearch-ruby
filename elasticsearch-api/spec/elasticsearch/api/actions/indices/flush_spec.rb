@@ -12,7 +12,7 @@ describe 'client.indices#flush' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

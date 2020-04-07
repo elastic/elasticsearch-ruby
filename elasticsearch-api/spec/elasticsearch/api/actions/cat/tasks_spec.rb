@@ -12,7 +12,7 @@ describe 'client.cat#tasks' do
         '_cat/tasks',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

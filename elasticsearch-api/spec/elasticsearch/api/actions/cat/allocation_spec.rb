@@ -12,7 +12,7 @@ describe 'client.cat#allocation' do
         '_cat/allocation',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

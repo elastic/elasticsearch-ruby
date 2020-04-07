@@ -12,7 +12,7 @@ describe 'client.cat#aliases' do
         '_cat/aliases',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.cat#snapshots' do
         '_cat/snapshots/foo',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.nodes#info' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

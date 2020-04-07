@@ -12,7 +12,7 @@ describe 'client.cluster#get_alias' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

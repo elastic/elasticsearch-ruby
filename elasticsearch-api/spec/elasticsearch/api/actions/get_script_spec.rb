@@ -11,7 +11,8 @@ describe 'client#get_script' do
         'GET',
         url,
         params,
-        nil
+        nil,
+        {}
     ]
   end
 

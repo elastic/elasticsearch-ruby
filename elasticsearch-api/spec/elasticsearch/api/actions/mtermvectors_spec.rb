@@ -10,8 +10,9 @@ describe 'client#mtermvectors' do
     [
         'GET',
         'my-index/my-type/_mtermvectors',
-        { },
-        body
+        {},
+        body,
+        {}
     ]
   end
 

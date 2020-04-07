@@ -12,7 +12,7 @@ describe 'client.cluster#recovery' do
         'foo/_recovery',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

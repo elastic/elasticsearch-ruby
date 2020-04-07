@@ -12,7 +12,7 @@ describe 'client.snapshot#delete_repository' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

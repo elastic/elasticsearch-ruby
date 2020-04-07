@@ -12,7 +12,7 @@ describe 'client.cat#templates' do
         '_cat/templates',
         {},
         nil,
-        nil
+        {}
     ]
   end
 
