@@ -13,7 +13,8 @@ describe 'JSON builders' do
           'GET',
           '_search',
           {},
-          body
+          body,
+          {}
       ]
     end
 
@@ -45,7 +46,8 @@ describe 'JSON builders' do
           'GET',
           '_search',
           {},
-          body
+          body,
+          {}
       ]
     end
 

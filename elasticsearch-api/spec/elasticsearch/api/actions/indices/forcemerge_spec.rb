@@ -12,7 +12,7 @@ describe 'client.cluster#forcemerge' do
         '_forcemerge',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.indices#analyze' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

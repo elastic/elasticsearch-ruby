@@ -12,7 +12,7 @@ describe 'client.indices#clone' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

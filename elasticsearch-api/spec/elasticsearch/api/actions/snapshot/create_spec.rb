@@ -12,7 +12,7 @@ describe 'client.snapshot#create' do
         '_snapshot/foo/bar',
         {},
         {},
-        nil
+        {}
     ]
   end
 

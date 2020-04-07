@@ -12,7 +12,7 @@ describe 'client.cat#indices' do
         '_cat/indices',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

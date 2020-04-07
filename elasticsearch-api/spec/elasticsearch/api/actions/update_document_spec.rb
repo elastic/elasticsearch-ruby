@@ -11,7 +11,8 @@ describe 'client#update' do
         'POST',
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 

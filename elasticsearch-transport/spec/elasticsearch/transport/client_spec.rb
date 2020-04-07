@@ -1315,7 +1315,7 @@ describe Elasticsearch::Transport::Client do
           allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
           expect { client.search(opaque_id: 'opaque_id') }.not_to raise_error
           expect(client).to have_received(:perform_request)
-            .with('GET', '_search', { opaque_id: 'opaque_id' }, nil)
+            .with('GET', '_search', { opaque_id: 'opaque_id' }, nil, {})
         end
       end
     end

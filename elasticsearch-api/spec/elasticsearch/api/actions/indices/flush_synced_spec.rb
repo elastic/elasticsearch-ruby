@@ -12,7 +12,7 @@ describe 'client.indices#flush_synced' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

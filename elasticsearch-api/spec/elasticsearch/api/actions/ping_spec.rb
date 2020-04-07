@@ -10,8 +10,9 @@ describe 'client#ping' do
     [
         'HEAD',
         '',
-        { },
-        nil
+        {},
+        nil,
+        {}
     ]
   end
 

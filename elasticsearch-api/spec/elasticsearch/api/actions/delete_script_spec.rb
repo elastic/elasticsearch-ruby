@@ -12,7 +12,8 @@ describe 'client#delete_script' do
           'DELETE',
           '_scripts/foo',
           {},
-          nil
+          nil,
+          {}
       ]
     end
 

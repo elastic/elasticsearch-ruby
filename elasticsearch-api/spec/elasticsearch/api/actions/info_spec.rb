@@ -11,7 +11,8 @@ describe 'client#info' do
         'GET',
         '',
         { },
-        nil
+        nil,
+        {}
     ]
   end
 

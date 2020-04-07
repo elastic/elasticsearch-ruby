@@ -12,7 +12,7 @@ describe 'client.cluster#rollover' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

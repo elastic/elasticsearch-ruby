@@ -12,7 +12,7 @@ describe 'client.cat#segments' do
       url,
       {},
       nil,
-      nil
+      {}
     ]
   end
 

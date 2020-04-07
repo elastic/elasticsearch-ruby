@@ -12,7 +12,7 @@ describe 'client.indices#open' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

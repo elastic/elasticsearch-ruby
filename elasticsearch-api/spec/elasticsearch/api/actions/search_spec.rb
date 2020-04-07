@@ -11,7 +11,8 @@ describe 'client#search' do
         'GET',
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 

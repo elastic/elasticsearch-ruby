@@ -12,7 +12,7 @@ describe 'client.tasks#list' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

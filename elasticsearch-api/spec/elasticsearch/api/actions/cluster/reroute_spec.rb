@@ -12,7 +12,7 @@ describe 'client.cluster#reroute' do
         '_cluster/reroute',
         {},
         {},
-        nil
+        {}
     ]
   end
 
@@ -28,7 +28,7 @@ describe 'client.cluster#reroute' do
           '_cluster/reroute',
           {},
           { commands: [ move: { index: 'myindex', shard: 0 }] },
-          nil
+          {}
       ]
     end
 

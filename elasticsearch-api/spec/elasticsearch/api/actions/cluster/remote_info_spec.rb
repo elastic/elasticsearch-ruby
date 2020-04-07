@@ -12,7 +12,7 @@ describe 'client.cluster#remote_info' do
         '_remote/info',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

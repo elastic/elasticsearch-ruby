@@ -12,7 +12,7 @@ describe 'client.indices#delete_alias' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

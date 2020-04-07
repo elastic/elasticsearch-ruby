@@ -12,7 +12,7 @@ describe 'client.snapshot#get_repository' do
         '_snapshot/foo',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

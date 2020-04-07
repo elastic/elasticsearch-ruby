@@ -12,7 +12,7 @@ describe 'client.indices#delete_template' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.cat#nodes' do
         '_cat/nodes',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

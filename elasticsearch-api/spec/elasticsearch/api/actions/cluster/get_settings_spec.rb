@@ -12,7 +12,7 @@ describe 'client.cluster#get_settings' do
         '_cluster/settings',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

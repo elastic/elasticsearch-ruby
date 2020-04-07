@@ -12,7 +12,7 @@ describe 'client.cluster#put_alias' do
         url,
         {},
         body,
-        nil
+        {}
     ]
   end
 
