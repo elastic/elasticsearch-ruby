@@ -83,6 +83,7 @@ Full documentation is available at <http://rubydoc.info/gems/elasticsearch-trans
 * [Connect using an Elastic Cloud ID](#connect-using-an-elastic-cloud-id)
 * [Authentication](#authentication)
 * [Logging](#logging)
+* [Custom HTTP Headers](#custom-http-headers)
 * [Identifying running tasks with X-Opaque-Id](#identifying-running-tasks-with-x-opaque-id)
 * [Setting Timeouts](#setting-timeouts)
 * [Randomizing Hosts](#randomizing-hosts)
@@ -248,6 +249,19 @@ log.level = :info
 client = Elasticsearch::Client.new logger: log
 ```
 
+### Custom HTTP Headers
+
+You can set a custom HTTP header on the client's initializer:
+
+```ruby
+client = Elasticsearch::Client.new(
+  transport_options: {
+    headers:
+      {user_agent: "My Ruby App"}
+  }
+)
+```
+
 ### Identifying running tasks with X-Opaque-Id
 
 The X-Opaque-Id header allows to track certain calls, or associate certain tasks with the client that started them ([more on the Elasticsearch docs](https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks)). To use this feature, you need to set an id for `opaque_id` on the client on each request. Example:
@@ -400,8 +414,8 @@ Then, create a new client, and the _Patron_  gem will be used as the "driver":
 ```ruby
 client = Elasticsearch::Client.new
 
-client.transport.connections.first.connection.builder.handlers
-# => [Faraday::Adapter::Patron]
+client.transport.connections.first.connection.builder.adapter
+# => Faraday::Adapter::Patron
 
 10.times do
   client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
