@@ -12,7 +12,8 @@
 <%# URL parameters -%>
 <%- @params.each do |name, info| -%>
   <%= docs_helper(name, info) -%>
-<%- end %>
+<%- end -%>
+# @option arguments [Hash] :headers Custom HTTP headers
 <%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] ? @spec['body']['description'].strip : 'TODO: Description') + (@spec['body']['required'] ? ' (*Required*)' : '') + "\n" if @spec['body'] -%>
 <% if @deprecation_note -%>
   #
@@ -23,5 +24,5 @@
 <% end -%>
 <%= '  '*(@namespace_depth+3) -%>#
 <%# Documentation link -%>
-<%=  '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'].gsub!(/\/(current|master)\//, '/7.5/') : "[TODO]" %>
+<%=  '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? @spec['documentation']['url'] : "[TODO]" %>
 <%= '  '*(@namespace_depth+3) %>#
