@@ -12,7 +12,7 @@ describe 'client.snapshot#status' do
         url,
         {},
         nil,
-        nil
+        {}
     ]
   end
 

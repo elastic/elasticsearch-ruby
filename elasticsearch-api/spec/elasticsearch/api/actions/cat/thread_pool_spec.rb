@@ -12,7 +12,7 @@ describe 'client.cat#thread_pool' do
         '_cat/thread_pool',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

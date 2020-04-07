@@ -12,7 +12,7 @@ describe 'client.indices#delete' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

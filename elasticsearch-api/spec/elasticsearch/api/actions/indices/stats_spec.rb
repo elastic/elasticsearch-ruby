@@ -12,7 +12,7 @@ describe 'client.cluster#stats' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

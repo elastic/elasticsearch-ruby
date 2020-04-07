@@ -12,7 +12,7 @@ describe 'client.cat#recovery' do
         '_cat/recovery',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

@@ -11,7 +11,8 @@ describe 'client#index' do
         request_type,
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 

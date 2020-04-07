@@ -11,7 +11,8 @@ describe 'client#exists' do
         'HEAD',
         url,
         params,
-        nil
+        nil,
+        {}
     ]
   end
 

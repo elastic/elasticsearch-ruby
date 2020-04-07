@@ -12,7 +12,7 @@ describe 'client.indices#exists_type' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 

@@ -11,7 +11,8 @@ describe 'client#count' do
       'GET',
       '_count',
       {},
-      nil
+      nil,
+      {}
     ]
   end
 
@@ -26,7 +27,8 @@ describe 'client#count' do
         'GET',
         'foo,bar/t1,t2/_count',
         {},
-        nil
+        nil,
+        {}
       ]
     end
 
@@ -42,7 +44,8 @@ describe 'client#count' do
         'POST',
         '_count',
         {},
-        { match: { foo: 'bar' } }
+        { match: { foo: 'bar' } },
+        {}
       ]
     end
 

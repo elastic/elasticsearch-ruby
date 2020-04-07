@@ -12,7 +12,7 @@ describe 'client.cluster#allocation_explain' do
         '_cluster/allocation/explain',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

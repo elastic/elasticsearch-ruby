@@ -12,7 +12,7 @@ describe 'client.cat#health' do
         '_cat/health',
         {},
         nil,
-        nil
+        {}
     ]
   end
 

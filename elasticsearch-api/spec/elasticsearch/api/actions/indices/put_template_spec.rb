@@ -12,7 +12,7 @@ describe 'client.cluster#put_template' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

@@ -12,7 +12,7 @@ describe 'client.cluster#validate_query' do
         url,
         params,
         body,
-        nil
+        {}
     ]
   end
 

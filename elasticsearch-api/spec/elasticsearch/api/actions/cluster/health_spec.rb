@@ -12,7 +12,7 @@ describe 'client.cluster#health' do
         '_cluster/health',
         {},
         nil,
-        nil
+        {}
     ]
   end
 
@@ -28,7 +28,7 @@ describe 'client.cluster#health' do
           '_cluster/health',
           { level: 'indices' },
           nil,
-          nil
+          {}
       ]
     end
 
@@ -45,7 +45,7 @@ describe 'client.cluster#health' do
           '_cluster/health/foo',
           {},
           nil,
-          nil
+          {}
       ]
     end
 

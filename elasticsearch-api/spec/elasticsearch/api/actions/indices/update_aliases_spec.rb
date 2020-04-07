@@ -12,7 +12,7 @@ describe 'client.cluster#update_aliases' do
         '_aliases',
         params,
         body,
-        nil
+        {}
     ]
   end
 
