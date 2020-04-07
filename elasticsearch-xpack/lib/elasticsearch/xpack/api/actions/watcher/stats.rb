@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module Watcher
         module Actions
-          # TODO: Description
-
+          # Retrieves the current Watcher metrics.
           #
           # @option arguments [List] :metric Controls what additional stat metrics should be include in the response
           #   (options: _all,queued_watches,current_watches,pending_watches)
@@ -17,11 +16,13 @@ module Elasticsearch
           #   (options: _all,queued_watches,current_watches,pending_watches)
 
           # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
           #
           def stats(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _metric = arguments.delete(:metric)
@@ -31,11 +32,11 @@ module Elasticsearch
                        "_watcher/stats/#{Elasticsearch::API::Utils.__listify(_metric)}"
                      else
                        "_watcher/stats"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

@@ -6,15 +6,16 @@ module Elasticsearch
   module XPack
     module API
       module Actions
-        # TODO: Description
-
+        # Retrieves usage information about the installed X-Pack features.
         #
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
         #
         def usage(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
@@ -22,7 +23,7 @@ module Elasticsearch
           params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

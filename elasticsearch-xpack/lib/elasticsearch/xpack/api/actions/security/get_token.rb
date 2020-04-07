@@ -7,14 +7,17 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # TODO: Description
-
+          # Creates a bearer token for access without requiring basic authentication.
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The token request to get (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
           #
           def get_token(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -23,7 +26,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

@@ -7,15 +7,16 @@ module Elasticsearch
     module API
       module Rollup
         module Actions
-          # TODO: Description
-
+          # Retrieves the configuration, stats, and status of rollup jobs.
           #
           # @option arguments [String] :id The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-job.html
           #
           def get_jobs(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _id = arguments.delete(:id)
@@ -25,11 +26,11 @@ module Elasticsearch
                        "_rollup/job/#{Elasticsearch::API::Utils.__listify(_id)}"
                      else
                        "_rollup/job"
-  end
+            end
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

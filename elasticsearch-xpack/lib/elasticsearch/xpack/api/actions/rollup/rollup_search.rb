@@ -7,14 +7,13 @@ module Elasticsearch
     module API
       module Rollup
         module Actions
-          # TODO: Description
-
+          # Enables searching rolled-up data using the standard query DSL.
           #
           # @option arguments [List] :index The indices or index-pattern(s) (containing rollup or regular data) that should be searched
           # @option arguments [String] :type The doc type inside the index   *Deprecated*
           # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
           # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The search request body (*Required*)
           #
           # *Deprecation notice*:
@@ -22,11 +21,13 @@ module Elasticsearch
           # Deprecated since version 7.0.0
           #
           #
-          # @see
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html
           #
           def rollup_search(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -43,7 +44,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

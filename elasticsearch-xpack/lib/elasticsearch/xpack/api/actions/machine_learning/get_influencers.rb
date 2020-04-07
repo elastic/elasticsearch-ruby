@@ -7,10 +7,9 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves anomaly detection job results for one or more influencers.
           #
-          # @option arguments [String] :job_id [TODO]
+          # @option arguments [String] :job_id Identifier for the anomaly detection job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
           # @option arguments [Int] :from skips a number of influencers
           # @option arguments [Int] :size specifies a max number of influencers to get
@@ -19,13 +18,15 @@ module Elasticsearch
           # @option arguments [Double] :influencer_score influencer score threshold for the requested influencers
           # @option arguments [String] :sort sort field for the requested influencers
           # @option arguments [Boolean] :desc whether the results should be sorted in decending order
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Influencer selection criteria
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
           #
           def get_influencers(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -36,7 +37,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

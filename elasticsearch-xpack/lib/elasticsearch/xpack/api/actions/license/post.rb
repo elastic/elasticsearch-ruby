@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module License
         module Actions
-          # TODO: Description
-
+          # Updates the license for the cluster.
           #
           # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body licenses to be installed
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html
           #
           def post(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_PUT
@@ -24,7 +25,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

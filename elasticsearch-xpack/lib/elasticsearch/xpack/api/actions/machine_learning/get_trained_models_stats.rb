@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves usage information for trained inference models.
           #
           # @option arguments [String] :model_id The ID of the trained models stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
           # @option arguments [Int] :from skips a number of trained models
           # @option arguments [Int] :size specifies a max number of trained models to get
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
           #
           def get_trained_models_stats(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _model_id = arguments.delete(:model_id)
@@ -28,11 +29,11 @@ module Elasticsearch
                        "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}/_stats"
                      else
                        "_ml/inference/_stats"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

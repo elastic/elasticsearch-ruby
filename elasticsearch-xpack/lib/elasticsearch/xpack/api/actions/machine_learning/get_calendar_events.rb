@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves information about the scheduled events in calendars.
           #
           # @option arguments [String] :calendar_id The ID of the calendar containing the events
           # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
@@ -16,12 +15,14 @@ module Elasticsearch
           # @option arguments [Date] :end Get events before this time
           # @option arguments [Int] :from Skips a number of events
           # @option arguments [Int] :size Specifies a max number of events to get
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see [TODO]
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html
           #
           def get_calendar_events(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -32,7 +33,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

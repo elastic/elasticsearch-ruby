@@ -9,13 +9,15 @@ module Elasticsearch
         module Actions
           # Translates SQL into Elasticsearch queries
           #
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate.html
           #
           def translate(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -24,7 +26,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

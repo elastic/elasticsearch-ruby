@@ -7,12 +7,15 @@ module Elasticsearch
     module API
       module License
         module Actions
-          # TODO: Description
-
+          # Retrieves information about the status of the trial license.
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html
           #
           def get_trial_status(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_GET
@@ -20,7 +23,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

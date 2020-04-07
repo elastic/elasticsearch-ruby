@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module IndexLifecycleManagement
         module Actions
-          # TODO: Description
-
+          # Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
           #
           # @option arguments [String] :index The name of the index to explain
           # @option arguments [Boolean] :only_managed filters the indices included in the response to ones managed by ILM
           # @option arguments [Boolean] :only_errors filters the indices included in the response to ones in an ILM error state, implies only_managed
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
           #
           def explain_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

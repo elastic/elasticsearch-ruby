@@ -7,12 +7,11 @@ module Elasticsearch
     module API
       module DataFrameTransformDeprecated
         module Actions
-          # TODO: Description
-
+          # Deletes an existing transform.
           #
           # @option arguments [String] :transform_id The id of the transform to delete
           # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # *Deprecation notice*:
           # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
@@ -24,6 +23,8 @@ module Elasticsearch
           def delete_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _transform_id = arguments.delete(:transform_id)
@@ -33,7 +34,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

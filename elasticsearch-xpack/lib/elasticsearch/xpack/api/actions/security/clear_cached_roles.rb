@@ -7,16 +7,17 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # TODO: Description
-
+          # Evicts roles from the native role cache.
           #
           # @option arguments [List] :name Role name
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
           #
           def clear_cached_roles(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -27,7 +28,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

@@ -7,15 +7,16 @@ module Elasticsearch
     module API
       module License
         module Actions
-          # TODO: Description
-
+          # Starts an indefinite basic license.
           #
           # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html
           #
           def post_start_basic(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_POST
@@ -23,7 +24,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

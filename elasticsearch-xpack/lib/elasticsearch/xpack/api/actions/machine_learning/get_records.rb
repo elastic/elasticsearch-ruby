@@ -7,25 +7,26 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Retrieves anomaly records for an anomaly detection job.
           #
-          # @option arguments [String] :job_id [TODO]
+          # @option arguments [String] :job_id The ID of the job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
           # @option arguments [Int] :from skips a number of records
           # @option arguments [Int] :size specifies a max number of records to get
           # @option arguments [String] :start Start time filter for records
           # @option arguments [String] :end End time filter for records
-          # @option arguments [Double] :record_score [TODO]
+          # @option arguments [Double] :record_score Returns records with anomaly scores greater or equal than this value
           # @option arguments [String] :sort Sort records by a particular field
           # @option arguments [Boolean] :desc Set the sort direction
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Record selection criteria
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-record.html
           #
           def get_records(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -36,7 +37,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

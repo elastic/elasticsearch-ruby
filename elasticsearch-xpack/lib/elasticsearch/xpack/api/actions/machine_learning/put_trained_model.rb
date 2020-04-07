@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Creates an inference trained model.
           #
           # @option arguments [String] :model_id The ID of the trained models to store
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The trained model configuration (*Required*)
           #
-          # @see TODO
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-inference.html
           #
           def put_trained_model(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

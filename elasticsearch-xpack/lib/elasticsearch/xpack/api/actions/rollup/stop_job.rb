@@ -7,18 +7,19 @@ module Elasticsearch
     module API
       module Rollup
         module Actions
-          # TODO: Description
-
+          # Stops an existing, started rollup job.
           #
           # @option arguments [String] :id The ID of the job to stop
           # @option arguments [Boolean] :wait_for_completion True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
           # @option arguments [Time] :timeout Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-stop-job.html
           #
           def stop_job(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -29,7 +30,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

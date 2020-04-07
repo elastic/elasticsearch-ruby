@@ -7,8 +7,7 @@ module Elasticsearch
     module API
       module MachineLearning
         module Actions
-          # TODO: Description
-
+          # Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
           #
           # @option arguments [Int] :lines_to_sample How many lines of the file should be included in the analysis
           # @option arguments [Int] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
@@ -26,13 +25,15 @@ module Elasticsearch
           # @option arguments [String] :timestamp_field Optional parameter to specify the timestamp field in the file
           # @option arguments [String] :timestamp_format Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
           # @option arguments [Boolean] :explain Whether to include a commentary on how the structure was derived
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The contents of the file to be analyzed (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-find-file-structure.html
           #
           def find_file_structure(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -41,7 +42,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = Elasticsearch::API::Utils.__bulkify(arguments.delete(:body))
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

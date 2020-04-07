@@ -7,17 +7,18 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # TODO: Description
-
+          # Determines whether the specified user has a specified list of privileges.
           #
           # @option arguments [String] :user Username
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The privileges to test (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
           #
           def has_privileges(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -32,7 +33,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end
