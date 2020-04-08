@@ -12,7 +12,7 @@ describe 'client#set_upgrade_mode' do
        '_ml/set_upgrade_mode',
        {},
        nil,
-       nil
+       {}
     ]
   end
 
@@ -28,7 +28,7 @@ describe 'client#set_upgrade_mode' do
         '_ml/set_upgrade_mode',
         { enabled: true, timeout: '10m' },
         nil,
-        nil
+        {}
       ]
     end
 
