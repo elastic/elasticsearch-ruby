@@ -16,10 +16,13 @@ module Elasticsearch
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
       #   (options: open,closed,hidden,none,all)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html
       #
       def search_shards(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -29,11 +32,11 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/_search_shards"
                  else
                    "_search_shards"
-end
+    end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = nil
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

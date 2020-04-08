@@ -12,12 +12,14 @@ module Elasticsearch
         # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [List] :actions A comma-separated list of actions that should be cancelled. Leave empty to cancel all.
         # @option arguments [String] :parent_task_id Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
-        # @option arguments [Boolean] :wait_for_completion Should the request block until the cancellation of the task and its child tasks is completed. Defaults to false
-
+        # @option arguments [Boolean] :wait_for_completion Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
         #
         def cancel(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _task_id = arguments.delete(:task_id)
@@ -27,11 +29,11 @@ module Elasticsearch
                      "_tasks/#{Utils.__listify(_task_id)}/_cancel"
                    else
                      "_tasks/_cancel"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

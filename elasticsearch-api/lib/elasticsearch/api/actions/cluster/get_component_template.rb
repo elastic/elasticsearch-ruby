@@ -11,11 +11,13 @@ module Elasticsearch
         # @option arguments [List] :name The comma separated names of the component templates
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
         #
         def get_component_template(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
@@ -25,11 +27,11 @@ module Elasticsearch
                      "_component_template/#{Utils.__listify(_name)}"
                    else
                      "_component_template"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

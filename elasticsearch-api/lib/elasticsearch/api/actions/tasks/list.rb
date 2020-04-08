@@ -17,11 +17,13 @@ module Elasticsearch
         #   (options: nodes,parents,none)
 
         # @option arguments [Time] :timeout Explicit operation timeout
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
         #
         def list(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
@@ -29,7 +31,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

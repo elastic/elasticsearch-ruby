@@ -17,12 +17,14 @@ module Elasticsearch
 
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-exists.html
         #
         def exists(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -35,7 +37,7 @@ module Elasticsearch
           body = nil
 
           Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
+            perform_request(method, path, params, body, headers).status == 200 ? true : false
           end
         end
 

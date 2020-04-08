@@ -25,11 +25,13 @@ module Elasticsearch
         # @option arguments [List] :types A comma-separated list of document types for the `indexing` index metric
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
         #
         def stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -51,11 +53,11 @@ module Elasticsearch
                      "_nodes/stats/#{Utils.__listify(_metric)}"
                    else
                      "_nodes/stats"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

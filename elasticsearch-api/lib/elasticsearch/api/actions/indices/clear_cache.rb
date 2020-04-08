@@ -19,11 +19,13 @@ module Elasticsearch
 
         # @option arguments [List] :index A comma-separated list of index name to limit the operation
         # @option arguments [Boolean] :request Clear request cache
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
         #
         def clear_cache(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -33,11 +35,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_cache/clear"
                    else
                      "_cache/clear"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

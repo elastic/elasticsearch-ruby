@@ -18,12 +18,14 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-index.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -34,7 +36,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

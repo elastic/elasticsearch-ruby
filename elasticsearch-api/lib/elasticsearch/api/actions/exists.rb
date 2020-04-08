@@ -21,12 +21,15 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
       #
       def exists(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -41,7 +44,7 @@ module Elasticsearch
         body = nil
 
         Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body).status == 200 ? true : false
+          perform_request(method, path, params, body, headers).status == 200 ? true : false
         end
       end
 

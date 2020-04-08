@@ -15,11 +15,13 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Boolean] :verbose Includes detailed memory usage by Lucene.
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-segments.html
         #
         def segments(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -29,11 +31,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_segments"
                    else
                      "_segments"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

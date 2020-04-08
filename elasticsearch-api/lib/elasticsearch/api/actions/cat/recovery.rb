@@ -23,11 +23,13 @@ module Elasticsearch
         #   (options: d,h,m,s,ms,micros,nanos)
 
         # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-recovery.html
         #
         def recovery(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -37,12 +39,12 @@ module Elasticsearch
                      "_cat/recovery/#{Utils.__listify(_index)}"
                    else
                      "_cat/recovery"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

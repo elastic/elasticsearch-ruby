@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
         # @option arguments [Boolean] :rewrite Provide a more detailed explanation showing the actual Lucene query that will be executed.
         # @option arguments [Boolean] :all_shards Execute validation on all shards instead of one random shard per index
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query definition specified with the Query DSL
         #
         # *Deprecation notice*:
@@ -37,6 +37,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
         #
         def validate_query(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -50,11 +52,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_validate/query"
                    else
                      "_validate/query"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

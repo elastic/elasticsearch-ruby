@@ -18,13 +18,15 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The index settings to be updated (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-update-settings.html
         #
         def put_settings(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -39,7 +41,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
