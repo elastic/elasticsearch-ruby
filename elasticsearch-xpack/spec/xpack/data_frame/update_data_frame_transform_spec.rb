@@ -12,7 +12,7 @@ describe 'client#update_data_frame_transform' do
         '_data_frame/transforms/foo/_update',
         params,
         {},
-        nil
+        {}
     ]
   end
 
