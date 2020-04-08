@@ -11,7 +11,7 @@ describe 'client#mtermvectors' do
         'GET',
         'my-index/_mtermvectors',
         { },
-        body
+        body,
         {}
     ]
   end

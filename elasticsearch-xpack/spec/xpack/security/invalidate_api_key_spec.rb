@@ -12,7 +12,7 @@ describe 'client#security#create_api_key' do
         '_security/api_key',
         {},
         body,
-        nil
+        {}
     ]
   end
 

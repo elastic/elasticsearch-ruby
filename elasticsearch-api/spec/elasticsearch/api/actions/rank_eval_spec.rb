@@ -11,7 +11,8 @@ describe 'client#rank_eval' do
         'GET',
         url,
         params,
-        body
+        body,
+        {}
     ]
   end
 
