@@ -10,11 +10,13 @@ module Elasticsearch
           # Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
           #
           # @option arguments [String] :index Index pattern
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
           #
           def deprecations(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _index = arguments.delete(:index)
@@ -24,11 +26,11 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_migration/deprecations"
                      else
                        "_migration/deprecations"
-  end
+            end
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

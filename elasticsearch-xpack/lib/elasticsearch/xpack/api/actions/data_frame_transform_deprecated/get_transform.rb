@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [Int] :from skips a number of transform configs, defaults to 0
           # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # *Deprecation notice*:
           # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
@@ -23,6 +23,8 @@ module Elasticsearch
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
           #
           def get_transform(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _transform_id = arguments.delete(:transform_id)
@@ -32,11 +34,11 @@ module Elasticsearch
                        "_data_frame/transforms/#{Elasticsearch::API::Utils.__listify(_transform_id)}"
                      else
                        "_data_frame/transforms"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

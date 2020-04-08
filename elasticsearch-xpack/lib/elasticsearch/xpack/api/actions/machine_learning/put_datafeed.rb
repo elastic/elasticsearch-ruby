@@ -16,6 +16,7 @@ module Elasticsearch
           # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open)
           #   (options: open,closed,hidden,none,all)
 
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The datafeed config (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
@@ -23,6 +24,8 @@ module Elasticsearch
           def put_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -33,7 +36,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

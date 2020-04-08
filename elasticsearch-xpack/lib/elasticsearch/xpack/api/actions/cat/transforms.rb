@@ -21,11 +21,13 @@ module Elasticsearch
           #   (options: d,h,m,s,ms,micros,nanos)
 
           # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
           #
           def transforms(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _transform_id = arguments.delete(:transform_id)
@@ -35,11 +37,11 @@ module Elasticsearch
                        "_cat/transforms/#{Elasticsearch::API::Utils.__listify(_transform_id)}"
                      else
                        "_cat/transforms"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

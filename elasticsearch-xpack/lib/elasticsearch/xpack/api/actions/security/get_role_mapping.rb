@@ -10,11 +10,13 @@ module Elasticsearch
           # Retrieves role mappings.
           #
           # @option arguments [String] :name Role-Mapping name
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
           #
           def get_role_mapping(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _name = arguments.delete(:name)
@@ -24,11 +26,11 @@ module Elasticsearch
                        "_security/role_mapping/#{Elasticsearch::API::Utils.__listify(_name)}"
                      else
                        "_security/role_mapping"
-  end
+            end
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

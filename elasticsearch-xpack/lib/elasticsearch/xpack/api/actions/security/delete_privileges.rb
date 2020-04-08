@@ -14,12 +14,15 @@ module Elasticsearch
           # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes.
           #   (options: true,false,wait_for)
 
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
           #
           def delete_privileges(arguments = {})
             raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -32,7 +35,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

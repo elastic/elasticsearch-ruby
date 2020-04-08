@@ -10,7 +10,7 @@ module Elasticsearch
           # Posts scheduled events in a calendar.
           #
           # @option arguments [String] :calendar_id The ID of the calendar to modify
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body A list of events (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar-event.html
@@ -18,6 +18,8 @@ module Elasticsearch
           def post_calendar_events(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -28,7 +30,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

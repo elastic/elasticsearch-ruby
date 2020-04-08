@@ -10,7 +10,7 @@ module Elasticsearch
           # Instantiates a filter.
           #
           # @option arguments [String] :filter_id The ID of the filter to create
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The filter details (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-filter.html
@@ -18,6 +18,8 @@ module Elasticsearch
           def put_filter(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
             raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -28,7 +30,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

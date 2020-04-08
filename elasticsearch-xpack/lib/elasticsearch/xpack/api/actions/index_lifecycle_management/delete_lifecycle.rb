@@ -10,12 +10,14 @@ module Elasticsearch
           # Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
           #
           # @option arguments [String] :policy The name of the index lifecycle policy
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
           #
           def delete_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -26,7 +28,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

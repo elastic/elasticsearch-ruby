@@ -9,13 +9,15 @@ module Elasticsearch
         module Actions
           # Estimates the model memory
           #
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
           #
           def estimate_model_memory(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -24,7 +26,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

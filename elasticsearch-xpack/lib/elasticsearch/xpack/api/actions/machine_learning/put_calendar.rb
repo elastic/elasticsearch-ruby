@@ -10,13 +10,15 @@ module Elasticsearch
           # Instantiates a calendar.
           #
           # @option arguments [String] :calendar_id The ID of the calendar to create
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The calendar details
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
           #
           def put_calendar(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -27,7 +29,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

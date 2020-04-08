@@ -9,7 +9,7 @@ module Elasticsearch
         module Actions
           # Previews a transform.
           #
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
           #
           # *Deprecation notice*:
@@ -22,6 +22,8 @@ module Elasticsearch
           def preview_transform(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_POST
@@ -29,7 +31,7 @@ module Elasticsearch
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

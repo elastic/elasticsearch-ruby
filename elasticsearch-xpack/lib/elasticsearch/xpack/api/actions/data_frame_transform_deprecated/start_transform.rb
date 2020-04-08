@@ -11,7 +11,7 @@ module Elasticsearch
           #
           # @option arguments [String] :transform_id The id of the transform to start
           # @option arguments [Time] :timeout Controls the time to wait for the transform to start
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # *Deprecation notice*:
           # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
@@ -23,6 +23,8 @@ module Elasticsearch
           def start_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _transform_id = arguments.delete(:transform_id)
@@ -32,7 +34,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.
