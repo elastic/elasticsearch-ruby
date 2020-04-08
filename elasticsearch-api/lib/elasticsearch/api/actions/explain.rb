@@ -23,7 +23,7 @@ module Elasticsearch
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
       # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The query definition using the Query DSL
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html
@@ -31,6 +31,8 @@ module Elasticsearch
       def explain(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -43,7 +45,7 @@ module Elasticsearch
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

@@ -16,12 +16,15 @@ module Elasticsearch
       # @option arguments [String] :search_type Search operation type
       #   (options: query_then_fetch,dfs_query_then_fetch)
 
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The ranking evaluation search definition, including search requests, document ratings and ranking metric definition. (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html
       #
       def rank_eval(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -36,7 +39,7 @@ module Elasticsearch
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

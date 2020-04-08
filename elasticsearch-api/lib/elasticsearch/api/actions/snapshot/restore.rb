@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [String] :snapshot A snapshot name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Details of what to restore
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
@@ -20,6 +20,8 @@ module Elasticsearch
         def restore(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -32,7 +34,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

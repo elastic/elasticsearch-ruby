@@ -26,11 +26,13 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Boolean] :forbid_closed_indices If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
         #
         def stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           method = HTTP_GET
           parts  = Utils.__extract_parts arguments, ParamsRegistry.get(:stats_parts)
           path   = Utils.__pathify Utils.__listify(arguments[:index]), '_stats', Utils.__listify(parts)
@@ -39,7 +41,7 @@ module Elasticsearch
           params[:groups] = Utils.__listify(params[:groups], :escape => false) if params[:groups]
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

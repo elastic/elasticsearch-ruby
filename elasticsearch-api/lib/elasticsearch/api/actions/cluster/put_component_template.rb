@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The template definition (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-component-templates.html
@@ -20,6 +20,8 @@ module Elasticsearch
         def put_component_template(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -30,7 +32,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

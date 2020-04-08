@@ -7,12 +7,14 @@ module Elasticsearch
     module Actions
       # Allows an arbitrary script to be executed and a result to be returned
       #
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The script to execute
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_GET
@@ -20,7 +22,7 @@ module Elasticsearch
         params = {}
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
     end
     end

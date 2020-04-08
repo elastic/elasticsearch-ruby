@@ -14,6 +14,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         #   (options: open,closed,hidden,none,all)
 
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # *Deprecation notice*:
         # The _upgrade API is no longer useful and will be removed. Instead, see _reindex API.
@@ -23,6 +24,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-upgrade.html
         #
         def get_upgrade(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -32,11 +35,11 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_upgrade"
                    else
                      "_upgrade"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

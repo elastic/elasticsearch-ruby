@@ -20,13 +20,15 @@ module Elasticsearch
       # @option arguments [List] :_source_excludes Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
       #
       def bulk(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+        headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
 
@@ -51,7 +53,8 @@ module Elasticsearch
           payload = body
       end
 
-        perform_request(method, path, params, payload, { "Content-Type" => "application/x-ndjson" }).body
+        headers.merge!("Content-Type" => "application/x-ndjson")
+        perform_request(method, path, params, payload, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

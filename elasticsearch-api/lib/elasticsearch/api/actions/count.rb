@@ -26,12 +26,14 @@ module Elasticsearch
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
       # @option arguments [Number] :terminate_after The maximum count for each shard, upon reaching which the query execution will terminate early
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A query to restrict the results specified with the Query DSL (optional)
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
       #
       def count(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -40,17 +42,17 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
-end
+    end
 
         path = if _index
                  "#{Utils.__listify(_index)}/_count"
                else
                  "_count"
-end
+    end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
 
       # Register this action with its valid params when the module is loaded.

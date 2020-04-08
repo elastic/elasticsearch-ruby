@@ -18,11 +18,13 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [List] :fields A comma-separated list of fields to return in the output
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
         #
         def fielddata(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _fields = arguments.delete(:fields)
@@ -32,11 +34,11 @@ module Elasticsearch
                      "_cat/fielddata/#{Utils.__listify(_fields)}"
                    else
                      "_cat/fielddata"
-end
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

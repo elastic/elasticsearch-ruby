@@ -8,7 +8,7 @@ module Elasticsearch
       # Explicitly clears the search context for a scroll.
       #
       # @option arguments [List] :scroll_id A comma-separated list of scroll IDs to clear   *Deprecated*
-
+      # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
       #
       # *Deprecation notice*:
@@ -19,6 +19,8 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api
       #
       def clear_scroll(arguments = {})
+        headers = arguments.delete(:headers) || {}
+
         arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
@@ -28,11 +30,11 @@ module Elasticsearch
                    "_search/scroll/#{Utils.__listify(_scroll_id)}"
                  else
                    "_search/scroll"
-end
+    end
         params = {}
 
         body = arguments[:body]
-        perform_request(method, path, params, body).body
+        perform_request(method, path, params, body, headers).body
       end
     end
     end

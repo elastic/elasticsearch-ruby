@@ -17,12 +17,14 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-open-close.html
         #
         def open(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -33,7 +35,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

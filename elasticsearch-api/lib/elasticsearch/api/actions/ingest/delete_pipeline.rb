@@ -11,12 +11,14 @@ module Elasticsearch
         # @option arguments [String] :id Pipeline ID
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html
         #
         def delete_pipeline(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -27,7 +29,7 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.

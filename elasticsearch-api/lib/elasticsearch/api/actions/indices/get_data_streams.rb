@@ -9,11 +9,13 @@ module Elasticsearch
         # Returns data streams.
         #
         # @option arguments [String] :name The name or wildcard expression of the requested data streams
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
         #
         def get_data_streams(arguments = {})
+          headers = arguments.delete(:headers) || {}
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
@@ -23,11 +25,11 @@ module Elasticsearch
                      "_data_streams/#{Utils.__listify(_name)}"
                    else
                      "_data_streams"
-end
+      end
           params = {}
 
           body = nil
-          perform_request(method, path, params, body).body
+          perform_request(method, path, params, body, headers).body
         end
 end
       end

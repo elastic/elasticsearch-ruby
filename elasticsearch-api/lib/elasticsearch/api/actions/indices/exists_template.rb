@@ -12,12 +12,14 @@ module Elasticsearch
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
         #
         def exists_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
@@ -30,7 +32,7 @@ module Elasticsearch
           body = nil
 
           Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body).status == 200 ? true : false
+            perform_request(method, path, params, body, headers).status == 200 ? true : false
           end
         end
 
