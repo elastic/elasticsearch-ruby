@@ -40,10 +40,6 @@ matrix:
       jdk: oraclejdk8
       env: TEST_SUITE=client
 
-    - rvm: 2.4
-      jdk: oraclejdk8
-      env: TEST_SUITE=client
-
     - rvm: jruby-9.2
       jdk: oraclejdk8
       env: TEST_SUITE=unit
