@@ -11,12 +11,14 @@ module Elasticsearch
           #
           # @option arguments [String] :id The ID of the data frame analytics to delete
           # @option arguments [Boolean] :force True if the job should be forcefully deleted
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
           #
           def delete_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -27,7 +29,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

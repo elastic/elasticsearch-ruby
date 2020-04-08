@@ -13,12 +13,14 @@ module Elasticsearch
           # @option arguments [String] :forecast_id The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
           # @option arguments [Boolean] :allow_no_forecasts Whether to ignore if `_all` matches no forecasts
           # @option arguments [Time] :timeout Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
           #
           def delete_forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -35,7 +37,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

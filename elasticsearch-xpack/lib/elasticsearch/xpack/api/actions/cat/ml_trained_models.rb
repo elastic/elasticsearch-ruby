@@ -24,11 +24,13 @@ module Elasticsearch
           #   (options: d,h,m,s,ms,micros,nanos)
 
           # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
           #
           def ml_trained_models(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _model_id = arguments.delete(:model_id)
@@ -38,11 +40,11 @@ module Elasticsearch
                        "_cat/ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
                      else
                        "_cat/ml/trained_models"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

@@ -10,11 +10,13 @@ module Elasticsearch
           # Retrieves roles in the native realm.
           #
           # @option arguments [String] :name Role name
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
           #
           def get_role(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _name = arguments.delete(:name)
@@ -24,14 +26,14 @@ module Elasticsearch
                        "_security/role/#{Elasticsearch::API::Utils.__listify(_name)}"
                      else
                        "_security/role"
-  end
+            end
             params = {}
 
             body = nil
             if Array(arguments[:ignore]).include?(404)
-              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
             else
-              perform_request(method, path, params, body).body
+              perform_request(method, path, params, body, headers).body
             end
           end
       end

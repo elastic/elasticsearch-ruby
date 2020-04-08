@@ -17,13 +17,15 @@ module Elasticsearch
           # @option arguments [String] :start Returns overall buckets with timestamps after this time
           # @option arguments [String] :end Returns overall buckets with timestamps earlier than this time
           # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Overall bucket selection details if not provided in URI
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-overall-buckets.html
           #
           def get_overall_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -34,7 +36,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

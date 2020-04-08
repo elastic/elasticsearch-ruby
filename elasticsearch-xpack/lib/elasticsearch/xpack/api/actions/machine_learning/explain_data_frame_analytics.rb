@@ -10,12 +10,14 @@ module Elasticsearch
           # Explains a data frame analytics config.
           #
           # @option arguments [String] :id The ID of the data frame analytics to explain
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The data frame analytics config to explain
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
           #
           def explain_data_frame_analytics(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _id = arguments.delete(:id)
@@ -25,11 +27,11 @@ module Elasticsearch
                        "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_explain"
                      else
                        "_ml/data_frame/analytics/_explain"
-  end
+            end
             params = {}
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

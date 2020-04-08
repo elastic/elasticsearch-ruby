@@ -9,11 +9,13 @@ module Elasticsearch
         module Actions
           # Retrieves application privileges.
           #
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
           #
           def get_user_privileges(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_GET
@@ -21,7 +23,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

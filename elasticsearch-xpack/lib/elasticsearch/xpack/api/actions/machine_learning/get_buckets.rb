@@ -20,13 +20,15 @@ module Elasticsearch
           # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets
           # @option arguments [String] :sort Sort buckets by a particular field
           # @option arguments [Boolean] :desc Set the sort direction
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Bucket selection details if not provided in URI
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
           #
           def get_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -43,7 +45,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

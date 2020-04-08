@@ -10,11 +10,13 @@ module Elasticsearch
           # Retrieves information about users in the native realm and built-in users.
           #
           # @option arguments [List] :username A comma-separated list of usernames
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
           #
           def get_user(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _username = arguments.delete(:username)
@@ -24,14 +26,14 @@ module Elasticsearch
                        "_security/user/#{Elasticsearch::API::Utils.__listify(_username)}"
                      else
                        "_security/user"
-  end
+            end
             params = {}
 
             body = nil
             if Array(arguments[:ignore]).include?(404)
-              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body).body }
+              Elasticsearch::API::Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
             else
-              perform_request(method, path, params, body).body
+              perform_request(method, path, params, body, headers).body
             end
           end
       end

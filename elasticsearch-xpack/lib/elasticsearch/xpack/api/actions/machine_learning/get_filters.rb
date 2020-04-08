@@ -12,11 +12,13 @@ module Elasticsearch
           # @option arguments [String] :filter_id The ID of the filter to fetch
           # @option arguments [Int] :from skips a number of filters
           # @option arguments [Int] :size specifies a max number of filters to get
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html
           #
           def get_filters(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _filter_id = arguments.delete(:filter_id)
@@ -26,11 +28,11 @@ module Elasticsearch
                        "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
                      else
                        "_ml/filters"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

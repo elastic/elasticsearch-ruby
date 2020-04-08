@@ -22,11 +22,13 @@ module Elasticsearch
           #   (options: d,h,m,s,ms,micros,nanos)
 
           # @option arguments [Boolean] :v Verbose mode. Display column headers
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-anomaly-detectors.html
           #
           def ml_jobs(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _job_id = arguments.delete(:job_id)
@@ -36,11 +38,11 @@ module Elasticsearch
                        "_cat/ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}"
                      else
                        "_cat/ml/anomaly_detectors"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

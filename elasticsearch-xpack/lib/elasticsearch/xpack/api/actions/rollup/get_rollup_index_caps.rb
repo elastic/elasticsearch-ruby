@@ -10,12 +10,14 @@ module Elasticsearch
           # Returns the rollup capabilities of all jobs inside of a rollup index (e.g. the index where rollup data is stored).
           #
           # @option arguments [String] :index The rollup index or index pattern to obtain rollup capabilities from.
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-get-rollup-index-caps.html
           #
           def get_rollup_index_caps(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -26,7 +28,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

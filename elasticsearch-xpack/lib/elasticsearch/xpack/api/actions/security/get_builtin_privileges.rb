@@ -9,11 +9,13 @@ module Elasticsearch
         module Actions
           # Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
           #
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html
           #
           def get_builtin_privileges(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             method = Elasticsearch::API::HTTP_GET
@@ -21,7 +23,7 @@ module Elasticsearch
             params = {}
 
             body = nil
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
       end
     end

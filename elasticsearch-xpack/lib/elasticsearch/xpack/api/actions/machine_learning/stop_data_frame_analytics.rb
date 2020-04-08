@@ -13,13 +13,15 @@ module Elasticsearch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
           # @option arguments [Boolean] :force True if the data frame analytics should be forcefully stopped
           # @option arguments [Time] :timeout Controls the time to wait until the task has stopped. Defaults to 20 seconds
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The stop data frame analytics parameters
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
           #
           def stop_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+            headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
@@ -30,7 +32,7 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.

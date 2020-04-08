@@ -59,12 +59,14 @@ module Elasticsearch
           # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
           # @option arguments [Boolean] :seq_no_primary_term Specify whether to return sequence number and primary term of the last modification of each hit
           # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
-
+          # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The search definition using the Query DSL
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
           #
           def submit(arguments = {})
+            headers = arguments.delete(:headers) || {}
+
             arguments = arguments.clone
 
             _index = arguments.delete(:index)
@@ -74,11 +76,11 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_async_search"
                      else
                        "_async_search"
-  end
+            end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body).body
+            perform_request(method, path, params, body, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.
