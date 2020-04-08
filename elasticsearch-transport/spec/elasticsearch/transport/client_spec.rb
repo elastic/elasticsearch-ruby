@@ -1133,6 +1133,18 @@ describe Elasticsearch::Transport::Client do
         end
       end
     end
+
+    context 'when a header is set on an endpoint request' do
+      let(:client) { described_class.new(host: hosts) }
+      let(:headers) { { 'user-agent' => 'my ruby app' } }
+
+      it 'performs the request with the header' do
+        allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
+        expect { client.search(headers: headers) }.not_to raise_error
+        expect(client).to have_received(:perform_request)
+          .with('GET', '_search', {}, nil, headers)
+      end
+    end
   end
 
   context 'when the client connects to Elasticsearch' do
