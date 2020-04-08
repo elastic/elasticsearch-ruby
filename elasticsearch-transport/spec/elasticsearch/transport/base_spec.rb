@@ -48,7 +48,7 @@ describe Elasticsearch::Transport::Transport::Base do
     context 'when the user and password are provided in the string URI' do
 
       let(:arguments) do
-        { hosts: 'http://test:secret_password@fake.com',
+        { hosts: 'http://test:secret_password@fake',
           logger: logger }
       end
 
@@ -58,7 +58,7 @@ describe Elasticsearch::Transport::Transport::Base do
     context 'when the user and password are provided in the URI object' do
 
       let(:arguments) do
-        { hosts: URI.parse('http://test:secret_password@fake.com'),
+        { hosts: URI.parse('http://test:secret_password@fake'),
           logger: logger }
       end
 
