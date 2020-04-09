@@ -234,9 +234,15 @@ You can set a custom HTTP header on the client's initializer:
 client = Elasticsearch::Client.new(
   transport_options: {
     headers:
-      {user_agent: "My Ruby App"}
+      {user_agent: "My App"}
   }
 )
+```
+
+You can also pass in `headers` as a parameter to any of the API Endpoints to set custom headers for the request:
+
+```ruby
+client.search(index: 'myindex', q: 'title:test', headers: {user_agent: "My App"})
 ```
 
 ### Identifying running tasks with X-Opaque-Id
