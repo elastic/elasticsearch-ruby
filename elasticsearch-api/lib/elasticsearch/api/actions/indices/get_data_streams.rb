@@ -8,7 +8,7 @@ module Elasticsearch
       module Actions
         # Returns data streams.
         #
-        # @option arguments [String] :name The name or wildcard expression of the requested data streams
+        # @option arguments [List] :name The comma separated names of data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
