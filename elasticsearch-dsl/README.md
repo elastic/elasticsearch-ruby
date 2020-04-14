@@ -100,13 +100,12 @@ which are translated to Hashes, and ultimately, JSON, the language of Elasticsea
 
 All Elasticsearch DSL features are supported, namely:
 
-* [Queries](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-queries.html)
-* [Filters](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-filters.html)
-* [Aggregations](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html)
-* [Suggestions](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-suggesters.html)
-* [Sorting](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-sort.html)
-* [Pagination](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-from-size.html)
-* [Options](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-body.html) (source filtering, highlighting, etc)
+* [Queries and Filter context](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html)
+* [Aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html)
+* [Suggestions](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html)
+* [Sorting](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html#request-body-search-sort)
+* [Pagination](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html#request-body-search-from-size)
+* [Options](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html) (source filtering, highlighting, etc)
 
 An example of a complex search definition is below.
 
