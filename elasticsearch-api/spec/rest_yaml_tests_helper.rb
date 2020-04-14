@@ -76,6 +76,14 @@ skipped_tests << { file:        'cat.templates/10_basic.yml',
 # node_selector is not supported yet
 skipped_tests << { file: 'cat.aliases/10_basic.yml',
                    description: '*' }
+skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
+                   description: 'Basic test for upgrade indices < 8.0.0' }
+skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
+                   description: 'Upgrade indices ignore unavailable < 8.0.0' }
+skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
+                   description: 'Upgrade indices allow no indices < 8.0.0' }
+skipped_tests << { file: 'indices.put_mapping/10_basic.yml',
+                   description: 'Put mappings with explicit _doc type bwc' }
 
 SKIPPED_TESTS = skipped_tests
 
