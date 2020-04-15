@@ -9,9 +9,14 @@ Gem::Specification.new do |s|
   s.authors       = ['Karel Minarik']
   s.email         = ['karel.minarik@elasticsearch.org']
   s.summary       = 'Ruby integrations for Elasticsearch'
-  s.homepage      = 'http://github.com/elasticsearch/elasticsearch-ruby'
+  s.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html'
   s.license       = 'Apache-2.0'
-
+  s.metadata = {
+    'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html',
+    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/6.x/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/6.x',
+    'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
+  }
   s.files         = `git ls-files`.split($/)
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
