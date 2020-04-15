@@ -25,10 +25,6 @@ matrix:
       jdk: oraclejdk8
       env: QUIET=y TEST_SUITE=integration
 
-    - rvm: 2.3
-      jdk: oraclejdk8
-      env: QUIET=y TEST_SUITE=integration
-
     - rvm: 2.4
       jdk: oraclejdk8
       env: QUIET=y TEST_SUITE=integration
