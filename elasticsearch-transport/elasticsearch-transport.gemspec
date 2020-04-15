@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'elasticsearch-extensions'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rake', '< 11.0'
+  s.add_development_dependency 'rake', '~> 13'
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'turn'
   s.add_development_dependency 'yard'
