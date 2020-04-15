@@ -43,7 +43,7 @@ module Elasticsearch
           # @return [Array]
           #
           def host_unreachable_exceptions
-            [::Faraday::Error::ConnectionFailed, ::Faraday::Error::TimeoutError]
+            [::Faraday::ConnectionFailed, ::Faraday::TimeoutError]
           end
         end
       end
