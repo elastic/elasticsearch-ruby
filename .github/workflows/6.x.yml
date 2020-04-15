@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ 2.3, 2.4, 2.5, 2.6, 2.7 ]
+        ruby: [ 2.4, 2.5, 2.6, 2.7 ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ jruby-9.1, jruby-9.2 ]
+        ruby: [ jruby-9.2 ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
