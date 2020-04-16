@@ -54,6 +54,8 @@ docker build \
 
 echo -e "\033[1m>>>>> Run [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
+mkdir -p elasticsearch-api/tmp
+
 repo=`pwd`
 
 # run the client tests
@@ -63,7 +65,6 @@ if [[ $TEST_SUITE != "xpack" ]]; then
            --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
            --env "TEST_SUITE=${TEST_SUITE}" \
            --volume $repo:/usr/src/app \
-           --volume=/tmp:/tmp \
            --name elasticsearch-ruby \
            --rm \
            elastic/elasticsearch-ruby \
