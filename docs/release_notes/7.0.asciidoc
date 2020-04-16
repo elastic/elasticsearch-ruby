@@ -1,0 +1,187 @@
+== 7.0 Release notes
+
+This version contains the following changes:
+
+* Added `elastic_ruby_console` executable. It opens a console with the elasticsearch gems you have installed required.
+* Added macro benchmarking framework, available when developing. Use `rake -T` to view all available benchmarking tasks. 
+
+=== Client
+
+* Fixed failing integration test
+* Updated the Manticore development dependency
+* Fixed a failing Manticore unit test
+* Removed "turn" and switched the tests to Minitest
+* Fixed integration tests for Patron
+* Allow passing request headers in `perform_request`
+* Added integration test for passing request headers in `perform_request`
+* Added, that request headers are printed in trace output, if set
+* Fix typos in elasticsearch-transport/README.md
+* Assert that connection count is at least previous count when reloaded
+* Adjust test for change in default number of shards on ES 7
+* Abstract logging functionality into a Loggable Module (#556)
+* Convert client integration tests to rspec
+* Add flexible configuration in spec helper
+* Use helper methods in spec_helper
+* Remove minitest client integration tests in favor of rspec test
+* Convert tests to rspec and refactor client
+* minor changes to the client specs
+* Use pry-nav in development for JRuby
+* Keep arguments variable name for now
+* Skip round-robin test for now
+* Mark test as pending until there is a better way to detect rotating nodes
+* Remove client unit test in favor of rspec test
+* Comment-out round-robin test as it occasionally passes and pending is ineffective
+* Document the default host and port constant
+* Add documentation to spec_helper methods
+* Redacted password if host info is printed in error message
+* Adds tests for not including password in logged error message
+* The redacted string change will be in 6.1.1
+* Add more tests for different ways to specify client host argument
+* Do not duplicate connections in connection pool after rebuild (#591)
+* Ensure that the spec rake task is run as part of integration tests
+* Use constant to define Elasticsearch hosts and avoid yellow status when number of nodes is 1
+* Update handling of publish_address in _nodes/http response
+* Add another test for hostname/ipv6:port format
+
+=== API
+
+* Added the `wait_for_active_shards` parameter to the "Indices Open" API
+* Added the "Indices Split" API
+* Added the `wait_for_no_initializing_shards` argument to the "Cluster Health" API
+* Added the "Cluster Remote Info" API
+* Remove the dependency on "turn"
+* Clear cluster transient settings in test setups
+* Use `YAML.load_documents` in the REST tests runner
+* Removed pinning dependency for Minitest
+* Replaced the testing framework from Test::Unit to Minites and improved test output
+* Added, that trace logs are printed when the `TRACE` environment variable is set
+* Removed the "turn" dependency from generated test_helper.rb
+* Update the "Delete By Query" API to support :slices
+* Speed up `Elasticsearch::API::Utils.__listify`
+* Speed up `Elasticsearch::API::Utils.__pathify`
+* Use "String#strip" and "String.empty?" in `Utils.__pathify`
+* Updated the inline documentation for using scripts in the "Update" API
+* Updated the "Scroll" API inline example with passing the scroll ID in the body
+* Marked the `percolate` method as deprecated and added an example for current percolator
+* Fixed, that `Utils.__report_unsupported_parameters` and `Utils.__report_unsupported_method` use `Kernel.warn` so they can be suppressed
+* Fixed the "greedy" regex in the `Utils.__rescue_from_not_found` method
+* Fixed the incorrect `create` method
+* Allow passing headers in `perform_request`
+* Set application/x-ndjson content type on Bulk and Msearch requests
+* Update the Reindex API to support :slices
+* Fixed and improved the YAML tests runner
+* Added the `include_type_name` parameter to APIs
+* Fixed the helper for unit tests
+* Removed the requirement for passing the `type` parameter to APIs
+* Removed dead code from the YAML tests runner
+* Fixed the `api:code:generate` Thor task
+* Add copy_settings as valid param to split API
+* Port api/actions tests to rspec (#543)
+* Update tests to not require type
+* Account for escape_utils not being available for JRuby
+* Add nodes/reload_secure_settings endpoint support (#546)
+* Add new params for search and msearch API
+* Retrieve stashed variable if referenced in test
+* Convert cat API tests to rspec
+* Convert cluster API tests to rspec
+* Convert indices tests to rspec
+* Fix documentation of #indices.analyze
+* Avoid instantiating an array of valid params for each request, each time it is called (#550)
+* Add headers to custom client documentation (#527)
+* Fix typos in README
+* Minor update to scroll documentation example
+* Convert snapshot, ingest, tasks, nodes api tests to rspec
+* Update source_includes and source_excludes params names for mget
+* Update source_includes and source_excludes params names for get, search, bulk, explain
+* Update source_includes and source_excludes params names for get_source
+* Mark _search endpoint as deprecated
+* Link to 6.0 documentation explicitly for _suggest deprecation
+* Update documentation for msearch
+* Update documentation for scroll_id to be in body of scroll endpoint
+* Remove reference to deprecated format option for _analyze endpoint
+* Correct endpoints used for get and put search template
+* Fix minor typo
+* Note that a non-empty body argument is required for the bulk api
+* Add note about empty body in yard documentation
+* Support if_primary_term param on index API
+* Delete test2 template in between tests in case a test is not cleanup up properly
+* Support ignore_throttled option on search API
+* Updates for types removal changes
+* Add missing update param
+* Add missing params to methods
+* Support if_primary_term param for delete
+* Delete an index and index template not cleaned up after in rest api tests
+* Update supported params for cat API endpoints
+* Update supported params for cluster API endpoints
+* Update supported params for indices API endpoints
+* Update supported params for ingest API endpoints
+* Update supported params for nodes API endpoints
+* Update supported params for snapshot API endpoints
+* Update missed node API endpoints
+* Update missed tasks API endpoints
+* Update top-level api endpoints
+* Adjust specs and code after test failures
+* Fix accidental overwrite of index code
+* Add missing param in cat/thread_pool
+* The type argument is not required in the index method
+* Delete 'nomatch' template to account for lack of test cleanup
+* Ensure that the :index param is supported for cat.segments
+* Ensure that the :name param is passed to the templates API
+
+=== DSL
+
+* Add inner_hits option support for has_parent query
+* Add inner_hits option support for has_child query
+* Add inner_hits option support for has_parent filter
+* Add inner_hits option support for has_child filter
+* adds query support for nested queries in filter context (#531)
+* Convert aggregations/pipeline tests to rspec (#564)
+* Convert aggregations tests to rspec (#566)
+* Convert filters tests to rspec (#567)
+* Fix bug in applying no_match_filter to indices filter
+* Update test for current elasticsearch version
+* Fix integration tests for join field syntax
+* Update agg scripted metric test for deprecation in ES issue #29328
+* Fix script in update for #29328
+* minor: fix spacing
+* Convert queries tests to rspec (#569)
+* Add inner_hits test after cherry-picking rspec conversion
+* Remove tests already converted to rspec
+* spec directory structure should mirror code directory structure
+* Support query_string type option
+* Ensure that filters are registered when called on bool queries (#609)
+* Don't specify a type when creating mappings in tests
+
+=== XPACK
+
+* Embedded the source code for the `elasticsearch-xpack` Rubygem
+* Fixed the `setup` for YAML integration tests
+* Added missing X-Pack APIs
+* Improved the YAML integration test runner
+* Updated the Rakefile for running integration tests
+* Added, that password for Elasticsearch is generated
+* Fixed the Watcher example
+* Updated the README
+* Added gitignore for the `elasticsearch-xpack` Rubygem
+* Add ruby-prof as a development dependency
+* Handle multiple roles passed to get_role_mapping
+* Minor updates to xpack api methods (#586)
+* Support freeze and unfreeze APIs
+* Rewrite xpack rest api yaml test handler (#585)
+* Updates to take into account SSL settings
+* Fix mistake in testing version range so test can be skipped
+* Support set_upgrade_mode machine learning API
+* Support typed_keys and rest_total_hits_as_int params for rollup_search
+* Improve string output for xpack rest api tests
+* Fix logic in version checking
+* Support if_seq_no and if_primary_term in put_watch
+* Don't test execute_watch/60_http_input because of possible Docker issue
+* Support api key methods
+* Fix minor typo in test description
+* Fix issue with replacing argument value with an Integer value
+* Support transform_and_set in yaml tests
+* Skip two more tests
+* Run security tests against elasticsearch 7.0.0-rc2
+* Account for error when forecast_id is not provided and legacy path is used
+* Blacklist specific tests, not the whole file
+* Fix version check for skipping test
