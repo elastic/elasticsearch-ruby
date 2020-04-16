@@ -1,0 +1,10 @@
+= Release Notes
+
+== 7.x
+* <<7.6, 7.6 Release Notes>>
+* <<7.5, 7.5 Release Notes>>
+* <<7.0, 7.0 Release Notes>>
+
+include::release_notes/7.6.asciidoc[]
+include::release_notes/7.5.asciidoc[]
+include::release_notes/7.0.asciidoc[]
