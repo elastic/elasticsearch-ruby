@@ -155,6 +155,22 @@ SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
 SKIPPED_TESTS << { file: 'ml/explain_data_frame_analytics.yml',
                    description: 'Test non-empty data frame given body'}
 
+# Transform tests have issues with text fields/keywords in setup
+SKIPPED_TESTS << { file: 'transform/transforms_stats.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_update.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_cat_apis.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_crud.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_stats_continuous.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_force_delete.yml',
+                   description: '*'}
+SKIPPED_TESTS << { file: 'transform/transforms_start_stop.yml',
+                   description: '*'}
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
