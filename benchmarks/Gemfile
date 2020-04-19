@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __FILE__), require: false
+gem 'elasticsearch-api', path: File.expand_path('../../elasticsearch-api', __FILE__), require: false
+gem 'elasticsearch-transport', path: File.expand_path('../../elasticsearch-transport', __FILE__), require: false
+
+gem 'ansi'
+gem 'patron'
+gem 'oj'
+
+gem 'pry', group: :development
