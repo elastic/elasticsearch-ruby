@@ -44,6 +44,7 @@ RSpec.configure do |config|
   config.include(HelperModule)
   config.formatter = 'documentation'
   config.color = true
+  config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
 end
 
 if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
