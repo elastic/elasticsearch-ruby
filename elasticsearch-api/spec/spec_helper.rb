@@ -7,14 +7,14 @@ if defined?(JRUBY_VERSION)
 else
   require 'pry-byebug'
 end
-require 'yaml'
+require 'ansi'
+require 'elasticsearch'
+require 'elasticsearch-api'
+require 'elasticsearch-transport'
 require 'jbuilder'
 require 'jsonify'
-require 'elasticsearch'
-require 'elasticsearch-transport'
-require 'elasticsearch-api'
+require 'yaml'
 
-require 'ansi'
 tracer = ::Logger.new(STDERR)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n }.ansi(:faint)}\n" }
 
@@ -52,6 +52,7 @@ RSpec.configure do |config|
   config.include(HelperModule)
   config.formatter = 'documentation'
   config.color = true
+  config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
 end
 
 class NotFound < StandardError; end
