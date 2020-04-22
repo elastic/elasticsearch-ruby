@@ -155,6 +155,10 @@ SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
 SKIPPED_TESTS << { file: 'ml/explain_data_frame_analytics.yml',
                    description: 'Test non-empty data frame given body'}
 
+# Stats is not working in versions earlier than 8.0.0
+SKIPPED_TESTS << { file: 'analytics/usage.yml',
+  description: 'Usage stats on analytics indices'}
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
