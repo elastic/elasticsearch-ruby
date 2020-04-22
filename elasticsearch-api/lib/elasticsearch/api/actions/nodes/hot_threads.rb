@@ -19,11 +19,6 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # *Deprecation notice*:
-        # The hot accepts /_cluster/nodes as prefix for backwards compatibility reasons
-        # Deprecated since version 7.0.0
-        #
-        #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments = {})
@@ -35,9 +30,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_cluster/nodes/#{Utils.__listify(_node_id)}/hot_threads"
+                     "_nodes/#{Utils.__listify(_node_id)}/hot_threads"
                    else
-                     "_cluster/nodes/hot_threads"
+                     "_nodes/hot_threads"
       end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
