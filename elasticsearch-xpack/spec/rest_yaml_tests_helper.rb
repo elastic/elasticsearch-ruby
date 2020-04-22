@@ -157,19 +157,23 @@ SKIPPED_TESTS << { file: 'ml/explain_data_frame_analytics.yml',
 
 # Transform tests have issues with text fields/keywords in setup
 SKIPPED_TESTS << { file: 'transform/transforms_stats.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_update.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_cat_apis.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_crud.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_stats_continuous.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_force_delete.yml',
-                   description: '*'}
+                   description: '*' }
 SKIPPED_TESTS << { file: 'transform/transforms_start_stop.yml',
-                   description: '*'}
+                   description: '*' }
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/852
+SKIPPED_TESTS << { file: 'analytics/usage.yml',
+                   description: 'Usage stats on analytics indices' }
 
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
