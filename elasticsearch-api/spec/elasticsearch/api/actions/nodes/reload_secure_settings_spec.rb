@@ -11,18 +11,14 @@ describe 'client#reload_secure_settings' do
         'POST',
         url,
         params,
-        nil,
+        body,
         {}
     ]
   end
 
-  let(:params) do
-    {}
-  end
-
-  let(:url) do
-    '_nodes/reload_secure_settings'
-  end
+  let(:params) { {} }
+  let(:url) { '_nodes/reload_secure_settings' }
+  let(:body) { nil }
 
   it 'performs the request' do
     expect(client_double.nodes.reload_secure_settings()).to eq({})
@@ -40,6 +36,7 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when more than one node id is specified as a string' do
+    let(:body){ { foo: 'bar' } }
 
     let(:url) do
       '_nodes/foo,bar/reload_secure_settings'
@@ -51,7 +48,7 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when more than one node id is specified as a list' do
-
+    let(:body){ { foo: 'bar' } }
     let(:url) do
       '_nodes/foo,bar/reload_secure_settings'
     end
