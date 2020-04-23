@@ -1,3 +1,4 @@
+[[75_release_notes]]
 == 7.5 Release notes
 
 - Support for Elasticsearch 7.5.

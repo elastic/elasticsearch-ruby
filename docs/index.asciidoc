@@ -7,3 +7,5 @@ include::model.asciidoc[]
 include::rails.asciidoc[]
 
 include::persistence.asciidoc[]
+
+include::release_notes/index.asciidoc[]

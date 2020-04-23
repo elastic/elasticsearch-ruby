@@ -1,0 +1,11 @@
+[[release_notes]]
+== Release Notes
+
+== 7.x
+* <<76_release_notes, 7.6 Release Notes>>
+* <<75_release_notes, 7.5 Release Notes>>
+* <<70_release_notes, 7.0 Release Notes>>
+
+include::76.asciidoc[]
+include::75.asciidoc[]
+include::70.asciidoc[]
