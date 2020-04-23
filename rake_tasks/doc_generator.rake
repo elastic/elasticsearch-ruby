@@ -56,7 +56,7 @@ namespace :docs do
   def self.show_parameters(params)
     param_string = []
     params.each do |k, v|
-      value = is_number?(v) ? v : "'#{v}'"
+      value = (is_number?(v) || is_boolean?(v)) ? v : "'#{v}'"
       param_string << "#{k.gsub('\"','')}: #{value}"
     end
     param_string.join(",\n\s\s")
@@ -73,6 +73,12 @@ namespace :docs do
 
   def self.is_number?(value)
     Float(value) || Integer(value) rescue false
+  end
+
+  def self.is_boolean?(value)
+    (['false', 'true'].include? value) ||
+                               value.is_a?(TrueClass) ||
+                               value.is_a?(FalseClass)
   end
 
   def write_file(code, file)
