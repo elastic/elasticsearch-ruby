@@ -9,6 +9,7 @@
 === API
 
 Endpoints that changed:
+
 - `_bulk`: body is now required as an argument.
 - `cat`: `local` and `master_timeout` parameters are gone.
   - `health`: New parameter `health`.
