@@ -1,5 +1,5 @@
 [[release_notes_75]]
-== 7.5 Release notes
+=== 7.5 Release notes
 
 - Support for Elasticsearch 7.5.
 - Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.

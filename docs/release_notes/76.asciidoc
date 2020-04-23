@@ -1,5 +1,5 @@
 [[release_notes_76]]
-== 7.6 Release notes
+=== 7.6 Release notes
 
 === Client
 
