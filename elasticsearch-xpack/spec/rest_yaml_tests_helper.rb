@@ -175,6 +175,10 @@ SKIPPED_TESTS << { file: 'transform/transforms_start_stop.yml',
 SKIPPED_TESTS << { file: 'analytics/usage.yml',
                    description: 'Usage stats on analytics indices' }
 
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/853
+SKIPPED_TESTS << { file: 'ml/jobs_crud.yml',
+                   description: 'Test put job with model_memory_limit as string and lazy open' }
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
