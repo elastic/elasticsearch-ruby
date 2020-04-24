@@ -43,13 +43,22 @@ namespace :docs do
     request_body << show_body(body) if body
     request_body = request_body.compact.join(",\n")
 
-    template = <<~SRC
-      client.#{api}(
-        #{request_body}
-      )
-    SRC
+    code = "response = client.#{api}(\n#{request_body}\n)\nputs response"
+    format_code(code)
+  end
 
-    # Remove trailing whitespace
+  def self.format_code(code)
+    # Print code to the file
+    File.open('temp.rb', 'w') do |f|
+      f.puts code
+    end
+    # Format code:
+    system("rubocop --config #{__dir__}/docs_rubocop_config.yml --format autogenconf -a ./temp.rb")
+    # Read it back
+    template = File.read('./temp.rb')
+    File.delete('./temp.rb')
+
+    # TODO: Manually remove final blank line since Rubocop is ignoring the config directive
     template.gsub(/\s+$/, '')
   end
 
@@ -63,12 +72,10 @@ namespace :docs do
   end
 
   def self.show_body(body)
-    '  body:' +
+    'body: ' +
       JSON.pretty_generate(body)
         .gsub(/\"([a-z_]+)\":/,'\\1: ') # Use Ruby 2 hash syntax
         .gsub('aggs', 'aggregations')   # Replace 'aggs' with 'aggregations' for consistency
-        .gsub(/(.*)/, '  \1')           # Add indentation
-        .gsub(/\s+({|\[)/,"\s\\1")      # Clean whitespace before { and ['s
   end
 
   def self.is_number?(value)
