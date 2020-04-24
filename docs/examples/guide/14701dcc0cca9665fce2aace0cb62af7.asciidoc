@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'twitter',
+  size: 0,
+  filter_path: 'hits.total',
+  body: {
+    query: {
+      range: {
+        likes: {
+          lt: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,21 +1,28 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     aggregations: {
       "JapaneseCars": {
         terms: {
-          field: "make",
-          include: ["mazda", "honda"]
+          field: 'make',
+          include: [
+            'mazda',
+            'honda'
+          ]
         }
       },
       "ActiveCarManufacturers": {
         terms: {
-          field: "make",
-          exclude: ["rover", "jensen"]
+          field: 'make',
+          exclude: [
+            'rover',
+            'jensen'
+          ]
         }
       }
     }
   }
 )
+puts response
 ----

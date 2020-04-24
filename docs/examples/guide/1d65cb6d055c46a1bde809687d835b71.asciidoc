@@ -1,4 +1,9 @@
 [source, ruby]
 ----
-response = client.get(index: 'twitter', id: 1, routing: 'user1')
+response = client.get(
+  index: 'twitter',
+  id: 2,
+  routing: 'user1'
+)
+puts response
 ----

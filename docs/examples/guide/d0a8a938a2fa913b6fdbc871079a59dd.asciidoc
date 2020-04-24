@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      term: {
+        user: {
+          value: 'Kimchy',
+          boost: 1
+        }
+      }
+    }
+  }
+)
+puts response
+----

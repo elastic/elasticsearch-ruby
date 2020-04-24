@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    sort: [
+      {
+        price: {
+          unmapped_type: 'long'
+        }
+      }
+    ],
+    query: {
+      term: {
+        product: 'chocolate'
+      }
+    }
+  }
+)
+puts response
+----

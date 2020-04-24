@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'new_twitter',
+  size: 0,
+  filter_path: 'hits.total'
+)
+puts response
+----

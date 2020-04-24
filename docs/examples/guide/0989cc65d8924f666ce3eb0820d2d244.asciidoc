@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'users',
+  refresh: 'wait_for',
+  body: {
+    user_id: 12_345
+  }
+)
+puts response
+----

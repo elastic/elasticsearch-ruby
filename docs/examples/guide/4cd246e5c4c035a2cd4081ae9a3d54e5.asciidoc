@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.update(
+  index: 'test',
+  id: 1,
+  body: {
+    script: {
+      source: 'ctx._source.tags.add(params.tag)',
+      lang: 'painless',
+      params: {
+        tag: 'blue'
+      }
+    }
+  }
+)
+puts response
+----

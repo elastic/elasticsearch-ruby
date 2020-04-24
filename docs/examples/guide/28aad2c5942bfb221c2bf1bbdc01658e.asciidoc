@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      query_string: {
+        fields: [
+          'city.*'
+        ],
+        query: 'this AND that OR thus'
+      }
+    }
+  }
+)
+puts response
+----

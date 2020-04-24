@@ -1,15 +1,18 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     aggregations: {
       genres: {
         terms: {
-          field: "genre",
-          order: { "_count": "asc" }
+          field: 'genre',
+          order: {
+            _count: 'asc'
+          }
         }
       }
     }
   }
 )
+puts response
 ----

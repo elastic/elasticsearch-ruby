@@ -1,28 +1,44 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     query: {
       bool: {
         must: {
-          term: { user: "kimchy" }
+          term: {
+            user: 'kimchy'
+          }
         },
         filter: {
-          term: { tag: "tech" }
+          term: {
+            tag: 'tech'
+          }
         },
         must_not: {
           range: {
-            age: { gte: 10, lte: 20 }
+            age: {
+              gte: 10,
+              lte: 20
+            }
           }
         },
         should: [
-          { term: { tag: "wow" } },
-          { term: { tag: "elasticsearch" } }
+          {
+            term: {
+              tag: 'wow'
+            }
+          },
+          {
+            term: {
+              tag: 'elasticsearch'
+            }
+          }
         ],
         minimum_should_match: 1,
-        boost: 1.0
+        boost: 1
       }
     }
   }
 )
+puts response
 ----

@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_index',
+  id: 1,
+  body: {
+    group: 'fans',
+    user: [
+      {
+        first: 'John',
+        last: 'Smith'
+      },
+      {
+        first: 'Alice',
+        last: 'White'
+      }
+    ]
+  }
+)
+puts response
+----

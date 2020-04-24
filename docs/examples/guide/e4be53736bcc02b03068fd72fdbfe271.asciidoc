@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'publications',
+  body: {
+    properties: {
+      title: {
+        type: 'text'
+      }
+    }
+  }
+)
+puts response
+----

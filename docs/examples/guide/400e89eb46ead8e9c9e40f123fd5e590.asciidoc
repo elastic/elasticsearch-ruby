@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'source',
+      size: 100
+    },
+    dest: {
+      index: 'dest',
+      routing: '=cat'
+    }
+  }
+)
+puts response
+----

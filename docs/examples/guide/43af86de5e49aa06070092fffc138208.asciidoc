@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      bool: {
+        must_not: {
+          exists: {
+            field: 'user'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,16 +1,19 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   index: 'bank',
   body: {
     query: {
       bool: {
-        must: { match_all: {} },
+        must: {
+          match_all: {
+          }
+        },
         filter: {
           range: {
             balance: {
-              gte: 20000,
-              lte: 30000
+              gte: 20_000,
+              lte: 30_000
             }
           }
         }
@@ -18,4 +21,5 @@ client.search(
     }
   }
 )
+puts response
 ----

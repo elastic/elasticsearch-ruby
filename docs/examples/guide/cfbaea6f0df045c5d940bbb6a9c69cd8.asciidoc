@@ -1,19 +1,24 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   index: 'bank',
-  size: 0,
   body: {
+    size: 0,
     aggregations: {
       group_by_state: {
-        terms: { field: "state.keyword" },
+        terms: {
+          field: 'state.keyword'
+        },
         aggregations: {
           average_balance: {
-            avg: { field: "balance" }
+            avg: {
+              field: 'balance'
+            }
           }
         }
       }
     }
   }
 )
+puts response
 ----

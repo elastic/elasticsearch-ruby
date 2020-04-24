@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    max_docs: 1,
+    source: {
+      index: 'twitter'
+    },
+    dest: {
+      index: 'new_twitter'
+    }
+  }
+)
+puts response
+----

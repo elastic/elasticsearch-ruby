@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.indices.refresh
+puts response
+----

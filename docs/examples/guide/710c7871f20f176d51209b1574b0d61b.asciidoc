@@ -1,4 +1,9 @@
 [source, ruby]
 ----
-response = client.get(index: 'twitter', id: 1, stored_fields: 'tags,counter')
+response = client.get(
+  index: 'twitter',
+  id: 1,
+  stored_fields: 'tags,counter'
+)
+puts response
 ----
