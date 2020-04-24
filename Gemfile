@@ -14,13 +14,16 @@ gem 'cane'
 gem 'mocha'
 gem 'pry'
 gem 'rake'
-gem 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-gem 'ruby-prof'    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+gem 'rubocop'
 gem 'shoulda-context'
 gem 'simplecov'
 gem 'simplecov-rcov'
 gem 'test-unit', '~> 2'
 gem 'yard'
+unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  gem 'require-prof'
+  gem 'ruby-prof'
+end
 
 group :development do
   gem 'rspec'

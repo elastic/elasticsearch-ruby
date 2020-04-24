@@ -1,0 +1,10 @@
+Layout/TrailingEmptyLines:
+  EnforcedStyle: final_newline
+Layout/AccessModifierIndentation:
+  EnforcedStyle: indent
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_first_argument
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+Style/WordArray:
+  EnforcedStyle: brackets
