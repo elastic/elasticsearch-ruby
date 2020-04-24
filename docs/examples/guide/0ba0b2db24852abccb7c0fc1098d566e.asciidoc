@@ -1,4 +1,15 @@
 [source, ruby]
 ----
-response = client.index(index: 'twitter', id: 2, routing: 'user1', body: {counter: 1, tags: ['white']})
+response = client.index(
+  index: 'twitter',
+  id: 2,
+  routing: 'user1',
+  body: {
+    counter: 1,
+    tags: [
+      'white'
+    ]
+  }
+)
+puts response
 ----

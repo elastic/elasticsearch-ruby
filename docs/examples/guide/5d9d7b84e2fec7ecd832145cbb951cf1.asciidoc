@@ -1,25 +1,25 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     size: 0,
     aggregations: {
       expired_sessions: {
         terms: {
-          field: "account_id",
+          field: 'account_id',
           include: {
             partition: 0,
             num_partitions: 20
           },
-          size: 10000,
+          size: 10_000,
           order: {
-            last_access: "asc"
+            last_access: 'asc'
           }
         },
         aggregations: {
           last_access: {
             max: {
-              field: "access_date"
+              field: 'access_date'
             }
           }
         }
@@ -27,4 +27,5 @@ client.search(
     }
   }
 )
+puts response
 ----

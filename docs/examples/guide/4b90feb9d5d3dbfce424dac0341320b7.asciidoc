@@ -1,12 +1,20 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   index: 'bank',
   body: {
-    query: { match_all: {} },
-    sort: { account_number: 'asc' },
+    query: {
+      match_all: {
+      }
+    },
+    sort: [
+      {
+        account_number: 'asc'
+      }
+    ],
     from: 10,
     size: 10
   }
 )
+puts response
 ----

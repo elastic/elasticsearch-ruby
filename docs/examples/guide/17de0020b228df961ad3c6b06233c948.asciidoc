@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my_index',
+  body: {
+    properties: {
+      user_id: {
+        type: 'keyword',
+        ignore_above: 100
+      }
+    }
+  }
+)
+puts response
+----

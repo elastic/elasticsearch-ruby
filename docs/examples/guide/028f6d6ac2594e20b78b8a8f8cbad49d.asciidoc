@@ -1,21 +1,33 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     aggregations: {
       countries: {
         terms: {
-          field: "artist.country",
+          field: 'artist.country',
           order: [
-            { "rock>playback_stats.avg": "desc" },
-            { "_count": "desc" }
+            {
+              "rock>playback_stats.avg": 'desc'
+            },
+            {
+              _count: 'desc'
+            }
           ]
         },
         aggregations: {
           rock: {
-            filter: { term: { genre: "rock" } },
+            filter: {
+              term: {
+                genre: 'rock'
+              }
+            },
             aggregations: {
-              playback_stats: { stats: { field: "play_count" } }
+              playback_stats: {
+                stats: {
+                  field: 'play_count'
+                }
+              }
             }
           }
         }
@@ -23,4 +35,5 @@ client.search(
     }
   }
 )
+puts response
 ----

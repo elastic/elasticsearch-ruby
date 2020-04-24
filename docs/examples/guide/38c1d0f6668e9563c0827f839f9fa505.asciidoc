@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.update(
+  index: 'test',
+  id: 1,
+  body: {
+    doc: {
+      name: 'new_name'
+    }
+  }
+)
+puts response
+----

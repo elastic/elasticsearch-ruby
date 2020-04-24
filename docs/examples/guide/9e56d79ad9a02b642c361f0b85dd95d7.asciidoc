@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_index',
+  body: {
+    mappings: {
+      properties: {
+        color: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+----

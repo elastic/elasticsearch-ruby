@@ -1,16 +1,17 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     query: {
       constant_score: {
         filter: {
           term: {
-            status: "active"
+            status: 'active'
           }
         }
       }
     }
   }
 )
+puts response
 ----

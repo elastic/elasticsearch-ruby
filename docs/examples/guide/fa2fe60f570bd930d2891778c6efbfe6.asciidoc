@@ -1,12 +1,13 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     query: {
       match: {
-        message: "this is a test"
+        message: 'this is a test'
       }
     }
   }
 )
+puts response
 ----

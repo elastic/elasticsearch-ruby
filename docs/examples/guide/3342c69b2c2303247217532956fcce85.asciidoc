@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      exists: {
+        field: 'user'
+      }
+    }
+  }
+)
+puts response
+----

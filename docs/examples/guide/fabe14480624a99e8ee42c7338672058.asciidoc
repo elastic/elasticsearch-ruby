@@ -1,7 +1,8 @@
 [source, ruby]
 ----
-client.indices.create(
-  index: "test",
-  wait_for_active_shards: "2"
+response = client.indices.create(
+  index: 'test',
+  wait_for_active_shards: 2
 )
+puts response
 ----

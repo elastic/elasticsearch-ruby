@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.get(
+  index: 'metricbeat-2016.05.30-1',
+  id: 1
+)
+puts response
+----

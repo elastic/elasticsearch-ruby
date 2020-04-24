@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'twitter,blog',
+  body: {
+    query: {
+      match_all: {
+      }
+    }
+  }
+)
+puts response
+----

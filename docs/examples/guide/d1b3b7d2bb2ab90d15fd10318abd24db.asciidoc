@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_index',
+  body: {
+    mappings: {
+      properties: {
+        post_date: {
+          type: 'date'
+        },
+        user: {
+          type: 'keyword'
+        },
+        name: {
+          type: 'keyword'
+        },
+        age: {
+          type: 'integer'
+        }
+      }
+    }
+  }
+)
+puts response
+----

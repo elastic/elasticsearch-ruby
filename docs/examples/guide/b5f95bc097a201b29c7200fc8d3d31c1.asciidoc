@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.put_template(
+  name: 'template_1',
+  body: {
+    index_patterns: [
+      '*'
+    ],
+    order: 0,
+    settings: {
+      number_of_shards: 1
+    },
+    mappings: {
+      _source: {
+        enabled: false
+      }
+    }
+  }
+)
+puts response
+----

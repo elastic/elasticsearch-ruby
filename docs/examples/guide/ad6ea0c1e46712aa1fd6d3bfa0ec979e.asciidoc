@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      query_string: {
+        query: '(new york city) OR (big apple)',
+        default_field: 'content'
+      }
+    }
+  }
+)
+puts response
+----

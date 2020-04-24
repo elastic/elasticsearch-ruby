@@ -1,7 +1,7 @@
 [source, ruby]
 ----
-client.indices.create(
-  index: "twitter",
+response = client.indices.create(
+  index: 'twitter',
   body: {
     settings: {
       index: {
@@ -11,4 +11,5 @@ client.indices.create(
     }
   }
 )
+puts response
 ----

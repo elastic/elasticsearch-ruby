@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'test'
+    },
+    dest: {
+      index: 'test2'
+    },
+    script: {
+      source: 'ctx._source.tag = ctx._source.remove("flag")'
+    }
+  }
+)
+puts response
+----

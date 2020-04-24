@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      multi_match: {
+        query: 'this is a test',
+        fields: [
+          'subject^3',
+          'message'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

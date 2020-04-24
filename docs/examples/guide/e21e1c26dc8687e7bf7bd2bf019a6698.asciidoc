@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'twitter',
+  conflicts: 'proceed',
+  body: {
+    query: {
+      match_all: {
+      }
+    }
+  }
+)
+puts response
+----

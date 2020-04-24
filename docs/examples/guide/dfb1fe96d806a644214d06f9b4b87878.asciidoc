@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'twitter',
+  scroll_size: 5000,
+  body: {
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

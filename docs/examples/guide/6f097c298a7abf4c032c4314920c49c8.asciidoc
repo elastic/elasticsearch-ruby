@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: [
+        'twitter',
+        'blog'
+      ]
+    },
+    dest: {
+      index: 'all_together'
+    }
+  }
+)
+puts response
+----

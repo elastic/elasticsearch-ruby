@@ -1,11 +1,14 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   index: 'bank',
   body: {
     query: {
-      match: { address: "mill lane" }
+      match: {
+        address: 'mill lane'
+      }
     }
   }
 )
+puts response
 ----

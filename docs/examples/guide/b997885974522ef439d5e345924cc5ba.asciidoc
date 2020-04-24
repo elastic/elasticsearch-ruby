@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_index',
+  id: 1,
+  refresh: true,
+  body: {
+    product: 'chocolate',
+    price: [
+      20,
+      4
+    ]
+  }
+)
+puts response
+----

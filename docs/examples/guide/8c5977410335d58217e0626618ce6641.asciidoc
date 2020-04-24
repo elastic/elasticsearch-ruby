@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_index',
+  id: 2,
+  body: {
+    color: 'blue'
+  }
+)
+puts response
+----

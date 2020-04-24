@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_index',
+  pretty: true,
+  body: {
+    query: {
+      match: {
+        full_text: 'Quick Brown Foxes!'
+      }
+    }
+  }
+)
+puts response
+----

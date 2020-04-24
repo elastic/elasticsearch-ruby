@@ -1,17 +1,21 @@
 [source, ruby]
 ----
-client.indices.create(
+response = client.indices.create(
   index: 'test',
   body: {
     aliases: {
-      alias_1: {},
-      alias_2: {
+      "alias_1": {
+      },
+      "alias_2": {
         filter: {
-          term: { user: "kimchy" }
+          term: {
+            user: 'kimchy'
+          }
         },
-        routing: "kimchy"
+        routing: 'kimchy'
       }
     }
   }
 )
+puts response
 ----

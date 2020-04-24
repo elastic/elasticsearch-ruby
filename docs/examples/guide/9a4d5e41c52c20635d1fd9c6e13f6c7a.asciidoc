@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'metricbeat-2016.05.30',
+  id: 1,
+  refresh: true,
+  body: {
+    "system.cpu.idle.pct": 0.908
+  }
+)
+puts response
+----

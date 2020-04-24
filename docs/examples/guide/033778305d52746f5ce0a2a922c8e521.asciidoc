@@ -1,19 +1,18 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     aggregations: {
       genres: {
-        tags: {
-          terms: {
-            script: {
-              source: "doc['genre'].value",
-              lang: "painless"
-            }
+        terms: {
+          script: {
+            source: "doc['genre'].value",
+            lang: 'painless'
           }
         }
       }
     }
   }
 )
+puts response
 ----

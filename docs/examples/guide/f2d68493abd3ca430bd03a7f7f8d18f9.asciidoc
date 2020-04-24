@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      query_string: {
+        fields: [
+          'content',
+          'name'
+        ],
+        query: 'this AND that'
+      }
+    }
+  }
+)
+puts response
+----

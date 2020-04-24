@@ -1,4 +1,8 @@
 [source, ruby]
 ----
-response = client.exists(index: 'twitter', id: 0)
+response = client.exists(
+  index: 'twitter',
+  id: 0
+)
+puts response
 ----

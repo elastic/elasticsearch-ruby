@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'twitter',
+  refresh: true,
+  slices: 5,
+  body: {
+    query: {
+      range: {
+        likes: {
+          lt: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

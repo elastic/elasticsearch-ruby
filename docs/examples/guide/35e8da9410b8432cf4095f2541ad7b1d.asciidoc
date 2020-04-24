@@ -1,11 +1,11 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   body: {
     aggregations: {
       products: {
         terms: {
-          field: "product",
+          field: 'product',
           size: 5,
           show_term_doc_count_error: true
         }
@@ -13,4 +13,5 @@ client.search(
     }
   }
 )
+puts response
 ----

@@ -1,4 +1,7 @@
 [source, ruby]
 ----
-client.cat.health(v: true)
+response = client.cat.health(
+  v: true
+)
+puts response
 ----

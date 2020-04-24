@@ -1,18 +1,27 @@
 [source, ruby]
 ----
-client.search(
+response = client.search(
   index: 'bank',
   body: {
     query: {
       bool: {
         must: [
-          { match: { age: "40" } }
+          {
+            match: {
+              age: '40'
+            }
+          }
         ],
         must_not: [
-          { match: { state: "ID" } }
+          {
+            match: {
+              state: 'ID'
+            }
+          }
         ]
       }
     }
   }
 )
+puts response
 ----

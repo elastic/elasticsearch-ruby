@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'new_users',
+  body: {
+    mappings: {
+      properties: {
+        user_id: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+----
