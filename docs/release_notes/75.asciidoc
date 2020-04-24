@@ -1,4 +1,5 @@
-== 7.5 Release notes
+[[release_notes_75]]
+=== 7.5 Release notes
 
 - Support for Elasticsearch 7.5.
 - Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.
@@ -8,6 +9,7 @@
 === API
 
 Endpoints that changed:
+
 - `_bulk`: body is now required as an argument.
 - `cat`: `local` and `master_timeout` parameters are gone.
   - `health`: New parameter `health`.

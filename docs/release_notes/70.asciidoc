@@ -1,4 +1,5 @@
-== 7.0 Release notes
+[[release_notes_70]]
+=== 7.0 Release notes
 
 This version contains the following changes:
 
