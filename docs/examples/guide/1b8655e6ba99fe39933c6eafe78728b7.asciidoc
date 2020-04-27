@@ -15,4 +15,20 @@ response = client.reindex(
   }
 )
 puts response
+
+response = client.reindex(
+  body: {
+    source: {
+      index: 'twitter',
+      slice: {
+        id: 1,
+        max: 2
+      }
+    },
+    dest: {
+      index: 'new_twitter'
+    }
+  }
+)
+puts response
 ----

@@ -4,4 +4,21 @@ response = client.indices.create(
   index: 'twitter-1'
 )
 puts response
+
+response = client.indices.create(
+  index: 'twitter-2'
+)
+puts response
+
+response = client.indices.create(
+  index: 'twitter-1,twitter-2',
+  body: {
+    properties: {
+      user_name: {
+        type: 'text'
+      }
+    }
+  }
+)
+puts response
 ----

@@ -8,4 +8,22 @@ response = client.cluster.put_settings(
   }
 )
 puts response
+
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "action.auto_create_index": 'false'
+    }
+  }
+)
+puts response
+
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "action.auto_create_index": 'true'
+    }
+  }
+)
+puts response
 ----

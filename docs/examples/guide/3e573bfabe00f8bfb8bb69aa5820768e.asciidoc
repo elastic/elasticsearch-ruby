@@ -2,4 +2,20 @@
 ----
 response = client.indices.refresh
 puts response
+
+response = client.indices.refresh(
+  index: 'twitter',
+  size: 0,
+  filter_path: 'hits.total',
+  body: {
+    query: {
+      range: {
+        likes: {
+          lt: 10
+        }
+      }
+    }
+  }
+)
+puts response
 ----

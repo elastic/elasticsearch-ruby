@@ -17,4 +17,22 @@ response = client.delete_by_query(
   }
 )
 puts response
+
+response = client.delete_by_query(
+  index: 'twitter',
+  body: {
+    slice: {
+      id: 1,
+      max: 2
+    },
+    query: {
+      range: {
+        likes: {
+          lt: 10
+        }
+      }
+    }
+  }
+)
+puts response
 ----
