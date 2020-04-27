@@ -5,4 +5,10 @@ response = client.get(
   id: 1
 )
 puts response
+
+response = client.get(
+  index: 'metricbeat-2016.05.31-1',
+  id: 1
+)
+puts response
 ----

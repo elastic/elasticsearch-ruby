@@ -13,4 +13,23 @@ response = client.index(
   }
 )
 puts response
+
+response = client.index(
+  body: {
+    query: {
+      term: {
+        product: 'chocolate'
+      }
+    },
+    sort: [
+      {
+        price: {
+          order: 'asc',
+          mode: 'avg'
+        }
+      }
+    ]
+  }
+)
+puts response
 ----

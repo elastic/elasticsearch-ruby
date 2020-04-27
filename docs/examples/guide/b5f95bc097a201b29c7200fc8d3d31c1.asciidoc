@@ -18,4 +18,23 @@ response = client.indices.put_template(
   }
 )
 puts response
+
+response = client.indices.put_template(
+  name: 'template_2',
+  body: {
+    index_patterns: [
+      'te*'
+    ],
+    order: 1,
+    settings: {
+      number_of_shards: 1
+    },
+    mappings: {
+      _source: {
+        enabled: true
+      }
+    }
+  }
+)
+puts response
 ----

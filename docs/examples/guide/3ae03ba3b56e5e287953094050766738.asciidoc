@@ -2,4 +2,11 @@
 ----
 response = client.indices.refresh
 puts response
+
+response = client.indices.refresh(
+  index: 'new_twitter',
+  size: 0,
+  filter_path: 'hits.total'
+)
+puts response
 ----
