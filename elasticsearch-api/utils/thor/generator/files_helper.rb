@@ -3,6 +3,7 @@
 # See the LICENSE file in the project root for more information
 
 require 'pathname'
+require_relative '../../../lib/elasticsearch/api/version.rb'
 
 module Elasticsearch
   module API
@@ -35,6 +36,11 @@ module Elasticsearch
             f.start_with?('_') ||
             File.extname(f) != '.json'
         end
+      end
+
+      def self.gem_version
+        regex = /([0-9]{1,2}\.[0-9x]{1,2})/
+        Elasticsearch::API::VERSION.match(regex)[0]
       end
     end
   end
