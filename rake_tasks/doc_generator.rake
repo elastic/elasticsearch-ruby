@@ -34,17 +34,20 @@ namespace :docs do
   end
 
   def self.build_client_query(api, entry)
-    request_body = []
-    query = entry['parsed_source'].first&.[]('query')
-    params = entry['parsed_source'].first&.[]('params')
-    params = params&.merge(query) || query if query
-    request_body << show_parameters(params) if params
-    body = entry['parsed_source'].first&.[]('body')
-    request_body << show_body(body) if body
-    request_body = request_body.compact.join(",\n")
-
-    code = "response = client.#{api}(\n#{request_body}\n)\nputs response"
-    format_code(code)
+    client_query = []
+    entry['parsed_source'].each do |entry|
+      request_body = []
+      query = entry&.[]('query')
+      params = entry&.[]('params')
+      params = params&.merge(query) || query if query
+      request_body << show_parameters(params) if params
+      body = entry&.[]('body')
+      request_body << show_body(body) if body
+      request_body = request_body.compact.join(",\n")
+      code = "response = client.#{api}(\n#{request_body}\n)\nputs response"
+      client_query << format_code(code)
+    end
+    client_query.join("\n\n")
   end
 
   def self.format_code(code)
