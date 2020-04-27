@@ -1,4 +1,0 @@
-[source, ruby]
-----
-client.nodes.reload_secure_settings
-----
