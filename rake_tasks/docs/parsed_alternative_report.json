@@ -828,6 +828,55 @@
   },
   {
     "source_location": {
+      "file": "modules/transport.asciidoc",
+      "line": 155
+    },
+    "digest": "939e79dee613238f9512fb9cbf0be816",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _cluster/settings\n{\n   \"transient\" : {\n      \"logger.org.elasticsearch.transport.TransportService.tracer\" : \"TRACE\"\n   }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_cluster/settings",
+        "query": null,
+        "body": {
+          "transient": {
+            "logger.org.elasticsearch.transport.TransportService.tracer": "TRACE"
+          }
+        },
+        "params": null,
+        "api": "cluster.put_settings"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "modules/transport.asciidoc",
+      "line": 168
+    },
+    "digest": "cecbbd7b4ec1bf82fd84ae96099febcc",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _cluster/settings\n{\n   \"transient\" : {\n      \"transport.tracer.include\" : \"*\",\n      \"transport.tracer.exclude\" : \"internal:coordination/fault_detection/*\"\n   }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_cluster/settings",
+        "query": null,
+        "body": {
+          "transient": {
+            "transport.tracer.include": "*",
+            "transport.tracer.exclude": "internal:coordination/fault_detection/*"
+          }
+        },
+        "params": null,
+        "api": "cluster.put_settings"
+      }
+    ]
+  },
+  {
+    "source_location": {
       "file": "setup/sysconfig/swap.asciidoc",
       "line": 71
     },
@@ -10537,51 +10586,6 @@
   },
   {
     "source_location": {
-      "file": "aggregations/bucket/range-aggregation.asciidoc",
-      "line": 386
-    },
-    "digest": "4547c455375eeda5ad9f74b40d4fa61b",
-    "lang": "console",
-    "found": [],
-    "source": "GET /_search\n{\n    \"aggs\" : {\n        \"price_ranges\" : {\n            \"range\" : {\n                \"field\" : \"price\",\n                \"ranges\" : [\n                    { \"to\" : 100 },\n                    { \"from\" : 100, \"to\" : 200 },\n                    { \"from\" : 200 }\n                ]\n            },\n            \"aggs\" : {\n                \"price_stats\" : {\n                    \"stats\" : {} <1>\n                }\n            }\n        }\n    }\n}",
-    "parsed_source": [
-      {
-        "method": "GET",
-        "url": "/_search",
-        "query": null,
-        "body": {
-          "aggs": {
-            "price_ranges": {
-              "range": {
-                "field": "price",
-                "ranges": [
-                  {
-                    "to": 100
-                  },
-                  {
-                    "from": 100,
-                    "to": 200
-                  },
-                  {
-                    "from": 200
-                  }
-                ]
-              },
-              "aggs": {
-                "price_stats": {
-                  "stats": {}
-                }
-              }
-            }
-          }
-        },
-        "params": null,
-        "api": "search"
-      }
-    ]
-  },
-  {
-    "source_location": {
       "file": "aggregations/bucket/rare-terms-aggregation.asciidoc",
       "line": 89
     },
@@ -15643,6 +15647,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15679,6 +15684,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15715,6 +15721,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15751,6 +15758,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15789,6 +15797,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15833,6 +15842,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15871,6 +15881,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15909,6 +15920,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15957,6 +15969,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -15994,6 +16007,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16037,6 +16051,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16075,6 +16090,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16114,6 +16130,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16167,6 +16184,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16206,6 +16224,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16243,6 +16262,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16307,6 +16327,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16343,6 +16364,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16375,6 +16397,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16412,6 +16435,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16447,6 +16471,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16479,6 +16504,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16515,6 +16541,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16549,6 +16576,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16585,6 +16613,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16622,6 +16651,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -16659,6 +16689,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -18625,6 +18656,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -18655,6 +18687,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -18687,6 +18720,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -20783,7 +20817,9 @@
     "digest": "3342c69b2c2303247217532956fcce85",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -20813,7 +20849,9 @@
     "digest": "43af86de5e49aa06070092fffc138208",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -20994,6 +21032,7 @@
     "found": [
       "php",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21029,6 +21068,7 @@
     "found": [
       "php",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21063,6 +21103,7 @@
     "found": [
       "php",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21130,6 +21171,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21165,6 +21207,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21201,6 +21244,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21232,6 +21276,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21268,6 +21313,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21311,7 +21357,9 @@
     "digest": "0c4ad860a485fe53d8140ad3ccd11dcf",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21345,7 +21393,9 @@
     "digest": "9e56d79ad9a02b642c361f0b85dd95d7",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21379,7 +21429,9 @@
     "digest": "d3088d5fa59b3ab110f64fb4f9b0065c",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21411,7 +21463,9 @@
     "digest": "8c5977410335d58217e0626618ce6641",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21440,7 +21494,9 @@
     "digest": "d1bcf2eb63a462bfdcf01a68e68d5b4a",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21661,7 +21717,9 @@
     "digest": "d31062ff8c015387889fed4ad86fd914",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -21879,7 +21937,7 @@
   {
     "source_location": {
       "file": "scripting/using.asciidoc",
-      "line": 147
+      "line": 149
     },
     "digest": "40a2bbc35a887d6c7dda3cca1fe7aa58",
     "lang": "console",
@@ -21906,7 +21964,7 @@
   {
     "source_location": {
       "file": "scripting/using.asciidoc",
-      "line": 163
+      "line": 165
     },
     "digest": "548a09b4630ae38cf8af33581ae614e6",
     "lang": "console",
@@ -21934,7 +21992,7 @@
   {
     "source_location": {
       "file": "scripting/using.asciidoc",
-      "line": 177
+      "line": 179
     },
     "digest": "08e08feb514b24006e13f258d617d873",
     "lang": "console",
@@ -21956,7 +22014,7 @@
   {
     "source_location": {
       "file": "scripting/using.asciidoc",
-      "line": 185
+      "line": 187
     },
     "digest": "b3423b00c6336ee0a1720b4ed7031cd7",
     "lang": "console",
@@ -21994,7 +22052,7 @@
   {
     "source_location": {
       "file": "scripting/using.asciidoc",
-      "line": 210
+      "line": 212
     },
     "digest": "4061fd5ba7221ca85805ed14d59a6bc5",
     "lang": "console",
@@ -22267,6 +22325,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -22309,6 +22368,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -22344,6 +22404,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -22382,6 +22443,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -24923,7 +24985,9 @@
     "digest": "8baccd8688a6bad1749b8935f9601ea4",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -24962,7 +25026,9 @@
     "digest": "b214942b938e47f2c486e523546cb574",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -25005,7 +25071,9 @@
     "digest": "b919f88e6f47a40d5793479440a90ba6",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -28772,7 +28840,9 @@
     "digest": "7f465b7e8ed42df6c42251b4481e699e",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -31383,7 +31453,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 81
+      "line": 82
     },
     "digest": "137c62a4443bdd7d5b95a15022a9dc30",
     "lang": "console",
@@ -31439,7 +31509,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 131
+      "line": 132
     },
     "digest": "f7dc2fed08e57abda2c3e8a14f8eb098",
     "lang": "console",
@@ -31493,7 +31563,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 179
+      "line": 180
     },
     "digest": "01f50acf7998b24969f451e922d145eb",
     "lang": "console",
@@ -31547,7 +31617,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 227
+      "line": 228
     },
     "digest": "496d35c89dc991a1509f7e8fb93ade45",
     "lang": "console",
@@ -31604,7 +31674,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 278
+      "line": 279
     },
     "digest": "13670d1534125831c2059eebd86d840c",
     "lang": "console",
@@ -31658,7 +31728,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 326
+      "line": 327
     },
     "digest": "d0378fe5e3aad05a2fd2e6e81213374f",
     "lang": "console",
@@ -31712,7 +31782,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 374
+      "line": 375
     },
     "digest": "7ab968a61bb0783f563dd6d29b253901",
     "lang": "console",
@@ -31779,7 +31849,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 431
+      "line": 432
     },
     "digest": "d305110a8cabfbebd1e38d85559d1023",
     "lang": "console",
@@ -31859,7 +31929,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 477
+      "line": 478
     },
     "digest": "a28111cdd9b5aaea96c779cbfbf38780",
     "lang": "console",
@@ -31913,7 +31983,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 525
+      "line": 526
     },
     "digest": "ed85ed833bec7286a0dfbe64077c5715",
     "lang": "console",
@@ -31967,7 +32037,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 573
+      "line": 574
     },
     "digest": "10d8b17e73d31dcd907de67327ed78a2",
     "lang": "console",
@@ -32031,7 +32101,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 631
+      "line": 632
     },
     "digest": "81c7a392efd505b686eed978fb7d9d17",
     "lang": "console",
@@ -32090,7 +32160,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 684
+      "line": 685
     },
     "digest": "2f4e28c81db47547ad39d0926babab12",
     "lang": "console",
@@ -32144,7 +32214,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 732
+      "line": 733
     },
     "digest": "85f0e5e8ab91ceab63c21dbedd9f4037",
     "lang": "console",
@@ -32198,7 +32268,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 780
+      "line": 781
     },
     "digest": "f545bb95214769aca993c1632a71ad2c",
     "lang": "console",
@@ -32272,7 +32342,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 838
+      "line": 839
     },
     "digest": "9606c271921cb800d5ea395b16d6ceaf",
     "lang": "console",
@@ -32326,7 +32396,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 886
+      "line": 887
     },
     "digest": "187e8786e0a90f1f6278cf89b670de0a",
     "lang": "console",
@@ -32381,7 +32451,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 935
+      "line": 936
     },
     "digest": "1f00e73c144603e97f6c14ab15fa1913",
     "lang": "console",
@@ -32439,7 +32509,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 987
+      "line": 988
     },
     "digest": "af00a58d9171d32f6efe52d94e51e526",
     "lang": "console",
@@ -32496,7 +32566,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1038
+      "line": 1039
     },
     "digest": "84108653e9e03b4edacd878ec870df77",
     "lang": "console",
@@ -32550,7 +32620,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1087
+      "line": 1088
     },
     "digest": "eb5987b58dae90c3a8a1609410be0570",
     "lang": "console",
@@ -32604,7 +32674,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1135
+      "line": 1136
     },
     "digest": "160f39a50847bad0be4be1529a95e4ce",
     "lang": "console",
@@ -32682,7 +32752,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1199
+      "line": 1200
     },
     "digest": "00e0c964c79fcc1876ab957da2ffce82",
     "lang": "console",
@@ -32764,7 +32834,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1258
+      "line": 1259
     },
     "digest": "d983c1ea730eeabac9e914656d7c9be2",
     "lang": "console",
@@ -32818,7 +32888,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1306
+      "line": 1307
     },
     "digest": "bb067c049331cc850a77b18bdfff81b5",
     "lang": "console",
@@ -32872,7 +32942,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1354
+      "line": 1355
     },
     "digest": "2731a8577ad734a732d784c5dcb1225d",
     "lang": "console",
@@ -32926,7 +32996,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1402
+      "line": 1403
     },
     "digest": "d1a285aa244ec461d68f13e7078a33c0",
     "lang": "console",
@@ -32982,7 +33052,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1448
+      "line": 1449
     },
     "digest": "584f502cf840134f2db5f39e2483ced1",
     "lang": "console",
@@ -33036,7 +33106,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1496
+      "line": 1497
     },
     "digest": "1ba7afe23a26fe9ac7856d8c5bc1059d",
     "lang": "console",
@@ -33090,7 +33160,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1545
+      "line": 1546
     },
     "digest": "d260225cf97e068ead2a8a6bb5aefd90",
     "lang": "console",
@@ -33144,7 +33214,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1593
+      "line": 1594
     },
     "digest": "320645d771e952af2a67bb7445c3688d",
     "lang": "console",
@@ -33200,7 +33270,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1643
+      "line": 1644
     },
     "digest": "327466380bcd55361973b4a96c6dccb2",
     "lang": "console",
@@ -33254,7 +33324,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1691
+      "line": 1692
     },
     "digest": "f097c02541056f3c0fc855e7bbeef8a8",
     "lang": "console",
@@ -33308,7 +33378,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1739
+      "line": 1740
     },
     "digest": "103296e16b4233926ad1f07360385606",
     "lang": "console",
@@ -33367,7 +33437,7 @@
   {
     "source_location": {
       "file": "analysis/analyzers/lang-analyzer.asciidoc",
-      "line": 1792
+      "line": 1793
     },
     "digest": "346f28d82acb5427c304aa574fea0008",
     "lang": "console",
@@ -38021,12 +38091,73 @@
   {
     "source_location": {
       "file": "analysis/tokenfilters/stemmer-tokenfilter.asciidoc",
-      "line": 17
+      "line": 23
     },
-    "digest": "1ca618e7d72ec73c1064fa6eae3086d1",
+    "digest": "a4e510aa9145ccedae151c4a6634f0a4",
     "lang": "console",
     "found": [],
-    "source": "PUT /my_index\n{\n    \"settings\": {\n        \"analysis\" : {\n            \"analyzer\" : {\n                \"my_analyzer\" : {\n                    \"tokenizer\" : \"standard\",\n                    \"filter\" : [\"lowercase\", \"my_stemmer\"]\n                }\n            },\n            \"filter\" : {\n                \"my_stemmer\" : {\n                    \"type\" : \"stemmer\",\n                    \"name\" : \"light_german\"\n                }\n            }\n        }\n    }\n}",
+    "source": "GET /_analyze\n{\n  \"tokenizer\": \"standard\",\n  \"filter\": [ \"stemmer\" ],\n  \"text\": \"the foxes jumping quickly\"\n}",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_analyze",
+        "query": null,
+        "body": {
+          "tokenizer": "standard",
+          "filter": [
+            "stemmer"
+          ],
+          "text": "the foxes jumping quickly"
+        },
+        "params": null,
+        "api": "indices.analyze"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "analysis/tokenfilters/stemmer-tokenfilter.asciidoc",
+      "line": 85
+    },
+    "digest": "7bdb87054d1c363964e109dec74197d6",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /my_index\n{\n  \"settings\": {\n    \"analysis\": {\n      \"analyzer\": {\n        \"my_analyzer\": {\n          \"tokenizer\": \"whitespace\",\n          \"filter\": [ \"stemmer\" ]\n        }\n      }\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/my_index",
+        "query": null,
+        "body": {
+          "settings": {
+            "analysis": {
+              "analyzer": {
+                "my_analyzer": {
+                  "tokenizer": "whitespace",
+                  "filter": [
+                    "stemmer"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "my_index"
+        },
+        "api": "indices.create"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "analysis/tokenfilters/stemmer-tokenfilter.asciidoc",
+      "line": 258
+    },
+    "digest": "cf215381af3df5eaa8c0cf3a2d42337a",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /my_index\n{\n  \"settings\": {\n    \"analysis\": {\n      \"analyzer\": {\n        \"my_analyzer\": {\n          \"tokenizer\": \"standard\",\n          \"filter\": [\n            \"lowercase\",\n            \"my_stemmer\"\n          ]\n        }\n      },\n      \"filter\": {\n        \"my_stemmer\": {\n          \"type\": \"stemmer\",\n          \"language\": \"light_german\"\n        }\n      }\n    }\n  }\n}",
     "parsed_source": [
       {
         "method": "PUT",
@@ -38047,7 +38178,7 @@
               "filter": {
                 "my_stemmer": {
                   "type": "stemmer",
-                  "name": "light_german"
+                  "language": "light_german"
                 }
               }
             }
@@ -39694,10 +39825,10 @@
       "file": "modules/discovery/adding-removing-nodes.asciidoc",
       "line": 64
     },
-    "digest": "abcc9f98c6bbaf70aa0b1abf8011d2a4",
+    "digest": "4e1f02928ef243bf07fd425754b7642b",
     "lang": "console",
     "found": [],
-    "source": "# Add node to voting configuration exclusions list and wait for the system\n# to auto-reconfigure the node out of the voting configuration up to the\n# default timeout of 30 seconds\nPOST /_cluster/voting_config_exclusions/node_name\n\n# Add node to voting configuration exclusions list and wait for\n# auto-reconfiguration up to one minute\nPOST /_cluster/voting_config_exclusions/node_name?timeout=1m",
+    "source": "# Add node to voting configuration exclusions list and wait for the system\n# to auto-reconfigure the node out of the voting configuration up to the\n# default timeout of 30 seconds\nPOST /_cluster/voting_config_exclusions?node_names=node_name\n\n# Add node to voting configuration exclusions list and wait for\n# auto-reconfiguration up to one minute\nPOST /_cluster/voting_config_exclusions?node_names=node_name&timeout=1m",
     "parsed_source": []
   },
   {
@@ -39922,55 +40053,6 @@
           "transient": {
             "http.tracer.include": "*",
             "http.tracer.exclude": ""
-          }
-        },
-        "params": null,
-        "api": "cluster.put_settings"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "modules/transport.asciidoc",
-      "line": 157
-    },
-    "digest": "939e79dee613238f9512fb9cbf0be816",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _cluster/settings\n{\n   \"transient\" : {\n      \"logger.org.elasticsearch.transport.TransportService.tracer\" : \"TRACE\"\n   }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_cluster/settings",
-        "query": null,
-        "body": {
-          "transient": {
-            "logger.org.elasticsearch.transport.TransportService.tracer": "TRACE"
-          }
-        },
-        "params": null,
-        "api": "cluster.put_settings"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "modules/transport.asciidoc",
-      "line": 170
-    },
-    "digest": "cecbbd7b4ec1bf82fd84ae96099febcc",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _cluster/settings\n{\n   \"transient\" : {\n      \"transport.tracer.include\" : \"*\",\n      \"transport.tracer.exclude\" : \"internal:coordination/fault_detection/*\"\n   }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_cluster/settings",
-        "query": null,
-        "body": {
-          "transient": {
-            "transport.tracer.include": "*",
-            "transport.tracer.exclude": "internal:coordination/fault_detection/*"
           }
         },
         "params": null,
@@ -42666,8 +42748,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/getting-started-ilm.asciidoc",
-      "line": 46
+      "file": "ilm/ilm-tutorial.asciidoc",
+      "line": 60
     },
     "digest": "080b3362db1fa14e1ca4e290d6e6447d",
     "lang": "console",
@@ -42707,8 +42789,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/getting-started-ilm.asciidoc",
-      "line": 93
+      "file": "ilm/ilm-tutorial.asciidoc",
+      "line": 115
     },
     "digest": "4d01c243f7406c98546311ec1ff6b7e6",
     "lang": "console",
@@ -42739,8 +42821,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/getting-started-ilm.asciidoc",
-      "line": 135
+      "file": "ilm/ilm-tutorial.asciidoc",
+      "line": 160
     },
     "digest": "7148c8512079d378af70302e65502dd2",
     "lang": "console",
@@ -42767,8 +42849,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/getting-started-ilm.asciidoc",
-      "line": 173
+      "file": "ilm/ilm-tutorial.asciidoc",
+      "line": 196
     },
     "digest": "2ffa953b29ed0156c9e610daf66b8e48",
     "lang": "console",
@@ -42789,8 +42871,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/getting-started-ilm.asciidoc",
-      "line": 184
+      "file": "ilm/ilm-tutorial.asciidoc",
+      "line": 207
     },
     "digest": "d679eaaaf8cc560cb7b999b3c31f43fc",
     "lang": "console-result",
@@ -42799,49 +42881,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 34
-    },
-    "digest": "b53e3314eb39b667a9ba87fb3a286e6b",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"warm\": {\n        \"min_age\": \"1d\",\n        \"actions\": {\n          \"allocate\": {\n            \"number_of_replicas\": 1\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"30d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "warm": {
-                "min_age": "1d",
-                "actions": {
-                  "allocate": {
-                    "number_of_replicas": 1
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "30d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 167
+      "file": "ilm/actions/ilm-allocate.asciidoc",
+      "line": 60
     },
     "digest": "1116c769f39f0c7fe86ec2a4871efcd5",
     "lang": "console",
@@ -42874,8 +42915,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 189
+      "file": "ilm/actions/ilm-allocate.asciidoc",
+      "line": 88
     },
     "digest": "0518c673094fb18ecb491a3b78af4695",
     "lang": "console",
@@ -42910,8 +42951,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 216
+      "file": "ilm/actions/ilm-allocate.asciidoc",
+      "line": 118
     },
     "digest": "9d461ae140ddc018efd2650559800cd1",
     "lang": "console",
@@ -42947,42 +42988,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 253
-    },
-    "digest": "83062a543163370328cf2e21a68c1bd3",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"delete\": {\n        \"actions\": {\n          \"wait_for_snapshot\" : {\n            \"policy\": \"slm-policy-name\"\n          }\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "delete": {
-                "actions": {
-                  "wait_for_snapshot": {
-                    "policy": "slm-policy-name"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 288
+      "file": "ilm/actions/ilm-delete.asciidoc",
+      "line": 22
     },
     "digest": "053497b6960f80fd7b005b7c6d54358f",
     "lang": "console",
@@ -43013,8 +43020,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 335
+      "file": "ilm/actions/ilm-forcemerge.asciidoc",
+      "line": 38
     },
     "digest": "eb5486d2fe4283475bf9e0e09280be16",
     "lang": "console",
@@ -43047,8 +43054,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 361
+      "file": "ilm/actions/ilm-freeze.asciidoc",
+      "line": 19
     },
     "digest": "0345fbd95c4516a89ac5ad261a16be8f",
     "lang": "console",
@@ -43079,8 +43086,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 395
+      "file": "ilm/actions/ilm-readonly.asciidoc",
+      "line": 18
     },
     "digest": "fc9a1b1173690a911725cff3912e9755",
     "lang": "console",
@@ -43111,8 +43118,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 433
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 25
     },
     "digest": "d7e7489b7d176aa854dfc785a12feab3",
     "lang": "console",
@@ -43143,8 +43150,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 477
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 67
     },
     "digest": "19211ccf772f1dee7b500c21f4a9a805",
     "lang": "console",
@@ -43177,8 +43184,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 500
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 91
     },
     "digest": "cfd4b34f35e531a20739a3b308d57134",
     "lang": "console",
@@ -43211,8 +43218,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 523
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 115
     },
     "digest": "d4a41fb74b41b41a0ee114a2311f2815",
     "lang": "console",
@@ -43245,8 +43252,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 547
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 140
     },
     "digest": "8940f2b911220acc9afef6360b6c13c4",
     "lang": "console",
@@ -43280,8 +43287,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 572
+      "file": "ilm/actions/ilm-rollover.asciidoc",
+      "line": 168
     },
     "digest": "f6c79fa1c01bb4539d0cba0bd62c1ce0",
     "lang": "console",
@@ -43320,8 +43327,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 620
+      "file": "ilm/actions/ilm-searchable-snapshot.asciidoc",
+      "line": 24
     },
     "digest": "3f2e5132e35b9e8b3203a4a0541cf0d4",
     "lang": "console",
@@ -43354,8 +43361,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 660
+      "file": "ilm/actions/ilm-set-priority.asciidoc",
+      "line": 29
     },
     "digest": "149a0eea54cdf6ea3052af6dba2d2a63",
     "lang": "console",
@@ -43388,8 +43395,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 712
+      "file": "ilm/actions/ilm-shrink.asciidoc",
+      "line": 36
     },
     "digest": "f3b4ddce8ff21fc1a76a7c0d9c36650e",
     "lang": "console",
@@ -43422,8 +43429,8 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 769
+      "file": "ilm/actions/ilm-unfollow.asciidoc",
+      "line": 45
     },
     "digest": "a5a58e8ad66afe831bc295500e3e8739",
     "lang": "console",
@@ -43454,64 +43461,33 @@
   },
   {
     "source_location": {
-      "file": "ilm/policy-definitions.asciidoc",
-      "line": 794
+      "file": "ilm/actions/ilm-wait-for-snapshot.asciidoc",
+      "line": 19
     },
-    "digest": "d14a2a6c2a8b084495b8a64708226650",
+    "digest": "83062a543163370328cf2e21a68c1bd3",
     "lang": "console",
     "found": [],
-    "source": "PUT _ilm/policy/full_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\": {\n        \"actions\": {\n          \"rollover\": {\n            \"max_age\": \"7d\",\n            \"max_size\": \"50G\"\n          }\n        }\n      },\n      \"warm\": {\n        \"min_age\": \"30d\",\n        \"actions\": {\n          \"forcemerge\": {\n            \"max_num_segments\": 1\n          },\n          \"shrink\": {\n            \"number_of_shards\": 1\n          },\n          \"allocate\": {\n            \"number_of_replicas\": 2\n          }\n        }\n      },\n      \"cold\": {\n        \"min_age\": \"60d\",\n        \"actions\": {\n          \"allocate\": {\n            \"require\": {\n              \"type\": \"cold\"\n            }\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"90d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
+    "source": "PUT _ilm/policy/my_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"delete\": {\n        \"actions\": {\n          \"wait_for_snapshot\" : {\n            \"policy\": \"slm-policy-name\"\n          }\n        }\n      }\n    }\n  }\n}",
     "parsed_source": [
       {
         "method": "PUT",
-        "url": "/_ilm/policy/full_policy",
+        "url": "/_ilm/policy/my_policy",
         "query": null,
         "body": {
           "policy": {
             "phases": {
-              "hot": {
-                "actions": {
-                  "rollover": {
-                    "max_age": "7d",
-                    "max_size": "50G"
-                  }
-                }
-              },
-              "warm": {
-                "min_age": "30d",
-                "actions": {
-                  "forcemerge": {
-                    "max_num_segments": 1
-                  },
-                  "shrink": {
-                    "number_of_shards": 1
-                  },
-                  "allocate": {
-                    "number_of_replicas": 2
-                  }
-                }
-              },
-              "cold": {
-                "min_age": "60d",
-                "actions": {
-                  "allocate": {
-                    "require": {
-                      "type": "cold"
-                    }
-                  }
-                }
-              },
               "delete": {
-                "min_age": "90d",
                 "actions": {
-                  "delete": {}
+                  "wait_for_snapshot": {
+                    "policy": "slm-policy-name"
+                  }
                 }
               }
             }
           }
         },
         "params": {
-          "policy": "full_policy"
+          "policy": "my_policy"
         },
         "api": "ilm.put_lifecycle"
       }
@@ -43520,7 +43496,7 @@
   {
     "source_location": {
       "file": "ilm/set-up-lifecycle-policy.asciidoc",
-      "line": 12
+      "line": 26
     },
     "digest": "7ecf197610e30c20f7206513ce393822",
     "lang": "console",
@@ -43560,12 +43536,12 @@
   {
     "source_location": {
       "file": "ilm/set-up-lifecycle-policy.asciidoc",
-      "line": 59
+      "line": 69
     },
-    "digest": "3c9d99215a7020ab478bdf5c8287a14f",
+    "digest": "f29c02d259065033bd557519d1b21481",
     "lang": "console",
     "found": [],
-    "source": "PUT _template/my_template\n{\n  \"index_patterns\": [\"test-*\"], <1>\n  \"settings\": {\n    \"number_of_shards\": 1,\n    \"number_of_replicas\": 1,\n    \"index.lifecycle.name\": \"my_policy\", <2>\n    \"index.lifecycle.rollover_alias\": \"test-alias\"\n  }\n}",
+    "source": "PUT _template/my_template\n{\n  \"index_patterns\": [\"test-*\"], <1>\n  \"settings\": {\n    \"number_of_shards\": 1,\n    \"number_of_replicas\": 1,\n    \"index.lifecycle.name\": \"my_policy\", <2>\n    \"index.lifecycle.rollover_alias\": \"test-alias\" <3>\n  }\n}",
     "parsed_source": [
       {
         "method": "PUT",
@@ -43592,7 +43568,7 @@
   {
     "source_location": {
       "file": "ilm/set-up-lifecycle-policy.asciidoc",
-      "line": 90
+      "line": 110
     },
     "digest": "25737fd456fd317cc4cc2db76b6cf28e",
     "lang": "console",
@@ -43620,7 +43596,7 @@
   {
     "source_location": {
       "file": "ilm/set-up-lifecycle-policy.asciidoc",
-      "line": 113
+      "line": 137
     },
     "digest": "160d259243d0800900b065c4b9d2b187",
     "lang": "console",
@@ -43642,304 +43618,6 @@
           "index": "test-index"
         },
         "api": "indices.create"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 29
-    },
-    "digest": "0c44088f251488432966131135f1bd1c",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\": {\n        \"actions\": {\n          \"rollover\": {\n            \"max_size\": \"25GB\"\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"30d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "hot": {
-                "actions": {
-                  "rollover": {
-                    "max_size": "25GB"
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "30d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 60
-    },
-    "digest": "2c37ed0b33658d73a712e7942ea7433a",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\": {\n        \"actions\": {\n          \"rollover\": {\n            \"max_size\": \"25GB\"\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"10d\", <1>\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "hot": {
-                "actions": {
-                  "rollover": {
-                    "max_size": "25GB"
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "10d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 98
-    },
-    "digest": "3f5f331ad51d398fbe349923fe8ce611",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n  \"my_policy\": {\n    \"version\": 2, <1>\n    \"modified_date\": 82392349, <2>\n    \"policy\": {\n      \"phases\": {\n        \"hot\": {\n          \"min_age\": \"0ms\",\n          \"actions\": {\n            \"rollover\": {\n              \"max_size\": \"25gb\"\n            }\n          }\n        },\n        \"delete\": {\n          \"min_age\": \"10d\",\n          \"actions\": {\n            \"delete\": {\n              \"delete_searchable_snapshot\": true\n            }\n          }\n        }\n      }\n    }\n  }\n}"
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 144
-    },
-    "digest": "fc541f5741c1fe052439ededa84ffe8a",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_executing_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\": {\n        \"actions\": {\n          \"rollover\": {\n            \"max_docs\": 1\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"10d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_executing_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "hot": {
-                "actions": {
-                  "rollover": {
-                    "max_docs": 1
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "10d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_executing_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 184
-    },
-    "digest": "0f6fa3a706a7c17858d3dbe329839ea6",
-    "lang": "console",
-    "found": [],
-    "source": "GET my_index/_ilm/explain",
-    "parsed_source": [
-      {
-        "method": "GET",
-        "url": "/my_index/_ilm/explain",
-        "query": null,
-        "body": null,
-        "params": {
-          "index": "my_index"
-        },
-        "api": "ilm.explain_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 190
-    },
-    "digest": "d5e55676f5242766ebb035b87ce660e2",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n  \"indices\": {\n    \"my_index\": {\n      \"index\": \"my_index\",\n      \"managed\": true,\n      \"policy\": \"my_executing_policy\",\n      \"lifecycle_date_millis\": 1538475653281,\n      \"age\": \"30s\",\n      \"phase\": \"hot\",\n      \"phase_time_millis\": 1538475653317,\n      \"action\": \"rollover\",\n      \"action_time_millis\": 1538475653317,\n      \"step\": \"check-rollover-ready\",\n      \"step_time_millis\": 1538475653317,\n      \"phase_execution\": {\n        \"policy\": \"my_executing_policy\",\n        \"modified_date_in_millis\": 1538475653317,\n        \"version\": 1,\n        \"phase_definition\": {\n          \"min_age\": \"0ms\",\n          \"actions\": {\n            \"rollover\": {\n              \"max_docs\": 1\n            }\n          }\n        }\n      }\n    }\n  }\n}"
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 227
-    },
-    "digest": "f94601bc9cd640adb939af67116a40c8",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_executing_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\": {\n        \"min_age\": \"1d\", <1>\n        \"actions\": {\n          \"rollover\": {\n            \"max_docs\": 1\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"10d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_executing_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "hot": {
-                "min_age": "1d",
-                "actions": {
-                  "rollover": {
-                    "max_docs": 1
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "10d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_executing_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 266
-    },
-    "digest": "aada9dd17e7b08f3c5a279920c84333e",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n  \"indices\": {\n    \"my_index\": {\n      \"index\": \"my_index\",\n      \"managed\": true,\n      \"policy\": \"my_executing_policy\",\n      \"lifecycle_date_millis\": 1538475653281,\n      \"age\": \"30s\",\n      \"phase\": \"hot\",\n      \"phase_time_millis\": 1538475653317,\n      \"action\": \"rollover\",\n      \"action_time_millis\": 1538475653317,\n      \"step\": \"check-rollover-ready\",\n      \"step_time_millis\": 1538475653317,\n      \"phase_execution\": {\n        \"policy\": \"my_executing_policy\",\n        \"modified_date_in_millis\": 1538475653317,\n        \"version\": 1, <1>\n        \"phase_definition\": {\n          \"min_age\": \"0ms\",\n          \"actions\": {\n            \"rollover\": {\n              \"max_docs\": 1\n            }\n          }\n        }\n      }\n    }\n  }\n}"
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 306
-    },
-    "digest": "416c65c55a53d0161426cc09ae999c72",
-    "lang": "console",
-    "found": [],
-    "source": "PUT _ilm/policy/my_executing_policy\n{\n  \"policy\": {\n    \"phases\": {\n      \"warm\": {\n        \"min_age\": \"1d\",\n        \"actions\": {\n          \"forcemerge\": {\n            \"max_num_segments\": 1\n          }\n        }\n      },\n      \"delete\": {\n        \"min_age\": \"10d\",\n        \"actions\": {\n          \"delete\": {}\n        }\n      }\n    }\n  }\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/_ilm/policy/my_executing_policy",
-        "query": null,
-        "body": {
-          "policy": {
-            "phases": {
-              "warm": {
-                "min_age": "1d",
-                "actions": {
-                  "forcemerge": {
-                    "max_num_segments": 1
-                  }
-                }
-              },
-              "delete": {
-                "min_age": "10d",
-                "actions": {
-                  "delete": {}
-                }
-              }
-            }
-          }
-        },
-        "params": {
-          "policy": "my_executing_policy"
-        },
-        "api": "ilm.put_lifecycle"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 344
-    },
-    "digest": "aada9dd17e7b08f3c5a279920c84333e",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n  \"indices\": {\n    \"my_index\": {\n      \"index\": \"my_index\",\n      \"managed\": true,\n      \"policy\": \"my_executing_policy\",\n      \"lifecycle_date_millis\": 1538475653281,\n      \"age\": \"30s\",\n      \"phase\": \"hot\",\n      \"phase_time_millis\": 1538475653317,\n      \"action\": \"rollover\",\n      \"action_time_millis\": 1538475653317,\n      \"step\": \"check-rollover-ready\",\n      \"step_time_millis\": 1538475653317,\n      \"phase_execution\": {\n        \"policy\": \"my_executing_policy\",\n        \"modified_date_in_millis\": 1538475653317,\n        \"version\": 1, <1>\n        \"phase_definition\": {\n          \"min_age\": \"0ms\",\n          \"actions\": {\n            \"rollover\": {\n              \"max_docs\": 1\n            }\n          }\n        }\n      }\n    }\n  }\n}"
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 398
-    },
-    "digest": "84935bf612d1aa402a7e16dae1ab99f5",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n  \"indices\": {\n    \"my_index\": {\n      \"index\": \"my_index\",\n      \"managed\": true,\n      \"policy\": \"my_executing_policy\",\n      \"lifecycle_date_millis\": 1538475653281,\n      \"age\": \"30s\",\n      \"phase\": \"warm\",\n      \"phase_time_millis\": 1538475653317,\n      \"action\": \"forcemerge\",\n      \"action_time_millis\": 1538475653317,\n      \"step\": \"forcemerge\",\n      \"step_time_millis\": 1538475653317,\n      \"phase_execution\": {\n        \"policy\": \"my_executing_policy\",\n        \"modified_date_in_millis\": 1538475653317,\n        \"version\": 3, <1>\n        \"phase_definition\": {\n          \"min_age\": \"1d\",\n          \"actions\": {\n            \"forcemerge\": {\n              \"max_num_segments\": 1\n            }\n          }\n        }\n      }\n    }\n  }\n}"
-  },
-  {
-    "source_location": {
-      "file": "ilm/update-lifecycle-policy.asciidoc",
-      "line": 496
-    },
-    "digest": "552b6761ef052efa1e83f8a3c30d6f78",
-    "lang": "console",
-    "found": [],
-    "source": "PUT my_index/_settings\n{\n  \"lifecycle.name\": \"my_other_policy\"\n}",
-    "parsed_source": [
-      {
-        "method": "PUT",
-        "url": "/my_index/_settings",
-        "query": null,
-        "body": {
-          "lifecycle.name": "my_other_policy"
-        },
-        "params": {
-          "index": "my_index"
-        },
-        "api": "indices.put_settings"
       }
     ]
   },
@@ -44197,7 +43875,7 @@
   {
     "source_location": {
       "file": "ilm/using-policies-rollover.asciidoc",
-      "line": 59
+      "line": 49
     },
     "digest": "aed01ec7b6368fa2c8f86434e176c907",
     "lang": "console",
@@ -44237,7 +43915,7 @@
   {
     "source_location": {
       "file": "ilm/using-policies-rollover.asciidoc",
-      "line": 87
+      "line": 77
     },
     "digest": "f29c02d259065033bd557519d1b21481",
     "lang": "console",
@@ -44269,7 +43947,7 @@
   {
     "source_location": {
       "file": "ilm/using-policies-rollover.asciidoc",
-      "line": 118
+      "line": 108
     },
     "digest": "454e0e11e2bbb4718109a53662f8c45d",
     "lang": "console",
@@ -44387,7 +44065,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 129
+      "line": 128
     },
     "digest": "75097f73665235b20df09739c820ad35",
     "lang": "console",
@@ -44441,7 +44119,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 172
+      "line": 171
     },
     "digest": "3feab5c602192b8dc58435654b17d3fe",
     "lang": "console",
@@ -44488,7 +44166,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 214
+      "line": 213
     },
     "digest": "ec195297eb804cba1cb19c9926773059",
     "lang": "console",
@@ -44516,7 +44194,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 256
+      "line": 255
     },
     "digest": "8d39a0f0116702e981545d13371cd0eb",
     "lang": "console",
@@ -44551,7 +44229,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 279
+      "line": 278
     },
     "digest": "bce0d86353e212cee466ccbc90bdc6e7",
     "lang": "console",
@@ -44597,7 +44275,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 318
+      "line": 317
     },
     "digest": "89115f8d40d9a13b0b01dc7c33ffd1cc",
     "lang": "console",
@@ -44625,7 +44303,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 357
+      "line": 356
     },
     "digest": "5df1ed33b5fcf3b9d85c20d100780d43",
     "lang": "console",
@@ -44649,7 +44327,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 388
+      "line": 387
     },
     "digest": "41f211cc838f1bee7eac264784f905e2",
     "lang": "console",
@@ -44680,7 +44358,7 @@
   {
     "source_location": {
       "file": "ilm/ilm-with-existing-indices.asciidoc",
-      "line": 418
+      "line": 417
     },
     "digest": "227e19aecb349f31e74898384322ae01",
     "lang": "console",
@@ -45662,7 +45340,7 @@
   {
     "source_location": {
       "file": "monitoring/configuring-metricbeat.asciidoc",
-      "line": 194
+      "line": 195
     },
     "digest": "519603821dc5b883fc2cf50e3d164084",
     "lang": "console",
@@ -47610,6 +47288,40 @@
       "file": "snapshot-restore/take-snapshot.asciidoc",
       "line": 199
     },
+    "digest": "88151217a2f66fc25ccdc26805e75be1",
+    "lang": "console",
+    "found": [],
+    "source": "DELETE /_snapshot/my_backup/my_backup,my_fs_backup\nDELETE /_snapshot/my_backup/snap*",
+    "parsed_source": [
+      {
+        "method": "DELETE",
+        "url": "/_snapshot/my_backup/my_backup,my_fs_backup",
+        "query": null,
+        "body": null,
+        "params": {
+          "repository": "my_backup",
+          "snapshot": "my_backup,my_fs_backup"
+        },
+        "api": "snapshot.delete"
+      },
+      {
+        "method": "DELETE",
+        "url": "/_snapshot/my_backup/snap*",
+        "query": null,
+        "body": null,
+        "params": {
+          "repository": "my_backup",
+          "snapshot": "snap*"
+        },
+        "api": "snapshot.delete"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "snapshot-restore/take-snapshot.asciidoc",
+      "line": 208
+    },
     "digest": "2b8d2065be3002b0be26598d6ad803a6",
     "lang": "console",
     "found": [],
@@ -47881,7 +47593,7 @@
   {
     "source_location": {
       "file": "slm/index.asciidoc",
-      "line": 38
+      "line": 37
     },
     "digest": "1d7abeea98f6ed64cc8371794c90a921",
     "lang": "console",
@@ -47918,7 +47630,7 @@
   {
     "source_location": {
       "file": "slm/index.asciidoc",
-      "line": 56
+      "line": 55
     },
     "digest": "ef76d0e4cdc2881c161a5557a98a3446",
     "lang": "console",
@@ -52071,6 +51783,33 @@
   },
   {
     "source_location": {
+      "file": "how-to/avoid-oversharding.asciidoc",
+      "line": 136
+    },
+    "digest": "3574da9ffe6372071d9bc9e79e3de3f0",
+    "lang": "console",
+    "found": [],
+    "source": "POST /_reindex\n{\n  \"source\": {\n    \"index\": \"foo-2019.10.*\"\n  },\n  \"dest\": {\n    \"index\": \"foo-2019.10\"\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "POST",
+        "url": "/_reindex",
+        "query": null,
+        "body": {
+          "source": {
+            "index": "foo-2019.10.*"
+          },
+          "dest": {
+            "index": "foo-2019.10"
+          }
+        },
+        "params": null,
+        "api": "reindex"
+      }
+    ]
+  },
+  {
+    "source_location": {
       "file": "api-conventions.asciidoc",
       "line": 78
     },
@@ -52394,15 +52133,15 @@
       "file": "api-conventions.asciidoc",
       "line": 382
     },
-    "digest": "eef497b2139cfd6c73f8d1dc3cf4daa4",
+    "digest": "eb87a00cd609f1298617c8be5345cd3a",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"twitter\" : {\n    \"settings\": {\n      \"index.number_of_replicas\": \"1\",\n      \"index.number_of_shards\": \"1\",\n      \"index.creation_date\": \"1474389951325\",\n      \"index.uuid\": \"n6gzFZTgS664GUfx0Xrpjw\",\n      \"index.version.created\": ...,\n      \"index.provided_name\" : \"twitter\"\n    }\n  }\n}"
+    "source": "{\n  \"twitter\" : {\n    \"settings\": {\n      \"index.number_of_replicas\": \"1\",\n      \"index.number_of_shards\": \"1\",\n      \"index.prefer_v2_templates\": \"true\",\n      \"index.creation_date\": \"1474389951325\",\n      \"index.uuid\": \"n6gzFZTgS664GUfx0Xrpjw\",\n      \"index.version.created\": ...,\n      \"index.provided_name\" : \"twitter\"\n    }\n  }\n}"
   },
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 404
+      "line": 405
     },
     "digest": "5925c23a173a63bdb30b458248d1df76",
     "lang": "console",
@@ -52426,17 +52165,17 @@
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 412
+      "line": 413
     },
-    "digest": "a5cc24f6d552e19c56f88840561750b3",
+    "digest": "a8542be910b8717d98d3c63d7db45a19",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"twitter\" : {\n    \"settings\" : {\n      \"index\" : {\n        \"number_of_replicas\": \"1\",\n        \"number_of_shards\": \"1\",\n        \"creation_date\": \"1474389951325\",\n        \"uuid\": \"n6gzFZTgS664GUfx0Xrpjw\",\n        \"version\": {\n          \"created\": ...\n        },\n        \"provided_name\" : \"twitter\"\n      }\n    }\n  }\n}"
+    "source": "{\n  \"twitter\" : {\n    \"settings\" : {\n      \"index\" : {\n        \"number_of_replicas\": \"1\",\n        \"number_of_shards\": \"1\",\n        \"creation_date\": \"1474389951325\",\n        \"uuid\": \"n6gzFZTgS664GUfx0Xrpjw\",\n        \"version\": {\n          \"created\": ...\n        },\n        \"provided_name\" : \"twitter\",\n        \"prefer_v2_templates\": \"true\"\n      }\n    }\n  }\n}"
   },
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 568
+      "line": 570
     },
     "digest": "a6f8636b03cc5f677b7d89e750328612",
     "lang": "console",
@@ -52460,7 +52199,7 @@
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 577
+      "line": 579
     },
     "digest": "be8a94d6faacfb7ca0d36d222e0ae4c9",
     "lang": "console-result",
@@ -52470,7 +52209,7 @@
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 600
+      "line": 602
     },
     "digest": "6d1e75312a28a5ba23837abf768f2510",
     "lang": "console",
@@ -52495,7 +52234,7 @@
   {
     "source_location": {
       "file": "api-conventions.asciidoc",
-      "line": 608
+      "line": 610
     },
     "digest": "ddad5df34c874dfe814a44e1e0d57148",
     "lang": "console-result",
@@ -52903,7 +52642,7 @@
   {
     "source_location": {
       "file": "cat/anomaly-detectors.asciidoc",
-      "line": 267
+      "line": 270
     },
     "digest": "bb03aeaba69c110f86505fa0e4e5035d",
     "lang": "console",
@@ -52926,7 +52665,7 @@
   {
     "source_location": {
       "file": "cat/anomaly-detectors.asciidoc",
-      "line": 273
+      "line": 276
     },
     "digest": "39271e983530b6eb89f38c4098549021",
     "lang": "console-result",
@@ -54202,7 +53941,7 @@
   {
     "source_location": {
       "file": "cluster/stats.asciidoc",
-      "line": 878
+      "line": 1089
     },
     "digest": "861f5f61409dc87f3671293b87839ff7",
     "lang": "console",
@@ -54225,7 +53964,7 @@
   {
     "source_location": {
       "file": "cluster/stats.asciidoc",
-      "line": 1122
+      "line": 1333
     },
     "digest": "71c629c44bf3c542a0daacbfc253c4b0",
     "lang": "console",
@@ -55067,18 +54806,18 @@
   {
     "source_location": {
       "file": "cluster/voting-exclusions.asciidoc",
-      "line": 73
+      "line": 81
     },
-    "digest": "59681840e544bb5b3bd858c194972f23",
+    "digest": "f6ead39c5505045543b9225deca7367d",
     "lang": "console",
     "found": [],
-    "source": "POST /_cluster/voting_config_exclusions/nodeId1",
+    "source": "POST /_cluster/voting_config_exclusions?node_names=nodeName1,nodeName2",
     "parsed_source": []
   },
   {
     "source_location": {
       "file": "cluster/voting-exclusions.asciidoc",
-      "line": 82
+      "line": 88
     },
     "digest": "25cb9e1da00dfd971065ce182467434d",
     "lang": "console",
@@ -56418,6 +56157,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56665,6 +56405,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56708,6 +56449,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56741,6 +56483,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56772,6 +56515,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56809,6 +56553,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56844,6 +56589,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56905,6 +56651,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56961,6 +56708,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -56999,6 +56747,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57047,6 +56796,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57076,6 +56826,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57114,6 +56865,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57141,6 +56893,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57169,6 +56922,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57203,6 +56957,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57240,6 +56995,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57277,6 +57033,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57314,6 +57071,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57345,6 +57103,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57376,6 +57135,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57413,6 +57173,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57446,6 +57207,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57489,6 +57251,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57523,6 +57286,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57563,6 +57327,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57605,6 +57370,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57887,6 +57653,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -57914,6 +57681,7 @@
     "found": [
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58560,6 +58328,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58614,7 +58383,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 294
+      "line": 411
     },
     "digest": "ae9ccfaa146731ab9176df90670db1c2",
     "lang": "console",
@@ -58622,6 +58391,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58676,7 +58446,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 308
+      "line": 425
     },
     "digest": "6e8127305ead40f2b6dd2ef3b99a9eca",
     "lang": "console-result",
@@ -58686,7 +58456,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 405
+      "line": 522
     },
     "digest": "8cd00a3aba7c3c158277bc032aac2830",
     "lang": "console",
@@ -58694,6 +58464,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58780,6 +58551,134 @@
   },
   {
     "source_location": {
+      "file": "docs/bulk.asciidoc",
+      "line": 544
+    },
+    "digest": "1aa91d3d48140d6367b6cabca8737b8f",
+    "lang": "console",
+    "found": [],
+    "source": "POST /_bulk\n{ \"update\": {\"_id\": \"5\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"foo\"} }\n{ \"update\": {\"_id\": \"6\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"foo\"} }\n{ \"create\": {\"_id\": \"7\", \"_index\": \"index1\"} }\n{ \"my_field\": \"foo\" }",
+    "parsed_source": [
+      {
+        "method": "POST",
+        "url": "/_bulk",
+        "query": null,
+        "body": [
+          {
+            "update": {
+              "_id": "5",
+              "_index": "index1"
+            }
+          },
+          {
+            "doc": {
+              "my_field": "foo"
+            }
+          },
+          {
+            "update": {
+              "_id": "6",
+              "_index": "index1"
+            }
+          },
+          {
+            "doc": {
+              "my_field": "foo"
+            }
+          },
+          {
+            "create": {
+              "_id": "7",
+              "_index": "index1"
+            }
+          },
+          {
+            "my_field": "foo"
+          }
+        ],
+        "params": null,
+        "api": "bulk"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "docs/bulk.asciidoc",
+      "line": 562
+    },
+    "digest": "36721b1f67f58f58902ca937e79cc5d2",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n  \"took\": 486,\n  \"errors\": true,\n  \"items\": [\n    {\n      \"update\": {\n        \"_index\": \"index1\",\n        \"_id\": \"5\",\n        \"status\": 404,\n        \"error\": {\n          \"type\": \"document_missing_exception\",\n          \"reason\": \"[5]: document missing\",\n          \"index_uuid\": \"aAsFqTI0Tc2W0LCWgPNrOA\",\n          \"shard\": \"0\",\n          \"index\": \"index1\"\n        }\n      }\n    },\n    {\n      \"update\": {\n        \"_index\": \"index1\",\n        \"_id\": \"6\",\n        \"status\": 404,\n        \"error\": {\n          \"type\": \"document_missing_exception\",\n          \"reason\": \"[6]: document missing\",\n          \"index_uuid\": \"aAsFqTI0Tc2W0LCWgPNrOA\",\n          \"shard\": \"0\",\n          \"index\": \"index1\"\n        }\n      }\n    },\n    {\n      \"create\": {\n        \"_index\": \"index1\",\n        \"_id\": \"7\",\n        \"_version\": 1,\n        \"result\": \"created\",\n        \"_shards\": {\n          \"total\": 2,\n          \"successful\": 1,\n          \"failed\": 0\n        },\n        \"_seq_no\": 0,\n        \"_primary_term\": 1,\n        \"status\": 201\n      }\n    }\n  ]\n}"
+  },
+  {
+    "source_location": {
+      "file": "docs/bulk.asciidoc",
+      "line": 623
+    },
+    "digest": "bfdad8a928ea30d7cf60d0a0a6bc6e2e",
+    "lang": "console",
+    "found": [],
+    "source": "POST /_bulk?filter_path=items.*.error\n{ \"update\": {\"_id\": \"5\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }\n{ \"update\": {\"_id\": \"6\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }\n{ \"update\": {\"_id\": \"7\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }",
+    "parsed_source": [
+      {
+        "method": "POST",
+        "url": "/_bulk",
+        "query": {
+          "filter_path": "items.*.error"
+        },
+        "body": [
+          {
+            "update": {
+              "_id": "5",
+              "_index": "index1"
+            }
+          },
+          {
+            "doc": {
+              "my_field": "baz"
+            }
+          },
+          {
+            "update": {
+              "_id": "6",
+              "_index": "index1"
+            }
+          },
+          {
+            "doc": {
+              "my_field": "baz"
+            }
+          },
+          {
+            "update": {
+              "_id": "7",
+              "_index": "index1"
+            }
+          },
+          {
+            "doc": {
+              "my_field": "baz"
+            }
+          }
+        ],
+        "params": null,
+        "api": "bulk"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "docs/bulk.asciidoc",
+      "line": 637
+    },
+    "digest": "ba07b72377ab9f5da75bdc76109f66d6",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n  \"items\": [\n    {\n      \"update\": {\n        \"error\": {\n          \"type\": \"document_missing_exception\",\n          \"reason\": \"[5]: document missing\",\n          \"index_uuid\": \"aAsFqTI0Tc2W0LCWgPNrOA\",\n          \"shard\": \"0\",\n          \"index\": \"index1\"\n        }\n      }\n    },\n    {\n      \"update\": {\n        \"error\": {\n          \"type\": \"document_missing_exception\",\n          \"reason\": \"[6]: document missing\",\n          \"index_uuid\": \"aAsFqTI0Tc2W0LCWgPNrOA\",\n          \"shard\": \"0\",\n          \"index\": \"index1\"\n        }\n      }\n    }\n  ]\n}"
+  },
+  {
+    "source_location": {
       "file": "docs/reindex.asciidoc",
       "line": 20
     },
@@ -58789,6 +58688,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58822,6 +58722,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58852,6 +58753,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58908,6 +58810,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58957,6 +58860,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -58993,6 +58897,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59034,6 +58939,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59073,6 +58979,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59108,6 +59015,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59142,6 +59050,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59180,6 +59089,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59214,6 +59124,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59250,6 +59161,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59287,6 +59199,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59321,6 +59234,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59357,6 +59271,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59396,6 +59311,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59444,6 +59360,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59481,6 +59398,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59521,6 +59439,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59561,6 +59480,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59599,6 +59519,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59642,6 +59563,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -59684,6 +59606,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -61874,6 +61797,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63422,6 +63346,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63472,6 +63397,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63519,6 +63445,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63583,6 +63510,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63620,6 +63548,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63660,6 +63589,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63694,6 +63624,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63722,6 +63653,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63756,6 +63688,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63810,6 +63743,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63850,6 +63784,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63888,6 +63823,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63926,6 +63862,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -63962,6 +63899,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64001,6 +63939,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64039,6 +63978,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64076,6 +64016,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64111,6 +64052,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64149,6 +64091,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64185,6 +64128,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64231,6 +64175,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64267,6 +64212,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64310,6 +64256,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64346,6 +64293,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -64381,6 +64329,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -67970,7 +67919,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/get-datafeed-stats.asciidoc",
-      "line": 145
+      "line": 153
     },
     "digest": "f44d287c6937785eb09b91353c1deb1e",
     "lang": "console",
@@ -67992,7 +67941,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/get-datafeed-stats.asciidoc",
-      "line": 153
+      "line": 161
     },
     "digest": "1217b5b9acc1a42b1854ce7d5d6f34d2",
     "lang": "console-result",
@@ -68049,7 +67998,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/get-job-stats.asciidoc",
-      "line": 361
+      "line": 366
     },
     "digest": "9298aaf8232a819e79b3bf8471245e98",
     "lang": "console",
@@ -68093,15 +68042,15 @@
       "file": "ml/anomaly-detection/apis/get-ml-info.asciidoc",
       "line": 49
     },
-    "digest": "d7f223ca9bb78d5eaaa7be550e288afa",
+    "digest": "e3872bc034472461ab17a3e75e965201",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"defaults\" : {\n    \"anomaly_detectors\" : {\n      \"categorization_analyzer\" : {\n        \"tokenizer\" : \"ml_classic\",\n        \"filter\" : [\n          {\n            \"type\" : \"stop\",\n            \"stopwords\" : [\n              \"Monday\",\n              \"Tuesday\",\n              \"Wednesday\",\n              \"Thursday\",\n              \"Friday\",\n              \"Saturday\",\n              \"Sunday\",\n              \"Mon\",\n              \"Tue\",\n              \"Wed\",\n              \"Thu\",\n              \"Fri\",\n              \"Sat\",\n              \"Sun\",\n              \"January\",\n              \"February\",\n              \"March\",\n              \"April\",\n              \"May\",\n              \"June\",\n              \"July\",\n              \"August\",\n              \"September\",\n              \"October\",\n              \"November\",\n              \"December\",\n              \"Jan\",\n              \"Feb\",\n              \"Mar\",\n              \"Apr\",\n              \"May\",\n              \"Jun\",\n              \"Jul\",\n              \"Aug\",\n              \"Sep\",\n              \"Oct\",\n              \"Nov\",\n              \"Dec\",\n              \"GMT\",\n              \"UTC\"\n            ]\n          }\n        ]\n      },\n      \"model_memory_limit\" : \"1gb\",\n      \"categorization_examples_limit\" : 4,\n      \"model_snapshot_retention_days\" : 1\n    },\n    \"datafeeds\" : {\n      \"scroll_size\" : 1000\n    }\n  },\n  \"upgrade_mode\": false,\n  \"native_code\" : {\n    \"version\": \"7.0.0\",\n    \"build_hash\": \"99a07c016d5a73\"\n  },\n  \"limits\" : { }\n}"
+    "source": "{\n  \"defaults\" : {\n    \"anomaly_detectors\" : {\n      \"categorization_analyzer\" : {\n        \"tokenizer\" : \"ml_classic\",\n        \"filter\" : [\n          {\n            \"type\" : \"stop\",\n            \"stopwords\" : [\n              \"Monday\",\n              \"Tuesday\",\n              \"Wednesday\",\n              \"Thursday\",\n              \"Friday\",\n              \"Saturday\",\n              \"Sunday\",\n              \"Mon\",\n              \"Tue\",\n              \"Wed\",\n              \"Thu\",\n              \"Fri\",\n              \"Sat\",\n              \"Sun\",\n              \"January\",\n              \"February\",\n              \"March\",\n              \"April\",\n              \"May\",\n              \"June\",\n              \"July\",\n              \"August\",\n              \"September\",\n              \"October\",\n              \"November\",\n              \"December\",\n              \"Jan\",\n              \"Feb\",\n              \"Mar\",\n              \"Apr\",\n              \"May\",\n              \"Jun\",\n              \"Jul\",\n              \"Aug\",\n              \"Sep\",\n              \"Oct\",\n              \"Nov\",\n              \"Dec\",\n              \"GMT\",\n              \"UTC\"\n            ]\n          }\n        ]\n      },\n      \"model_memory_limit\" : \"1gb\",\n      \"categorization_examples_limit\" : 4,\n      \"model_snapshot_retention_days\" : 1\n    },\n    \"datafeeds\" : {\n      \"scroll_size\" : 1000\n    }\n  },\n  \"upgrade_mode\": false,\n  \"native_code\" : {\n    \"version\": \"7.0.0\",\n    \"build_hash\": \"99a07c016d5a73\"\n  },\n  \"limits\" : {\n    \"effective_max_model_memory_limit\": \"28961mb\"\n  }\n}"
   },
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/get-snapshot.asciidoc",
-      "line": 200
+      "line": 204
     },
     "digest": "c873f9cd093e26515148f052e28c7805",
     "lang": "console",
@@ -68266,7 +68215,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/open-job.asciidoc",
-      "line": 54
+      "line": 65
     },
     "digest": "a6204edaa0bcf7b82a89ab4f6bda0914",
     "lang": "console",
@@ -68290,12 +68239,12 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/open-job.asciidoc",
-      "line": 65
+      "line": 76
     },
-    "digest": "71f99817272cf85977dc23543fbacf0b",
+    "digest": "b5835f0dd6c814da70c497d320f67f2a",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"opened\": true\n}"
+    "source": "{\n  \"opened\" : true,\n  \"node\" : \"node-1\"\n}"
   },
   {
     "source_location": {
@@ -68413,7 +68362,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/start-datafeed.asciidoc",
-      "line": 99
+      "line": 111
     },
     "digest": "d7ae456f119246e95f2f4c37e7544b8c",
     "lang": "console",
@@ -68437,12 +68386,12 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/start-datafeed.asciidoc",
-      "line": 110
+      "line": 122
     },
-    "digest": "1851f163178ac4046c8fc88b0293644f",
+    "digest": "cf5c7db01c545fa26fe97bc7409d3ed1",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"started\": true\n}"
+    "source": "{\n  \"started\" : true,\n  \"node\" : \"node-1\"\n}"
   },
   {
     "source_location": {
@@ -69181,20 +69130,20 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/get-dfanalytics-stats.asciidoc",
-      "line": 84
+      "line": 516
     },
-    "digest": "cfc52956b005d57111c49dfe1735634e",
+    "digest": "dbd2834971fedbe36911933d451ae65d",
     "lang": "console",
     "found": [],
-    "source": "GET _ml/data_frame/analytics/loganalytics/_stats",
+    "source": "GET _ml/data_frame/analytics/ecommerce/_stats",
     "parsed_source": [
       {
         "method": "GET",
-        "url": "/_ml/data_frame/analytics/loganalytics/_stats",
+        "url": "/_ml/data_frame/analytics/ecommerce/_stats",
         "query": null,
         "body": null,
         "params": {
-          "id": "loganalytics"
+          "id": "ecommerce"
         },
         "api": "ml.get_data_frame_analytics_stats"
       }
@@ -69203,12 +69152,12 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/get-dfanalytics-stats.asciidoc",
-      "line": 93
+      "line": 522
     },
-    "digest": "d51195db67610db5b1b39f600f6badee",
+    "digest": "3b676ccb4e56d449957509b191c468ec",
     "lang": "console-result",
     "found": [],
-    "source": "{\n    \"count\": 1,\n    \"data_frame_analytics\": [\n        {\n            \"id\": \"loganalytics\",\n            \"state\": \"stopped\",\n            \"progress\": [\n              {\n                \"phase\": \"reindexing\",\n                \"progress_percent\": 0\n              },\n              {\n                \"phase\": \"loading_data\",\n                \"progress_percent\": 0\n              },\n              {\n                \"phase\": \"analyzing\",\n                \"progress_percent\": 0\n              },\n              {\n                \"phase\": \"writing_results\",\n                \"progress_percent\": 0\n              }\n            ]\n        }\n    ]\n}"
+    "source": "{\n  \"count\" : 1,\n  \"data_frame_analytics\" : [\n    {\n      \"id\" : \"ecommerce\",\n      \"state\" : \"stopped\",\n      \"progress\" : [\n        {\n          \"phase\" : \"reindexing\",\n          \"progress_percent\" : 100\n        },\n        {\n          \"phase\" : \"loading_data\",\n          \"progress_percent\" : 100\n        },\n        {\n          \"phase\" : \"analyzing\",\n          \"progress_percent\" : 100\n        },\n        {\n          \"phase\" : \"writing_results\",\n          \"progress_percent\" : 100\n        }\n      ],\n      \"data_counts\" : {\n        \"training_docs_count\" : 3321,\n        \"test_docs_count\" : 0,\n        \"skipped_docs_count\" : 0\n      },\n      \"memory_usage\" : {\n        \"timestamp\" : 1586905058000,\n        \"peak_usage_bytes\" : 279484\n      },\n      \"analysis_stats\" : {\n        \"outlier_detection_stats\" : {\n          \"timestamp\" : 1586905058000,\n          \"parameters\" : {\n            \"n_neighbors\" : 0,\n            \"method\" : \"ensemble\",\n            \"compute_feature_influence\" : true,\n            \"feature_influence_threshold\" : 0.1,\n            \"outlier_fraction\" : 0.05,\n            \"standardization_enabled\" : true\n          },\n          \"timing_stats\" : {\n            \"elapsed_time\" : 245\n          }\n        }\n      }\n    }\n  ]\n}"
   },
   {
     "source_location": {
@@ -69263,7 +69212,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/start-dfanalytics.asciidoc",
-      "line": 73
+      "line": 84
     },
     "digest": "1a3a4b8a4bfee4ab84ddd13d8835f560",
     "lang": "console",
@@ -69285,12 +69234,12 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/start-dfanalytics.asciidoc",
-      "line": 81
+      "line": 92
     },
-    "digest": "aff76d64e6270a13c3274869f9abc3a9",
+    "digest": "f052c0460de9e53274506d780b23f202",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"acknowledged\" : true\n}"
+    "source": "{\n  \"acknowledged\" : true,\n  \"node\" : \"node-1\"\n}"
   },
   {
     "source_location": {
@@ -70640,6 +70589,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -70674,6 +70624,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -70718,6 +70669,7 @@
       "php",
       "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73198,7 +73150,9 @@
     "digest": "d1b3b7d2bb2ab90d15fd10318abd24db",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73241,7 +73195,9 @@
     "digest": "ae9b5fbd42af2386ffbf56ad4a697e51",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73288,7 +73244,9 @@
     "digest": "b997885974522ef439d5e345924cc5ba",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73345,7 +73303,9 @@
     "digest": "abf329ebefaf58acd4ee30e685731499",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73379,7 +73339,9 @@
     "digest": "f6b5032bf27c2445d28845be0d413970",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73413,7 +73375,9 @@
     "digest": "2891aa10ee9d474780adf94d5607f2db",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73447,7 +73411,9 @@
     "digest": "f4a1008b3f9baa67bb03ce9ef5ab4cb4",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73481,7 +73447,9 @@
     "digest": "7477671958734843dd67cf0b8e6c7515",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73515,7 +73483,9 @@
     "digest": "5f3549ac7fee94682ca0d7439eebdd2a",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73549,7 +73519,9 @@
     "digest": "de139866a220124360e5e27d1a736ea4",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73595,7 +73567,9 @@
     "digest": "22334f4b24bb8977d3e1bf2ffdc29d3f",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73672,7 +73646,9 @@
     "digest": "ef0f4fa4272c47ff62fb7b422cf975e7",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73709,7 +73685,9 @@
     "digest": "899eef71a67a1b2aa11a2166ec7f48f1",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73746,7 +73724,9 @@
     "digest": "d17269bb80fb63ec0bf37d219e003dcb",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73791,7 +73771,9 @@
     "digest": "979d25dff2d8987119410291ad47b0d1",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73833,7 +73815,9 @@
     "digest": "d50a3c64890f88af32c6d4ef4899d82a",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73873,6 +73857,7 @@
     "lang": "console",
     "found": [
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73911,7 +73896,9 @@
     "digest": "15dad5338065baaaa7d475abe85f4c22",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -73953,7 +73940,9 @@
     "digest": "77243bbf92f2a55e0fca6c2a349a1c15",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -74001,7 +73990,9 @@
     "digest": "04fe1e3a0047b0cdb10987b79fc3f3f3",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -74044,7 +74035,9 @@
     "digest": "e8e451bc8c45bcf16df43804c4fc8329",
     "lang": "console",
     "found": [
+      "csharp",
       "python",
+      "ruby",
       "go",
       "js"
     ],
@@ -76294,6 +76287,64 @@
         "api": "msearch_template"
       }
     ]
+  },
+  {
+    "source_location": {
+      "file": "eql/eql-search-api.asciidoc",
+      "line": 33
+    },
+    "digest": "8986aba9325b19f602ec729652f2cf28",
+    "lang": "console",
+    "found": [],
+    "source": "GET my_index/_eql/search\n{\n  \"query\": \"\"\"\n    process where process.name = \"regsvr32.exe\"\n  \"\"\"\n}",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/my_index/_eql/search",
+        "query": null,
+        "body": {
+          "query": "\n    process where process.name = \"regsvr32.exe\"\n  "
+        },
+        "params": {
+          "index": "my_index"
+        },
+        "api": "eql.search"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "eql/eql-search-api.asciidoc",
+      "line": 227
+    },
+    "digest": "f584313eb33bc2f570989c23e50135bc",
+    "lang": "console",
+    "found": [],
+    "source": "GET my_index/_eql/search\n{\n  \"query\": \"\"\"\n    file where (file.name == \"cmd.exe\" and agent.id != \"my_user\")\n  \"\"\"\n}",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/my_index/_eql/search",
+        "query": null,
+        "body": {
+          "query": "\n    file where (file.name == \"cmd.exe\" and agent.id != \"my_user\")\n  "
+        },
+        "params": {
+          "index": "my_index"
+        },
+        "api": "eql.search"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "eql/eql-search-api.asciidoc",
+      "line": 241
+    },
+    "digest": "61c458c7eb5af4faffaf1d28d6b9e16b",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n  \"took\": 6,\n  \"timed_out\": false,\n  \"hits\": {\n    \"total\": {\n      \"value\": 2,\n      \"relation\": \"eq\"\n    },\n    \"events\": [\n      {\n        \"_index\": \"my_index\",\n        \"_id\": \"2\",\n        \"_score\": null,\n        \"_source\": {\n          \"@timestamp\": \"2020-12-06T11:04:07.000Z\",\n          \"agent\": {\n            \"id\": \"8a4f500d\"\n          },\n          \"event\": {\n            \"category\": \"file\"\n          },\n          \"file\": {\n            \"accessed\": \"2020-12-07T11:07:08.000Z\",\n            \"name\": \"cmd.exe\",\n            \"path\": \"C:\\\\Windows\\\\System32\\\\cmd.exe\",\n            \"type\": \"file\",\n            \"size\": 16384\n          },\n          \"process\": {\n            \"name\": \"cmd.exe\",\n            \"path\": \"C:\\\\Windows\\\\System32\\\\cmd.exe\"\n          }\n        },\n        \"sort\": [\n          1607252647000\n        ]\n      },\n      {\n        \"_index\": \"my_index\",\n        \"_id\": \"4\",\n        \"_score\": null,\n        \"_source\": {\n          \"@timestamp\": \"2020-12-07T11:07:08.000Z\",\n          \"agent\": {\n            \"id\": \"8a4f500d\"\n          },\n          \"event\": {\n            \"category\": \"file\"\n          },\n          \"file\": {\n            \"accessed\": \"2020-12-07T11:07:08.000Z\",\n            \"name\": \"cmd.exe\",\n            \"path\": \"C:\\\\Windows\\\\System32\\\\cmd.exe\",\n            \"type\": \"file\",\n            \"size\": 16384\n          },\n          \"process\": {\n            \"name\": \"cmd.exe\",\n            \"path\": \"C:\\\\Windows\\\\System32\\\\cmd.exe\"\n          }\n        },\n        \"sort\": [\n          1607339228000\n        ]\n      }\n    ]\n  }\n}"
   },
   {
     "source_location": {

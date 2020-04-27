@@ -1,4 +1,0 @@
-[source, ruby]
-----
-client.indices.flush_synced
-----
