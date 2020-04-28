@@ -5,13 +5,12 @@
 require 'spec_helper'
 
 describe 'client#reload_secure_settings' do
-
   let(:expected_args) do
     [
         'POST',
         url,
         params,
-        nil,
+        body,
         {}
     ]
   end
@@ -19,6 +18,8 @@ describe 'client#reload_secure_settings' do
   let(:params) do
     {}
   end
+
+  let(:body) { nil }
 
   let(:url) do
     '_nodes/reload_secure_settings'
@@ -29,7 +30,6 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when a node id is specified' do
-
     let(:url) do
       '_nodes/foo/reload_secure_settings'
     end
@@ -40,9 +40,12 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when more than one node id is specified as a string' do
-
     let(:url) do
       '_nodes/foo,bar/reload_secure_settings'
+    end
+
+    let(:body) do
+      { foo: 'bar' }
     end
 
     it 'performs the request' do
@@ -51,9 +54,12 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when more than one node id is specified as a list' do
-
     let(:url) do
       '_nodes/foo,bar/reload_secure_settings'
+    end
+
+    let(:body) do
+      { foo: 'bar' }
     end
 
     it 'performs the request' do
@@ -62,9 +68,8 @@ describe 'client#reload_secure_settings' do
   end
 
   context 'when a timeout param is specified' do
-
     let(:params) do
-      { timeout: '30s'}
+      { timeout: '30s' }
     end
 
     it 'performs the request' do
