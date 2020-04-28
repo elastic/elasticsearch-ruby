@@ -1,3 +1,296 @@
+## 7.7.0
+
+This version drops support for Ruby 2.4 since it's reached it's end of life.
+
+### Client
+
+- Support for Elasticsearch version `7.7`
+
+#### Custom Headers
+
+You can set custom HTTP headers on the client's initializer or pass them as a parameter to any API endpoint. [More info and code examples](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#custom-http-headers).
+
+### API
+
+#### API Changes
+
+- Clean: Removes up some deprecated endpoints: `abort_benchmark`, `benchmark`, `delete_by_rethrottle`, `nodes.shutdown`, `remote.info`.
+- `expand_wildcards` Whether to expand wildcard expressions to concrete indices that are open, closed or both. Options: open, closed, hidden, none, all. `hidden` option is new. It was also added to the following endpoints: `cat.aliases`, `cat.indices`.
+- `delete_by_query`: Parameter `slices` can now be set to `auto`.
+- `reindex`: Parameter `slices` can now be set to `auto`.
+- `update_by_query`: Parameter `slices` can now be set to `auto`.
+- `snapshot.cleanup_repository`: Parameter `body` is removed.
+
+#### New API Endpoints
+
+- `cluster.delete_component_template`
+- `cluster.get_component_template`
+- `cluster.put_component_template`
+- `indices.create_data_stream` (experimental)
+- `indices.delete_data_stream` (experimental)
+- `indices.get_data_stream` (experimental)
+
+### X-Pack
+
+#### API Changes
+
+- `machine_learing.get_trained_models`: New parameter `tags`
+- `machine_learning.put_datafeed`, `machine_learning.update_datafeed`: Added parameters `ignore_unavailable`, `allow_no_indices`, `ignore_throttled`, `expand_wildcards`
+- `reload_secure_settings`: New parameter `body`, an object containing the password for the keystore.
+
+#### New API Endpoints
+
+- `async_search.delete`
+- `async_search.get`
+- `async_search.submit`
+- `cat.ml_data_frame_analytics`
+- `cat.ml_datafeeds`
+- `cat.ml_jobs`
+- `cat.ml_trained_models`
+- `cat.transform`
+- `cat.transforms`
+- `machine_learning.estimate_model_memory`
+- `transform.delete_transform`
+- `transform.get_transform`
+- `transform.get_transform_stats`
+- `transform.preview_transform`
+- `transform.put_transform`
+- `transform.start_transform`
+- `transform.stop_transform`
+- `transform.update_transform`
+
+## 7.6.0
+
+### Client
+
+- Support for Elasticsearch version `7.6`.
+- Last release supporting Ruby 2.4. Ruby 2.4 has reached it's end of life and no more security updates will be provided, users are suggested to update to a newer version of Ruby.
+
+#### API Key Support
+The client now supports API Key Authentication, check "Authentication" on the [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#authentication) for information on how to use it.
+
+#### X-Opaque-Id Support
+
+The client now supports identifying running tasks with X-Opaque-Id. Check [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#identifying-running-tasks-with-x-opaque-id) for information on how to use X-Opaque-Id.
+
+#### Faraday migrated to 1.0
+
+We're now using version 1.0 of Faraday:
+- The client initializer was modified but this should not disrupt final users at all, check [this commit](https://github.com/elastic/elasticsearch-ruby/commit/0fdc6533f4621a549a4cb99e778bbd827461a2d0) for more information.
+- Migrated error checking to remove the deprecated `Faraday::Error` namespace.
+- **This change is not compatible with [Typhoeus](https://github.com/typhoeus/typhoeus)**. The latest release is 1.3.1, but it's [still using the deprecated `Faraday::Error` namespace](https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100). This has been fixed on master, but the last release was November 6, 2018. Version 1.4.0 should be ok once it's released.
+- Note: Faraday 1.0 drops official support for JRuby. It installs fine on the tests we run with JRuby in this repo, but it's something we should pay attention to.
+
+Reference: [Upgrading - Faraday 1.0](https://github.com/lostisland/faraday/blob/master/UPGRADING.md)
+
+[Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/808)
+
+### API
+
+#### API Changes:
+- `cat.indices`: argument `bytes` options were: `b,k,m,g` and are now `b,k,kb,m,mb,g,gb,t,tb,p,pb`.
+- `delete_by_query`: New parameter `analyzer` - The analyzer to use for the query string.
+- `indices.put_template`: Removed parameters: `timeout`, `flat_settings`.
+- `msearch_template`: New Parameter `ccs_minimize_roundtrips` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+- `rank_eval`: New parameter `search_type` - Search operation type (options: `query_then_fetch,dfs_query_then_fetch`).
+- `search_template`: New parameter `ccs_minimize_roundtrips` - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+
+#### New API endpoints:
+- `get_script_context`
+- `get_script_languages`
+
+#### Warnings:
+Synced flush is deprecated and will be removed in 8.0.
+
+### X-Pack
+
+#### New API endpoints:
+- `ml/delete_trained_model`
+- `ml/explain_data_frame_analytics`
+- `ml/get_trained_models`
+- `ml/get_trained_models_stats`
+- `ml/put_trained_model`
+
+#### API changes:
+- `license/get`: Added parameter `accept_enterprise`.
+- `ml/delete_data_frame_analytics` Added parameter `force`.
+-  `monitoring/bulk` - Removed parameter `system_version`.
+
+## 7.5.0
+
+- Support for Elasticsearch 7.5.
+- Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.
+- Specs have been updated to address new/deprecated parameters.
+- Ruby versions tested: 2.3.8, 2.4.9, 2.5.7, 2.6.5 and 2.7.0 (new).
+
+### API
+
+Endpoints that changed:
+- `_bulk`: body is now required as an argument.
+- `cat`: `local` and `master_timeout` parameters are gone.
+  - `health`: New parameter `health`.
+  - `indices`: Adds `time` and `include_unload_segments` parameters.
+  - `nodes`: Adds `bytes`, `time` parameters.
+  - `pending_tasks`: Adds `time` parameter.
+  - `recovery`: Adds `active_only`, `detailed`, `index`, `time` parameters.
+  - `segments`: Removes `index` parameter and it's now a url part.
+  - `shards`: Adds `time` parameter.
+  - `snapshots`: Adds `time` parameter.
+  - `tasks`: Adds `time` parameter.
+  - `templates`: The `name` parameter is now passed in as a part but not a parameter.
+  - `thread_pool`: The `thread_pool_patterns` parameter is now passed in as a part but not as a parameter.
+- `cluster`
+  - `put_settings`: body is required.
+  - `state`: `index_templates` is gone.
+  - `node_id` is now a url part.
+- `delete` - `parent` parameter is gone.
+- `delete_by_query`: `analyzer`  parameters are gone, `max_docs` is a new parameter, `body` is now a required parameter.
+- `delete_by_query_rethrottle` new endpoint.
+- `delete_by_rethrottle` - uses `delete_by_query_rethrottle` and hasn't changed.
+- `exists`, `exists_source`, `explain`: `parent` parameter is gone.
+- `field_caps`: `fields` param is no longer required.
+- `get`: `parent` parameter is gone
+- `get_source`: `parent` parameter is gone
+- `index`: `body` parameter is required, `wait_for_shard` is a new parameter, `consistency`, `include_type_name`, `parent`, `percolate`, `replication`, `timestamp`, `ttl` parameters are gone
+- `indices`
+  - `get`: `feature` paramatere was deprecated and is gone.
+  - `delete_aliases`, `put_alias`: URL changed internally to 'aliases' instead of 'alias' but shouldn't affect the client's API.
+- `render_search_template`: `id` is now a part not a parameter
+- `search`: `fielddata_fields`, `include_type_name`, `fields`, `ignore_indices`, `lowercase_expanded_terms`, `query_cache`, `source` parameters are gone, `ccs_minimize_roundtrips`, `track_scores` are new parameters.
+- `tasks` - `list`: task_id is not supported anymore, it's in get now.
+- `termvectors`: `parent` parameter is gone.
+- `update`: `version` parameter is not supported anymore.
+
+### X-PACK
+
+Some urls changed internally to remove `_xpack`, but it shouldn't affect the client's API.
+
+- `explore`: `index` is now required.
+- `info`: `human` parameter is gone.
+- `migration`: some endpoints are gone: `get_assistance`, `get_assistance_test` and `upgrade_test`.
+- `watcher`: `restart` endpoint is gone.
+
+
+## 7.4.0
+
+### Client
+
+* Accept options passed to #perform_request to avoid infinite retry loop
+* Fix minor typo
+
+### API
+
+* Update documentation of put_script method
+
+### EXT:7.4.0
+
+
+
+### XPACK
+
+* Add ParamsRegistry in each direcotry and for Xpack top-level API
+* Add ParamsRegistry for Xpack data_frame API
+* Add ParamsRegistry for Xpack graph API
+* Add ParamsRegistry for Xpack license API
+* Add ParamsRegistry for Xpack MachineLearning API
+* Fix path for loading params_registry files
+* Add ParamsRegistry for Xpack Migration API
+* Add ParamsRegistry for Xpack Monitoring API
+* Add ParamsRegistry for Xpack Rollup API
+* Add ParamsRegistry for Xpack security API
+* Add ParamsRegistry for Xpack sql API
+* Add ParamsRegistry for Xpack watcher API
+* Update missed file with ParamsRegistry
+* Update versions in params registry files
+* Add update_data_frame_transform
+* Support Index Lifecycle Management(ILM) API
+
+## 7.3.0
+
+### Client
+
+* Add note to readme about the default port value
+* Add note about exception to default port rule when connecting using Elastic Cloud ID
+* Cluster name is variable in cloud id
+
+### XPACK
+
+* Support allow_no_match parameter in stop_data_frame_transform
+* Add allow_no_match to get_data_frame_transform API
+* Add missing headers
+* Support get_builtin_privileges API
+* Update tests for changed xpack paths
+* test:integration task in xpack gem shouldn't do anything in favor of test:rest_api
+
+## 7.2.0
+
+### Client
+
+* Support User-Agent header client team specification
+* Improve code handling headers
+* Handle headers when using JRuby and Manticore
+* Rename method for clarity
+* Test selecting connections using multiple threads
+* Synchronize access to the connections collection and mutation of @current instance variable
+* Fix specs for selecting a connection
+* Further fixes to specs for testing selecting connections in parallel
+* Support providing a cloud id
+* Allow a port to be set with a Cloud id and use default if no port is provided
+* Remove unnecessary check for cloud_id when setting default port
+* Add documentation for creating client with cloud_id
+* Allow compression with Faraday and supported http adapters
+* Put development gem dependencies in gemspec
+* No reason to use ! for decompress method name
+* Check for the existence of headers before checking headers
+* Apply compression headers manually based on general :compression option
+* Use GZIP constant
+* Group tests into their transport adapters
+* Support compression when using Curb adapter
+* Support compression when using Manticore adapter with JRuby
+* Fix Curb unit test, expecting headers to be merged and not set
+* Update test descriptions for compression settings
+* Add documentation of 'compression' option on client
+* Improve client documentation for compression option
+* Centralize header handling into one method
+* Only add Accept-Encoding header if compression option is true
+
+### API
+
+* Use rewritten test harness from XPACK for rest API tests
+* Include skipped tests and further updates
+* Delete all repositories and snapshots in a method
+* Further updates to the rest API test runner
+* Add erroneously removed constants and gems
+* Updates to rest api yaml rspec tasks
+* The get_source endpoint should raise an error if the resource is not found
+* Rename method to clear data in tests and consolidate tasks into one method
+* Update api for 7.2
+
+### EXT:7.2.0
+
+
+
+### XPACK
+
+* Add data_frame API
+* Update data frame files
+
+## 7.1.0
+
+### Client
+
+* Update elasticsearch-transport README
+* Use default port when host and protocol are specified but no port
+* Verify that we have a response object before checking its status
+* Make code more succinct for supporting host with path and no port
+* Support options specified with String keys
+* Update elasticsearch-transport/lib/elasticsearch/transport/client.rb
+* Add tests showing IPv6 host specified when creating client
+
+### API
+
+* Update links in elasticsearch-api README
+
 ### DSL 0.1.8
 
 * Swap links elasticsearch.org->elastic.co (@harry-wood)
