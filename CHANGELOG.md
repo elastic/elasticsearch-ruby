@@ -1,7 +1,63 @@
-## 7.7.0.pre
+## 7.7.0
+
+This version drops support for Ruby 2.4 since it's reached it's end of life.
+
+### Client
 
 - Support for Elasticsearch version `7.7`
-- This is a pre-release, full Changelog details will be published with the final release of 7.7.0
+
+#### Custom Headers
+
+You can set custom HTTP headers on the client's initializer or pass them as a parameter to any API endpoint. [More info and code examples](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#custom-http-headers).
+
+### API
+
+#### API Changes
+
+- Clean: Removes up some deprecated endpoints: `abort_benchmark`, `benchmark`, `delete_by_rethrottle`, `nodes.shutdown`, `remote.info`.
+- `expand_wildcards` Whether to expand wildcard expressions to concrete indices that are open, closed or both. Options: open, closed, hidden, none, all. `hidden` option is new. It was also added to the following endpoints: `cat.aliases`, `cat.indices`.
+- `delete_by_query`: Parameter `slices` can now be set to `auto`.
+- `reindex`: Parameter `slices` can now be set to `auto`.
+- `update_by_query`: Parameter `slices` can now be set to `auto`.
+- `snapshot.cleanup_repository`: Parameter `body` is removed.
+
+#### New API Endpoints
+
+- `cluster.delete_component_template`
+- `cluster.get_component_template`
+- `cluster.put_component_template`
+- `indices.create_data_stream` (experimental)
+- `indices.delete_data_stream` (experimental)
+- `indices.get_data_stream` (experimental)
+
+### X-Pack
+
+#### API Changes
+
+- `machine_learing.get_trained_models`: New parameter `tags`
+- `machine_learning.put_datafeed`, `machine_learning.update_datafeed`: Added parameters `ignore_unavailable`, `allow_no_indices`, `ignore_throttled`, `expand_wildcards`
+- `reload_secure_settings`: New parameter `body`, an object containing the password for the keystore.
+
+#### New API Endpoints
+
+- `async_search.delete`
+- `async_search.get`
+- `async_search.submit`
+- `cat.ml_data_frame_analytics`
+- `cat.ml_datafeeds`
+- `cat.ml_jobs`
+- `cat.ml_trained_models`
+- `cat.transform`
+- `cat.transforms`
+- `machine_learning.estimate_model_memory`
+- `transform.delete_transform`
+- `transform.get_transform`
+- `transform.get_transform_stats`
+- `transform.preview_transform`
+- `transform.put_transform`
+- `transform.start_transform`
+- `transform.stop_transform`
+- `transform.update_transform`
 
 ## 7.6.0
 
