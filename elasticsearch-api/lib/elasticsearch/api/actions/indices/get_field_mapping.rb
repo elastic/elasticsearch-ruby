@@ -26,7 +26,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
           _fields = arguments.delete(:field) || arguments.delete(:fields)

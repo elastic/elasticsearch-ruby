@@ -12,7 +12,7 @@ module Elasticsearch
           # @option arguments [String] :id Watch ID
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/watcher-api-delete-watch.html
           #
           def delete_watch(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

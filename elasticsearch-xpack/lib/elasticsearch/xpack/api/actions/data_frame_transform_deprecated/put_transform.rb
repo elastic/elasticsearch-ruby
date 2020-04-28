@@ -19,7 +19,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/put-transform.html
           #
           def put_transform(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -12,7 +12,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/preview-transform.html
           #
           def preview_transform(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

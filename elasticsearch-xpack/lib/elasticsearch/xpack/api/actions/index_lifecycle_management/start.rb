@@ -11,7 +11,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/ilm-start.html
           #
           def start(arguments = {})
             headers = arguments.delete(:headers) || {}

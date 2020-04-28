@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/start-trial.html
           #
           def post_start_trial(arguments = {})
             headers = arguments.delete(:headers) || {}

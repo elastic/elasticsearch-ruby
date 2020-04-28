@@ -31,7 +31,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
         headers = arguments.delete(:headers) || {}

@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/security-api-clear-cache.html
           #
           def clear_cached_realms(arguments = {})
             raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]

@@ -12,7 +12,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/sql-translate.html
           #
           def translate(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

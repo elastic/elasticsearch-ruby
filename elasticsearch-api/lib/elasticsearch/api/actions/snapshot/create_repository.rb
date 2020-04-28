@@ -15,7 +15,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The repository definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-snapshots.html
         #
         def create_repository(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

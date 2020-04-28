@@ -12,7 +12,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/data-streams.html
         #
         def create_data_stream(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

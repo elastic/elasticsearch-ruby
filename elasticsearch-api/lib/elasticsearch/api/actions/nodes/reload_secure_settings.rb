@@ -11,8 +11,9 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body An object containing the password for the elasticsearch keystore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/secure-settings.html#reloadable-secure-settings
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/secure-settings.html#reloadable-secure-settings
         #
         def reload_secure_settings(arguments = {})
           headers = arguments.delete(:headers) || {}
@@ -29,7 +30,7 @@ module Elasticsearch
       end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
 

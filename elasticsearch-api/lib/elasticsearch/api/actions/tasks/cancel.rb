@@ -14,7 +14,7 @@ module Elasticsearch
         # @option arguments [String] :parent_task_id Cancel tasks with specified parent task id (node_id:task_number). Set to -1 to cancel all.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/tasks.html
         #
         def cancel(arguments = {})
           headers = arguments.delete(:headers) || {}

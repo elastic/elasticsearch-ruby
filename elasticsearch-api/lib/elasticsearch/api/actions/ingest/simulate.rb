@@ -13,7 +13,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The simulate definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/simulate-pipeline-api.html
         #
         def simulate(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

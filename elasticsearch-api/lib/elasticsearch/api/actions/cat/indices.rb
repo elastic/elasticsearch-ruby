@@ -32,7 +32,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cat-indices.html
         #
         def indices(arguments = {})
           headers = arguments.delete(:headers) || {}

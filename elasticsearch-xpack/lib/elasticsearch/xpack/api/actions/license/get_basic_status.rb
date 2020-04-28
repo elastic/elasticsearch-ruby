@@ -11,7 +11,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-basic-status.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/get-basic-status.html
           #
           def get_basic_status(arguments = {})
             headers = arguments.delete(:headers) || {}

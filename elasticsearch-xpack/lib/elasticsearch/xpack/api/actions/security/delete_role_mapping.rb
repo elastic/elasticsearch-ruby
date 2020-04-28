@@ -15,7 +15,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-role-mapping.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/security-api-delete-role-mapping.html
           #
           def delete_role_mapping(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

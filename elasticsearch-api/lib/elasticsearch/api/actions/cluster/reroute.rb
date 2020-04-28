@@ -19,7 +19,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cluster-reroute.html
         #
         def reroute(arguments = {})
           headers = arguments.delete(:headers) || {}

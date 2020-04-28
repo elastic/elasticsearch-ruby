@@ -16,7 +16,7 @@ module Elasticsearch
           # @option arguments [Boolean] :owner flag to query API keys owned by the currently authenticated user
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/security-api-get-api-key.html
           #
           def get_api_key(arguments = {})
             headers = arguments.delete(:headers) || {}

@@ -21,7 +21,7 @@ module Elasticsearch
         # @option arguments [Boolean] :request Clear request cache
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-clearcache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/indices-clearcache.html
         #
         def clear_cache(arguments = {})
           headers = arguments.delete(:headers) || {}

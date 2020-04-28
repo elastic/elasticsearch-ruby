@@ -12,7 +12,7 @@ module Elasticsearch
           # @option arguments [String] :id The ID of the job to start
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-start-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/rollup-start-job.html
           #
           def start_job(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

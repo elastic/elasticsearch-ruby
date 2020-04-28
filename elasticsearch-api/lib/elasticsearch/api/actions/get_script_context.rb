@@ -9,7 +9,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/7.7/painless-contexts.html
       #
       def get_script_context(arguments = {})
         headers = arguments.delete(:headers) || {}

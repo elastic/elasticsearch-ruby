@@ -11,7 +11,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/get-trial-status.html
           #
           def get_trial_status(arguments = {})
             headers = arguments.delete(:headers) || {}

@@ -35,7 +35,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/search-count.html
       #
       def count(arguments = {})
         headers = arguments.delete(:headers) || {}

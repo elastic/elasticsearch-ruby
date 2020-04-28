@@ -21,7 +21,7 @@ module Elasticsearch
           # Deprecated since version 7.0.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/graph-explore-api.html
           #
           def explore(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

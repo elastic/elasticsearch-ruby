@@ -13,7 +13,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-analyze.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/indices-analyze.html
         #
         def analyze(arguments = {})
           headers = arguments.delete(:headers) || {}

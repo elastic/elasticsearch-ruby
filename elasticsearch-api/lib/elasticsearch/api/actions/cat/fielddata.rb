@@ -20,7 +20,7 @@ module Elasticsearch
         # @option arguments [List] :fields A comma-separated list of fields to return in the output
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-fielddata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cat-fielddata.html
         #
         def fielddata(arguments = {})
           headers = arguments.delete(:headers) || {}

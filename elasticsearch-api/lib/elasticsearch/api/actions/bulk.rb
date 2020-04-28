@@ -23,7 +23,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docs-bulk.html
       #
       def bulk(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

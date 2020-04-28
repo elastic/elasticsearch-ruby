@@ -24,7 +24,7 @@ module Elasticsearch
           # @option arguments [Boolean] :v Verbose mode. Display column headers
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-dfanalytics.html
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/7.7/cat-dfanalytics.html
           #
           def ml_data_frame_analytics(arguments = {})
             headers = arguments.delete(:headers) || {}

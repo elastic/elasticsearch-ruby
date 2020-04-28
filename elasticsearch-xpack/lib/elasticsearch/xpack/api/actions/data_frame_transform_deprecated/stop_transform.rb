@@ -20,7 +20,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/stop-transform.html
           #
           def stop_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

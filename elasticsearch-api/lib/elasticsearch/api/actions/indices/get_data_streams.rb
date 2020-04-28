@@ -11,7 +11,7 @@ module Elasticsearch
         # @option arguments [List] :name The comma separated names of data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/data-streams.html
         #
         def get_data_streams(arguments = {})
           headers = arguments.delete(:headers) || {}

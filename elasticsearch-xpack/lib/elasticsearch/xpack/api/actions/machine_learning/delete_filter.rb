@@ -12,7 +12,7 @@ module Elasticsearch
           # @option arguments [String] :filter_id The ID of the filter to delete
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/ml-delete-filter.html
           #
           def delete_filter(arguments = {})
             raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]

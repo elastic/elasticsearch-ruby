@@ -14,7 +14,7 @@ module Elasticsearch
           # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/ml-forecast.html
           #
           def forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

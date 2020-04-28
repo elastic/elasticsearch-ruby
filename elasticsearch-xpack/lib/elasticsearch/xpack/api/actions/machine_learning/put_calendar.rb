@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The calendar details
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/ml-put-calendar.html
           #
           def put_calendar(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]

@@ -16,7 +16,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/security-api-delete-privilege.html
           #
           def delete_privileges(arguments = {})
             raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]

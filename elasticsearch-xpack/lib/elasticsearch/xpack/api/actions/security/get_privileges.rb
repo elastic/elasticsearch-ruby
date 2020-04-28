@@ -13,7 +13,7 @@ module Elasticsearch
           # @option arguments [String] :name Privilege name
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.7/security-api-get-privileges.html
           #
           def get_privileges(arguments = {})
             headers = arguments.delete(:headers) || {}
