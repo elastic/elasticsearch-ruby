@@ -45,7 +45,7 @@ Endpoints that changed:
 - `termvectors`: `parent` parameter is gone.
 - `update`: `version` parameter is not supported anymore.
 
-=== X-PACK
+=== X-Pack
 
 Some urls changed internally to remove `_xpack`, but it shouldn't affect the client's API.
 
