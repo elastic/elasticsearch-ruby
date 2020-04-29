@@ -1,3 +1,38 @@
+## 6.8.2
+
+### Client
+
+- Accept options passed to #perform_request to avoid infinite retry loop - https://github.com/elastic/elasticsearch-ruby/pull/837
+
+#### API Key Support
+The client now supports API Key Authentication, check "Authentication" on the [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#authentication) for information on how to use it.
+
+#### X-Opaque-Id Support
+
+The client now supports identifying running tasks with X-Opaque-Id. Check [transport README](https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#identifying-running-tasks-with-x-opaque-id) for information on how to use X-Opaque-Id.
+
+#### Faraday migrated to 1.0
+
+We're now using version 1.0 of Faraday:
+- The client initializer was modified but this should not disrupt final users at all, check [this commit](https://github.com/elastic/elasticsearch-ruby/commit/0fdc6533f4621a549a4cb99e778bbd827461a2d0) for more information.
+- Migrated error checking to remove the deprecated `Faraday::Error` namespace.
+- **This change is not compatible with [Typhoeus](https://github.com/typhoeus/typhoeus)**. The latest release is 1.3.1, but it's [still using the deprecated `Faraday::Error` namespace](https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100). This has been fixed on master, but the last release was November 6, 2018. Version 1.4.0 should be ok once it's released.
+- Note: Faraday 1.0 drops official support for JRuby. It installs fine on the tests we run with JRuby in this repo, but it's something we should pay attention to.
+
+Reference: [Upgrading - Faraday 1.0](https://github.com/lostisland/faraday/blob/master/UPGRADING.md)
+
+[Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/808)
+
+### API
+
+* Ensure that `index` argument is considered in rank_eval api https://github.com/elastic/elasticsearch-ruby/commit/b56beea7fa3c78594428bc718bd412b40d8e424f
+* Update handling of publish_address in _nodes/http response https://github.com/elastic/elasticsearch-ruby/commit/68350f9f978badef57930aec35441f4d975f65bf
+* Remove percolate Spec (not supported)
+
+### EXT:6.8.2
+
+
+
 ## 6.8.1
 
 * Lock the version of Faraday: Faraday 1.0 was released with breaking changes. Thank you @taylorthurlow :+1: (#752)
