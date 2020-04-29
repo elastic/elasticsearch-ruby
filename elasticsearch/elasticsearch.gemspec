@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
   s.rdoc_options      = ['--charset=UTF-8']
 
   s.required_ruby_version = '>= 2.4'
-  s.add_dependency 'elasticsearch-api',       '6.8.1'
-  s.add_dependency 'elasticsearch-transport', '6.8.1'
+  s.add_dependency 'elasticsearch-api',       '6.8.2'
+  s.add_dependency 'elasticsearch-transport', '6.8.2'
 
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
