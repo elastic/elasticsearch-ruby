@@ -41,7 +41,7 @@ module Elasticsearch
         # @option arguments [Boolean] :forbid_closed_indices If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-stats.html
         #
         def stats(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -29,7 +29,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-synced-flush-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-synced-flush-api.html
         #
         def flush_synced(arguments = {})
           headers = arguments.delete(:headers) || {}

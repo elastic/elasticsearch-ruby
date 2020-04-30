@@ -24,7 +24,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html#_validating_templates
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-template.html#_validating_templates
       #
       def render_search_template(arguments = {})
         headers = arguments.delete(:headers) || {}

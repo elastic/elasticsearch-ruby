@@ -30,7 +30,7 @@ module Elasticsearch
       # @option arguments [Boolean] :include_unmapped Indicates whether unmapped fields should be included in the response.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-field-caps.html
       #
       def field_caps(arguments = {})
         headers = arguments.delete(:headers) || {}

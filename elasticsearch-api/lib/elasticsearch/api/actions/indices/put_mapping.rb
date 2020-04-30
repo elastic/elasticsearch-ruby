@@ -39,7 +39,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-put-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-put-mapping.html
         #
         def put_mapping(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

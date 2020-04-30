@@ -17,35 +17,38 @@
 
 module Elasticsearch
   module API
-    module Cluster
+    module Indices
       module Actions
-        # Returns a list of any cluster-level changes (e.g. create index, update mapping,
-        # allocate or fail shard) which have not yet been executed.
+        # Simulate matching the given index name against the index templates in the system
         #
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [String] :name The name of the index (it must be a concrete index name)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body New index template definition, which will be included in the simulation, as if it already exists in the system
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-pending.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-templates.html
         #
-        def pending_tasks(arguments = {})
+        def simulate_index_template(arguments = {})
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_cluster/pending_tasks"
+          _name = arguments.delete(:name)
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_index_template/_simulate_index/#{Utils.__listify(_name)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:pending_tasks, [
-          :local,
+        ParamsRegistry.register(:simulate_index_template, [
           :master_timeout
         ].freeze)
 end

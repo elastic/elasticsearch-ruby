@@ -29,7 +29,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#_clear_scroll_api
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-body.html#_clear_scroll_api
       #
       def clear_scroll(arguments = {})
         headers = arguments.delete(:headers) || {}
