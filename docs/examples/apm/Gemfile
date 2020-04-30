@@ -1,0 +1,5 @@
+source 'https://rubygems.org' do
+  gem 'elastic-apm'
+  gem 'elasticsearch'
+  gem 'sinatra'
+end
