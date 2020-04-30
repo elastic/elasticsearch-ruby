@@ -18,7 +18,6 @@
 module Elasticsearch
   module Transport
     module Transport
-
       # Wraps the response from Elasticsearch.
       #
       class Response
