@@ -1333,6 +1333,32 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
+    context 'when Elasticsearch response includes a warning header' do
+      let(:client) do
+        Elasticsearch::Transport::Client.new(hosts: hosts)
+      end
+
+      let(:warning) { 'Elasticsearch warning: "deprecation warning"' }
+
+      it 'prints a warning' do
+        allow_any_instance_of(Elasticsearch::Transport::Transport::Response).to receive(:headers) do
+          { 'warning' => warning }
+        end
+
+        begin
+          stderr      = $stderr
+          fake_stderr = StringIO.new
+          $stderr     = fake_stderr
+
+          client.perform_request('GET', '/')
+          fake_stderr.rewind
+          expect(fake_stderr.string).to eq("warning: #{warning}\n")
+        ensure
+          $stderr = stderr
+        end
+      end
+    end
+
     context 'when a header is set on an endpoint request' do
       let(:client) { described_class.new(host: hosts) }
       let(:headers) { { 'user-agent' => 'my ruby app' } }
