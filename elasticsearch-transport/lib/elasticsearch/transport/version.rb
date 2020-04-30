@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module Transport
-    VERSION = "7.6.0"
+    VERSION = "7.x-SNAPSHOT"
   end
 end
