@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module XPack
-    VERSION = "7.6.0"
+    VERSION = "7.x-SNAPSHOT"
   end
 end
