@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-forcemerge.html
         #
         def forcemerge(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/grok-processor.html#grok-processor-rest-get
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/grok-processor.html#grok-processor-rest-get
         #
         def processor_grok(arguments = {})
           headers = arguments.delete(:headers) || {}
