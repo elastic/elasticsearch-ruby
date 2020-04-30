@@ -17,44 +17,33 @@
 
 module Elasticsearch
   module API
-    module Indices
+    module Cluster
       module Actions
-        # Creates or updates an index template.
+        # Clears cluster voting config exclusions.
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
-        # @option arguments [String] :cause User defined reason for creating/updating the index template
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :wait_for_removal Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The template definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
         #
-        def put_index_template(arguments = {})
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
-
+        def delete_voting_config_exclusions(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          _name = arguments.delete(:name)
-
-          method = Elasticsearch::API::HTTP_PUT
-          path   = "_index_template/#{Utils.__listify(_name)}"
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_cluster/voting_config_exclusions"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = arguments[:body]
+          body = nil
           perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:put_index_template, [
-          :create,
-          :cause,
-          :master_timeout
+        ParamsRegistry.register(:delete_voting_config_exclusions, [
+          :wait_for_removal
         ].freeze)
 end
       end
