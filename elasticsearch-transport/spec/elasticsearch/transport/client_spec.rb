@@ -18,7 +18,6 @@
 require 'spec_helper'
 
 describe Elasticsearch::Transport::Client do
-
   let(:client) do
     described_class.new.tap do |_client|
       allow(_client).to receive(:__build_connections)

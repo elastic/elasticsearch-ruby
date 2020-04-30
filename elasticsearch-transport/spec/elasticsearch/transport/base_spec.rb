@@ -114,7 +114,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when `perform_request` is called without a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(3).times.and_call_original
       end
@@ -127,7 +126,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when `perform_request` is called with a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(6).times.and_call_original
       end
@@ -141,7 +139,6 @@ describe Elasticsearch::Transport::Transport::Base do
   end
 
   context 'when the client has `retry_on_failure` set to true' do
-
     let(:client) do
       Elasticsearch::Transport::Client.new(arguments)
     end
@@ -154,7 +151,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when `perform_request` is called without a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(4).times.and_call_original
       end
@@ -167,7 +163,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when `perform_request` is called with a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(6).times.and_call_original
       end
@@ -181,7 +176,6 @@ describe Elasticsearch::Transport::Transport::Base do
   end
 
   context 'when the client has `retry_on_failure` set to false' do
-
     let(:client) do
       Elasticsearch::Transport::Client.new(arguments)
     end
@@ -194,7 +188,6 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     context 'when `perform_request` is called without a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).once.and_call_original
       end
