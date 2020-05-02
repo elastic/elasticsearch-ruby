@@ -1,0 +1,6 @@
+.git/
+
+.yardoc
+coverage/
+docs/
+tmp/
