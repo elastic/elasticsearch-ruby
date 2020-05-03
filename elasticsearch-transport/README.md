@@ -172,7 +172,7 @@ Elasticsearch::Client.new hosts: [
     user: 'USERNAME',
     password: 'PASSWORD',
     scheme: 'https'
-  } 
+  }
 ]
 ```
 ... or simply use the common URL format:
@@ -326,7 +326,7 @@ You can specify how many times should the client retry the request before it rai
 (the default is 3 times):
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], max_retries: 5
 ```
 
 You can also use `retry_on_status` to retry when specific status codes are returned:
@@ -334,6 +334,7 @@ You can also use `retry_on_status` to retry when specific status codes are retur
 ```ruby
 Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503]
 ```
+`max_retries` works with `retry_on_status` as well.
 
 ### Reloading Hosts
 
