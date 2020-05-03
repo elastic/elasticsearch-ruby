@@ -48,7 +48,7 @@ module Elasticsearch
             #
             response = @client.search index: 'test-index', body: { query: { match: { title: 'test' } } }
 
-            assert_equal 1,      response['hits']['total']
+            assert_equal 1,      response['hits']['total']['value']
             assert_equal 'Test', response['hits']['hits'][0]['_source']['title']
 
             # Delete the index
