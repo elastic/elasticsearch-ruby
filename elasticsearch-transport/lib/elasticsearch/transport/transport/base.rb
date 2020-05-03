@@ -263,11 +263,16 @@ module Elasticsearch
           start = Time.now
           tries = 0
           reload_on_failure = opts.fetch(:reload_on_failure, @options[:reload_on_failure])
-
-          max_retries = if opts.key?(:retry_on_failure)
-            opts[:retry_on_failure] === true ? DEFAULT_MAX_RETRIES : opts[:retry_on_failure]
-          elsif options.key?(:retry_on_failure)
-            options[:retry_on_failure] === true ? DEFAULT_MAX_RETRIES : options[:retry_on_failure]
+          retry_on_failure = opts.fetch(:retry_on_failure, @options[:retry_on_failure])
+          max_retry_value = opts.fetch(:max_retries, @options[:max_retries])
+          max_retries = if max_retry_value || retry_on_failure
+            if retry_on_failure.nil?
+              max_retry_value
+            elsif retry_on_failure === true
+              max_retry_value.nil? ?  DEFAULT_MAX_RETRIES : max_retry_value
+            else
+              max_retry_value.nil? ?  retry_on_failure : max_retry_value
+            end
           end
 
           params = params.clone
@@ -314,7 +319,7 @@ module Elasticsearch
               reload_connections! and retry
             end
 
-            if max_retries
+            if retry_on_failure
               log_warn "[#{e.class}] Attempt #{tries} connecting to #{connection.host.inspect}"
               if tries <= max_retries
                 retry

@@ -251,4 +251,75 @@ describe Elasticsearch::Transport::Transport::Base do
       end
     end
   end
+
+  context 'when the client uses `max_retries`' do
+
+    let(:client) do
+      Elasticsearch::Transport::Client.new(arguments)
+    end
+
+    let(:arguments) do
+      {
+          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
+          max_retries: 2
+      }
+    end
+
+    context 'when `perform_request` is called without a `retry_on_failure` option value' do
+
+      before do
+        expect(client.transport).to receive(:get_connection).exactly(1).times.and_call_original
+      end
+
+      it 'does not retry' do
+        expect {
+          client.transport.perform_request('GET', '/info')
+        }.to raise_exception(Faraday::ConnectionFailed)
+      end
+    end
+
+    context 'when `perform_request` is called with a `retry_on_failure` option value' do
+
+      before do
+        expect(client.transport).to receive(:get_connection).exactly(3).times.and_call_original
+      end
+
+      it 'uses the option `max_retries` value' do
+        expect {
+          client.transport.perform_request('GET', '/info', {}, nil, nil, retry_on_failure: 5)
+        }.to raise_exception(Faraday::ConnectionFailed)
+      end
+    end
+
+    context 'when `perform_request` is called with a `reload_on_failure` option value' do
+
+      before do
+        expect(client.transport).to receive(:get_connection).exactly(2).times.and_call_original
+      end
+
+      it 'tries only the number of connections' do
+        expect {
+          client.transport.perform_request('GET', '/info', {}, nil, nil, reload_on_failure: true)
+        }.to raise_exception(Faraday::ConnectionFailed)
+      end
+    end
+
+    context 'when `perform_request` is called with a `retry_on_status` option value' do
+
+      before do
+        expect(client.transport).to receive(:__raise_transport_error).exactly(3).times.and_call_original
+      end
+      let(:arguments) do
+        {
+            hosts: ['http://localhost:9250'],
+            retry_on_status: ['404']
+        }
+      end
+      it 'retries on 404 status the specified number of max_retries' do
+        expect {
+          client.transport.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ', {}, nil, nil, max_retries: 2)
+        }.to raise_exception(Elasticsearch::Transport::Transport::Errors::NotFound)
+      end
+    end
+  end
 end

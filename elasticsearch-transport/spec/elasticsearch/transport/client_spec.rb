@@ -1726,6 +1726,7 @@ describe Elasticsearch::Transport::Client do
       context 'when an invalid url is specified' do
 
         it 'raises an exception' do
+          client.perform_request('DELETE', 'myindex')
           expect {
             client.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ')
           }.to raise_exception(Elasticsearch::Transport::Transport::Errors::NotFound)
