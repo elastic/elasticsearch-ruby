@@ -265,7 +265,7 @@ module Elasticsearch
 
         def skip_version?(client, skip_definition)
           return true if skip_definition['version'] == 'all'
-          range_partition =  /\s*-\s*/
+          range_partition = /\s*-\s*/
           if versions = skip_definition['version'] && skip_definition['version'].partition(range_partition)
             low, high = __parse_versions(versions)
             range = low..high
@@ -287,8 +287,8 @@ module Elasticsearch
         end
 
         def __parse_versions(versions)
-          low = versions[0]
-          high = (['', nil, '-'].include? versions[2]) ? low : versions[2]
+          low = ['', nil].include? versions[0] ? '0' : versions[0]
+          high = ['', nil].include? versions[2] ? '9999' : versions[2]
           [low, high]
         end
       end
