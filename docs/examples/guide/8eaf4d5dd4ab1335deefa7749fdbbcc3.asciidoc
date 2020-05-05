@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      function_score: {
+        field_value_factor: {
+          field: 'likes',
+          factor: 1.2,
+          modifier: 'sqrt',
+          missing: 1
+        }
+      }
+    }
+  }
+)
+puts response
+----

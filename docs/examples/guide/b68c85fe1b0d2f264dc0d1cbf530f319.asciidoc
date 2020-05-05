@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      function_score: {
+        query: {
+          match: {
+            message: 'elasticsearch'
+          }
+        },
+        script_score: {
+          script: {
+            params: {
+              a: 5,
+              b: 1.2
+            },
+            source: "params.a / Math.pow(params.b, doc['likes'].value)"
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

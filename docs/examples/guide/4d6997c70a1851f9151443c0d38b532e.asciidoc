@@ -1,0 +1,51 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_index',
+  id: 1,
+  body: {
+    message: 'some arrays in this document...',
+    tags: [
+      'elasticsearch',
+      'wow'
+    ],
+    lists: [
+      {
+        name: 'prog_list',
+        description: 'programming list'
+      },
+      {
+        name: 'cool_list',
+        description: 'cool stuff list'
+      }
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_index',
+  id: 2,
+  body: {
+    message: 'no arrays in this document...',
+    tags: 'elasticsearch',
+    lists: {
+      name: 'prog_list',
+      description: 'programming list'
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_index',
+  body: {
+    query: {
+      match: {
+        tags: 'elasticsearch'
+      }
+    }
+  }
+)
+puts response
+----

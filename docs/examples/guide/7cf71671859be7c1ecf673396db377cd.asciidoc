@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.update_aliases(
+  body: {
+    actions: [
+      {
+        add: {
+          index: 'test1',
+          alias: 'alias2',
+          filter: {
+            term: {
+              user: 'kimchy'
+            }
+          }
+        }
+      }
+    ]
+  }
+)
+puts response
+----

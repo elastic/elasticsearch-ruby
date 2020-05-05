@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'twitter',
+  body: {
+    index: {
+      refresh_interval: null
+    }
+  }
+)
+puts response
+----

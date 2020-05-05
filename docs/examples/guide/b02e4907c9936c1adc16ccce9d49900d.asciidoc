@@ -1,5 +1,5 @@
 [source, ruby]
 ----
-response = client.info
+response = client.cluster.health
 puts response
 ----

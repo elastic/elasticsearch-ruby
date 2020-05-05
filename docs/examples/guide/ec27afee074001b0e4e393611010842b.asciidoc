@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      function_score: {
+        gauss: {
+          date: {
+            origin: '2013-09-17',
+            scale: '10d',
+            offset: '5d',
+            decay: 0.5
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

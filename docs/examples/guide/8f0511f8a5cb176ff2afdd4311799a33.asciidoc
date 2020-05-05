@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'twitter',
+  id: 1,
+  refresh: true,
+  body: {
+    user: 'kimchy'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'twitter',
+  q: 'user:kimchy'
+)
+puts response
+
+response = client.index(
+  index: 'twitter',
+  body: {
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

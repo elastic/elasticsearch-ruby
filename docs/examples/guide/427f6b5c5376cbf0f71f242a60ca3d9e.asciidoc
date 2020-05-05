@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'alias2',
+  q: 'user:kimchy',
+  routing: '2,3'
+)
+puts response
+----
