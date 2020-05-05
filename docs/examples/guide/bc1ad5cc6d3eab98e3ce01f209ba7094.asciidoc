@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.update_aliases(
+  body: {
+    actions: [
+      {
+        add: {
+          index: 'test',
+          alias: 'alias1',
+          routing: '1'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      function_score: {
+        random_score: {
+          seed: 10,
+          field: '_seq_no'
+        }
+      }
+    }
+  }
+)
+puts response
+----

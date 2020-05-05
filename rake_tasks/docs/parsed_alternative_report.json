@@ -1996,6 +1996,106 @@
   },
   {
     "source_location": {
+      "file": "aggregations/metrics/avg-aggregation.asciidoc",
+      "line": 139
+    },
+    "digest": "da2382a59a4200333accd75be74c6136",
+    "lang": "console",
+    "found": [],
+    "source": "PUT metrics_index/_doc/1\n{\n  \"network.name\" : \"net-1\",\n  \"latency_histo\" : {\n      \"values\" : [0.1, 0.2, 0.3, 0.4, 0.5], <1>\n      \"counts\" : [3, 7, 23, 12, 6] <2>\n   }\n}\n\nPUT metrics_index/_doc/2\n{\n  \"network.name\" : \"net-2\",\n  \"latency_histo\" : {\n      \"values\" :  [0.1, 0.2, 0.3, 0.4, 0.5], <1>\n      \"counts\" : [8, 17, 8, 7, 6] <2>\n   }\n}\n\nPOST /metrics_index/_search?size=0\n{\n    \"aggs\" : {\n        \"avg_latency\" :\n            { \"avg\" : { \"field\" : \"latency_histo\" }\n        }\n    }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/1",
+        "query": null,
+        "body": {
+          "network.name": "net-1",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              3,
+              7,
+              23,
+              12,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "1"
+        },
+        "api": "index"
+      },
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/2",
+        "query": null,
+        "body": {
+          "network.name": "net-2",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              8,
+              17,
+              8,
+              7,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "2"
+        },
+        "api": "index"
+      },
+      {
+        "method": "POST",
+        "url": "/metrics_index/_search",
+        "query": {
+          "size": "0"
+        },
+        "body": {
+          "aggs": {
+            "avg_latency": {
+              "avg": {
+                "field": "latency_histo"
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "metrics_index"
+        },
+        "api": "search"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "aggregations/metrics/avg-aggregation.asciidoc",
+      "line": 172
+    },
+    "digest": "7a04eebca1af36e35a0298af8dadce40",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n    ...\n    \"aggregations\" : {\n        \"avg_latency\" : {\n           \"value\" : 0.29690721649\n        }\n    }\n}"
+  },
+  {
+    "source_location": {
       "file": "aggregations/metrics/weighted-avg-aggregation.asciidoc",
       "line": 55
     },
@@ -4356,7 +4456,7 @@
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 10
+      "line": 12
     },
     "digest": "43159621ffaa30dbfd60459a5e7b8e54",
     "lang": "console",
@@ -4397,17 +4497,17 @@
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 30
+      "line": 32
     },
-    "digest": "e3fe09a765f8ddad554e74a8256c8b78",
+    "digest": "9de287a3c0d3f7567452297f58f2f830",
     "lang": "console-result",
     "found": [],
-    "source": "{\n    ...\n    \"aggregations\": {\n        \"hat_prices\": {\n           \"value\": 450.0\n        }\n    }\n}"
+    "source": "{\n    ...\n    \"aggregations\" : {\n        \"hat_prices\" : {\n           \"value\" : 450.0\n        }\n    }\n}"
   },
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 49
+      "line": 51
     },
     "digest": "4b5f2bd0db1a94614f4d2e46a5159bd2",
     "lang": "console",
@@ -4450,7 +4550,7 @@
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 75
+      "line": 77
     },
     "digest": "49a4032ac0cbc413b47660bcf998ef5f",
     "lang": "console",
@@ -4496,7 +4596,7 @@
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 107
+      "line": 109
     },
     "digest": "82a2031f77972b713f75ed05c4bd9815",
     "lang": "console",
@@ -4540,7 +4640,7 @@
   {
     "source_location": {
       "file": "aggregations/metrics/sum-aggregation.asciidoc",
-      "line": 139
+      "line": 141
     },
     "digest": "a78c3f4389502fe2dbd1cd10a017d1ed",
     "lang": "console",
@@ -4578,6 +4678,106 @@
         "api": "search"
       }
     ]
+  },
+  {
+    "source_location": {
+      "file": "aggregations/metrics/sum-aggregation.asciidoc",
+      "line": 172
+    },
+    "digest": "8db0606ceb96b90711c9e9a1665f3d06",
+    "lang": "console",
+    "found": [],
+    "source": "PUT metrics_index/_doc/1\n{\n  \"network.name\" : \"net-1\",\n  \"latency_histo\" : {\n      \"values\" : [0.1, 0.2, 0.3, 0.4, 0.5], <1>\n      \"counts\" : [3, 7, 23, 12, 6] <2>\n   }\n}\n\nPUT metrics_index/_doc/2\n{\n  \"network.name\" : \"net-2\",\n  \"latency_histo\" : {\n      \"values\" :  [0.1, 0.2, 0.3, 0.4, 0.5], <1>\n      \"counts\" : [8, 17, 8, 7, 6] <2>\n   }\n}\n\nPOST /metrics_index/_search?size=0\n{\n    \"aggs\" : {\n        \"total_latency\" : { \"sum\" : { \"field\" : \"latency_histo\" } }\n    }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/1",
+        "query": null,
+        "body": {
+          "network.name": "net-1",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              3,
+              7,
+              23,
+              12,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "1"
+        },
+        "api": "index"
+      },
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/2",
+        "query": null,
+        "body": {
+          "network.name": "net-2",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              8,
+              17,
+              8,
+              7,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "2"
+        },
+        "api": "index"
+      },
+      {
+        "method": "POST",
+        "url": "/metrics_index/_search",
+        "query": {
+          "size": "0"
+        },
+        "body": {
+          "aggs": {
+            "total_latency": {
+              "sum": {
+                "field": "latency_histo"
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "metrics_index"
+        },
+        "api": "search"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "aggregations/metrics/sum-aggregation.asciidoc",
+      "line": 203
+    },
+    "digest": "27fcd5882fd5f9c728dec67b5cd982fe",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n    ...\n    \"aggregations\" : {\n        \"total_latency\" : {\n           \"value\" : 28.8\n        }\n    }\n}"
   },
   {
     "source_location": {
@@ -5483,6 +5683,106 @@
         "api": "search"
       }
     ]
+  },
+  {
+    "source_location": {
+      "file": "aggregations/metrics/valuecount-aggregation.asciidoc",
+      "line": 96
+    },
+    "digest": "e9fe608f105d7e3268a15e409e2cb9ab",
+    "lang": "console",
+    "found": [],
+    "source": "PUT metrics_index/_doc/1\n{\n  \"network.name\" : \"net-1\",\n  \"latency_histo\" : {\n      \"values\" : [0.1, 0.2, 0.3, 0.4, 0.5],\n      \"counts\" : [3, 7, 23, 12, 6] <1>\n   }\n}\n\nPUT metrics_index/_doc/2\n{\n  \"network.name\" : \"net-2\",\n  \"latency_histo\" : {\n      \"values\" :  [0.1, 0.2, 0.3, 0.4, 0.5],\n      \"counts\" : [8, 17, 8, 7, 6] <1>\n   }\n}\n\nPOST /metrics_index/_search?size=0\n{\n    \"aggs\" : {\n        \"total_requests\" : {\n            \"value_count\" : { \"field\" : \"latency_histo\" }\n        }\n    }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/1",
+        "query": null,
+        "body": {
+          "network.name": "net-1",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              3,
+              7,
+              23,
+              12,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "1"
+        },
+        "api": "index"
+      },
+      {
+        "method": "PUT",
+        "url": "/metrics_index/_doc/2",
+        "query": null,
+        "body": {
+          "network.name": "net-2",
+          "latency_histo": {
+            "values": [
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5
+            ],
+            "counts": [
+              8,
+              17,
+              8,
+              7,
+              6
+            ]
+          }
+        },
+        "params": {
+          "index": "metrics_index",
+          "id": "2"
+        },
+        "api": "index"
+      },
+      {
+        "method": "POST",
+        "url": "/metrics_index/_search",
+        "query": {
+          "size": "0"
+        },
+        "body": {
+          "aggs": {
+            "total_requests": {
+              "value_count": {
+                "field": "latency_histo"
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "metrics_index"
+        },
+        "api": "search"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "aggregations/metrics/valuecount-aggregation.asciidoc",
+      "line": 129
+    },
+    "digest": "b169c9313bd324f4a7e28f3583d9c19e",
+    "lang": "console-result",
+    "found": [],
+    "source": "{\n    ...\n    \"aggregations\" : {\n        \"total_requests\" : {\n           \"value\" : 97\n        }\n    }\n}"
   },
   {
     "source_location": {
@@ -11449,53 +11749,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 135
-    },
-    "digest": "d50a3835bf5795ac73e58906a3413544",
-    "lang": "console",
-    "found": [
-      "php",
-      "csharp",
-      "python",
-      "ruby",
-      "go",
-      "js"
-    ],
-    "source": "GET /_search\n{\n    \"aggs\" : {\n        \"products\" : {\n            \"terms\" : {\n                \"field\" : \"product\",\n                \"size\" : 5\n            }\n        }\n    }\n}",
-    "parsed_source": [
-      {
-        "method": "GET",
-        "url": "/_search",
-        "query": null,
-        "body": {
-          "aggs": {
-            "products": {
-              "terms": {
-                "field": "product",
-                "size": 5
-              }
-            }
-          }
-        },
-        "params": null,
-        "api": "search"
-      }
-    ]
-  },
-  {
-    "source_location": {
-      "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 234
-    },
-    "digest": "1a4020b84329edbc97af2f1a922ce82c",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n    ...\n    \"aggregations\" : {\n        \"products\" : {\n            \"doc_count_error_upper_bound\" : 46,\n            \"sum_other_doc_count\" : 79,\n            \"buckets\" : [\n                {\n                    \"key\" : \"Product A\",\n                    \"doc_count\" : 100\n                },\n                {\n                    \"key\" : \"Product Z\",\n                    \"doc_count\" : 52\n                }\n                ...\n            ]\n        }\n    }\n}"
-  },
-  {
-    "source_location": {
-      "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 264
+      "line": 162
     },
     "digest": "35e8da9410b8432cf4095f2541ad7b1d",
     "lang": "console",
@@ -11532,17 +11786,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 290
-    },
-    "digest": "e19bb86b7736ca78acd08e14451c4449",
-    "lang": "console-result",
-    "found": [],
-    "source": "{\n    ...\n    \"aggregations\" : {\n        \"products\" : {\n            \"doc_count_error_upper_bound\" : 46,\n            \"sum_other_doc_count\" : 79,\n            \"buckets\" : [\n                {\n                    \"key\" : \"Product A\",\n                    \"doc_count\" : 100,\n                    \"doc_count_error_upper_bound\" : 0\n                },\n                {\n                    \"key\" : \"Product Z\",\n                    \"doc_count\" : 52,\n                    \"doc_count_error_upper_bound\" : 2\n                }\n                ...\n            ]\n        }\n    }\n}"
-  },
-  {
-    "source_location": {
-      "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 341
+      "line": 207
     },
     "digest": "6a4679531e64c492fce16dc12de6dcb0",
     "lang": "console",
@@ -11580,7 +11824,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 358
+      "line": 224
     },
     "digest": "93f1bdd72e79827dcf9a34efa02fd977",
     "lang": "console",
@@ -11618,7 +11862,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 377
+      "line": 243
     },
     "digest": "71b5b2ba9557d0f296ff2de91727d2f6",
     "lang": "console",
@@ -11663,7 +11907,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 397
+      "line": 263
     },
     "digest": "34efeade38445b2834749ced59782e25",
     "lang": "console",
@@ -11708,7 +11952,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 443
+      "line": 309
     },
     "digest": "dc15e2373e5ecbe09b4ea0858eb63d47",
     "lang": "console",
@@ -11762,7 +12006,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 470
+      "line": 336
     },
     "digest": "028f6d6ac2594e20b78b8a8f8cbad49d",
     "lang": "console",
@@ -11821,7 +12065,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 503
+      "line": 369
     },
     "digest": "527324766814561b75aaee853ede49a7",
     "lang": "console",
@@ -11857,7 +12101,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 544
+      "line": 410
     },
     "digest": "033778305d52746f5ce0a2a922c8e521",
     "lang": "console",
@@ -11895,7 +12139,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 578
+      "line": 444
     },
     "digest": "4646764bf09911fee7d58630c72d3137",
     "lang": "console",
@@ -11935,7 +12179,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 600
+      "line": 466
     },
     "digest": "a49169b4622918992411fab4ec48191b",
     "lang": "console",
@@ -11974,7 +12218,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 626
+      "line": 492
     },
     "digest": "0afaf1cad692e6201aa574c8feb6e622",
     "lang": "console",
@@ -12011,7 +12255,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 654
+      "line": 520
     },
     "digest": "98b121bf47cebd85671a2cb519688d28",
     "lang": "console",
@@ -12059,7 +12303,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 683
+      "line": 549
     },
     "digest": "5d9d7b84e2fec7ecd832145cbb951cf1",
     "lang": "console",
@@ -12110,7 +12354,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 775
+      "line": 641
     },
     "digest": "7f28f8ae8fcdbd807dadde0b5b007a6d",
     "lang": "console",
@@ -12154,7 +12398,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 806
+      "line": 672
     },
     "digest": "cd5bc5bf7cd58d7b1492c9c298b345f6",
     "lang": "console",
@@ -12199,7 +12443,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 857
+      "line": 723
     },
     "digest": "774d715155cd13713e6e327adf6ce328",
     "lang": "console",
@@ -12235,7 +12479,7 @@
   {
     "source_location": {
       "file": "aggregations/bucket/terms-aggregation.asciidoc",
-      "line": 882
+      "line": 748
     },
     "digest": "f085fb032dae56a3b104ab874eaea2ad",
     "lang": "console",
@@ -16319,7 +16563,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 255
+      "line": 265
     },
     "digest": "f2d68493abd3ca430bd03a7f7f8d18f9",
     "lang": "console",
@@ -16356,7 +16600,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 271
+      "line": 281
     },
     "digest": "e17e8852ec3f31781e1364f4dffeb6d0",
     "lang": "console",
@@ -16389,7 +16633,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 287
+      "line": 297
     },
     "digest": "a2a25aad1fea9a541b52ac613c78fb64",
     "lang": "console",
@@ -16427,7 +16671,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 306
+      "line": 316
     },
     "digest": "28aad2c5942bfb221c2bf1bbdc01658e",
     "lang": "console",
@@ -16463,7 +16707,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 323
+      "line": 333
     },
     "digest": "db6cba451ba562abe953d09ad80cc15c",
     "lang": "console",
@@ -16496,7 +16740,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 342
+      "line": 352
     },
     "digest": "58b5003c0a53a39bf509aa3797aad471",
     "lang": "console",
@@ -16533,7 +16777,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 408
+      "line": 418
     },
     "digest": "f32f0c19b42de3b87dd764fe4ca17e7c",
     "lang": "console",
@@ -16568,7 +16812,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 436
+      "line": 446
     },
     "digest": "60ee33f3acfdd0fe6f288ac77312c780",
     "lang": "console",
@@ -16605,7 +16849,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 462
+      "line": 472
     },
     "digest": "be1bd47393646ac6bbee177d1cdb7738",
     "lang": "console",
@@ -16643,7 +16887,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 486
+      "line": 496
     },
     "digest": "fdd38f0d248385a444c777e7acd97846",
     "lang": "console",
@@ -16681,7 +16925,7 @@
   {
     "source_location": {
       "file": "query-dsl/query-string-query.asciidoc",
-      "line": 518
+      "line": 528
     },
     "digest": "6f21a878fee3b43c5332b81aaddbeac7",
     "lang": "console",
@@ -23123,12 +23367,12 @@
   {
     "source_location": {
       "file": "mapping/types/histogram.asciidoc",
-      "line": 73
+      "line": 76
     },
-    "digest": "7d6b1797b1178e96d287831a94bb9658",
+    "digest": "fc3f5f40fa283559ca615cd0eb0a1755",
     "lang": "console",
     "found": [],
-    "source": "PUT my_index\n{\n  \"mappings\": {\n    \"properties\": {\n      \"my_histogram\": {\n        \"type\" : \"histogram\"\n      },\n      \"my_text\" : {\n        \"type\" : \"keyword\"\n      }\n    }\n  }\n}",
+    "source": "PUT my_index\n{\n  \"mappings\" : {\n    \"properties\" : {\n      \"my_histogram\" : {\n        \"type\" : \"histogram\"\n      },\n      \"my_text\" : {\n        \"type\" : \"keyword\"\n      }\n    }\n  }\n}",
     "parsed_source": [
       {
         "method": "PUT",
@@ -23156,7 +23400,7 @@
   {
     "source_location": {
       "file": "mapping/types/histogram.asciidoc",
-      "line": 93
+      "line": 96
     },
     "digest": "09774dd1a8613672844caadb2bc8dc1e",
     "lang": "console",
@@ -36228,7 +36472,7 @@
   {
     "source_location": {
       "file": "analysis/tokenfilters/edgengram-tokenfilter.asciidoc",
-      "line": 199
+      "line": 203
     },
     "digest": "6f07152055e99416deb10e95b428b847",
     "lang": "console",
@@ -37202,6 +37446,68 @@
   },
   {
     "source_location": {
+      "file": "analysis/tokenfilters/kstem-tokenfilter.asciidoc",
+      "line": 29
+    },
+    "digest": "68a891f609ca3a379d2d64e4914f3067",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_analyze\n{\n  \"tokenizer\": \"standard\",\n  \"filter\": [ \"kstem\" ],\n  \"text\": \"the foxes jumping quickly\"\n}",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_analyze",
+        "query": null,
+        "body": {
+          "tokenizer": "standard",
+          "filter": [
+            "kstem"
+          ],
+          "text": "the foxes jumping quickly"
+        },
+        "params": null,
+        "api": "indices.analyze"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "analysis/tokenfilters/kstem-tokenfilter.asciidoc",
+      "line": 98
+    },
+    "digest": "e56ea22e3555d7c6de248e0327200b2e",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /my_index\n{\n  \"settings\": {\n    \"analysis\": {\n      \"analyzer\": {\n        \"my_analyzer\": {\n          \"tokenizer\": \"whitespace\",\n          \"filter\": [\n            \"lowercase\",\n            \"kstem\"\n          ]\n        }\n      }\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/my_index",
+        "query": null,
+        "body": {
+          "settings": {
+            "analysis": {
+              "analyzer": {
+                "my_analyzer": {
+                  "tokenizer": "whitespace",
+                  "filter": [
+                    "lowercase",
+                    "kstem"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "my_index"
+        },
+        "api": "indices.create"
+      }
+    ]
+  },
+  {
+    "source_location": {
       "file": "analysis/tokenfilters/length-tokenfilter.asciidoc",
       "line": 27
     },
@@ -37658,7 +37964,7 @@
   {
     "source_location": {
       "file": "analysis/tokenfilters/ngram-tokenfilter.asciidoc",
-      "line": 204
+      "line": 208
     },
     "digest": "2793fa53b7d269852aa74f6bf57e34dc",
     "lang": "console",
@@ -37790,6 +38096,68 @@
         },
         "params": {
           "index": "test"
+        },
+        "api": "indices.create"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "analysis/tokenfilters/porterstem-tokenfilter.asciidoc",
+      "line": 28
+    },
+    "digest": "0d54ddad2bf6f76aa5c35f53ba77748a",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_analyze\n{\n  \"tokenizer\": \"standard\",\n  \"filter\": [ \"porter_stem\" ],\n  \"text\": \"the foxes jumping quickly\"\n}",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_analyze",
+        "query": null,
+        "body": {
+          "tokenizer": "standard",
+          "filter": [
+            "porter_stem"
+          ],
+          "text": "the foxes jumping quickly"
+        },
+        "params": null,
+        "api": "indices.analyze"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "analysis/tokenfilters/porterstem-tokenfilter.asciidoc",
+      "line": 97
+    },
+    "digest": "1badc80ac8097713f8fc51872615a042",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /my_index\n{\n  \"settings\": {\n    \"analysis\": {\n      \"analyzer\": {\n        \"my_analyzer\": {\n          \"tokenizer\": \"whitespace\",\n          \"filter\": [\n            \"lowercase\",\n            \"porter_stem\"\n          ]\n        }\n      }\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/my_index",
+        "query": null,
+        "body": {
+          "settings": {
+            "analysis": {
+              "analyzer": {
+                "my_analyzer": {
+                  "tokenizer": "whitespace",
+                  "filter": [
+                    "lowercase",
+                    "porter_stem"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "params": {
+          "index": "my_index"
         },
         "api": "indices.create"
       }
@@ -39867,7 +40235,7 @@
   {
     "source_location": {
       "file": "modules/cluster/disk_allocator.asciidoc",
-      "line": 55
+      "line": 61
     },
     "digest": "aaaa9a186db96077879ddfcfbd625fdb",
     "lang": "console",
@@ -39891,7 +40259,7 @@
   {
     "source_location": {
       "file": "modules/cluster/disk_allocator.asciidoc",
-      "line": 79
+      "line": 85
     },
     "digest": "4fe5a9e99dc9400d67a5a2f6f6752c07",
     "lang": "console",
@@ -42882,7 +43250,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-allocate.asciidoc",
-      "line": 60
+      "line": 54
     },
     "digest": "1116c769f39f0c7fe86ec2a4871efcd5",
     "lang": "console",
@@ -42916,7 +43284,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-allocate.asciidoc",
-      "line": 88
+      "line": 82
     },
     "digest": "0518c673094fb18ecb491a3b78af4695",
     "lang": "console",
@@ -42952,7 +43320,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-allocate.asciidoc",
-      "line": 118
+      "line": 112
     },
     "digest": "9d461ae140ddc018efd2650559800cd1",
     "lang": "console",
@@ -42989,7 +43357,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-delete.asciidoc",
-      "line": 22
+      "line": 23
     },
     "digest": "053497b6960f80fd7b005b7c6d54358f",
     "lang": "console",
@@ -43021,7 +43389,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-forcemerge.asciidoc",
-      "line": 38
+      "line": 37
     },
     "digest": "eb5486d2fe4283475bf9e0e09280be16",
     "lang": "console",
@@ -43055,7 +43423,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-freeze.asciidoc",
-      "line": 19
+      "line": 26
     },
     "digest": "0345fbd95c4516a89ac5ad261a16be8f",
     "lang": "console",
@@ -43185,7 +43553,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-rollover.asciidoc",
-      "line": 91
+      "line": 90
     },
     "digest": "cfd4b34f35e531a20739a3b308d57134",
     "lang": "console",
@@ -43219,7 +43587,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-rollover.asciidoc",
-      "line": 115
+      "line": 113
     },
     "digest": "d4a41fb74b41b41a0ee114a2311f2815",
     "lang": "console",
@@ -43253,7 +43621,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-rollover.asciidoc",
-      "line": 140
+      "line": 138
     },
     "digest": "8940f2b911220acc9afef6360b6c13c4",
     "lang": "console",
@@ -43288,7 +43656,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-rollover.asciidoc",
-      "line": 168
+      "line": 166
     },
     "digest": "f6c79fa1c01bb4539d0cba0bd62c1ce0",
     "lang": "console",
@@ -43462,7 +43830,7 @@
   {
     "source_location": {
       "file": "ilm/actions/ilm-wait-for-snapshot.asciidoc",
-      "line": 19
+      "line": 21
     },
     "digest": "83062a543163370328cf2e21a68c1bd3",
     "lang": "console",
@@ -45276,7 +45644,7 @@
   {
     "source_location": {
       "file": "monitoring/collecting-monitoring-data.asciidoc",
-      "line": 61
+      "line": 57
     },
     "digest": "fb2b8d642e16132eebcff4f8b6d592d1",
     "lang": "console",
@@ -47367,10 +47735,10 @@
       "file": "snapshot-restore/restore-snapshot.asciidoc",
       "line": 45
     },
-    "digest": "47dcf95e3d398b9bdcb0a483f705bb4b",
+    "digest": "ac7dc81f97b69b20243a31a5a18fc67a",
     "lang": "console",
     "found": [],
-    "source": "POST /_snapshot/my_backup/snapshot_1/_restore\n{\n  \"indices\": \"index_1,index_2\",\n  \"ignore_unavailable\": true,\n  \"include_global_state\": true,\n  \"rename_pattern\": \"index_(.+)\",\n  \"rename_replacement\": \"restored_index_$1\"\n}",
+    "source": "POST /_snapshot/my_backup/snapshot_1/_restore\n{\n  \"indices\": \"index_1,index_2\",\n  \"include_aliases\": false,\n  \"ignore_unavailable\": true,\n  \"include_global_state\": true,\n  \"rename_pattern\": \"index_(.+)\",\n  \"rename_replacement\": \"restored_index_$1\"\n}",
     "parsed_source": [
       {
         "method": "POST",
@@ -47378,6 +47746,7 @@
         "query": null,
         "body": {
           "indices": "index_1,index_2",
+          "include_aliases": false,
           "ignore_unavailable": true,
           "include_global_state": true,
           "rename_pattern": "index_(.+)",
@@ -47394,7 +47763,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 83
+      "line": 84
     },
     "digest": "922df55507c66533fcadc850eecabcff",
     "lang": "console",
@@ -47426,7 +47795,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 128
+      "line": 129
     },
     "digest": "1ae301364751c376b3d26581a36d8975",
     "lang": "console",
@@ -47446,7 +47815,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 137
+      "line": 138
     },
     "digest": "db1913b97109b86cfc5efc7cfcd65d93",
     "lang": "console",
@@ -47468,7 +47837,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 146
+      "line": 147
     },
     "digest": "e566ca0098be82a2847c17069711a822",
     "lang": "console",
@@ -47491,7 +47860,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 154
+      "line": 155
     },
     "digest": "fd7dbd4240410907a1d6823eb1ee3b03",
     "lang": "console-result",
@@ -47501,7 +47870,7 @@
   {
     "source_location": {
       "file": "snapshot-restore/restore-snapshot.asciidoc",
-      "line": 202
+      "line": 203
     },
     "digest": "2432f86346177533cabdabbd4eb41b30",
     "lang": "console",
@@ -54126,10 +54495,10 @@
       "file": "cluster/nodes-usage.asciidoc",
       "line": 69
     },
-    "digest": "35d13927cdb2785fd79e88c8c04007e7",
+    "digest": "187cc2082eeaa32d13363bd6cb39a923",
     "lang": "console-result",
     "found": [],
-    "source": "{\n  \"_nodes\": {\n    \"total\": 1,\n    \"successful\": 1,\n    \"failed\": 0\n  },\n  \"cluster_name\": \"my_cluster\",\n  \"nodes\": {\n    \"pQHNt5rXTTWNvUgOrdynKg\": {\n      \"timestamp\": 1492553961812, <1>\n      \"since\": 1492553906606, <2>\n      \"rest_actions\": {\n        \"org.elasticsearch.rest.action.admin.cluster.RestNodesUsageAction\": 1,\n        \"org.elasticsearch.rest.action.admin.indices.RestCreateIndexAction\": 1,\n        \"org.elasticsearch.rest.action.document.RestGetAction\": 1,\n        \"org.elasticsearch.rest.action.search.RestSearchAction\": 19, <3>\n        \"org.elasticsearch.rest.action.admin.cluster.RestNodesInfoAction\": 36\n      }\n    }\n  }\n}"
+    "source": "{\n  \"_nodes\": {\n    \"total\": 1,\n    \"successful\": 1,\n    \"failed\": 0\n  },\n  \"cluster_name\": \"my_cluster\",\n  \"nodes\": {\n    \"pQHNt5rXTTWNvUgOrdynKg\": {\n      \"timestamp\": 1492553961812, <1>\n      \"since\": 1492553906606, <2>\n      \"rest_actions\": {\n        \"nodes_usage_action\": 1,\n        \"create_index_action\": 1,\n        \"document_get_action\": 1,\n        \"search_action\": 19, <3>\n        \"nodes_info_action\": 36\n      },\n      \"aggregations\": {\n        ...\n      }\n    }\n  }\n}"
   },
   {
     "source_location": {
@@ -58383,7 +58752,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 411
+      "line": 415
     },
     "digest": "ae9ccfaa146731ab9176df90670db1c2",
     "lang": "console",
@@ -58446,7 +58815,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 425
+      "line": 429
     },
     "digest": "6e8127305ead40f2b6dd2ef3b99a9eca",
     "lang": "console-result",
@@ -58456,7 +58825,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 522
+      "line": 526
     },
     "digest": "8cd00a3aba7c3c158277bc032aac2830",
     "lang": "console",
@@ -58552,11 +58921,14 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 544
+      "line": 548
     },
     "digest": "1aa91d3d48140d6367b6cabca8737b8f",
     "lang": "console",
-    "found": [],
+    "found": [
+      "python",
+      "ruby"
+    ],
     "source": "POST /_bulk\n{ \"update\": {\"_id\": \"5\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"foo\"} }\n{ \"update\": {\"_id\": \"6\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"foo\"} }\n{ \"create\": {\"_id\": \"7\", \"_index\": \"index1\"} }\n{ \"my_field\": \"foo\" }",
     "parsed_source": [
       {
@@ -58604,7 +58976,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 562
+      "line": 566
     },
     "digest": "36721b1f67f58f58902ca937e79cc5d2",
     "lang": "console-result",
@@ -58614,11 +58986,14 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 623
+      "line": 627
     },
     "digest": "bfdad8a928ea30d7cf60d0a0a6bc6e2e",
     "lang": "console",
-    "found": [],
+    "found": [
+      "python",
+      "ruby"
+    ],
     "source": "POST /_bulk?filter_path=items.*.error\n{ \"update\": {\"_id\": \"5\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }\n{ \"update\": {\"_id\": \"6\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }\n{ \"update\": {\"_id\": \"7\", \"_index\": \"index1\"} }\n{ \"doc\": {\"my_field\": \"baz\"} }",
     "parsed_source": [
       {
@@ -58670,7 +59045,7 @@
   {
     "source_location": {
       "file": "docs/bulk.asciidoc",
-      "line": 637
+      "line": 641
     },
     "digest": "ba07b72377ab9f5da75bdc76109f66d6",
     "lang": "console-result",
@@ -63337,8 +63712,605 @@
   },
   {
     "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 35
+    },
+    "digest": "9f975faf72eaad571b579bbff3733b91",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _index_template/template_1\n{\n  \"index_patterns\": [\"te*\", \"bar*\"],\n  \"template\": {\n    \"settings\": {\n      \"number_of_shards\": 1\n    },\n    \"mappings\": {\n      \"_source\": {\n        \"enabled\": false\n      },\n      \"properties\": {\n        \"host_name\": {\n          \"type\": \"keyword\"\n        },\n        \"created_at\": {\n          \"type\": \"date\",\n          \"format\": \"EEE MMM dd HH:mm:ss Z yyyy\"\n        }\n      }\n    },\n    \"aliases\": {\n      \"mydata\": { }\n    }\n  },\n  \"priority\": 10,\n  \"composed_of\": [\"component_template1\", \"other_component_template\"],\n  \"version\": 3,\n  \"_meta\": {\n    \"description\": \"my custom\"\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "te*",
+            "bar*"
+          ],
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "mappings": {
+              "_source": {
+                "enabled": false
+              },
+              "properties": {
+                "host_name": {
+                  "type": "keyword"
+                },
+                "created_at": {
+                  "type": "date",
+                  "format": "EEE MMM dd HH:mm:ss Z yyyy"
+                }
+              }
+            },
+            "aliases": {
+              "mydata": {}
+            }
+          },
+          "priority": 10,
+          "composed_of": [
+            "component_template1",
+            "other_component_template"
+          ],
+          "version": 3,
+          "_meta": {
+            "description": "my custom"
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 119
+    },
+    "digest": "3759ca688c4bd3c838780a9aad63258b",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_index_template/template_1",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": null,
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.get_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 156
+    },
+    "digest": "275ec358d5d1e4b9ff06cb4ae7e47650",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_index_template/temp*",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_index_template/temp*",
+        "query": null,
+        "body": null,
+        "params": {
+          "name": "temp*"
+        },
+        "api": "indices.get_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 165
+    },
+    "digest": "3b40db1c5c6b36f087d7a09a4ce285c6",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_index_template",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_index_template",
+        "query": null,
+        "body": null,
+        "params": null,
+        "api": "indices.get_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 241
+    },
+    "digest": "71133bbe914a3fc8a2dfa666e7ba591b",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_component_template/template_with_2_shards\n{\n  \"template\": {\n    \"settings\": {\n      \"index.number_of_shards\": 2\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_with_2_shards",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "index.number_of_shards": 2
+            }
+          }
+        },
+        "params": {
+          "name": "template_with_2_shards"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 253
+    },
+    "digest": "752c809b5495a3de6cad52c5fd308909",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_component_template/template_with_3_shards\n{\n  \"template\": {\n    \"settings\": {\n      \"index.number_of_shards\": 3\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_with_3_shards",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "index.number_of_shards": 3
+            }
+          }
+        },
+        "params": {
+          "name": "template_with_3_shards"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 267
+    },
+    "digest": "31eeb07e692dba7486c6f45cafc0e5d0",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_index_template/template_1\n{\n  \"index_patterns\": [\"t*\"],\n  \"composed_of\": [\"template_with_2_shards\", \"template_with_3_shards\"]\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "t*"
+          ],
+          "composed_of": [
+            "template_with_2_shards",
+            "template_with_3_shards"
+          ]
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 283
+    },
+    "digest": "ed8ad81604137f4cc8757bb74636b8b4",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _index_template/template_1\n{\n  \"index_patterns\" : [\"te*\"],\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 1\n    },\n    \"aliases\" : {\n        \"alias1\" : {},\n        \"alias2\" : {\n            \"filter\" : {\n                \"term\" : {\"user\" : \"kimchy\" }\n            },\n            \"routing\" : \"kimchy\"\n        },\n        \"{index}-alias\" : {} <1>\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "te*"
+          ],
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "aliases": {
+              "alias1": {},
+              "alias2": {
+                "filter": {
+                  "term": {
+                    "user": "kimchy"
+                  }
+                },
+                "routing": "kimchy"
+              },
+              "{index}-alias": {}
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 315
+    },
+    "digest": "62083da06c2cd4b4b62290eda1ec93e0",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_index_template/template_1\n{\n  \"index_patterns\" : [\"t*\"],\n  \"priority\" : 0,\n  \"template\": {\n    \"settings\" : {\n      \"number_of_shards\" : 1,\n      \"number_of_replicas\": 0\n    },\n    \"mappings\" : {\n      \"_source\" : { \"enabled\" : false }\n    }\n  }\n}\n\nPUT /_index_template/template_2\n{\n  \"index_patterns\" : [\"te*\"],\n  \"priority\" : 1,\n  \"template\": {\n    \"settings\" : {\n      \"number_of_shards\" : 2\n    },\n    \"mappings\" : {\n      \"_source\" : { \"enabled\" : true }\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "t*"
+          ],
+          "priority": 0,
+          "template": {
+            "settings": {
+              "number_of_shards": 1,
+              "number_of_replicas": 0
+            },
+            "mappings": {
+              "_source": {
+                "enabled": false
+              }
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      },
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_2",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "te*"
+          ],
+          "priority": 1,
+          "template": {
+            "settings": {
+              "number_of_shards": 2
+            },
+            "mappings": {
+              "_source": {
+                "enabled": true
+              }
+            }
+          }
+        },
+        "params": {
+          "name": "template_2"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 365
+    },
+    "digest": "9138550002cb26ab64918cce427963b8",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_index_template/template_1\n{\n  \"index_patterns\" : [\"foo\", \"bar\"],\n  \"priority\" : 0,\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 1\n    }\n  },\n  \"version\": 123\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "foo",
+            "bar"
+          ],
+          "priority": 0,
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            }
+          },
+          "version": 123
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/index-templates.asciidoc",
+      "line": 393
+    },
+    "digest": "0d8063b484a18f8672fb5ed8712c5c97",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_index_template/template_1\n{\n  \"index_patterns\": [\"foo\", \"bar\"],\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 3\n    }\n  },\n  \"_meta\": {\n    \"description\": \"set number of shards to three\",\n    \"serialization\": {\n      \"class\": \"MyIndexTemplate\",\n      \"id\": 17\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_index_template/template_1",
+        "query": null,
+        "body": {
+          "index_patterns": [
+            "foo",
+            "bar"
+          ],
+          "template": {
+            "settings": {
+              "number_of_shards": 3
+            }
+          },
+          "_meta": {
+            "description": "set number of shards to three",
+            "serialization": {
+              "class": "MyIndexTemplate",
+              "id": 17
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "indices.put_index_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 12
+    },
+    "digest": "e784fc00894635470adfd78a0c46b427",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _component_template/template_1\n{\n  \"template\": {\n    \"settings\": {\n      \"number_of_shards\": 1\n    },\n    \"mappings\": {\n      \"_source\": {\n        \"enabled\": false\n      },\n      \"properties\": {\n        \"host_name\": {\n          \"type\": \"keyword\"\n        },\n        \"created_at\": {\n          \"type\": \"date\",\n          \"format\": \"EEE MMM dd HH:mm:ss Z yyyy\"\n        }\n      }\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_1",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "mappings": {
+              "_source": {
+                "enabled": false
+              },
+              "properties": {
+                "host_name": {
+                  "type": "keyword"
+                },
+                "created_at": {
+                  "type": "date",
+                  "format": "EEE MMM dd HH:mm:ss Z yyyy"
+                }
+              }
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 88
+    },
+    "digest": "827b7e9308ea288f18aea00a5accc38e",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_component_template/template_1",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_component_template/template_1",
+        "query": null,
+        "body": null,
+        "params": {
+          "name": "template_1"
+        },
+        "api": "cluster.get_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 124
+    },
+    "digest": "6c72460570307f23478100db04a84c8e",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_component_template/temp*",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_component_template/temp*",
+        "query": null,
+        "body": null,
+        "params": {
+          "name": "temp*"
+        },
+        "api": "cluster.get_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 133
+    },
+    "digest": "dd4f051ab62f0507e3b6e3d6f333e85f",
+    "lang": "console",
+    "found": [],
+    "source": "GET /_component_template",
+    "parsed_source": [
+      {
+        "method": "GET",
+        "url": "/_component_template",
+        "query": null,
+        "body": null,
+        "params": null,
+        "api": "cluster.get_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 187
+    },
+    "digest": "07694ab6343fcb4fea2859d17ae5ae7e",
+    "lang": "console",
+    "found": [],
+    "source": "PUT _component_template/template_1\n{\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 1\n    },\n    \"aliases\" : {\n        \"alias1\" : {},\n        \"alias2\" : {\n            \"filter\" : {\n                \"term\" : {\"user\" : \"kimchy\" }\n            },\n            \"routing\" : \"kimchy\"\n        },\n        \"{index}-alias\" : {} <1>\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_1",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "aliases": {
+              "alias1": {},
+              "alias2": {
+                "filter": {
+                  "term": {
+                    "user": "kimchy"
+                  }
+                },
+                "routing": "kimchy"
+              },
+              "{index}-alias": {}
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 228
+    },
+    "digest": "c6339d09f85000a6432304b0ec63b8f6",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_component_template/template_1\n{\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 1\n    }\n  },\n  \"version\": 123\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_1",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            }
+          },
+          "version": 123
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
+      "file": "indices/component-templates.asciidoc",
+      "line": 254
+    },
+    "digest": "5b2a13366bd4e1ab4b25d04d360570dc",
+    "lang": "console",
+    "found": [],
+    "source": "PUT /_component_template/template_1\n{\n  \"template\": {\n    \"settings\" : {\n        \"number_of_shards\" : 1\n    }\n  },\n  \"_meta\": {\n    \"description\": \"set number of shards to one\",\n    \"serialization\": {\n      \"class\": \"MyComponentTemplate\",\n      \"id\": 10\n    }\n  }\n}",
+    "parsed_source": [
+      {
+        "method": "PUT",
+        "url": "/_component_template/template_1",
+        "query": null,
+        "body": {
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            }
+          },
+          "_meta": {
+            "description": "set number of shards to one",
+            "serialization": {
+              "class": "MyComponentTemplate",
+              "id": 10
+            }
+          }
+        },
+        "params": {
+          "name": "template_1"
+        },
+        "api": "cluster.put_component_template"
+      }
+    ]
+  },
+  {
+    "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 10
+      "line": 22
     },
     "digest": "e5f50b31f165462d883ecbff45f74985",
     "lang": "console",
@@ -63389,7 +64361,7 @@
   {
     "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 136
+      "line": 148
     },
     "digest": "1b8caf0a6741126c6d0ad83b56fce290",
     "lang": "console",
@@ -63437,7 +64409,7 @@
   {
     "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 170
+      "line": 182
     },
     "digest": "b5f95bc097a201b29c7200fc8d3d31c1",
     "lang": "console",
@@ -63502,7 +64474,7 @@
   {
     "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 221
+      "line": 233
     },
     "digest": "9166cf38427d5cde5d2ec12a2012b669",
     "lang": "console",
@@ -63540,7 +64512,7 @@
   {
     "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 239
+      "line": 251
     },
     "digest": "46658f00edc4865dfe472a392374cd0f",
     "lang": "console",
@@ -63571,7 +64543,7 @@
   {
     "source_location": {
       "file": "indices/templates.asciidoc",
-      "line": 247
+      "line": 259
     },
     "digest": "a2e618c0a7ef9368e0b39e7ece15e27e",
     "lang": "console-result",
@@ -67104,7 +68076,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/put-datafeed.asciidoc",
-      "line": 114
+      "line": 113
     },
     "digest": "23067c5e8da958fa4d914f3b5c9bf607",
     "lang": "console",
@@ -67131,7 +68103,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/put-datafeed.asciidoc",
-      "line": 126
+      "line": 125
     },
     "digest": "6bdf0b32f57bad22be8b6bfc07ff58d7",
     "lang": "console-result",
@@ -68249,7 +69221,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/preview-datafeed.asciidoc",
-      "line": 57
+      "line": 53
     },
     "digest": "38eed000de433b540116928681c520d3",
     "lang": "console",
@@ -68271,7 +69243,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/preview-datafeed.asciidoc",
-      "line": 65
+      "line": 61
     },
     "digest": "cb9301147c1c73e6d4b6abfbe731e2f7",
     "lang": "console-result",
@@ -68362,7 +69334,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/start-datafeed.asciidoc",
-      "line": 111
+      "line": 113
     },
     "digest": "d7ae456f119246e95f2f4c37e7544b8c",
     "lang": "console",
@@ -68386,7 +69358,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/start-datafeed.asciidoc",
-      "line": 122
+      "line": 124
     },
     "digest": "cf5c7db01c545fa26fe97bc7409d3ed1",
     "lang": "console-result",
@@ -68430,7 +69402,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/update-datafeed.asciidoc",
-      "line": 119
+      "line": 115
     },
     "digest": "df6d5b5f8e1c8785503269ccb7b34763",
     "lang": "console",
@@ -68458,7 +69430,7 @@
   {
     "source_location": {
       "file": "ml/anomaly-detection/apis/update-datafeed.asciidoc",
-      "line": 135
+      "line": 131
     },
     "digest": "037d9fe54be67c0e6418799c3cfe7b50",
     "lang": "console-result",
@@ -68573,7 +69545,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 414
+      "line": 379
     },
     "digest": "8c6f3bb8abae9ff1d21e776f16ad1c86",
     "lang": "console",
@@ -68632,7 +69604,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 486
+      "line": 449
     },
     "digest": "ce3c391c2b1915cfc44a2917bca71d19",
     "lang": "console",
@@ -68669,7 +69641,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 511
+      "line": 474
     },
     "digest": "21ecd0d3fa2f27cbee2a89b6c7973b28",
     "lang": "console-result",
@@ -68679,7 +69651,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 549
+      "line": 512
     },
     "digest": "e8211247c280a3fbbbdd32850b743b7b",
     "lang": "console",
@@ -68713,7 +69685,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 572
+      "line": 535
     },
     "digest": "4ff328150800d40f323aa57c871362d7",
     "lang": "console-result",
@@ -68723,7 +69695,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 606
+      "line": 569
     },
     "digest": "ae82eb17c23cb8e5761cb6240a5ed0a6",
     "lang": "console",
@@ -68759,7 +69731,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/put-dfanalytics.asciidoc",
-      "line": 640
+      "line": 601
     },
     "digest": "4fb0629146ca78b85e823edd405497bb",
     "lang": "console",
@@ -69130,7 +70102,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/get-dfanalytics-stats.asciidoc",
-      "line": 516
+      "line": 510
     },
     "digest": "dbd2834971fedbe36911933d451ae65d",
     "lang": "console",
@@ -69152,7 +70124,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/get-dfanalytics-stats.asciidoc",
-      "line": 522
+      "line": 516
     },
     "digest": "3b676ccb4e56d449957509b191c468ec",
     "lang": "console-result",
@@ -69212,7 +70184,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/start-dfanalytics.asciidoc",
-      "line": 84
+      "line": 89
     },
     "digest": "1a3a4b8a4bfee4ab84ddd13d8835f560",
     "lang": "console",
@@ -69234,7 +70206,7 @@
   {
     "source_location": {
       "file": "ml/df-analytics/apis/start-dfanalytics.asciidoc",
-      "line": 92
+      "line": 97
     },
     "digest": "f052c0460de9e53274506d780b23f202",
     "lang": "console-result",
@@ -70261,7 +71233,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 346
+      "line": 368
     },
     "digest": "be49260e1b3496c4feac38c56ebb0669",
     "lang": "console",
@@ -70291,7 +71263,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 354
+      "line": 376
     },
     "digest": "47a23d3d61f1a76fc1695411d6375a5b",
     "lang": "console-result",
@@ -70301,7 +71273,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 392
+      "line": 414
     },
     "digest": "f5569945024b9d664828693705c27c1a",
     "lang": "console",
@@ -70331,7 +71303,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 404
+      "line": 426
     },
     "digest": "168bfdde773570cfc6dd3ab3574e413b",
     "lang": "console",
@@ -70359,7 +71331,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 413
+      "line": 435
     },
     "digest": "8022e6a690344035b6472a43a9d122e0",
     "lang": "console",
@@ -70389,7 +71361,7 @@
   {
     "source_location": {
       "file": "search/search.asciidoc",
-      "line": 419
+      "line": 441
     },
     "digest": "43682666e1abcb14770c99f02eb26a0d",
     "lang": "console",
@@ -70469,7 +71441,7 @@
   {
     "source_location": {
       "file": "search/async-search.asciidoc",
-      "line": 133
+      "line": 142
     },
     "digest": "14b81f96297952970b78a3216e059596",
     "lang": "console",
@@ -70491,7 +71463,7 @@
   {
     "source_location": {
       "file": "search/async-search.asciidoc",
-      "line": 139
+      "line": 148
     },
     "digest": "0f1fcb83af235bb9409e34d19deb637b",
     "lang": "console-result",
@@ -70501,7 +71473,7 @@
   {
     "source_location": {
       "file": "search/async-search.asciidoc",
-      "line": 218
+      "line": 229
     },
     "digest": "7a3a7fbd81e5050b42e8c1eca26c7c1d",
     "lang": "console",

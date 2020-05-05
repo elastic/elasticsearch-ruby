@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.forcemerge(
+  index: 'twitter',
+  max_num_segments: 5
+)
+puts response
+----

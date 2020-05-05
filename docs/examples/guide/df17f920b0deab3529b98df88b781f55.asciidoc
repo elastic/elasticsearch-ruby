@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      function_score: {
+        functions: [
+          {
+            gauss: {
+              price: {
+                origin: '0',
+                scale: '20'
+              }
+            }
+          },
+          {
+            gauss: {
+              location: {
+                origin: '11, 12',
+                scale: '2km'
+              }
+            }
+          }
+        ],
+        query: {
+          match: {
+            properties: 'balcony'
+          }
+        },
+        score_mode: 'multiply'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test'
+)
+puts response
+
+response = client.indices.create(
+  index: 'test_2'
+)
+puts response
+
+response = client.indices.create(
+  body: {
+    actions: [
+      {
+        add: {
+          index: 'test_2',
+          alias: 'test'
+        }
+      },
+      {
+        remove_index: {
+          index: 'test'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.indices.close(
+  index: 'twitter'
+)
+puts response
+
+response = client.indices.close(
+  index: 'twitter',
+  body: {
+    analysis: {
+      analyzer: {
+        content: {
+          type: 'custom',
+          tokenizer: 'whitespace'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.close(
+  index: 'twitter'
+)
+puts response
+----

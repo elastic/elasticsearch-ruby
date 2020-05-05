@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      regexp: {
+        user: {
+          value: 'k.*y',
+          flags: 'ALL',
+          max_determinized_states: 10_000,
+          rewrite: 'constant_score'
+        }
+      }
+    }
+  }
+)
+puts response
+----
