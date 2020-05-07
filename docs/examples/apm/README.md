@@ -17,12 +17,14 @@ Use your web browser or `curl` against http://localhost:9292/ to check that ever
 
 Once the app is running, you can open the following routes in your web browser or via `curl`:
 
-* `localhost:9292/` - The root path returns the response from `cluster.health`
-* `localhost:9292/ingest` - This will bulk insert 1,000 documents in the `games` index in slices of 250 at a time.
-* `localhost:9292/search/{param}` - Returns search results for `param`.
-* `localhost:9292/error` - This route will trigger an error.
-* `localhost:9292/delete` - This route will delete all the data in the `games` index.
-* `localhost:9292/delete/{id}` - This route will delete a document with the given id from the `games` index.
+* `/` - The root path returns the response from `cluster.health`
+* `/ingest` - This will bulk insert 1,000 documents in the `games` index in slices of 250 at a time.
+* `/search/{param}` - Returns search results for `param`.
+* `/error` - This route will trigger an error.
+* `/delete` - This route will delete all the data in the `games` index.
+* `/delete/{id}` - This route will delete a document with the given id from the `games` index.
+* `/update/` - This route will update the `modified` field on some docs in the `games` index.
+* `/doc/{id}` - This route will return a document with a given ID from Elasticsearch.
 
 # Data Source
 
