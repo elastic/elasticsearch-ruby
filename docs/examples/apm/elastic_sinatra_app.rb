@@ -31,18 +31,8 @@ class ElasticSinatraApp < Sinatra::Base
 
   get '/search/:query' do
     query = sanitize(params[:query])
-    response = @client.search(
-      index: 'games',
-      body:
-        {
-          query: {
-            multi_match: {
-              query: query
-            }
-          }
-        }
-    )
-    json_response(response['hits'])
+    response = search_elasticsearch(query)
+    json_response(response['hits']['hits'])
   end
 
   get '/delete' do
@@ -66,12 +56,35 @@ class ElasticSinatraApp < Sinatra::Base
     end
   end
 
+  get '/update' do
+    response = []
+    docs = search_elasticsearch
+
+    docs['hits']['hits'].each do |doc|
+      response << @client.update(
+        index: 'games',
+        id: doc['_id'],
+        body: {
+          doc: {
+            modified: DateTime.now
+          }
+        }
+      )
+    end
+    json_response(response)
+  end
+
   get '/error' do
     begin
       @client.delete(index: 'games', id: 'somerandomid')
     rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
       json_response(e, 404)
     end
+  end
+
+  get '/doc/:id' do
+    response = @client.get(index: 'games', id: sanitize(params[:id]))
+    json_response(response)
   end
 
   private
@@ -86,5 +99,15 @@ class ElasticSinatraApp < Sinatra::Base
 
   def sanitize(params)
     Rack::Utils.escape_html(params)
+  end
+
+  def search_elasticsearch(query = '')
+    @client.search(
+      index: 'games',
+      body:
+        {
+          query: { multi_match: { query: query } }
+        }
+    )
   end
 end
