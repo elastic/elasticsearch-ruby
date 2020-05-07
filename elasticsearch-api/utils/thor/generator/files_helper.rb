@@ -51,9 +51,13 @@ module Elasticsearch
         end
       end
 
-      def self.gem_version
+      def self.documentation_url(documentation_url)
+        branch = `git rev-parse --abbrev-ref HEAD`
+        return documentation_url if branch == "master\n"
+
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
-        Elasticsearch::API::VERSION.match(regex)[0]
+        version = Elasticsearch::API::VERSION.match(regex)[0]
+        documentation_url.gsub(/\/(current|master)\//, "/#{version}/")
       end
     end
   end
