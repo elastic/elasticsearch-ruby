@@ -6,7 +6,9 @@ class ElasticSinatraApp < Sinatra::Base
   use ElasticAPM::Middleware
 
   before do
-    @client = Elasticsearch::Client.new
+    @client = Elasticsearch::Client.new(
+      hosts: ENV['ELASTICSEARCH_HOSTS'] || 'localhost:9200'
+    )
   end
 
   get '/' do
