@@ -77,12 +77,12 @@ services:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
     ports:
     - 9292:9292
+    networks:
+    - elastic
     healthcheck:
-      interval: 60s
+      interval: 30s
       retries: 20
       test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:9292/
-    networks:
-      - elastic
 
 volumes:
   esdata:
