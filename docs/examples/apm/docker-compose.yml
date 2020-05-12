@@ -84,6 +84,16 @@ services:
       retries: 20
       test: curl --write-out 'HTTP %{http_code}' --fail --silent --output /dev/null http://localhost:9292/
 
+  pinger:
+    container_name: pinger
+    build:
+      dockerfile: ${PWD}/dockerfiles/pinger/Dockerfile
+      context: ${PWD}
+    depends_on:
+      - ruby_app
+    networks:
+    - elastic
+
 volumes:
   esdata:
     driver: local
