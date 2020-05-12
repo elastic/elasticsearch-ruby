@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'elasticsearch'
+require_relative './games_data.rb'
 
 class ElasticSinatraApp < Sinatra::Base
   use ElasticAPM::Middleware

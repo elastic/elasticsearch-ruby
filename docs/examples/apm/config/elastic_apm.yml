@@ -6,5 +6,5 @@ service_name: 'ruby-client-apm'
 # secret_token: ''
 
 # Set custom APM Server URL (default: http://localhost:8200)
-# In this example, we're using the URL from the docker-compose kibana instance
-server_url: 'http://localhost:8200'
+# In this example, we're using the URL from the docker-compose apm-server instance
+server_url: 'http://apm-server:8200'

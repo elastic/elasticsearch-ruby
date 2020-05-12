@@ -9,4 +9,4 @@ RUN bundle install
 
 EXPOSE 9292
 
-CMD bundle exec rackup -p 9292 config.ru
+CMD RACK_ENV=production bundle exec rackup -p 9292 --host 0.0.0.0 config.ru
