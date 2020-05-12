@@ -104,6 +104,10 @@ module Elasticsearch
       def cat
         @cat ||= xpack.cat
       end
+
+      def indices
+        @indices ||= xpack.indices
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
