@@ -287,8 +287,8 @@ module Elasticsearch
         end
 
         def __parse_versions(versions)
-          low = ['', nil].include? versions[0] ? '0' : versions[0]
-          high = ['', nil].include? versions[2] ? '9999' : versions[2]
+          low = (['', nil].include? versions[0]) ? '0' : versions[0]
+          high = (['', nil].include? versions[2]) ? '9999' : versions[2]
           [low, high]
         end
       end
