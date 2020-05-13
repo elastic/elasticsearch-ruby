@@ -108,6 +108,10 @@ module Elasticsearch
       def indices
         @indices ||= xpack.indices
       end
+
+      def searchable_snapshots
+        @searchable_snapshots ||= xpack.searchable_snapshots
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
