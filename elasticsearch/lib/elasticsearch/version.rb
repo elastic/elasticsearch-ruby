@@ -3,5 +3,5 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
-  VERSION = "7.7.0.pre"
+  VERSION = "7.7.0"
 end

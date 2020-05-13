@@ -4,6 +4,6 @@
 
 module Elasticsearch
   module XPack
-    VERSION = "7.7.0.pre"
+    VERSION = "7.7.0"
   end
 end
