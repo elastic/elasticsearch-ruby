@@ -24,7 +24,7 @@ module Elasticsearch
         #
         # @option arguments [List] :thread_pool_patterns A comma-separated list of regular-expressions to filter the thread pools in the output
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :size The multiplier in which to display values
+        # @option arguments [String] :size The multiplier in which to display values   *Deprecated*
         #   (options: ,k,m,g,t,p)
 
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-thread-pool.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
           headers = arguments.delete(:headers) || {}

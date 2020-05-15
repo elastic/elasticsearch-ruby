@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-split-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/indices-split-index.html
         #
         def split(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

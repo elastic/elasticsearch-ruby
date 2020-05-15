@@ -80,7 +80,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/search-search.html
       #
       def search(arguments = {})
         headers = arguments.delete(:headers) || {}

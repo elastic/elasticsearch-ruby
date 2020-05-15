@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/modules-snapshots.html
         #
         def status(arguments = {})
           headers = arguments.delete(:headers) || {}

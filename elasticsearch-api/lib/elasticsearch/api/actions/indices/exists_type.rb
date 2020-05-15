@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-types-exists.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/indices-types-exists.html
         #
         def exists_type(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/get-pipeline-api.html
         #
         def get_pipeline(arguments = {})
           headers = arguments.delete(:headers) || {}

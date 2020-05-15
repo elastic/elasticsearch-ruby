@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :only_ancient_segments If true, only ancient (an older Lucene major release) segments will be upgraded
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/indices-upgrade.html
         #
         def upgrade(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [String] :name The name or wildcard expression of the requested data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/data-streams.html
         #
         def get_data_streams(arguments = {})
           headers = arguments.delete(:headers) || {}

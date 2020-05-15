@@ -32,7 +32,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
         headers = arguments.delete(:headers) || {}

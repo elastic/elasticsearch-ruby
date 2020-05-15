@@ -23,7 +23,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The script to execute
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/7.x/painless-execute-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/7.8/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
         headers = arguments.delete(:headers) || {}

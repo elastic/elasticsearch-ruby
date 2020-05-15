@@ -42,7 +42,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-delete.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/docs-delete.html
       #
       def delete(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

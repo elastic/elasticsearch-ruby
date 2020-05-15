@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-nodes-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/cluster-nodes-info.html
         #
         def info(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -33,11 +33,10 @@ module Elasticsearch
       # @option arguments [List] :_source_excludes Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
-      # @option arguments [Boolean] :prefer_v2_templates favor V2 templates instead of V1 templates during automatic index creation
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-bulk.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/docs-bulk.html
       #
       def bulk(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -83,8 +82,7 @@ module Elasticsearch
         :_source,
         :_source_excludes,
         :_source_includes,
-        :pipeline,
-        :prefer_v2_templates
+        :pipeline
       ].freeze)
     end
     end

@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/tasks.html
         #
         def tasks(arguments = {})
           headers = arguments.delete(:headers) || {}

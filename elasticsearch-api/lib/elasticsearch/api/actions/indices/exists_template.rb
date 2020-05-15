@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/indices-templates.html
         #
         def exists_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

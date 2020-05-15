@@ -31,7 +31,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-flush.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/indices-flush.html
         #
         def flush(arguments = {})
           headers = arguments.delete(:headers) || {}
