@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The restore configuration for mounting the snapshot as searchable (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-api-mount-snapshot.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/searchable-snapshots-api-mount-snapshot.html
           #
           def mount(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

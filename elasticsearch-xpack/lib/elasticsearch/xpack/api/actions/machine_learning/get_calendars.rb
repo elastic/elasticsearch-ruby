@@ -28,7 +28,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The from and size parameters optionally sent in the body
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/ml-get-calendar.html
           #
           def get_calendars(arguments = {})
             headers = arguments.delete(:headers) || {}

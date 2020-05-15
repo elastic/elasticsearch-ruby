@@ -33,7 +33,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/get-transform-stats.html
           #
           def get_transform_stats(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

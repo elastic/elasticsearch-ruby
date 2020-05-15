@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The evaluation definition (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/evaluate-dfanalytics.html
           #
           def evaluate_data_frame(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

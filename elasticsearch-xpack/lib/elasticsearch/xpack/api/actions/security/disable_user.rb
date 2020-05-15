@@ -28,7 +28,7 @@ module Elasticsearch
 
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/security-api-disable-user.html
           #
           def disable_user(arguments = {})
             raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]

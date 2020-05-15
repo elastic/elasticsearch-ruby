@@ -28,7 +28,7 @@ module Elasticsearch
           # @option arguments [Int] :size specifies a max number of trained models to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/get-inference-stats.html
           #
           def get_trained_models_stats(arguments = {})
             headers = arguments.delete(:headers) || {}

@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :policy The name of the index lifecycle policy
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/ilm-get-lifecycle.html
           #
           def get_lifecycle(arguments = {})
             headers = arguments.delete(:headers) || {}

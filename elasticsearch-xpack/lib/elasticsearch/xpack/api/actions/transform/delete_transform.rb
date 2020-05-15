@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/delete-transform.html
           #
           def delete_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

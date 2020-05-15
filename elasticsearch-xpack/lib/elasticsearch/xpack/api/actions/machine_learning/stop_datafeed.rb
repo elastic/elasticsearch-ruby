@@ -28,7 +28,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Controls the time to wait until a datafeed has stopped. Default to 20 seconds
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/ml-stop-datafeed.html
           #
           def stop_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
