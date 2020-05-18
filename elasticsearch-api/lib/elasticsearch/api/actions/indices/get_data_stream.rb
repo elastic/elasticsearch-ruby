@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
         #
-        def get_data_streams(arguments = {})
+        def get_data_stream(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
@@ -35,9 +35,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_data_streams/#{Utils.__listify(_name)}"
+                     "_data_stream/#{Utils.__listify(_name)}"
                    else
-                     "_data_streams"
+                     "_data_stream"
       end
           params = {}
 
