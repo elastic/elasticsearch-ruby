@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
   s.add_development_dependency 'simplecov-rcov'
   s.add_development_dependency 'test-unit', '~> 2'
-  s.add_development_dependency 'typhoeus', '~> 0.6'
+  s.add_development_dependency 'typhoeus', '~> 1.4'
   unless defined?(JRUBY_VERSION) || defined?(Rubinius)
     s.add_development_dependency 'curb'
     s.add_development_dependency 'patron'

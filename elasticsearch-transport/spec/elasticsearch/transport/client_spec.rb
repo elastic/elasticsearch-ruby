@@ -103,8 +103,7 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
-    context 'when the adapter is specified' do
-
+    context 'when the adapter is patron' do
       let(:adapter) do
         client.transport.connections.all.first.connection.builder.adapter
       end
@@ -118,8 +117,21 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
-    context 'when the adapter is specified as a string key' do
+    context 'when the adapter is typhoeus' do
+      let(:adapter) do
+        client.transport.connections.all.first.connection.builder.adapter
+      end
 
+      let(:client) do
+        described_class.new(adapter: :typhoeus)
+      end
+
+      it 'uses Faraday with the adapter' do
+        expect(adapter).to eq Faraday::Adapter::Typhoeus
+      end
+    end
+
+    context 'when the adapter is specified as a string key' do
       let(:adapter) do
         client.transport.connections.all.first.connection.builder.adapter
       end
@@ -1009,6 +1021,33 @@ describe Elasticsearch::Transport::Client do
 
         it 'uses the patron connection handler' do
           expect(adapter).to eq('Faraday::Adapter::Patron')
+        end
+
+        it 'keeps connections open' do
+          response = client.perform_request('GET', '_nodes/stats/http')
+          connections_before = response.body['nodes'].values.find { |n| n['name'] == node_names.first }['http']['total_opened']
+          client.transport.reload_connections!
+          response = client.perform_request('GET', '_nodes/stats/http')
+          connections_after = response.body['nodes'].values.find { |n| n['name'] == node_names.first }['http']['total_opened']
+          expect(connections_after).to be >= (connections_before)
+        end
+      end
+
+      context 'when typhoeus is used as an adapter', unless: jruby? do
+        before do
+          require 'typhoeus'
+        end
+
+        let(:options) do
+          { adapter: :typhoeus }
+        end
+
+        let(:adapter) do
+          client.transport.connections.first.connection.builder.adapter
+        end
+
+        it 'uses the patron connection handler' do
+          expect(adapter).to eq('Faraday::Adapter::Typhoeus')
         end
 
         it 'keeps connections open' do
