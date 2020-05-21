@@ -283,7 +283,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when the adapter can be detected', unless: jruby? do
-
       around do |example|
         require 'patron'; load 'patron.rb'
         example.run
@@ -299,7 +298,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when the Faraday adapter is configured' do
-
       let(:client) do
         described_class.new do |faraday|
           faraday.adapter :patron
@@ -326,7 +324,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when cloud credentials are provided' do
-
     let(:client) do
       described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme')
     end
@@ -348,7 +345,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when a port is specified' do
-
       let(:client) do
         described_class.new(cloud_id: 'name:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elastic', password: 'changeme', port: 9250 )
       end
@@ -367,7 +363,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when the cluster has alternate names' do
-
       let(:client) do
         described_class.new(cloud_id: 'myCluster:bG9jYWxob3N0JGFiY2QkZWZnaA==', user: 'elasticfantastic', password: 'tobechanged')
       end
@@ -392,13 +387,9 @@ describe Elasticsearch::Transport::Client do
   end
 
   shared_examples_for 'a client that extracts hosts' do
-
     context 'when the host is a String' do
-
       context 'when there is a protocol specified' do
-
         context 'when credentials are specified \'http://USERNAME:PASSWORD@myhost:8080\'' do
-
           let(:host) do
             'http://USERNAME:PASSWORD@myhost:8080'
           end
@@ -418,7 +409,6 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when there is a trailing slash \'http://myhost/\'' do
-
           let(:host) do
             'http://myhost/'
           end
@@ -439,7 +429,6 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when there is a trailing slash with a path \'http://myhost/foo/bar/\'' do
-
           let(:host) do
             'http://myhost/foo/bar/'
           end
@@ -452,9 +441,7 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when the protocol is http' do
-
           context 'when there is no port specified \'http://myhost\'' do
-
             let(:host) do
               'http://myhost'
             end
@@ -1617,7 +1604,6 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when using the Patron adapter', unless: jruby? do
-
             let(:client) do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :patron)
             end
@@ -1636,7 +1622,6 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when using the Net::HTTP::Persistent adapter' do
-
             let(:client) do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :net_http_persistent)
             end
@@ -1655,7 +1640,6 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when using the Typhoeus adapter' do
-
             let(:client) do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :typhoeus)
             end
@@ -1676,7 +1660,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Curb as the transport', unless: jruby? do
-
         let(:client) do
           described_class.new(hosts: ELASTICSEARCH_HOSTS,
                               compression: true,
@@ -1697,7 +1680,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Manticore as the transport', if: jruby? do
-
         let(:client) do
           described_class.new(hosts: ELASTICSEARCH_HOSTS,
                               compression: true,
@@ -1711,9 +1693,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#perform_request' do
-
       context 'when a request is made' do
-
         before do
           client.perform_request('DELETE', '_all')
           client.perform_request('DELETE', 'myindex') rescue
@@ -1801,7 +1781,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when patron is used as an adapter', unless: jruby? do
-
         before do
           require 'patron'
         end
