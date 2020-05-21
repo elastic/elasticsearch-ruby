@@ -28,16 +28,16 @@ Features overview:
 * Node reloading (based on cluster state) on errors or on demand
 
 For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections,
-such as [patron](https://github.com/toland/patron).
-Just require the library (`require 'patron'`) in your code,
-and it will be automatically used.
+such as [patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).
+Just require the library (`require 'patron'`) in your code, and it will be automatically used.
 
 Currently these libraries will be automatically detected and used:
 - [Patron](https://github.com/toland/patron)
+- [Typhoeus](https://github.com/typhoeus/typhoeus)
 - [HTTPClient](https://rubygems.org/gems/httpclient)
 - [Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent)
 
-**Note on [Typhoeus](https://github.com/typhoeus/typhoeus)**: Typhoeus is compatible and will be automatically detected too. However, the latest release (v1.3.1 at the moment of writing this) is not compatible with Faraday 1.0. [It still uses the deprecated `Faraday::Error` namespace](https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100). If you want to use it with this gem, we suggest getting `master` from GitHub, since this has been fixed for v1.4.0. We'll update this if/when v1.4.0 is released.a
+**Note on [Typhoeus](https://github.com/typhoeus/typhoeus)**: You need to use v1.4.0 or up since older versions are not compatible with Faraday 1.0.
 
 For detailed information, see example configurations [below](#transport-implementations).
 
