@@ -67,7 +67,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry'
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'test-unit', '~> 2'
-  s.add_development_dependency 'typhoeus', '~> 0.6'
+  s.add_development_dependency 'typhoeus', '~> 1.4'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'bundler'
 
