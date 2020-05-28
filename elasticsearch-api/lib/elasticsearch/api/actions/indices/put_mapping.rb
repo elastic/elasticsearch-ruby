@@ -56,7 +56,7 @@ module Elasticsearch
           path   = if _index && _type
                      "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mappings"
                    elsif _index
-                     "#{Utils.__listify(_index)}/_mapping"
+                     "#{Utils.__listify(_index)}/_mappings"
                    elsif _type
                      "_mappings/#{Utils.__listify(_type)}"
   end
