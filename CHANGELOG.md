@@ -1,3 +1,8 @@
+## 7.8.0.pre
+
+- Support for Elasticsearch version 7.8
+- This is a pre-release, full Changelog details will be published with the final release of 7.8.0
+
 ## 7.7.0
 
 This version drops support for Ruby 2.4 since it's reached it's end of life.
