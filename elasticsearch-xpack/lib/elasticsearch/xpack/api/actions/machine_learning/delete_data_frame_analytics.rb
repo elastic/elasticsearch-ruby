@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Boolean] :force True if the job should be forcefully deleted
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/delete-dfanalytics.html
           #
           def delete_data_frame_analytics(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

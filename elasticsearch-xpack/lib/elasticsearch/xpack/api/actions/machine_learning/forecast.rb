@@ -25,9 +25,10 @@ module Elasticsearch
           # @option arguments [String] :job_id The ID of the job to forecast for
           # @option arguments [Time] :duration The duration of the forecast
           # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
+          # @option arguments [String] :max_model_memory The max memory able to be used by the forecast. Default is 20mb.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-forecast.html
           #
           def forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -51,7 +52,8 @@ module Elasticsearch
           # @since 6.2.0
           ParamsRegistry.register(:forecast, [
             :duration,
-            :expires_in
+            :expires_in,
+            :max_model_memory
           ].freeze)
       end
     end

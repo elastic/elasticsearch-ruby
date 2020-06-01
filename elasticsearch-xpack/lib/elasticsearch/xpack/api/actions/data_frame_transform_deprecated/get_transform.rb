@@ -33,7 +33,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-transform.html
           #
           def get_transform(arguments = {})
             headers = arguments.delete(:headers) || {}

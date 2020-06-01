@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Controls the time to wait for the transform to start
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/start-transform.html
           #
           def start_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
