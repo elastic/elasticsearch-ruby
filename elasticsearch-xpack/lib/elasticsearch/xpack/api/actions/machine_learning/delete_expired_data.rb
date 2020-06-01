@@ -23,6 +23,7 @@ module Elasticsearch
           # Deletes expired and unused machine learning data.
           #
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body deleting expired data parameters
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
           #
@@ -35,7 +36,7 @@ module Elasticsearch
             path   = "_ml/_delete_expired_data"
             params = {}
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
       end

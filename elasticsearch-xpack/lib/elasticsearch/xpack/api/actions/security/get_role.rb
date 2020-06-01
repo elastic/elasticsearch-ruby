@@ -22,7 +22,7 @@ module Elasticsearch
         module Actions
           # Retrieves roles in the native realm.
           #
-          # @option arguments [String] :name Role name
+          # @option arguments [List] :name A comma-separated list of role names
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html

@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [List] :index A comma-separated list of index names
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.0/searchable-snapshots-api-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-stats.html
           #
           def stats(arguments = {})
             headers = arguments.delete(:headers) || {}
