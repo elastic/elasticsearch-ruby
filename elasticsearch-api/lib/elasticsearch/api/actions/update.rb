@@ -36,7 +36,6 @@ module Elasticsearch
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
-      # @option arguments [Boolean] :prefer_v2_templates favor V2 templates instead of V1 templates during automatic index creation
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
@@ -92,8 +91,7 @@ module Elasticsearch
         :routing,
         :timeout,
         :if_seq_no,
-        :if_primary_term,
-        :prefer_v2_templates
+        :if_primary_term
       ].freeze)
     end
     end

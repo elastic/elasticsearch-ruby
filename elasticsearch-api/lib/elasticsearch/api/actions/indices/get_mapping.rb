@@ -30,7 +30,7 @@ module Elasticsearch
         #   (options: open,closed,hidden,none,all)
 
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)   *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # *Deprecation notice*:

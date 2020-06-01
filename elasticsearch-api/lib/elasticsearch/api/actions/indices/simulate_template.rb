@@ -17,40 +17,45 @@
 
 module Elasticsearch
   module API
-    module Snapshot
+    module Indices
       module Actions
-        # Removes stale data from repository.
+        # Simulate resolving the given template name or body
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :name The name of the index template
+        # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+        # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body New index template definition to be simulated, if no index template name is specified
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/clean-up-snapshot-repo-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-templates.html
         #
-        def cleanup_repository(arguments = {})
-          raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
-
+        def simulate_template(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          _repository = arguments.delete(:repository)
+          _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_snapshot/#{Utils.__listify(_repository)}/_cleanup"
+          path   = if _name
+                     "_index_template/_simulate/#{Utils.__listify(_name)}"
+                   else
+                     "_index_template/_simulate"
+      end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:cleanup_repository, [
-          :master_timeout,
-          :timeout
+        ParamsRegistry.register(:simulate_template, [
+          :create,
+          :cause,
+          :master_timeout
         ].freeze)
 end
       end

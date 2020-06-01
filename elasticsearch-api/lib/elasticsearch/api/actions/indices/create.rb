@@ -26,7 +26,6 @@ module Elasticsearch
         # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for before the operation returns.
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :prefer_v2_templates favor V2 templates instead of V1 templates during index creation
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
         #
@@ -56,8 +55,7 @@ module Elasticsearch
           :include_type_name,
           :wait_for_active_shards,
           :timeout,
-          :master_timeout,
-          :prefer_v2_templates
+          :master_timeout
         ].freeze)
 end
       end
