@@ -36,7 +36,6 @@ module Elasticsearch
       #   (options: internal,external,external_gte)
 
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
-      # @option arguments [Boolean] :prefer_v2_templates favor V2 templates instead of V1 templates during automatic index creation
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #

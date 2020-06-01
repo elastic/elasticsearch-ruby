@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html
         #
         def post_voting_config_exclusions(arguments = {})
           headers = arguments.delete(:headers) || {}
