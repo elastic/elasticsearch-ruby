@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The job config (*Required*)
           #
-          # @see [TODO]
+          # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
           #
           def validate(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

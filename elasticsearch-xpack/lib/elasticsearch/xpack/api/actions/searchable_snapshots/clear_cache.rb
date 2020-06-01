@@ -31,7 +31,7 @@ module Elasticsearch
           # @option arguments [List] :index A comma-separated list of index name to limit the operation
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.0/searchable-snapshots-api-clear-cache.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-clear-cache.html
           #
           def clear_cache(arguments = {})
             headers = arguments.delete(:headers) || {}
