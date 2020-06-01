@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :job_id The ID of the job to open
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-open-job.html
           #
           def open_job(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

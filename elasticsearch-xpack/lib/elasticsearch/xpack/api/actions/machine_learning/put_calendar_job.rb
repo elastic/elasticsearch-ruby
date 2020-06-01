@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [String] :job_id The ID of the job to add to the calendar
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-put-calendar-job.html
           #
           def put_calendar_job(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]

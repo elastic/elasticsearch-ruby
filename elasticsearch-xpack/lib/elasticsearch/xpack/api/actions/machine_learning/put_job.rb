@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The job (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-put-job.html
           #
           def put_job(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -24,7 +24,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-authenticate.html
           #
           def authenticate(arguments = {})
             headers = arguments.delete(:headers) || {}

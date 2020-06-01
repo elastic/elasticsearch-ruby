@@ -29,9 +29,10 @@ module Elasticsearch
           # @option arguments [Int] :from skips a number of trained models
           # @option arguments [Int] :size specifies a max number of trained models to get
           # @option arguments [List] :tags A comma-separated list of tags that the model must have.
+          # @option arguments [Boolean] :for_export Omits fields that are illegal to set on model PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-inference.html
           #
           def get_trained_models(arguments = {})
             headers = arguments.delete(:headers) || {}
@@ -61,7 +62,8 @@ module Elasticsearch
             :decompress_definition,
             :from,
             :size,
-            :tags
+            :tags,
+            :for_export
           ].freeze)
       end
     end
