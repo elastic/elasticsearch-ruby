@@ -20,14 +20,11 @@ require_relative 'test_file/test'
 require_relative 'test_file/task_group'
 
 module Elasticsearch
-
   module RestAPIYAMLTests
-
     # Class representing a single test file, containing a setup, teardown, and multiple tests.
     #
     # @since 6.2.0
     class TestFile
-
       attr_reader :features_to_skip
       attr_reader :name
 

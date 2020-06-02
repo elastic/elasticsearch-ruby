@@ -137,7 +137,6 @@ module Elasticsearch
         def task_groups
           @task_groups ||= begin
             @definition.each_with_index.inject([]) do |task_groups, (action, i)|
-
               # the action has a catch, it's a singular task group
               if action['do'] && action['do']['catch']
                 task_groups << TaskGroup.new(self)
