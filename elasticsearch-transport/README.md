@@ -83,6 +83,7 @@ Full documentation is available at <http://rubydoc.info/gems/elasticsearch-trans
 * [Connect using an Elastic Cloud ID](#connect-using-an-elastic-cloud-id)
 * [Authentication](#authentication)
 * [Logging](#logging)
+* [APM integration](#apm-integration)
 * [Custom HTTP Headers](#custom-http-headers)
 * [Identifying running tasks with X-Opaque-Id](#identifying-running-tasks-with-x-opaque-id)
 * [Setting Timeouts](#setting-timeouts)
@@ -248,6 +249,9 @@ log.level = :info
 
 client = Elasticsearch::Client.new logger: log
 ```
+### APM integration
+
+This client integrates seamlessly with Elastic APM via the [Elastic APM Agent](https://github.com/elastic/apm-agent-ruby). It will automatically capture client requests if you are using the agent on your code. If you're using `elastic-apm` v3.8.0 or up, you can set `capture_elasticsearch_queries` to `true` in `config/elastic_apm.yml` to also capture the body from requests in Elasticsearch. See [here](https://github.com/elastic/elasticsearch-ruby/tree/master/docs/examples/apm) for an example.
 
 ### Custom HTTP Headers
 

@@ -8,3 +8,6 @@ service_name: 'ruby-client-apm'
 # Set custom APM Server URL (default: http://localhost:8200)
 # In this example, we're using the URL from the docker-compose apm-server instance
 server_url: 'http://apm-server:8200'
+
+# Capture request body in Elasticsearch queries
+capture_elasticsearch_queries: true
