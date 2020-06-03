@@ -1,3 +1,65 @@
+## 7.8.0
+
+### Client
+
+- Support for Elasticsearch version `7.8`.
+- Surface deprecation headers from Elasticsearch. When there's a `warning` response header in Elasticsearch's response, the client will emit a warning with `warn`.
+- Typhoeus is supported again, version 1.4+ and has been added back to the docs.
+- Adds documentation and example for integrating with Elastic APM.
+
+### API
+
+#### New API Endpoints
+
+- `abort_benchmark`
+- `benchmark`
+- `cluster.delete_voting_config_exclusions`
+- `cluster.post_voting_config_exclusions`
+- `delete_by_rethrottle`
+- `nodes.shutdown`
+- `remote.info`
+
+Experimental endpoints:
+
+- `cluster.delete_component_template`
+- `cluster.exists_component_template`
+- `cluster.get_component_template`
+- `cluster.put_component_template`
+
+- `indices.delete_index_template`
+- `indices.exists_index_template`
+- `indices.get_index_template`
+- `indices.put_index_template`
+- `indices.simulate_index_template`
+
+#### API Changes
+
+- `cat/thread_pool`: `size` is deprecated
+- `indices.get_data_streams`: `name` is now a string instead of list, the name or wildcard expression of the requested data streams.
+- `indices.put_index_template`: new parameter: `cause` (string), user defined reason for creating/updating the index template.
+- `indices.simulate_index_template`: Two new parameters: `create`, whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one. `cause` User defined reason for dry-run creating the new template for simulation purposes
+- `snapshot.delete_repository`: New parameter `repository`, name of the snapshot repository, wildcard (`*`) patterns are now supported
+- `task.cancel`: new parameter `wait_for_completion` (boolean) Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
+
+### X-Pack
+
+#### New API Endpoints
+
+New namespace: `indices`
+- `indices.freeze`
+- `indices.reload_search_analyzers`
+- `indices.unfreeze`
+
+New namespace: `searchable_snapshots`
+- `clear_cache`
+- `mount`
+- `repository_stats`
+- `stats`
+
+#### API Changes
+
+- `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters
+
 ## 7.7.0
 
 This version drops support for Ruby 2.4 since it's reached it's end of life.
