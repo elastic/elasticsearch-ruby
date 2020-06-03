@@ -2,11 +2,13 @@
 == Release Notes
 
 === 7.x
+* <<release_notes_78, 7.8 Release Notes>>
 * <<release_notes_77, 7.7 Release Notes>>
 * <<release_notes_76, 7.6 Release Notes>>
 * <<release_notes_75, 7.5 Release Notes>>
 * <<release_notes_70, 7.0 Release Notes>>
 
+include::78.asciidoc[]
 include::77.asciidoc[]
 include::76.asciidoc[]
 include::75.asciidoc[]
