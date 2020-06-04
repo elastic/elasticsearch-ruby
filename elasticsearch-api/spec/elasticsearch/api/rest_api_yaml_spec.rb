@@ -51,7 +51,6 @@ describe 'Rest API YAML tests' do
                   end
                 end
               else
-
                 # 'match' is in the task group definition
                 if task_group.has_match_clauses?
                   task_group.match_clauses.each do |match|
