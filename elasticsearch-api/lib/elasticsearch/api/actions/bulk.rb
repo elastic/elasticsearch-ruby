@@ -34,7 +34,8 @@ module Elasticsearch
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
+      # @option arguments [String] :body The operation definition and data (action-data pairs), separated by newlines (*Required*). Array of Strings, Header/Data pairs,
+      # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
       #
