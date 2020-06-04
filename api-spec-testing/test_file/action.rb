@@ -16,9 +16,7 @@
 # under the License.
 
 module Elasticsearch
-
   module RestAPIYAMLTests
-
     # Class representing a single action. An action is one of the following:
     #
     #   1. Applying header settings on a client.
@@ -85,7 +83,6 @@ module Elasticsearch
           when 'catch'
             client
           when 'warnings', 'allowed_warnings'
-            # TODO warn the users
             client
           else
             @response = client.send(_method, prepare_arguments(args, test))
