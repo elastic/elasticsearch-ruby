@@ -25,7 +25,6 @@ module Elasticsearch
     #
     # @since 6.2.0
     class Action
-
       attr_reader :response
 
       # Initialize an Action object.
@@ -80,9 +79,7 @@ module Elasticsearch
                                         tracer: Logger.new($stdout),
                                         transport_options: TRANSPORT_OPTIONS.merge( headers: headers))
             end
-          when 'catch'
-            client
-          when 'warnings', 'allowed_warnings'
+          when 'catch', 'warnings', 'allowed_warnings'
             client
           else
             @response = client.send(_method, prepare_arguments(args, test))
