@@ -26,6 +26,7 @@ module Elasticsearch
           # @option arguments [Long] :category_id The identifier of the category definition of interest
           # @option arguments [Int] :from skips a number of categories
           # @option arguments [Int] :size specifies a max number of categories to get
+          # @option arguments [String] :partition_field_value Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Category selection details if not provided in URI
           #
@@ -59,7 +60,8 @@ module Elasticsearch
           # @since 6.2.0
           ParamsRegistry.register(:get_categories, [
             :from,
-            :size
+            :size,
+            :partition_field_value
           ].freeze)
       end
     end
