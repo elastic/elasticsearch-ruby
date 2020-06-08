@@ -155,6 +155,13 @@ module Elasticsearch
           end
         SRC
       end
+
+      def bulk_doc_helper(info)
+        <<~SRC
+          # @option arguments [String|Array] :body #{info}. Array of Strings, Header/Data pairs,
+          # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
+        SRC
+      end
     end
   end
 end

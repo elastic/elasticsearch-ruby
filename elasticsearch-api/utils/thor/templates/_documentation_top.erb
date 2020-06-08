@@ -14,7 +14,17 @@
   <%= docs_helper(name, info) -%>
 <%- end -%>
 # @option arguments [Hash] :headers Custom HTTP headers
-<%= '  '*(@namespace_depth+3) + '# @option arguments [Hash] :body ' + (@spec['body']['description'] ? @spec['body']['description'].strip : 'TODO: Description') + (@spec['body']['required'] ? ' (*Required*)' : '') + "\n" if @spec['body'] -%>
+<%- if @spec['body'] -%>
+  <%- if @method_name == 'bulk' -%>
+    <%= bulk_doc_helper(@spec['body']['description']) -%>
+  <%- else -%>
+    <%= '  '*(@namespace_depth+1) +
+    '# @option arguments [Hash] :body ' + (@spec['body']['description'] ?
+                                           @spec['body']['description'].strip : 'TODO: Description') +
+                                           (@spec['body']['required'] ? ' (*Required*)' : '') + "\n"
+    -%>
+  <%- end -%>
+<%- end -%>
 <% if @deprecation_note -%>
   #
   # *Deprecation notice*:
