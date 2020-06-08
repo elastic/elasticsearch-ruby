@@ -45,6 +45,7 @@ module Elasticsearch
 
           option_method :filters
           option_method :other_bucket
+          option_method :other_bucket_key
         end
 
       end
