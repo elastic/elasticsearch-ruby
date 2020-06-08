@@ -66,7 +66,7 @@ module Elasticsearch
           # @option arguments [String] :suggest_text The source text for which the suggestions should be returned
           # @option arguments [Time] :timeout Explicit operation timeout
           # @option arguments [Boolean] :track_scores Whether to calculate and return scores even if they are not used for sorting
-          # @option arguments [Boolean] :track_total_hits Indicate if the number of documents that match the query should be tracked
+          # @option arguments [Boolean|long] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
           # @option arguments [Boolean] :allow_partial_search_results Indicate if an error should be returned if there is a partial search failure or timeout
           # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
           # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
