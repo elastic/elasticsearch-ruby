@@ -24,6 +24,7 @@ module Elasticsearch
           #
           # @option arguments [String] :id The ID of the data frame analytics to delete
           # @option arguments [Boolean] :force True if the job should be forcefully deleted
+          # @option arguments [Time] :timeout Controls the time to wait until a job is deleted. Defaults to 1 minute
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
@@ -49,7 +50,8 @@ module Elasticsearch
           #
           # @since 6.2.0
           ParamsRegistry.register(:delete_data_frame_analytics, [
-            :force
+            :force,
+            :timeout
           ].freeze)
       end
     end
