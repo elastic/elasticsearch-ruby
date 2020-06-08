@@ -135,14 +135,15 @@ module Elasticsearch
             }
           end
 
-          # Equality operator based on connection protocol, host and port
+          # Equality operator based on connection protocol, host, port and attributes
           #
           # @return [Boolean]
           #
           def ==(other)
             self.host[:protocol] == other.host[:protocol] && \
             self.host[:host] == other.host[:host] && \
-            self.host[:port].to_i == other.host[:port].to_i
+            self.host[:port].to_i == other.host[:port].to_i && \
+            self.host[:attributes] == other.host[:attributes]
           end
 
           # @return [String]
