@@ -78,7 +78,7 @@ module Elasticsearch
       def module_name_helper(name)
         return name.upcase if %w[sql ssl].include? name
 
-        name.split("_").map(&:capitalize).join
+        name.split('_').map(&:capitalize).join
       end
 
       def termvectors_path
