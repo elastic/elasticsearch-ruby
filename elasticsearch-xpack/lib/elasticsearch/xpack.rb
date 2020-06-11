@@ -120,6 +120,10 @@ module Elasticsearch
       def autoscaling
         @autoscaling ||= xpack.autoscaling
       end
+
+      def enrich
+        @enrich ||= xpack.enrich
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
