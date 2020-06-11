@@ -112,6 +112,10 @@ module Elasticsearch
       def searchable_snapshots
         @searchable_snapshots ||= xpack.searchable_snapshots
       end
+
+      def cross_cluster_replication
+        @cross_cluster_replication ||= xpack.cross_cluster_replication
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
