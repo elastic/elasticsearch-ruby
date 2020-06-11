@@ -18,17 +18,28 @@
 module Elasticsearch
   module XPack
     module API
-      module AsyncSearch
-        module Actions; end
+      module Autoscaling
+        module Actions
+          # Gets the current autoscaling decision based on the configured autoscaling policy, indicating whether or not autoscaling is needed.
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-decision.html
+          #
+          def get_autoscaling_decision(arguments = {})
+            headers = arguments.delete(:headers) || {}
 
-        class AsyncSearchClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, AsyncSearch::Actions
-        end
+            arguments = arguments.clone
 
-        def async_search
-          @async_search ||= AsyncSearchClient.new(self)
-        end
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_autoscaling/decision"
+            params = {}
+
+            body = nil
+            perform_request(method, path, params, body, headers).body
+          end
       end
+    end
     end
   end
 end
