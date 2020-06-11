@@ -116,6 +116,10 @@ module Elasticsearch
       def cross_cluster_replication
         @cross_cluster_replication ||= xpack.cross_cluster_replication
       end
+
+      def autoscaling
+        @autoscaling ||= xpack.autoscaling
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)

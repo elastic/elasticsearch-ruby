@@ -18,15 +18,15 @@
 module Elasticsearch
   module XPack
     module API
-      module AsyncSearch
+      module Autoscaling
         module Actions; end
 
-        class AsyncSearchClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, AsyncSearch::Actions
+        class AutoscalingClient
+          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Autoscaling::Actions
         end
 
-        def async_search
-          @async_search ||= AsyncSearchClient.new(self)
+        def autoscaling
+          @autoscaling ||= AutoscalingClient.new(self)
         end
       end
     end
