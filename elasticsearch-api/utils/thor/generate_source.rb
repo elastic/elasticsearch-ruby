@@ -113,12 +113,13 @@ module Elasticsearch
         names = @endpoint_name.split('.')
         if @current_api == :xpack
           names = (names.first == 'xpack' ? names : ['xpack', names].flatten)
-          # Return an array to expand 'ml', 'ilm' and 'ccr'
+          # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
           names.map do |name|
             name
               .gsub(/^ml$/, 'machine_learning')
               .gsub(/^ilm$/, 'index_lifecycle_management')
               .gsub(/^ccr/, 'cross_cluster_replication')
+              .gsub(/^slm/, 'snapshot_lifecycle_management')
           end
         else
           names
