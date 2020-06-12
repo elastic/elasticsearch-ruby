@@ -128,6 +128,10 @@ module Elasticsearch
       def eql
         @eql ||= xpack.eql
       end
+
+      def snapshot_lifecycle_management
+        @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)

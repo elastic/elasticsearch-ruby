@@ -18,15 +18,15 @@
 module Elasticsearch
   module XPack
     module API
-      module SSL
+      module SnapshotLifecycleManagement
         module Actions; end
 
-        class SSLClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SSL::Actions
+        class SnapshotLifecycleManagementClient
+          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SnapshotLifecycleManagement::Actions
         end
 
-        def ssl
-          @ssl ||= SSLClient.new(self)
+        def snapshot_lifecycle_management
+          @snapshot_lifecycle_management ||= SnapshotLifecycleManagementClient.new(self)
         end
       end
     end
