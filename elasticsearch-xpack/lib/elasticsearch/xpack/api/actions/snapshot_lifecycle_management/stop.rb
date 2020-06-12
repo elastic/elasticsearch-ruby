@@ -18,17 +18,28 @@
 module Elasticsearch
   module XPack
     module API
-      module SSL
-        module Actions; end
+      module SnapshotLifecycleManagement
+        module Actions
+          # Turns off snapshot lifecycle management (SLM).
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-stop.html
+          #
+          def stop(arguments = {})
+            headers = arguments.delete(:headers) || {}
 
-        class SSLClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SSL::Actions
-        end
+            arguments = arguments.clone
 
-        def ssl
-          @ssl ||= SSLClient.new(self)
-        end
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_slm/stop"
+            params = {}
+
+            body = nil
+            perform_request(method, path, params, body, headers).body
+          end
       end
+    end
     end
   end
 end
