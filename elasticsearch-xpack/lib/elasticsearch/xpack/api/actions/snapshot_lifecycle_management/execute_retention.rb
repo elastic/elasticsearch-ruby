@@ -18,17 +18,28 @@
 module Elasticsearch
   module XPack
     module API
-      module SSL
-        module Actions; end
+      module SnapshotLifecycleManagement
+        module Actions
+          # Deletes any snapshots that are expired according to the policy's retention rules.
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
+          #
+          def execute_retention(arguments = {})
+            headers = arguments.delete(:headers) || {}
 
-        class SSLClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SSL::Actions
-        end
+            arguments = arguments.clone
 
-        def ssl
-          @ssl ||= SSLClient.new(self)
-        end
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_slm/_execute_retention"
+            params = {}
+
+            body = nil
+            perform_request(method, path, params, body, headers).body
+          end
       end
+    end
     end
   end
 end

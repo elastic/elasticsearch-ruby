@@ -18,17 +18,28 @@
 module Elasticsearch
   module XPack
     module API
-      module SSL
-        module Actions; end
+      module SnapshotLifecycleManagement
+        module Actions
+          # Retrieves the status of snapshot lifecycle management (SLM).
+          #
+          # @option arguments [Hash] :headers Custom HTTP headers
+          #
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-status.html
+          #
+          def get_status(arguments = {})
+            headers = arguments.delete(:headers) || {}
 
-        class SSLClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SSL::Actions
-        end
+            arguments = arguments.clone
 
-        def ssl
-          @ssl ||= SSLClient.new(self)
-        end
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_slm/status"
+            params = {}
+
+            body = nil
+            perform_request(method, path, params, body, headers).body
+          end
       end
+    end
     end
   end
 end
