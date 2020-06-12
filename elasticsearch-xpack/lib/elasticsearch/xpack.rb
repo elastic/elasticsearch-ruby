@@ -124,6 +124,10 @@ module Elasticsearch
       def enrich
         @enrich ||= xpack.enrich
       end
+
+      def eql
+        @eql ||= xpack.eql
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
