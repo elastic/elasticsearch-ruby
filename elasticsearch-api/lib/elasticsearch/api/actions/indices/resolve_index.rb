@@ -17,46 +17,40 @@
 
 module Elasticsearch
   module API
-    module Snapshot
+    module Indices
       module Actions
-        # Deletes one or more snapshots.
+        # Returns information about any matching indices, aliases, and data streams
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [List] :snapshot A comma-separated list of snapshot names
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [List] :name A comma-separated list of names or wildcard expressions
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open)
+        #   (options: open,closed,hidden,none,all)
+
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index.html
         #
-        def delete(arguments = {})
-          raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
-          raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
+        def resolve_index(arguments = {})
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          _repository = arguments.delete(:repository)
+          _name = arguments.delete(:name)
 
-          _snapshot = arguments.delete(:snapshot)
-
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_resolve/index/#{Utils.__listify(_name)}"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
-          else
-            perform_request(method, path, params, body, headers).body
-          end
+          perform_request(method, path, params, body, headers).body
         end
 
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:delete, [
-          :master_timeout
+        ParamsRegistry.register(:resolve_index, [
+          :expand_wildcards
         ].freeze)
 end
       end
