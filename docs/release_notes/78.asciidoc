@@ -35,12 +35,12 @@ Experimental endpoints:
 
 ==== API Changes
 
-- `cat/thread_pool`: `size` is deprecated
+- `cat/thread_pool`: `size` is deprecated.
 - `indices.get_data_streams`: `name` is now a string instead of list, the name or wildcard expression of the requested data streams.
 - `indices.put_index_template`: new parameter: `cause` (string), user defined reason for creating/updating the index template.
-- `indices.simulate_index_template`: Two new parameters: `create`, whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one. `cause` User defined reason for dry-run creating the new template for simulation purposes
-- `snapshot.delete_repository`: New parameter `repository`, name of the snapshot repository, wildcard (`*`) patterns are now supported
-- `task.cancel`: new parameter `wait_for_completion` (boolean) Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
+- `indices.simulate_index_template`: Two new parameters: `create`, whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one. `cause` User defined reason for dry-run creating the new template for simulation purposes.
+- `snapshot.delete_repository`: New parameter `repository`, name of the snapshot repository, wildcard (`*`) patterns are now supported.
+- `task.cancel`: new parameter `wait_for_completion` (boolean) Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false.
 
 === X-Pack
 
@@ -61,4 +61,5 @@ New namespace: `searchable_snapshots`
 
 ==== API Changes
 
-- `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters
+- `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters.
+- `machine_learning.delete_data_frame_analytics` new param `timeout`: controls the time to wait until a job is deleted. Defaults to 1 minute.
