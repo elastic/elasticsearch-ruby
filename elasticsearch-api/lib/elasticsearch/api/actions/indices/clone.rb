@@ -59,7 +59,7 @@ module Elasticsearch
           :master_timeout,
           :wait_for_active_shards
         ].freeze)
-end
       end
+    end
   end
 end

@@ -44,7 +44,7 @@ module Elasticsearch
           method = Elasticsearch::API::HTTP_DELETE
           path   = if _index && _name
                      "#{Utils.__listify(_index)}/_aliases/#{Utils.__listify(_name)}"
-  end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -58,7 +58,7 @@ module Elasticsearch
           :timeout,
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end

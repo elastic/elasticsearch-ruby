@@ -122,5 +122,5 @@ module Elasticsearch
         :slices
       ].freeze)
     end
-    end
+  end
 end

@@ -64,5 +64,5 @@ module Elasticsearch
         :max_docs
       ].freeze)
     end
-    end
+  end
 end

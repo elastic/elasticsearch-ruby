@@ -93,7 +93,7 @@ module Elasticsearch
           :bulk,
           :metric
         ].freeze)
-end
       end
+    end
   end
 end

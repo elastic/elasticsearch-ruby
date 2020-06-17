@@ -48,7 +48,7 @@ module Elasticsearch
                      "_nodes/usage/#{Utils.__listify(_metric)}"
                    else
                      "_nodes/usage"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -61,7 +61,7 @@ module Elasticsearch
         ParamsRegistry.register(:usage, [
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

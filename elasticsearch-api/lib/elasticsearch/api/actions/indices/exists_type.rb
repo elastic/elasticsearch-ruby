@@ -66,7 +66,7 @@ module Elasticsearch
           :expand_wildcards,
           :local
         ].freeze)
-end
       end
+    end
   end
 end

@@ -54,7 +54,7 @@ module Elasticsearch
                      "_settings/#{Utils.__listify(_name)}"
                    else
                      "_settings"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -73,7 +73,7 @@ module Elasticsearch
           :local,
           :include_defaults
         ].freeze)
-end
       end
+    end
   end
 end

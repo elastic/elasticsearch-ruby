@@ -49,7 +49,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_mapping/field/#{Utils.__listify(_fields)}"
                    else
                      "_mapping/field/#{Utils.__listify(_fields)}"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -66,7 +66,7 @@ module Elasticsearch
           :expand_wildcards,
           :local
         ].freeze)
-end
       end
+    end
   end
 end

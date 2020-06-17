@@ -42,12 +42,17 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_msearch/template"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
                  else
-                   "_msearch/template"
-  end
+                   Elasticsearch::API::HTTP_GET
+                 end
+
+        path = if _index
+                 "#{Utils.__listify(_index)}/_msearch/template"
+               else
+                 "_msearch/template"
+               end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -59,7 +64,7 @@ module Elasticsearch
 ")
         else
           payload = body
-      end
+        end
 
         headers.merge!("Content-Type" => "application/x-ndjson")
         perform_request(method, path, params, payload, headers).body
@@ -76,5 +81,5 @@ module Elasticsearch
         :ccs_minimize_roundtrips
       ].freeze)
     end
-    end
+  end
 end

@@ -52,7 +52,7 @@ module Elasticsearch
                      "_cat/recovery/#{Utils.__listify(_index)}"
                    else
                      "_cat/recovery"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
@@ -75,7 +75,7 @@ module Elasticsearch
           :time,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

@@ -30,13 +30,18 @@ module Elasticsearch
 
         arguments = arguments.clone
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = "_scripts/painless/_execute"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
+                 else
+                   Elasticsearch::API::HTTP_GET
+                 end
+
+        path = "_scripts/painless/_execute"
         params = {}
 
         body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
     end
-    end
+  end
 end

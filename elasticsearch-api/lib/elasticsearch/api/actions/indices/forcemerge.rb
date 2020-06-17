@@ -46,7 +46,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_forcemerge"
                    else
                      "_forcemerge"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -64,7 +64,7 @@ module Elasticsearch
           :max_num_segments,
           :only_expunge_deletes
         ].freeze)
-end
       end
+    end
   end
 end

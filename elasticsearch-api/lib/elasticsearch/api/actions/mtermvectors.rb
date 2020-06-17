@@ -48,19 +48,24 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_mtermvectors"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
                  else
-                   "_mtermvectors"
-    end
+                   Elasticsearch::API::HTTP_GET
+                 end
+
+        path = if _index
+                 "#{Utils.__listify(_index)}/_mtermvectors"
+               else
+                 "_mtermvectors"
+               end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         if ids
           body = { :ids => ids }
         else
           body = arguments[:body]
-    end
+        end
         perform_request(method, path, params, body, headers).body
       end
 
@@ -82,5 +87,5 @@ module Elasticsearch
         :version_type
       ].freeze)
     end
-    end
+  end
 end

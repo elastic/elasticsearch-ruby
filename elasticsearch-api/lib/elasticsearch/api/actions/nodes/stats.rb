@@ -66,7 +66,7 @@ module Elasticsearch
                      "_nodes/stats/#{Utils.__listify(_metric)}"
                    else
                      "_nodes/stats"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -86,7 +86,7 @@ module Elasticsearch
           :timeout,
           :include_segment_file_sizes
         ].freeze)
-end
       end
+    end
   end
 end
