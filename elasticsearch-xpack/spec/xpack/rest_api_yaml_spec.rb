@@ -58,6 +58,7 @@ describe 'XPack Rest API YAML tests' do
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, ADMIN_CLIENT)
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
               Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_transforms, ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_index_templates, ADMIN_CLIENT)
               test_file.setup(ADMIN_CLIENT)
             end
 
