@@ -56,8 +56,8 @@ module Elasticsearch
           ParamsRegistry.register(:revert_model_snapshot, [
             :delete_intervening_results
           ].freeze)
+        end
       end
-    end
     end
   end
 end

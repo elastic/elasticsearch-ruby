@@ -37,12 +37,17 @@ module Elasticsearch
 
             _calendar_id = arguments.delete(:calendar_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _calendar_id
-                       "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
                      else
-                       "_ml/calendars"
-            end
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _calendar_id
+                     "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
+                   else
+                     "_ml/calendars"
+                   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -56,8 +61,8 @@ module Elasticsearch
             :from,
             :size
           ].freeze)
+        end
       end
-    end
     end
   end
 end

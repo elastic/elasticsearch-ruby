@@ -63,8 +63,8 @@ module Elasticsearch
             :expand_wildcards,
             :wait_for_active_shards
           ].freeze)
+        end
       end
-    end
     end
   end
 end

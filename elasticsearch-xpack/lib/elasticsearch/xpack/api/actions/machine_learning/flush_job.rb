@@ -60,8 +60,8 @@ module Elasticsearch
             :advance_time,
             :skip_time
           ].freeze)
+        end
       end
-    end
     end
   end
 end

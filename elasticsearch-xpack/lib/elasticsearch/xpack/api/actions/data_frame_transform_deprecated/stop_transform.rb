@@ -60,8 +60,8 @@ module Elasticsearch
             :timeout,
             :allow_no_match
           ].freeze)
+        end
       end
-    end
     end
   end
 end

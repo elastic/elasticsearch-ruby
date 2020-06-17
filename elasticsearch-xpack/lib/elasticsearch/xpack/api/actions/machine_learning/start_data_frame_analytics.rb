@@ -52,8 +52,8 @@ module Elasticsearch
           ParamsRegistry.register(:start_data_frame_analytics, [
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

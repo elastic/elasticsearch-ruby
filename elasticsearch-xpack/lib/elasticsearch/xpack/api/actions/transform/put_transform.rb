@@ -53,8 +53,8 @@ module Elasticsearch
           ParamsRegistry.register(:put_transform, [
             :defer_validation
           ].freeze)
+        end
       end
-    end
     end
   end
 end

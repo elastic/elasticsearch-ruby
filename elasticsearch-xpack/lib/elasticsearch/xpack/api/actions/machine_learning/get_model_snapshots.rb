@@ -46,12 +46,17 @@ module Elasticsearch
 
             _snapshot_id = arguments.delete(:snapshot_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _job_id && _snapshot_id
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots/#{Elasticsearch::API::Utils.__listify(_snapshot_id)}"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
                      else
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots"
-  end
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _job_id && _snapshot_id
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots/#{Elasticsearch::API::Utils.__listify(_snapshot_id)}"
+                   else
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/model_snapshots"
+                   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -69,8 +74,8 @@ module Elasticsearch
             :sort,
             :desc
           ].freeze)
+        end
       end
-    end
     end
   end
 end

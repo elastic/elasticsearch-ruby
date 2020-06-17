@@ -41,7 +41,7 @@ module Elasticsearch
                        "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
                      else
                        "_ml/filters"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -55,8 +55,8 @@ module Elasticsearch
             :from,
             :size
           ].freeze)
+        end
       end
-    end
     end
   end
 end

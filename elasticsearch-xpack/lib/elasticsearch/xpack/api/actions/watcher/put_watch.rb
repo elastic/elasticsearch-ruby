@@ -58,8 +58,8 @@ module Elasticsearch
             :if_seq_no,
             :if_primary_term
           ].freeze)
+        end
       end
-    end
     end
   end
 end

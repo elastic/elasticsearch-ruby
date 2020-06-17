@@ -44,8 +44,13 @@ module Elasticsearch
 
             _job_id = arguments.delete(:job_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/overall_buckets"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/overall_buckets"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -64,8 +69,8 @@ module Elasticsearch
             :end,
             :allow_no_jobs
           ].freeze)
+        end
       end
-    end
     end
   end
 end

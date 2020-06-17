@@ -51,8 +51,8 @@ module Elasticsearch
           ParamsRegistry.register(:clear_cached_realms, [
             :usernames
           ].freeze)
+        end
       end
-    end
     end
   end
 end

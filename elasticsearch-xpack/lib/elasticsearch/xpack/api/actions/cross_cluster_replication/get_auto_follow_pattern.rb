@@ -39,14 +39,14 @@ module Elasticsearch
                        "_ccr/auto_follow/#{Elasticsearch::API::Utils.__listify(_name)}"
                      else
                        "_ccr/auto_follow"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end
