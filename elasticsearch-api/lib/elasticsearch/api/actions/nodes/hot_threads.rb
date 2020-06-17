@@ -51,7 +51,7 @@ module Elasticsearch
                      "_cluster/nodes/#{Utils.__listify(_node_id)}/hot_threads"
                    else
                      "_cluster/nodes/hot_threads"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -69,7 +69,7 @@ module Elasticsearch
           :type,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

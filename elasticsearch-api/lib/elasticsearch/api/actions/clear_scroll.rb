@@ -43,12 +43,12 @@ module Elasticsearch
                    "_search/scroll/#{Utils.__listify(_scroll_id)}"
                  else
                    "_search/scroll"
-    end
+                 end
         params = {}
 
         body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
     end
-    end
+  end
 end

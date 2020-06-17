@@ -42,7 +42,7 @@ module Elasticsearch
                      "_index_template/_simulate/#{Utils.__listify(_name)}"
                    else
                      "_index_template/_simulate"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -57,7 +57,7 @@ module Elasticsearch
           :cause,
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end

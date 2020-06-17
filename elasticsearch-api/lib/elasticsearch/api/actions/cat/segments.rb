@@ -46,7 +46,7 @@ module Elasticsearch
                      "_cat/segments/#{Utils.__listify(_index)}"
                    else
                      "_cat/segments"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -64,7 +64,7 @@ module Elasticsearch
           :s,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

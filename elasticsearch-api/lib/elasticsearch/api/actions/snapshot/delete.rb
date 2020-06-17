@@ -58,7 +58,7 @@ module Elasticsearch
         ParamsRegistry.register(:delete, [
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end

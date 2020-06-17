@@ -45,7 +45,7 @@ module Elasticsearch
                      "_cat/templates/#{Utils.__listify(_name)}"
                    else
                      "_cat/templates"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -64,7 +64,7 @@ module Elasticsearch
           :s,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

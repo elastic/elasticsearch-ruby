@@ -33,17 +33,22 @@ module Elasticsearch
 
         _id = arguments.delete(:id)
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = if _id
-                   "_render/template/#{Utils.__listify(_id)}"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
                  else
-                   "_render/template"
-    end
+                   Elasticsearch::API::HTTP_GET
+                 end
+
+        path = if _id
+                 "_render/template/#{Utils.__listify(_id)}"
+               else
+                 "_render/template"
+               end
         params = {}
 
         body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
     end
-    end
+  end
 end

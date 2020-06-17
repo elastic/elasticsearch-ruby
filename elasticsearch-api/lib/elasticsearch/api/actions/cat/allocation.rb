@@ -48,7 +48,7 @@ module Elasticsearch
                      "_cat/allocation/#{Utils.__listify(_node_id)}"
                    else
                      "_cat/allocation"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
@@ -69,7 +69,7 @@ module Elasticsearch
           :s,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

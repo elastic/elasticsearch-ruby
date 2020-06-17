@@ -62,7 +62,7 @@ module Elasticsearch
           :ignore_unavailable,
           :verbose
         ].freeze)
-end
       end
+    end
   end
 end

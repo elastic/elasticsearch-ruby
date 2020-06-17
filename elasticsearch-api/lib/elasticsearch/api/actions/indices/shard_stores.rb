@@ -46,7 +46,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_shard_stores"
                    else
                      "_shard_stores"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -62,7 +62,7 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

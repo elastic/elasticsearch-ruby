@@ -50,7 +50,7 @@ module Elasticsearch
                      "#{Utils.__listify(_alias)}/_rollover/#{Utils.__listify(_new_index)}"
                    else
                      "#{Utils.__listify(_alias)}/_rollover"
-  end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -67,7 +67,7 @@ module Elasticsearch
           :master_timeout,
           :wait_for_active_shards
         ].freeze)
-end
       end
+    end
   end
 end

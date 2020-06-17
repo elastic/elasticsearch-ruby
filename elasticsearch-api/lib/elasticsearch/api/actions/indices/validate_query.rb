@@ -58,14 +58,19 @@ module Elasticsearch
 
           _type = arguments.delete(:type)
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = if _index && _type
-                     "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
-                   elsif _index
-                     "#{Utils.__listify(_index)}/_validate/query"
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
                    else
-                     "_validate/query"
-      end
+                     Elasticsearch::API::HTTP_GET
+                   end
+
+          path = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_validate/query"
+                 else
+                   "_validate/query"
+                 end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -89,7 +94,7 @@ module Elasticsearch
           :rewrite,
           :all_shards
         ].freeze)
-end
       end
+    end
   end
 end

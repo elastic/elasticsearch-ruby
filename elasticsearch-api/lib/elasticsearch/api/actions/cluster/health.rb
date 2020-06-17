@@ -57,7 +57,7 @@ module Elasticsearch
                      "_cluster/health/#{Utils.__listify(_index)}"
                    else
                      "_cluster/health"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -80,7 +80,7 @@ module Elasticsearch
           :wait_for_no_initializing_shards,
           :wait_for_status
         ].freeze)
-end
       end
+    end
   end
 end

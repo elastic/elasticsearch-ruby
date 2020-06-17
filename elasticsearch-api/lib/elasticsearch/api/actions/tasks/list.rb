@@ -59,7 +59,7 @@ module Elasticsearch
           :group_by,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

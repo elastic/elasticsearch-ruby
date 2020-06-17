@@ -43,7 +43,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_flush/synced"
                    else
                      "_flush/synced"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -62,7 +62,7 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

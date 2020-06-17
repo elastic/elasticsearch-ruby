@@ -59,19 +59,14 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = if arguments[:body]
-                   Elasticsearch::API::HTTP_POST
+        method = Elasticsearch::API::HTTP_POST
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_count"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_count"
                  else
-                   Elasticsearch::API::HTTP_GET
-    end
-
-        path = if _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_count"
-               elsif _index
-                 "#{Utils.__listify(_index)}/_count"
-               else
-                 "_count"
-    end
+                   "_count"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -98,5 +93,5 @@ module Elasticsearch
         :terminate_after
       ].freeze)
     end
-    end
+  end
 end
