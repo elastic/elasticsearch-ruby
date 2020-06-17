@@ -39,7 +39,7 @@ module Elasticsearch
                        "_security/role/#{Elasticsearch::API::Utils.__listify(_name)}"
                      else
                        "_security/role"
-            end
+                     end
             params = {}
 
             body = nil
@@ -49,8 +49,8 @@ module Elasticsearch
               perform_request(method, path, params, body, headers).body
             end
           end
+        end
       end
-    end
     end
   end
 end

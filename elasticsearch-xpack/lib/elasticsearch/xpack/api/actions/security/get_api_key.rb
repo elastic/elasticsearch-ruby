@@ -54,8 +54,8 @@ module Elasticsearch
             :realm_name,
             :owner
           ].freeze)
+        end
       end
-    end
     end
   end
 end

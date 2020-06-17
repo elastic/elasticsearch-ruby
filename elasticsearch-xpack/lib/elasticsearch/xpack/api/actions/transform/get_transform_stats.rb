@@ -55,8 +55,8 @@ module Elasticsearch
             :size,
             :allow_no_match
           ].freeze)
+        end
       end
-    end
     end
   end
 end

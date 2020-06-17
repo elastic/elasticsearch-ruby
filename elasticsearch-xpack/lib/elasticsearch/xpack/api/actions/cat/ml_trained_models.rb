@@ -53,7 +53,7 @@ module Elasticsearch
                        "_cat/ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
                      else
                        "_cat/ml/trained_models"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -75,8 +75,8 @@ module Elasticsearch
             :time,
             :v
           ].freeze)
+        end
       end
-    end
     end
   end
 end

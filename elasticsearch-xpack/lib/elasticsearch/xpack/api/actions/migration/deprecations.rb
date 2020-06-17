@@ -39,14 +39,14 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_migration/deprecations"
                      else
                        "_migration/deprecations"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

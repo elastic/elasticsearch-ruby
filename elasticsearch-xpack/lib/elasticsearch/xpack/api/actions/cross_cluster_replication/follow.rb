@@ -53,8 +53,8 @@ module Elasticsearch
           ParamsRegistry.register(:follow, [
             :wait_for_active_shards
           ].freeze)
+        end
       end
-    end
     end
   end
 end

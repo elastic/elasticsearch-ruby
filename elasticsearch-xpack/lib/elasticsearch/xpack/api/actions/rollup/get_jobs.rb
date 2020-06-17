@@ -39,14 +39,14 @@ module Elasticsearch
                        "_rollup/job/#{Elasticsearch::API::Utils.__listify(_id)}"
                      else
                        "_rollup/job"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

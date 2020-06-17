@@ -39,14 +39,14 @@ module Elasticsearch
                        "_enrich/policy/#{Elasticsearch::API::Utils.__listify(_name)}"
                      else
                        "_enrich/policy"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

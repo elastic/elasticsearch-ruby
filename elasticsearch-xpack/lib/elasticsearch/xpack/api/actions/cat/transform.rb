@@ -49,7 +49,7 @@ module Elasticsearch
                        "_cat/transforms/#{Elasticsearch::API::Utils.__listify(_transform_id)}"
                      else
                        "_cat/transforms"
-  end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -70,8 +70,8 @@ module Elasticsearch
             :time,
             :v
           ].freeze)
+        end
       end
-    end
     end
   end
 end

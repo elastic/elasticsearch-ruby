@@ -51,7 +51,7 @@ module Elasticsearch
                        "_monitoring/#{Elasticsearch::API::Utils.__listify(_type)}/bulk"
                      else
                        "_monitoring/bulk"
-  end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -59,7 +59,7 @@ module Elasticsearch
               payload = Elasticsearch::API::Utils.__bulkify(body)
             else
               payload = body
-          end
+            end
 
             headers.merge!("Content-Type" => "application/x-ndjson")
             perform_request(method, path, params, payload, headers).body
@@ -73,8 +73,8 @@ module Elasticsearch
             :system_api_version,
             :interval
           ].freeze)
+        end
       end
-    end
     end
   end
 end

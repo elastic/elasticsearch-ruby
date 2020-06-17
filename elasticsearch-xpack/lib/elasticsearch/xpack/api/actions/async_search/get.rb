@@ -55,8 +55,8 @@ module Elasticsearch
             :keep_alive,
             :typed_keys
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -51,8 +51,8 @@ module Elasticsearch
           ParamsRegistry.register(:create_api_key, [
             :refresh
           ].freeze)
+        end
       end
-    end
     end
   end
 end

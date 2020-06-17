@@ -39,8 +39,13 @@ module Elasticsearch
 
             _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -54,8 +59,8 @@ module Elasticsearch
             :routing,
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

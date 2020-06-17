@@ -43,12 +43,17 @@ module Elasticsearch
 
             _category_id = arguments.delete(:category_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _job_id && _category_id
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/categories/#{Elasticsearch::API::Utils.__listify(_category_id)}"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
                      else
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/categories"
-  end
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _job_id && _category_id
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/categories/#{Elasticsearch::API::Utils.__listify(_category_id)}"
+                   else
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/categories"
+                   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -63,8 +68,8 @@ module Elasticsearch
             :size,
             :partition_field_value
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -51,8 +51,8 @@ module Elasticsearch
           ParamsRegistry.register(:start_transform, [
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

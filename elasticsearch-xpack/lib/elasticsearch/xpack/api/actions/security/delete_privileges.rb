@@ -57,8 +57,8 @@ module Elasticsearch
           ParamsRegistry.register(:delete_privileges, [
             :refresh
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -51,8 +51,8 @@ module Elasticsearch
           ParamsRegistry.register(:execute_policy, [
             :wait_for_completion
           ].freeze)
+        end
       end
-    end
     end
   end
 end

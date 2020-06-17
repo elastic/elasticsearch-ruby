@@ -49,8 +49,8 @@ module Elasticsearch
           ParamsRegistry.register(:query, [
             :format
           ].freeze)
+        end
       end
-    end
     end
   end
 end

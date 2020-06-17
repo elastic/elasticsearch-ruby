@@ -23,6 +23,9 @@ module Elasticsearch
           # Returns results matching a query expressed in Event Query Language (EQL)
           #
           # @option arguments [String] :index The name of the index to scope the operation
+          # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
+          # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+          # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Eql request body. Use the `query` to limit the query scope. (*Required*)
           #
@@ -39,15 +42,29 @@ module Elasticsearch
 
             _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_eql/search"
-            params = {}
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = "#{Elasticsearch::API::Utils.__listify(_index)}/_eql/search"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 6.2.0
+          ParamsRegistry.register(:search, [
+            :wait_for_completion_timeout,
+            :keep_on_completion,
+            :keep_alive
+          ].freeze)
+        end
       end
-    end
     end
   end
 end

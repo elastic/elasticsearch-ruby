@@ -49,12 +49,17 @@ module Elasticsearch
 
             _timestamp = arguments.delete(:timestamp)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _job_id && _timestamp
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/buckets/#{Elasticsearch::API::Utils.__listify(_timestamp)}"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
                      else
-                       "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/buckets"
-  end
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _job_id && _timestamp
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/buckets/#{Elasticsearch::API::Utils.__listify(_timestamp)}"
+                   else
+                     "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/results/buckets"
+                   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -75,8 +80,8 @@ module Elasticsearch
             :sort,
             :desc
           ].freeze)
+        end
       end
-    end
     end
   end
 end
