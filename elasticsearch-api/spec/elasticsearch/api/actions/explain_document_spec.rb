@@ -18,16 +18,17 @@
 require 'spec_helper'
 
 describe 'client#explain' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      method,
+      url,
+      params,
+      body,
+      {}
     ]
   end
+
+  let(:method) { 'POST' }
 
   let(:params) do
     {}
@@ -62,7 +63,7 @@ describe 'client#explain' do
   end
 
   context 'when a query is provided' do
-
+    let(:method) { 'GET' }
     let(:params) do
       { q: 'abc123' }
     end
@@ -77,7 +78,6 @@ describe 'client#explain' do
   end
 
   context 'when a query definition is provided' do
-
     let(:body) do
       { query: { match: {} } }
     end
@@ -88,7 +88,6 @@ describe 'client#explain' do
   end
 
   context 'when the request needs to be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/bar%2Fbam/1/_explain'
     end

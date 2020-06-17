@@ -18,16 +18,16 @@
 require 'spec_helper'
 
 describe 'client#search' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      method,
+      url,
+      params,
+      body,
+      {}
     ]
   end
+  let(:method) { 'GET' }
 
   let(:body) do
     nil
@@ -46,10 +46,10 @@ describe 'client#search' do
   end
 
   context 'when a request definition is specified' do
-
     let(:body) do
       { query: { match: {} } }
     end
+    let(:method) { 'POST' }
 
     let(:url) do
       '_search'

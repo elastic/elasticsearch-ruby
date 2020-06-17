@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client#search_template' do
-
   let(:expected_args) do
     [
-        'GET',
-        'foo/_search/template',
-        { },
-        { foo: 'bar' },
-        {}
+      'POST',
+      'foo/_search/template',
+      { },
+      { foo: 'bar' },
+      {}
     ]
   end
 

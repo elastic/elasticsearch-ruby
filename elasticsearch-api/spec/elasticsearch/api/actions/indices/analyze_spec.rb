@@ -18,16 +18,16 @@
 require 'spec_helper'
 
 describe 'client.indices#analyze' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      method,
+      url,
+      params,
+      body,
+      {}
     ]
   end
+  let(:method) { 'GET' }
 
   let(:body) do
     nil
@@ -46,7 +46,6 @@ describe 'client.indices#analyze' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_analyze'
     end
@@ -57,10 +56,10 @@ describe 'client.indices#analyze' do
   end
 
   context 'when a body is specified' do
-
     let(:body) do
       'foo'
     end
+    let(:method) { 'POST' }
 
     it 'performs the request' do
       expect(client_double.indices.analyze(body: 'foo')).to eq({})

@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client#msearch' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        headers
+      'POST',
+      url,
+      params,
+      body,
+      headers
     ]
   end
 

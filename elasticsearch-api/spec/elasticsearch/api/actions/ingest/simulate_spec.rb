@@ -18,16 +18,16 @@
 require 'spec_helper'
 
 describe 'client.ingest#simulate' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        {},
-        {},
-        {}
+      method,
+      url,
+      {},
+      {},
+      {}
     ]
   end
+  let(:method) { 'POST' }
 
   let(:url) do
     '_ingest/pipeline/_simulate'
@@ -38,7 +38,6 @@ describe 'client.ingest#simulate' do
   end
 
   context 'when a pipeline id is provided' do
-
     let(:url) do
       '_ingest/pipeline/foo/_simulate'
     end

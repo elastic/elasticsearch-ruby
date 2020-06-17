@@ -18,16 +18,14 @@
 require 'spec_helper'
 
 describe 'JSON builders' do
-
   context 'JBuilder' do
-
     let(:expected_args) do
       [
-          'GET',
-          '_search',
-          {},
-          body,
-          {}
+        'POST',
+        '_search',
+        {},
+        body,
+        {}
       ]
     end
 
@@ -53,14 +51,13 @@ describe 'JSON builders' do
   end
 
   context 'Jsonify' do
-
     let(:expected_args) do
       [
-          'GET',
-          '_search',
-          {},
-          body,
-          {}
+        'POST',
+        '_search',
+        {},
+        body,
+        {}
       ]
     end
 
