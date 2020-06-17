@@ -55,8 +55,8 @@ module Elasticsearch
             :expires_in,
             :max_model_memory
           ].freeze)
+        end
       end
-    end
     end
   end
 end

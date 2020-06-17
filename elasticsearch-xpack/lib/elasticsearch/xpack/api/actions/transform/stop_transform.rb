@@ -59,8 +59,8 @@ module Elasticsearch
             :allow_no_match,
             :wait_for_checkpoint
           ].freeze)
+        end
       end
-    end
     end
   end
 end

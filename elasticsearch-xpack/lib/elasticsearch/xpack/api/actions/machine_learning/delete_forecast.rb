@@ -46,7 +46,7 @@ module Elasticsearch
                        "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_forecast/#{Elasticsearch::API::Utils.__listify(_forecast_id)}"
                      else
                        "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_forecast"
-  end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -60,8 +60,8 @@ module Elasticsearch
             :allow_no_forecasts,
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -38,8 +38,8 @@ module Elasticsearch
             body = arguments[:body]
             perform_request(method, path, params, body).body
           end
+        end
       end
-    end
     end
   end
 end

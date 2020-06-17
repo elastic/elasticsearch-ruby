@@ -40,7 +40,7 @@ module Elasticsearch
                        "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_stats"
                      else
                        "_ml/anomaly_detectors/_stats"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -53,8 +53,8 @@ module Elasticsearch
           ParamsRegistry.register(:get_job_stats, [
             :allow_no_jobs
           ].freeze)
+        end
       end
-    end
     end
   end
 end

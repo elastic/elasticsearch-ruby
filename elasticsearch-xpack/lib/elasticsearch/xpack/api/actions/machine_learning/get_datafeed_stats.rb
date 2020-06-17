@@ -40,7 +40,7 @@ module Elasticsearch
                        "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_stats"
                      else
                        "_ml/datafeeds/_stats"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -53,8 +53,8 @@ module Elasticsearch
           ParamsRegistry.register(:get_datafeed_stats, [
             :allow_no_datafeeds
           ].freeze)
+        end
       end
-    end
     end
   end
 end

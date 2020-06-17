@@ -44,14 +44,14 @@ module Elasticsearch
                        "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_watch_id)}/_ack/#{Elasticsearch::API::Utils.__listify(_action_id)}"
                      else
                        "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_watch_id)}/_ack"
-  end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

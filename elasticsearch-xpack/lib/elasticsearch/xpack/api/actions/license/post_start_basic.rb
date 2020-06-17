@@ -46,8 +46,8 @@ module Elasticsearch
           ParamsRegistry.register(:post_start_basic, [
             :acknowledge
           ].freeze)
+        end
       end
-    end
     end
   end
 end

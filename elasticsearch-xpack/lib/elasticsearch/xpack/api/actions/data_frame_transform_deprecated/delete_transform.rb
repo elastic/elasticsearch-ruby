@@ -56,8 +56,8 @@ module Elasticsearch
           ParamsRegistry.register(:delete_transform, [
             :force
           ].freeze)
+        end
       end
-    end
     end
   end
 end

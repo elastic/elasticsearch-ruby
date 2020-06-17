@@ -42,7 +42,7 @@ module Elasticsearch
                        "_ml/_delete_expired_data/#{Elasticsearch::API::Utils.__listify(_job_id)}"
                      else
                        "_ml/_delete_expired_data"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -56,8 +56,8 @@ module Elasticsearch
             :requests_per_second,
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

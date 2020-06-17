@@ -59,8 +59,8 @@ module Elasticsearch
             :from,
             :size
           ].freeze)
+        end
       end
-    end
     end
   end
 end

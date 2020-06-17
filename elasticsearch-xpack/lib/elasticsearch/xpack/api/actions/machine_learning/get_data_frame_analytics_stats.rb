@@ -42,7 +42,7 @@ module Elasticsearch
                        "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_stats"
                      else
                        "_ml/data_frame/analytics/_stats"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -57,8 +57,8 @@ module Elasticsearch
             :from,
             :size
           ].freeze)
+        end
       end
-    end
     end
   end
 end

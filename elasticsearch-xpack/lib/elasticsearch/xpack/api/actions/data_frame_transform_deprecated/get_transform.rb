@@ -47,7 +47,7 @@ module Elasticsearch
                        "_data_frame/transforms/#{Elasticsearch::API::Utils.__listify(_transform_id)}"
                      else
                        "_data_frame/transforms"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -62,8 +62,8 @@ module Elasticsearch
             :size,
             :allow_no_match
           ].freeze)
+        end
       end
-    end
     end
   end
 end

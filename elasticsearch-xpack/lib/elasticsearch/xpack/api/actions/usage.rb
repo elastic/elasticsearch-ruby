@@ -45,7 +45,7 @@ module Elasticsearch
         ParamsRegistry.register(:usage, [
           :master_timeout
         ].freeze)
-  end
       end
-end
+    end
+  end
 end

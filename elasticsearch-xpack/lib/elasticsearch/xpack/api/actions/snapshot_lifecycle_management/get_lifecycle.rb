@@ -39,14 +39,14 @@ module Elasticsearch
                        "_slm/policy/#{Elasticsearch::API::Utils.__listify(_policy_id)}"
                      else
                        "_slm/policy"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

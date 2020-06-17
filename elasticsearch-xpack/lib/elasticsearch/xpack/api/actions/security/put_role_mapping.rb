@@ -55,8 +55,8 @@ module Elasticsearch
           ParamsRegistry.register(:put_role_mapping, [
             :refresh
           ].freeze)
+        end
       end
-    end
     end
   end
 end

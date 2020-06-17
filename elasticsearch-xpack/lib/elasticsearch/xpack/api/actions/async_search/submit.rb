@@ -89,7 +89,7 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_async_search"
                      else
                        "_async_search"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -142,8 +142,8 @@ module Elasticsearch
             :seq_no_primary_term,
             :max_concurrent_shard_requests
           ].freeze)
+        end
       end
-    end
     end
   end
 end

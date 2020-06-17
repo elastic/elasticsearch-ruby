@@ -59,8 +59,8 @@ module Elasticsearch
             :master_timeout,
             :wait_for_completion
           ].freeze)
+        end
       end
-    end
     end
   end
 end
