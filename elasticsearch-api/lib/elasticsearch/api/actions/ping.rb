@@ -45,5 +45,5 @@ module Elasticsearch
       end
       end
     end
-    end
+  end
 end

@@ -45,7 +45,7 @@ module Elasticsearch
                      "_snapshot/#{Utils.__listify(_repository)}/_status"
                    else
                      "_snapshot/_status"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -63,7 +63,7 @@ module Elasticsearch
           :master_timeout,
           :ignore_unavailable
         ].freeze)
-end
       end
+    end
   end
 end

@@ -92,7 +92,7 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_update_by_query"
                  else
                    "#{Utils.__listify(_index)}/_update_by_query"
-  end
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -140,5 +140,5 @@ module Elasticsearch
         :slices
       ].freeze)
     end
-    end
+  end
 end

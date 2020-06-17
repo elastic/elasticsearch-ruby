@@ -40,7 +40,7 @@ module Elasticsearch
                      "_cluster/stats/nodes/#{Utils.__listify(_node_id)}"
                    else
                      "_cluster/stats"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -54,7 +54,7 @@ module Elasticsearch
           :flat_settings,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

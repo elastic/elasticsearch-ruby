@@ -49,7 +49,7 @@ module Elasticsearch
                      "_nodes/#{Utils.__listify(_metric)}"
                    else
                      "_nodes"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -63,7 +63,7 @@ module Elasticsearch
           :flat_settings,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

@@ -47,7 +47,7 @@ module Elasticsearch
                      "_cat/fielddata/#{Utils.__listify(_fields)}"
                    else
                      "_cat/fielddata"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -66,7 +66,7 @@ module Elasticsearch
           :v,
           :fields
         ].freeze)
-end
       end
+    end
   end
 end

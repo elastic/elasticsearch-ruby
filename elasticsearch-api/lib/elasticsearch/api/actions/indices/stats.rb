@@ -92,7 +92,7 @@ module Elasticsearch
           :suggest,
           :metric
         ].freeze)
-end
       end
+    end
   end
 end

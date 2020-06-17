@@ -50,7 +50,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_settings"
                    else
                      "_settings"
-  end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -69,7 +69,7 @@ module Elasticsearch
           :expand_wildcards,
           :flat_settings
         ].freeze)
-end
       end
+    end
   end
 end

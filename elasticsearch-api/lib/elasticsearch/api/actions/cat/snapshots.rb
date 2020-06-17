@@ -48,7 +48,7 @@ module Elasticsearch
                      "_cat/snapshots/#{Utils.__listify(_repository)}"
                    else
                      "_cat/snapshots"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -68,7 +68,7 @@ module Elasticsearch
           :time,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

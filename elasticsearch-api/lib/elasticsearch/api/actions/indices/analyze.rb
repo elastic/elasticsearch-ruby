@@ -35,12 +35,17 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = if _index
-                     "#{Utils.__listify(_index)}/_analyze"
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
                    else
-                     "_analyze"
-      end
+                     Elasticsearch::API::HTTP_GET
+                   end
+
+          path = if _index
+                   "#{Utils.__listify(_index)}/_analyze"
+                 else
+                   "_analyze"
+                 end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -53,7 +58,7 @@ module Elasticsearch
         ParamsRegistry.register(:analyze, [
           :index
         ].freeze)
-end
       end
+    end
   end
 end

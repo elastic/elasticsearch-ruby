@@ -52,7 +52,7 @@ module Elasticsearch
         ParamsRegistry.register(:resolve_index, [
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

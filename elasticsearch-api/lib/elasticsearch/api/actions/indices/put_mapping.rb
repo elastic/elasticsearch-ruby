@@ -59,7 +59,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_mappings"
                    elsif _type
                      "_mappings/#{Utils.__listify(_type)}"
-  end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -77,7 +77,7 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

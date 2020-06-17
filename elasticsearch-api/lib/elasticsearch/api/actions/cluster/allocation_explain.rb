@@ -33,8 +33,13 @@ module Elasticsearch
 
           arguments = arguments.clone
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_cluster/allocation/explain"
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
+          path = "_cluster/allocation/explain"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -48,7 +53,7 @@ module Elasticsearch
           :include_yes_decisions,
           :include_disk_info
         ].freeze)
-end
       end
+    end
   end
 end

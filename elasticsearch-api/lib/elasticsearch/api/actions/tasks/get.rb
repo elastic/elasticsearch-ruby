@@ -50,7 +50,7 @@ module Elasticsearch
           :wait_for_completion,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

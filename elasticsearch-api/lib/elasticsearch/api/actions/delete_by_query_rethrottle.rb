@@ -50,5 +50,5 @@ module Elasticsearch
         :requests_per_second
       ].freeze)
     end
-    end
+  end
 end

@@ -47,7 +47,7 @@ module Elasticsearch
           :help,
           :s
         ].freeze)
-end
       end
+    end
   end
 end

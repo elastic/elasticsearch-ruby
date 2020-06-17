@@ -63,7 +63,7 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}"
                  else
                    "#{Utils.__listify(_index)}/_doc/#{Utils.__listify(_id)}"
-  end
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = nil
@@ -90,5 +90,5 @@ module Elasticsearch
         :version_type
       ].freeze)
     end
-    end
+  end
 end

@@ -42,7 +42,7 @@ module Elasticsearch
                      "_template/#{Utils.__listify(_name)}"
                    else
                      "_template"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -58,7 +58,7 @@ module Elasticsearch
           :master_timeout,
           :local
         ].freeze)
-end
       end
+    end
   end
 end

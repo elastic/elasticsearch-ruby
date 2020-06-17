@@ -38,13 +38,13 @@ module Elasticsearch
                      "_data_stream/#{Utils.__listify(_name)}"
                    else
                      "_data_stream"
-      end
+                   end
           params = {}
 
           body = nil
           perform_request(method, path, params, body, headers).body
         end
-end
       end
+    end
   end
 end

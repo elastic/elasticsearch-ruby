@@ -48,7 +48,7 @@ module Elasticsearch
           :local,
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end
