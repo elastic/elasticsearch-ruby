@@ -50,6 +50,7 @@ module Elasticsearch
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
       method_option :api,     type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
+
       def generate
         self.class.source_root File.expand_path(__dir__)
         @xpack = options[:api].include? 'xpack'
@@ -150,16 +151,19 @@ module Elasticsearch
         case @endpoint_name
         when 'index'
           '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST'
-        when 'count'
-          <<~SRC
-            if arguments[:body]
-              Elasticsearch::API::HTTP_POST
-            else
-              Elasticsearch::API::HTTP_GET
-            end
-          SRC
         else
-          "Elasticsearch::API::HTTP_#{@spec['url']['paths'].map { |a| a['methods'] }.flatten.first}"
+          default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
+          if default_method == 'GET' && @spec['body']
+            <<~SRC
+              if arguments[:body]
+                Elasticsearch::API::HTTP_POST
+              else
+                Elasticsearch::API::HTTP_GET
+              end
+            SRC
+          else
+            "Elasticsearch::API::HTTP_#{default_method}"
+          end
         end
       end
 
