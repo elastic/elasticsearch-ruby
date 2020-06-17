@@ -21,7 +21,7 @@ describe 'client#count' do
 
   let(:expected_args) do
     [
-      'GET',
+      'POST',
       '_count',
       {},
       nil,
@@ -37,7 +37,7 @@ describe 'client#count' do
 
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         'foo,bar/t1,t2/_count',
         {},
         nil,
