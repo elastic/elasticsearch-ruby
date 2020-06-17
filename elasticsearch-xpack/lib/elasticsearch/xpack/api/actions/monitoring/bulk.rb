@@ -27,7 +27,8 @@ module Elasticsearch
           # @option arguments [String] :system_api_version API Version of the monitored system
           # @option arguments [String] :interval Collection interval (e.g., '10s' or '10000ms') of the payload
           # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The operation definition and data (action-data pairs), separated by newlines (*Required*)
+          # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
+          # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
           #
           # *Deprecation notice*:
           # Specifying types in urls has been deprecated
@@ -50,7 +51,7 @@ module Elasticsearch
                        "_monitoring/#{Elasticsearch::API::Utils.__listify(_type)}/bulk"
                      else
                        "_monitoring/bulk"
-  end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -58,7 +59,7 @@ module Elasticsearch
               payload = Elasticsearch::API::Utils.__bulkify(body)
             else
               payload = body
-          end
+            end
 
             headers.merge!("Content-Type" => "application/x-ndjson")
             perform_request(method, path, params, payload, headers).body
@@ -72,8 +73,8 @@ module Elasticsearch
             :system_api_version,
             :interval
           ].freeze)
+        end
       end
-    end
     end
   end
 end

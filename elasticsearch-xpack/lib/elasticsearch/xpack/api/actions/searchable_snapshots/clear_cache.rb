@@ -45,7 +45,7 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_searchable_snapshots/cache/clear"
                      else
                        "_searchable_snapshots/cache/clear"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -61,8 +61,8 @@ module Elasticsearch
             :expand_wildcards,
             :index
           ].freeze)
+        end
       end
-    end
     end
   end
 end

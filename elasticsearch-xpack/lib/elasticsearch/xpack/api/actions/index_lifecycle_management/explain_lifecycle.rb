@@ -53,8 +53,8 @@ module Elasticsearch
             :only_managed,
             :only_errors
           ].freeze)
+        end
       end
-    end
     end
   end
 end

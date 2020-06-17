@@ -45,7 +45,7 @@ module Elasticsearch
                        "_security/user/#{Elasticsearch::API::Utils.__listify(_username)}/_password"
                      else
                        "_security/user/_password"
-  end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -58,8 +58,8 @@ module Elasticsearch
           ParamsRegistry.register(:change_password, [
             :refresh
           ].freeze)
+        end
       end
-    end
     end
   end
 end

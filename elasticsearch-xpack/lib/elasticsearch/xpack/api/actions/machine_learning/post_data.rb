@@ -55,8 +55,8 @@ module Elasticsearch
             :reset_start,
             :reset_end
           ].freeze)
+        end
       end
-    end
     end
   end
 end

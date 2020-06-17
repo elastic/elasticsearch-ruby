@@ -77,8 +77,8 @@ module Elasticsearch
             :timestamp_format,
             :explain
           ].freeze)
+        end
       end
-    end
     end
   end
 end

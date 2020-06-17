@@ -61,8 +61,8 @@ module Elasticsearch
             :ignore_throttled,
             :expand_wildcards
           ].freeze)
+        end
       end
-    end
     end
   end
 end

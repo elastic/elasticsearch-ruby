@@ -48,8 +48,8 @@ module Elasticsearch
             :type,
             :acknowledge
           ].freeze)
+        end
       end
-    end
     end
   end
 end

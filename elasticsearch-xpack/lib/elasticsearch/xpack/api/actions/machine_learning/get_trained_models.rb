@@ -46,7 +46,7 @@ module Elasticsearch
                        "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}"
                      else
                        "_ml/inference"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -65,8 +65,8 @@ module Elasticsearch
             :tags,
             :for_export
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -48,8 +48,8 @@ module Elasticsearch
             :local,
             :accept_enterprise
           ].freeze)
+        end
       end
-    end
     end
   end
 end

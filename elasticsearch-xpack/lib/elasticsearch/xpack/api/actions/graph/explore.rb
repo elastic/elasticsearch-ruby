@@ -47,12 +47,17 @@ module Elasticsearch
 
             _type = arguments.delete(:type)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _index && _type
-                       "#{Elasticsearch::API::Utils.__listify(_index)}/#{Elasticsearch::API::Utils.__listify(_type)}/_graph/explore"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
                      else
-                       "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
-  end
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _index && _type
+                     "#{Elasticsearch::API::Utils.__listify(_index)}/#{Elasticsearch::API::Utils.__listify(_type)}/_graph/explore"
+                   else
+                     "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
+                   end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -66,8 +71,8 @@ module Elasticsearch
             :routing,
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

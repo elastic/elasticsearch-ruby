@@ -53,8 +53,8 @@ module Elasticsearch
           ParamsRegistry.register(:delete_role_mapping, [
             :refresh
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -39,14 +39,14 @@ module Elasticsearch
                        "#{Elasticsearch::API::Utils.__listify(_index)}/_searchable_snapshots/stats"
                      else
                        "_searchable_snapshots/stats"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

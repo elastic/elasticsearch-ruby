@@ -53,8 +53,8 @@ module Elasticsearch
             :force,
             :timeout
           ].freeze)
+        end
       end
-    end
     end
   end
 end

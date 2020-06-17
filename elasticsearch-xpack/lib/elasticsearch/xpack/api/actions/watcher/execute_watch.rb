@@ -41,7 +41,7 @@ module Elasticsearch
                        "_watcher/watch/#{Elasticsearch::API::Utils.__listify(_id)}/_execute"
                      else
                        "_watcher/watch/_execute"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
@@ -54,8 +54,8 @@ module Elasticsearch
           ParamsRegistry.register(:execute_watch, [
             :debug
           ].freeze)
+        end
       end
-    end
     end
   end
 end

@@ -53,8 +53,8 @@ module Elasticsearch
             :force,
             :wait_for_completion
           ].freeze)
+        end
       end
-    end
     end
   end
 end

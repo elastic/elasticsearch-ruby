@@ -38,8 +38,8 @@ module Elasticsearch
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

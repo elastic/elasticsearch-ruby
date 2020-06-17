@@ -44,14 +44,14 @@ module Elasticsearch
                        "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}"
                      else
                        "_security/privilege"
-            end
+                     end
             params = {}
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+        end
       end
-    end
     end
   end
 end

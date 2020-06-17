@@ -45,7 +45,7 @@ module Elasticsearch
                        "_watcher/stats/#{Elasticsearch::API::Utils.__listify(_metric)}"
                      else
                        "_watcher/stats"
-            end
+                     end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
@@ -59,8 +59,8 @@ module Elasticsearch
             :metric,
             :emit_stacktraces
           ].freeze)
+        end
       end
-    end
     end
   end
 end

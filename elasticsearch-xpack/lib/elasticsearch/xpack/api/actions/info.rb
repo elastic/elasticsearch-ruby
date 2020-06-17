@@ -45,7 +45,7 @@ module Elasticsearch
         ParamsRegistry.register(:info, [
           :categories
         ].freeze)
-  end
       end
-end
+    end
+  end
 end
