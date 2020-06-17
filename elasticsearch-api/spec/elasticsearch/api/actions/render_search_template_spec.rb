@@ -21,7 +21,7 @@ describe 'client#render_search_template' do
   context 'when no id is specified' do
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         '_render/template',
         {},
         { foo: 'bar' },
@@ -37,7 +37,7 @@ describe 'client#render_search_template' do
   context 'when id is specified' do
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         '_render/template/foo',
         {},
         { foo: 'bar' },

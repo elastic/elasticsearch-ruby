@@ -18,16 +18,16 @@
 require 'spec_helper'
 
 describe 'client#mtermvectors' do
-
   let(:expected_args) do
     [
-        'GET',
-        'my-index/_mtermvectors',
-        { },
-        body,
-        {}
+      method,
+      'my-index/_mtermvectors',
+      {},
+      body,
+      {}
     ]
   end
+  let(:method) { 'POST' }
 
   let(:body) do
     { ids: [1, 2, 3] }
@@ -38,7 +38,7 @@ describe 'client#mtermvectors' do
   end
 
   context 'when a list of ids is passed instead of a body' do
-
+    let(:method) { 'GET' }
     it 'performs the request' do
       expect(client_double.mtermvectors(index: 'my-index', ids: [1, 2, 3])).to eq({})
     end

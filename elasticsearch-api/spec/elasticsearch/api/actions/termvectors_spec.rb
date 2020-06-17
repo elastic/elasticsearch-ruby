@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client#termvectors' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      'POST',
+      url,
+      params,
+      body,
+      {}
     ]
   end
 
@@ -56,7 +55,6 @@ describe 'client#termvectors' do
   end
 
   context 'when the older api name \'termvector\' is used' do
-
     let(:url) do
       'foo/_termvectors/123'
     end

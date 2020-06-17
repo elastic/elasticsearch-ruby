@@ -18,16 +18,16 @@
 require 'spec_helper'
 
 describe 'client.cluster#validate_query' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      method,
+      url,
+      params,
+      body,
+      {}
     ]
   end
+  let(:method) { 'GET' }
 
   let(:url) do
     '_validate/query'
@@ -46,7 +46,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_validate/query'
     end
@@ -57,7 +56,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when a type and index are specified' do
-
     let(:url) do
       'foo/bar/_validate/query'
     end
@@ -68,7 +66,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when multiple indicies are specified as a list' do
-
     let(:url) do
       'foo,bar/_validate/query'
     end
@@ -79,7 +76,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when multiple indicies are specified as a string' do
-
     let(:url) do
       'foo,bar/_validate/query'
     end
@@ -90,7 +86,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when parameters are specified' do
-
     let(:params) do
       { explain: true, q: 'foo' }
     end
@@ -105,10 +100,10 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when a body is specified' do
-
     let(:body) do
       { filtered: {} }
     end
+    let(:method) { 'POST' }
 
     it 'performs the request' do
       expect(client_double.indices.validate_query(body: { filtered: {} })).to eq({})
@@ -116,7 +111,6 @@ describe 'client.cluster#validate_query' do
   end
 
   context 'when the path needs to be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_validate/query'
     end

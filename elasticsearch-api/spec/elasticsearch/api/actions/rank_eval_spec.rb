@@ -8,11 +8,11 @@ describe 'client#rank_eval' do
 
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      'POST',
+      url,
+      params,
+      body,
+      {}
     ]
   end
 

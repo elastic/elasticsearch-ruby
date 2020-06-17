@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client#mget' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        params,
-        body,
-        {}
+      'POST',
+      url,
+      params,
+      body,
+      {}
     ]
   end
 

@@ -37,7 +37,7 @@ describe 'client#scroll' do
   context 'with scroll_id in the body' do
     let(:expected_args) do
       [
-        'GET',
+        'POST',
         '_search/scroll',
         {},
         { scroll_id: 'cXVlcn...' },
