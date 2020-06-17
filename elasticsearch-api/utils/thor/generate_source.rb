@@ -261,7 +261,7 @@ module Elasticsearch
       end
 
       def run_rubocop(api)
-        system("rubocop --format autogenconf -x #{FilesHelper::output_dir(api)}")
+        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir(api)}")
       end
     end
   end
