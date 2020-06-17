@@ -47,7 +47,7 @@ module Elasticsearch
                    "_scripts/#{Utils.__listify(_id)}/#{Utils.__listify(_context)}"
                  else
                    "_scripts/#{Utils.__listify(_id)}"
-  end
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -63,5 +63,5 @@ module Elasticsearch
         :context
       ].freeze)
     end
-    end
+  end
 end

@@ -72,5 +72,5 @@ module Elasticsearch
         :version_type
       ].freeze)
     end
-    end
+  end
 end

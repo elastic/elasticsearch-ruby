@@ -64,7 +64,7 @@ module Elasticsearch
           :include_defaults,
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end

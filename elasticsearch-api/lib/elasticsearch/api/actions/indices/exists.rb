@@ -66,7 +66,7 @@ module Elasticsearch
           :flat_settings,
           :include_defaults
         ].freeze)
-end
       end
+    end
   end
 end

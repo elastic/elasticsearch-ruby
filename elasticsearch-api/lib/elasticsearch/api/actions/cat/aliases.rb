@@ -47,7 +47,7 @@ module Elasticsearch
                      "_cat/aliases/#{Utils.__listify(_name)}"
                    else
                      "_cat/aliases"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
@@ -67,7 +67,7 @@ module Elasticsearch
           :v,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

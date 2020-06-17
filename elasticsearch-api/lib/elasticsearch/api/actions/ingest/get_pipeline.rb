@@ -39,7 +39,7 @@ module Elasticsearch
                      "_ingest/pipeline/#{Utils.__listify(_id)}"
                    else
                      "_ingest/pipeline"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -52,7 +52,7 @@ module Elasticsearch
         ParamsRegistry.register(:get_pipeline, [
           :master_timeout
         ].freeze)
-end
       end
+    end
   end
 end

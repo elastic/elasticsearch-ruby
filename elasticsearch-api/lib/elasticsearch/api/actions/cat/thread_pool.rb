@@ -49,7 +49,7 @@ module Elasticsearch
                      "_cat/thread_pool/#{Utils.__listify(_thread_pool_patterns)}"
                    else
                      "_cat/thread_pool"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
@@ -70,7 +70,7 @@ module Elasticsearch
           :s,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

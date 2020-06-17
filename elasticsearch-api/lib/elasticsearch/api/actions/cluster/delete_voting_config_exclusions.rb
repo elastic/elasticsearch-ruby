@@ -45,7 +45,7 @@ module Elasticsearch
         ParamsRegistry.register(:delete_voting_config_exclusions, [
           :wait_for_removal
         ].freeze)
-end
       end
+    end
   end
 end

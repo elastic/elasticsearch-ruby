@@ -66,7 +66,7 @@ module Elasticsearch
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_update"
                  else
                    "#{Utils.__listify(_index)}/_update/#{Utils.__listify(_id)}"
-  end
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -94,5 +94,5 @@ module Elasticsearch
         :if_primary_term
       ].freeze)
     end
-    end
+  end
 end

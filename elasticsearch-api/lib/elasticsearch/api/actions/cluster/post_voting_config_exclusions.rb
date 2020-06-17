@@ -49,7 +49,7 @@ module Elasticsearch
           :node_names,
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

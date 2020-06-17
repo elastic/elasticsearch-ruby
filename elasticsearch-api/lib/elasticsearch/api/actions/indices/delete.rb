@@ -64,7 +64,7 @@ module Elasticsearch
           :allow_no_indices,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

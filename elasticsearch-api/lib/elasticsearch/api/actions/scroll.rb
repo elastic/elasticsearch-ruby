@@ -41,12 +41,17 @@ module Elasticsearch
 
         _scroll_id = arguments.delete(:scroll_id)
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = if _scroll_id
-                   "_search/scroll/#{Utils.__listify(_scroll_id)}"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
                  else
-                   "_search/scroll"
-    end
+                   Elasticsearch::API::HTTP_GET
+                 end
+
+        path = if _scroll_id
+                 "_search/scroll/#{Utils.__listify(_scroll_id)}"
+               else
+                 "_search/scroll"
+               end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
@@ -62,5 +67,5 @@ module Elasticsearch
         :rest_total_hits_as_int
       ].freeze)
     end
-    end
+  end
 end

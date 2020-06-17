@@ -48,7 +48,7 @@ module Elasticsearch
                      "#{Utils.__listify(_index)}/_cache/clear"
                    else
                      "_cache/clear"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -68,7 +68,7 @@ module Elasticsearch
           :index,
           :request
         ].freeze)
-end
       end
+    end
   end
 end

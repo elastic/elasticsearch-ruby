@@ -65,7 +65,7 @@ module Elasticsearch
           :time,
           :v
         ].freeze)
-end
       end
+    end
   end
 end

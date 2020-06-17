@@ -40,7 +40,7 @@ module Elasticsearch
                      "_nodes/#{Utils.__listify(_node_id)}/reload_secure_settings"
                    else
                      "_nodes/reload_secure_settings"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
@@ -53,7 +53,7 @@ module Elasticsearch
         ParamsRegistry.register(:reload_secure_settings, [
           :timeout
         ].freeze)
-end
       end
+    end
   end
 end

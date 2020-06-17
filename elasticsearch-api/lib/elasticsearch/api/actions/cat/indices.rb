@@ -59,7 +59,7 @@ module Elasticsearch
                      "_cat/indices/#{Utils.__listify(_index)}"
                    else
                      "_cat/indices"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
@@ -85,7 +85,7 @@ module Elasticsearch
           :include_unloaded_segments,
           :expand_wildcards
         ].freeze)
-end
       end
+    end
   end
 end

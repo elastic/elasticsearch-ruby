@@ -42,7 +42,7 @@ module Elasticsearch
                      "_tasks/#{Utils.__listify(_task_id)}/_cancel"
                    else
                      "_tasks/_cancel"
-      end
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -58,7 +58,7 @@ module Elasticsearch
           :parent_task_id,
           :wait_for_completion
         ].freeze)
-end
       end
+    end
   end
 end

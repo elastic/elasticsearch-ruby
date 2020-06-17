@@ -56,7 +56,7 @@ module Elasticsearch
           :timeout,
           :verify
         ].freeze)
-end
       end
+    end
   end
 end
