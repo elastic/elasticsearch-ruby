@@ -17,19 +17,18 @@
 
 module Elasticsearch
   module API
-    module Cat
+    module DanglingIndices
       module Actions; end
-
-      # Client for the "cat" namespace (includes the {Cat::Actions} methods)
+      # Client for the "dangling_indices" namespace (includes the {DanglingIndices::Actions} methods)
       #
-      class CatClient
-        include Common::Client, Common::Client::Base, Cat::Actions
+      class DanglingIndicesClient
+        include Common::Client, Common::Client::Base, DanglingIndices::Actions
       end
 
-      # Proxy method for {CatClient}, available in the receiving object
+      # Proxy method for {DanglingIndicesClient}, available in the receiving object
       #
-      def cat
-        @cat ||= CatClient.new(self)
+      def dangling_indices
+        @dangling_indices ||= DanglingIndicesClient.new(self)
       end
     end
   end

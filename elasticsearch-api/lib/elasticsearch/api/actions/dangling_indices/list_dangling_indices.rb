@@ -17,19 +17,26 @@
 
 module Elasticsearch
   module API
-    module Cat
-      module Actions; end
+    module DanglingIndices
+      module Actions
+        # Returns all dangling indices.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-gateway-dangling-indices.html
+        #
+        def list_dangling_indices(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "cat" namespace (includes the {Cat::Actions} methods)
-      #
-      class CatClient
-        include Common::Client, Common::Client::Base, Cat::Actions
-      end
+          arguments = arguments.clone
 
-      # Proxy method for {CatClient}, available in the receiving object
-      #
-      def cat
-        @cat ||= CatClient.new(self)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_dangling"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end
