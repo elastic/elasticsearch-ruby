@@ -15,22 +15,34 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module Cat
-      module Actions; end
+require 'spec_helper'
 
-      # Client for the "cat" namespace (includes the {Cat::Actions} methods)
-      #
-      class CatClient
-        include Common::Client, Common::Client::Base, Cat::Actions
-      end
+describe 'dangling_indices#import_dangling_index' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_dangling/foo',
+      {},
+      nil,
+      {}
+    ]
+  end
 
-      # Proxy method for {CatClient}, available in the receiving object
-      #
-      def cat
-        @cat ||= CatClient.new(self)
-      end
+  it 'performs the request' do
+    expect(
+      client_double.dangling_indices.import_dangling_index(index_uuid: 'foo')
+    ).to eq({})
+  end
+
+  context 'when no index_uuid is specified' do
+    let(:client) do
+      Class.new { include Elasticsearch::API }.new
+    end
+
+    it 'raises the exception' do
+      expect do
+        client.dangling_indices.delete_dangling_index
+      end.to raise_exception(ArgumentError)
     end
   end
 end
