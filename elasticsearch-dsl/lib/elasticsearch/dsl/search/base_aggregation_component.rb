@@ -66,7 +66,10 @@ module Elasticsearch
           def to_hash(options={})
             call
 
-            @hash = { name => @args } unless @hash && @hash[name] && ! @hash[name].empty?
+            unless @hash && @hash[name].respond_to?(:empty?) && !@hash[name].empty?
+              args = @args.respond_to?(:to_hash) ? @args.to_hash : @args
+              @hash = { name => args }
+            end
 
             if @aggregations
               @hash[:aggregations] = @aggregations.to_hash

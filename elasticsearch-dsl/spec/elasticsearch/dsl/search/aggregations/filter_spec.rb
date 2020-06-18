@@ -28,6 +28,24 @@ describe Elasticsearch::DSL::Search::Aggregations::Filter do
     it 'can be converted to a hash' do
       expect(search.to_hash).to eq(filter: {})
     end
+
+    context 'when provided a query object' do
+
+      let(:search) do
+        described_class.new(filter)
+      end
+      let(:filter) { Elasticsearch::DSL::Search::Query.new { match_all } }
+
+      it 'can be converted to a hash' do
+        expect(search.to_hash).to eq(filter: { match_all: {} })
+      end
+
+      it 'can be called repeatedly' do
+        search.to_hash
+        expect { search.to_hash }.to_not raise_error
+      end
+
+    end
   end
 
   context 'when another aggregation is nested' do
