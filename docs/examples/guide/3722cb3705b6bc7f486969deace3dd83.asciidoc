@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      type_count: {
+        value_count: {
+          script: {
+            source: "doc['type'].value"
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

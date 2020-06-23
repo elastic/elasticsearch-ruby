@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'test',
+  refresh: true,
+  conflicts: 'proceed'
+)
+puts response
+
+response = client.update_by_query(
+  index: 'test',
+  filter_path: 'hits.total',
+  body: {
+    query: {
+      match: {
+        flag: 'foo'
+      }
+    }
+  }
+)
+puts response
+----

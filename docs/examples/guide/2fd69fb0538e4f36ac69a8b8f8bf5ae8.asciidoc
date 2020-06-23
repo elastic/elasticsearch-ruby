@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'twitter',
+  body: {
+    script: {
+      source: 'ctx._source.likes++',
+      lang: 'painless'
+    },
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

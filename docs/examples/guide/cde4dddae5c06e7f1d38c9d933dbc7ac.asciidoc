@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'twitter,blog'
+)
+puts response
+----

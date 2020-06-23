@@ -1,0 +1,67 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'metrics_index',
+  id: 1,
+  body: {
+    "network.name": 'net-1',
+    latency_histo: {
+      values: [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5
+      ],
+      counts: [
+        3,
+        7,
+        23,
+        12,
+        6
+      ]
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'metrics_index',
+  id: 2,
+  body: {
+    "network.name": 'net-2',
+    latency_histo: {
+      values: [
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5
+      ],
+      counts: [
+        8,
+        17,
+        8,
+        7,
+        6
+      ]
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'metrics_index',
+  size: 0,
+  body: {
+    aggregations: {
+      total_requests: {
+        value_count: {
+          field: 'latency_histo'
+        }
+      }
+    }
+  }
+)
+puts response
+----

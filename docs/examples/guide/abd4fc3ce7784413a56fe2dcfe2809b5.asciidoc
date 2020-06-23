@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'test',
+  filter_path: 'hits.total',
+  body: {
+    query: {
+      match: {
+        flag: 'foo'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.search(
+  scroll: '1m',
+  body: {
+    sort: [
+      '_doc'
+    ]
+  }
+)
+puts response
+----

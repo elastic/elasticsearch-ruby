@@ -1,9 +1,8 @@
 [source, ruby]
 ----
-response = client.delete(
+response = client.search(
   index: 'twitter',
-  id: 1,
-  routing: 'kimchy'
+  size: 'surprise_me'
 )
 puts response
 ----

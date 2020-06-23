@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.search(
+  q: 'elasticsearch',
+  filter_path: 'took,hits.hits._id,hits.hits._score'
+)
+puts response
+----

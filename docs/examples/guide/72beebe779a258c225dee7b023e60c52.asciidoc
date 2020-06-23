@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'search'
+)
+puts response
+----

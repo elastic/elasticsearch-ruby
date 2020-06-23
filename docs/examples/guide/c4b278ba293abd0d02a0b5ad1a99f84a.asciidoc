@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'set-foo',
+  body: {
+    description: 'sets foo',
+    processors: [
+      {
+        set: {
+          field: 'foo',
+          value: 'bar'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.ingest.put_pipeline(
+  index: 'twitter',
+  pipeline: 'set-foo'
+)
+puts response
+----

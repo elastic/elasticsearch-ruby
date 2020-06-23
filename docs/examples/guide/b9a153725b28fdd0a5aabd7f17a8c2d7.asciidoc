@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.get_settings(
+  index: 'twitter',
+  flat_settings: true
+)
+puts response
+----

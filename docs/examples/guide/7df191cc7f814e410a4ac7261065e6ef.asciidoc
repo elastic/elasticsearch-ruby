@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.tasks.list(
+  detailed: true,
+  actions: '*byquery'
+)
+puts response
+----

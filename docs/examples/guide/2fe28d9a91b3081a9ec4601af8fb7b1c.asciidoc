@@ -1,0 +1,53 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test',
+  body: {
+    mappings: {
+      dynamic: false,
+      properties: {
+        text: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'test',
+  refresh: true,
+  body: {
+    text: 'words words',
+    flag: 'bar'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'test',
+  refresh: true,
+  body: {
+    text: 'words words',
+    flag: 'foo'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'test',
+  body: {
+    properties: {
+      text: {
+        type: 'text'
+      },
+      flag: {
+        type: 'text',
+        analyzer: 'keyword'
+      }
+    }
+  }
+)
+puts response
+----

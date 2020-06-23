@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'twitter',
+  scroll: '1m',
+  body: {
+    size: 100,
+    query: {
+      match: {
+        title: 'elasticsearch'
+      }
+    }
+  }
+)
+puts response
+----
