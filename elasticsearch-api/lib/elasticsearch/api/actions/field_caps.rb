@@ -29,6 +29,7 @@ module Elasticsearch
 
       # @option arguments [Boolean] :include_unmapped Indicates whether unmapped fields should be included in the response.
       # @option arguments [Hash] :headers Custom HTTP headers
+      # @option arguments [Hash] :body An index filter specified with the Query DSL
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
       #
@@ -39,15 +40,20 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = Elasticsearch::API::HTTP_GET
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_field_caps"
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
                  else
-                   "_field_caps"
+                   Elasticsearch::API::HTTP_GET
                  end
+
+        path = if _index
+                 "#{Utils.__listify(_index)}/_field_caps"
+               else
+                 "_field_caps"
+               end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-        body = nil
+        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
 
