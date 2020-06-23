@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'twitter',
+  conflicts: 'proceed',
+  body: {
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

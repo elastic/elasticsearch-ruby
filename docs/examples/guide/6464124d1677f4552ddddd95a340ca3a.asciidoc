@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'library',
+  refresh: true,
+  body: {
+    title: 'Book #1',
+    rating: 200.1
+  }
+)
+puts response
+
+response = client.index(
+  index: 'library',
+  refresh: true,
+  body: {
+    title: 'Book #2',
+    rating: 1.7
+  }
+)
+puts response
+
+response = client.index(
+  index: 'library',
+  refresh: true,
+  body: {
+    title: 'Book #3',
+    rating: 0.1
+  }
+)
+puts response
+
+response = client.index(
+  filter_path: 'hits.hits._source',
+  _source: 'title',
+  sort: 'rating:desc'
+)
+puts response
+----

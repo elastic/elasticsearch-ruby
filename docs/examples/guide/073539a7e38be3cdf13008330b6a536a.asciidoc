@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.indices(
+  index: 'twi*',
+  v: true,
+  s: 'index'
+)
+puts response
+----

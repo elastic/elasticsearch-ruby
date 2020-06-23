@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.refresh
+puts response
+
+response = client.indices.refresh(
+  index: 'twitter',
+  size: 0,
+  q: 'extra:test',
+  filter_path: 'hits.total'
+)
+puts response
+----

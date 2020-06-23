@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'twitter',
+  body: {
+    slice: {
+      id: 0,
+      max: 2
+    },
+    script: {
+      source: "ctx._source['extra'] = 'test'"
+    }
+  }
+)
+puts response
+
+response = client.update_by_query(
+  index: 'twitter',
+  body: {
+    slice: {
+      id: 1,
+      max: 2
+    },
+    script: {
+      source: "ctx._source['extra'] = 'test'"
+    }
+  }
+)
+puts response
+----

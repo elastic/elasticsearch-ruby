@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_index',
+  id: 1,
+  refresh: true,
+  body: {
+    date: '2015-10-01T05:30:00Z'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_index',
+  id: 2,
+  refresh: true,
+  body: {
+    date: '2015-10-01T06:30:00Z'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_index',
+  size: 0,
+  body: {
+    aggregations: {
+      by_day: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'day',
+          offset: '+6h'
+        }
+      }
+    }
+  }
+)
+puts response
+----

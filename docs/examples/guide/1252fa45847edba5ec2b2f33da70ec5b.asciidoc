@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.state(
+  filter_path: 'routing_table.indices.**.state'
+)
+puts response
+----

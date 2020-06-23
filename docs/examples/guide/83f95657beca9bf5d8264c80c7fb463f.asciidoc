@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      match_phrase: {
+        message: 'this is a test'
+      }
+    }
+  }
+)
+puts response
+----

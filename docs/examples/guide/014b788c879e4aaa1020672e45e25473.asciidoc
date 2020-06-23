@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     transient: {
-      "logger.org.elasticsearch.transport": 'trace'
+      "cluster.routing.use_adaptive_replica_selection": false
     }
   }
 )

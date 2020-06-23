@@ -1,9 +1,8 @@
 [source, ruby]
 ----
-response = client.delete(
+response = client.update_by_query(
   index: 'twitter',
-  id: 1,
-  routing: 'kimchy'
+  scroll_size: 100
 )
 puts response
 ----
