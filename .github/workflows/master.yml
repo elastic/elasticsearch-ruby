@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  test-master:
+  test-elasticsearch:
     strategy:
       fail-fast: false
       matrix:
@@ -18,10 +18,17 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Build and test with Rake
+    - name: Build and test elasticsearch wrapper
       run: |
         sudo apt-get install libcurl4-openssl-dev
         ruby -v
-        rake bundle:clean
-        rake bundle:install
-        rake test:unit
+        cd elasticsearch && rm -f Gemfile.lock && bundle install && rake test:unit
+    - name: Build and test elasticsearch-api
+      run: |
+        cd elasticsearch-api && rm -f Gemfile.lock && bundle install && rake test:unit
+    - name: Build and test elasticsearch-xpack
+      run: |
+        cd elasticsearch-xpack && rm -f Gemfile.lock && bundle install && rake test:unit
+    - name: Build and test elasticsearch-transport
+      run: |
+        cd elasticsearch-xpack && rm -f Gemfile.lock && bundle install && rake test:unit
