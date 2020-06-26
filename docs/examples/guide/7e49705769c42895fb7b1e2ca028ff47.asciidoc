@@ -1,4 +1,0 @@
-[source, ruby]
-----
-client.cat.nodes
-----
