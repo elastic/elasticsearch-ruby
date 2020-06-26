@@ -8,9 +8,10 @@ namespace :docs do
   desc 'Generate doc examples'
   task :generate do
     # Remove existing documents to avoid having outdated files
-    Dir.foreach(TARGET_DIR) do |f|
-      File.delete(File.join(TARGET_DIR), f) if !f =~ /^\.{1,2}$/
+    Dir.foreach(TARGET_DIR) do |file|
+      File.delete(File.join(TARGET_DIR, file)) if file !~ /^\.{1,2}$/
     end
+
     # Only select the files in the EXAMPLES_TO_PARSE array and that are not
     # console result examples
     entries = json_data.select do |d|
