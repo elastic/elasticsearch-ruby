@@ -18,10 +18,11 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Build and test with Rake
+    - name: Build
       run: |
+        sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev
-        ruby -v
         rake bundle:clean
         rake bundle:install
-        rake test:unit
+    - name: Test with Rake
+      run: rake test:unit
