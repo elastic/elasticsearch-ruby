@@ -47,7 +47,7 @@ module Elasticsearch
         #
         # @see Client#initialize
         #
-        def initialize(arguments={}, &block)
+        def initialize(arguments = {}, &block)
           @state_mutex = Mutex.new
 
           @hosts       = arguments[:hosts]   || []
@@ -234,9 +234,9 @@ module Elasticsearch
         def __full_url(host)
           url  = "#{host[:protocol]}://"
           url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
-          url += "#{host[:host]}"
+          url += host[:host]
           url += ":#{host[:port]}" if host[:port]
-          url += "#{host[:path]}" if host[:path]
+          url += host[:path] if host[:path]
           url
         end
 
@@ -258,8 +258,9 @@ module Elasticsearch
         # @raise  [ServerError]   If request failed on server
         # @raise  [Error]         If no connection is available
         #
-        def perform_request(method, path, params={}, body=nil, headers=nil, opts={}, &block)
-          raise NoMethodError, "Implement this method in your transport class" unless block_given?
+        def perform_request(method, path, params = {}, body = nil, headers = nil, opts = {}, &block)
+          raise NoMethodError, 'Implement this method in your transport class' unless block_given?
+
           start = Time.now
           tries = 0
           reload_on_failure = opts.fetch(:reload_on_failure, @options[:reload_on_failure])
@@ -276,15 +277,15 @@ module Elasticsearch
 
           begin
             tries     += 1
-            connection = get_connection or raise Error.new("Cannot get new connection from pool.")
+            connection = get_connection or raise Error.new('Cannot get new connection from pool.')
 
             if connection.connection.respond_to?(:params) && connection.connection.params.respond_to?(:to_hash)
               params = connection.connection.params.merge(params.to_hash)
             end
 
-            url        = connection.full_url(path, params)
+            url      = connection.full_url(path, params)
 
-            response   = block.call(connection, url)
+            response = block.call(connection, url)
 
             connection.healthy! if connection.failures > 0
 

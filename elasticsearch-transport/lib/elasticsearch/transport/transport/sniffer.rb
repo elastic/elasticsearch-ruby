@@ -45,21 +45,21 @@ module Elasticsearch
         #
         def hosts
           Timeout::timeout(timeout, SnifferTimeoutError) do
-            nodes = transport.perform_request('GET', '_nodes/http', {}, nil, nil,
-                                              reload_on_failure: false).body
+            nodes = perform_sniff_request.body
 
             hosts = nodes['nodes'].map do |id, info|
-              if info[PROTOCOL]
-                host, port = parse_publish_address(info[PROTOCOL]['publish_address'])
+              next unless info[PROTOCOL]
+              host, port = parse_publish_address(info[PROTOCOL]['publish_address'])
 
-                { :id =>      id,
-                  :name =>    info['name'],
-                  :version => info['version'],
-                  :host =>    host,
-                  :port =>    port,
-                  :roles =>   info['roles'],
-                  :attributes => info['attributes'] }
-              end
+              {
+                id: id,
+                name: info['name'],
+                version: info['version'],
+                host: host,
+                port: port,
+                roles: info['roles'],
+                attributes: info['attributes']
+              }
             end.compact
 
             hosts.shuffle! if transport.options[:randomize_hosts]
@@ -68,6 +68,13 @@ module Elasticsearch
         end
 
         private
+
+        def perform_sniff_request
+          transport.perform_request(
+            'GET', '_nodes/http', {}, nil, nil,
+            reload_on_failure: false
+          )
+        end
 
         def parse_publish_address(publish_address)
           # publish_address is in the format hostname/ip:port
