@@ -18,7 +18,6 @@
 require 'spec_helper'
 
 describe Elasticsearch::Transport::Transport::Sniffer do
-
   let(:transport) do
     double('transport').tap do |t|
       allow(t).to receive(:perform_request).and_return(response)
@@ -45,7 +44,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
   end
 
   describe '#initialize' do
-
     it 'has a transport instance' do
       expect(sniffer.transport).to be(transport)
     end
@@ -56,7 +54,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
   end
 
   describe '#timeout' do
-
     let(:sniffer) do
       described_class.new(double('transport', options: {}))
     end
@@ -71,13 +68,11 @@ describe Elasticsearch::Transport::Transport::Sniffer do
   end
 
   describe '#hosts' do
-
     let(:hosts) do
       sniffer.hosts
     end
 
     context 'when the entire response is parsed' do
-
       let(:raw_response) do
         {
           "cluster_name" => "elasticsearch_test",
@@ -142,7 +137,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the transport protocol does not match' do
-
       let(:raw_response) do
         { 'nodes' => { 'n1' => { 'foo' => { 'publish_address' => '127.0.0.1:9250' } } } }
       end
@@ -153,7 +147,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when a list of nodes is returned' do
-
       let(:raw_response) do
         { 'nodes' => { 'n1' => { 'http' => { 'publish_address' => '127.0.0.1:9250' } },
                        'n2' => { 'http' => { 'publish_address' => '127.0.0.1:9251' } } } }
@@ -175,7 +168,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the host and port are an ip address and port' do
-
       it 'parses the response' do
         expect(hosts.size).to eq(1)
       end
@@ -190,7 +182,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the host and port are a hostname and port' do
-
       let(:publish_address) do
         'testhost1.com:9250'
       end
@@ -213,7 +204,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the host and port are in the format: hostname/ip:port' do
-
       let(:publish_address) do
         'example.com/127.0.0.1:9250'
       end
@@ -231,7 +221,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
       end
 
       context 'when the address is IPv6' do
-
         let(:publish_address) do
           'example.com/[::1]:9250'
         end
@@ -251,7 +240,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the address is IPv6' do
-
       let(:publish_address) do
         '[::1]:9250'
       end
@@ -270,7 +258,6 @@ describe Elasticsearch::Transport::Transport::Sniffer do
     end
 
     context 'when the transport has :randomize_hosts option' do
-
       let(:raw_response) do
         { 'nodes' => { 'n1' => { 'http' => { 'publish_address' => '127.0.0.1:9250' } },
                        'n2' => { 'http' => { 'publish_address' => '127.0.0.1:9251' } } } }
