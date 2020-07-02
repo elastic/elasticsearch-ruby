@@ -37,17 +37,12 @@ module Elasticsearch
 
           _id = arguments.delete(:id)
 
-          method = if arguments[:body]
-                     Elasticsearch::API::HTTP_POST
+          method = Elasticsearch::API::HTTP_POST
+          path   = if _id
+                     "_ingest/pipeline/#{Utils.__listify(_id)}/_simulate"
                    else
-                     Elasticsearch::API::HTTP_GET
+                     "_ingest/pipeline/_simulate"
                    end
-
-          path = if _id
-                   "_ingest/pipeline/#{Utils.__listify(_id)}/_simulate"
-                 else
-                   "_ingest/pipeline/_simulate"
-                 end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
