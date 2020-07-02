@@ -20,7 +20,6 @@ require 'test_helper'
 module Elasticsearch
   module Test
     class XPackInfoTest < Minitest::Test
-
       context "XPack: Info" do
         subject { FakeClient.new }
 
@@ -35,9 +34,7 @@ module Elasticsearch
 
           subject.xpack.info
         end
-
       end
-
     end
   end
 end
