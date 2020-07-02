@@ -148,12 +148,14 @@ module Elasticsearch
       end
 
       def __http_method
-        case @endpoint_name
-        when 'index'
-          '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST'
-        else
-          default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
-          if default_method == 'GET' && @spec['body']
+        return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
+
+        default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
+        if @spec['body'] && default_method == 'GET'
+          # When default method is GET and body is required, we should always use POST
+          if @spec['body']['required']
+            'Elasticsearch::API::HTTP_POST'
+          else
             <<~SRC
               if arguments[:body]
                 Elasticsearch::API::HTTP_POST
@@ -161,9 +163,9 @@ module Elasticsearch
                 Elasticsearch::API::HTTP_GET
               end
             SRC
-          else
-            "Elasticsearch::API::HTTP_#{default_method}"
           end
+        else
+          "Elasticsearch::API::HTTP_#{default_method}"
         end
       end
 
