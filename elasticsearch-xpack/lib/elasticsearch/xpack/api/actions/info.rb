@@ -22,6 +22,7 @@ module Elasticsearch
         # Retrieves information about the installed X-Pack features.
         #
         # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
+        # @option arguments [Boolean] :accept_enterprise If an enterprise license is installed, return the type and mode as 'enterprise' (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.8/info-api.html
@@ -43,7 +44,8 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:info, [
-          :categories
+          :categories,
+          :accept_enterprise
         ].freeze)
   end
       end
