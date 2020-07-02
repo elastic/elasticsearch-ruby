@@ -37,17 +37,12 @@ module Elasticsearch
 
             _user = arguments.delete(:user)
 
-            method = if arguments[:body]
-                       Elasticsearch::API::HTTP_POST
+            method = Elasticsearch::API::HTTP_POST
+            path   = if _user
+                       "_security/user/#{Elasticsearch::API::Utils.__listify(_user)}/_has_privileges"
                      else
-                       Elasticsearch::API::HTTP_GET
+                       "_security/user/_has_privileges"
                      end
-
-            path = if _user
-                     "_security/user/#{Elasticsearch::API::Utils.__listify(_user)}/_has_privileges"
-                   else
-                     "_security/user/_has_privileges"
-                   end
             params = {}
 
             body = arguments[:body]

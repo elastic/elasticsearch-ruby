@@ -42,13 +42,8 @@ module Elasticsearch
 
             _index = arguments.delete(:index)
 
-            method = if arguments[:body]
-                       Elasticsearch::API::HTTP_POST
-                     else
-                       Elasticsearch::API::HTTP_GET
-                     end
-
-            path = "#{Elasticsearch::API::Utils.__listify(_index)}/_eql/search"
+            method = Elasticsearch::API::HTTP_POST
+            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_eql/search"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
