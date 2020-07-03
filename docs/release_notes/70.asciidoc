@@ -6,7 +6,7 @@ This version contains the following changes:
 * Added `elastic_ruby_console` executable. It opens a console with the elasticsearch gems you have installed required.
 * Added macro benchmarking framework, available when developing. Use `rake -T` to view all available benchmarking tasks. 
 
-=== Client
+==== Client
 
 * Fixed failing integration test
 * Updated the Manticore development dependency
@@ -44,7 +44,7 @@ This version contains the following changes:
 * Update handling of publish_address in _nodes/http response
 * Add another test for hostname/ipv6:port format
 
-=== API
+==== API
 
 * Added the `wait_for_active_shards` parameter to the "Indices Open" API
 * Added the "Indices Split" API
@@ -129,7 +129,7 @@ This version contains the following changes:
 * Ensure that the :index param is supported for cat.segments
 * Ensure that the :name param is passed to the templates API
 
-=== DSL
+==== DSL
 
 * Add inner_hits option support for has_parent query
 * Add inner_hits option support for has_child query
@@ -153,7 +153,7 @@ This version contains the following changes:
 * Ensure that filters are registered when called on bool queries (#609)
 * Don't specify a type when creating mappings in tests
 
-=== XPACK
+==== X-Pack
 
 * Embedded the source code for the `elasticsearch-xpack` Rubygem
 * Fixed the `setup` for YAML integration tests
