@@ -1,4 +1,5 @@
 require 'json'
+require 'fileutils'
 
 namespace :docs do
   SRC_FILE          = "#{__dir__}/docs/parsed_alternative_report.json".freeze
@@ -8,9 +9,8 @@ namespace :docs do
   desc 'Generate doc examples'
   task :generate do
     # Remove existing documents to avoid having outdated files
-    Dir.foreach(TARGET_DIR) do |file|
-      File.delete(File.join(TARGET_DIR, file)) if file !~ /^\.{1,2}$/
-    end
+    FileUtils.remove_dir(TARGET_DIR)
+    Dir.mkdir(TARGET_DIR)
 
     # Only select the files in the EXAMPLES_TO_PARSE array and that are not
     # console result examples
