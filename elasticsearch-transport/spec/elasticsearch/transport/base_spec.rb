@@ -46,10 +46,12 @@ describe Elasticsearch::Transport::Transport::Base do
 
     context 'when the user and password are provided as separate arguments' do
       let(:arguments) do
-        { hosts: 'fake',
+        {
+          hosts: 'fake',
           logger: logger,
           password: 'secret_password',
-          user: 'test' }
+          user: 'test'
+        }
       end
 
       it_behaves_like 'a redacted string'
@@ -57,8 +59,10 @@ describe Elasticsearch::Transport::Transport::Base do
 
     context 'when the user and password are provided in the string URI' do
       let(:arguments) do
-        { hosts: 'https://test:secret_password@fake_local_elasticsearch',
-          logger: logger }
+        {
+          hosts: 'https://test:secret_password@fake_local_elasticsearch',
+          logger: logger
+        }
       end
 
       it_behaves_like 'a redacted string'
@@ -66,8 +70,10 @@ describe Elasticsearch::Transport::Transport::Base do
 
     context 'when the user and password are provided in the URI object' do
       let(:arguments) do
-        { hosts: URI.parse('https://test:secret_password@fake_local_elasticsearch'),
-          logger: logger }
+        {
+          hosts: URI.parse('https://test:secret_password@fake_local_elasticsearch'),
+          logger: logger
+        }
       end
 
       it_behaves_like 'a redacted string'
@@ -75,36 +81,32 @@ describe Elasticsearch::Transport::Transport::Base do
   end
 
   context 'when reload_on_failure is true and and hosts are unreachable' do
-
     let(:client) do
       Elasticsearch::Transport::Client.new(arguments)
     end
 
     let(:arguments) do
       {
-          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
-          reload_on_failure: true,
-          sniffer_timeout: 5
+        hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
+        reload_on_failure: true,
+        sniffer_timeout: 5
       }
     end
 
     it 'raises an exception' do
-      expect {
-        client.info
-      }.to raise_exception(Faraday::ConnectionFailed)
+      expect { client.info }.to raise_exception(Faraday::ConnectionFailed)
     end
   end
 
   context 'when the client has `retry_on_failure` set to an integer' do
-
     let(:client) do
       Elasticsearch::Transport::Client.new(arguments)
     end
 
     let(:arguments) do
       {
-          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
-          retry_on_failure: 2
+        hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
+        retry_on_failure: 2
       }
     end
 
@@ -209,40 +211,35 @@ describe Elasticsearch::Transport::Transport::Base do
   end
 
   context 'when the client has no `retry_on_failure` set' do
-
     let(:client) do
       Elasticsearch::Transport::Client.new(arguments)
     end
 
     let(:arguments) do
-      {
-          hosts: ['http://unavailable:9200', 'http://unavailable:9201'],
-      }
+      { hosts: ['http://unavailable:9200', 'http://unavailable:9201'] }
     end
 
     context 'when `perform_request` is called without a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(1).times.and_call_original
       end
 
       it 'does not retry' do
-        expect {
+        expect do
           client.transport.perform_request('GET', '/info')
-        }.to raise_exception(Faraday::ConnectionFailed)
+        end.to raise_exception(Faraday::ConnectionFailed)
       end
     end
 
     context 'when `perform_request` is called with a `retry_on_failure` option value' do
-
       before do
         expect(client.transport).to receive(:get_connection).exactly(6).times.and_call_original
       end
 
       it 'uses the option `retry_on_failure` value' do
-        expect {
+        expect do
           client.transport.perform_request('GET', '/info', {}, nil, nil, retry_on_failure: 5)
-        }.to raise_exception(Faraday::ConnectionFailed)
+        end.to raise_exception(Faraday::ConnectionFailed)
       end
     end
   end
