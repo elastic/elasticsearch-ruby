@@ -65,21 +65,9 @@ skipped_tests << { file:        'cat.aliases/20_headers.yml',
 skipped_tests << { file:        'create/15_without_id.yml',
                    description: 'Create without ID' }
 
-# No error is raised
-skipped_tests << { file:        'create/15_without_id_with_types.yml',
-                   description: 'Create without ID' }
-
 # Error message doesn't match
 skipped_tests << { file:        'tasks.get/10_basic.yml',
                    description: 'get task test' }
-
-# No error is raised
-skipped_tests << { file:        'cat.allocation/10_basic.yml',
-                   description: '*' }
-
-# Figure out how to match response when there is an error
-skipped_tests << { file:        'delete/70_mix_typeless_typeful.yml',
-                   description: '*' }
 
 # Figure out how to match response when there is an error
 skipped_tests << { file:        'cat.templates/10_basic.yml',
@@ -96,14 +84,6 @@ skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
                    description: 'Upgrade indices allow no indices < 8.0.0' }
 skipped_tests << { file: 'indices.put_mapping/10_basic.yml',
                    description: 'Put mappings with explicit _doc type bwc' }
-
-# Responses are there but not equal (eg.: yellow status)
-skipped_tests << { file: 'cluster.health/10_basic.yml',
-                   description: 'cluster health with closed index (pre 7.2.0)' }
-
-# Regular expression not catching exact match:
-skipped_tests << { file: 'cat.indices/10_basic.yml',
-                   description: 'Test cat indices output for closed index (pre 7.2.0)' }
 
 # TODO
 skipped_tests << { file: 'indices.resolve_index/10_basic_resolve_index.yml',
