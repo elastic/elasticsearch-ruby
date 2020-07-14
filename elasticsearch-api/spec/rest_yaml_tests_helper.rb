@@ -105,6 +105,10 @@ skipped_tests << { file: 'cluster.health/10_basic.yml',
 skipped_tests << { file: 'cat.indices/10_basic.yml',
                    description: 'Test cat indices output for closed index (pre 7.2.0)' }
 
+# TODO
+skipped_tests << { file: 'indices.resolve_index/10_basic_resolve_index.yml',
+                   description: 'Resolve index with hidden and closed indices' }
+
 SKIPPED_TESTS = skipped_tests
 
 # The directory of rest api YAML files.
