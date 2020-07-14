@@ -16,18 +16,13 @@
 # under the License.
 
 module Elasticsearch
-
   module RestAPIYAMLTests
-
     class TestFile
-
       # Represents a single test in a test file. A single test can have many operations and validations.
       #
       # @since 6.2.0
       class Test
-
         class << self
-
           # Given a list of keys, find the value in a recursively nested document.
           #
           # @param [ Array<String> ] chain The list of nested document keys.
@@ -82,18 +77,18 @@ module Elasticsearch
         #   do, match
         #
         # @since 6.2.0
-        GROUP_TERMINATORS = [ 'length',
-                              'gt',
-                              'gte',
-                              'lt',
-                              'lte',
-                              'set',
-                              'transform_and_set',
-                              'match',
-                              'is_false',
-                              'is_true'
+        GROUP_TERMINATORS = [
+          'length',
+          'gt',
+          'gte',
+          'lt',
+          'lte',
+          'set',
+          'transform_and_set',
+          'match',
+          'is_false',
+          'is_true'
         ].freeze
-
 
         # The maximum Elasticsearch version this client version can successfully run tests against.
         #
@@ -262,10 +257,16 @@ module Elasticsearch
           end
         end
 
+        # Given the server version and the skip definition version, returns if a
+        # test should be skipped. It will return true if the server version is
+        # contained in the range of the test's skip definition version.
+        #
         def skip_version?(client, skip_definition)
           return true if skip_definition['version'] == 'all'
+
           range_partition = /\s*-\s*/
-          if versions = skip_definition['version'] && skip_definition['version'].partition(range_partition)
+          if versions = skip_definition['version'] &&
+                        skip_definition['version'].partition(range_partition)
             low, high = __parse_versions(versions)
             range = low..high
             begin
