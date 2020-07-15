@@ -21,7 +21,7 @@ module Elasticsearch
       module Actions
         # Deletes a data stream.
         #
-        # @option arguments [String] :name The name of the data stream
+        # @option arguments [List] :name A comma-separated list of data streams to delete; use `*` to delete all data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html

@@ -31,6 +31,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         #   (options: open,closed,hidden,none,all)
 
+        # @option arguments [Boolean] :write_index_only When true, applies mappings only to the write index of an alias or data stream
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The mapping definition (*Required*)
         #
@@ -75,7 +76,8 @@ module Elasticsearch
           :master_timeout,
           :ignore_unavailable,
           :allow_no_indices,
-          :expand_wildcards
+          :expand_wildcards,
+          :write_index_only
         ].freeze)
       end
     end

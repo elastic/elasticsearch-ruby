@@ -19,14 +19,18 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns data streams.
+        # Provides statistics on operations happening in a data stream.
         #
-        # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
+        # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
+        #   (options: open,closed,hidden,none,all)
+
+        # @option arguments [Boolean] :forbid_closed_indices If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
         #
-        def get_data_stream(arguments = {})
+        def data_streams_stats(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
@@ -35,15 +39,23 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_data_stream/#{Utils.__listify(_name)}"
+                     "_data_stream/#{Utils.__listify(_name)}/_stats"
                    else
-                     "_data_stream"
+                     "_data_stream/_stats"
                    end
-          params = {}
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
           perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:data_streams_stats, [
+          :expand_wildcards,
+          :forbid_closed_indices
+        ].freeze)
       end
     end
   end

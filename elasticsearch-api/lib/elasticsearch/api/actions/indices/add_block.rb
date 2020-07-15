@@ -32,7 +32,7 @@ module Elasticsearch
 
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-blocks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-blocks.html
         #
         def add_block(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
