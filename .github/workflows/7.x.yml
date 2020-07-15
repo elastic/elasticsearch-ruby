@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 7.x
+      - 7.9
   pull_request:
     branches:
       - 7.x
