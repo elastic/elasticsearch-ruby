@@ -1,3 +1,8 @@
+## 7.9.0.pre
+
+* Support for Elasticsearch version 7.9
+* This is a pre-release, full Changelog details will be published with the final release of 7.9.0
+
 ## 7.8.0
 
 ### Client
