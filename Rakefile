@@ -132,27 +132,24 @@ DESC
 task :update_version, :old, :new do |task, args|
   require 'ansi'
 
-  puts "[!!!] Required argument [old] missing".ansi(:red) unless args[:old]
-  puts "[!!!] Required argument [new] missing".ansi(:red) unless args[:new]
+  puts '[!!!] Required argument [old] missing'.ansi(:red) unless args[:old]
+  puts '[!!!] Required argument [new] missing'.ansi(:red) unless args[:new]
 
   files = Dir['**/**/version.rb','**/**/*.gemspec']
 
-  longest_line = files.map { |f| f.size }.max
+  longest_line = files.map(&:size).max
 
-  puts "\n", "= FILES ".ansi(:faint) + ('='*92).ansi(:faint), "\n"
+  puts"\n", '= FILES '.ansi(:faint) + ('='*92).ansi(:faint), "\n"
 
   files.each do |file|
     begin
-      File.open(file, 'r+') do |f|
-        content = f.read
-        if content.match Regexp.new(args[:old])
-          content.gsub! Regexp.new(args[:old]), args[:new]
-          puts "+ [#{file}]".ansi(:green).ljust(longest_line+20) + " [#{args[:old]}] -> [#{args[:new]}]".ansi(:green,:bold)
-          f.rewind
-          f.write content
-        else
-          puts "- [#{file}]".ansi(:yellow).ljust(longest_line+20) + " -".ansi(:faint,:strike)
-        end
+      content = File.read(file)
+      if content.match Regexp.new(args[:old])
+        content.gsub! Regexp.new(args[:old]), args[:new]
+        puts "+ [#{file}]".ansi(:green).ljust(longest_line+20) + " [#{args[:old]}] -> [#{args[:new]}]".ansi(:green,:bold)
+        File.open(file, 'w') { |f| f.puts content }
+      else
+        puts "- [#{file}]".ansi(:yellow).ljust(longest_line+20) + " -".ansi(:faint,:strike)
       end
     rescue Exception => e
       puts "[!!!] #{e.class} : #{e.message}".ansi(:red,:bold)
@@ -160,7 +157,7 @@ task :update_version, :old, :new do |task, args|
     end
   end
 
-  puts "\n\n", "= CHANGELOG ".ansi(:faint) + ('='*88).ansi(:faint), "\n"
+  puts "\n\n", '= CHANGELOG '.ansi(:faint) + ('='*88).ansi(:faint), "\n"
 
   log = `git --no-pager log --reverse --no-color --pretty='* %s' HEAD --not v#{args[:old]} elasticsearch*`.split("\n")
 
