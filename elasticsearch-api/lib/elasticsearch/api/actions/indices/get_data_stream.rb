@@ -21,7 +21,7 @@ module Elasticsearch
       module Actions
         # Returns data streams.
         #
-        # @option arguments [String] :name The name or wildcard expression of the requested data streams
+        # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
