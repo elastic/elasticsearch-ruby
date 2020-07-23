@@ -33,6 +33,7 @@ module Elasticsearch
       # @option arguments [List] :_source_excludes Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
+      # @option arguments [Boolean] :require_alias Sets require_alias for all incoming documents. Defaults to unset (false)
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
       # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
@@ -83,7 +84,8 @@ module Elasticsearch
         :_source,
         :_source_excludes,
         :_source_includes,
-        :pipeline
+        :pipeline,
+        :require_alias
       ].freeze)
     end
   end
