@@ -32,7 +32,6 @@ module Elasticsearch
           # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
           # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
           #   (options: AND,OR)
-
           # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
           # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
           # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
@@ -43,14 +42,12 @@ module Elasticsearch
           # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
           # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
           #   (options: open,closed,hidden,none,all)
-
           # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
           # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
           # @option arguments [String] :q Query in the Lucene query string syntax
           # @option arguments [List] :routing A comma-separated list of specific routing values
           # @option arguments [String] :search_type Search operation type
           #   (options: query_then_fetch,dfs_query_then_fetch)
-
           # @option arguments [Number] :size Number of hits to return (default: 10)
           # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
           # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
@@ -61,7 +58,6 @@ module Elasticsearch
           # @option arguments [String] :suggest_field Specify which field to use for suggestions
           # @option arguments [String] :suggest_mode Specify suggest mode
           #   (options: missing,popular,always)
-
           # @option arguments [Number] :suggest_size How many suggestions to return in response
           # @option arguments [String] :suggest_text The source text for which the suggestions should be returned
           # @option arguments [Time] :timeout Explicit operation timeout
