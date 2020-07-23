@@ -28,7 +28,6 @@ module Elasticsearch
           # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true)
           # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open)
           #   (options: open,closed,hidden,none,all)
-
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The datafeed config (*Required*)
           #
