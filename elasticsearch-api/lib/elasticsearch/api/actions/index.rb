@@ -36,6 +36,7 @@ module Elasticsearch
       # @option arguments [Number] :if_seq_no only perform the index operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the index operation if the last operation that has changed the document has the specified primary term
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
+      # @option arguments [Boolean] :require_alias When true, requires destination to be an alias. Default is false
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
@@ -89,7 +90,8 @@ module Elasticsearch
         :version_type,
         :if_seq_no,
         :if_primary_term,
-        :pipeline
+        :pipeline,
+        :require_alias
       ].freeze)
     end
   end

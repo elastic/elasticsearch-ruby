@@ -30,12 +30,12 @@ module Elasticsearch
       # @option arguments [String] :lang The script language (default: painless)
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
       #   (options: true,false,wait_for)
-
       # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried when a conflict occurs (default: 0)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
+      # @option arguments [Boolean] :require_alias When true, requires destination is an alias. Default is false
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
@@ -91,7 +91,8 @@ module Elasticsearch
         :routing,
         :timeout,
         :if_seq_no,
-        :if_primary_term
+        :if_primary_term,
+        :require_alias
       ].freeze)
     end
   end
