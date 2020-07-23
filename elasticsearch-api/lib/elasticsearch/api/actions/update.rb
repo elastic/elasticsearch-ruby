@@ -36,6 +36,7 @@ module Elasticsearch
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
+      # @option arguments [Boolean] :require_alias When true, requires destination is an alias. Default is false
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
@@ -91,7 +92,8 @@ module Elasticsearch
         :routing,
         :timeout,
         :if_seq_no,
-        :if_primary_term
+        :if_primary_term,
+        :require_alias
       ].freeze)
     end
   end
