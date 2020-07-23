@@ -23,7 +23,6 @@ module Elasticsearch
         #
         # @option arguments [String] :bytes The unit in which to display byte values
         #   (options: b,k,kb,m,mb,g,gb,t,tb,p,pb)
-
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -32,7 +31,6 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values
         #   (options: d,h,m,s,ms,micros,nanos)
-
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
