@@ -27,7 +27,6 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values
         #   (options: d,h,m,s,ms,micros,nanos)
-
         # @option arguments [Boolean] :ts Set to false to disable timestamping
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers

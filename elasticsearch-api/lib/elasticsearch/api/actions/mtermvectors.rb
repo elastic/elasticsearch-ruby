@@ -35,7 +35,6 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte,force)
-
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
       #

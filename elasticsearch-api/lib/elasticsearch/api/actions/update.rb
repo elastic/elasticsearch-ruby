@@ -30,7 +30,6 @@ module Elasticsearch
       # @option arguments [String] :lang The script language (default: painless)
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes.
       #   (options: true,false,wait_for)
-
       # @option arguments [Number] :retry_on_conflict Specify how many times should the operation be retried when a conflict occurs (default: 0)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout

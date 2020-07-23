@@ -34,7 +34,6 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type
       #   (options: internal,external,external_gte,force)
-
       # @option arguments [Hash] :headers Custom HTTP headers
       #
       # *Deprecation notice*:

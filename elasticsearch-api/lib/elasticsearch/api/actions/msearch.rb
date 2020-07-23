@@ -24,7 +24,6 @@ module Elasticsearch
       # @option arguments [List] :type A comma-separated list of document types to use as default
       # @option arguments [String] :search_type Search operation type
       #   (options: query_then_fetch,query_and_fetch,dfs_query_then_fetch,dfs_query_and_fetch)
-
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
