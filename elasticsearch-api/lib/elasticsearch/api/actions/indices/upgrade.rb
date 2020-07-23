@@ -25,7 +25,6 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
         #   (options: open,closed,hidden,none,all)
-
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :wait_for_completion Specify whether the request should block until the all segments are upgraded (default: false)
         # @option arguments [Boolean] :only_ancient_segments If true, only ancient (an older Lucene major release) segments will be upgraded

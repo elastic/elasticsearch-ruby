@@ -28,7 +28,6 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
         # @option arguments [String] :group_by Group tasks by nodes or parent/child relationships
         #   (options: nodes,parents,none)
-
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
