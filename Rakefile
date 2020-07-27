@@ -21,18 +21,22 @@ import 'rake_tasks/doc_generator.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
 require 'pathname'
 
-CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
-SUBPROJECTS = [ 'elasticsearch',
-                'elasticsearch-transport',
-                'elasticsearch-dsl',
-                'elasticsearch-api',
-                'elasticsearch-extensions',
-                'elasticsearch-xpack' ].freeze
+CURRENT_PATH = Pathname(File.expand_path(__dir__))
+SUBPROJECTS = [
+  'elasticsearch',
+  'elasticsearch-transport',
+  'elasticsearch-dsl',
+  'elasticsearch-api',
+  'elasticsearch-extensions',
+  'elasticsearch-xpack'
+].freeze
 
-RELEASE_TOGETHER = [ 'elasticsearch',
-                     'elasticsearch-transport',
-                     'elasticsearch-api',
-                     'elasticsearch-xpack' ].freeze
+RELEASE_TOGETHER = [
+  'elasticsearch',
+  'elasticsearch-transport',
+  'elasticsearch-api',
+  'elasticsearch-xpack'
+].freeze
 
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 
@@ -74,7 +78,7 @@ task :default do
   system "rake --tasks"
 end
 
-desc "Display information about subprojects"
+desc 'Display information about subprojects'
 task :subprojects do
   puts '-'*80
   SUBPROJECTS.each do |project|
@@ -85,11 +89,11 @@ task :subprojects do
   end
 end
 
-desc "Alias for `bundle:install`"
-task :bundle => 'bundle:install'
+desc 'Alias for `bundle:install`'
+task bundle: 'bundle:install'
 
 namespace :bundle do
-  desc "Run `bundle install` in all subprojects"
+  desc 'Run `bundle install` in all subprojects'
   task :install do
     SUBPROJECTS.each do |project|
       puts '-'*80
@@ -98,7 +102,7 @@ namespace :bundle do
     end
   end
 
-  desc "Remove Gemfile.lock in all subprojects"
+  desc 'Remove Gemfile.lock in all subprojects'
   task :clean do
     SUBPROJECTS.each do |project|
       sh "rm -f #{CURRENT_PATH.join(project)}/Gemfile.lock"
@@ -106,7 +110,7 @@ namespace :bundle do
   end
 end
 
-desc "Generate documentation for all subprojects"
+desc 'Generate documentation for all subprojects'
 task :doc do
   SUBPROJECTS.each do |project|
     sh "cd #{CURRENT_PATH.join(project)} && rake doc"
@@ -114,10 +118,11 @@ task :doc do
   end
 end
 
-desc "Release all subprojects to Rubygems"
+desc 'Release all subprojects to Rubygems'
 task :release do
   RELEASE_TOGETHER.each do |project|
     next if project == 'elasticsearch-extensions'
+
     sh "cd #{CURRENT_PATH.join(project)} && rake release"
     puts '-'*80
   end
@@ -231,16 +236,16 @@ task :update_version, :old, :new do |task, args|
   diff = `git --no-pager diff --patch --word-diff=color --minimal elasticsearch*`.split("\n")
 
   puts diff
-          .reject { |l| l =~ /^\e\[1mdiff \-\-git/ }
-          .reject { |l| l =~ /^\e\[1mindex [a-z0-9]{7}/ }
-          .reject { |l| l =~ /^\e\[1m\-\-\- i/ }
-          .reject { |l| l =~ /^\e\[36m@@/ }
-          .map    { |l| l =~ /^\e\[1m\+\+\+ w/ ? "\n#{l}   " + '-'*(104-l.size) : l }
-          .join("\n")
+         .reject { |l| l =~ /^\e\[1mdiff \-\-git/ }
+         .reject { |l| l =~ /^\e\[1mindex [a-z0-9]{7}/ }
+         .reject { |l| l =~ /^\e\[1m\-\-\- i/ }
+         .reject { |l| l =~ /^\e\[36m@@/ }
+         .map    { |l| l =~ /^\e\[1m\+\+\+ w/ ? "\n#{l}   " + '-'*(104-l.size) : l }
+         .join("\n")
 
-  puts "\n\n", "= COMMIT ".ansi(:faint) + ('='*91).ansi(:faint), "\n"
+  puts "\n\n", '= COMMIT '.ansi(:faint) + ('='*91).ansi(:faint), "\n"
 
-  puts  "git add CHANGELOG.md elasticsearch*",
+  puts  'git add CHANGELOG.md elasticsearch*',
         "git commit --verbose --message='Release #{args[:new]}' --edit",
         "rake release"
         "\n"
