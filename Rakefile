@@ -247,18 +247,6 @@ task :update_version, :old, :new do |task, args|
 
   puts  'git add CHANGELOG.md elasticsearch*',
         "git commit --verbose --message='Release #{args[:new]}' --edit",
-        "rake release"
-        "\n"
-end
-
-desc 'Run code examples for documentation'
-task :doc_examples do
-  require 'rake/testtask'
-  require 'rspec'
-  require 'rspec/core/rake_task'
-
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = 'examples/docs/spec/**{,/*/**}/*_spec.rb'
-  end
-  Rake::Task['spec'].execute
+        'rake release',
+        ''
 end
