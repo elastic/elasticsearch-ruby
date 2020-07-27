@@ -18,10 +18,12 @@
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'rake_tasks/doc_generator.rake'
+import 'rake_tasks/automated_release.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
 require 'pathname'
 
 CURRENT_PATH = Pathname(File.expand_path(__dir__))
+
 SUBPROJECTS = [
   'elasticsearch',
   'elasticsearch-transport',

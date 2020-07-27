@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.bindir = 'bin'
 
-  s.extra_rdoc_files  = [ 'README.md', 'LICENSE' ]
+  s.extra_rdoc_files  = [ 'README.md', 'LICENSE.txt' ]
   s.rdoc_options      = [ '--charset=UTF-8' ]
 
   s.required_ruby_version = '>= 2.5'
