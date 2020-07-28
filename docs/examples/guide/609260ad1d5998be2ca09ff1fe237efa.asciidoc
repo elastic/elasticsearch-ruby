@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.get_mapping(
-  index: 'my-index'
-)
-puts response
-----

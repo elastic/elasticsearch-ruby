@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-index-000001',
+  body: {
+    properties: {
+      city: {
+        type: 'text',
+        fields: {
+          raw: {
+            type: 'keyword'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

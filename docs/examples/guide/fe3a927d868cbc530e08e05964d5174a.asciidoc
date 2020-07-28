@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    product: 'chocolate',
+    price: [
+      20,
+      4
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  body: {
+    query: {
+      term: {
+        product: 'chocolate'
+      }
+    },
+    sort: [
+      {
+        price: {
+          order: 'asc',
+          mode: 'avg'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

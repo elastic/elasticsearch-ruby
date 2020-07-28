@@ -1,0 +1,61 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        city: {
+          type: 'text',
+          fields: {
+            raw: {
+              type: 'keyword'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    city: 'New York'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    city: 'York'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match: {
+        city: 'york'
+      }
+    },
+    sort: {
+      "city.raw": 'asc'
+    },
+    aggregations: {
+      "Cities": {
+        terms: {
+          field: 'city.raw'
+        }
+      }
+    }
+  }
+)
+puts response
+----

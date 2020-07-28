@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    sort: [
+      {
+        post_date: {
+          order: 'asc'
+        }
+      },
+      'user',
+      {
+        name: 'desc'
+      },
+      {
+        age: 'desc'
+      },
+      '_score'
+    ],
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

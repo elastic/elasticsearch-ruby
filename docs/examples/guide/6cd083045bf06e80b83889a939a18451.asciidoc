@@ -1,0 +1,99 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        user: {
+          type: 'nested'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    group: 'fans',
+    user: [
+      {
+        first: 'John',
+        last: 'Smith'
+      },
+      {
+        first: 'Alice',
+        last: 'White'
+      }
+    ]
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      nested: {
+        path: 'user',
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  "user.first": 'Alice'
+                }
+              },
+              {
+                match: {
+                  "user.last": 'Smith'
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      nested: {
+        path: 'user',
+        query: {
+          bool: {
+            must: [
+              {
+                match: {
+                  "user.first": 'Alice'
+                }
+              },
+              {
+                match: {
+                  "user.last": 'White'
+                }
+              }
+            ]
+          }
+        },
+        inner_hits: {
+          highlight: {
+            fields: {
+              "user.first": {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----
