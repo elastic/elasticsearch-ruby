@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.get_mapping(
+  index: '*'
+)
+puts response
+
+response = client.indices.get_mapping(
+  index: '_all'
+)
+puts response
+
+response = client.indices.get_mapping
+puts response
+----

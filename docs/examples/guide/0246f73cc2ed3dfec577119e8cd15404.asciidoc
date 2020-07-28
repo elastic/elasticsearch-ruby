@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-index-000001',
+  body: {
+    properties: {
+      name: {
+        properties: {
+          last: {
+            type: 'text'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,53 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        date: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    date: '2015-01-01'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    date: '2015-01-01T12:10:30Z'
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 3,
+  body: {
+    date: 1_420_070_400_001
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    sort: {
+      date: 'asc'
+    }
+  }
+)
+puts response
+----
