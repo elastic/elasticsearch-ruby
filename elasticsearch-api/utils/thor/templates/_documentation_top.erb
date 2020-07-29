@@ -3,6 +3,7 @@
 <%- else %>
   <%= '  '*(@namespace_depth+3) %># TODO: Description
 <%- end %>
+<%= stability_doc_helper(@spec['stability']) -%>
 <%= '  '*(@namespace_depth+3) %>#
 <%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
   <%- @parts.each do |name, info| -%>
