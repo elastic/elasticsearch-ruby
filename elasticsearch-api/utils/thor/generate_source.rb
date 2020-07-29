@@ -234,6 +234,32 @@ module Elasticsearch
         "# @option arguments [#{tipo}] :#{name} #{description} #{required} #{deprecated} #{options}\n"
       end
 
+      def stability_doc_helper(stability)
+        return if stability == 'stable'
+
+        if stability == 'experimental'
+          <<~MSG
+            # This functionality is Experimental and may be changed or removed
+            # completely in a future release. Elastic will take a best effort approach
+            # to fix any issues, but experimental features are not subject to the
+            # support SLA of official GA features.
+          MSG
+        elsif stability == 'beta'
+          <<~MSG
+            # This functionality is in Beta and is subject to change. The design and
+            # code is less mature than official GA features and is being provided
+            # as-is with no warranties. Beta features are not subject to the support
+            # SLA of official GA features.
+          MSG
+        else
+          <<~MSG
+            # This functionality is subject to potential breaking changes within a
+            # minor version, meaning that your referencing code may break when this
+            # library is upgraded.
+          MSG
+        end
+      end
+
       def generate_tests
         copy_file 'templates/test_helper.rb', @output.join('test').join('test_helper.rb')
 
