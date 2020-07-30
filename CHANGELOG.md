@@ -1,3 +1,16 @@
+## 7.8.1
+
+### Client
+
+- Support for Elasticsearch version `7.8.1`.
+- Bug fix: Fixed a bug on the API endpoints documentation for RubyDocs: there was an unnecessary empty new line in the documentation for parameters that have options. So the parameters before that empty newline were not being documented in RubyDocs.
+
+### X-Pack
+
+#### API Changes
+
+- Update to `info` endpoint. New parameter `accept_enterprise` (boolean): If an enterprise license is installed, return the type and mode as 'enterprise' (default: false).
+
 ## 7.8.0
 
 ### Client
