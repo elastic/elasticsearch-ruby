@@ -21,6 +21,10 @@ module Elasticsearch
       module DataFrameTransformDeprecated
         module Actions
           # Retrieves configuration information for transforms.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :transform_id The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
           # @option arguments [Int] :from skips a number of transform configs, defaults to 0

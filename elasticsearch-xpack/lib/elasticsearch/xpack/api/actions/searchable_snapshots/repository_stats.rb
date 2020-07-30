@@ -21,6 +21,10 @@ module Elasticsearch
       module SearchableSnapshots
         module Actions
           # Retrieve usage statistics about a snapshot repository.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :repository The repository for which to get the stats for
           # @option arguments [Hash] :headers Custom HTTP headers
