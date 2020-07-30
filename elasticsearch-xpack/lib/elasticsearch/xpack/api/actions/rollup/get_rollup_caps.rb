@@ -21,6 +21,10 @@ module Elasticsearch
       module Rollup
         module Actions
           # Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the index to check rollup capabilities on, or left blank for all jobs
           # @option arguments [Hash] :headers Custom HTTP headers
