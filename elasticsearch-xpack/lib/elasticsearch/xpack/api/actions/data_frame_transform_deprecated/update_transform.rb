@@ -21,6 +21,10 @@ module Elasticsearch
       module DataFrameTransformDeprecated
         module Actions
           # Updates certain properties of a transform.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :transform_id The id of the transform.  (*Required*)
           # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.

@@ -21,6 +21,10 @@ module Elasticsearch
       module Rollup
         module Actions
           # Stops an existing, started rollup job.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the job to stop
           # @option arguments [Boolean] :wait_for_completion True if the API should block until the job has fully stopped, false if should be executed async. Defaults to false.
