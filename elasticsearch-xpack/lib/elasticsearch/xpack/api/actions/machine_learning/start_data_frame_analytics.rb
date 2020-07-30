@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Starts a data frame analytics job.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics to start
           # @option arguments [Time] :timeout Controls the time to wait until the task has started. Defaults to 20 seconds

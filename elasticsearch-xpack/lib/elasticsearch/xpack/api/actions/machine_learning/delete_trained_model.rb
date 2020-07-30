@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :model_id The ID of the trained model to delete
           # @option arguments [Hash] :headers Custom HTTP headers

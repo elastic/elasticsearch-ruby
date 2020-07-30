@@ -21,11 +21,16 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Retrieves usage information for data frame analytics jobs.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
           # @option arguments [Int] :from skips a number of analytics
           # @option arguments [Int] :size specifies a max number of analytics to get
+          # @option arguments [Boolean] :verbose whether the stats response should be verbose
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-dfanalytics-stats.html
@@ -55,7 +60,8 @@ module Elasticsearch
           ParamsRegistry.register(:get_data_frame_analytics_stats, [
             :allow_no_match,
             :from,
-            :size
+            :size,
+            :verbose
           ].freeze)
         end
       end
