@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Retrieves configuration information for data frame analytics jobs.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)

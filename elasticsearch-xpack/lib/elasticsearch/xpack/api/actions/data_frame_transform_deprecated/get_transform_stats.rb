@@ -21,6 +21,10 @@ module Elasticsearch
       module DataFrameTransformDeprecated
         module Actions
           # Retrieves usage information for transforms.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
           # @option arguments [Number] :from skips a number of transform stats, defaults to 0
