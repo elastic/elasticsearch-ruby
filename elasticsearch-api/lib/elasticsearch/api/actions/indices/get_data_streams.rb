@@ -20,6 +20,10 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns data streams.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :name The name or wildcard expression of the requested data streams
         # @option arguments [Hash] :headers Custom HTTP headers
