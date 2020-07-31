@@ -26,7 +26,7 @@ module Elasticsearch
           # to fix any issues, but experimental features are not subject to the
           # support SLA of official GA features.
           #
-          # @option arguments [String] :type Default document type for items which don't provide one   *Deprecated*
+          # @option arguments [String] :type Default document type for items which don't provide one *Deprecated*
           # @option arguments [String] :system_id Identifier of the monitored system
           # @option arguments [String] :system_api_version API Version of the monitored system
           # @option arguments [String] :interval Collection interval (e.g., '10s' or '10000ms') of the payload
