@@ -21,17 +21,15 @@ module Elasticsearch
       module Actions
         # Returns basic statistics about performance of cluster nodes.
         #
-        # @option arguments [String] :bytes The unit in which to display byte values
-        #   (options: b,k,kb,m,mb,g,gb,t,tb,p,pb)
+        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)
-        # @option arguments [Boolean] :local Calculate the selected nodes using the local cluster state rather than the state from master node (default: false)   *Deprecated*
+        # @option arguments [Boolean] :local Calculate the selected nodes using the local cluster state rather than the state from master node (default: false) *Deprecated*
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :time The unit in which to display time values
-        #   (options: d,h,m,s,ms,micros,nanos)
+        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #

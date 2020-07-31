@@ -20,7 +20,7 @@ module Elasticsearch
     module Actions
       # Returns information and statistics about terms in the fields of a particular document.
       #
-      # @option arguments [String] :index The index in which the document resides.  (*Required*)
+      # @option arguments [String] :index The index in which the document resides. (*Required*)
       # @option arguments [String] :id The id of the document, when not specified a doc param should be supplied.
       # @option arguments [String] :type The type of the document.
       # @option arguments [Boolean] :term_statistics Specifies if total term frequency and document frequency should be returned.
@@ -33,8 +33,7 @@ module Elasticsearch
       # @option arguments [String] :routing Specific routing value.
       # @option arguments [Boolean] :realtime Specifies if request is real-time as opposed to near-real-time (default: true).
       # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type
-      #   (options: internal,external,external_gte,force)
+      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte, force)
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define parameters and or supply a document to get termvectors for. See documentation.
       #

@@ -26,8 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :detailed Return detailed task information (default: false)
         # @option arguments [String] :parent_task_id Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
-        # @option arguments [String] :group_by Group tasks by nodes or parent/child relationships
-        #   (options: nodes,parents,none)
+        # @option arguments [String] :group_by Group tasks by nodes or parent/child relationships (options: nodes, parents, none)
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
