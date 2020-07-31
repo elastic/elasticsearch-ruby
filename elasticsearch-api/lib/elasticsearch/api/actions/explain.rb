@@ -22,11 +22,10 @@ module Elasticsearch
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document   *Deprecated*
+      # @option arguments [String] :type The type of the document *Deprecated*
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
       # @option arguments [String] :analyzer The analyzer for the query string query
-      # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
-      #   (options: AND,OR)
+      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
       # @option arguments [String] :df The default field for query string query (default: _all)
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored

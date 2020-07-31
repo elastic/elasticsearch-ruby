@@ -20,7 +20,7 @@ module Elasticsearch
     module Actions
       # Allows to retrieve a large numbers of results from a single search request.
       #
-      # @option arguments [String] :scroll_id The scroll ID   *Deprecated*
+      # @option arguments [String] :scroll_id The scroll ID *Deprecated*
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
       # @option arguments [String] :scroll_id The scroll ID for scrolled search
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
