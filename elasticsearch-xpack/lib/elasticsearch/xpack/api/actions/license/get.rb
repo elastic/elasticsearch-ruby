@@ -23,7 +23,7 @@ module Elasticsearch
           # Retrieves licensing information for the cluster
           #
           # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-          # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true   *Deprecated*
+          # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true *Deprecated*
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html
