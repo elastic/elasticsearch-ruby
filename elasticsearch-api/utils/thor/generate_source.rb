@@ -229,10 +229,12 @@ module Elasticsearch
         info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
         tipo = info['type'] ? info['type'].capitalize : 'String'
         description = info['description'] ? info['description'].strip : '[TODO]'
-        options = info['options'] ? "\n    #   (options: #{info['options'].join(', '.strip)})" : nil
-        required = info['required'] ? ' (*Required*)' : ''
-        deprecated = info['deprecated'] ? ' *Deprecated*' : ''
-        "# @option arguments [#{tipo}] :#{name} #{description} #{required} #{deprecated} #{options}\n"
+        options = info['options'] ? "(options: #{info['options'].join(', ').strip})" : nil
+        required = info['required'] ? '(*Required*)' : ''
+        deprecated = info['deprecated'] ? '*Deprecated*' : ''
+        optionals = [required, deprecated, options].join(' ').strip
+
+        "# @option arguments [#{tipo}] :#{name} #{description} #{optionals}\n"
       end
 
       def stability_doc_helper(stability)
