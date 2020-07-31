@@ -22,8 +22,7 @@ module Elasticsearch
         # Returns information about any matching indices, aliases, and data streams
         #
         # @option arguments [List] :name A comma-separated list of names or wildcard expressions
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open)
-        #   (options: open,closed,hidden,none,all)
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index.html
