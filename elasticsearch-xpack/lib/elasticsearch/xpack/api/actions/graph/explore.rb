@@ -23,7 +23,7 @@ module Elasticsearch
           # Explore extracted and summarized information about the documents and terms in an index.
           #
           # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-          # @option arguments [List] :type A comma-separated list of document types to search; leave empty to perform the operation on all types   *Deprecated*
+          # @option arguments [List] :type A comma-separated list of document types to search; leave empty to perform the operation on all types *Deprecated*
           # @option arguments [String] :routing Specific routing value
           # @option arguments [Time] :timeout Explicit operation timeout
           # @option arguments [Hash] :headers Custom HTTP headers
