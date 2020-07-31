@@ -21,7 +21,7 @@ module Elasticsearch
       # Allows to get multiple documents in one request.
       #
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document   *Deprecated*
+      # @option arguments [String] :type The type of the document *Deprecated*
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
