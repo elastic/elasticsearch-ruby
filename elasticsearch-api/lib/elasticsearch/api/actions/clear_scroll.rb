@@ -20,7 +20,7 @@ module Elasticsearch
     module Actions
       # Explicitly clears the search context for a scroll.
       #
-      # @option arguments [List] :scroll_id A comma-separated list of scroll IDs to clear   *Deprecated*
+      # @option arguments [List] :scroll_id A comma-separated list of scroll IDs to clear *Deprecated*
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
       #

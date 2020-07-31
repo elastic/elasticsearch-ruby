@@ -26,8 +26,7 @@ module Elasticsearch
         # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)
         # @option arguments [Number] :threads Specify the number of threads to provide information for (default: 3)
         # @option arguments [Boolean] :ignore_idle_threads Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
-        # @option arguments [String] :type The type to sample (default: cpu)
-        #   (options: cpu,wait,block)
+        # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block)
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #

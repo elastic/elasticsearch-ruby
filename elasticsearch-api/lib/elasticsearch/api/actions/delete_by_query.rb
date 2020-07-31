@@ -23,23 +23,19 @@ module Elasticsearch
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :analyzer The analyzer to use for the query string
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
-      # @option arguments [String] :default_operator The default operator for query string query (AND or OR)
-      #   (options: AND,OR)
+      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
       # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
       # @option arguments [Number] :from Starting offset (default: 0)
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-      # @option arguments [String] :conflicts What to do when the delete by query hits version conflicts?
-      #   (options: abort,proceed)
-      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-      #   (options: open,closed,hidden,none,all)
+      # @option arguments [String] :conflicts What to do when the delete by query hits version conflicts? (options: abort, proceed)
+      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [String] :q Query in the Lucene query string syntax
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
-      # @option arguments [String] :search_type Search operation type
-      #   (options: query_then_fetch,dfs_query_then_fetch)
+      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Time] :search_timeout Explicit timeout for each search request. Defaults to no timeout.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
