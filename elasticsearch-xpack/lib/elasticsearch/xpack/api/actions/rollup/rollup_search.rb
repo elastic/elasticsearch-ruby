@@ -23,7 +23,7 @@ module Elasticsearch
           # Enables searching rolled-up data using the standard query DSL.
           #
           # @option arguments [List] :index The indices or index-pattern(s) (containing rollup or regular data) that should be searched
-          # @option arguments [String] :type The doc type inside the index   *Deprecated*
+          # @option arguments [String] :type The doc type inside the index *Deprecated*
           # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
           # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
           # @option arguments [Hash] :headers Custom HTTP headers

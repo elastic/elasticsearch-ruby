@@ -26,8 +26,7 @@ module Elasticsearch
           # @option arguments [Int] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
           # @option arguments [Time] :timeout Timeout after which the analysis will be aborted
           # @option arguments [String] :charset Optional parameter to specify the character set of the file
-          # @option arguments [String] :format Optional parameter to specify the high level file format
-          #   (options: ndjson,xml,delimited,semi_structured_text)
+          # @option arguments [String] :format Optional parameter to specify the high level file format (options: ndjson, xml, delimited, semi_structured_text)
           # @option arguments [Boolean] :has_header_row Optional parameter to specify whether a delimited file includes the column names in its first row
           # @option arguments [List] :column_names Optional parameter containing a comma separated list of the column names for a delimited file
           # @option arguments [String] :delimiter Optional parameter to specify the delimiter character for a delimited file - must be a single character
