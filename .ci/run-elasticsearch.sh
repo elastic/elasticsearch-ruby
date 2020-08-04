@@ -153,6 +153,17 @@ if [[ "$NODE_NAME" == "instance" ]]; then
   cert_validation_flags="--cacert /usr/share/elasticsearch/config/certs/ca.crt --resolve ${NODE_NAME}:443:127.0.0.1"
 fi
 
+# Pull the container, retry on failures up to 5 times with
+# short delays between each attempt. Fixes most transient network errors.
+docker_pull_attempts=0
+until [ "$docker_pull_attempts" -ge 5 ]
+do
+    docker pull docker.elastic.co/elasticsearch/"$ELASTICSEARCH_VERSION" && break
+    docker_pull_attempts=$((docker_pull_attempts+1))
+    echo "Failed to pull image, retrying in 10 seconds (retry $docker_pull_attempts/5)..."
+    sleep 10
+done
+
 echo -e "\033[34;1mINFO:\033[0m Starting container $NODE_NAME \033[0m"
 set -x
 docker run \
