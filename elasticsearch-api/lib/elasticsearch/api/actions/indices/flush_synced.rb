@@ -27,6 +27,11 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
+        # *Deprecation notice*:
+        # Synced flush is deprecated and will be removed in 8.0. Use flush instead.
+        # Deprecated since version 7.6.0
+        #
+        #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-synced-flush-api.html
         #
         def flush_synced(arguments = {})
