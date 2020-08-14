@@ -1,12 +1,12 @@
 [[release_notes_75]]
-=== 7.5 Release notes
+= 7.5 Release notes
 
 - Support for Elasticsearch 7.5.
 - Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.
 - Specs have been updated to address new/deprecated parameters.
 - Ruby versions tested: 2.3.8, 2.4.9, 2.5.7, 2.6.5 and 2.7.0 (new).
 
-==== API
+== API
 
 Endpoints that changed:
 
@@ -45,7 +45,7 @@ Endpoints that changed:
 - `termvectors`: `parent` parameter is gone.
 - `update`: `version` parameter is not supported anymore.
 
-==== X-Pack
+== X-Pack
 
 Some urls changed internally to remove `_xpack`, but it shouldn't affect the client's API.
 

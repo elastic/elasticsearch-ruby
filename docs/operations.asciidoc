@@ -1,0 +1,16 @@
+[[operations]]
+== Operations
+
+The Rubygems listed on this page make it easier to operate with {es} by using 
+the Ruby client.
+
+* <<activemodel_activerecord>>
+* <<ruby_on_rails>>
+* <<persistence>>
+
+include::model.asciidoc[]
+
+include::rails.asciidoc[]
+
+include::persistence.asciidoc[]
+

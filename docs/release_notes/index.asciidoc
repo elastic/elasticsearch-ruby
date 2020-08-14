@@ -1,7 +1,9 @@
 [[release_notes]]
-== Release Notes
+= Release Notes
 
-=== 7.x
+[float]
+== 7.x
+
 * <<release_notes_781, 7.8.1 Release Notes>>
 * <<release_notes_78, 7.8 Release Notes>>
 * <<release_notes_77, 7.7 Release Notes>>
@@ -9,9 +11,9 @@
 * <<release_notes_75, 7.5 Release Notes>>
 * <<release_notes_70, 7.0 Release Notes>>
 
-include::781.asciidoc[]
-include::78.asciidoc[]
-include::77.asciidoc[]
-include::76.asciidoc[]
-include::75.asciidoc[]
-include::70.asciidoc[]
+include::781.asciidoc[leveloffset=+1]
+include::78.asciidoc[leveloffset=+1]
+include::77.asciidoc[leveloffset=+1]
+include::76.asciidoc[leveloffset=+1]
+include::75.asciidoc[leveloffset=+1]
+include::70.asciidoc[leveloffset=+1]

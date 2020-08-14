@@ -1,0 +1,11 @@
+[[quickstart]]
+== Quickstart
+
+This section gives you a quick overview of the Ruby client and how the main 
+functions work.
+
+
+[[crud-operations]]
+=== CRUD operations
+
+In this section, you can find examples of the {es} basic operations.

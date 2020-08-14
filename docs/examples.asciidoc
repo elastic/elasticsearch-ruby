@@ -1,0 +1,55 @@
+[[examples]]
+== Examples
+
+You need the `elasticsearch` gem <<ruby-install,installed>> to use the examples 
+below.
+
+[float]
+[[simple-usage]]
+=== Simple usage
+
+This section shows you how to make simple {es} operations by using the Ruby 
+client.
+
+The code snippet below creates the {es} client. The `log: true` parameter makes 
+sure that the output is logged to the console.
+
+[source,ruby]
+------------------------------------
+require 'elasticsearch'
+client = Elasticsearch::Client.new log: true
+------------------------------------
+
+
+Use the following line to check cluster health:
+
+[source,ruby]
+------------------------------------
+client.cluster.health
+------------------------------------
+
+
+The next snippet indexes a document to `my-index` and creates `my-index` if it 
+does not exist:
+
+[source,ruby]
+------------------------------------
+client.index index: 'my-index', id: 1, body: { title: 'Test' }
+------------------------------------
+
+
+The following line refreshes `my-index` to make sure that the indexed 
+document is available for `search`:
+
+[source,ruby]
+------------------------------------
+client.indices.refresh index: 'my-index'
+------------------------------------
+
+
+The line below runs a search query on `my-index`:
+
+[source,ruby]
+------------------------------------
+client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
+------------------------------------
