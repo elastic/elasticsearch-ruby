@@ -1,17 +1,20 @@
 [[ruby_on_rails]]
-== Ruby On Rails
+=== Ruby On Rails
 
 The `elasticsearch-rails` http://rubygems.org/gems/elasticsearch-rails[Rubygem]
 provides features suitable for Ruby on Rails applications.
 
-=== Features at a Glance
+==== Features at a Glance
 
 * Rake tasks for importing data from application models
 * Integration with Rails' instrumentation framework
 * Templates for generating example Rails application
 
-=== Example applications
+==== Example applications
 
-You can generate a fully working example Ruby on Rails application with templates provides.
+You can generate a fully working example Ruby on Rails application by using the 
+provided templates.
 
-Please refer to the https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails[documentation] for more information.
+Consult the 
+https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-rails[documentation] 
+for more information.

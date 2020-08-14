@@ -1,16 +1,16 @@
 [[release_notes_78]]
-=== 7.8 Release notes
+= 7.8 Release notes
 
-==== Client
+== Client
 
 - Support for Elasticsearch version `7.8`.
 - Surface deprecation headers from Elasticsearch. When there's a `warning` response header in Elasticsearch's response, the client will emit a warning with `warn`.
 - Typhoeus is supported again, version 1.4+ and has been added back to the docs.
 - Adds documentation and example for integrating with Elastic APM.
 
-==== API
+=== API
 
-===== New API Endpoints
+==== New API Endpoints
 
 - `abort_benchmark`
 - `benchmark`
@@ -33,7 +33,7 @@ Experimental endpoints:
 - `indices.put_index_template`
 - `indices.simulate_index_template`
 
-===== API Changes
+==== API Changes
 
 - `cat/thread_pool`: `size` is deprecated.
 - `indices.get_data_streams`: `name` is now a string instead of list, the name or wildcard expression of the requested data streams.
@@ -42,9 +42,9 @@ Experimental endpoints:
 - `snapshot.delete_repository`: New parameter `repository`, name of the snapshot repository, wildcard (`*`) patterns are now supported.
 - `task.cancel`: new parameter `wait_for_completion` (boolean) Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false.
 
-==== X-Pack
+=== X-Pack
 
-===== New API Endpoints
+==== New API Endpoints
 
 New namespace: `indices`
 
@@ -59,7 +59,7 @@ New namespace: `searchable_snapshots`
 - `repository_stats`
 - `stats`
 
-===== API Changes
+==== API Changes
 
 - `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters.
 - `machine_learning.delete_data_frame_analytics` new param `timeout`: controls the time to wait until a job is deleted. Defaults to 1 minute.

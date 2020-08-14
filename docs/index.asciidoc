@@ -1,11 +1,17 @@
-= Ruby And Rails Integrations
+= Ruby and Rails Integrations
 
-include::client.asciidoc[]
+:doctype:           book
 
-include::model.asciidoc[]
+include::{docs-root}/shared/versions/stack/{source_branch}.asciidoc[]
 
-include::rails.asciidoc[]
+include::{docs-root}/shared/attributes.asciidoc[]
 
-include::persistence.asciidoc[]
+include::overview.asciidoc[]
+
+include::install.asciidoc[]
+
+include::operations.asciidoc[]
+
+include::examples.asciidoc[]
 
 include::release_notes/index.asciidoc[]

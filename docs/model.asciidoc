@@ -1,13 +1,15 @@
 [[activemodel_activerecord]]
-== ActiveModel / ActiveRecord
+=== ActiveModel / ActiveRecord
 
 The `elasticsearch-model` http://rubygems.org/gems/elasticsearch-model[Rubygem]
-provides integration with Ruby domain objects ("models"), commonly found e.g. in Ruby on Rails applications.
+provides integration with Ruby domain objects ("models"), commonly found for 
+example, in Ruby on Rails applications.
 
-It uses the `elasticsearch` Rubygem as the client communicating with the Elasticsearch cluster.
+It uses the `elasticsearch` Rubygem as the client communicating with the {es} 
+cluster.
 
 
-=== Features at a Glance
+==== Features at a Glance
 
 * ActiveModel integration with adapters for ActiveRecord and Mongoid
 * Enumerable-based wrapper for search results
@@ -18,7 +20,7 @@ It uses the `elasticsearch` Rubygem as the client communicating with the Elastic
 * Convenience methods for (re)creating the index, setting up mappings, indexing documents, ...
 
 
-=== Usage
+==== Usage
 
 Add the library to your Gemfile:
 
@@ -47,8 +49,8 @@ response.took
 # => 3
 ------------------------------------
 
-It is possible to either return results as model instances, or decorated documents from Elasticsearch,
-with the `records` and `results` methods, respectively:
+It is possible to either return results as model instances, or decorated 
+documents from {es}, with the `records` and `results` methods, respectively:
 
 [source,ruby]
 ------------------------------------
@@ -63,5 +65,6 @@ response.results.first._source.title
 # => "Quick brown fox"
 ------------------------------------
 
-Please see the full https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model[documentation]
+Consult the 
+https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model[documentation]
 for more information.
