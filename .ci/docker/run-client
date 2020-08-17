@@ -9,6 +9,15 @@
 #   - $ELASTICSEARCH_VERSION
 #
 
+docker_pull_attempts=0
+until [ "$docker_pull_attempts" -ge 5 ]
+do
+    docker pull docker.elastic.co/elasticsearch/"$ELASTICSEARCH_VERSION" && break
+    docker_pull_attempts=$((docker_pull_attempts+1))
+    echo "Failed to pull image, retrying in 10 seconds (retry $docker_pull_attempts/5)..."
+    sleep 10
+done
+
 # run elasticsearch
 docker run \
   --rm \
