@@ -66,4 +66,4 @@
         .ci/run-tests
     publishers:
     - email:
-        recipients: infra-root+build@elastic.co
+        recipients: build-lang-clients@elastic.co
