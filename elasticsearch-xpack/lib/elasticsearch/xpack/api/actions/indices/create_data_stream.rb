@@ -20,11 +20,10 @@ module Elasticsearch
     module API
       module Indices
         module Actions
-          # Creates or updates a data stream
+          # Creates a data stream
           #
           # @option arguments [String] :name The name of the data stream
           # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The data stream definition
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
           #
@@ -41,7 +40,7 @@ module Elasticsearch
             path   = "_data_stream/#{Elasticsearch::API::Utils.__listify(_name)}"
             params = {}
 
-            body = arguments[:body]
+            body = nil
             perform_request(method, path, params, body, headers).body
           end
         end
