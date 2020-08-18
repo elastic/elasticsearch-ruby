@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The start datafeed parameters
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-start-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ml-start-datafeed.html
           #
           def start_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]

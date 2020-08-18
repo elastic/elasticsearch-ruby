@@ -27,7 +27,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The role mapping to add (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-put-role-mapping.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/security-api-put-role-mapping.html
           #
           def put_role_mapping(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

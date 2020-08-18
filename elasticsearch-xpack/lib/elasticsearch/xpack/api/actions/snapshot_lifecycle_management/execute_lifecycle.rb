@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-lifecycle.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/slm-api-execute-lifecycle.html
           #
           def execute_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]

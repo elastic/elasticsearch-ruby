@@ -28,7 +28,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-decision.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/autoscaling-get-autoscaling-decision.html
           #
           def get_autoscaling_decision(arguments = {})
             headers = arguments.delete(:headers) || {}

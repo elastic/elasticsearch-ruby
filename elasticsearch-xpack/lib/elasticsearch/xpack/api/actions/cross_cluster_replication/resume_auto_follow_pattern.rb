@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :name The name of the auto follow pattern to resume discovering new indices to follow.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-resume-auto-follow-pattern.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ccr-resume-auto-follow-pattern.html
           #
           def resume_auto_follow_pattern(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

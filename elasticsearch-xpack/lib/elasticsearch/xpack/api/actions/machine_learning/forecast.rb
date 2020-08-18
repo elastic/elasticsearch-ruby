@@ -28,7 +28,7 @@ module Elasticsearch
           # @option arguments [String] :max_model_memory The max memory able to be used by the forecast. Default is 20mb.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-forecast.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ml-forecast.html
           #
           def forecast(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
