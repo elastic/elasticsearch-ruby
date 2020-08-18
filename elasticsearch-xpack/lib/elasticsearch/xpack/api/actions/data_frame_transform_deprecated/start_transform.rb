@@ -35,7 +35,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/start-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/start-transform.html
           #
           def start_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

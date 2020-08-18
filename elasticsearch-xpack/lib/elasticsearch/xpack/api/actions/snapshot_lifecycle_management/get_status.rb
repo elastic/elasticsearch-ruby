@@ -24,7 +24,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-status.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/slm-api-get-status.html
           #
           def get_status(arguments = {})
             headers = arguments.delete(:headers) || {}

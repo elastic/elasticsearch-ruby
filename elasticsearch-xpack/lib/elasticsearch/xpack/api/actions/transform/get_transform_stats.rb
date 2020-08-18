@@ -28,7 +28,7 @@ module Elasticsearch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-transform-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/get-transform-stats.html
           #
           def get_transform_stats(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

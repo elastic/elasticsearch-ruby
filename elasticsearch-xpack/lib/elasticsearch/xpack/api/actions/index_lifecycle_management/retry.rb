@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-retry-policy.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ilm-retry-policy.html
           #
           def retry(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

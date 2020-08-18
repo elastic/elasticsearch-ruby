@@ -32,7 +32,7 @@ module Elasticsearch
           # @option arguments [Int] :size specifies a max number of analytics to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-dfanalytics.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/get-dfanalytics.html
           #
           def get_data_frame_analytics(arguments = {})
             headers = arguments.delete(:headers) || {}

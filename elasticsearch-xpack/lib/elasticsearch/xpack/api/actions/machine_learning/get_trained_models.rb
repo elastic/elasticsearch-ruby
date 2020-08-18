@@ -36,7 +36,7 @@ module Elasticsearch
           # @option arguments [Boolean] :for_export Omits fields that are illegal to set on model PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-inference.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/get-inference.html
           #
           def get_trained_models(arguments = {})
             headers = arguments.delete(:headers) || {}

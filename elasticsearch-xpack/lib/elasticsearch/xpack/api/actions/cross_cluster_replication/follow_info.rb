@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-follow-info.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/ccr-get-follow-info.html
           #
           def follow_info(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
