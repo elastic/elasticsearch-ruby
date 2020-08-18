@@ -1,3 +1,57 @@
+## 7.9.0
+
+### Client
+
+- Support for Elasticsearch version `7.9.0`.
+- Transport/Connection: Considers attributes values for equality - https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af[Commit].
+- When an API endpoint accepts both `GET` and `POST`, the client will always use `POST` when a request body is present.
+
+### API
+
+- Documentation for API endpoints will point out when an API is experimental, beta or unstable.
+
+#### New API Endpoints
+
+- New namespace: `dangling_indices`
+- `dangling_indices.delete_dangling_index`
+- `dangling_indices.import_dangling_index`
+- `dangling_indices.list_dangling_indices`
+- `indices.add_block`
+
+Experimental endpoints:
+- `indices.resolve_index`
+- `simulate_template`
+
+#### API Changes
+
+- `field_caps`: adds body parameter allowing to filter indices if `index_filter` is provided.
+- `eql.search`: new parameters `wait_for_completion`, `keep_on_completion` and `keep_alive`.
+- `info`: New parameter `accept_enterprise`: If an enterprise license is installed, return the type and mode as 'enterprise' (default: false).
+- `indices.put_mapping`: new parameter `write_index_only`.
+
+
+### X-Pack
+
+#### New API Endpoints
+
+The Ruby client now supports all the X-Pack API endpoints.
+
+- New namespace `autoscaling`: `autoscaling.delete_autoscaling_policy`, `autoscaling.get_autoscaling_decision`, `autoscaling.get_autoscaling_policy`, `autoscaling.put_autoscaling_policy`
+- New namespace `enrich`: `enrich.delete_policy`, `enrich.execute_policy`, `enrich.get_policy`, `enrich.put_policy`, `enrich.stats`
+- New namespace `eql`: `eql.delete`, `eql.get`, `eql.search`
+- New namespace `cross_cluster_replication`: `cross_cluster_replication.delete_auto_follow_pattern`, `cross_cluster_replication.follow`, `cross_cluster_replication.follow_info`, `cross_cluster_replication.follow_stats`, `cross_cluster_replication.forget_follower`, `cross_cluster_replication.get_auto_follow_pattern`, `cross_cluster_replication.pause_auto_follow_pattern`, `cross_cluster_replication.pause_follow`, `cross_cluster_replication.put_auto_follow_pattern`, `cross_cluster_replication.resume_auto_follow_pattern`, `cross_cluster_replication.resume_follow`, `cross_cluster_replication.stats`, `cross_cluster_replication.unfollow`
+- New namespace `snapshot_lifecycle_management`: `snapshot_lifecycle_management.delete_lifecycle`, `snapshot_lifecycle_management.execute_lifecycle`, `snapshot_lifecycle_management.execute_retention`, `snapshot_lifecycle_management.get_lifecycle`, `snapshot_lifecycle_management.get_stats`, `snapshot_lifecycle_management.get_status`, `snapshot_lifecycle_management.put_lifecycle`, `snapshot_lifecycle_management.start`, `snapshot_lifecycle_management.stop`
+- `indices.create_data_stream`
+- `indices.data_streams_stats`
+- `indices.delete_data_stream`
+- `indices.get_data_stream`
+- `security.clear_cached_privileges`
+- `machine_learning.update_data_frame_analytics`
+
+#### API Changes
+
+- `machine_learning.delete_expired_data`: new parameters `job_id`, `requests_per_second` and `timeout`
+
 ## 7.8.1
 
 ### Client
