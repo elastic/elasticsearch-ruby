@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module API
-    VERSION = "7.x-SNAPSHOT"
+    VERSION = "7.9.0"
   end
 end
