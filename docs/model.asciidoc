@@ -7,6 +7,7 @@ provides integration with Ruby domain objects ("models"), commonly found e.g. in
 It uses the `elasticsearch` Rubygem as the client communicating with the Elasticsearch cluster.
 
 
+[discrete]
 === Features at a Glance
 
 * ActiveModel integration with adapters for ActiveRecord and Mongoid
@@ -18,6 +19,7 @@ It uses the `elasticsearch` Rubygem as the client communicating with the Elastic
 * Convenience methods for (re)creating the index, setting up mappings, indexing documents, ...
 
 
+[discrete]
 === Usage
 
 Add the library to your Gemfile:
