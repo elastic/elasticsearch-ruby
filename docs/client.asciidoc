@@ -8,6 +8,8 @@ Full documentation is hosted at https://github.com/elastic/elasticsearch-ruby[Gi
 and http://rubydoc.info/gems/elasticsearch[RubyDoc]
 -- this documentation provides only an overview of features.
 
+
+[discrete]
 === Elasticsearch and Ruby Version Compatibility
 
 The Elasticsearch client is compatible with Ruby 1.9 and higher.
@@ -27,6 +29,8 @@ just use a release matching major version of Elasticsearch.
 | master        | → | master
 |===
 
+
+[discrete]
 === Installation
 
 Install the Ruby gem for the latest Elasticsearch version:
@@ -57,6 +61,8 @@ gem install elasticsearch -v 6.0.0
 gem 'elasticsearch', '~> 6.0'
 ------------------------------------
 
+
+[discrete]
 === Example Usage
 
 [source,ruby]
@@ -75,6 +81,7 @@ client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
 ------------------------------------
 
 
+[discrete]
 === Features at a Glance
 
 * Pluggable logging and tracing
@@ -87,6 +94,7 @@ client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
 * 100% REST API coverage
 
 
+[discrete]
 === Transport and API
 
 The `elasticsearch` gem combines two separate Rubygems:
@@ -106,6 +114,7 @@ Keep in mind, that for optimal performance, you should use an HTTP library which
 persistent ("keep-alive") HTTP connections.
 
 
+[discrete]
 === Extensions
 
 The https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[`elasticsearch-extensions`]

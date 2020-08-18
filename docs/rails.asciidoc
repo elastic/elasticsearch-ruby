@@ -4,12 +4,16 @@
 The `elasticsearch-rails` http://rubygems.org/gems/elasticsearch-rails[Rubygem]
 provides features suitable for Ruby on Rails applications.
 
+
+[discrete]
 === Features at a Glance
 
 * Rake tasks for importing data from application models
 * Integration with Rails' instrumentation framework
 * Templates for generating example Rails application
 
+
+[discrete]
 === Example applications
 
 You can generate a fully working example Ruby on Rails application with templates provides.
