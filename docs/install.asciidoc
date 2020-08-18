@@ -34,3 +34,9 @@ Or you can add a specific version of {es} to your Gemfile:
 ------------------------------------
 gem 'elasticsearch', '~> 6.0'
 ------------------------------------
+
+[[requirements]]
+=== Requirements 
+
+Please consult the following list to learn more about the requirements of 
+installing the Ruby client.

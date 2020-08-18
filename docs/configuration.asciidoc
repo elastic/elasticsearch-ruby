@@ -5,12 +5,15 @@ This page contains information about how to configure the Ruby client tailored
 to your needs. Almost every aspect of the client is configurable. However, in 
 most cases you only need to set a couple of parameters.
 
+
+[[using-client]]
+=== Using the client
+
+Using the client is straightforward, it supports all the public APIs of {es}, 
+and every method exposes the same signature.
+
+
 [[authentication]]
 === Authentication
 
 The code snippets below show you how to connect to various {es} providers.
-
-[[es-cloud]]
-==== Elastic Cloud 
-
-If you are using {es} in the cloud, there is an easy way to connect. 

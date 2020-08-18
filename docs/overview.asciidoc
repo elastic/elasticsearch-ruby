@@ -11,6 +11,7 @@ http://rubydoc.info/gems/elasticsearch[RubyDoc]. This documentation provides
 only an overview of features.
 
 
+[discrete]
 [[es-ruby-version-compatibility]]
 === {es} and Ruby Version Compatibility
 
@@ -32,6 +33,7 @@ just use a release matching major version of {es}.
 |===
 
 
+[discrete]
 === Features at a Glance
 
 * Pluggable logging and tracing
@@ -44,6 +46,7 @@ just use a release matching major version of {es}.
 * 100% REST API coverage
 
 
+[discrete]
 [[transport-api]]
 === Transport and API
 
@@ -66,6 +69,7 @@ Keep in mind, that for optimal performance, you should use an HTTP library which
 supports persistent ("keep-alive") HTTP connections.
 
 
+[discrete]
 [[extensions]]
 === Extensions
 

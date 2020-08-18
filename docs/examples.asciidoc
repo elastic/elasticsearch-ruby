@@ -4,7 +4,9 @@
 You need the `elasticsearch` gem <<ruby-install,installed>> to use the examples 
 below.
 
-[float]
+* <<simple-usage>>
+
+
 [[simple-usage]]
 === Simple usage
 

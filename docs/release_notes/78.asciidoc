@@ -1,6 +1,8 @@
 [[release_notes_78]]
 = 7.8 Release notes
 
+
+[discrete]
 == Client
 
 - Support for Elasticsearch version `7.8`.
@@ -8,8 +10,12 @@
 - Typhoeus is supported again, version 1.4+ and has been added back to the docs.
 - Adds documentation and example for integrating with Elastic APM.
 
+
+[discrete]
 === API
 
+
+[discrete]
 ==== New API Endpoints
 
 - `abort_benchmark`
@@ -33,6 +39,8 @@ Experimental endpoints:
 - `indices.put_index_template`
 - `indices.simulate_index_template`
 
+
+[discrete]
 ==== API Changes
 
 - `cat/thread_pool`: `size` is deprecated.
@@ -42,8 +50,12 @@ Experimental endpoints:
 - `snapshot.delete_repository`: New parameter `repository`, name of the snapshot repository, wildcard (`*`) patterns are now supported.
 - `task.cancel`: new parameter `wait_for_completion` (boolean) Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false.
 
+
+[discrete]
 === X-Pack
 
+
+[discrete]
 ==== New API Endpoints
 
 New namespace: `indices`
@@ -59,6 +71,8 @@ New namespace: `searchable_snapshots`
 - `repository_stats`
 - `stats`
 
+
+[discrete]
 ==== API Changes
 
 - `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters.
