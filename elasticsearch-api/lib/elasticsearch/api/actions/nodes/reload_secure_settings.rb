@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the password for the elasticsearch keystore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/secure-settings.html#reloadable-secure-settings
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/secure-settings.html#reloadable-secure-settings
         #
         def reload_secure_settings(arguments = {})
           headers = arguments.delete(:headers) || {}

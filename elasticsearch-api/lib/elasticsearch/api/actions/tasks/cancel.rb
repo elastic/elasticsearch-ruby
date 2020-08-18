@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/tasks.html
         #
         def cancel(arguments = {})
           headers = arguments.delete(:headers) || {}

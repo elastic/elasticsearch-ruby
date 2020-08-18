@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-plugins.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/cat-plugins.html
         #
         def plugins(arguments = {})
           headers = arguments.delete(:headers) || {}

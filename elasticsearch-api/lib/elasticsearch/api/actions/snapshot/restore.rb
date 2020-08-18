@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Details of what to restore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/modules-snapshots.html
         #
         def restore(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
