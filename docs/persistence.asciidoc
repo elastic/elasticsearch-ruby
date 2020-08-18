@@ -6,10 +6,14 @@ provides persistence layer for Ruby domain objects.
 
 It supports the repository design patterns. Versions before 6.0 also supported the _active record_ design pattern.
 
+
+[discrete]
 === Repository
 
 The `Elasticsearch::Persistence::Repository` module provides an implementation of the repository pattern and allows to save, delete, find and search objects stored in Elasticsearch, as well as configure mappings and settings for the index.
 
+
+[discrete]
 ==== Features At a Glance
 
 * Access to the Elasticsearch client
@@ -21,6 +25,8 @@ The `Elasticsearch::Persistence::Repository` module provides an implementation o
 * Providing access to the Elasticsearch response for search results (aggregations, total, ...)
 * Defining the methods for serialization and deserialization
 
+
+[discrete]
 ==== Usage
 
 Let's have a simple plain old Ruby object (PORO):
