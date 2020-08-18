@@ -1,6 +1,8 @@
 [[release_notes]]
 == Release Notes
 
+
+[discrete]
 === 7.x
 * <<release_notes_79, 7.9 Release Notes>>
 * <<release_notes_781, 7.8.1 Release Notes>>

@@ -3,16 +3,24 @@
 
 This version drops support for Ruby 2.4 since it's reached it's end of life.
 
+
+[discrete]
 ==== Client
 
 - Support for Elasticsearch version `7.7`
 
+
+[discrete]
 ===== Custom Headers
 
 You can set custom HTTP headers on the client's initializer or pass them as a parameter to any API endpoint. https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#custom-http-headers[More info and code examples].
 
+
+[discrete]
 ==== API
 
+
+[discrete]
 ===== API Changes
 
 - Clean: Removes up some deprecated endpoints: `abort_benchmark`, `benchmark`, `delete_by_rethrottle`, `nodes.shutdown`, `remote.info`.
@@ -22,6 +30,8 @@ You can set custom HTTP headers on the client's initializer or pass them as a pa
 - `update_by_query`: Parameter `slices` can now be set to `auto`.
 - `snapshot.cleanup_repository`: Parameter `body` is removed.
 
+
+[discrete]
 ===== New API Endpoints
 
 - `cluster.delete_component_template`
@@ -31,14 +41,20 @@ You can set custom HTTP headers on the client's initializer or pass them as a pa
 - `indices.delete_data_stream` (experimental)
 - `indices.get_data_stream` (experimental)
 
+
+[discrete]
 ==== X-Pack
 
+
+[discrete]
 ===== API Changes
 
 - `machine_learing.get_trained_models`: New parameter `tags`
 - `machine_learning.put_datafeed`, `machine_learning.update_datafeed`: Added parameters `ignore_unavailable`, `allow_no_indices`, `ignore_throttled`, `expand_wildcards`
 - `reload_secure_settings`: New parameter `body`, an object containing the password for the keystore.
 
+
+[discrete]
 ===== New API Endpoints
 
 - `async_search.delete`
