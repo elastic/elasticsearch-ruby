@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-resolve-index-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.9/indices-resolve-index-api.html
         #
         def resolve_index(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
