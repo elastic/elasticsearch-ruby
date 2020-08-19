@@ -5,6 +5,7 @@
 [discrete]
 == Client
 
+
 - Support for Elasticsearch version `7.8`.
 - Surface deprecation headers from Elasticsearch. When there's a `warning` response header in Elasticsearch's response, the client will emit a warning with `warn`.
 - Typhoeus is supported again, version 1.4+ and has been added back to the docs.
@@ -17,6 +18,7 @@
 
 [discrete]
 ==== New API Endpoints
+
 
 - `abort_benchmark`
 - `benchmark`
@@ -74,6 +76,7 @@ New namespace: `searchable_snapshots`
 
 [discrete]
 ==== API Changes
+
 
 - `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters.
 - `machine_learning.delete_data_frame_analytics` new param `timeout`: controls the time to wait until a job is deleted. Defaults to 1 minute.

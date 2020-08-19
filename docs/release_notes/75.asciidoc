@@ -51,6 +51,7 @@ Endpoints that changed:
 [discrete]
 == X-Pack
 
+
 Some urls changed internally to remove `_xpack`, but it shouldn't affect the client's API.
 
 - `explore`: `index` is now required.

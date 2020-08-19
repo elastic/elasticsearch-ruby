@@ -9,6 +9,8 @@ It uses the `elasticsearch` Rubygem as the client communicating with the {es}
 cluster.
 
 
+
+[discrete]
 ==== Features at a Glance
 
 * ActiveModel integration with adapters for ActiveRecord and Mongoid
@@ -20,6 +22,8 @@ cluster.
 * Convenience methods for (re)creating the index, setting up mappings, indexing documents, ...
 
 
+
+[discrete]
 ==== Usage
 
 Add the library to your Gemfile:

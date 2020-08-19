@@ -5,6 +5,7 @@
 [discrete]
 == Client
 
+
 * Support for Elasticsearch version 7.6.
 * Last release supporting Ruby 2.4. Ruby 2.4 has reached it's end of life and no more security updates will be provided, users are suggested to update to a newer version of Ruby.
 
@@ -43,6 +44,7 @@ https://github.com/elastic/elasticsearch-ruby/pull/808[Pull Request]
 [discrete]
 === API Changes:
 
+
 - `cat.indices`: argument `bytes` options were: `b,k,m,g` and are now `b,k,kb,m,mb,g,gb,t,tb,p,pb`.
 - `delete_by_query`: New parameter `analyzer` - The analyzer to use for the query string.
 - `indices.put_template`: Removed parameters: `timeout`, `flat_settings`.
@@ -53,6 +55,7 @@ https://github.com/elastic/elasticsearch-ruby/pull/808[Pull Request]
 
 [discrete]
 === New API endpoints:
+
 
 - `get_script_context`
 - `get_script_languages`
@@ -71,6 +74,7 @@ Synced flush is deprecated and will be removed in 8.0.
 [discrete]
 === New API endpoints:
 
+
 - `ml/delete_trained_model`
 - `ml/explain_data_frame_analytics`
 - `ml/get_trained_models`
@@ -80,6 +84,7 @@ Synced flush is deprecated and will be removed in 8.0.
 
 [discrete]
 === API changes:
+
 
 - `license/get`: Added parameter `accept_enterprise`.
 - `ml/delete_data_frame_analytics` Added parameter `force`.
