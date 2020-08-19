@@ -13,6 +13,7 @@
 * <<release_notes_70, 7.0 Release Notes>>
 
 
+include::79.asciidoc[leveloffset=+1]
 include::781.asciidoc[leveloffset=+1]
 include::78.asciidoc[leveloffset=+1]
 include::77.asciidoc[leveloffset=+1]

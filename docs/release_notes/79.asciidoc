@@ -1,20 +1,21 @@
 [[release_notes_79]]
-=== 7.9 Release notes
+= 7.9 Release notes
 
 [discrete]
-==== Client
+== Client
 
 - Support for Elasticsearch version `7.9.0`.
 - Transport/Connection: Considers attributes values for equality - https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af[Commit].
 - When an API endpoint accepts both `GET` and `POST`, the client will always use `POST` when a request body is present.
 
+
 [discrete]
-==== API
+== API
 
 - Documentation for API endpoints will point out when an API is experimental, beta or unstable.
 
 [discrete]
-===== New API Endpoints
+=== New API Endpoints
 
 - New namespace: `dangling_indices`
 - `dangling_indices.delete_dangling_index`
@@ -26,19 +27,21 @@ Experimental endpoints:
 - `indices.resolve_index`
 - `simulate_template`
 
+
 [discrete]
-===== API Changes
+=== API Changes
 
 - `field_caps`: adds body parameter allowing to filter indices if `index_filter` is provided.
 - `eql.search`: new parameters `wait_for_completion`, `keep_on_completion` and `keep_alive`.
 - `info`: New parameter `accept_enterprise`: If an enterprise license is installed, return the type and mode as 'enterprise' (default: false).
 - `indices.put_mapping`: new parameter `write_index_only`.
 
-[discrete]
-==== X-Pack
 
 [discrete]
-===== New API Endpoints
+== X-Pack
+
+[discrete]
+=== New API Endpoints
 
 The Ruby client now supports all the X-Pack API endpoints.
 
@@ -55,6 +58,6 @@ The Ruby client now supports all the X-Pack API endpoints.
 - `machine_learning.update_data_frame_analytics`
 
 [discrete]
-===== API Changes
+=== API Changes
 
 - `machine_learning.delete_expired_data`: new parameters `job_id`, `requests_per_second` and `timeout`
