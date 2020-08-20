@@ -31,7 +31,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.0/search-multi-search.html
       #
       def msearch(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -64,13 +64,11 @@ module Elasticsearch
                     end
                     .map { |item| Elasticsearch::API.serializer.dump(item) }
           payload << "" unless payload.empty?
-          payload = payload.join("
-")
+          payload = payload.join("\n")
         when body.is_a?(Array)
           payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
           payload << "" unless payload.empty?
-          payload = payload.join("
-")
+          payload = payload.join("\n")
         else
           payload = body
         end
