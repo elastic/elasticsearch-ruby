@@ -49,13 +49,12 @@ describe 'client#msearch' do
   end
 
   it 'requires the :body argument' do
-    expect {
+    expect do
       client.msearch
-    }.to raise_exception(ArgumentError)
+    end.to raise_exception(ArgumentError)
   end
 
   context 'when the body is an object' do
-
     let(:body) do
       <<-PAYLOAD.gsub(/^\s+/, '')
             {"index":"foo"}
@@ -68,16 +67,19 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch body: [
-          { index: 'foo', search: { query: { match_all: {}  } } },
-          { index: 'bar', search: { query: { match: { foo: 'bar' } } } },
-          { search_type: 'count', search: { facets: { tags: {} } } }
-      ])
+      expect(
+        client_double.msearch(
+          body: [
+            { index: 'foo', search: { query: { match_all: {}  } } },
+            { index: 'bar', search: { query: { match: { foo: 'bar' } } } },
+            { search_type: 'count', search: { facets: { tags: {} } } }
+          ]
+        )
+      )
     end
   end
 
   context 'when the body is a string' do
-
     let(:body) do
       %Q|{"foo":"bar"}\n{"moo":"lam"}|
     end
@@ -88,7 +90,6 @@ describe 'client#msearch' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_msearch'
     end
@@ -102,10 +103,9 @@ describe 'client#msearch' do
     end
   end
 
-  context 'when a type and index are specified' do
-
+  context 'when multiple indices are specified' do
     let(:url) do
-      'foo/bar/_msearch'
+      'foo,bar/_msearch'
     end
 
     let(:body) do
@@ -113,29 +113,13 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(index: 'foo', type: 'bar', body: []))
-    end
-  end
-
-  context 'when multiple indices and multiple types are specified' do
-
-    let(:url) do
-      'foo,bar/lam,bam/_msearch'
-    end
-
-    let(:body) do
-      ''
-    end
-
-    it 'performs the request' do
-      expect(client_double.msearch(index: ['foo', 'bar'], type: ['lam', 'bam'], body: []))
+      expect(client_double.msearch(index: ['foo', 'bar'], body: []))
     end
   end
 
   context 'when the request needs to be URL-escaped' do
-
     let(:url) do
-      'foo%5Ebar/bar%2Fbam/_msearch'
+      'foo%5Ebar/_msearch'
     end
 
     let(:body) do
@@ -143,12 +127,11 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(index: 'foo^bar', type: 'bar/bam', body: [])).to eq({})
+      expect(client_double.msearch(index: 'foo^bar', body: [])).to eq({})
     end
   end
 
   context 'when the URL params need to be URL-encoded' do
-
     let(:url) do
       '_msearch'
     end
