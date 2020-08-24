@@ -57,6 +57,11 @@ class Elasticsearch::Transport::Transport::Connections::ConnectionTest < Minites
       assert_equal 'http://localhost:9200/foo/_search?foo=bar', c.full_url('_search', {:foo => 'bar'})
     end
 
+    should "return right full url with path when path starts with /" do
+      c = Connection.new :host => { :protocol => 'http', :host => 'localhost', :port => '9200', :path => '/foo' }
+      assert_equal 'http://localhost:9200/foo/_search?foo=bar', c.full_url('/_search', {:foo => 'bar'})
+    end
+
     should "have a string representation" do
       c = Connection.new :host => 'x'
       assert_match /host: x/, c.to_s
