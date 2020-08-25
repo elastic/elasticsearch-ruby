@@ -72,9 +72,25 @@ namespace :elasticsearch do
     STDOUT.puts "Building version [#{es_version}] from [#{gitref}]:", ""
 
     case es_version
-    when 0.0, 5..1000
-      path_to_build   = CURRENT_PATH.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
-      build_command   = "cd #{CURRENT_PATH.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
+    when 0.0, 7.0, 8.0
+      # /home/fernando/workspace/ruby/tmp/elasticsearch/distribution/docker/build/docker
+      path_to_build = CURRENT_PATH.join('tmp/elasticsearch/distribution/docker/build/docker/elasticsearch-*.tar.gz')
+      build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch')} && ./gradlew assemble;"
+
+      extract_command = <<-CODE.gsub(/          /, '')
+          build=`ls #{path_to_build} | awk '{print $NF}' | awk -F '/' '{print $NF}' | sed s/\.tar\.gz//`
+          if [ $build ]; then
+            rm -rf "#{CURRENT_PATH.join('tmp/builds')}/$build";
+            echo "cool"
+          else
+            echo "Cannot determine build, exiting..."
+            exit 1
+          fi
+          tar xvf #{path_to_build} -C #{CURRENT_PATH.join('tmp/builds')};
+      CODE
+    when 5..1000
+      path_to_build = CURRENT_PATH.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
+      build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
       extract_command = <<-CODE.gsub(/          /, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
           if [[ $build ]]; then
@@ -103,7 +119,7 @@ namespace :elasticsearch do
       build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn clean package -DskipTests"
       extract_command = <<-CODE.gsub(/          /, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
-          if [[ $build ]]; then
+          if [ $build ]; then
             rm -rf "#{CURRENT_PATH.join('tmp/builds')}/$build";
           else
             echo "Cannot determine build, exiting..."
@@ -122,11 +138,11 @@ namespace :elasticsearch do
       cd #{CURRENT_PATH.join('tmp/elasticsearch')} && git fetch origin --quiet;
       cd #{CURRENT_PATH.join('tmp/elasticsearch')} && git checkout #{gitref};
       #{build_command}
-    #{extract_command}
+      #{extract_command}
       echo; echo; echo "Built: $build"
     CODE
 
-    puts "", '-'*80, ""
+    puts '', '-' * 80, ''
     Rake::Task['elasticsearch:builds'].invoke
   end
 
