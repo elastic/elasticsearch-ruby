@@ -75,12 +75,12 @@ end
 # subprojects.each { |project| $LOAD_PATH.unshift CURRENT_PATH.join(project, "lib").to_s }
 
 task :default do
-  system "rake --tasks"
+  system 'rake --tasks'
 end
 
 desc 'Display information about subprojects'
 task :subprojects do
-  puts '-'*80
+  puts '-' * 80
   SUBPROJECTS.each do |project|
     commit  = `git log --pretty=format:'%h %ar: %s' -1 #{project}`
     version =  Gem::Specification::load(CURRENT_PATH.join(project, "#{project}.gemspec").to_s).version.to_s
@@ -96,7 +96,7 @@ namespace :bundle do
   desc 'Run `bundle install` in all subprojects'
   task :install do
     SUBPROJECTS.each do |project|
-      puts '-'*80
+      puts '-' * 80
       sh "cd #{CURRENT_PATH.join(project)} && unset BUNDLE_GEMFILE && bundle install"
       puts
     end
