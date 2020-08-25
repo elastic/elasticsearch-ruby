@@ -91,14 +91,13 @@ To work on the code, clone and bootstrap the project first:
 ```
 git clone https://github.com/elasticsearch/elasticsearch-ruby.git
 cd elasticsearch-ruby/
-rake setup
-rake bundle
+bundle exec rake setup
+bundle exec rake bundle
 ```
 
 This will clone the Elasticsearch repository into the project, and run `bundle install` in all subprojects.
 
-To run tests, you need to start a testing cluster on port 9250,
-or provide a different one in the `TEST_CLUSTER_PORT` environment variable.
+To run tests, you need to start a testing cluster on port 9250, or provide a different one in the `TEST_CLUSTER_PORT` environment variable.
 
 There's a Rake task to start the testing cluster:
 
@@ -106,25 +105,28 @@ There's a Rake task to start the testing cluster:
 rake test:cluster:start
 ```
 
-You can configure the port, path to the startup script,
-number of nodes, and other settings with environment variables:
+You can configure the port, path to the startup script, number of nodes, and other settings with environment variables:
 
 ```
-TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-2.0.0-SNAPSHOT/bin/elasticsearch \
+TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
 TEST_CLUSTER_PORT=9250 \
 TEST_CLUSTER_NODES=2 \
 TEST_CLUSTER_NAME=my_cluster \
-TEST_CLUSTER_PARAMS='-Xms500m -Xmx500m -D es.index.store.type=niofs' \
+ES_JAVA_OPTS='-Xms500m -Xmx500m' \
 TEST_CLUSTER_TIMEOUT=120 \
 rake test:cluster:start
 ```
 
-To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build`
-Rake task to build Elasticsearch from the cloned source
-(use `rake elasticsearch:update` to update the repository):
+You can stop the cluster with a rake task, passing in the `TEST_CLUSTER_COMMAND` variable:
 
-**Note:** If you have gems from the `elasticsearch` family installed system-wide,
-          and want to use development ones, prepend the command with `bundle exec`.
+```
+TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
+rake test:cluster:stop
+```
+
+To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build` Rake task to build Elasticsearch from the cloned source (use `rake elasticsearch:update` to update the repository):
+
+**Note:** If you have gems from the `elasticsearch` family installed system-wide, and want to use development ones, prepend the command with `bundle exec`.
 
 ```
 rake elasticsearch:build
@@ -139,7 +141,13 @@ rake elasticsearch:build[origin/1.x]
 To run all the tests in all the subprojects, use the Rake task:
 
 ```
-time rake test:all
+time rake test:client
+```
+
+By default, tests will atempt to use `http://localhost:9200` as a test server. If you're using a different host/port, set the `TEST_ES_SERVER` environment variable, e.g.:
+
+```
+$ TEST_ES_SERVER='http://localhost:9250' be rake test:client
 ```
 
 ## License
