@@ -15,9 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "elasticsearch/api"
-require "elasticsearch/xpack/version"
-require "elasticsearch/xpack/api/actions/params_registry"
+require 'elasticsearch/api'
+require 'elasticsearch/xpack/version'
+require 'elasticsearch/xpack/api/actions/params_registry'
 
 Dir[ File.expand_path('../xpack/api/actions/**/params_registry.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../xpack/api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
@@ -33,7 +33,8 @@ module Elasticsearch
       end
 
       class Client
-        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base
+        include Elasticsearch::API::Common::Client
+        include Elasticsearch::API::Common::Client::Base
         include Elasticsearch::XPack::API
       end
     end
@@ -45,8 +46,20 @@ Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snaps
 module Elasticsearch
   module Transport
     class Client
+      TOP_LEVEL_METHODS = [:open_point_in_time, :close_point_in_time].freeze
+
+      def method_missing(method, *args, &block)
+        return xpack.send(method, *args, &block) if TOP_LEVEL_METHODS.include?(method)
+
+        super
+      end
+
+      def respond_to_missing?(method_name, *args)
+        TOP_LEVEL_METHODS.include?(method_name) || super
+      end
+
       def xpack
-        @xpack_client ||= Elasticsearch::XPack::API::Client.new(self)
+        @xpack ||= Elasticsearch::XPack::API::Client.new(self)
       end
 
       def security

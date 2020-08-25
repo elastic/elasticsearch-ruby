@@ -23,30 +23,41 @@ module Elasticsearch
       context 'XPack: OpenPointInTime' do
         subject { FakeClient.new }
 
-        should 'perform correct request' do
+        should 'perform correct request in xpack namespace' do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'POST', method
-            assert_equal '_pit', url
-            assert_equal Hash.new, params
-            assert_nil   body
+            assert_equal('POST', method)
+            assert_equal('_pit', url)
+            assert_equal({}, params)
+            assert_nil(body)
             true
           end.returns(FakeResponse.new)
 
           subject.xpack.open_point_in_time
         end
 
-        should 'perform correct request with index' do
+        should 'perform correct request without using xpack namespace' do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'POST', method
-            assert_equal 'test/_pit', url
-            assert_equal Hash.new, params
-            assert_nil   body
+            assert_equal('POST', method)
+            assert_equal('_pit', url)
+            assert_equal({}, params)
+            assert_nil(body)
             true
           end.returns(FakeResponse.new)
 
-          subject.xpack.open_point_in_time(index: 'test')
+          subject.open_point_in_time
         end
 
+        should 'perform correct request with index' do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal('POST', method)
+            assert_equal('test/_pit', url)
+            assert_equal({}, params)
+            assert_nil(body)
+            true
+          end.returns(FakeResponse.new)
+
+          subject.open_point_in_time(index: 'test')
+        end
       end
     end
   end
