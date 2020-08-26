@@ -2,6 +2,8 @@
 
 This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
+[![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg)](https://github.com/elastic/elasticsearch-ruby/actions) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+
 The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
 library is a wrapper for two separate libraries:
 
@@ -83,8 +85,6 @@ or install it from a source code checkout:
     rake install
 
 ## Development
-
-[![Build Status](https://travis-ci.org/elastic/elasticsearch-ruby.svg?branch=master)](https://travis-ci.org/elastic/elasticsearch-ruby) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
 To work on the code, clone and bootstrap the project first:
 
