@@ -26,8 +26,8 @@ require 'mocha/minitest'
 
 require 'ansi'
 
-require 'elasticsearch/xpack'
 require 'elasticsearch/transport'
+require 'elasticsearch/xpack'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
@@ -58,7 +58,7 @@ module Elasticsearch
       end
 
       # Top level methods:
-      [:open_point_in_time, :close_point_in_time].each do |method|
+      Elasticsearch::Transport::Client::TOP_LEVEL_METHODS.each do |method|
         define_method method do |*args|
           xpack.send(method, *args)
         end

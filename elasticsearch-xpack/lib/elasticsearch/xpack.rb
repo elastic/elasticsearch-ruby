@@ -46,7 +46,15 @@ Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snaps
 module Elasticsearch
   module Transport
     class Client
-      TOP_LEVEL_METHODS = [:open_point_in_time, :close_point_in_time].freeze
+      # When a method is called on the client, if it's one of the xpack root
+      # namespace methods, send them to the xpack client.
+      # E.g.: client.xpack.usage => client.usage
+      # Excluding `info` since OSS and XPACK both have info endpoints.
+      TOP_LEVEL_METHODS = [
+        :open_point_in_time,
+        :close_point_in_time,
+        :usage
+      ].freeze
 
       def method_missing(method, *args, &block)
         return xpack.send(method, *args, &block) if TOP_LEVEL_METHODS.include?(method)
