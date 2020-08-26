@@ -9,39 +9,33 @@ on:
 jobs:
   test-ruby:
     env:
-      TEST_ES_SERVER: http://localhost:9200
+      TEST_ES_SERVER: http://localhost:9250
+      PORT: 9250
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ 2.4, 2.5, 2.6, 2.7 ]
+        ruby: [ 2.4, 2.5, 2.6, 2.7, jruby-9.2 ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Increase system limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 6.x-SNAPSHOT
+        nodes: 2
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Build and test with Rake
+    - name: Build
       run: |
+        sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev
-        ruby -v
         rake bundle:clean
         rake bundle:install
-        rake test:unit
-  test-jruby:
-    strategy:
-      fail-fast: false
-      matrix:
-        ruby: [ jruby-9.2 ]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-    - name: Build and test with Rake
-      run: |
-        sudo apt-get install libcurl4-openssl-dev
-        ruby -v
-        rake bundle:clean
-        rake bundle:install
-        rake test:unit
+    - name: Test with Rake
+      run: rake test:client
