@@ -96,9 +96,9 @@ module Elasticsearch
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
-      def initialize(arguments={}, &block)
-        @options = arguments
-        @arguments = arguments
+      def initialize(arguments = {}, &block)
+        @options = arguments.each_with_object({}){ |(k,v), args| args[k.to_sym] = v }
+        @arguments = @options
         @arguments[:logger] ||= @arguments[:log]   ? DEFAULT_LOGGER.call() : nil
         @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
         @arguments[:reload_connections] ||= false
