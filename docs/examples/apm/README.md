@@ -4,23 +4,27 @@ The Elasticsearch Ruby client integrates seamlessly with Elastic APM via the [El
 
 A `docker-compose` file based on the [Quick start development environment](https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html) for APM is provided. It gets the default distributions of Elasticsearch, Kibana and APM Server up and running in Docker. The docker-compose file also runs the basic Sinatra App and a script to ping the web app with different endpoints.
 
-Run `docker-compose up` on the root folder of this example and you'll get everything set up. Follow the steps on the full documentation [at elastic.co](https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html) to get APM set up in your Kibana instance.
+Run `docker-compose up` on the root folder of this example and you'll get everything set up. You can check the steps on the full documentation [at elastic.co](https://www.elastic.co/guide/en/apm/get-started/current/quick-start-overview.html).
 
-[Install Docker Compose](https://docs.docker.com/compose/install/), cd into this directory and run it:
+[Install Docker Compose](https://docs.docker.com/compose/install/), cd into this directory and run it. You need to set the `STACK_VERSION` environment variable to set the version of the stack you want to use:
 
 ```bash
 $ cd docs/examples/apm
-$ docker-compose up
+$ STACK_VERSION=7.9.1 docker-compose up
 ```
 
 The following services will be available:
 
-- Kibana:              http: //localhost:5061
-- Elasticsearch:       http: //localhost:9200
-- APM Server:          http: //localhost:8200
-- Example Sinatra app: http: //localhost:9292
+- Kibana:              http://localhost:5601
+- Elasticsearch:       http://localhost:9200
+- APM Server:          http://localhost:8200
+- Example Sinatra app: http://localhost:9292
 
 Use your web browser or `curl` against http://localhost:9292/ to check that everything is working. You should see a JSON response from `cluster.health`.
+
+The first time you visit the Kibana Home page in your browser, you'll need to click on "Add APM" in the Observability section. You can check the APM Server and APM Agent status there, or just scroll down to the bottom of the page and click on "Launch APM".
+
+Use the APM app at http://localhost:5601/app/apm to visualize your application performance data!
 
 The docker-compose file will also run a `pinger` script. This script will make requests irregularly to the web app to simulate proper traffic and fill your APM Dashboard with data, even errors. You can comment the pinger container from `docker-compose.yml` if you want to have all the services running and test the different endpoints (or add your own) by yourself.
 
