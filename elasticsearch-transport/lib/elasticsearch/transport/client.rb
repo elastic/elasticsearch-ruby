@@ -191,13 +191,18 @@ module Elasticsearch
 
       def extract_cloud_creds(arguments)
         return unless arguments[:cloud_id]
+
         name = arguments[:cloud_id].split(':')[0]
         cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub("#{name}:", '')).split('$')
-        [ { scheme: 'https',
+        [
+          {
+            scheme: 'https',
             user: arguments[:user],
             password: arguments[:password],
             host: "#{elasticsearch_instance}.#{cloud_url}",
-            port: arguments[:port] || DEFAULT_CLOUD_PORT } ]
+            port: arguments[:port] || DEFAULT_CLOUD_PORT
+          }
+        ]
       end
 
       # Normalizes and returns hosts configuration.

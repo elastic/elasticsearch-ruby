@@ -75,12 +75,13 @@ When you want to mix the library into your own client, it must conform to a foll
 * It responds to a `perform_request(method, path, params, body, headers)` method,
 * the method returns an object with `status`, `body` and `headers` methods.
 
-A simple client could look like this:
+A simple client could look like this (_with a dependency on `active_support` to parse the query params_):
 
 ```ruby
 require 'multi_json'
 require 'faraday'
 require 'elasticsearch/api'
+require 'active_support'
 
 class MySimpleClient
   include Elasticsearch::API
@@ -92,9 +93,24 @@ class MySimpleClient
 
     CONNECTION.run_request \
       method.downcase.to_sym,
-      path,
+      path_with_params(path, params),
       ( body ? MultiJson.dump(body): nil ),
       {'Content-Type' => 'application/json'}
+  end
+  
+  private
+  
+  def path_with_params(path, params)
+    return path if params.blank?
+  
+    case params
+    when String
+      "#{path}?#{params}"
+    when Hash
+      "#{path}?#{params.to_query}"
+    else
+      raise ArgumentError, "Cannot parse params: '#{params}'"
+    end
   end
 end
 

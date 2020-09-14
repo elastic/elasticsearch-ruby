@@ -1,15 +1,14 @@
-ELASTICSEARCH_PATH = "#{CURRENT_PATH}/tmp/elasticsearch"
+ELASTICSEARCH_PATH = "#{CURRENT_PATH}/tmp/elasticsearch".freeze
 
-desc "Clone elasticsearch into the ./tmp directory"
+desc 'Clone elasticsearch into the ./tmp directory'
 task :setup do
   unless File.exist?('./tmp/elasticsearch')
-    sh "git clone https://github.com/elasticsearch/elasticsearch.git tmp/elasticsearch"
+    sh 'git clone https://github.com/elasticsearch/elasticsearch.git tmp/elasticsearch'
   end
 end
 
 namespace :elasticsearch do
-
-  desc "Wait for elasticsearch cluster to be in green state"
+  desc 'Wait for elasticsearch cluster to be in green state'
   task :wait_for_green do
     require 'elasticsearch'
 
@@ -21,10 +20,10 @@ namespace :elasticsearch do
           ready = true
           break
         end
-      rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => ex
-        puts "Couldn't confirm green status.\n#{ex.inspect}."
-      rescue Faraday::ConnectionFailed => ex
-        puts "Couldn't connect to Elasticsearch.\n#{ex.inspect}."
+      rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => e
+        puts "Couldn't confirm green status.\n#{e.inspect}."
+      rescue Faraday::ConnectionFailed => e
+        puts "Couldn't connect to Elasticsearch.\n#{e.inspect}."
         sleep(30)
       end
     end
@@ -34,20 +33,18 @@ namespace :elasticsearch do
     end
   end
 
-  desc "Update the submodule with Elasticsearch core repository"
-  task :update => :setup do
+  desc 'Update the submodule with Elasticsearch core repository'
+  task update: :setup do
     sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} fetch origin --quiet"
     begin
       %x[git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} pull]
-    rescue Exception => @exception
+    rescue Exception => @e
       @failed = true
     end
 
-    if @failed || !$?.success?
-      STDERR.puts "", "[!] Error while pulling -- #{@exception}"
-    end
+    STDERR.puts '', "[!] Error while pulling -- #{@e}" if @failed || !$?.success?
 
-    puts "\n", "CHANGES:", '-'*80
+    puts "\n", "CHANGES:", '-' * 80
     sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
   end
 
@@ -62,7 +59,7 @@ namespace :elasticsearch do
   DESC
   task :build, :branch do |task, args|
     Rake::Task['elasticsearch:status'].invoke
-    puts '-'*80
+    puts '-' * 80
 
     gitref = args[:branch] || 'origin/master'
     es_version = gitref.gsub(/^v|origin\/(\d\.+)/, '\1').to_f
@@ -72,9 +69,25 @@ namespace :elasticsearch do
     STDOUT.puts "Building version [#{es_version}] from [#{gitref}]:", ""
 
     case es_version
-    when 0.0, 5..1000
-      path_to_build   = CURRENT_PATH.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
-      build_command   = "cd #{CURRENT_PATH.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
+    when 0.0, 7.0, 8.0
+      # /home/fernando/workspace/ruby/tmp/elasticsearch/distribution/docker/build/docker
+      path_to_build = CURRENT_PATH.join('tmp/elasticsearch/distribution/docker/build/docker/elasticsearch-*.tar.gz')
+      build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch')} && ./gradlew assemble;"
+
+      extract_command = <<-CODE.gsub(/          /, '')
+          build=`ls #{path_to_build} | awk '{print $NF}' | awk -F '/' '{print $NF}' | sed s/\.tar\.gz//`
+          if [ $build ]; then
+            rm -rf "#{CURRENT_PATH.join('tmp/builds')}/$build";
+            echo "cool"
+          else
+            echo "Cannot determine build, exiting..."
+            exit 1
+          fi
+          tar xvf #{path_to_build} -C #{CURRENT_PATH.join('tmp/builds')};
+      CODE
+    when 5..1000
+      path_to_build = CURRENT_PATH.join('tmp/elasticsearch/distribution/tar/build/distributions/elasticsearch-*.tar.gz')
+      build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch/distribution/tar')} && gradle clean assemble;"
       extract_command = <<-CODE.gsub(/          /, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
           if [[ $build ]]; then
@@ -103,7 +116,7 @@ namespace :elasticsearch do
       build_command = "cd #{CURRENT_PATH.join('tmp/elasticsearch')} && MAVEN_OPTS=-Xmx1g mvn clean package -DskipTests"
       extract_command = <<-CODE.gsub(/          /, '')
           build=`ls #{path_to_build} | xargs -0 basename | sed s/\.tar\.gz//`
-          if [[ $build ]]; then
+          if [ $build ]; then
             rm -rf "#{CURRENT_PATH.join('tmp/builds')}/$build";
           else
             echo "Cannot determine build, exiting..."
@@ -122,11 +135,11 @@ namespace :elasticsearch do
       cd #{CURRENT_PATH.join('tmp/elasticsearch')} && git fetch origin --quiet;
       cd #{CURRENT_PATH.join('tmp/elasticsearch')} && git checkout #{gitref};
       #{build_command}
-    #{extract_command}
+      #{extract_command}
       echo; echo; echo "Built: $build"
     CODE
 
-    puts "", '-'*80, ""
+    puts '', '-' * 80, ''
     Rake::Task['elasticsearch:builds'].invoke
   end
 
