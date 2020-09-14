@@ -12,28 +12,6 @@ only an overview of features.
 
 
 [discrete]
-[[es-ruby-version-compatibility]]
-=== {es} and Ruby Version Compatibility
-
-The {es} client is compatible with Ruby 1.9 and higher.
-
-The client's API is compatible with {es} API versions from 0.90 till current,
-just use a release matching major version of {es}.
-
-|===
-| Gem Version   |   | Elasticsearch Version
-
-| 0.90          | → | 0.90
-| 1.x           | → | 1.x
-| 2.x           | → | 2.x
-| 5.x           | → | 5.x
-| 6.x           | → | 6.x
-| 7.x           | → | 7.x
-| master        | → | master
-|===
-
-
-[discrete]
 === Features at a Glance
 
 * Pluggable logging and tracing

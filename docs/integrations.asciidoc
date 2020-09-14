@@ -1,5 +1,5 @@
-[[operations]]
-== Operations
+[[integrations]]
+== Integrations
 
 The Rubygems listed on this page make it easier to operate with {es} by using 
 the Ruby client.

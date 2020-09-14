@@ -1,0 +1,4 @@
+[[connecting]]
+== Connecting
+
+This section gives you a quick overview of the Ruby client.

@@ -1,0 +1,5 @@
+[[ruby-helpers]]
+== Helpers
+
+This page contains a collection of simple helper functions that abstract some 
+specifics of the raw API.
