@@ -83,7 +83,7 @@ task :subprojects do
   puts '-' * 80
   SUBPROJECTS.each do |project|
     commit  = `git log --pretty=format:'%h %ar: %s' -1 #{project}`
-    version =  Gem::Specification::load(CURRENT_PATH.join(project, "#{project}.gemspec").to_s).version.to_s
+    version = Gem::Specification::load(CURRENT_PATH.join(project, "#{project}.gemspec").to_s).version.to_s
     puts "#{version}".ljust(10) +
          "| \e[1m#{project.ljust(SUBPROJECTS.map {|s| s.length}.max)}\e[0m | #{commit[ 0..80]}..."
   end
@@ -114,7 +114,7 @@ desc 'Generate documentation for all subprojects'
 task :doc do
   SUBPROJECTS.each do |project|
     sh "cd #{CURRENT_PATH.join(project)} && rake doc"
-    puts '-'*80
+    puts '-' * 80
   end
 end
 
@@ -124,7 +124,7 @@ task :release do
     next if project == 'elasticsearch-extensions'
 
     sh "cd #{CURRENT_PATH.join(project)} && rake release"
-    puts '-'*80
+    puts '-' * 80
   end
 end
 
