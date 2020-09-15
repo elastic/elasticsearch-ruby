@@ -20,7 +20,6 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rspec/core/rake_task'
 
-
 task :default do
   exec "rake --tasks"
 end
@@ -33,21 +32,20 @@ Rake::TestTask.new('test:unit') do |test|
 end
 
 namespace :test do
-
   RSpec::Core::RakeTask.new(:spec)
 
-  desc "Run rest api yaml tests"
-  Rake::TestTask.new(:rest_api)  do |test|
+  desc 'Run rest api yaml tests'
+  Rake::TestTask.new(:rest_api) do |test|
     `rm Gemfile.lock`
-    test.deps = [ :spec ]
+    test.deps = [:spec]
   end
 
-  desc "Run integration tests"
+  desc 'Run integration tests'
   task :integration
 
-  desc "Run Elasticsearch with X-Pack installed (Docker)"
-    task :elasticsearch do
-      sh <<-COMMAND.gsub(/^\s*/, '').gsub(/\s{1,}/, ' ')
+  desc 'Run Elasticsearch with X-Pack installed (Docker)'
+  task :elasticsearch do
+    sh <<-COMMAND.gsub(/^\s*/, '').gsub(/\s{1,}/, ' ')
         docker run \
           --name elasticsearch-xpack \
           --env "discovery.type=single-node" \
@@ -67,6 +65,6 @@ namespace :test do
           --memory 4g \
           --rm \
           docker.elastic.co/elasticsearch/elasticsearch:7.0.0-SNAPSHOT
-      COMMAND
-    end
+    COMMAND
+  end
 end
