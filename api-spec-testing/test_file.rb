@@ -18,6 +18,7 @@
 require_relative 'test_file/action'
 require_relative 'test_file/test'
 require_relative 'test_file/task_group'
+require 'logger'
 
 module Elasticsearch
 
@@ -42,7 +43,13 @@ module Elasticsearch
       # @since 6.1.0
       def initialize(file_name, features_to_skip = [])
         @name = file_name
-        documents = YAML.load_stream(File.new(file_name))
+        begin
+          documents = YAML.load_stream(File.new(file_name))
+        rescue StandardError => e
+          logger = Logger.new($stdout)
+          logger.error e
+          logger.error "Filename : #{@name}"
+        end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
         @teardown = documents.find { |doc| doc['teardown'] }
