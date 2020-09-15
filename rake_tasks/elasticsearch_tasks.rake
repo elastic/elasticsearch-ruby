@@ -181,10 +181,12 @@ namespace :elasticsearch do
     end
 
     es_version_info = admin_client.info['version']
-    unless build_hash = es_version_info['build_hash']
+    unless (build_hash = es_version_info['build_hash'])
       STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
       exit(1)
     end
+
+    STDOUT.puts "ELASTICSEARCH INFO: #{es_version_info}"
 
     name = ENV['CI'] ? build_hash : "[\e[1m#{build_hash}\e[0m]"
     STDERR.puts '-'*80, "YAML tests: Switching to #{name} from #{current_branch}", '-'*80
