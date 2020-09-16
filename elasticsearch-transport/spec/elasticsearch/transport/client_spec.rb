@@ -1742,12 +1742,12 @@ describe Elasticsearch::Transport::Client do
           client.perform_request('DELETE', '_all')
           client.perform_request('DELETE', 'myindex') rescue
           client.perform_request('PUT', 'myindex', {}, { settings: { number_of_shards: 2, number_of_replicas: 0 } })
-          client.perform_request('PUT', 'myindex/mydoc/1', { routing: 'XYZ', timeout: '1s' }, { foo: 'bar' })
+          client.perform_request('PUT', 'myindex/_doc/1', { routing: 'XYZ', timeout: '1s' }, { foo: 'bar' })
           client.perform_request('GET', '_cluster/health?wait_for_status=green&timeout=2s', {})
         end
 
         let(:response) do
-          client.perform_request('GET', 'myindex/mydoc/1?routing=XYZ')
+          client.perform_request('GET', 'myindex/_doc/1?routing=XYZ')
         end
 
         it 'handles paths and URL paramters' do
@@ -1760,10 +1760,9 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when an invalid url is specified' do
-
         it 'raises an exception' do
           expect {
-            client.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ')
+            client.perform_request('GET', 'myindex/_doc/1?routing=FOOBARBAZ')
           }.to raise_exception(Elasticsearch::Transport::Transport::Errors::NotFound)
         end
       end

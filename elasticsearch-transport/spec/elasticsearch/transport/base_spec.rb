@@ -128,14 +128,14 @@ describe Elasticsearch::Transport::Transport::Base do
 
       let(:arguments) do
         {
-          hosts: ['http://localhost:9250'],
+          hosts: ELASTICSEARCH_HOSTS,
           retry_on_status: ['404']
         }
       end
 
       it 'retries on 404 status the specified number of max_retries' do
         expect do
-          client.transport.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ', {}, nil, nil, retry_on_failure: 5)
+          client.transport.perform_request('GET', 'myindex/_doc/1?routing=FOOBARBAZ', {}, nil, nil, retry_on_failure: 5)
         end.to raise_exception(Elasticsearch::Transport::Transport::Errors::NotFound)
       end
     end
