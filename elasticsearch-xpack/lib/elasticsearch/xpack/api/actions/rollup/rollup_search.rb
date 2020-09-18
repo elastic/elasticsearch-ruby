@@ -21,6 +21,10 @@ module Elasticsearch
       module Rollup
         module Actions
           # Enables searching rolled-up data using the standard query DSL.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [List] :index The indices or index-pattern(s) (containing rollup or regular data) that should be searched
           # @option arguments [String] :type The doc type inside the index *Deprecated*

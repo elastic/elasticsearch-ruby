@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Updates certain properties of a data frame analytics job.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics to update
           # @option arguments [Hash] :headers Custom HTTP headers

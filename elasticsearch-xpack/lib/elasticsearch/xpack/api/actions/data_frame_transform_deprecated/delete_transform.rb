@@ -21,6 +21,10 @@ module Elasticsearch
       module DataFrameTransformDeprecated
         module Actions
           # Deletes an existing transform.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :transform_id The id of the transform to delete
           # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.

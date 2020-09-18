@@ -21,11 +21,15 @@ module Elasticsearch
       module SearchableSnapshots
         module Actions
           # Retrieve various statistics about searchable snapshots.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [List] :index A comma-separated list of index names
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html
           #
           def stats(arguments = {})
             headers = arguments.delete(:headers) || {}

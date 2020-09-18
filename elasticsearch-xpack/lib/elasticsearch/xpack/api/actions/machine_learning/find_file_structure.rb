@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [Int] :lines_to_sample How many lines of the file should be included in the analysis
           # @option arguments [Int] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.

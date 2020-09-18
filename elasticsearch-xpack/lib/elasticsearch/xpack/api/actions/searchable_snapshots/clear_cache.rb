@@ -21,6 +21,10 @@ module Elasticsearch
       module SearchableSnapshots
         module Actions
           # Clear the cache of searchable snapshots.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [List] :index A comma-separated list of index names
           # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -29,7 +33,7 @@ module Elasticsearch
           # @option arguments [List] :index A comma-separated list of index name to limit the operation
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-api-clear-cache.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/searchable-snapshots-apis.html
           #
           def clear_cache(arguments = {})
             headers = arguments.delete(:headers) || {}

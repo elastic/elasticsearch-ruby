@@ -21,6 +21,10 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Explains a data frame analytics config.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics to explain
           # @option arguments [Hash] :headers Custom HTTP headers

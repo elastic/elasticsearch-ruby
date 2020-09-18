@@ -23,7 +23,8 @@ module Elasticsearch
           # Closes one or more anomaly detection jobs. A job can be opened and closed multiple times throughout its lifecycle.
           #
           # @option arguments [String] :job_id The name of the job to close
-          # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+          # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
+          # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) *Deprecated*
           # @option arguments [Boolean] :force True if the job should be forcefully closed
           # @option arguments [Time] :timeout Controls the time to wait until a job has closed. Default to 30 minutes
           # @option arguments [Hash] :headers Custom HTTP headers
@@ -52,6 +53,7 @@ module Elasticsearch
           #
           # @since 6.2.0
           ParamsRegistry.register(:close_job, [
+            :allow_no_match,
             :allow_no_jobs,
             :force,
             :timeout
