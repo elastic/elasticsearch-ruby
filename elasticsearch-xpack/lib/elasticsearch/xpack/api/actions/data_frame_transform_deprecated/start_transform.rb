@@ -21,6 +21,10 @@ module Elasticsearch
       module DataFrameTransformDeprecated
         module Actions
           # Starts one or more transforms.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :transform_id The id of the transform to start
           # @option arguments [Time] :timeout Controls the time to wait for the transform to start

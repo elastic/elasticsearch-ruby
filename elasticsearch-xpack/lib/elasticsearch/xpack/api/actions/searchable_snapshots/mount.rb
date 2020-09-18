@@ -21,6 +21,10 @@ module Elasticsearch
       module SearchableSnapshots
         module Actions
           # Mount a snapshot as a searchable index.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount
           # @option arguments [String] :snapshot The name of the snapshot of the index to mount

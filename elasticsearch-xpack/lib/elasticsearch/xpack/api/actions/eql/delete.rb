@@ -21,6 +21,10 @@ module Elasticsearch
       module Eql
         module Actions
           # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :id The async search ID
           # @option arguments [Hash] :headers Custom HTTP headers

@@ -21,6 +21,10 @@ module Elasticsearch
       module Eql
         module Actions
           # Returns async results from previously executed Event Query Language (EQL) search
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :id The async search ID
           # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response

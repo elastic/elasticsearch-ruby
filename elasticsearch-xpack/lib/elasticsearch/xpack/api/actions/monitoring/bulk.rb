@@ -21,6 +21,10 @@ module Elasticsearch
       module Monitoring
         module Actions
           # Used by the monitoring features to send monitoring data.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :type Default document type for items which don't provide one *Deprecated*
           # @option arguments [String] :system_id Identifier of the monitored system
