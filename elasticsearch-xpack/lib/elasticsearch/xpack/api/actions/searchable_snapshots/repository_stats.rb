@@ -20,7 +20,7 @@ module Elasticsearch
     module API
       module SearchableSnapshots
         module Actions
-          # Retrieve usage statistics about a snapshot repository.
+          # DEPRECATED: This API is replaced by the Repositories Metering API.
           # This functionality is Experimental and may be changed or removed
           # completely in a future release. Elastic will take a best effort approach
           # to fix any issues, but experimental features are not subject to the
@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [String] :repository The repository for which to get the stats for
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-repository-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
           #
           def repository_stats(arguments = {})
             raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
