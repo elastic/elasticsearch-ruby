@@ -1,0 +1,5 @@
+[[transport]]
+=== Transport
+
+This pages is about how the Ruby client handles communication with an {es} 
+cluster.

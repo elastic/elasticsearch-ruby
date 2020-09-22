@@ -4,9 +4,12 @@
 The Rubygems listed on this page make it easier to operate with {es} by using 
 the Ruby client.
 
+* <<transport>>
 * <<activemodel_activerecord>>
 * <<ruby_on_rails>>
 * <<persistence>>
+
+include:: transport.asciidoc[]
 
 include::model.asciidoc[]
 
