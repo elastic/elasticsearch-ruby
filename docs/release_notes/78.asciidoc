@@ -77,3 +77,24 @@ New namespace: `searchable_snapshots`
 
 - `machine_learning.delete_expired_data` new param `body`: deleting expired data parameters.
 - `machine_learning.delete_data_frame_analytics` new param `timeout`: controls the time to wait until a job is deleted. Defaults to 1 minute.
+
+
+[discrete]
+[[release_notes_781]]
+=== 7.8.1 Release notes
+
+[discrete]
+=== Client
+
+- Support for Elasticsearch version `7.8.1`.
+- Bug fix: Fixed a bug on the API endpoints documentation for RubyDocs: there was an unnecessary empty new line in the documentation for parameters that have options. So the parameters before that empty newline were not being documented in RubyDocs.
+
+
+[discrete]
+=== X-Pack
+
+
+[discrete]
+==== API Changes
+
+- Update to `info` endpoint. New parameter `accept_enterprise` (boolean): If an enterprise license is installed, return the type and mode as 'enterprise' (default: false).

@@ -1,6 +1,12 @@
-= Ruby And Rails Integrations
+= Ruby and Rails Integrations
 
-include::client.asciidoc[]
+:doctype:           book
+
+include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
+
+include::overview.asciidoc[]
+
+include::installation.asciidoc[]
 
 include::model.asciidoc[]
 
