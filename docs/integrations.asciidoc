@@ -9,7 +9,7 @@ the Ruby client.
 * <<ruby_on_rails>>
 * <<persistence>>
 
-include:: transport.asciidoc[]
+include::transport.asciidoc[]
 
 include::model.asciidoc[]
 
