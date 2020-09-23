@@ -102,17 +102,22 @@ bundle exec rake setup
 bundle exec rake bundle
 ```
 
-This will clone the Elasticsearch repository into the project, and run `bundle install` in all subprojects.
+This will clone the Elasticsearch repository into the project, and run `bundle install` in all subprojects. There are a few tasks to work with Elasticsearch. Use `rake -T` and look for the tasks in the `elasticsearch` namespace. You can build elasticsearch with `rake elasticsearch:build` after having ran setup.
 
 To run tests, you need to start a testing cluster on port 9250, or provide a different one in the `TEST_CLUSTER_PORT` environment variable.
 
-There's a Rake task to start the testing cluster:
+There's a Rake task to start the testing cluster. By default this is going to try and use the `elasticsearch` command on your system:
 
 ```
 rake test:cluster:start
 ```
 
-You can configure the port, path to the startup script, number of nodes, and other settings with environment variables:
+You can also configure where the elasticsearch startup script is found with the `TEST_CLUSTER_COMMAND` environment variable, e.g.:
+```
+TEST_CLUSTER_COMMAND=~/elasticsearch/bin/elasticsearch rake test:cluster:stop
+```
+
+You also can configure the port, number of nodes, and other settings with environment variables:
 
 ```
 TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
@@ -131,6 +136,9 @@ TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearc
 rake test:cluster:stop
 ```
 
+There's also a rake task for starting up Elasticsearch in a Docker container:
+`rake docker:start[version]` - E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with X-Pack, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`.
+
 To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build` Rake task to build Elasticsearch from the cloned source (use `rake elasticsearch:update` to update the repository):
 
 **Note:** If you have gems from the `elasticsearch` family installed system-wide, and want to use development ones, prepend the command with `bundle exec`.
@@ -138,6 +146,8 @@ To run tests against unreleased Elasticsearch versions, you can use the `rake el
 ```
 rake elasticsearch:build
 ```
+
+This is going to create the build in `./tmp/builds/`.
 
 You can pass a branch name (tag, commit, ...) as the Rake task variable:
 
