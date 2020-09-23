@@ -17,6 +17,7 @@
 
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
+import 'rake_tasks/docker_tasks.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
 require 'pathname'
 
