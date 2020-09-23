@@ -15,11 +15,11 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
-desc "Run unit tests"
-task :default => 'test:unit'
-task :test    => 'test:unit'
+desc 'Run unit tests'
+task default: 'test:unit'
+task test: 'test:unit'
 
 # ----- Test tasks ------------------------------------------------------------
 

@@ -65,7 +65,7 @@ def admin_client
       user     = ENV['ELASTIC_USER'] || 'elastic'
       url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
     else
-      url = "http://#{uri.host || 'localhost'}:#{uri.port || 9200}"
+      url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
     end
     puts "Elasticsearch Client url: #{url}"
     Elasticsearch::Client.new(host: url, transport_options: transport_options)
