@@ -15,8 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-
-ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+ELASTICSEARCH_HOSTS = if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
                         hosts.split(',').map do |host|
                           /(http\:\/\/)?(\S+)/.match(host)[2]
                         end
@@ -24,7 +23,7 @@ ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOS
 
 TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
 
-JRUBY    = defined?(JRUBY_VERSION)
+JRUBY = defined?(JRUBY_VERSION)
 
 if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
   require 'simplecov'
