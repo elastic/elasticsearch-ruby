@@ -38,7 +38,6 @@ end
 module Elasticsearch
   module Extensions
     module Test
-
       # A convenience Ruby class for starting and stopping an Elasticsearch cluster,
       # eg. for integration tests
       #
@@ -60,12 +59,11 @@ module Elasticsearch
       # @see Cluster#initialize
       #
       module Cluster
-
         # Starts a cluster
         #
         # @see Cluster#start
         #
-        def start(arguments={})
+        def start(arguments = {})
           Cluster.new(arguments).start
         end
 
@@ -73,7 +71,7 @@ module Elasticsearch
         #
         # @see Cluster#stop
         #
-        def stop(arguments={})
+        def stop(arguments = {})
           Cluster.new(arguments).stop
         end
 
@@ -81,7 +79,7 @@ module Elasticsearch
         #
         # @see Cluster#running?
         #
-        def running?(arguments={})
+        def running?(arguments = {})
           Cluster.new(arguments).running?
         end
 
@@ -89,7 +87,7 @@ module Elasticsearch
         #
         # @see Cluster#wait_for_green
         #
-        def wait_for_green(arguments={})
+        def wait_for_green(arguments = {})
           Cluster.new(arguments).wait_for_green
         end
 
@@ -215,6 +213,7 @@ module Elasticsearch
             }
           }
           COMMANDS['7.0'] = COMMANDS['6.0'].clone
+          COMMANDS['8.0'] = COMMANDS['7.0'].clone
           COMMANDS.freeze
 
           # Create a new instance of the Cluster class
@@ -430,7 +429,7 @@ module Elasticsearch
                 '0.0.0.0'
               when /^2/
                 '_local_'
-              when /^5|^6|^7/
+              when /^5|^6|^7|^8/
                 '_local_'
               else
                 raise RuntimeError, "Cannot determine default network host from version [#{version}]"
@@ -473,6 +472,7 @@ module Elasticsearch
           #
           def __determine_version
             path_to_lib = File.dirname(arguments[:command]) + '/../lib/'
+
             version = if arguments[:version]
               arguments[:version]
             elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f =~ /^elasticsearch\-\d/ }.first).nil?
@@ -550,6 +550,8 @@ module Elasticsearch
                 '6.0'
               when /^7\..*/
                 '7.0'
+              when /^8\..*/
+                '8.0'
               else
                 raise RuntimeError, "Cannot determine major version from [#{version}]"
             end
