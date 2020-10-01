@@ -1,0 +1,35 @@
+[[ruby-install]]
+== Installation
+
+Install the Rubygem for the latest {es} version by using the following command:
+
+[source,sh]
+------------------------------------
+gem install elasticsearch
+------------------------------------
+
+
+Or add the `elasticsearch` Ruby gem to your Gemfile:
+
+[source,ruby]
+------------------------------------
+gem 'elasticsearch'
+------------------------------------
+
+
+
+You can install the Ruby gem for a specific {es} version by using the following 
+command:
+
+[source,sh]
+------------------------------------
+gem install elasticsearch -v 6.0.0
+------------------------------------
+
+
+Or you can add a specific version of {es} to your Gemfile:
+
+[source,ruby]
+------------------------------------
+gem 'elasticsearch', '~> 6.0'
+------------------------------------
