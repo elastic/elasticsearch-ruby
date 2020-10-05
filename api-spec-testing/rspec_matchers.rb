@@ -17,10 +17,8 @@
 
 # Match the `length` of a field.
 RSpec::Matchers.define :match_response_field_length do |expected_pairs, test|
-
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-
       # ssl test returns results at '$body' key. See ssl/10_basic.yml
       expected_pairs = expected_pairs['$body'] if expected_pairs['$body']
 
@@ -43,7 +41,6 @@ end
 
 # Validate that a field is `true`.
 RSpec::Matchers.define :match_true_field do |field, test|
-
   match do |response|
     # Handle is_true: ''
     return !!response if field == ''
@@ -61,7 +58,6 @@ end
 
 # Validate that a field is `false`.
 RSpec::Matchers.define :match_false_field do |field, test|
-
   match do |response|
     # Handle is_false: ''
     return !response if field == ''
@@ -79,7 +75,6 @@ end
 
 # Validate that a field is `gte` than a given value.
 RSpec::Matchers.define :match_gte_field do |expected_pairs, test|
-
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
@@ -102,7 +97,6 @@ end
 
 # Validate that a field is `gt` than a given value.
 RSpec::Matchers.define :match_gt_field do |expected_pairs, test|
-
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
@@ -125,7 +119,6 @@ end
 
 # Validate that a field is `lte` than a given value.
 RSpec::Matchers.define :match_lte_field do |expected_pairs, test|
-
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
@@ -148,7 +141,6 @@ end
 
 # Validate that a field is `lt` than a given value.
 RSpec::Matchers.define :match_lt_field do |expected_pairs, test|
-
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
 
@@ -171,7 +163,6 @@ end
 
 # Match an arbitrary field of a response to a given value.
 RSpec::Matchers.define :match_response do |pairs, test|
-
   match do |response|
     pairs = sanitize_pairs(pairs)
     compare_pairs(pairs, response, test).empty?
@@ -266,7 +257,6 @@ end
 
 # Match that a request returned a given error.
 RSpec::Matchers.define :match_error do |expected_error|
-
   match do |actual_error|
     # Remove surrounding '/' in string representing Regex
     expected_error = expected_error.chomp("/")
