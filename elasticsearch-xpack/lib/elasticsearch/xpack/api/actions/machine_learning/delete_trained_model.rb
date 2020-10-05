@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [String] :model_id The ID of the trained model to delete
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html
           #
           def delete_trained_model(arguments = {})
             raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
@@ -41,7 +41,7 @@ module Elasticsearch
             _model_id = arguments.delete(:model_id)
 
             method = Elasticsearch::API::HTTP_DELETE
-            path   = "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}"
+            path   = "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
             params = {}
 
             body = nil
