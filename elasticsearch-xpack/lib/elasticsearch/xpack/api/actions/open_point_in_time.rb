@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :keep_alive Specific the time to live for the point in time
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/point-in-time.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/point-in-time-api.html
         #
         def open_point_in_time(arguments = {})
           headers = arguments.delete(:headers) || {}
