@@ -19,9 +19,7 @@ require 'spec_helper'
 require 'rest_yaml_tests_helper'
 
 describe 'XPack Rest API YAML tests' do
-
   REST_API_YAML_FILES.each do |file|
-
     test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
@@ -67,21 +65,18 @@ describe 'XPack Rest API YAML tests' do
             end
 
             test.task_groups.each do |task_group|
-
               before do
                 task_group.run(client)
               end
 
               # 'catch' is in the task group definition
               if task_group.catch_exception?
-
                 it 'sends the request and throws the expected error' do
                   expect(task_group.exception).to match_error(task_group.expected_exception_message)
                 end
 
                 # 'match' on error description is in the task group definition
                 if task_group.has_match_clauses?
-
                   task_group.match_clauses.each do |match|
                     it 'contains the expected error in the request response' do
                       expect(task_group.exception.message).to match(Regexp.new(Regexp.escape(match['match'].values.first.to_s)))

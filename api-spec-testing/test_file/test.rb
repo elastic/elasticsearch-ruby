@@ -16,18 +16,13 @@
 # under the License.
 
 module Elasticsearch
-
   module RestAPIYAMLTests
-
     class TestFile
-
       # Represents a single test in a test file. A single test can have many operations and validations.
       #
       # @since 6.2.0
       class Test
-
         class << self
-
           # Given a list of keys, find the value in a recursively nested document.
           #
           # @param [ Array<String> ] chain The list of nested document keys.
@@ -39,6 +34,7 @@ module Elasticsearch
           def find_value_in_document(chain, document)
             return document[chain] unless chain.is_a?(Array)
             return document[chain[0]] unless chain.size > 1
+
             # a number can be a string key in a Hash or indicate an element in a list
             if document.is_a?(Hash)
               find_value_in_document(chain[1..-1], document[chain[0].to_s]) if document[chain[0].to_s]
