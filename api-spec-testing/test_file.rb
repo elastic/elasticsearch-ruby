@@ -75,6 +75,7 @@ module Elasticsearch
       # @since 6.2.0
       def setup(client)
         return unless @setup
+
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
         actions.each do |action|
           action.execute(client)
@@ -94,13 +95,13 @@ module Elasticsearch
       # @since 6.2.0
       def teardown(client)
         return unless @teardown
+
         actions = @teardown['teardown'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
         actions.each { |action| action.execute(client) }
         self
       end
 
       class << self
-
         # Prepare Elasticsearch for a single test file.
         # This method deletes indices, roles, datafeeds, etc.
         #
