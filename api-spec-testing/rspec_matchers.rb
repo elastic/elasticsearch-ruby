@@ -229,6 +229,11 @@ RSpec::Matchers.define :match_response do |pairs, test|
     #   match: {task: '/.+:\d+/'}
     if expected[0] == "/" && expected[-1] == "/"
       /#{expected.tr("/", "")}/ =~ actual_value
+    elsif !!(expected.match?(/[0-9]{1}\.[0-9]+E[0-9]+/))
+      # When the value in the yaml test is a big number, the format is
+      # different from what Ruby uses, so we transform  X.XXXXEXX to X.XXXXXe+XX
+      # to be able to compare the values
+      actual_value.to_s == expected.gsub('E', 'e+')
     elsif expected == ''
       actual_value == response
     else
