@@ -32,7 +32,7 @@ module Elasticsearch
           # @option arguments [Int] :size specifies a max number of trained models to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-models-stats.html
           #
           def get_trained_models_stats(arguments = {})
             headers = arguments.delete(:headers) || {}
@@ -43,9 +43,9 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_GET
             path   = if _model_id
-                       "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}/_stats"
+                       "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}/_stats"
                      else
-                       "_ml/inference/_stats"
+                       "_ml/trained_models/_stats"
                      end
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

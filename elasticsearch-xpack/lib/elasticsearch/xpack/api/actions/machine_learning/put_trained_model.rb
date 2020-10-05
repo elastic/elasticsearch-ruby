@@ -30,7 +30,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The trained model configuration (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-inference.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models.html
           #
           def put_trained_model(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -43,7 +43,7 @@ module Elasticsearch
             _model_id = arguments.delete(:model_id)
 
             method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/inference/#{Elasticsearch::API::Utils.__listify(_model_id)}"
+            path   = "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
             params = {}
 
             body = arguments[:body]
