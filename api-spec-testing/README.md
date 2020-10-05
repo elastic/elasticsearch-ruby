@@ -44,6 +44,10 @@ Task Groups are a representation of a block of actions consisting of 'do' action
 
 For each TaskGroup, it sees what's in the task group definition and runs an expectation test.
 
+## Action
+
+This file is where the action is executed, where we call the client with the method from the test and save the response which is then used in the task group.
+
 ## Rest YAML tests Helper
 
 `elasticsearch-(api|xpack)/spec/rest_yaml_tests_helper.rb`
