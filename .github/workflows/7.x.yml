@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - 7.x
+      - 7.10
   pull_request:
     branches:
       - 7.x
+      - 7.10
 jobs:
   test-ruby:
     env:
