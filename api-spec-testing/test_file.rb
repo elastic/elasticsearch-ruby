@@ -131,6 +131,7 @@ module Elasticsearch
           clear_machine_learning_indices(client)
           create_x_pack_rest_user(client)
           clear_transforms(client)
+          clear_datastreams(client)
           clear_indices_xpack(client)
           clear_index_templates(client)
           clear_snapshots_and_repositories(client)
@@ -222,13 +223,17 @@ module Elasticsearch
           end
         end
 
+        def clear_datastreams(client)
+          client.indices.delete_data_stream(name: '*')
+        end
+
         def clear_indices(client)
           client.indices.delete(index: '*', expand_wildcards: 'all')
         end
 
         def clear_indices_xpack(client)
           indices = client.indices.get(index: '_all').keys.reject do |i|
-            i.start_with?('.security') || i.start_with?('.watches')
+            i.start_with?('.security') || i.start_with?('.watches') || i.start_with?('.ds-')
           end
           indices.each do |index|
             client.indices.delete_alias(index: index, name: '*', ignore: 404)
