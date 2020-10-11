@@ -52,6 +52,19 @@ module Elasticsearch
 
           assert_equal 'foo', subject.to_hash[:aggregations][:inner][:dummy][:field]
         end
+
+        should "add a nested aggregation using imperatively" do
+          subject.aggregation(
+            :inner,
+            ::Elasticsearch::DSL::Search::Aggregations::Dummy.new(field: 'foo')
+          )
+
+          assert ! subject.aggregations.empty?, "#{subject.aggregations.inspect} is empty"
+
+          assert_equal( {:dummy=>{:field=>"foo"}}, subject.aggregations[:inner].to_hash )
+
+          assert_equal 'foo', subject.to_hash[:aggregations][:inner][:dummy][:field]
+        end
       end
     end
   end

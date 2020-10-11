@@ -53,7 +53,12 @@ module Elasticsearch
           #
           def aggregation(*args, &block)
             @aggregations ||= AggregationsCollection.new
-            @aggregations.update args.first => Aggregation.new(*args, &block)
+            if block
+              @aggregations.update args.first => Aggregation.new(*args, &block)
+            else
+              name = args.shift
+              @aggregations.update name => args.shift
+            end
             self
           end
 
