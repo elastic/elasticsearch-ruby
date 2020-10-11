@@ -39,6 +39,8 @@ module Elasticsearch
 
           option_method :field
           option_method :interval
+          option_method :fixed_interval
+          option_method :calendar_interval
           option_method :pre_zone
           option_method :post_zone
           option_method :time_zone
