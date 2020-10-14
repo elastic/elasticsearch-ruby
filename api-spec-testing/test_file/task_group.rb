@@ -16,13 +16,9 @@
 # under the License.
 
 module Elasticsearch
-
   module RestAPIYAMLTests
-
     class TestFile
-
       class Test
-
         # Representation of a block of actions consisting of some 'do' actions and their verifications.
         #
         # For example, this is a task group:
@@ -36,7 +32,6 @@ module Elasticsearch
         #
         # @since 6.2.0
         class TaskGroup
-
           attr_reader :exception
           attr_reader :response
           attr_reader :test
@@ -321,7 +316,6 @@ module Elasticsearch
           def set_variable(action)
             variables_to_set.each do |set_definition|
               set_definition['set'].each do |response_key, variable_name|
-
                 nested_key_chain = response_key.split('.').map do |key|
                   (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
                 end
