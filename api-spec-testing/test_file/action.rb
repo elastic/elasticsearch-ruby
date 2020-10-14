@@ -109,9 +109,12 @@ module Elasticsearch
                   args[key] = value.collect { |v| prepare_arguments(v, test) }
                 when String
                   # Find the cached values where the variable name is contained in the arguments.
-                  if cached_value = test.cached_values.find { |k, v| value =~ /\$\{?#{k}\}?/ }
-                    # The arguments may contain the variable in the form ${variable} or $variable
-                    args[key] = value.gsub(/\$\{?#{cached_value[0]}\}?/, cached_value[1].to_s)
+                  if(cached_values = test.cached_values.keys.select { |k| value =~ /\$\{?#{k}\}?/ })
+                    cached_values.each do |cached|
+                      # The arguments may contain the variable in the form ${variable} or $variable
+                      value.gsub!(/\$\{?#{cached}\}?/, test.cached_values[cached].to_s)
+                    end
+                    args[key] = value
                   end
                 when Time
                   # The YAML parser reads in dates as Time objects, reconvert to a format Elasticsearch accepts
