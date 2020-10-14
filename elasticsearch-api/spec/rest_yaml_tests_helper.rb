@@ -22,7 +22,7 @@ include Elasticsearch::RestAPIYAMLTests
 TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
-if hosts = ELASTICSEARCH_URL
+if (hosts = ELASTICSEARCH_URL)
   split_hosts = hosts.split(',').map do |host|
     /(http\:\/\/)?\S+/.match(host)
   end
@@ -49,11 +49,19 @@ end
 
 
 YAML_FILES_DIRECTORY = "#{File.expand_path(File.dirname('..'), '..')}" +
-    "/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test"
+                       '/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
-                ["#{File.expand_path(File.dirname('..'), '..')}" +
-                     "/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test/#{ENV['SINGLE_TEST']}"]
+                test_target = ENV['SINGLE_TEST']
+                path = File.expand_path(File.dirname('..'), '..')
+
+                if test_target.match?(/\.yml$/)
+                  ["#{path}/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test/#{test_target}"]
+                else
+                  Dir.glob(
+                    ["#{path}/tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test/#{test_target}/*.yml"]
+                  )
+                end
               end
 
 skipped_tests = []

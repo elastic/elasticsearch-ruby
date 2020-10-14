@@ -7,9 +7,13 @@ The specs in `elasticsearch-api` and `elasticsearch-xpack` automatically run the
 The file that traverses the yaml files and loads a **TestFile** object per each of them:
 `elasticsearch-(api|xpack)/spec/elasticsearch/api/rest_api_yaml_spec.rb`
 
-You can use the SINGLE_TEST env variable to run just one test, or add code like this on the first line of the tests.each block:  
+You can use the SINGLE_TEST env variable to run just one test or one test directory. E.g.:
+```
+cd elasticsearch-api && SINGLE_TEST=indices.resolve_index/10_basic_resolve_index.yml TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+```
+And:
 ```ruby
-next unless file =~ /indices.put_mapping\/all_path_options_with_types.yml/
+cd elasticsearch-api && SINGLE_TEST=indices.resolve_index TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
 ```
 
 ## TestFile
