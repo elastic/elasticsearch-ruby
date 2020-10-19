@@ -28,7 +28,6 @@ module Elasticsearch
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
-        # @option arguments [List] :fields A comma-separated list of fields to return in the output
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-fielddata.html
