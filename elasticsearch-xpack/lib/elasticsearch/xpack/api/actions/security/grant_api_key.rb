@@ -20,31 +20,35 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # Retrieves role mappings.
+          # Creates an API key on behalf of another user.
           #
-          # @option arguments [List] :name A comma-separated list of role-mapping names
+          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body The api key request to create an API key (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-role-mapping.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-grant-api-key.html
           #
-          def get_role_mapping(arguments = {})
+          def grant_api_key(arguments = {})
+            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_security/api_key/grant"
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _name
-                       "_security/role_mapping/#{Elasticsearch::API::Utils.__listify(_name)}"
-                     else
-                       "_security/role_mapping"
-                     end
-            params = {}
-
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 6.2.0
+          ParamsRegistry.register(:grant_api_key, [
+            :refresh
+          ].freeze)
         end
       end
     end
