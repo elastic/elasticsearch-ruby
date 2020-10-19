@@ -26,7 +26,6 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [String] :type Default document type for items which don't provide one
       # @option arguments [List] :_source True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
       # @option arguments [List] :_source_excludes Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
