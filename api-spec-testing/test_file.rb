@@ -236,7 +236,7 @@ module Elasticsearch
         end
 
         def clear_indices_xpack(client)
-          indices = client.indices.get(index: '_all').keys.reject do |i|
+          indices = client.indices.get(index: '_all', expand_wildcards: 'all').keys.reject do |i|
             i.start_with?('.security') || i.start_with?('.watches') || i.start_with?('.ds-')
           end
           indices.each do |index|
