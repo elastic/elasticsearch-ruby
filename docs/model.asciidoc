@@ -8,7 +8,7 @@ It uses the `elasticsearch` Rubygem as the client communicating with the Elastic
 
 
 [discrete]
-=== Features at a Glance
+=== Features
 
 * ActiveModel integration with adapters for ActiveRecord and Mongoid
 * Enumerable-based wrapper for search results

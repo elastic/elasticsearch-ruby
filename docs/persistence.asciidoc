@@ -14,7 +14,7 @@ The `Elasticsearch::Persistence::Repository` module provides an implementation o
 
 
 [discrete]
-==== Features At a Glance
+==== Features
 
 * Access to the Elasticsearch client
 * Setting the index name, document type, and object class for deserialization
