@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-blocks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/index-modules-blocks.html
         #
         def add_block(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

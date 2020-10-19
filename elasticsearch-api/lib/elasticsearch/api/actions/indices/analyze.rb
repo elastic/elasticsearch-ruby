@@ -22,7 +22,6 @@ module Elasticsearch
         # Performs the analysis process on a text and return the tokens breakdown of the text.
         #
         # @option arguments [String] :index The name of the index to scope the operation
-        # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
