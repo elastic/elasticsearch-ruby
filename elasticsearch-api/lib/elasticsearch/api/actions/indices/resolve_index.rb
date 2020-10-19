@@ -20,12 +20,16 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns information about any matching indices, aliases, and data streams
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [List] :name A comma-separated list of names or wildcard expressions
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-resolve-index-api.html
         #
         def resolve_index(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
