@@ -21,6 +21,7 @@ module Elasticsearch
       # Allows to execute several search operations in one request.
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
+      # @option arguments [List] :type A comma-separated list of document types to use as default
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -30,6 +31,11 @@ module Elasticsearch
       # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
+      #
+      # *Deprecation notice*:
+      # Specifying types in urls has been deprecated
+      # Deprecated since version 7.0.0
+      #
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-multi-search.html
       #
@@ -42,8 +48,12 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
+        _type = arguments.delete(:type)
+
         method = Elasticsearch::API::HTTP_POST
-        path   = if _index
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_msearch"
+                 elsif _index
                    "#{Utils.__listify(_index)}/_msearch"
                  else
                    "_msearch"
