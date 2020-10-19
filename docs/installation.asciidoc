@@ -23,7 +23,7 @@ command:
 
 [source,sh]
 ------------------------------------
-gem install elasticsearch -v 6.0.0
+gem install elasticsearch -v 7.0.0
 ------------------------------------
 
 
@@ -31,5 +31,5 @@ Or you can add a specific version of {es} to your Gemfile:
 
 [source,ruby]
 ------------------------------------
-gem 'elasticsearch', '~> 6.0'
+gem 'elasticsearch', '~> 7.0'
 ------------------------------------

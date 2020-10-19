@@ -47,7 +47,7 @@ client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
 
 
 [discrete]
-=== Features at a Glance
+=== Features
 
 * Pluggable logging and tracing
 * Pluggable connection selection strategies (round-robin, random, custom)
