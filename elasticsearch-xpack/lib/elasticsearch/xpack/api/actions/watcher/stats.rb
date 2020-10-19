@@ -23,7 +23,6 @@ module Elasticsearch
           # Retrieves the current Watcher metrics.
           #
           # @option arguments [List] :metric Controls what additional stat metrics should be include in the response (options: _all, queued_watches, current_watches, pending_watches)
-          # @option arguments [List] :metric Controls what additional stat metrics should be include in the response (options: _all, queued_watches, current_watches, pending_watches)
           # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
           # @option arguments [Hash] :headers Custom HTTP headers
           #
