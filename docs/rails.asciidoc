@@ -6,7 +6,7 @@ provides features suitable for Ruby on Rails applications.
 
 
 [discrete]
-=== Features at a Glance
+=== Features
 
 * Rake tasks for importing data from application models
 * Integration with Rails' instrumentation framework
