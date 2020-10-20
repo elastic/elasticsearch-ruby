@@ -12,3 +12,4 @@ Gemfile.lock
 *.log
 .idea/*
 profile/**/data/*.json
+.ci/output
