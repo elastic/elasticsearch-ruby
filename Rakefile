@@ -36,6 +36,9 @@ RELEASE_TOGETHER = [ 'elasticsearch',
 
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 
+# Import build task after setting constants:
+import 'rake_tasks/build_tasks.rake'
+
 def admin_client
   $admin_client ||= begin
     transport_options = {}
@@ -130,7 +133,7 @@ desc <<-DESC
 
       $ rake update_version[5.0.0,5.0.1]
 DESC
-task :update_version, :old, :new do |task, args|
+task :update_version, :old, :new do |_, args|
   require 'ansi'
 
   puts '[!!!] Required argument [old] missing'.ansi(:red) unless args[:old]
