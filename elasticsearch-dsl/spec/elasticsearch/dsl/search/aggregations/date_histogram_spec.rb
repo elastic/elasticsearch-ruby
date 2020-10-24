@@ -58,6 +58,28 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
       end
     end
 
+    describe '#fixed_interval' do
+
+      before do
+        search.fixed_interval('bar')
+      end
+
+      it 'applies the option' do
+        expect(search.to_hash[:date_histogram][:foo][:fixed_interval]).to eq('bar')
+      end
+    end
+
+    describe '#calendar_interval' do
+
+      before do
+        search.calendar_interval('bar')
+      end
+
+      it 'applies the option' do
+        expect(search.to_hash[:date_histogram][:foo][:calendar_interval]).to eq('bar')
+      end
+    end
+
     describe '#pre_zone' do
 
       before do
