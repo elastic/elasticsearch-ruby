@@ -30,6 +30,7 @@ module Elasticsearch
           # @option arguments [Int] :from skips a number of transform configs, defaults to 0
           # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+          # @option arguments [Boolean] :exclude_generated Omits generated fields. Allows transform configurations to be easily copied between clusters and within the same cluster
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # *Deprecation notice*:
@@ -64,7 +65,8 @@ module Elasticsearch
           ParamsRegistry.register(:get_transform, [
             :from,
             :size,
-            :allow_no_match
+            :allow_no_match,
+            :exclude_generated
           ].freeze)
         end
       end

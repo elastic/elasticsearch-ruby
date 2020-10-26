@@ -18,35 +18,28 @@
 module Elasticsearch
   module XPack
     module API
-      module MachineLearning
+      module Autoscaling
         module Actions
-          # Creates an inference trained model.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
+          # Gets the current autoscaling capacity based on the configured autoscaling policy.
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
-          # @option arguments [String] :model_id The ID of the trained models to store
           # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The trained model configuration (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-capacity.html
           #
-          def put_trained_model(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
-
+          def get_autoscaling_capacity(arguments = {})
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            _model_id = arguments.delete(:model_id)
-
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
+            method = Elasticsearch::API::HTTP_GET
+            path   = "_autoscaling/capacity"
             params = {}
 
-            body = arguments[:body]
+            body = nil
             perform_request(method, path, params, body, headers).body
           end
         end
