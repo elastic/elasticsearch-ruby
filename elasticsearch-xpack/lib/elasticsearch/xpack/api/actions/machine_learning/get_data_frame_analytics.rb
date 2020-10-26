@@ -21,16 +21,16 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Retrieves configuration information for data frame analytics jobs.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
+          # This functionality is in Beta and is subject to change. The design and
+          # code is less mature than official GA features and is being provided
+          # as-is with no warranties. Beta features are not subject to the support
+          # SLA of official GA features.
           #
           # @option arguments [String] :id The ID of the data frame analytics to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
           # @option arguments [Int] :from skips a number of analytics
           # @option arguments [Int] :size specifies a max number of analytics to get
-          # @option arguments [Boolean] :for_export Omits fields that are illegal to set on data frame analytics PUT
+          # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on data frame analytics PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
@@ -61,7 +61,7 @@ module Elasticsearch
             :allow_no_match,
             :from,
             :size,
-            :for_export
+            :exclude_generated
           ].freeze)
         end
       end

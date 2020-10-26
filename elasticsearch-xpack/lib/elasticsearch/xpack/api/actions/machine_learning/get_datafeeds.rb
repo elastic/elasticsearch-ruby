@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :datafeed_id The ID of the datafeeds to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
           # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) *Deprecated*
-          # @option arguments [Boolean] :for_export Omits fields that are illegal to set on datafeed PUT
+          # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on datafeed PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
@@ -55,7 +55,7 @@ module Elasticsearch
           ParamsRegistry.register(:get_datafeeds, [
             :allow_no_match,
             :allow_no_datafeeds,
-            :for_export
+            :exclude_generated
           ].freeze)
         end
       end
