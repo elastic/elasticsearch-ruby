@@ -24,7 +24,6 @@ module Elasticsearch
       # @option arguments [String] :context Script context
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
-      # @option arguments [String] :context Context name to compile script against
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
