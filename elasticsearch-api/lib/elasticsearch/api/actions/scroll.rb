@@ -22,7 +22,6 @@ module Elasticsearch
       #
       # @option arguments [String] :scroll_id The scroll ID *Deprecated*
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
-      # @option arguments [String] :scroll_id The scroll ID for scrolled search
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The scroll ID if not passed by URL or query parameter.
