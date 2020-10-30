@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The ranking evaluation search definition, including search requests, document ratings and ranking metric definition. (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-rank-eval.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/search-rank-eval.html
       #
       def rank_eval(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

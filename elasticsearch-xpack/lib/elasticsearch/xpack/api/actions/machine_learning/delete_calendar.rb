@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :calendar_id The ID of the calendar to delete
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-delete-calendar.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/ml-delete-calendar.html
           #
           def delete_calendar(arguments = {})
             raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]

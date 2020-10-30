@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [String] :name the name of the autoscaling policy
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-policy.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/autoscaling-get-autoscaling-policy.html
           #
           def get_autoscaling_policy(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

@@ -27,7 +27,7 @@ module Elasticsearch
           # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) *Deprecated*
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-job-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/ml-get-job-stats.html
           #
           def get_job_stats(arguments = {})
             headers = arguments.delete(:headers) || {}

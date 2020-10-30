@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body licenses to be installed
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/update-license.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/update-license.html
           #
           def post(arguments = {})
             headers = arguments.delete(:headers) || {}

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-aliases.html
         #
         def delete_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

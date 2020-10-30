@@ -43,7 +43,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-explain.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/search-explain.html
       #
       def explain(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

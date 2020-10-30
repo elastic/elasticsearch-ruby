@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :datafeed_id The ID of the datafeed to preview
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-preview-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/ml-preview-datafeed.html
           #
           def preview_datafeed(arguments = {})
             raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
