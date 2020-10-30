@@ -74,7 +74,7 @@ a `reindex` method is added to the client:
     client.index index: 'test', type: 'd', body: { title: 'foo' }
 
     client.reindex source: { index: 'test' },
-                   target: { index: 'test', client: target_client },
+                   dest: { index: 'test', client: target_client },
                    transform: lambda { |doc| doc['_source']['title'].upcase! },
                    refresh: true
     # => { errors: 0 }
@@ -95,7 +95,7 @@ You can also use the `Reindex` class directly:
 
     reindex = Elasticsearch::Extensions::Reindex.new \
                 source: { index: 'test', client: client },
-                target: { index: 'test-copy' }
+                dest: { index: 'test-copy' }
 
     reindex.perform
 

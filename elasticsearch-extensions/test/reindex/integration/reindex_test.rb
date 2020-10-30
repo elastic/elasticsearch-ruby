@@ -54,7 +54,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     should "copy documents from one index to another" do
       reindex = Elasticsearch::Extensions::Reindex.new \
                   source: { index: 'test1', client: @client },
-                  target: { index: 'test2' },
+                  dest: { index: 'test2' },
                   batch_size: 2,
                   refresh: true
 
@@ -67,7 +67,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     should "transform documents with a lambda" do
       reindex = Elasticsearch::Extensions::Reindex.new \
                   source: { index: 'test1', client: @client },
-                  target: { index: 'test2' },
+                  dest: { index: 'test2' },
                   transform: lambda { |d| d['_source']['category'].upcase! },
                   refresh: true
 
@@ -84,7 +84,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
 
       reindex = Elasticsearch::Extensions::Reindex.new \
                   source: { index: 'test1', client: @client },
-                  target: { index: 'test3' }
+                  dest: { index: 'test3' }
 
       result = reindex.perform
 
@@ -97,7 +97,7 @@ class Elasticsearch::Extensions::ReindexIntegrationTest < Elasticsearch::Test::I
     should "reindex via the API integration" do
       @client.indices.create index: 'test4'
 
-      @client.reindex source: { index: 'test1' }, target: { index: 'test4' }
+      @client.reindex source: { index: 'test1' }, dest: { index: 'test4' }
       @client.indices.refresh index: 'test4'
 
       assert_equal 3, @client.search(index: 'test4')['hits']['total']['value']

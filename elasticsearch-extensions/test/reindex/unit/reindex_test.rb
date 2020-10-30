@@ -20,7 +20,7 @@ require 'elasticsearch/extensions/reindex'
 
 class Elasticsearch::Extensions::ReindexTest < Elasticsearch::Test::UnitTestCase
   context "The Reindex extension module" do
-    DEFAULT_OPTIONS = { source: { index: 'foo', client: Object.new }, target: { index: 'bar' } }
+    DEFAULT_OPTIONS = { source: { index: 'foo', client: Object.new }, dest: { index: 'bar' } }
 
     should "require options" do
       assert_raise ArgumentError do
@@ -67,7 +67,7 @@ class Elasticsearch::Extensions::ReindexTest < Elasticsearch::Test::UnitTestCase
       should "scroll through the index and save batches in bulk" do
         client  = mock()
         subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
-                                                         target: { index: 'bar' }
+                                                         dest: { index: 'bar' }
 
         client.expects(:search)
           .returns({ '_scroll_id' => 'scroll_id_1' }.merge(Marshal.load(Marshal.dump(@default_response))))
@@ -87,7 +87,7 @@ class Elasticsearch::Extensions::ReindexTest < Elasticsearch::Test::UnitTestCase
       should "return the number of errors" do
         client  = mock()
         subject = Elasticsearch::Extensions::Reindex.new source: { index: 'foo', client: client },
-                                                         target: { index: 'bar' }
+                                                         dest: { index: 'bar' }
 
         client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' }.merge(@default_response))
         client.expects(:scroll).returns(@empty_response)
@@ -102,7 +102,7 @@ class Elasticsearch::Extensions::ReindexTest < Elasticsearch::Test::UnitTestCase
         client  = mock()
         subject = Elasticsearch::Extensions::Reindex.new \
           source: { index: 'foo', client: client },
-          target: { index: 'bar' },
+          dest: { index: 'bar' },
           transform: lambda { |d| d['_source']['foo'].upcase!; d }
 
         client.expects(:search).returns({ '_scroll_id' => 'scroll_id_1' }.merge(@default_response))
