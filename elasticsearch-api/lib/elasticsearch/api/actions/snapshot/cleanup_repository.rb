@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/clean-up-snapshot-repo-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/clean-up-snapshot-repo-api.html
         #
         def cleanup_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body New index template definition to be simulated, if no index template name is specified
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/indices-templates.html
         #
         def simulate_template(arguments = {})
           headers = arguments.delete(:headers) || {}

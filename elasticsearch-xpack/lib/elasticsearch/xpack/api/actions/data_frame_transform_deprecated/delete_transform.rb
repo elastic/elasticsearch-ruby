@@ -35,7 +35,7 @@ module Elasticsearch
           # Deprecated since version 7.5.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/delete-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/delete-transform.html
           #
           def delete_transform(arguments = {})
             raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

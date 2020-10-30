@@ -31,7 +31,7 @@ module Elasticsearch
           # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/eql-search-api.html
           #
           def get(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

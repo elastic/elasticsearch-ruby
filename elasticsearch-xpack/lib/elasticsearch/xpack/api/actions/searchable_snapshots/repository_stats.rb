@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [String] :repository The repository for which to get the stats for
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/searchable-snapshots-apis.html
           #
           def repository_stats(arguments = {})
             raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]

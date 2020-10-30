@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The detector (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/machine-learning/7.x/ml-jobs.html
+          # @see https://www.elastic.co/guide/en/machine-learning/7.10/ml-jobs.html
           #
           def validate_detector(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

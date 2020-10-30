@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/usage-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/usage-api.html
         #
         def usage(arguments = {})
           headers = arguments.delete(:headers) || {}

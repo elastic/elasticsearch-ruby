@@ -43,7 +43,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-validate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/search-validate.html
         #
         def validate_query(arguments = {})
           headers = arguments.delete(:headers) || {}

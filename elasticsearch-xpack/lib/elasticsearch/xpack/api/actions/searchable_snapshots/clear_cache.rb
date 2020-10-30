@@ -32,7 +32,7 @@ module Elasticsearch
           # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/searchable-snapshots-apis.html
           #
           def clear_cache(arguments = {})
             headers = arguments.delete(:headers) || {}

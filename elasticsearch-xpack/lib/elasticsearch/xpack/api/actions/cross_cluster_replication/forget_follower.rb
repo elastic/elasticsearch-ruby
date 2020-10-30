@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-forget-follower.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/ccr-post-forget-follower.html
           #
           def forget_follower(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

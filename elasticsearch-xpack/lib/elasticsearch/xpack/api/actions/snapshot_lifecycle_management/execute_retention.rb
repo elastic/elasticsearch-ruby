@@ -24,7 +24,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-retention.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/slm-api-execute-retention.html
           #
           def execute_retention(arguments = {})
             headers = arguments.delete(:headers) || {}

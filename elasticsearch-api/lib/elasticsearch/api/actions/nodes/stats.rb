@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-nodes-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-nodes-stats.html
         #
         def stats(arguments = {})
           headers = arguments.delete(:headers) || {}

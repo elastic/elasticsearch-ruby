@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_status Wait until cluster is in a specific state (options: green, yellow, red)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-health.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cluster-health.html
         #
         def health(arguments = {})
           headers = arguments.delete(:headers) || {}

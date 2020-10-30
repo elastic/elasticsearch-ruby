@@ -38,7 +38,7 @@ module Elasticsearch
           # Deprecated since version 7.0.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-search.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/rollup-search.html
           #
           def rollup_search(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

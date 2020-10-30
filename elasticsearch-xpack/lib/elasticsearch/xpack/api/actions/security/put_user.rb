@@ -27,7 +27,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The user to add (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-put-user.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/security-api-put-user.html
           #
           def put_user(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

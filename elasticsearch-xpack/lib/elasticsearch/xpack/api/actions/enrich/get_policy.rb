@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [List] :name A comma-separated list of enrich policy names
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-enrich-policy-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/get-enrich-policy-api.html
           #
           def get_policy(arguments = {})
             headers = arguments.delete(:headers) || {}

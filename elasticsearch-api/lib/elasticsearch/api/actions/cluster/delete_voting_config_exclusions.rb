@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_removal Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/voting-config-exclusions.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/voting-config-exclusions.html
         #
         def delete_voting_config_exclusions(arguments = {})
           headers = arguments.delete(:headers) || {}

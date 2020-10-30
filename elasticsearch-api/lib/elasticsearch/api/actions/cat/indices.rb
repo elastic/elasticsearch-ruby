@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/cat-indices.html
         #
         def indices(arguments = {})
           headers = arguments.delete(:headers) || {}

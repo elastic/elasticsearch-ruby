@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-delete-policy.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.10/slm-api-delete-policy.html
           #
           def delete_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
