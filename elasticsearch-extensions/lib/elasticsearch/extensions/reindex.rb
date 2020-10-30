@@ -40,10 +40,10 @@ module Elasticsearch
       end; extend self
 
       module API
-        # Copy documents from one index into another and refresh the target index
+        # Copy documents from one index into another and refresh the destination index
         #
         # @example
-        #     client.reindex source: { index: 'test1' }, target: { index: 'test2' }, refresh: true
+        #     client.reindex source: { index: 'test1' }, dest: { index: 'test2' }, refresh: true
         #
         # The method allows all the options as {Reindex::Reindex.new}.
         #
@@ -67,40 +67,40 @@ module Elasticsearch
       #   client  = Elasticsearch::Client.new
       #   reindex = Elasticsearch::Extensions::Reindex.new \
       #               source: { index: 'test1', client: client },
-      #               target: { index: 'test2' }
+      #               dest: { index: 'test2' }
       #
       #   reindex.perform
       #
       # @example Copy documents to a different cluster
       #
       #     source_client  = Elasticsearch::Client.new url: 'http://localhost:9200'
-      #     target_client  = Elasticsearch::Client.new url: 'http://localhost:9250'
+      #     destination_client  = Elasticsearch::Client.new url: 'http://localhost:9250'
       #
       #     reindex = Elasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test', client: source_client },
-      #                 target: { index: 'test', client: target_client }
+      #                 dest: { index: 'test', client: destination_client }
       #     reindex.perform
       #
       # @example Transform the documents during re-indexing
       #
       #     reindex = Elasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test1', client: client },
-      #                 target: { index: 'test2' },
+      #                 dest: { index: 'test2' },
       #                 transform: lambda { |doc| doc['_source']['category'].upcase! }
       #
       #
       # The reindexing process works by "scrolling" an index and sending
-      # batches via the "Bulk" API to the target index/cluster
+      # batches via the "Bulk" API to the destination index/cluster
       #
       # @option arguments [String] :source The source index/cluster definition (*Required*)
-      # @option arguments [String] :target The target index/cluster definition (*Required*)
+      # @option arguments [String] :dest The destination index/cluster definition (*Required*)
       # @option arguments [Proc] :transform A block which will be executed for each document
       # @option arguments [Integer] :batch_size The size of the batch for scroll operation (Default: 1000)
       # @option arguments [String] :scroll The timeout for the scroll operation (Default: 5min)
-      # @option arguments [Boolean] :refresh Whether to refresh the target index after
+      # @option arguments [Boolean] :refresh Whether to refresh the destination index after
       #                                      the operation is completed (Default: false)
       #
-      # Be aware, that if you want to change the target index settings and/or mappings,
+      # Be aware, that if you want to change the destination index settings and/or mappings,
       # you have to do so in advance by using the "Indices Create" API.
       #
       # Note, that there is a native "Reindex" API in Elasticsearch 2.3.x and higer versions,
@@ -115,7 +115,7 @@ module Elasticsearch
           [
             [:source, :index],
             [:source, :client],
-            [:target, :index]
+            [:dest, :index]
           ].each do |required_option|
             value = required_option.reduce(arguments) { |sum, o| sum = sum[o] ? sum[o] : {}  }
 
@@ -130,7 +130,7 @@ module Elasticsearch
             refresh: false
           }.merge(arguments)
 
-          arguments[:target][:client] ||= arguments[:source][:client]
+          arguments[:dest][:client] ||= arguments[:source][:client]
         end
 
         # Performs the operation
@@ -161,14 +161,14 @@ module Elasticsearch
             output[:errors] += bulk_response['items'].select { |k, v| k.values.first['error'] }.size
           end
 
-          arguments[:target][:client].indices.refresh index: arguments[:target][:index] if arguments[:refresh]
+          arguments[:dest][:client].indices.refresh index: arguments[:dest][:index] if arguments[:refresh]
 
           output
         end
 
         def __store_batch(documents)
           body = documents.map do |doc|
-            doc['_index'] = arguments[:target][:index]
+            doc['_index'] = arguments[:dest][:index]
 
             arguments[:transform].call(doc) if arguments[:transform]
 
@@ -179,7 +179,7 @@ module Elasticsearch
             { index: doc }
           end
 
-          arguments[:target][:client].bulk body: body
+          arguments[:dest][:client].bulk body: body
         end
       end
     end
