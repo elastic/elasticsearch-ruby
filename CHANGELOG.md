@@ -1,3 +1,45 @@
+## 7.10.0
+
+### Client
+
+- Support for Elasticsearch version `7.10.0`.
+- Fixes a bug when building the complete endpoint URL could end with duplicate slashes `//`.
+- Fixes a bug when building the complete endpoint URL with cloud id could end with duplicate ports [#1081](https://github.com/elastic/elasticsearch-ruby/issues/1081).
+
+
+### API
+
+- Fix in RubyDoc comments, some parameters were being duplicated.
+- Deprecation notice: Synced flush (`indices.flush_synced`) is deprecated and will be removed in 8.0. Use flush instead.
+
+#### New API Endpoints
+
+- `snapshot.clone`
+
+#### API Changes
+
+- `bulk`, `index`, `update`: new parameter `require_alias` (boolean):  When true, requires destination to be an alias (default: false) for `index` and `update`. For `bulk` it sets `require_alias` for all incoming documents. Defaults to unset (false).
+
+### X-Pack
+
+Deprecation notice: `searchable_snapshots.repository_stats` is deprecated and is replaced by the Repositories Metering API.
+
+#### New API Endpoints
+
+- `close_point_in_time`
+- `open_point_in_time`
+- `security.clear_api_key_cache`
+- `security.grant_api_key`
+
+#### API Changes
+
+- `cat.ml_datafeeds`, `cat.ml_jobs`, `machine_learning.close_job`, `machine_learning.get_datafeed_stats`, `machine_learning.get_datafeeds`, `machine_learning.get_job_stats`, `machine_learning.get_jobs`, `machine_learning.get_overall_buckets`, `machine_learning.stop_datafeed`: new parameter `allow_no_match` (boolean): Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
+-`machine_learning.get_data_frame_analytics`: new parameter `verbose` (boolean), whether the stats response should be verbose
+- `machine_learning.get_trained_models`: new parameter `include` (string), a comma-separate list of fields to optionally include. Valid options are 'definition' and 'total_feature_importance'. Default is none.
+- `machine_learning.stop_datafeed`: endpoint now accepts a `body`: the URL params optionally sent in the body
+- `security.get_role`, `security/get_role_mapping`: The name parameter is now a comma-separated list of role-mapping names
+- `machine_learning.delete_trained_model`, `machine_learning.get_trained_models`, `machine_learning.get_trained_models_stats`, `machine_learning.put_trained_model`: Internal change, url changed from `_ml/inference` to `_ml/trained_models`
+
 ## 7.9.0
 
 ### Client
