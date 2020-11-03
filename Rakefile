@@ -37,7 +37,7 @@ RELEASE_TOGETHER = [ 'elasticsearch',
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 
 # Import build task after setting constants:
-import 'rake_tasks/build_tasks.rake'
+import 'rake_tasks/unified_release_tasks.rake'
 
 def admin_client
   $admin_client ||= begin

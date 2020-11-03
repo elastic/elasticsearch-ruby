@@ -4,7 +4,7 @@
 # common build entry script for all elasticsearch clients
 
 # ./.ci/make.sh bump VERSION
-# ./.ci/make.sh release TARGET_DIR
+# ./.ci/make.sh build[TARGET_DIR]
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
 
@@ -13,9 +13,11 @@ CMD=$1
 VERSION=$2
 set -euo pipefail
 
-TARGET_DIR=".ci/output"
+TARGET_DIR=${TARGET_DIR-.ci/output}
 OUTPUT_DIR="$repo/${TARGET_DIR}"
 RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
+GITHUB_TOKEN=${GITHUB_TOKEN-}
+RUBYGEMS_API=${RUBYGEMS_API-}
 
 case $CMD in
     bump)
@@ -24,8 +26,11 @@ case $CMD in
     build)
         TASK=build["$TARGET_DIR"]
         ;;
+    publish)
+        TASK=publish
+        ;;
     *)
-        echo -e "\nUsage:\n\t $0 {bump[VERSION]|build[VERSION,TARGET_DIR]}\n"
+        echo -e "\nUsage:\n\t $0 {bump [VERSION] | build [TARGET_DIR]}\n"
         exit 1
 esac
 
@@ -41,9 +46,11 @@ echo -e "\033[1m>>>>> Run [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>
 mkdir -p "$OUTPUT_DIR"
 
 docker run \
-  --env "RUBY_TEST_VERSION" \
-  --name test-runner \
-  --volume "${OUTPUT_DIR}:/${TARGET_DIR}" \
-  --rm \
-  elastic/elasticsearch-ruby \
-  bundle exec rake "$TASK"
+       --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
+       --env "GITHUB_TOKEN" \
+       --env "RUBYGEMS_API_KEY" \
+       --name test-runner \
+       --volume "${OUTPUT_DIR}:/${TARGET_DIR}" \
+       --rm \
+       elastic/elasticsearch-ruby \
+       bundle exec rake unified_release:"$TASK"
