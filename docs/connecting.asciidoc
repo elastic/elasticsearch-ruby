@@ -53,7 +53,8 @@ client = Elasticsearch::Client.new(
 [[auth-api-key]]
 ==== API Key authentication
 
-You can also use the {ref}/security-api-create-api-key.html[ApiKey] 
+You can also use the 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] 
 authentication.
 
 NOTE: If you provide both basic authentication credentials and the ApiKey 
@@ -93,15 +94,15 @@ configuration hash:
 ------------------------------------
 client = Elasticsearch::Client.new(
   hosts:
-	[
-  	{
-    	host: 'my-protected-host',
-    	port: '443',
-    	user: 'USERNAME',
-    	password: 'PASSWORD',
-    	scheme: 'https'
-  	}
-	]
+	  [
+  	   {
+    	   host: 'my-protected-host',
+    	   port: '443',
+    	   user: 'USERNAME',
+    	   password: 'PASSWORD',
+    	   scheme: 'https'
+  	   }
+	  ]
 )
 ------------------------------------
 
@@ -137,9 +138,9 @@ client = Elasticsearch::Client.new log: true
 
 client.cluster.health
 
-client.index index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' }
+client.index(index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' })
 
-client.indices.refresh index: 'my-index'
+client.indices.refresh(index: 'my-index')
 
-client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
+client.search(index: 'my-index', body: { query: { match: { title: 'test' } } })
 ------------------------------------
