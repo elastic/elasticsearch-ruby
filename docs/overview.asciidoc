@@ -12,46 +12,6 @@ only an overview of features.
 
 
 [discrete]
-=== {es} and Ruby Version Compatibility
-
-The {es} client is compatible with Ruby 1.9 and higher.
-
-The client's API is compatible with {es} API versions from 0.90 till current,
-just use a release matching major version of {es}.
-
-|===
-| Gem Version   |   | {es} Version
-
-| 0.90          | → | 0.90
-| 1.x           | → | 1.x
-| 2.x           | → | 2.x
-| 5.x           | → | 5.x
-| 6.x           | → | 6.x
-| 7.x           | → | 7.x
-| master        | → | master
-|===
-
-
-[discrete]
-=== Example Usage
-
-[source,ruby]
-------------------------------------
-require 'elasticsearch'
-
-client = Elasticsearch::Client.new log: true
-
-client.cluster.health
-
-client.index index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' }
-
-client.indices.refresh index: 'my-index'
-
-client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
-------------------------------------
-
-
-[discrete]
 === Features
 
 * Pluggable logging and tracing
