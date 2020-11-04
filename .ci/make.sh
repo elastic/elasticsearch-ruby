@@ -13,26 +13,27 @@ CMD=$1
 VERSION=$2
 set -euo pipefail
 
-TARGET_DIR=${TARGET_DIR-.ci/output}
+TARGET_DIR=.ci/output
 OUTPUT_DIR="$repo/${TARGET_DIR}"
 RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
-GITHUB_TOKEN=${GITHUB_TOKEN-}
-RUBYGEMS_API=${RUBYGEMS_API-}
+GITHUB_TOKEN=${GITHUB_TOKEN-nil}
+RUBYGEMS_API=${RUBYGEMS_API-nil}
 GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
 
 case $CMD in
-    bump)
-        TASK=bump["$VERSION"]
-        ;;
-    build)
+    assemble)
         TASK=build["$TARGET_DIR"]
         ;;
     publish)
         TASK=publish
         ;;
     *)
-        echo -e "\nUsage:\n\t $0 {bump [VERSION] | build [TARGET_DIR]}\n"
+        echo -e "\nUsage:"
+        echo -e "\t Build gem files:"
+        echo -e "\t $0 assemble\n"
+        echo -e "\t Publish gems:"
+        echo -e "\t $0 publish\n"
         exit 1
 esac
 
@@ -51,10 +52,11 @@ docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
        --env "GITHUB_TOKEN" \
        --env "RUBYGEMS_API_KEY" \
+       --env "GIT_EMAIL" \
+       --env "GIT_NAME" \
        --name test-runner \
+       --volume $repo:/usr/src/app \
        --volume "${OUTPUT_DIR}:/${TARGET_DIR}" \
        --rm \
        elastic/elasticsearch-ruby \
-       git config --global user.email ${GIT_EMAIL} && \
-       git config --global user.name ${GIT_NAME} && \
-       bundle exec rake bundle:clean bundle:install unified_release:"$TASK"
+       bundle exec rake unified_release:"$TASK"

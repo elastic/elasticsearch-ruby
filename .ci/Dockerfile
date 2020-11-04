@@ -11,8 +11,6 @@ WORKDIR /usr/src/app
 COPY . .
 
 RUN gem update --system
-RUN gem uninstall bundler
-RUN gem install bundler
-RUN bundle install
+RUN bundle install --quiet
 RUN bundle exec rake bundle:clean
 RUN rake bundle:install

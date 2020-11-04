@@ -53,6 +53,9 @@ namespace :unified_release do
     raise ArgumentError, 'You need to set the env value for GITHUB_TOKEN' unless ENV['GITHUB_TOKEN']
     raise ArgumentError, 'You need to set the env value for RUBYGEMS_API_KEY' unless ENV['RUBYGEMS_API_KEY']
 
+    sh 'git config --global user.email ${GIT_EMAIL} && ' \
+       'git config --global user.name ${GIT_NAME}'
+
     file_name = File.expand_path('~/.gem/credentials')
     text = <<~CREDENTIALS
       ---
