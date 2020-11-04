@@ -228,7 +228,7 @@ module Elasticsearch
         end
 
         def clear_datastreams(client)
-          client.indices.delete_data_stream(name: '*')
+          client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
         end
 
         def clear_indices(client)
