@@ -101,7 +101,7 @@ namespace :bundle do
   task :install do
     SUBPROJECTS.each do |project|
       puts '-' * 80
-      sh "cd #{CURRENT_PATH.join(project)} && unset BUNDLE_GEMFILE && bundle install"
+      sh "cd #{CURRENT_PATH.join(project)} && unset BUNDLE_GEMFILE && bundle install --quiet"
       puts
     end
   end
