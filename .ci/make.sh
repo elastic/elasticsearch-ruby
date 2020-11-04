@@ -18,6 +18,8 @@ OUTPUT_DIR="$repo/${TARGET_DIR}"
 RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
 GITHUB_TOKEN=${GITHUB_TOKEN-}
 RUBYGEMS_API=${RUBYGEMS_API-}
+GIT_NAME=${GIT_NAME-elastic}
+GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
 
 case $CMD in
     bump)
@@ -53,4 +55,6 @@ docker run \
        --volume "${OUTPUT_DIR}:/${TARGET_DIR}" \
        --rm \
        elastic/elasticsearch-ruby \
+       git config --global user.email ${GIT_EMAIL} && \
+       git config --global user.name ${GIT_NAME} && \
        bundle exec rake unified_release:"$TASK"
