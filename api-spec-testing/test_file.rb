@@ -22,12 +22,16 @@ require 'logger'
 
 module Elasticsearch
   module RestAPIYAMLTests
+    # Custom exception to raise when a test file needs to be skipped. This is
+    # captured as soon as possible so the test runners can move on to the next test.
+    class SkipTestsException < StandardError
+    end
+
     # Class representing a single test file, containing a setup, teardown, and multiple tests.
     #
     # @since 6.2.0
     class TestFile
-      attr_reader :features_to_skip
-      attr_reader :name
+      attr_reader :features_to_skip, :name, :client
 
       # Initialize a single test file.
       #
@@ -38,8 +42,9 @@ module Elasticsearch
       # @param [ Array<Symbol> ] skip_features The names of features to skip.
       #
       # @since 6.1.0
-      def initialize(file_name, features_to_skip = [])
+      def initialize(file_name, client, features_to_skip = [])
         @name = file_name
+        @client = client
         begin
           documents = YAML.load_stream(File.new(file_name))
         rescue StandardError => e
@@ -49,8 +54,38 @@ module Elasticsearch
         end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
+        skip_entire_test_file? if @setup
         @teardown = documents.find { |doc| doc['teardown'] }
         @features_to_skip = REST_API_YAML_SKIP_FEATURES + features_to_skip
+      end
+
+      def skip_entire_test_file?
+        @skip = @setup['setup']&.select { |a| a['skip'] }
+        return false if @skip.empty?
+
+        raise SkipTestsException if skip_version?(@client, @skip.first['skip'])
+      end
+
+      def skip_version?(client, skip_definition)
+        return true if skip_definition['version'] == 'all'
+
+        range_partition = /\s*-\s*/
+        return unless (versions = skip_definition['version']) && skip_definition['version'].partition(range_partition)
+
+        low, high = __parse_versions(versions)
+        range = low..high
+        begin
+          server_version = client.info['version']['number']
+        rescue
+          warn('Could not determine Elasticsearch version when checking if test should be skipped.')
+        end
+        range.cover?(server_version)
+      end
+
+      def __parse_versions(versions)
+        low = (['', nil].include? versions[0]) ? '0' : versions[0]
+        high = (['', nil].include? versions[2]) ? '9999' : versions[2]
+        [low, high]
       end
 
       # Get a list of tests in the test file.
