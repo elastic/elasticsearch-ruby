@@ -23,6 +23,7 @@ module Elasticsearch
           # Deletes a data stream.
           #
           # @option arguments [List] :name A comma-separated list of data streams to delete; use `*` to delete all data streams
+          # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
@@ -38,11 +39,18 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_DELETE
             path   = "_data_stream/#{Elasticsearch::API::Utils.__listify(_name)}"
-            params = {}
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
             perform_request(method, path, params, body, headers).body
           end
+
+          # Register this action with its valid params when the module is loaded.
+          #
+          # @since 6.2.0
+          ParamsRegistry.register(:delete_data_stream, [
+            :expand_wildcards
+          ].freeze)
         end
       end
     end
