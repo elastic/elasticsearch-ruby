@@ -94,10 +94,6 @@ skipped_tests << { file:        'delete/70_mix_typeless_typeful.yml',
 skipped_tests << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
 
-# node_selector is not supported yet
-skipped_tests << { file: 'cat.aliases/10_basic.yml',
-                   description: '*' }
-
 # Responses are there but not equal (eg.: yellow status)
 skipped_tests << { file: 'cluster.health/10_basic.yml',
                    description: 'cluster health with closed index (pre 7.2.0)' }
@@ -112,4 +108,4 @@ SKIPPED_TESTS = skipped_tests
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
 # The features to skip
-REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
+REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze

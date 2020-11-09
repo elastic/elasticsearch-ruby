@@ -188,4 +188,4 @@ SKIPPED_TESTS << { file: 'ml/jobs_crud.yml',
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
 # The features to skip
-REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
+REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
