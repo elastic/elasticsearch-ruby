@@ -64,10 +64,7 @@ module Elasticsearch
           end
         end
 
-        attr_reader :description
-        attr_reader :test_file
-        attr_reader :cached_values
-        attr_reader :file_basename
+        attr_reader :description, :test_file, :cached_values, :file_basename
 
         # Actions that if followed by a 'do' action, indicate that they complete their task group.
         # For example, consider this sequence of actions:
@@ -117,7 +114,6 @@ module Elasticsearch
           @definition = test_definition[description].select { |doc| !doc.key?('skip') }
           @definition.delete_if { |doc| doc['skip'] }
           @cached_values = {}
-
           skip_definitions = test_definition[description].select { |doc| doc['skip'] }.compact
           @skip = skip_definitions unless skip_definitions.empty?
         end
@@ -159,7 +155,7 @@ module Elasticsearch
         #
         # @since 6.2.0
         def cache_value(cache_key, value)
-          @cached_values["#{cache_key}"] = value
+          @cached_values[cache_key] = value
           @cached_values
         end
 
@@ -224,7 +220,7 @@ module Elasticsearch
 
           if @skip
             @skip.collect { |s| s['skip'] }.any? do |skip|
-              contains_features_to_skip?(features_to_skip, skip) || skip_version?(client, skip)
+              contains_features_to_skip?(features_to_skip, skip) || test_file.skip_version?(client, skip)
             end
           end
         end
@@ -285,12 +281,6 @@ module Elasticsearch
 
         def expects_exception?(action)
           action['do'] && action['do']['catch']
-        end
-
-        def __parse_versions(versions)
-          low = (['', nil].include? versions[0]) ? '0' : versions[0]
-          high = (['', nil].include? versions[2]) ? '9999' : versions[2]
-          [low, high]
         end
       end
     end
