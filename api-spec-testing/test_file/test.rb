@@ -64,10 +64,7 @@ module Elasticsearch
           end
         end
 
-        attr_reader :description
-        attr_reader :test_file
-        attr_reader :cached_values
-        attr_reader :file_basename
+        attr_reader :description, :test_file, :cached_values, :file_basename
 
         # Actions that if followed by a 'do' action, indicate that they complete their task group.
         # For example, consider this sequence of actions:
@@ -117,7 +114,6 @@ module Elasticsearch
           @definition = test_definition[description].select { |doc| !doc.key?('skip') }
           @definition.delete_if { |doc| doc['skip'] }
           @cached_values = {}
-
           skip_definitions = test_definition[description].select { |doc| doc['skip'] }.compact
           @skip = skip_definitions unless skip_definitions.empty?
         end
@@ -133,7 +129,6 @@ module Elasticsearch
         def task_groups
           @task_groups ||= begin
             @definition.each_with_index.inject([]) do |task_groups, (action, i)|
-
               # the action has a catch, it's a singular task group
               if action['do'] && action['do']['catch']
                 task_groups << TaskGroup.new(self)
@@ -160,7 +155,7 @@ module Elasticsearch
         #
         # @since 6.2.0
         def cache_value(cache_key, value)
-          @cached_values["#{cache_key}"] = value
+          @cached_values[cache_key] = value
           @cached_values
         end
 
@@ -225,7 +220,7 @@ module Elasticsearch
 
           if @skip
             @skip.collect { |s| s['skip'] }.any? do |skip|
-              contains_features_to_skip?(features_to_skip, skip) || skip_version?(client, skip)
+              contains_features_to_skip?(features_to_skip, skip) || test_file.skip_version?(client, skip)
             end
           end
         end
@@ -259,33 +254,12 @@ module Elasticsearch
           end
         end
 
-        def skip_version?(client, skip_definition)
-          return true if skip_definition['version'] == 'all'
-          range_partition = /\s*-\s*/
-          if versions = skip_definition['version'] && skip_definition['version'].partition(range_partition)
-            low, high = __parse_versions(versions)
-            range = low..high
-            begin
-              server_version = client.info['version']['number']
-            rescue
-              warn('Could not determine Elasticsearch version when checking if test should be skipped.')
-            end
-            range.cover?(server_version)
-          end
-        end
-
         def is_a_validation?(action)
           GROUP_TERMINATORS.any? { |validation| action[validation] } || expects_exception?(action)
         end
 
         def expects_exception?(action)
           action['do'] && action['do']['catch']
-        end
-
-        def __parse_versions(versions)
-          low = (['', nil].include? versions[0]) ? '0' : versions[0]
-          high = (['', nil].include? versions[2]) ? '9999' : versions[2]
-          [low, high]
         end
       end
     end

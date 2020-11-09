@@ -8,7 +8,13 @@ require 'rest_yaml_tests_helper'
 describe 'Rest API YAML tests' do
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
-    test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
+    begin
+      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
+    rescue SkipTestsException => _e
+      # If the test file has a `skip` at the top level that applies to this
+      # version of Elasticsearch, continue with the next text.
+      next
+    end
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
       test_file.tests.each do |test|

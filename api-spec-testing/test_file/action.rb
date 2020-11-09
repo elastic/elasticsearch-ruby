@@ -56,6 +56,9 @@ module Elasticsearch
         @definition.each.inject(client) do |client, (method_chain, args)|
           chain = method_chain.split('.')
 
+          # If we have a method nested in a namespace, client becomes the
+          # client/namespace. Eg for `indices.resolve_index`, `client =
+          # client.indices` and then we call `resolve_index` on `client`.
           if chain.size > 1
             client = chain[0...-1].inject(client) do |_client, _method|
               _client.send(_method)
