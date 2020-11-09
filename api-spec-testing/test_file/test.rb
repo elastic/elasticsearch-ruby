@@ -219,8 +219,8 @@ module Elasticsearch
           return true if pre_defined_skip?
 
           if @skip
-            @skip.collect { |s| s['skip'] }.any? do |skip|
-              contains_features_to_skip?(features_to_skip, skip) || test_file.skip_version?(client, skip)
+            @skip.collect { |s| s['skip'] }.any? do |skip_definition|
+              contains_features_to_skip?(features_to_skip, skip_definition) || test_file.skip_version?(client, skip_definition)
             end
           end
         end
@@ -244,8 +244,8 @@ module Elasticsearch
 
         private
 
-        def contains_features_to_skip?(features_to_skip, skip_defintion)
-          !(features_to_skip &  ([skip_defintion['features']].flatten || [])).empty?
+        def contains_features_to_skip?(features_to_skip, skip_definition)
+          !(features_to_skip &  ([skip_definition['features']].flatten || [])).empty?
         end
 
         def pre_defined_skip?
