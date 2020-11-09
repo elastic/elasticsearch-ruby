@@ -81,18 +81,6 @@ skipped_tests << { file:        'tasks.get/10_basic.yml',
 skipped_tests << { file:        'cat.templates/10_basic.yml',
                    description: '*' }
 
-# node_selector is not supported yet
-skipped_tests << { file: 'cat.aliases/10_basic.yml',
-                   description: '*' }
-skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
-                   description: 'Basic test for upgrade indices < 8.0.0' }
-skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
-                   description: 'Upgrade indices ignore unavailable < 8.0.0' }
-skipped_tests << { file: 'indices.upgrade/20_deprecated.yml',
-                   description: 'Upgrade indices allow no indices < 8.0.0' }
-skipped_tests << { file: 'indices.put_mapping/10_basic.yml',
-                   description: 'Put mappings with explicit _doc type bwc' }
-
 # TODO
 skipped_tests << { file: 'indices.resolve_index/10_basic_resolve_index.yml',
                    description: 'Resolve index with hidden and closed indices' }
@@ -103,4 +91,4 @@ SKIPPED_TESTS = skipped_tests
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
 # The features to skip
-REST_API_YAML_SKIP_FEATURES = ['warnings'].freeze
+REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
