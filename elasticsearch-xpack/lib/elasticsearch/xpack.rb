@@ -15,9 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "elasticsearch/api"
-require "elasticsearch/xpack/version"
-require "elasticsearch/xpack/api/actions/params_registry"
+require 'elasticsearch/api'
+require 'elasticsearch/xpack/version'
+require 'elasticsearch/xpack/api/actions/params_registry'
 
 Dir[ File.expand_path('../xpack/api/actions/**/params_registry.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../xpack/api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
@@ -131,6 +131,14 @@ module Elasticsearch
 
       def snapshot_lifecycle_management
         @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
+      end
+
+      def open_point_in_time(arguments = {})
+        xpack.open_point_in_time(arguments)
+      end
+
+      def close_point_in_time(arguments = {})
+        xpack.close_point_in_time(arguments)
       end
     end
   end
