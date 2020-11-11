@@ -159,6 +159,7 @@ module Elasticsearch
           clear_roles(client)
           clear_users(client)
           clear_privileges(client)
+          clear_datastreams(client)
           clear_datafeeds(client)
           clear_ml_jobs(client)
           clear_rollup_jobs(client)
@@ -200,6 +201,10 @@ module Elasticsearch
           client.xpack.ml.get_datafeeds['datafeeds'].each do |d|
             client.xpack.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
           end
+        end
+
+        def clear_datastreams(client)
+          client.xpack.indices.delete_data_stream(name: '*')
         end
 
         def clear_ml_jobs(client)
