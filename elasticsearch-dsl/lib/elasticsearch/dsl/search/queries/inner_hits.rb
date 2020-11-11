@@ -91,6 +91,30 @@ module Elasticsearch
             end
           end
 
+          # Specify the _source on the inner_hits definition. By default inner_hits contain complete source.
+          #
+          # @example
+          #   inner_hits 'last_tweet' do
+          #     size 10
+          #     from 5
+          #     source ['likes']
+          #     sort do
+          #       by :date, order: 'desc'
+          #       by :likes, order: 'asc'
+          #     end
+          #   end
+          #
+          # @param [ Array, Hash ]
+          #
+          # @return self.
+          #
+          # @since 0.1.9
+          def _source(args)
+            @source = args
+            self
+          end
+          alias_method :source, :_source
+
           # Convert the definition to a hash, to be used in a search request.
           #
           # @example
@@ -111,6 +135,7 @@ module Elasticsearch
             call
             @hash = @value
             @hash[:sort] = @sort.to_hash if @sort
+            @hash[:_source] = @source if defined?(@source)
             @hash
           end
         end

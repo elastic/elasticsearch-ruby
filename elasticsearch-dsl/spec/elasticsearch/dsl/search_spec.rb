@@ -274,6 +274,7 @@ describe Elasticsearch::DSL::Search do
           inner_hits 'last_tweet' do
             size 10
             from 5
+            _source ['date']
             sort do
               by :date, order: 'desc'
               by :likes, order: 'asc'
@@ -287,6 +288,7 @@ describe Elasticsearch::DSL::Search do
       { name: 'last_tweet',
         size: 10,
         from: 5,
+        _source: ['date'],
         sort: [ { date: { order: 'desc' } },
                 { likes: { order: 'asc' } }]
       }

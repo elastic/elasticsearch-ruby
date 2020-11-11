@@ -70,6 +70,38 @@ describe Elasticsearch::DSL::Search::Queries::InnerHits do
                                             { likes: { order: 'asc' } }])
       end
     end
+
+    describe '#_source' do
+      context 'when excludes' do
+        before do
+          search._source({excludes: 'date'})
+        end
+
+        it 'applies the option' do
+          expect(search.to_hash[:_source][:excludes]).to eq('date')
+        end
+      end
+
+      context 'when includes' do
+        before do
+          search._source({includes: 'date'})
+        end
+
+        it 'applies the option' do
+          expect(search.to_hash[:_source][:includes]).to eq('date')
+        end
+      end
+
+      context 'when listing fields' do
+        before do
+          search._source(['last_tweet', 'date'])
+        end
+
+        it 'applies the option' do
+          expect(search.to_hash[:_source]).to eq(['last_tweet', 'date'])
+        end
+      end
+    end
   end
 
   describe '#initialize' do
