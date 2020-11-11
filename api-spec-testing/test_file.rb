@@ -116,8 +116,30 @@ module Elasticsearch
         return unless @setup
 
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
+        count = 0
+
         actions.each do |action|
-          action.execute(client)
+          begin
+            action.execute(client)
+          rescue Elasticsearch::Transport::Transport::Errors::ServiceUnavailable => e
+            # The action sometimes gets the cluster in a recovering state, so we
+            # retry a few times and then raise an exception if it's still
+            # happening
+            count += 1
+            raise e if count > 9
+
+            redo
+          rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+            error = JSON.parse(e.message.gsub(/\[[0-9]{3}\] /, ''))['error']['root_cause'].first
+            count += 1
+
+            logger = Logger.new($stdout)
+            logger.error "#{error['type']}: #{error['reason']}"
+            client.indices.delete(index: error['index']) if error['reason'] =~ /index \[.+\] already exists/
+            raise e if count > 9
+
+            redo
+          end
         end
         self
       end
@@ -164,26 +186,26 @@ module Elasticsearch
             wait_for_pending_tasks(client)
             clear_sml_policies(client)
           end
-
           clear_snapshots_and_repositories(client)
           clear_datastreams(client) if xpack?
           clear_indices(client)
-
           if xpack?
+            clear_datafeeds(client)
             clear_templates_xpack(client)
+            clear_ml_jobs(client)
           else
             client.indices.delete_template(name: '*')
             client.indices.delete_index_template(name: '*')
             client.cluster.delete_component_template(name: '*')
           end
-
           clear_cluster_settings(client)
-
           return unless xpack?
 
           clear_ilm_policies(client)
           clear_auto_follow_patterns(client)
           clear_tasks(client)
+          clear_indices(client)
+          clear_transforms(client)
         end
 
         def xpack?
@@ -355,9 +377,7 @@ module Elasticsearch
 
         def clear_indices(client)
           client.indices.delete(index: '*', expand_wildcards: 'all', ignore: 404)
-        end
 
-        def clear_indices_xpack(client)
           indices = client.indices.get(index: '_all', expand_wildcards: 'all').keys.reject do |i|
             i.start_with?('.security') || i.start_with?('.watches') || i.start_with?('.ds-')
           end
@@ -365,6 +385,12 @@ module Elasticsearch
             client.indices.delete_alias(index: index, name: '*', ignore: 404)
             client.indices.delete(index: index, ignore: 404)
           end
+        rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+          raise e unless e.message.include?('is the write index for data stream')
+
+          error = JSON.parse(e.message.gsub(/\[[0-9]{3}\] /, ''))['error']['root_cause'].first
+          logger = Logger.new($stdout)
+          logger.error "#{error['type']}: #{error['reason']}"
         end
       end
     end
