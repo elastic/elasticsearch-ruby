@@ -18,7 +18,6 @@ describe 'Rest API YAML tests' do
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
       test_file.tests.each do |test|
-
         context "#{test.description}" do
           if test.skip_test?(ADMIN_CLIENT)
             skip 'Test contains feature(s) not yet supported or version is not satisfied'
@@ -29,13 +28,13 @@ describe 'Rest API YAML tests' do
 
             # Runs once before each test in a test file
             before(:all) do
-              Elasticsearch::RestAPIYAMLTests::TestFile.clear_data(ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
               test_file.setup(ADMIN_CLIENT)
             end
 
             after(:all) do
               test_file.teardown(ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.clear_data(ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|
