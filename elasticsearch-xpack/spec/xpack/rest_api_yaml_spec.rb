@@ -21,17 +21,19 @@ require 'rest_yaml_tests_helper'
 describe 'XPack Rest API YAML tests' do
   REST_API_YAML_FILES.each do |file|
     begin
-      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, DEFAULT_CLIENT, REST_API_YAML_SKIP_FEATURES)
+      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
+      logger = Logger.new($stdout)
+      logger.info("Skipping test #{file}")
       next
     end
 
     context "#{file.gsub("#{YAML_FILES_DIRECTORY}/", '')}" do
       before(:all) do
         # Runs once before all tests in a test file
-        Elasticsearch::RestAPIYAMLTests::TestFile.clear_data_xpack(ADMIN_CLIENT)
+        Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
       end
 
       test_file.tests.each do |test|
@@ -48,26 +50,18 @@ describe 'XPack Rest API YAML tests' do
             before(:all) do
               begin
                 # watcher/get_watch/30_with_chain_input.yml needs to have a teardown deleting my_watch.
-                ADMIN_CLIENT.xpack.watcher.delete_watch(id: "my_watch")
+                ADMIN_CLIENT.xpack.watcher.delete_watch(id: 'my_watch')
               rescue Elasticsearch::Transport::Transport::Errors::NotFound
               end
-
               # todo: remove these two lines when Dimitris' PR is merged
-              ADMIN_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
-              ADMIN_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_datafeeds, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_ml_jobs, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_tasks, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_rollup_jobs, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_machine_learning_indices, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_indices, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_transforms, ADMIN_CLIENT)
-              Elasticsearch::RestAPIYAMLTests::TestFile.send(:clear_index_templates, ADMIN_CLIENT)
-              test_file.setup(ADMIN_CLIENT)
+              ADMIN_CLIENT.cluster.put_settings(body: { transient: { 'xpack.ml.max_model_memory_limit' => nil } })
+              ADMIN_CLIENT.cluster.put_settings(body: { persistent: { 'xpack.ml.max_model_memory_limit' => nil } })
+              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
+              test_file.setup
             end
 
             after(:all) do
-              test_file.teardown(ADMIN_CLIENT)
+              test_file.teardown
             end
 
             test.task_groups.each do |task_group|

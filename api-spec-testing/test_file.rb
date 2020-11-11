@@ -32,6 +32,7 @@ module Elasticsearch
     # @since 6.2.0
     class TestFile
       attr_reader :features_to_skip, :name, :client
+      LOGGER = Logger.new($stdout)
 
       # Initialize a single test file.
       #
@@ -39,6 +40,7 @@ module Elasticsearch
       #   TestFile.new(file_name)
       #
       # @param [ String ] file_name The name of the test file.
+      # @param [ Client] An instance of the client
       # @param [ Array<Symbol> ] skip_features The names of features to skip.
       #
       # @since 6.1.0
@@ -48,9 +50,8 @@ module Elasticsearch
         begin
           documents = YAML.load_stream(File.new(file_name))
         rescue StandardError => e
-          logger = Logger.new($stdout)
-          logger.error e
-          logger.error "Filename : #{@name}"
+          LOGGER.error e
+          LOGGER.error "Filename : #{@name}"
         end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
@@ -108,34 +109,50 @@ module Elasticsearch
       # Run the setup tasks defined for a single test file.
       #
       # @example Run the setup tasks.
-      #   test_file.setup(client)
+      #   test_file.setup
       #
       # @param [ Elasticsearch::Client ] client The client to use to perform the setup tasks.
       #
       # @return [ self ]
       #
       # @since 6.2.0
-      def setup(client)
+      def setup
         return unless @setup
 
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
-        actions.each do |action|
-          action.execute(client)
+        count = 0
+        loop do
+          actions.delete_if do |action|
+            begin
+              action.execute(client)
+              true
+            rescue Elasticsearch::Transport::Transport::Errors::ServiceUnavailable => e
+              # The action sometimes gets the cluster in a recovering state, so we
+              # retry a few times and then raise an exception if it's still
+              # happening
+              count += 1
+              raise e if count > 9
+
+              false
+            end
+          end
+          break if actions.empty?
         end
+
         self
       end
 
       # Run the teardown tasks defined for a single test file.
       #
       # @example Run the teardown tasks.
-      #   test_file.teardown(client)
+      #   test_file.teardown
       #
       # @param [ Elasticsearch::Client ] client The client to use to perform the teardown tasks.
       #
       # @return [ self ]
       #
       # @since 6.2.0
-      def teardown(client)
+      def teardown
         return unless @teardown
 
         actions = @teardown['teardown'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
@@ -144,35 +161,157 @@ module Elasticsearch
       end
 
       class << self
-        # Prepare Elasticsearch for a single test file.
-        # This method deletes indices, roles, datafeeds, etc.
-        #
-        # @since 6.2.0
-        def clear_data(client)
-          clear_indices(client)
-          clear_index_templates(client)
+        PRESERVE_ILM_POLICY_IDS = [
+          'ilm-history-ilm-policy', 'slm-history-ilm-policy',
+          'watch-history-ilm-policy', 'ml-size-based-ilm-policy', 'logs',
+          'metrics'
+        ].freeze
+
+        XPACK_TEMPLATES = [
+          '.watches', 'logstash-index-template', '.logstash-management',
+          'security_audit_log', '.slm-history', '.async-search',
+          'saml-service-provider', 'ilm-history', 'logs', 'logs-settings',
+          'logs-mappings', 'metrics', 'metrics-settings', 'metrics-mappings',
+          'synthetics', 'synthetics-settings', 'synthetics-mappings',
+          '.snapshot-blob-cache', '.deprecation-indexing-mappings', '.deprecation-indexing-settings'
+        ].freeze
+
+        # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
+        # https://github.com/elastic/elasticsearch-php/blob/7.10/tests/Elasticsearch/Tests/Utility.php#L97
+        def wipe_cluster(client)
+          if xpack?
+            clear_rollup_jobs(client)
+            clear_sml_policies(client)
+            wait_for_pending_tasks(client)
+          end
           clear_snapshots_and_repositories(client)
+          clear_datastreams(client) if xpack?
+          clear_indices(client)
+          if xpack?
+            clear_templates_xpack(client)
+            clear_datafeeds(client)
+            clear_ml_jobs(client)
+          else
+            client.indices.delete_template(name: '*')
+            client.indices.delete_index_template(name: '*')
+            client.cluster.delete_component_template(name: '*')
+          end
+          clear_cluster_settings(client)
+          return unless xpack?
+
+          clear_ml_filters(client)
+          clear_ilm_policies(client)
+          clear_auto_follow_patterns(client)
+          clear_tasks(client)
+          clear_transforms(client)
+          wait_for_cluster_tasks(client)
         end
 
-        # Prepare Elasticsearch for a single test file.
-        # This method deletes indices, roles, datafeeds, etc.
-        #
-        # @since 6.2.0
-        def clear_data_xpack(client)
-          clear_roles(client)
-          clear_users(client)
-          clear_privileges(client)
-          clear_datafeeds(client)
-          clear_ml_jobs(client)
-          clear_rollup_jobs(client)
-          clear_tasks(client)
-          clear_machine_learning_indices(client)
-          create_x_pack_rest_user(client)
-          clear_transforms(client)
-          clear_datastreams(client)
-          clear_indices_xpack(client)
-          clear_index_templates(client)
-          clear_snapshots_and_repositories(client)
+        def xpack?
+          ENV['TEST_SUITE'] == 'xpack'
+        end
+
+        def wait_for_pending_tasks(client)
+          filter = 'xpack/rollup/job'
+          loop do
+            results = client.cat.tasks(detailed: true).split("\n")
+            count = 0
+
+            time = Time.now.to_i
+            results.each do |task|
+              next if task.empty?
+
+              count += 1 if task.include?(filter)
+            end
+            break unless count.positive? && Time.now.to_i < (time + 30)
+          end
+        end
+
+        def wait_for_cluster_tasks(client)
+          tasks_filter = ['delete-index', 'remove-data-stream', 'ilm-history']
+          time = Time.now.to_i
+          count = 0
+
+          loop do
+            results = client.cluster.pending_tasks
+            results['tasks'].each do |task|
+              next if task.empty?
+
+              LOGGER.info "Pending task: #{task}"
+              tasks_filter.map do |filter|
+                count += 1 if task['source'].include? filter
+              end
+            end
+            break unless count.positive? && Time.now.to_i < (time + 30)
+          end
+        end
+
+        def clear_sml_policies(client)
+          policies = client.xpack.snapshot_lifecycle_management.get_lifecycle
+
+          policies.each do |name, _|
+            client.xpack.snapshot_lifecycle_management.delete_lifecycle(policy_id: name)
+          end
+        end
+
+        def clear_ilm_policies(client)
+          policies = client.xpack.ilm.get_lifecycle
+          policies.each do |policy|
+            client.xpack.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+          end
+        end
+
+        def clear_cluster_settings(client)
+          settings = client.cluster.get_settings
+          new_settings = []
+          settings.each do |name, value|
+            next unless !value.empty? && value.is_a?(Array)
+
+            new_settings[name] = [] if new_settings[name].empty?
+            value.each do |key, _v|
+              new_settings[name]["#{key}.*"] = nil
+            end
+          end
+          client.cluster.put_settings(body: new_settings) unless new_settings.empty?
+        end
+
+        def clear_templates_xpack(client)
+          templates = client.cat.templates(h: 'name').split("\n")
+
+          templates.each do |template|
+            next if xpack_template? template
+
+            begin
+              client.indices.delete_template(name: template)
+            rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
+              if e.message.include?("index_template [#{template}] missing")
+                client.indices.delete_index_template(name: template, ignore: 404)
+              end
+            end
+          end
+          # Delete component template
+          result = client.cluster.get_component_template
+
+          result['component_templates'].each do |template|
+            next if xpack_template? template['name']
+
+            client.cluster.delete_component_template(name: template['name'], ignore: 404)
+          end
+        end
+
+        def xpack_template?(template)
+          xpack_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform'].freeze
+          xpack_prefixes.map { |a| return true if a.include? template }
+
+          XPACK_TEMPLATES.include? template
+        end
+
+        def clear_auto_follow_patterns(client)
+          patterns = client.cross_cluster_replication.get_auto_follow_pattern
+
+          patterns['patterns'].each do |pattern|
+            client.cross_cluster_replication.delete_auto_follow_pattern(name: pattern)
+          end
         end
 
         private
@@ -243,19 +382,19 @@ module Elasticsearch
         end
 
         def clear_snapshots_and_repositories(client)
-          if repositories = client.snapshot.get_repository
-            repositories.keys.each do |repository|
-              responses = client.snapshot.get(repository: repository, snapshot: '_all')['responses']
-              next unless responses
+          return unless (repositories = client.snapshot.get_repository)
 
-              responses.each do |response|
-                response['snapshots'].each do |snapshot|
-                  client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'])
-                end
+          repositories.each_key do |repository|
+            responses = client.snapshot.get(repository: repository, snapshot: '_all')['responses']
+            next unless responses
+
+            responses.each do |response|
+              response['snapshots'].each do |snapshot|
+                client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'])
               end
-
-              client.snapshot.delete_repository(repository: repository)
             end
+
+            client.snapshot.delete_repository(repository: repository)
           end
         end
 
@@ -266,21 +405,22 @@ module Elasticsearch
         end
 
         def clear_datastreams(client)
-          client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
+          datastreams = client.xpack.indices.get_data_stream(name: '*', expand_wildcards: 'all')
+          datastreams['data_streams'].each do |datastream|
+            client.xpack.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
+          end
+          client.indices.delete_data_stream(name: '*')
+        end
+
+        def clear_ml_filters(client)
+          filters = client.xpack.ml.get_filters['filters']
+          filters.each do |filter|
+            client.xpack.ml.delete_filter(filter_id: filter['filter_id'])
+          end
         end
 
         def clear_indices(client)
-          client.indices.delete(index: '*', expand_wildcards: 'all')
-        end
-
-        def clear_indices_xpack(client)
-          indices = client.indices.get(index: '_all', expand_wildcards: 'all').keys.reject do |i|
-            i.start_with?('.security') || i.start_with?('.watches') || i.start_with?('.ds-')
-          end
-          indices.each do |index|
-            client.indices.delete_alias(index: index, name: '*', ignore: 404)
-            client.indices.delete(index: index, ignore: 404)
-          end
+          client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         end
       end
     end

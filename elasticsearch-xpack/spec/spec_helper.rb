@@ -50,5 +50,6 @@ RSpec.configure do |config|
   config.include(HelperModule)
   config.formatter = 'documentation'
   config.color = true
+  config.color_mode = :on
   config.add_formatter('RspecJunitFormatter', '../elasticsearch-api/tmp/elasticsearch-xpack-junit.xml')
 end
