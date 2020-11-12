@@ -70,9 +70,9 @@ module Elasticsearch
         return true if skip_definition['version'] == 'all'
 
         range_partition = /\s*-\s*/
-        return unless (versions = skip_definition['version']) && skip_definition['version'].partition(range_partition)
+        return unless (versions = skip_definition['version'])
 
-        low, high = __parse_versions(versions)
+        low, high = __parse_versions(versions.partition(range_partition))
         range = low..high
         begin
           server_version = client.info['version']['number']
