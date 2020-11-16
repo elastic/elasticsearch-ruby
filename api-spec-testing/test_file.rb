@@ -134,11 +134,15 @@ module Elasticsearch
                  Elasticsearch::Transport::Transport::Errors::Conflict => e
             error = JSON.parse(e.message.gsub(/\[[0-9]{3}\] /, ''))['error']['root_cause'].first
             count += 1
+            raise e if count > 9
 
             logger = Logger.new($stdout)
             logger.error "#{error['type']}: #{error['reason']}"
-            client.indices.delete(index: error['index']) if error['reason'] =~ /index \[.+\] already exists/
-            raise e if count > 9
+            if error['reason'] =~ /index \[.+\] already exists/
+              client.indices.delete(index: error['index'])
+            elsif (model_id_match = /Trained machine learning model \[([a-z-0-9]+)\] already exists/.match(error['reason']))
+              client.machine_learning.delete_trained_model(model_id: model_id_match[1])
+            end
 
             sleep(1)
             redo
