@@ -176,6 +176,25 @@ SKIPPED_TESTS << { file: 'analytics/usage.yml',
 SKIPPED_TESTS << { file: 'ml/jobs_crud.yml',
                    description: 'Test put job with model_memory_limit as string and lazy open' }
 
+# 7.10 skipped tests:
+SKIPPED_TESTS << { file: 'license/20_put_license.yml',
+                   description: 'Current license is trial means not eligle to start trial' }
+SKIPPED_TESTS << { file: 'privileges/40_get_user_privs.yml',
+                   description: '*' }
+SKIPPED_TESTS << { file: 'license/20_put_license.yml',
+                   description: 'Current license is trial means not eligle to start trial' }
+SKIPPED_TESTS << { file: 'rollup/security_tests.yml', description: '*' }
+SKIPPED_TESTS << { file: 'security/hidden-index/13_security-tokens_read.yml', description: '*' }
+SKIPPED_TESTS << { file: 'security/hidden-index/14_security-tokens-7_read.yml', description: '*' }
+SKIPPED_TESTS << { file: 'token/10_basic.yml', description: '*' }
+SKIPPED_TESTS << { file: 'token/11_invalidation.yml', description: '*' }
+SKIPPED_TESTS << { file: 'license/30_enterprise_license.yml', description: '*' }
+SKIPPED_TESTS << { file: 'license/20_put_license.yml', description: '*' }
+SKIPPED_TESTS << { file: 'xpack/20_info.yml', description: '*' }
+SKIPPED_TESTS << { file: 'graph/10_basic.yml', description: '*' }
+SKIPPED_TESTS << { file: 'authenticate/10_field_level_security.yml', description: '*' }
+# End 7.10 skipped tests
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
