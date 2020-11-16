@@ -3,7 +3,9 @@
 ### Client
 
 - Support for Elasticsearch version `7.10.0`.
-- Fixes a bug when building the complete endpoint URL.
+- Fixes a bug when building the complete endpoint URL could end with duplicate slashes `//`.
+- Fixes a bug when building the complete endpoint URL with cloud id could end with duplicate ports [#1081](https://github.com/elastic/elasticsearch-ruby/issues/1081).
+
 
 ### API
 
