@@ -433,6 +433,51 @@ describe Elasticsearch::Transport::Client do
         ).to eq('https://elasticfantastic:changeme@abcd.localhost:9243')
       end
     end
+
+    context 'when the cloud host provides a port' do
+      let(:client) do
+        described_class.new(
+          cloud_id: 'name:ZWxhc3RpY19zZXJ2ZXI6OTI0MyRlbGFzdGljX2lk',
+          user: 'elastic',
+          password: 'changeme'
+        )
+      end
+
+      let(:hosts) do
+        client.transport.hosts
+      end
+
+      it 'creates the correct full url' do
+        expect(hosts[0][:host]).to eq('elastic_id.elastic_server')
+        expect(hosts[0][:protocol]).to eq('https')
+        expect(hosts[0][:user]).to eq('elastic')
+        expect(hosts[0][:password]).to eq('changeme')
+        expect(hosts[0][:port]).to eq(9243)
+      end
+    end
+
+    context 'when the cloud host provides a port and the port is also specified' do
+      let(:client) do
+        described_class.new(
+          cloud_id: 'name:ZWxhc3RpY19zZXJ2ZXI6OTI0MyRlbGFzdGljX2lk',
+          user: 'elastic',
+          password: 'changeme',
+          port: 9200
+        )
+      end
+
+      let(:hosts) do
+        client.transport.hosts
+      end
+
+      it 'creates the correct full url' do
+        expect(hosts[0][:host]).to eq('elastic_id.elastic_server')
+        expect(hosts[0][:protocol]).to eq('https')
+        expect(hosts[0][:user]).to eq('elastic')
+        expect(hosts[0][:password]).to eq('changeme')
+        expect(hosts[0][:port]).to eq(9243)
+      end
+    end
   end
 
   shared_examples_for 'a client that extracts hosts' do
