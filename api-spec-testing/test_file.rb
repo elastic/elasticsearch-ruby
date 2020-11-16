@@ -208,6 +208,7 @@ module Elasticsearch
           clear_cluster_settings(client)
           return unless xpack?
 
+          clear_ml_filters(client)
           clear_ilm_policies(client)
           clear_auto_follow_patterns(client)
           clear_tasks(client)
@@ -381,6 +382,13 @@ module Elasticsearch
         def clear_datastreams(client)
           client.xpack.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
+        end
+
+        def clear_ml_filters(client)
+          filters = client.xpack.ml.get_filters['filters']
+          filters.each do |filter|
+            client.xpack.ml.delete_filter(filter_id: filter['filter_id'])
+          end
         end
 
         def clear_indices(client)
