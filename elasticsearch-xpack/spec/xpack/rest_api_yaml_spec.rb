@@ -21,7 +21,7 @@ require 'rest_yaml_tests_helper'
 describe 'XPack Rest API YAML tests' do
   REST_API_YAML_FILES.each do |file|
     begin
-      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, DEFAULT_CLIENT, REST_API_YAML_SKIP_FEATURES)
+      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
@@ -55,11 +55,11 @@ describe 'XPack Rest API YAML tests' do
               ADMIN_CLIENT.cluster.put_settings(body: { transient: { "xpack.ml.max_model_memory_limit" => nil } })
               ADMIN_CLIENT.cluster.put_settings(body: { persistent: { "xpack.ml.max_model_memory_limit" => nil } })
               Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
-              test_file.setup(ADMIN_CLIENT)
+              test_file.setup
             end
 
             after(:all) do
-              test_file.teardown(ADMIN_CLIENT)
+              test_file.teardown
             end
 
             test.task_groups.each do |task_group|
