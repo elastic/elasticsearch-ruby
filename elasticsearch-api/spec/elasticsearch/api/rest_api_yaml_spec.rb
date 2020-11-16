@@ -9,7 +9,7 @@ describe 'Rest API YAML tests' do
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
     begin
-      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, REST_API_YAML_SKIP_FEATURES)
+      test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
@@ -29,11 +29,11 @@ describe 'Rest API YAML tests' do
             # Runs once before each test in a test file
             before(:all) do
               Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
-              test_file.setup(ADMIN_CLIENT)
+              test_file.setup
             end
 
             after(:all) do
-              test_file.teardown(ADMIN_CLIENT)
+              test_file.teardown
               Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
             end
 
