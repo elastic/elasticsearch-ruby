@@ -184,6 +184,11 @@ SKIPPED_TESTS << { file: 'analytics/usage.yml',
 SKIPPED_TESTS << { file: 'ml/jobs_crud.yml',
                    description: 'Test put job with model_memory_limit as string and lazy open' }
 
+SKIPPED_TESTS << { file: 'ml/inference_crud.yml',
+                   description: 'Test delete given unused trained model' }
+SKIPPED_TESTS << { file: 'ml/filter_crud.yml',
+                   description: '*' }
+
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
 
