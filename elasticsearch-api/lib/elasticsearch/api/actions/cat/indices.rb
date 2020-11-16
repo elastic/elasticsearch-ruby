@@ -24,7 +24,6 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [String] :health A health status ("green", "yellow", or "red" to filter only indices matching the specified health status (options: green, yellow, red)
@@ -65,7 +64,6 @@ module Elasticsearch
         ParamsRegistry.register(:indices, [
           :format,
           :bytes,
-          :local,
           :master_timeout,
           :h,
           :health,
