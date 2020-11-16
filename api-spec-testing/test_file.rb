@@ -39,6 +39,7 @@ module Elasticsearch
       #   TestFile.new(file_name)
       #
       # @param [ String ] file_name The name of the test file.
+      # @param [ Client] An instance of the client
       # @param [ Array<Symbol> ] skip_features The names of features to skip.
       #
       # @since 6.1.0
@@ -105,14 +106,14 @@ module Elasticsearch
       # Run the setup tasks defined for a single test file.
       #
       # @example Run the setup tasks.
-      #   test_file.setup(client)
+      #   test_file.setup
       #
       # @param [ Elasticsearch::Client ] client The client to use to perform the setup tasks.
       #
       # @return [ self ]
       #
       # @since 6.2.0
-      def setup(client)
+      def setup
         return unless @setup
 
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
@@ -147,14 +148,14 @@ module Elasticsearch
       # Run the teardown tasks defined for a single test file.
       #
       # @example Run the teardown tasks.
-      #   test_file.teardown(client)
+      #   test_file.teardown
       #
       # @param [ Elasticsearch::Client ] client The client to use to perform the teardown tasks.
       #
       # @return [ self ]
       #
       # @since 6.2.0
-      def teardown(client)
+      def teardown
         return unless @teardown
 
         actions = @teardown['teardown'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
