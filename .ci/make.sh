@@ -22,16 +22,21 @@ GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
 
 case $CMD in
+    assemble_snapshot)
+        TASK=assemble_snapshot[$VERSION_QUALIFIER]
+        ;;
     assemble)
-        TASK=build["$TARGET_DIR"]
+        TASK=assemble_release[$TARGET_DIR]
         ;;
     publish)
         TASK=publish
         ;;
     *)
         echo -e "\nUsage:"
-        echo -e "\t Build gem files:"
-        echo -e "\t $0 assemble\n"
+        echo -e "\t Build snapshot gem files:"
+        echo -e "\t VERSION_QUALIFIER=alpha1 $0 assemble_snapshot\n"
+        echo -e "\t Build release gem files:"
+        echo -e "\t $0 assemble_snapshot\n"
         echo -e "\t Publish gems:"
         echo -e "\t $0 publish\n"
         exit 1

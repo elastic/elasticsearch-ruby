@@ -19,15 +19,24 @@ require_relative '../elasticsearch/lib/elasticsearch/version'
 CURRENT_VERSION = Elasticsearch::VERSION
 
 namespace :unified_release do
-  desc 'Bump versions'
-  task :bump, [:version] do |_, args|
-    raise ArgumentError, 'You must specify a version: rake bump[8.0.0]' unless args[:version]
+  desc 'Build snapshot gem files'
+  task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
+    raise ArgumentError,
+          'You must specify a version_qualifier: e.g. rake bump[alpha1]' unless args[:version_qualifier]
 
-    Rake::Task['update_version'].invoke(CURRENT_VERSION, args[:version])
+    version = if CURRENT_VERSION.include?('SNAPSHOT')
+                # eg 8.0.0-SNAPSHOT
+                CURRENT_VERSION.gsub('-SNAPSHOT', "#{args[:version_qualifier]}-SNAPSHOT")
+              else
+                CURRENT_VERSION + "-#{args[:version_qualifier]}"
+              end
+
+    Rake::Task['update_version'].invoke(CURRENT_VERSION, version)
+    Rake::Task['unified_release:assemble_release'].invoke(args[:output_dir])
   end
 
   desc 'Build release gem files'
-  task :build, [:output_dir] do |_, args|
+  task :assemble_release, [:output_dir] do |_, args|
     raise ArgumentError, 'You must specify an output dir: rake build[output_dir]' unless args[:output_dir]
 
     RELEASE_TOGETHER.each do |gem|
