@@ -80,7 +80,7 @@ module Elasticsearch
         rescue
           warn('Could not determine Elasticsearch version when checking if test should be skipped.')
         end
-        range.cover?(server_version)
+        range.cover?(Gem::Version.new(server_version))
       end
 
       def __parse_versions(versions)
@@ -88,8 +88,7 @@ module Elasticsearch
 
         low = (['', nil].include? versions[0]) ? '0' : versions[0]
         high = (['', nil].include? versions[2]) ? '9999' : versions[2]
-
-        [low, high]
+        [Gem::Version.new(low), Gem::Version.new(high)]
       end
 
       # Get a list of tests in the test file.
