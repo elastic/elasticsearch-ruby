@@ -1,0 +1,146 @@
+[[connecting]]
+== Connecting
+
+This page contains the information you need to connect and use the Client with 
+{es}.
+
+**On this page**
+
+* <<client-auth, Authentication options>>
+* <<client-usage, Using the client>>
+
+
+[discrete]
+[[client-auth]]
+=== Authentication
+
+This document contains code snippets to show you how to connect to various {es} 
+providers.
+
+
+[discrete]
+[[auth-ec]]
+==== Elastic Cloud
+
+If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers 
+an easy way to connect to it. You must pass the Cloud ID that you can find in 
+the cloud console, then your username and password.
+
+
+[source,ruby]
+------------------------------------
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>'
+  user: '<Username>',
+  password: '<Password>',
+)
+------------------------------------
+
+You can also connect to the Cloud by using API Key authentication:
+
+[source,ruby]
+------------------------------------
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
+  api_key: {id: '<Id>', api_key: '<APIKey>'}
+)
+------------------------------------
+
+
+[discrete]
+[[auth-api-key]]
+==== API Key authentication
+
+You can also use the 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] 
+authentication.
+
+NOTE: If you provide both basic authentication credentials and the ApiKey 
+configuration, the ApiKey takes precedence.
+You can also use API Key authentication:
+
+[source,ruby]
+------------------------------------
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: credentials
+)
+------------------------------------
+
+Where credentials is either the base64 encoding of `id` and `api_key` joined by 
+a colon or a hash with the `id` and `api_key`:
+
+[source,ruby]
+------------------------------------
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: {id: 'my_id', api_key: 'my_api_key'}
+)
+------------------------------------
+
+
+[discrete]
+[[auth-basic]]
+==== Basic authentication
+
+You can pass the authentication credentials, scheme and port in the host 
+configuration hash:
+
+[source,ruby]
+------------------------------------
+client = Elasticsearch::Client.new(
+  hosts:
+	  [
+  	   {
+    	   host: 'my-protected-host',
+    	   port: '443',
+    	   user: 'USERNAME',
+    	   password: 'PASSWORD',
+    	   scheme: 'https'
+  	   }
+	  ]
+)
+------------------------------------
+
+Or use the common URL format:
+
+client = Elasticsearch::Client.new(url: 'https://username:password@localhost:9200')
+
+To pass a custom certificate for SSL peer verification to Faraday-based clients,
+use the `transport_options` option:
+
+[source,ruby]
+------------------------------------
+Elasticsearch::Client.new(
+  url: 'https://username:password@localhost:9200',
+  transport_options: {
+	ssl: { ca_file: '/path/to/cacert.pem' }
+  }
+)
+------------------------------------
+
+
+[discrete]
+[[client-usage]]
+=== Usage
+
+The following snippet shows an example of using the Ruby client:
+
+[source,ruby]
+------------------------------------
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new log: true
+
+client.cluster.health
+
+client.index(index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' })
+
+client.indices.refresh(index: 'my-index')
+
+client.search(index: 'my-index', body: { query: { match: { title: 'test' } } })
+------------------------------------

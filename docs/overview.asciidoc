@@ -12,6 +12,7 @@ only an overview of features.
 
 
 [discrete]
+<<<<<<< HEAD
 === {es} and Ruby Version Compatibility
 
 The {es} client is compatible with Ruby 1.9 and higher.
@@ -47,6 +48,8 @@ client.search index: 'my-index', body: { query: { match: { title: 'test' } } }
 
 
 [discrete]
+=======
+>>>>>>> 945396d4... [DOCS] Adds Connecting section to Ruby docs (#1073)
 === Features
 
 * Pluggable logging and tracing
