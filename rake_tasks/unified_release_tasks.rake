@@ -21,14 +21,17 @@ CURRENT_VERSION = Elasticsearch::VERSION
 namespace :unified_release do
   desc 'Build snapshot gem files'
   task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    raise ArgumentError,
-          'You must specify a version_qualifier: e.g. rake bump[alpha1]' unless args[:version_qualifier]
+    version_qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
+                          Time.now.strftime('%Y%m%d%H%M%S')
+                        else
+                          args[:version_qualifier]
+                        end
 
     version = if CURRENT_VERSION.include?('SNAPSHOT')
                 # eg 8.0.0-SNAPSHOT
-                CURRENT_VERSION.gsub('-SNAPSHOT', "#{args[:version_qualifier]}-SNAPSHOT")
+                CURRENT_VERSION.gsub('-SNAPSHOT', "#{version_qualifier}-SNAPSHOT")
               else
-                CURRENT_VERSION + "-#{args[:version_qualifier]}"
+                CURRENT_VERSION + "-#{version_qualifier}"
               end
 
     Rake::Task['update_version'].invoke(CURRENT_VERSION, version)
