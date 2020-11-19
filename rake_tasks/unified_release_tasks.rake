@@ -16,7 +16,6 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 require_relative '../elasticsearch/lib/elasticsearch/version'
-CURRENT_VERSION = Elasticsearch::VERSION
 
 namespace :unified_release do
   desc 'Build snapshot gem files'
@@ -27,14 +26,14 @@ namespace :unified_release do
                           args[:version_qualifier]
                         end
 
-    version = if CURRENT_VERSION.include?('SNAPSHOT')
-                # eg 8.0.0-SNAPSHOT
-                CURRENT_VERSION.gsub('-SNAPSHOT', "#{version_qualifier}-SNAPSHOT")
-              else
-                CURRENT_VERSION + "-#{version_qualifier}"
-              end
+    @version = if Elasticsearch::VERSION.include?('SNAPSHOT')
+                 # eg 8.0.0-SNAPSHOT
+                 Elasticsearch::VERSION.gsub('-SNAPSHOT', "#{version_qualifier}-SNAPSHOT")
+               else
+                 Elasticsearch::VERSION + "-#{version_qualifier}"
+               end
 
-    Rake::Task['update_version'].invoke(CURRENT_VERSION, version)
+    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version)
 
     build_gems(args[:output_dir])
   end
@@ -43,13 +42,14 @@ namespace :unified_release do
   task :assemble_release, [:output_dir] do |_, args|
     raise ArgumentError, 'You must specify an output dir: rake build[output_dir]' unless args[:output_dir]
 
+    @version = Elasticsearch::VERSION
     build_gems(args[:output_dir])
   end
 
   def build_gems(output_dir)
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
-      puts "Building #{gem} v#{CURRENT_VERSION} to #{output_dir}"
+      puts "Building #{gem} v#{@version} to #{output_dir}"
       sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
@@ -61,7 +61,7 @@ namespace :unified_release do
 
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
-      puts "Releasing #{gem} v#{CURRENT_VERSION}"
+      puts "Releasing #{gem} v#{Elasticsearch::VERSION}"
       sh "cd #{CURRENT_PATH.join(gem)} && bundle exec rake release"
     end
   end
