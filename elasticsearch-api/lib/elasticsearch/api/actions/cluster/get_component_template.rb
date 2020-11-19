@@ -20,10 +20,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Returns one or more component templates
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [List] :name The comma separated names of the component templates
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

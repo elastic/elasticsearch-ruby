@@ -20,10 +20,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Deletes an index template.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :timeout Explicit operation timeout
