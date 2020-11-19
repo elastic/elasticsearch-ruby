@@ -35,17 +35,22 @@ namespace :unified_release do
               end
 
     Rake::Task['update_version'].invoke(CURRENT_VERSION, version)
-    Rake::Task['unified_release:assemble_release'].invoke(args[:output_dir])
+
+    build_gems(args[:output_dir])
   end
 
   desc 'Build release gem files'
   task :assemble_release, [:output_dir] do |_, args|
     raise ArgumentError, 'You must specify an output dir: rake build[output_dir]' unless args[:output_dir]
 
+    build_gems(args[:output_dir])
+  end
+
+  def build_gems(output_dir)
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
-      puts "Building #{gem} v#{CURRENT_VERSION} to #{args[:output_dir]}"
-      sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(args[:output_dir])}"
+      puts "Building #{gem} v#{CURRENT_VERSION} to #{output_dir}"
+      sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
   end

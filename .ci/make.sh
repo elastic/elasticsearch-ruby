@@ -20,10 +20,12 @@ GITHUB_TOKEN=${GITHUB_TOKEN-nil}
 RUBYGEMS_API=${RUBYGEMS_API-nil}
 GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
+DATE=`date +%Y%m%d%H%M%S`
+VERSION_QUALIFIER=${VERSION_QUALIFIER-$DATE}
 
 case $CMD in
     assemble_snapshot)
-        TASK=assemble_snapshot[$VERSION_QUALIFIER]
+        TASK=assemble_snapshot[$VERSION_QUALIFIER,$TARGET_DIR]
         ;;
     assemble)
         TASK=assemble_release[$TARGET_DIR]
