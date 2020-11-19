@@ -19,13 +19,18 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # The _upgrade API is no longer useful and will be removed.
+        # DEPRECATED Returns a progress status of current upgrade.
         #
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # *Deprecation notice*:
+        # The _upgrade API is no longer useful and will be removed. Instead, see _reindex API.
+        # Deprecated since version 8.0.0
+        #
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-upgrade.html
         #

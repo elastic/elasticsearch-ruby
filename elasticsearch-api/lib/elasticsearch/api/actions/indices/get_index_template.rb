@@ -20,10 +20,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns an index template.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [List] :name The comma separated names of the index templates
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
