@@ -68,6 +68,22 @@ describe Elasticsearch::DSL::Search::Queries::Match do
         expect(search.to_hash[:match][:type]).to eq(10)
       end
     end
+
+    describe '#auto_generate_synonyms_phrase_query' do
+      it 'applies the option' do
+        search.auto_generate_synonyms_phrase_query 'false'
+
+        expect(search.to_hash[:match][:auto_generate_synonyms_phrase_query]).to eq('false')
+      end
+    end
+
+    describe '#fuzzy_transpositions' do
+      it 'applies the option' do
+        search.fuzzy_transpositions 'false'
+
+        expect(search.to_hash[:match][:fuzzy_transpositions]).to eq('false')
+      end
+    end
   end
 
   describe '#initialize' do
