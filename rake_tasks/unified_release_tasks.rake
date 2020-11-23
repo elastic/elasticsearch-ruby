@@ -38,13 +38,15 @@ namespace :unified_release do
 
   desc 'Build release gem files'
   task :assemble_release, [:output_dir] do |_, args|
-    raise ArgumentError, 'You must specify an output dir: rake build[output_dir]' unless args[:output_dir]
+    raise ArgumentError, 'You must specify an output dir' unless args[:output_dir]
 
     @version = Elasticsearch::VERSION
     build_gems(args[:output_dir])
   end
 
   def build_gems(output_dir)
+    raise ArgumentError, 'You must specify an output dir' unless output_dir
+
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
       puts "Building #{gem} v#{@version} to #{output_dir}"
