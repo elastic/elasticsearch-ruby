@@ -20,17 +20,15 @@ require_relative '../elasticsearch/lib/elasticsearch/version'
 namespace :unified_release do
   desc 'Build snapshot gem files'
   task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    version_qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
-                          Time.now.strftime('%Y%m%d%H%M%S')
-                        else
-                          args[:version_qualifier]
-                        end
-
-    @version = if Elasticsearch::VERSION.include?('SNAPSHOT')
-                 # eg 8.0.0-SNAPSHOT
-                 Elasticsearch::VERSION.gsub('-SNAPSHOT', "#{version_qualifier}-SNAPSHOT")
+    @version = if !(args[:version_qualifier].nil? || args[:version_qualifier].empty?)
+                 if Elasticsearch::VERSION.include?('SNAPSHOT')
+                   # eg 8.0.0-SNAPSHOT
+                   Elasticsearch::VERSION.gsub('-SNAPSHOT', ".#{args[:version_qualifier]}-SNAPSHOT")
+                 else
+                   Elasticsearch::VERSION + ".#{args[:version_qualifier]}"
+                 end
                else
-                 Elasticsearch::VERSION + "-#{version_qualifier}"
+                 Elasticsearch::VERSION
                end
 
     Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version)
