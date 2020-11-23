@@ -18,29 +18,11 @@
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :unified_release do
-  desc 'Build snapshot gem files'
-  task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    @version = if !(args[:version_qualifier].nil? || args[:version_qualifier].empty?)
-                 if Elasticsearch::VERSION.include?('SNAPSHOT')
-                   # eg 8.0.0-SNAPSHOT
-                   Elasticsearch::VERSION.gsub('-SNAPSHOT', ".#{args[:version_qualifier]}-SNAPSHOT")
-                 else
-                   Elasticsearch::VERSION + ".#{args[:version_qualifier]}"
-                 end
-               else
-                 Elasticsearch::VERSION
-               end
+  desc 'Build gem files'
+  task :assemble, [:version_qualifier, :output_dir] do |_, args|
+    @version = determine_version(args)
+    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
 
-    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version)
-
-    build_gems(args[:output_dir])
-  end
-
-  desc 'Build release gem files'
-  task :assemble_release, [:output_dir] do |_, args|
-    raise ArgumentError, 'You must specify an output dir' unless args[:output_dir]
-
-    @version = Elasticsearch::VERSION
     build_gems(args[:output_dir])
   end
 
@@ -53,6 +35,19 @@ namespace :unified_release do
       sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
+  end
+
+  def determine_version(args)
+    if !(args[:version_qualifier].nil? || args[:version_qualifier].empty?)
+      if Elasticsearch::VERSION.include?('SNAPSHOT')
+        # eg 8.0.0-SNAPSHOT
+        Elasticsearch::VERSION.gsub('-SNAPSHOT', ".#{args[:version_qualifier]}-SNAPSHOT")
+      else
+        Elasticsearch::VERSION + ".#{args[:version_qualifier]}"
+      end
+    else
+      Elasticsearch::VERSION
+    end
   end
 
   desc 'Publish gems to Rubygems'
