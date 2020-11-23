@@ -3,5 +3,5 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
-  VERSION = "8.0.0.pre"
+  VERSION = "8.0.0-SNAPSHOT"
 end
