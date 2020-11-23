@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module Transport
-    VERSION = "8.0.0.pre"
+    VERSION = "8.0.0-SNAPSHOT"
   end
 end
