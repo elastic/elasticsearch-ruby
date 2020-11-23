@@ -20,27 +20,16 @@ GITHUB_TOKEN=${GITHUB_TOKEN-nil}
 RUBYGEMS_API=${RUBYGEMS_API-nil}
 GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
-DATE=`date +%Y%m%d%H%M%S`
-VERSION_QUALIFIER=${VERSION_QUALIFIER-$DATE}
+VERSION_QUALIFIER=${VERSION_QUALIFIER-''}
 
 case $CMD in
-    assemble_snapshot)
-        TASK=assemble_snapshot[$VERSION_QUALIFIER,$TARGET_DIR]
-        ;;
     assemble)
-        TASK=assemble_release[$TARGET_DIR]
-        ;;
-    publish)
-        TASK=publish
+        TASK=assemble[$VERSION_QUALIFIER,$TARGET_DIR]
         ;;
     *)
         echo -e "\nUsage:"
-        echo -e "\t Build snapshot gem files:"
-        echo -e "\t VERSION_QUALIFIER=alpha1 $0 assemble_snapshot\n"
-        echo -e "\t Build release gem files:"
-        echo -e "\t $0 assemble_snapshot\n"
-        echo -e "\t Publish gems:"
-        echo -e "\t $0 publish\n"
+        echo -e "\t Build gem files:"
+        echo -e "\t [VERSION_QUALIFIER=alpha1] $0 assemble\n"
         exit 1
 esac
 
