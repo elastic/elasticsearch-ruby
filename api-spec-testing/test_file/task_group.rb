@@ -32,9 +32,7 @@ module Elasticsearch
         #
         # @since 6.2.0
         class TaskGroup
-          attr_reader :exception
-          attr_reader :response
-          attr_reader :test
+          attr_reader :exception, :response, :test
 
           # Initialize a TaskGroup object.
           #
