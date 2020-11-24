@@ -385,16 +385,10 @@ module Elasticsearch
           return unless (repositories = client.snapshot.get_repository)
 
           repositories.each_key do |repository|
-            responses = client.snapshot.get(repository: repository, snapshot: '_all')['responses']
-            next unless responses
 
-            responses.each do |response|
-              response['snapshots'].each do |snapshot|
-                client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'])
-              end
-            end
+            client.snapshot.delete(repository: repository, snapshot: '*', ignore: 404) if(repositories[repository]['type'] == 'fs')
 
-            client.snapshot.delete_repository(repository: repository)
+            client.snapshot.delete_repository(repository: repository, ignore: 404)
           end
         end
 
