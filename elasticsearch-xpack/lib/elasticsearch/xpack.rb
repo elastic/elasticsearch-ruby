@@ -45,6 +45,26 @@ Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snaps
 module Elasticsearch
   module Transport
     class Client
+      # When a method is called on the client, if it's one of the xpack root
+      # namespace methods, send them to the xpack client.
+      # E.g.: client.xpack.usage => client.usage
+      # Excluding `info` since OSS and XPACK both have info endpoints.
+      TOP_LEVEL_METHODS = [
+        :open_point_in_time,
+        :close_point_in_time,
+        :usage
+      ].freeze
+
+      def method_missing(method, *args, &block)
+        return xpack.send(method, *args, &block) if TOP_LEVEL_METHODS.include?(method)
+
+        super
+      end
+
+      def respond_to_missing?(method_name, *args)
+        TOP_LEVEL_METHODS.include?(method_name) || super
+      end
+
       def xpack
         @xpack_client ||= Elasticsearch::XPack::API::Client.new(self)
       end
@@ -131,14 +151,6 @@ module Elasticsearch
 
       def snapshot_lifecycle_management
         @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
-      end
-
-      def open_point_in_time(arguments = {})
-        xpack.open_point_in_time(arguments)
-      end
-
-      def close_point_in_time(arguments = {})
-        xpack.close_point_in_time(arguments)
       end
     end
   end
