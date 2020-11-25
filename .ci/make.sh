@@ -11,6 +11,7 @@ repo=$(realpath "$script_path/../")
 # shellcheck disable=SC1090
 CMD=$1
 VERSION=$2
+VERSION_QUALIFIER=${VERSION-''}
 set -euo pipefail
 
 TARGET_DIR=${TARGET_DIR-.ci/output}
@@ -20,7 +21,6 @@ GITHUB_TOKEN=${GITHUB_TOKEN-nil}
 RUBYGEMS_API=${RUBYGEMS_API-nil}
 GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
-VERSION_QUALIFIER=${VERSION_QUALIFIER-''}
 
 case $CMD in
     assemble)
@@ -29,7 +29,7 @@ case $CMD in
     *)
         echo -e "\nUsage:"
         echo -e "\t Build gem files:"
-        echo -e "\t [VERSION_QUALIFIER=alpha1] $0 assemble\n"
+        echo -e "\t $0 assemble [version_qualifier]\n"
         exit 1
 esac
 
