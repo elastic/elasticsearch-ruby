@@ -56,13 +56,6 @@ module Elasticsearch
         puts 'PERFORMING REQUEST:', "--> #{method.to_s.upcase} #{path} #{params} #{body}"
         FakeResponse.new(200, 'FAKE', {})
       end
-
-      # Top level methods:
-      Elasticsearch::Transport::Client::TOP_LEVEL_METHODS.each do |method|
-        define_method method do |*args|
-          xpack.send(method, *args)
-        end
-      end
     end
 
     FakeResponse = Struct.new(:status, :body, :headers) do
