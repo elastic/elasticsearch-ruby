@@ -1,7 +1,6 @@
 # Elasticsearch::Extensions
 
-This library provides a set of extensions to the
-[`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
+This library provides a set of extensions to the [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
 
 ## Installation
 
