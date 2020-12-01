@@ -1,3 +1,13 @@
+## EXT:0.0.32
+
+New release of [`elasticsearch-extensions`](elasticsearch-extensions):
+
+- Fixes parsing Elasticsearch version when a major, minor or patch have more than 1 digit (e.g. 7.10.0) ([commit](https://github.com/elastic/elasticsearch-ruby/commit/1d7a4b58e2605e946206f8e1720b1ddde710aef0)).
+- Changes the key of the parameter of Reindex from `target` to `dest` by @tetsuya-ogawa ([commit](https://github.com/elastic/elasticsearch-ruby/commit/25a983f7d848fc8bf0345ff3fe6011ef90c8c4c3#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Fixes test cluster clear_cluster option by @Lajcisvk ([commit](https://github.com/elastic/elasticsearch-ruby/commit/f55b56ed2a54299c5f5ed52a6513d186acd411db#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Sanitizes filename in the backup extension ([commit](https://github.com/elastic/elasticsearch-ruby/commit/6c055690782baf87f3b09e713b53b3d508af5197#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Adds 8.0.0 to cluster tasks ([commit](https://github.com/elastic/elasticsearch-ruby/commit/c3189328291b1a83f2c857e504ad9b75e20a7f93#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+
 ## 7.10.0
 
 ### Client

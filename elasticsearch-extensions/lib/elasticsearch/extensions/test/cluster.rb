@@ -258,7 +258,7 @@ module Elasticsearch
             @clear_cluster = if @arguments[:clear_cluster].nil?
                                (ENV.fetch('TEST_CLUSTER_CLEAR', 'true') != 'false')
                              else
-		               !!@arguments[:clear_cluster]
+		                           !!@arguments[:clear_cluster]
                              end
 
             # Make sure `cluster_name` is not dangerous
