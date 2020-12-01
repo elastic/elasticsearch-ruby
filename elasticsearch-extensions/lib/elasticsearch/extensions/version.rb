@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module Extensions
-    VERSION = "0.0.31"
+    VERSION = '0.0.32'.freeze
   end
 end
