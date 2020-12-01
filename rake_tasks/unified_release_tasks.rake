@@ -15,47 +15,58 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
+require 'fileutils'
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :unified_release do
   desc 'Build gem snapshot'
   task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    qualifier = "#{args[:version_qualifier]}-SNAPSHOT"
-    @version = determine_version(qualifier)
-    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
+    qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
+                  Time.now.strftime('%Y%m%d%H%M%S')
+                else
+                  args[:version_qualifier]
+                end
+    @version = "#{Elasticsearch::VERSION}.#{qualifier}-SNAPSHOT"
+    @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-SNAPSHOT"
 
+    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
     build_gems(args[:output_dir])
+    zip_files(args[:output_dir])
   end
 
   desc 'Build gem release'
   task :assemble, [:version_qualifier, :output_dir] do |_, args|
-    @version = determine_version(args[:version_qualifier])
+    version = [Elasticsearch::VERSION]
+    version << args[:version_qualifier] unless args[:version_qualifier].nil? || args[:version_qualifier].empty?
+
+    @version = version.join('.')
+    @zip_filename = "elasticsearch-ruby-#{version.join('-')}"
     Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
 
     build_gems(args[:output_dir])
+    zip_files(args[:output_dir])
   end
 
   def build_gems(output_dir)
     raise ArgumentError, 'You must specify an output dir' unless output_dir
 
+    # Create dir if it doesn't exist
+    dir = CURRENT_PATH.join(output_dir).to_s
+    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
       puts "Building #{gem} v#{@version} to #{output_dir}"
-      sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(output_dir)}"
+      sh "cd #{CURRENT_PATH.join(gem)} " \
+         "&& gem build --silent -o #{gem}-#{@version}.gem && " \
+         "mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
   end
 
-  def determine_version(version_qualifier)
-    if !(version_qualifier.nil? || version_qualifier.empty?)
-      if version_qualifier =~ /^-SNAPSHOT$/
-        Elasticsearch::VERSION + version_qualifier
-      else
-        Elasticsearch::VERSION + "-#{version_qualifier}"
-      end
-    else
-      Elasticsearch::VERSION
-    end
+  def zip_files(output_dir)
+    sh "cd #{CURRENT_PATH.join(output_dir)} && " \
+       "zip -r #{@zip_filename}.zip * " \
   end
 
   desc 'Publish gems to Rubygems'
