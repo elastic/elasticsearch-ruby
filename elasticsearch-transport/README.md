@@ -187,18 +187,24 @@ Elasticsearch::Client.new(
 
 ### Logging
 
-To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
-set the `log` argument:
+To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class), set the `log` argument to true:
 
 ```ruby
-Elasticsearch::Client.new log: true
+Elasticsearch::Client.new(log: true)
+```
+
+You can also use [ecs-logging](https://github.com/elastic/ecs-logging-ruby). `ecs-logging` is a set of libraries that allows you to transform your application logs to structured logs that comply with the [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html):
+
+```ruby
+logger = EcsLogging::Logger.new($stdout)
+Elasticsearch::Client.new(logger: logger)
 ```
 
 
 To trace requests and responses in the _Curl_ format, set the `trace` argument:
 
 ```ruby
-Elasticsearch::Client.new trace: true
+Elasticsearch::Client.new(trace: true)
 ```
 
 You can customize the default logger or tracer:
@@ -211,7 +217,7 @@ You can customize the default logger or tracer:
 Or, you can use a custom `::Logger` instance:
 
 ```ruby
-Elasticsearch::Client.new logger: Logger.new(STDERR)
+Elasticsearch::Client.new(logger: Logger.new(STDERR))
 ```
 
 You can pass the client any conforming logger implementation:
@@ -223,7 +229,7 @@ log = Logging.logger['elasticsearch']
 log.add_appenders Logging.appenders.stdout
 log.level = :info
 
-client = Elasticsearch::Client.new logger: log
+client = Elasticsearch::Client.new(logger: log)
 ```
 
 ### Custom HTTP Headers
