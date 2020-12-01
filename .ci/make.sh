@@ -23,12 +23,17 @@ GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
 
 case $CMD in
+    assemble_snapshot)
+        TASK=assemble_snapshot[$VERSION_QUALIFIER,$TARGET_DIR]
+        ;;
     assemble)
         TASK=assemble[$VERSION_QUALIFIER,$TARGET_DIR]
         ;;
     *)
         echo -e "\nUsage:"
-        echo -e "\t Build gem files:"
+        echo -e "\t Build snapshot gems:"
+        echo -e "\t $0 assemble_snapshot [version_qualifier]\n"
+        echo -e "\t Build release gems:"
         echo -e "\t $0 assemble [version_qualifier]\n"
         exit 1
 esac
