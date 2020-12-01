@@ -530,7 +530,7 @@ module Elasticsearch
                 raise RuntimeError, "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
               end
 
-              if m = output.match(/Version: (\d\.\d.\d).*,/)
+              if(m = output.match(/Version: (\d+\.\d+.\d+).*,/))
                 m[1]
               else
                 raise RuntimeError, "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"

@@ -291,6 +291,24 @@ class Elasticsearch::Extensions::TestClusterTest < Elasticsearch::Test::UnitTest
           assert_equal '2.0', @subject.__determine_version
         end
 
+        should "return version from `elasticsearch --version` when version reaches double digits" do
+          File.expects(:exist?).with('/foo/bar/bin/../lib/').returns(false)
+          File.expects(:exist?).with('/foo/bar/bin/elasticsearch').returns(true)
+
+          io = mock('IO')
+          io.expects(:pid).returns(123)
+          io.expects(:read).returns('Version: 7.11.0-SNAPSHOT, Build: d1c86b0/2016-03-30T10:43:20Z, JVM: 1.8.0_60')
+          io.expects(:closed?).returns(false)
+          io.expects(:close)
+          IO.expects(:popen).returns(io)
+
+          Process.stubs(:wait)
+          Process.expects(:kill).with('INT', 123)
+
+          assert_equal '7.0', @subject.__determine_version
+        end
+
+
         should "return version from arguments" do
           cluster = Elasticsearch::Extensions::Test::Cluster::Cluster.new command: '/foo/bar/bin/elasticsearch', version: '5.2'
           assert_equal '5.0', cluster.__determine_version
