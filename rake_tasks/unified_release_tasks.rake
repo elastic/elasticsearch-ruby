@@ -22,12 +22,13 @@ namespace :unified_release do
   desc 'Build gem snapshot'
   task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
     qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
+                  @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-SNAPSHOT"
                   Time.now.strftime('%Y%m%d%H%M%S')
                 else
+                  @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-#{args[:version_qualifier]}-SNAPSHOT"
                   args[:version_qualifier]
                 end
     @version = "#{Elasticsearch::VERSION}.#{qualifier}-SNAPSHOT"
-    @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-SNAPSHOT"
 
     Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
     build_gems(args[:output_dir])
