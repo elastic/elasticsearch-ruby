@@ -22,20 +22,27 @@ import 'rake_tasks/update_version.rake'
 import 'profile/benchmarking/benchmarking_tasks.rake'
 require 'pathname'
 
-CURRENT_PATH = Pathname( File.expand_path('..', __FILE__) )
-SUBPROJECTS = [ 'elasticsearch',
-                'elasticsearch-transport',
-                'elasticsearch-dsl',
-                'elasticsearch-api',
-                'elasticsearch-extensions',
-                'elasticsearch-xpack' ].freeze
+CURRENT_PATH = Pathname(File.expand_path(__dir__))
+SUBPROJECTS = [
+  'elasticsearch',
+  'elasticsearch-transport',
+  'elasticsearch-dsl',
+  'elasticsearch-api',
+  'elasticsearch-extensions',
+  'elasticsearch-xpack'
+].freeze
 
-RELEASE_TOGETHER = [ 'elasticsearch',
-                     'elasticsearch-transport',
-                     'elasticsearch-api',
-                     'elasticsearch-xpack' ].freeze
+RELEASE_TOGETHER = [
+  'elasticsearch',
+  'elasticsearch-transport',
+  'elasticsearch-api',
+  'elasticsearch-xpack'
+].freeze
 
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
+
+# Import build task after setting constants:
+import 'rake_tasks/unified_release_tasks.rake'
 
 def admin_client
   $admin_client ||= begin
