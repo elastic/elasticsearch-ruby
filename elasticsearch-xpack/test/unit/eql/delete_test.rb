@@ -28,7 +28,7 @@ module Elasticsearch
             assert_equal 'DELETE', method
             assert_equal '_eql/search/test', url
             assert_equal({}, params)
-            assert_equal body, nil
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
