@@ -29,7 +29,7 @@ module Elasticsearch
             assert_equal 'GET', method
             assert_equal 'my_index/_graph/explore', url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
