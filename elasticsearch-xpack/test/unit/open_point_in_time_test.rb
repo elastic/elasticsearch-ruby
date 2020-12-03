@@ -46,6 +46,18 @@ module Elasticsearch
 
           subject.xpack.open_point_in_time(index: 'foo')
         end
+
+        should 'perform correct request in client root with index' do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'POST', method
+            assert_equal 'foo/_pit', url
+            assert_equal({}, params)
+            assert_nil   body
+            true
+          end.returns(FakeResponse.new)
+
+          subject.open_point_in_time(index: 'foo')
+        end
       end
     end
   end

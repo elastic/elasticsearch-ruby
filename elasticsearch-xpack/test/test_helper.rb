@@ -26,6 +26,7 @@ require 'mocha/minitest'
 
 require 'ansi'
 
+require 'elasticsearch/transport'
 require 'elasticsearch/xpack'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
@@ -48,12 +49,19 @@ module Elasticsearch
   module Test
     class FakeClient
       def xpack
-        @xpack_client ||= Elasticsearch::XPack::API::Client.new(self)
+        @xpack ||= Elasticsearch::XPack::API::Client.new(self)
       end
 
       def perform_request(method, path, params, body)
         puts "PERFORMING REQUEST:", "--> #{method.to_s.upcase} #{path} #{params} #{body}"
         FakeResponse.new(200, 'FAKE', {})
+      end
+
+      # Top level methods:
+      Elasticsearch::Transport::Client::TOP_LEVEL_METHODS.each do |method|
+        define_method method do |*args|
+          xpack.send(method, *args)
+        end
       end
     end
 
@@ -61,9 +69,11 @@ module Elasticsearch
       def status
         values[0] || 200
       end
+
       def body
         values[1] || '{}'
       end
+
       def headers
         values[2] || {}
       end
