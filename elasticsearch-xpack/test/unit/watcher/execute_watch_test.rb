@@ -29,7 +29,7 @@ module Elasticsearch
             assert_equal 'PUT', method
             assert_equal '_watcher/watch/foo/_execute', url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
@@ -41,7 +41,7 @@ module Elasticsearch
             assert_equal 'PUT', method
             assert_equal '_watcher/watch/_execute', url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 

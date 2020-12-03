@@ -29,7 +29,7 @@ module Elasticsearch
             assert_equal 'GET', method
             assert_equal "_ml/anomaly_detectors/foo/results/buckets", url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 

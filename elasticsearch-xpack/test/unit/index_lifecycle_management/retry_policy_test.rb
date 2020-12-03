@@ -29,7 +29,7 @@ module Elasticsearch
             assert_equal 'POST', method
             assert_equal 'foo/_ilm/retry', url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
