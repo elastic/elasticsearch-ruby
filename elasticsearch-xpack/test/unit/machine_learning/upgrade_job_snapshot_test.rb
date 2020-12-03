@@ -29,7 +29,7 @@ module Elasticsearch
             assert_equal 'POST', method
             assert_equal "_ml/anomaly_detectors/foo/model_snapshots/bar/_upgrade", url
             assert_equal Hash.new, params
-            assert_equal nil, body
+            assert_nil body
             true
           end.returns(FakeResponse.new)
 
