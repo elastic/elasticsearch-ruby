@@ -20,6 +20,10 @@ module Elasticsearch
     module Tasks
       module Actions
         # Returns information about a task.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :task_id Return the task with specified id (node_id:task_number)
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
