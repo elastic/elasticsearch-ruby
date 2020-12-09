@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'minitest-reporters', '~> 1'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'rake', '~> 12.3'
+  s.add_development_dependency 'rake', '~> 13'
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'

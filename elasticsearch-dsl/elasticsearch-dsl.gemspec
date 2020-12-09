@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4'
 
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rake', '~> 12.3'
+  s.add_development_dependency 'rake', '~> 13'
 
   s.add_development_dependency 'elasticsearch'
   s.add_development_dependency 'elasticsearch-extensions'
