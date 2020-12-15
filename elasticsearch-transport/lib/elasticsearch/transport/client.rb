@@ -118,8 +118,11 @@ module Elasticsearch
       #
       # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
       #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
-      # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client. This
-      # will be prepended to the id you set before each request if you're using X-Opaque-Id
+      # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
+      #                                                     This will be prepended to the id you set before each request
+      #                                                     if you're using X-Opaque-Id
+      # @option enable_meta_header [Boolean] :enable_meta_header Enable sending the meta data header to Cloud.
+      #                                                          (Default: true)
       #
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
@@ -134,9 +137,11 @@ module Elasticsearch
         @arguments[:randomize_hosts]    ||= false
         @arguments[:transport_options]  ||= {}
         @arguments[:http]               ||= {}
+        @arguments[:enable_meta_header] ||= true
         @options[:http]                 ||= {}
 
         set_api_key if (@api_key = @arguments[:api_key])
+        set_meta_header unless @arguments[:enable_meta_header] == false
 
         @seeds = extract_cloud_creds(@arguments)
         @seeds ||= __extract_hosts(@arguments[:hosts] ||
@@ -184,13 +189,40 @@ module Elasticsearch
 
       def set_api_key
         @api_key = __encode(@api_key) if @api_key.is_a? Hash
+        add_header('Authorization' => "ApiKey #{@api_key}")
+        @arguments.delete(:user)
+        @arguments.delete(:password)
+      end
+
+      def add_header(header)
         headers = @arguments[:transport_options]&.[](:headers) || {}
-        headers.merge!('Authorization' => "ApiKey #{@api_key}")
+        headers.merge!(header)
         @arguments[:transport_options].merge!(
           headers: headers
         )
-        @arguments.delete(:user)
-        @arguments.delete(:password)
+      end
+
+      def set_meta_header
+        meta_headers = {
+          es: Elasticsearch::VERSION,
+          rb: RUBY_VERSION,
+          t: Elasticsearch::Transport::VERSION
+        }
+        meta_headers.merge!(meta_header_engine) if meta_header_engine
+        add_header({ 'x-elastic-client-meta' => meta_headers.map { |k, v| "#{k}=#{v}" }.join(',') })
+      end
+
+      def meta_header_engine
+        case RUBY_ENGINE
+        when 'ruby'
+          {}
+        when 'jruby'
+          { jr: JRUBY_VERSION }
+        when 'rbx'
+          { rbx: RUBY_VERSION }
+        else
+          { RUBY_ENGINE.to_sym => RUBY_VERSION }
+        end
       end
 
       def extract_cloud_creds(arguments)
