@@ -7,9 +7,7 @@ require 'test_helper'
 module Elasticsearch
   module Test
     class WrapperGemTest < Minitest::Test
-
       context "Wrapper gem" do
-
         should "require all neccessary subgems" do
           assert defined? Elasticsearch::Client
           assert defined? Elasticsearch::API
@@ -22,9 +20,7 @@ module Elasticsearch
           assert_respond_to client, :cluster
           assert_respond_to client, :indices
         end
-
       end
-
     end
   end
 end

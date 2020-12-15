@@ -1491,7 +1491,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when a request is made' do
-
       let!(:response) do
         client.perform_request('GET', '_cluster/health')
       end
@@ -1502,9 +1501,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#initialize' do
-
       context 'when options are specified' do
-
         let(:transport_options) do
           { headers: { accept: 'application/yaml', content_type: 'application/yaml' } }
         end
@@ -1520,7 +1517,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when a block is provided' do
-
         let(:client) do
           Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
             client.headers['Accept'] = 'application/yaml'
@@ -1563,11 +1559,8 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#options' do
-
       context 'when retry_on_failure is true' do
-
         context 'when a node is unreachable' do
-
           let(:hosts) do
             [ELASTICSEARCH_HOSTS.first, "foobar1", "foobar2"]
           end
