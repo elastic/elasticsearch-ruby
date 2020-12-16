@@ -296,7 +296,6 @@ module Elasticsearch
           def transform_and_set_variable(action)
             variables_to_transform_and_set.each do |set_definition|
               set_definition['transform_and_set'].each do |response_key, transform_description|
-
                 match_base_64_transform = /(\#base64EncodeCredentials\()(\S*)\)/
                 matches = match_base_64_transform.match(transform_description)
                 fields = matches[2].split(',') if matches.length > 0
