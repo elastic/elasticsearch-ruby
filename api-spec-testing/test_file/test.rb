@@ -58,8 +58,15 @@ module Elasticsearch
           #
           # @since 6.2.0
           def split_and_parse_key(key)
-            key.split(/(?<!\\)\./).map do |key|
-              (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key.gsub('\\', '')
+            key.split(/(?<!\\)\./).reject { |k| k.empty? }.map do |key_part|
+              case key_part
+               when /^\.\$/ # For keys in the form of .$key
+                 key_part.gsub(/^\./, '')
+              when /\A[-+]?[0-9]+\z/
+                key_part.to_i
+              else
+                key_part.gsub('\\', '')
+              end
             end.reject { |k| k == '$body' }
           end
         end
