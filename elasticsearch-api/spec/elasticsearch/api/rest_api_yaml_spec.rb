@@ -13,6 +13,8 @@ describe 'Rest API YAML tests' do
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
+      logger = Logger.new($stdout)
+      logger.info "Skipping #{file} due to 'skip all'."
       next
     end
 
