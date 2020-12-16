@@ -18,26 +18,26 @@
 module Elasticsearch
   module XPack
     module API
-      module Eql
+      module Indices
         module Actions
-          # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+          # Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
           #
-          # @option arguments [String] :id The async search ID
+          # @option arguments [String] :name The name of the data stream
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
           #
-          def delete(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+          def promote_data_stream(arguments = {})
+            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+            _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_eql/search/#{Elasticsearch::API::Utils.__listify(_id)}"
+            method = Elasticsearch::API::HTTP_POST
+            path   = "_data_stream/_promote/#{Elasticsearch::API::Utils.__listify(_name)}"
             params = {}
 
             body = nil

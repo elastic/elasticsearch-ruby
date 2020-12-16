@@ -18,29 +18,35 @@
 module Elasticsearch
   module XPack
     module API
-      module Eql
+      module Rollup
         module Actions
-          # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+          # Rollup an index
           #
-          # @option arguments [String] :id The async search ID
+          # @option arguments [String] :index The index to roll up (*Required*)
+          # @option arguments [String] :rollup_index The name of the rollup index to create (*Required*)
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body The rollup configuration (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-api.html
           #
-          def delete(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+          def rollup(arguments = {})
+            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+            raise ArgumentError, "Required argument 'rollup_index' missing" unless arguments[:rollup_index]
 
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+            _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_eql/search/#{Elasticsearch::API::Utils.__listify(_id)}"
+            _rollup_index = arguments.delete(:rollup_index)
+
+            method = Elasticsearch::API::HTTP_POST
+            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_rollup/#{Elasticsearch::API::Utils.__listify(_rollup_index)}"
             params = {}
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
         end
