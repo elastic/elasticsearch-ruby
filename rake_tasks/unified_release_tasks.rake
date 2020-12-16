@@ -19,33 +19,19 @@ require 'fileutils'
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :unified_release do
-  desc 'Build gem snapshot'
-  task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
-                  @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-SNAPSHOT"
-                  Time.now.strftime('%Y%m%d%H%M%S')
-                else
-                  @zip_filename = "elasticsearch-ruby-#{Elasticsearch::VERSION}-#{args[:version_qualifier]}-SNAPSHOT"
-                  args[:version_qualifier]
-                end
-    @version = "#{Elasticsearch::VERSION}.#{qualifier}-SNAPSHOT"
+  desc 'Build gem releases and snapshots'
+  task :assemble, [:version, :output_dir] do |_, args|
+    @zip_filename = "elasticsearch-ruby-#{args[:version]}"
+    @version = if args[:version].match? '-SNAPSHOT'
+                 args[:version].gsub('-SNAPSHOT', ".#{Time.now.strftime('%Y%m%d%H%M%S')}-SNAPSHOT")
+               else
+                 args[:version]
+               end
 
-    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
-    build_gems(args[:output_dir])
-    zip_files(args[:output_dir])
-  end
-
-  desc 'Build gem release'
-  task :assemble, [:version_qualifier, :output_dir] do |_, args|
-    version = [Elasticsearch::VERSION]
-    version << args[:version_qualifier] unless args[:version_qualifier].nil? || args[:version_qualifier].empty?
-
-    @version = version.join('.')
-    @zip_filename = "elasticsearch-ruby-#{version.join('-')}"
     Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
 
     build_gems(args[:output_dir])
-    zip_files(args[:output_dir])
+    create_zip_file(args[:output_dir])
   end
 
   def build_gems(output_dir)
@@ -65,7 +51,7 @@ namespace :unified_release do
     puts '-' * 80
   end
 
-  def zip_files(output_dir)
+  def create_zip_file(output_dir)
     sh "cd #{CURRENT_PATH.join(output_dir)} && " \
        "zip -r #{@zip_filename}.zip * " \
   end
