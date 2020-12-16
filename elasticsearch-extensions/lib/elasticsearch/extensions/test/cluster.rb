@@ -205,7 +205,7 @@ module Elasticsearch
                 -E path.repo=/tmp \
                 -E repositories.url.allowed_urls=http://snapshot.test* \
                 -E discovery.zen.minimum_master_nodes=#{arguments[:number_of_nodes]-1} \
-                -E xpack.security.enabled=false \
+                #{'-E xpack.security.enabled=false' unless arguments[:dist] == 'oss'} \
                 -E node.max_local_storage_nodes=#{arguments[:number_of_nodes]} \
                 -E logger.level=#{ENV['DEBUG'] ? 'DEBUG' : 'INFO'} \
                 #{arguments[:es_params]}
@@ -472,7 +472,6 @@ module Elasticsearch
           #
           def __determine_version
             path_to_lib = File.dirname(arguments[:command]) + '/../lib/'
-
             version = if arguments[:version]
               arguments[:version]
             elsif File.exist?(path_to_lib) && !(jar = Dir.entries(path_to_lib).select { |f| f =~ /^elasticsearch\-\d/ }.first).nil?
@@ -530,6 +529,8 @@ module Elasticsearch
                 raise RuntimeError, "Cannot determine Elasticsearch version from [#{arguments[:command]} --version] or [#{arguments[:command]} -v]"
               end
 
+              @dist = output.match(/Build: ([a-z]+)\//)&.[](1)
+
               if(m = output.match(/Version: (\d+\.\d+.\d+).*,/))
                 m[1]
               else
@@ -564,11 +565,10 @@ module Elasticsearch
           # @return String
           #
           def __command(version, arguments, node_number)
-            if command = COMMANDS[version]
-              command.call(arguments, node_number)
-            else
-              raise ArgumentError, "Cannot find command for version [#{version}]"
-            end
+            raise ArgumentError, "Cannot find command for version [#{version}]" unless (command = COMMANDS[version])
+
+            arguments.merge!({ dist: @dist })
+            command.call(arguments, node_number)
           end
 
           # Blocks the process and waits for the cluster to be in a "green" state
@@ -669,7 +669,6 @@ module Elasticsearch
           def __remove_cluster_data
             FileUtils.rm_rf arguments[:path_data]
           end
-
 
           # Check whether process for PIDs are running
           #
