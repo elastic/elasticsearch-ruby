@@ -22,10 +22,10 @@ module Elasticsearch
         # Returns information about the tasks currently executing on one or more nodes in the cluster.
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+        # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [List] :actions A comma-separated list of actions that should be returned. Leave empty to return all.
         # @option arguments [Boolean] :detailed Return detailed task information (default: false)
-        # @option arguments [Number] :parent_task Return tasks with specified parent task id. Set to -1 to return all.
+        # @option arguments [String] :parent_task_id Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
@@ -53,10 +53,10 @@ module Elasticsearch
         # @since 6.2.0
         ParamsRegistry.register(:tasks, [
           :format,
-          :node_id,
+          :nodes,
           :actions,
           :detailed,
-          :parent_task,
+          :parent_task_id,
           :h,
           :help,
           :s,

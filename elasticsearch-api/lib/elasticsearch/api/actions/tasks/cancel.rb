@@ -20,6 +20,10 @@ module Elasticsearch
     module Tasks
       module Actions
         # Cancels a task, if it can be cancelled through an API.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :task_id Cancel the task with specified task id (node_id:task_number)
         # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
