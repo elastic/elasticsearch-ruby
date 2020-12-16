@@ -11,7 +11,6 @@ repo=$(realpath "$script_path/../")
 # shellcheck disable=SC1090
 CMD=$1
 VERSION=$2
-VERSION_QUALIFIER=${VERSION-''}
 set -euo pipefail
 
 TARGET_DIR=${TARGET_DIR-.ci/output}
@@ -23,11 +22,8 @@ GIT_NAME=${GIT_NAME-elastic}
 GIT_EMAIL=${GIT_EMAIL-'clients-team@elastic.co'}
 
 case $CMD in
-    assemble_snapshot)
-        TASK=assemble_snapshot[$VERSION_QUALIFIER,$TARGET_DIR]
-        ;;
     assemble)
-        TASK=assemble[$VERSION_QUALIFIER,$TARGET_DIR]
+        TASK=assemble[$VERSION,$TARGET_DIR]
         ;;
     *)
         echo -e "\nUsage:"
