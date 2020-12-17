@@ -34,7 +34,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Overall bucket selection details if not provided in URI
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-overall-buckets.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/ml-get-overall-buckets.html
           #
           def get_overall_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Boolean] :accept_enterprise If an enterprise license is installed, return the type and mode as 'enterprise' (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/info-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/info-api.html
         #
         def info(arguments = {})
           headers = arguments.delete(:headers) || {}

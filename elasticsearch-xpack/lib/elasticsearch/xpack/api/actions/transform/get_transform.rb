@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on transform PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/get-transform.html
           #
           def get_transform(arguments = {})
             headers = arguments.delete(:headers) || {}

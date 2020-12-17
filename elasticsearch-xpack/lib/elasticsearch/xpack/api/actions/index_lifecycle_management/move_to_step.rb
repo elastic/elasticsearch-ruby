@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The new lifecycle step to move to
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-move-to-step.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/ilm-move-to-step.html
           #
           def move_to_step(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/start-basic.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/start-basic.html
           #
           def post_start_basic(arguments = {})
             headers = arguments.delete(:headers) || {}

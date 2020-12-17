@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-delete-role-mapping.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/security-api-delete-role-mapping.html
           #
           def delete_role_mapping(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

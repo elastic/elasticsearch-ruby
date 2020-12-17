@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Specify the cursor value in the `cursor` element to clean the cursor. (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-pagination.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/sql-pagination.html
           #
           def clear_cursor(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

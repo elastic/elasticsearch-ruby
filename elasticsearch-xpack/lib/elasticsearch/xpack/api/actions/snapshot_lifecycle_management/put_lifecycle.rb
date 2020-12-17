@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-put-policy.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/slm-api-put-policy.html
           #
           def put_lifecycle(arguments = {})
             raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]

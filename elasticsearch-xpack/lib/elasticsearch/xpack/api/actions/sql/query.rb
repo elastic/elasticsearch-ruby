@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Use the `query` element to start a query. Use the `cursor` element to continue a query. (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-rest-overview.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/sql-rest-overview.html
           #
           def query(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The enrich policy to register (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-enrich-policy-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/put-enrich-policy-api.html
           #
           def put_policy(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

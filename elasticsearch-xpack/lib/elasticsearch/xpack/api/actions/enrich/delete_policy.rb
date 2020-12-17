@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :name The name of the enrich policy
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/delete-enrich-policy-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/delete-enrich-policy-api.html
           #
           def delete_policy(arguments = {})
             raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

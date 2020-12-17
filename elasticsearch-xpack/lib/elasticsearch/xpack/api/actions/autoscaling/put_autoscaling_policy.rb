@@ -30,7 +30,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body the specification of the autoscaling policy (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-put-autoscaling-policy.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/autoscaling-put-autoscaling-policy.html
           #
           def put_autoscaling_policy(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

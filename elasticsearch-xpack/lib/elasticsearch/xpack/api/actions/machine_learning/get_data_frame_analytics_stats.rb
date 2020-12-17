@@ -33,7 +33,7 @@ module Elasticsearch
           # @option arguments [Boolean] :verbose whether the stats response should be verbose
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-dfanalytics-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/get-dfanalytics-stats.html
           #
           def get_data_frame_analytics_stats(arguments = {})
             headers = arguments.delete(:headers) || {}

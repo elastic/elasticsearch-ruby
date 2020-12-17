@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [List] :username A comma-separated list of usernames
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-user.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/security-api-get-user.html
           #
           def get_user(arguments = {})
             headers = arguments.delete(:headers) || {}

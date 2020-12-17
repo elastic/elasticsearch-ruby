@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Eql request body. Use the `query` to limit the query scope. (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/eql-search-api.html
           #
           def search(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

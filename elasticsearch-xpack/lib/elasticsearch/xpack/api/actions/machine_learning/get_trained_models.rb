@@ -37,7 +37,7 @@ module Elasticsearch
           # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on model PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-trained-models.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/get-trained-models.html
           #
           def get_trained_models(arguments = {})
             headers = arguments.delete(:headers) || {}

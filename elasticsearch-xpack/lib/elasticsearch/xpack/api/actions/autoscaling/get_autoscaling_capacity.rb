@@ -28,7 +28,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-capacity.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/autoscaling-get-autoscaling-capacity.html
           #
           def get_autoscaling_capacity(arguments = {})
             headers = arguments.delete(:headers) || {}
