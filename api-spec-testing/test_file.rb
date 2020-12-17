@@ -229,7 +229,6 @@ module Elasticsearch
         end
 
         def wait_for_cluster_tasks(client)
-          tasks_filter = ['delete-index', 'remove-data-stream', 'ilm-history', 'insert_order']
           time = Time.now.to_i
           count = 0
 
@@ -239,9 +238,7 @@ module Elasticsearch
               next if task.empty?
 
               LOGGER.debug "Pending cluster task: #{task}"
-              tasks_filter.map do |filter|
-                count += 1 if task['source'].include? filter
-              end
+              count += 1
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
           end
