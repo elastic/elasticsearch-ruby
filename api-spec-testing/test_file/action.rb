@@ -111,8 +111,14 @@ module Elasticsearch
                   # Find the cached values where the variable name is contained in the arguments.
                   if(cached_values = test.cached_values.keys.select { |k| value =~ /\$\{?#{k}\}?/ })
                     cached_values.each do |cached|
-                      # The arguments may contain the variable in the form ${variable} or $variable
-                      value.gsub!(/\$\{?#{cached}\}?/, test.cached_values[cached].to_s)
+                      # Arguments can be $variable, ${variable} or a Hash:
+                      retrieved = test.cached_values[cached]
+                      if retrieved.is_a?(Hash)
+                        value = retrieved
+                      else
+                        # Regex substitution to replace ${variable} or $variable for the value
+                        value.gsub!(/\$\{?#{cached}\}?/, retrieved.to_s)
+                      end
                     end
                     args[key] = value
                   end
