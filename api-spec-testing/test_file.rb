@@ -404,7 +404,12 @@ module Elasticsearch
           datastreams['data_streams'].each do |datastream|
             client.xpack.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
           end
-          client.indices.delete_data_stream(name: '*')
+          begin
+            client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
+          rescue StandardError => e
+            LOGGER.error "Caught exception attempting to delete data streams: #{e}"
+            client.indices.delete_data_stream(name: '*')
+          end
         end
 
         def clear_ml_filters(client)
