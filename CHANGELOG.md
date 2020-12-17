@@ -1,3 +1,9 @@
+## EXT:0.0.33
+
+New release of [`elasticsearch-extensions`](elasticsearch-extensions):
+
+- Fixes a bug where clusters failed to start with `"unknown setting [xpack.security.enabled]"` when running `elasticsearch-oss`. More details on the [issue](https://github.com/elastic/elasticsearch-ruby/issues/1130) ([commit](https://github.com/elastic/elasticsearch-ruby/commit/23a1302db43ad45f6ce5d1ac4fcfcc1d824609f3)).
+
 ## EXT:0.0.32
 
 New release of [`elasticsearch-extensions`](elasticsearch-extensions):
