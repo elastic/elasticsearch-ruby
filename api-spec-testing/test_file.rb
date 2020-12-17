@@ -221,6 +221,7 @@ module Elasticsearch
             results.each do |task|
               next if task.empty?
 
+              LOGGER.debug "Pending task: #{task}"
               count += 1 if task.include?(filter)
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -237,7 +238,7 @@ module Elasticsearch
             results['tasks'].each do |task|
               next if task.empty?
 
-              LOGGER.info "Pending task: #{task}"
+              LOGGER.debug "Pending cluster task: #{task}"
               tasks_filter.map do |filter|
                 count += 1 if task['source'].include? filter
               end
