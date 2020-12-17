@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-create-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/indices-create-index.html
         #
         def create(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

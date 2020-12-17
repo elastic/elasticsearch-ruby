@@ -32,7 +32,7 @@ module Elasticsearch
         # Deprecated since version 7.6.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-synced-flush-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/indices-synced-flush-api.html
         #
         def flush_synced(arguments = {})
           headers = arguments.delete(:headers) || {}

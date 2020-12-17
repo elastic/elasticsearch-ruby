@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/indices-component-template.html
         #
         def get_component_template(arguments = {})
           headers = arguments.delete(:headers) || {}

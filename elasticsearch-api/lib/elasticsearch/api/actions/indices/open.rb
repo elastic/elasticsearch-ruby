@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-open-close.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/indices-open-close.html
         #
         def open(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

@@ -66,7 +66,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/docs-update-by-query.html
       #
       def update_by_query(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

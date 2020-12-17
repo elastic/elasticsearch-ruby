@@ -39,7 +39,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/docs-get.html
       #
       def get_source(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

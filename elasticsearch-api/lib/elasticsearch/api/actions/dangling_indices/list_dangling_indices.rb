@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/modules-gateway-dangling-indices.html
         #
         def list_dangling_indices(arguments = {})
           headers = arguments.delete(:headers) || {}

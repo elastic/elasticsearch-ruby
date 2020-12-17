@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-get-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.11/indices-get-settings.html
         #
         def get_settings(arguments = {})
           headers = arguments.delete(:headers) || {}
