@@ -56,12 +56,12 @@ describe 'XPack Rest API YAML tests' do
               # todo: remove these two lines when Dimitris' PR is merged
               ADMIN_CLIENT.cluster.put_settings(body: { transient: { 'xpack.ml.max_model_memory_limit' => nil } })
               ADMIN_CLIENT.cluster.put_settings(body: { persistent: { 'xpack.ml.max_model_memory_limit' => nil } })
-              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
               test_file.setup
             end
 
             after(:all) do
               test_file.teardown
+              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|
