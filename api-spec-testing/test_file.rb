@@ -181,8 +181,8 @@ module Elasticsearch
         def wipe_cluster(client)
           if xpack?
             clear_rollup_jobs(client)
-            clear_sml_policies(client)
             wait_for_pending_tasks(client)
+            clear_sml_policies(client)
           end
           clear_snapshots_and_repositories(client)
           clear_datastreams(client) if xpack?
