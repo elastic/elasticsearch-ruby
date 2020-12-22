@@ -146,6 +146,20 @@ describe Elasticsearch::DSL::Search::Filters::Bool do
     end
   end
 
+  context 'when options methods are called' do
+
+    describe '#minimum_should_match' do
+
+      before do
+        search.minimum_should_match 1
+      end
+
+      it 'applies the option' do
+        expect(search.to_hash).to eq(bool: { minimum_should_match: 1 })
+      end
+    end
+  end
+
   describe '#must' do
 
     before do

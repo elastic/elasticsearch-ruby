@@ -57,6 +57,8 @@ module Elasticsearch
         class Bool
           include BaseComponent
 
+          option_method :minimum_should_match
+
           def must(*args, &block)
             @hash[name][:must] ||= []
             value = args.empty? ? Filter.new(*args, &block).to_hash : args.first.to_hash
