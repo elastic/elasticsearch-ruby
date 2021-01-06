@@ -246,7 +246,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new(adapter: :patron)
+        described_class.new(adapter: :patron, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -260,7 +260,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new(adapter: :typhoeus)
+        described_class.new(adapter: :typhoeus, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -274,7 +274,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new('adapter' => :patron)
+        described_class.new(adapter: :patron, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -1684,7 +1684,7 @@ describe Elasticsearch::Transport::Client do
           context 'when using the HTTPClient adapter' do
 
             let(:client) do
-              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient)
+              described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient, enable_meta_header: false)
             end
 
             it 'compresses the request and decompresses the response' do
