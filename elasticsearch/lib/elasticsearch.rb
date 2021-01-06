@@ -11,6 +11,9 @@ module Elasticsearch
   module Transport
     class Client
       include Elasticsearch::API
+
+      # Constant for elasticsearch-transport meta-header
+      META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
     end
   end
 end
