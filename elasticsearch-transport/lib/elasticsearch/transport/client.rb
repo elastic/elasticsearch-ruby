@@ -139,11 +139,10 @@ module Elasticsearch
         @arguments[:randomize_hosts]    ||= false
         @arguments[:transport_options]  ||= {}
         @arguments[:http]               ||= {}
-        @arguments[:enable_meta_header] ||= true
+        @arguments[:enable_meta_header] = arguments.fetch(:enable_meta_header) { true }
         @options[:http]                 ||= {}
 
         set_api_key if (@api_key = @arguments[:api_key])
-        set_meta_header unless @arguments[:enable_meta_header] == false
 
         @seeds = extract_cloud_creds(@arguments)
         @seeds ||= __extract_hosts(@arguments[:hosts] ||
@@ -163,15 +162,18 @@ module Elasticsearch
         if @arguments[:transport]
           @transport = @arguments[:transport]
         else
-          transport_class  = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
-          if transport_class == Transport::HTTP::Faraday
-            @transport = transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
-              faraday.adapter(@arguments[:adapter] || __auto_detect_adapter)
-              block&.call faraday
-            end
-          else
-            @transport = transport_class.new(hosts: @seeds, options: @arguments)
-          end
+          @transport_class = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
+          @transport = if @transport_class == Transport::HTTP::Faraday
+                         @arguments[:adapter] ||= __auto_detect_adapter
+                         set_meta_header
+                         @transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
+                           faraday.adapter(@arguments[:adapter])
+                           block&.call faraday
+                         end
+                       else
+                         set_meta_header
+                         @transport_class.new(hosts: @seeds, options: @arguments)
+                       end
         end
       end
 
@@ -205,12 +207,16 @@ module Elasticsearch
       end
 
       def set_meta_header
+        return if @arguments[:enable_meta_header] == false
+
         meta_headers = {
-          es: Elasticsearch::VERSION,
+          es: Elasticsearch::VERSION, # TODO - es|ent
           rb: RUBY_VERSION,
           t: Elasticsearch::Transport::VERSION
         }
         meta_headers.merge!(meta_header_engine) if meta_header_engine
+        meta_headers.merge!(meta_header_adapter) if meta_header_adapter
+
         add_header({ 'x-elastic-client-meta' => meta_headers.map { |k, v| "#{k}=#{v}" }.join(',') })
       end
 
@@ -224,6 +230,29 @@ module Elasticsearch
           { rbx: RUBY_VERSION }
         else
           { RUBY_ENGINE.to_sym => RUBY_VERSION }
+        end
+      end
+
+      def meta_header_adapter
+        if @transport_class == Transport::HTTP::Faraday
+          {fd: Faraday::VERSION}.merge(
+            case @arguments[:adapter]
+            when :patron
+              {pt: Patron::VERSION}
+            when :net_http
+              {nh: defined?(Net::HTTP::VERSION) ? Net::HTTP::VERSION : Net::HTTP::HTTPVersion}
+            when :typhoeus
+              {ty: Typhoeus::VERSION}
+            when :httpclient
+              {hc: HTTPClient::VERSION}
+            when :net_http_persistent
+              {np: Net::HTTP::Persistent::VERSION}
+            end
+          )
+        elsif defined?(Transport::HTTP::Curb) && @transport_class == Transport::HTTP::Curb
+          {cl: Curl::CURB_VERSION}
+        elsif defined?(Transport::HTTP::Manticore) && @transport_class == Transport::HTTP::Manticore
+          {mc: Manticore::VERSION}
         end
       end
 
