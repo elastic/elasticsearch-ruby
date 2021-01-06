@@ -209,8 +209,10 @@ module Elasticsearch
       def set_meta_header
         return if @arguments[:enable_meta_header] == false
 
+        service, version = meta_header_service_version
+
         meta_headers = {
-          es: Elasticsearch::VERSION, # TODO - es|ent
+          service.to_sym => version,
           rb: RUBY_VERSION,
           t: Elasticsearch::Transport::VERSION
         }
@@ -218,6 +220,16 @@ module Elasticsearch
         meta_headers.merge!(meta_header_adapter) if meta_header_adapter
 
         add_header({ 'x-elastic-client-meta' => meta_headers.map { |k, v| "#{k}=#{v}" }.join(',') })
+      end
+
+      def meta_header_service_version
+        if defined?(Elastic::META_HEADER_SERVICE_VERSION)
+          Elastic::META_HEADER_SERVICE_VERSION
+        elsif defined?(Elasticsearch::VERSION)
+          ['es', Elasticsearch::VERSION]
+        else
+          ['es', Elasticsearch::Transport::VERSION]
+        end
       end
 
       def meta_header_engine
