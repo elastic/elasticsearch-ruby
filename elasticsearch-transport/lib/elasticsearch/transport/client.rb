@@ -221,10 +221,12 @@ module Elasticsearch
       end
 
       def meta_header_service_version
-        if defined?(META_HEADER_SERVICE_VERSION)
-          META_HEADER_SERVICE_VERSION
-        else
+        if defined?(Elastic::META_HEADER_SERVICE_VERSION)
+          Elastic::META_HEADER_SERVICE_VERSION
+        elsif defined?(Elasticsearch::VERSION)
           ['es', Elasticsearch::VERSION]
+        else
+          ['es', Elasticsearch::Transport::VERSION]
         end
       end
 
