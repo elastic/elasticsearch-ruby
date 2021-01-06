@@ -32,7 +32,7 @@ if File.exist? File.expand_path('../../elasticsearch/elasticsearch.gemspec', __F
   gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __FILE__), require: false
 end
 
-group :development do
+group :development, :test do
   gem 'rspec'
   if defined?(JRUBY_VERSION)
     gem 'pry-nav'
