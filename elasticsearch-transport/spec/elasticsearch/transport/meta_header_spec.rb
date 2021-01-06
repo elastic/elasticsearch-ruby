@@ -178,5 +178,34 @@ describe Elasticsearch::Transport::Client do
         expect(subject).to include('x-elastic-client-meta' => meta_header)
       end
     end
+
+    context 'when using a different service version' do
+      before do
+        module Elasticsearch
+          module Transport
+            class Client
+              META_HEADER_SERVICE_VERSION = [:ent, '8.0.0']
+            end
+          end
+        end
+      end
+
+      after do
+        module Elasticsearch
+          module Transport
+            class Client
+              META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
+            end
+          end
+        end
+      end
+
+      let(:client) { Elasticsearch::Client.new }
+
+      it 'sets the service version in the metaheader' do
+        expect(subject['x-elastic-client-meta']).to match(regexp)
+        expect(subject['x-elastic-client-meta']).to start_with('ent=8.0.0')
+      end
+    end
   end
 end
