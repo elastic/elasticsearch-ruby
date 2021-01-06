@@ -181,22 +181,14 @@ describe Elasticsearch::Transport::Client do
 
     context 'when using a different service version' do
       before do
-        module Elasticsearch
-          module Transport
-            class Client
-              META_HEADER_SERVICE_VERSION = [:ent, '8.0.0']
-            end
-          end
+        module Elastic
+          META_HEADER_SERVICE_VERSION = [:ent, '8.0.0']
         end
       end
 
       after do
-        module Elasticsearch
-          module Transport
-            class Client
-              META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
-            end
-          end
+        module Elastic
+          META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
         end
       end
 
