@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module Transport
-    VERSION = "7.10.0"
+    VERSION = "7.10.1"
   end
 end
