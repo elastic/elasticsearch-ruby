@@ -20,12 +20,12 @@ require 'spec_helper'
 describe Elasticsearch::Transport::Client do
   context 'meta-header' do
     let(:subject) { client.transport.connections.first.connection.headers }
-    let(:regexp) { /^[a-z]{1,}=[a-z0-9.\-]{1,}(?:,[a-z]{1,}=[a-z0-9.\-]+)*$/ }
+    let(:regexp) { /^[a-z]{1,}=[a-z0-9.\-]{1,}(?:,[a-z]{1,}=[a-z0-9._\-]+)*$/ }
     let(:adapter) { :net_http }
     let(:adapter_code) { "nh=#{defined?(Net::HTTP::VERSION) ? Net::HTTP::VERSION : Net::HTTP::HTTPVersion}" }
     let(:meta_header) do
-      if RUBY_ENGINE == 'jruby'
-        "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
+      if jruby?
+        "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
       else
         "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
       end
@@ -77,8 +77,8 @@ describe Elasticsearch::Transport::Client do
 
     context 'adapters' do
       let(:meta_header) do
-        if RUBY_ENGINE == 'jruby'
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION}"
+        if jruby?
+          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION}"
         else
           "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION}"
         end
@@ -166,8 +166,8 @@ describe Elasticsearch::Transport::Client do
       let(:client) { Elasticsearch::Client.new(transport_class: MyTransport) }
       let(:subject){ client.instance_variable_get("@arguments")[:transport_options][:headers] }
       let(:meta_header) do
-        if RUBY_ENGINE == 'jruby'
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jr=#{JRUBY_VERSION}"
+        if jruby?
+          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
         else
           "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION}"
         end
