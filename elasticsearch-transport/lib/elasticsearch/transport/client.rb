@@ -237,7 +237,7 @@ module Elasticsearch
         when 'ruby'
           {}
         when 'jruby'
-          { jr: JRUBY_VERSION }
+          { jv: ENV_JAVA['java.version'], jr: JRUBY_VERSION }
         when 'rbx'
           { rbx: RUBY_VERSION }
         else
