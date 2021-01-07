@@ -1,3 +1,23 @@
+## 7.10.1
+
+### Client
+
+* Use 443 for default cloud port, 9200 as the default port for http Adds more test cases
+
+### API
+
+* Changes stability in tasks
+
+### EXT:7.10.1
+
+
+
+## 7.10.1
+
+### Client
+
+- Updates for connecting with Cloud.
+
 ## 7.10.0
 
 ### Client
