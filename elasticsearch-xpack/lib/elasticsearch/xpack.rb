@@ -153,6 +153,10 @@ module Elasticsearch
       def snapshot_lifecycle_management
         @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
       end
+
+      def text_structure
+        @text_structure ||= xpack.text_structure
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
