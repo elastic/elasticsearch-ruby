@@ -128,7 +128,7 @@ task :release do
   RELEASE_TOGETHER.each do |project|
     next if project == 'elasticsearch-extensions'
 
-    sh "cd #{CURRENT_PATH.join(project)} && rake release"
+    sh "cd #{CURRENT_PATH.join(project)} && bundle exec rake release"
     puts '-' * 80
   end
 end
