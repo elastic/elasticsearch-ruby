@@ -26,6 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
+        # @option arguments [Boolean] :include_bootstrap Include bootstrap plugins in the response
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
@@ -54,6 +55,7 @@ module Elasticsearch
           :master_timeout,
           :h,
           :help,
+          :include_bootstrap,
           :s,
           :v
         ].freeze)
