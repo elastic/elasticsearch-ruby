@@ -18,29 +18,30 @@
 module Elasticsearch
   module XPack
     module API
-      module Eql
+      module Watcher
         module Actions
-          # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+          # Retrieves stored watches.
           #
-          # @option arguments [String] :id The async search ID
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body From, size, query, sort and search_after
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-query-watches.html
           #
-          def delete(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
-
+          def query_watches(arguments = {})
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_eql/search/#{Elasticsearch::API::Utils.__listify(_id)}"
+            path = "_watcher/_query/watches"
             params = {}
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
         end

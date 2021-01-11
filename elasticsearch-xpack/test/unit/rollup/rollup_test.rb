@@ -19,20 +19,38 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class XPackGetRollupIndexCapsTest < Minitest::Test
-      context "XPack Rollup: Get index caps" do
+    class XPackRollupTest < Minitest::Test
+      context "XPack Rollup: rollup an index" do
         subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'GET', method
-            assert_equal "foo/_rollup/data", url
-            assert_equal Hash.new, params
-            assert_nil body
+            assert_equal('POST', method)
+            assert_equal('foo/_rollup/bar', url)
+            assert_equal({}, params)
+            assert_equal(body, {})
             true
           end.returns(FakeResponse.new)
 
-          subject.xpack.rollup.get_rollup_index_caps :index => 'foo'
+          subject.xpack.rollup.rollup(body: {}, index: 'foo', rollup_index: 'bar')
+        end
+
+        should 'raise argument error without body' do
+          assert_raises ArgumentError do
+            subject.xpack.rollup.rollup(index: 'foo', rollup_index: 'bar')
+          end
+        end
+
+        should 'raise argument error without index' do
+          assert_raises ArgumentError do
+            subject.xpack.rollup.rollup(body: {}, rollup_index: 'bar')
+          end
+        end
+
+        should 'raise argument error without rollup_index' do
+          assert_raises ArgumentError do
+            subject.xpack.rollup.rollup(body: {}, index: 'foo')
+          end
         end
       end
     end

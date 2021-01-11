@@ -19,20 +19,26 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class XPackGetRollupIndexCapsTest < Minitest::Test
-      context "XPack Rollup: Get index caps" do
-        subject { FakeClient.new }
+    class XPackIndicesPromoteDataStreamTest < Minitest::Test
+      subject { FakeClient.new }
 
-        should "perform correct request" do
+      context 'XPack: Promote Data Stream' do
+        should 'perform correct request' do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'GET', method
-            assert_equal "foo/_rollup/data", url
-            assert_equal Hash.new, params
-            assert_nil body
+            assert_equal('POST', method)
+            assert_equal('_data_stream/_promote/foo', url)
+            assert_equal({}, params)
+            assert_nil(body)
             true
           end.returns(FakeResponse.new)
 
-          subject.xpack.rollup.get_rollup_index_caps :index => 'foo'
+          subject.xpack.indices.promote_data_stream(name: 'foo')
+        end
+
+        should 'raise argument error without name' do
+          assert_raises ArgumentError do
+            subject.xpack.indices.promote_data_stream
+          end
         end
       end
     end

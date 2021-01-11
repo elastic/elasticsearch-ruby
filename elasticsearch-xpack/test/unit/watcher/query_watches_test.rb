@@ -19,20 +19,32 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class XPackGetRollupIndexCapsTest < Minitest::Test
-      context "XPack Rollup: Get index caps" do
+    class XPackWatcherQueryWatchesTest < Minitest::Test
+      context "XPack Watcher: Query watches" do
         subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal 'GET', method
-            assert_equal "foo/_rollup/data", url
-            assert_equal Hash.new, params
-            assert_nil body
+            assert_equal('GET', method)
+            assert_equal('_watcher/_query/watches', url)
+            assert_equal(params, {})
+            assert_nil(body)
             true
           end.returns(FakeResponse.new)
 
-          subject.xpack.rollup.get_rollup_index_caps :index => 'foo'
+          subject.xpack.watcher.query_watches
+        end
+
+        should "perform correct request when sending body" do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal('POST', method)
+            assert_equal('_watcher/_query/watches', url)
+            assert_equal(params, {})
+            assert_equal(body, {})
+            true
+          end.returns(FakeResponse.new)
+
+          subject.xpack.watcher.query_watches(body: {})
         end
       end
     end
