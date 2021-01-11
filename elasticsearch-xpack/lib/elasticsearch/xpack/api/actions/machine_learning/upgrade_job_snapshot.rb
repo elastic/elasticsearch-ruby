@@ -24,7 +24,7 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The ID of the job
           # @option arguments [String] :snapshot_id The ID of the snapshot
-          # @option arguments [Timevalue] :timeout How long should the API wait for the job to be opened and the old snapshot to be loaded.
+          # @option arguments [Time] :timeout How long should the API wait for the job to be opened and the old snapshot to be loaded.
           # @option arguments [Boolean] :wait_for_completion Should the request wait until the task is complete before responding to the caller. Default is false.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
