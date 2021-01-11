@@ -531,7 +531,7 @@ module Elasticsearch
 
               @dist = output.match(/Build: ([a-z]+)\//)&.[](1)
 
-              if(m = output.match(/Version: (\d+\.\d+\.\d+).*,/))
+              if m = output.match(/Version: (\d+\.\d+\.\d+).*,/)
                 m[1]
               else
                 raise RuntimeError, "Cannot determine Elasticsearch version from elasticsearch --version output [#{output}]"
