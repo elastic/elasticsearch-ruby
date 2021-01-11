@@ -1,11 +1,11 @@
-name: 7.x
+name: 7.11
 on:
   push:
     branches:
-      - 7.x
+      - 7.11
   pull_request:
     branches:
-      - 7.x
+      - 7.11
 jobs:
   test-ruby:
     env:
