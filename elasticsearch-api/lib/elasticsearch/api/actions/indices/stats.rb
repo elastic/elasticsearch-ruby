@@ -21,10 +21,10 @@ module Elasticsearch
       module Actions
         # Provides statistics on operations happening in an index.
         #
-        # @option arguments [List] :metric Limit the information returned the specific metrics. (options: _all, completion, docs, fielddata, query_cache, flush, get, indexing, merge, request_cache, refresh, search, segments, store, warmer, suggest, bulk)
+        # @option arguments [List] :metric Limit the information returned the specific metrics. (options: _all, completion, docs, fielddata, query_cache, flush, get, indexing, merge, request_cache, refresh, search, segments, store, warmer, bulk)
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [List] :completion_fields A comma-separated list of fields for `fielddata` and `suggest` index metric (supports wildcards)
-        # @option arguments [List] :fielddata_fields A comma-separated list of fields for `fielddata` index metric (supports wildcards)
+        # @option arguments [List] :completion_fields A comma-separated list of fields for the `completion` index metric (supports wildcards)
+        # @option arguments [List] :fielddata_fields A comma-separated list of fields for the `fielddata` index metric (supports wildcards)
         # @option arguments [List] :fields A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
         # @option arguments [List] :groups A comma-separated list of search groups for `search` index metric
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
@@ -83,7 +83,6 @@ module Elasticsearch
           :segments,
           :store,
           :warmer,
-          :suggest,
           :bulk,
           :metric
         ].freeze)
