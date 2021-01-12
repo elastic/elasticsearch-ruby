@@ -57,7 +57,14 @@ module Elasticsearch
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
+            if body.is_a? Array
+              payload = Elasticsearch::API::Utils.__bulkify(body)
+            else
+              payload = body
+            end
+
+            headers.merge!("Content-Type" => "application/x-ndjson")
+            perform_request(method, path, params, payload, headers).body
           end
 
           # Register this action with its valid params when the module is loaded.
