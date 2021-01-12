@@ -14,7 +14,7 @@ when 'mtermvectors'
 <%- else -%>
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <%- end -%>
-<%- if ['bulk', 'msearch', 'msearch_template'].include? @method_name -%>
+<%- if ['bulk', 'msearch', 'msearch_template', 'find_structure'].include? @method_name -%>
   <%= self.send("#{@method_name}_body_helper".to_s) %>
   headers.merge!("Content-Type" => "application/x-ndjson")
   <%= '  '*(@namespace_depth+4) %>perform_request(method, path, params, payload, headers).body
