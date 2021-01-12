@@ -156,6 +156,10 @@ module Elasticsearch
         SRC
       end
 
+      def find_structure_body_helper
+        bulk_body_helper
+      end
+
       def bulk_doc_helper(info)
         <<~SRC
           # @option arguments [String|Array] :body #{info}. Array of Strings, Header/Data pairs,
