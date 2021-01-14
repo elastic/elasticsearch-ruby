@@ -2,12 +2,23 @@
 === 7.10 Release notes
 
 [discrete]
+[[release_notes_7101]]
+=== 7.10.1 Release notes
+[discrete]
+==== Client
+
+- Updates for connecting with Cloud.
+
+[discrete]
+[[release_notes_7100]]
+=== 7.10 Release notes
+
+[discrete]
 ==== Client
 
 - Support for Elasticsearch version `7.10.0`.
 - Fixes a bug when building the complete endpoint URL could end with duplicate slashes `//`.
 - Fixes a bug when building the complete endpoint URL with cloud id could end with duplicate ports https://github.com/elastic/elasticsearch-ruby/issues/1081[#1081].
-
 
 [discrete]
 ==== API
