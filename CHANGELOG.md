@@ -1,3 +1,7 @@
+## 7.10.1
+
+- Use 443 for default cloud port, 9200 as the default port for http
+
 ## 7.10.0
 
 ### Client
@@ -45,7 +49,7 @@ Deprecation notice: `searchable_snapshots.repository_stats` is deprecated and is
 ### Client
 
 - Support for Elasticsearch version `7.9.0`.
-- Transport/Connection: Considers attributes values for equality - https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af[Commit].
+- Transport/Connection: Considers attributes values for equality - [Commit](https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af).
 - When an API endpoint accepts both `GET` and `POST`, the client will always use `POST` when a request body is present.
 
 ### API
