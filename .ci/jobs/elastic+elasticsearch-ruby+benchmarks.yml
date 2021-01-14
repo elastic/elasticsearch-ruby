@@ -6,7 +6,7 @@
     display-name: 'elastic / elasticsearch-ruby # benchmarks'
     description: Client benchmarks for the Ruby client
     parameters:
-      - string: { name: branch_specifier, default: refs/heads/benchmarks }
+      - string: { name: branch_specifier, default: refs/heads/master }
     triggers:
       - timed: "H H/12 * * *"
     vault:
