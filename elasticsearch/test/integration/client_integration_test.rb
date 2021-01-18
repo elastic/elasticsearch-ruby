@@ -57,6 +57,10 @@ module Elasticsearch
           end
         end
 
+        should 'report the right meta header' do
+          headers = @client.transport.connections.first.connection.headers
+          assert_match /^es=#{Elasticsearch::VERSION}/, headers['x-elastic-client-meta']
+        end
       end
     end
   end

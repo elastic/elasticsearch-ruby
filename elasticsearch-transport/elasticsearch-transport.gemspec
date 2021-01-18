@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
   # Gems for testing integrations
   s.add_development_dependency 'cane'
   s.add_development_dependency 'hashie'
+  s.add_development_dependency 'httpclient'
   s.add_development_dependency 'manticore', '~> 0.5.2' if defined? JRUBY_VERSION
   s.add_development_dependency 'minitest', '~> 4.0'
   s.add_development_dependency 'net-http-persistent'
