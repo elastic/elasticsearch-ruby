@@ -109,7 +109,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new(adapter: :patron)
+        described_class.new(adapter: :patron, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -123,7 +123,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new(adapter: :typhoeus)
+        described_class.new(adapter: :typhoeus, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -137,7 +137,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
-        described_class.new('adapter' => :patron)
+        described_class.new('adapter' => :patron, enable_meta_header: false)
       end
 
       it 'uses Faraday with the adapter' do
@@ -230,7 +230,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when credentials are specified' do
-
         let(:host) do
           'http://USERNAME:PASSWORD@myhost:8080'
         end

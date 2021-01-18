@@ -8,6 +8,13 @@ require 'logger'
 require 'ansi/code'
 require 'hashie/mash'
 require 'pry-nav'
+if defined?(JRUBY_VERSION)
+  require 'elasticsearch/transport/transport/http/manticore'
+  require 'pry-nav'
+else
+  require 'elasticsearch/transport/transport/http/curb'
+  require 'curb'
+end
 
 # The hosts to use for creating a elasticsearch client.
 #

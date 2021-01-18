@@ -14,3 +14,7 @@ module Elasticsearch
     end
   end
 end
+module Elastic
+  # Constant for elasticsearch-transport meta-header
+  META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
+end
