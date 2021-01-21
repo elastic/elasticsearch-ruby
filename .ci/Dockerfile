@@ -10,8 +10,9 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN apt-get update
+RUN apt-get install zip
 RUN gem update --system
-RUN gem install bundler
-RUN bundle install
+RUN bundle install --quiet
 RUN bundle exec rake bundle:clean
 RUN rake bundle:install
