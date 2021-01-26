@@ -21,7 +21,6 @@ class Elasticsearch::Transport::Transport::Connections::ConnectionTest < Minites
   include Elasticsearch::Transport::Transport::Connections
 
   context "Connection" do
-
     should "be initialized with :host, :connection, and :options" do
       c = Connection.new :host => 'x', :connection => 'y', :options => {}
       assert_equal 'x', c.host
