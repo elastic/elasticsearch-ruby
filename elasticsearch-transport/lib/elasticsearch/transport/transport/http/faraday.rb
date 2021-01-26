@@ -33,9 +33,17 @@ module Elasticsearch
           # @return [Response]
           # @see    Transport::Base#perform_request
           #
-          def perform_request(method, path, params={}, body=nil, headers=nil, opts={})
+          def perform_request(method, path, params = {}, body = nil, headers = nil, opts = {})
             super do |connection, url|
-              headers = headers || connection.connection.headers
+              headers = if connection.connection.headers
+                          if !headers.nil?
+                            connection.connection.headers.merge(headers)
+                          else
+                            connection.connection.headers
+                          end
+                        else
+                          headers
+                        end
 
               response = connection.connection.run_request(method.downcase.to_sym,
                                                            url,
