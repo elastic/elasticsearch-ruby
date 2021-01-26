@@ -52,7 +52,7 @@ module Elasticsearch
             # @return [Connections::Connection]
             #
             def select(options={})
-              connections.to_a.send( defined?(RUBY_VERSION) && RUBY_VERSION > '1.9' ? :sample : :choice)
+              connections.to_a.sample
             end
           end
 

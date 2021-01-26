@@ -15,7 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 JRUBY    = defined?(JRUBY_VERSION)
 
 require 'pathname'
