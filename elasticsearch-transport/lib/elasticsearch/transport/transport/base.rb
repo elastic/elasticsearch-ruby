@@ -145,8 +145,20 @@ module Elasticsearch
         # @api    private
         #
         def __build_connections
-          Connections::Collection.new \
-            :connections => hosts.map { |host|
+          Connections::Collection.new(
+            connections: __connections_from_host,
+            selector_class: options[:selector_class],
+            selector: options[:selector]
+          )
+        end
+
+        # Helper function: Maps over hosts, sets protocol, port and user/password and builds connections
+        #
+        # @return [Array<Connection>
+        # @api    private
+        #
+        def __connections_from_host
+          hosts.map do |host|
             host[:protocol] = host[:scheme] || options[:scheme] || options[:http][:scheme] || DEFAULT_PROTOCOL
             host[:port] ||= options[:port] || options[:http][:port] || DEFAULT_PORT
             if (options[:user] || options[:http][:user]) && !host[:user]
@@ -155,9 +167,7 @@ module Elasticsearch
             end
 
             __build_connection(host, (options[:transport_options] || {}), @block)
-          },
-            :selector_class => options[:selector_class],
-            :selector => options[:selector]
+          end
         end
 
         # @abstract Build and return a connection.
