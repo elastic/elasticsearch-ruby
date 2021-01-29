@@ -12,7 +12,7 @@
 
 # When run in CI the test-matrix is used to define additional variables
 
-# TEST_SUITE -- either `oss` or `xpack`, defaults to `oss` in `run-tests`
+# TEST_SUITE -- either `free` or `platinum`, defaults to `free` in `run-tests`
 #
 # As well as any repos specific variables
 
@@ -28,7 +28,7 @@ SCRIPT_PATH=$(dirname $(realpath -s $0))
 
 cert_validation_flags="--insecure"
 url="http://localhost"
-if [[ "$TEST_SUITE" == "xpack" ]]; then
+if [[ "$TEST_SUITE" == "platinum" ]]; then
   url="https://elastic:$ELASTIC_PASSWORD@localhost"
 fi
 
@@ -59,7 +59,7 @@ mkdir -p elasticsearch-api/tmp
 repo=`pwd`
 
 # run the client tests
-if [[ $TEST_SUITE != "xpack" ]]; then
+if [[ $TEST_SUITE != "platinum" ]]; then
     docker run \
            --network="${NETWORK_NAME}" \
            --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \

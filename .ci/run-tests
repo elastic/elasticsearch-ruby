@@ -16,7 +16,7 @@ NODE_NAME=instance
 
 elasticsearch_image=elasticsearch
 elasticsearch_url=https://elastic:changeme@${NODE_NAME}:9200
-if [[ $TEST_SUITE != "xpack" ]]; then
+if [[ $TEST_SUITE != "platinum" ]]; then
   elasticsearch_image=elasticsearch-${TEST_SUITE}
   elasticsearch_url=http://${NODE_NAME}:9200
 fi
