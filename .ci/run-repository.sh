@@ -2,47 +2,29 @@
 #
 # Called by entry point `run-test` use this script to add your repository specific test commands
 #
-# Once called Elasticsearch is up and running and the following parameters are available to this script
-
-# ELASTICSEARCH_VERSION -- version e.g Major.Minor.Patch(-Prelease)
-# ELASTICSEARCH_CONTAINER -- the docker moniker as a reference to know which docker image distribution is used
-# ELASTICSEARCH_URL -- The url at which elasticsearch is reachable
-# NETWORK_NAME -- The docker network name
-# NODE_NAME -- The docker container name also used as Elasticsearch node name
-
-# When run in CI the test-matrix is used to define additional variables
-
-# TEST_SUITE -- either `oss` or `xpack`, defaults to `oss` in `run-tests`
+# Once called Elasticsearch is up and running
 #
-# As well as any repos specific variables
+# Its recommended to call `imports.sh` as defined here so that you get access to all variables defined there
+#
+# Any parameters that test-matrix.yml defines should be declared here with appropiate defaults
 
-echo -e "\033[34;1mINFO:\033[0m URL: ${ELASTICSEARCH_URL}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m VERSION: ${ELASTICSEARCH_VERSION}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m CONTAINER: ${ELASTICSEARCH_CONTAINER}\033[0m"
+script_path=$(dirname $(realpath -s $0))
+source $script_path/functions/imports.sh
+set -euo pipefail
+
+echo -e "\033[34;1mINFO:\033[0m VERSION: ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m TEST_SUITE: ${TEST_SUITE}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m RUNSCRIPTS: ${RUNSCRIPTS}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m URL: ${elasticsearch_url}\033[0m"
+echo -e "\033[34;1mINFO:\033[0m CONTAINER: ${elasticsearch_container}\033[0m"
 
-RUNSCRIPTS=${RUNSCRIPTS-}
-ELASTIC_PASSWORD=${ELASTIC_PASSWORD-changeme}
-SCRIPT_PATH=$(dirname $(realpath -s $0))
-
-cert_validation_flags="--insecure"
-url="http://localhost"
-if [[ "$TEST_SUITE" == "xpack" ]]; then
-  url="https://elastic:$ELASTIC_PASSWORD@localhost"
-fi
-
-set +x
-
-echo -e "\033[34;1mINFO:\033[0m pinging Elasticsearch ..\033[0m"
-curl $cert_validation_flags --fail $url:9200/_cluster/health?pretty
-echo -e "\033[32;1mSUCCESS:\033[0m successfully started the ${ELASTICSEARCH_VERSION} stack.\033[0m"
-
+#
 # Ruby client setup:
+#
 
 export RUBY_TEST_VERSION=${RUBY_TEST_VERSION:-2.7.0}
-export ELASTICSEARCH_VERSION=${ELASTICSEARCH_VERSION:-8.0.0-SNAPSHOT}
-export SINGLE_TEST=${SINGLE_TEST}
+export STACK_VERSION=${STACK_VERSION:-8.0.0-SNAPSHOT}
+export SINGLE_TEST=${SINGLE_TEST:-}
 
 echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 # create client image
@@ -59,10 +41,10 @@ mkdir -p elasticsearch-api/tmp
 repo=`pwd`
 
 # run the client tests
-if [[ $TEST_SUITE != "xpack" ]]; then
+if [[ $TEST_SUITE != "platinum" ]]; then
     docker run \
-           --network="${NETWORK_NAME}" \
-           --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
+           --network="${network_name}" \
+           --env "TEST_ES_SERVER=${elasticsearch_url}" \
            --env "TEST_SUITE=${TEST_SUITE}" \
            --volume $repo:/usr/src/app \
            --name elasticsearch-ruby \
@@ -71,9 +53,9 @@ if [[ $TEST_SUITE != "xpack" ]]; then
            bundle exec rake test:rest_api
 else
     docker run \
-           --network="${NETWORK_NAME}" \
-           --env "TEST_ES_SERVER=${ELASTICSEARCH_URL}" \
-           --env "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}" \
+           --network="${network_name}" \
+           --env "TEST_ES_SERVER=${elasticsearch_url}" \
+           --env "ELASTIC_PASSWORD=${elastic_password}" \
            --env "TEST_SUITE=${TEST_SUITE}" \
            --env "ELASTIC_USER=elastic" \
            --env "SINGLE_TEST=${SINGLE_TEST}" \
