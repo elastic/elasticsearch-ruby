@@ -1,5 +1,5 @@
 ---
-ELASTICSEARCH_VERSION:
+STACK_VERSION:
   - 8.0.0-SNAPSHOT
 
 RUBY_TEST_VERSION:
@@ -8,7 +8,7 @@ RUBY_TEST_VERSION:
 - 2.5.8
 
 TEST_SUITE:
-- oss
-- xpack
+- free
+- platinum
 
 exclude: ~
