@@ -91,6 +91,19 @@ module Elasticsearch
             end
           end
 
+          # DSL method for building the `highlight` part of a search definition
+          #
+          # @return [self]
+          #
+          def highlight(*args, &block)
+            if !args.empty? || block
+              @highlight = Highlight.new(*args, &block)
+              self
+            else
+              @highlight
+            end
+          end
+
           # Convert the definition to a hash, to be used in a search request.
           #
           # @example
@@ -111,6 +124,7 @@ module Elasticsearch
             call
             @hash = @value
             @hash[:sort] = @sort.to_hash if @sort
+            @hash[:highlight] = @highlight.to_hash if @highlight
             @hash
           end
         end

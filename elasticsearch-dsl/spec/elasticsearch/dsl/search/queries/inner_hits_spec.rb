@@ -16,6 +16,9 @@ describe Elasticsearch::DSL::Search::Queries::InnerHits do
           by :date, order: 'desc'
           by :likes, order: 'asc'
         end
+        highlight do
+          fields %w[comment]
+        end
       end
     end
 
