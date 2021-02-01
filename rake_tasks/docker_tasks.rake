@@ -34,11 +34,11 @@ namespace :docker do
     abort 'Docker not installed' unless find_executable 'docker'
     abort 'You need to set a version, e.g. rake docker:start[7.x-SNAPSHOT]' unless params[:version]
 
-    elasticsearch_suite = if ['xpack', 'x-pack'].include? :suite
-                            'elasticsearch'
-                          else
-                            'elasticsearch-oss'
-                          end
-    system("ELASTICSEARCH_VERSION=#{elasticsearch_suite}:#{params[:version]} ./.ci/run-elasticsearch.sh")
+    test_suite = if ['xpack', 'x-pack'].include? :suite
+                   'platinum'
+                 else
+                   'free'
+                 end
+    system("STACK_VERSION=#{params[:version]} TEST_SUITE=#{test_suite} ./.ci/run-elasticsearch.sh")
   end
 end
