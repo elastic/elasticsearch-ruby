@@ -57,7 +57,7 @@ def admin_client
       uri = URI.parse(split_hosts.first[0])
     end
 
-    if test_suite == 'xpack'
+    if test_suite == 'platinum'
       transport_options.merge!(
         ssl: {
           verify: false,

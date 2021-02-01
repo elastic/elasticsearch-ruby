@@ -44,7 +44,7 @@ key = OpenSSL::PKey::RSA.new(raw_key)
 ca_file = File.join(PROJECT_PATH, '/.ci/certs/ca.crt')
 
 if defined?(TEST_HOST) && defined?(TEST_PORT)
-  if TEST_SUITE == 'xpack'
+  if TEST_SUITE == 'platinum'
     TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
                                        client_cert: certificate,
                                        client_key: key,

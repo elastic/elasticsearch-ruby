@@ -208,7 +208,7 @@ module Elasticsearch
         end
 
         def xpack?
-          ENV['TEST_SUITE'] == 'xpack'
+          ENV['TEST_SUITE'] == 'platinum'
         end
 
         def wait_for_pending_tasks(client)
