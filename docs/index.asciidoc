@@ -10,6 +10,12 @@ include::installation.asciidoc[]
 
 include::connecting.asciidoc[]
 
+include::config.asciidoc[]
+
+include::basic-config.asciidoc[]
+
+include::advanced-config.asciidoc[]
+
 include::model.asciidoc[]
 
 include::rails.asciidoc[]
