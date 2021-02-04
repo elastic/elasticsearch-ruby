@@ -11,25 +11,25 @@ connections, configuring logging, customizing the transport library, and so on.
 To connect to a specific {es} host:
 
 ```ruby
-Elasticsearch::Client.new host: 'search.myserver.com'
+Elasticsearch::Client.new(host: 'search.myserver.com')
 ```
 
 To connect to a host with specific port:
 
 ```ruby
-Elasticsearch::Client.new host: 'myhost:8080'
+Elasticsearch::Client.new(host: 'myhost:8080')
 ```
 
 To connect to multiple hosts:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['myhost1', 'myhost2']
+Elasticsearch::Client.new(hosts: ['myhost1', 'myhost2'])
 ```
 
 Instead of strings, you can pass host information as an array of Hashes:
 
 ```ruby
-Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
+Elasticsearch::Client.new(hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ])
 ```
 
 NOTE: When specifying multiple hosts, you probably want to enable the 
@@ -40,18 +40,18 @@ Common URL parts – scheme, HTTP authentication credentials, URL prefixes, and 
 on – are handled automatically:
 
 ```ruby
-Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+Elasticsearch::Client.new(url: 'https://username:password@api.server.org:4430/search')
 ```
 
 You can pass multiple URLs separated by a comma:
 
 ```ruby
-Elasticsearch::Client.new urls: 'http://localhost:9200,http://localhost:9201'
+Elasticsearch::Client.new(urls: 'http://localhost:9200,http://localhost:9201')
 ```
 
 Another way to configure URLs is to export the `ELASTICSEARCH_URL` variable.
 
-The client is automatically round-robin across the hosts (unless you select or 
+The client is automatically going to use a round-robin algorithm across the hosts (unless you select or 
 implement a different <<connection-selector>>).
 
 
@@ -72,7 +72,7 @@ your username and password separately, and optionally a port. Refer to
 ==== Logging
 
 To log requests and responses to standard output with the default logger (an 
-instance of Ruby's {::Logger} class), set the log argument to true:
+instance of Ruby's `::Logger` class), set the log argument to true:
 
 ```ruby
 Elasticsearch::Client.new(log: true)
@@ -205,7 +205,7 @@ For many operations in {es}, the default timeouts of HTTP libraries are too low.
 To increase the timeout, you can use the `request_timeout` parameter:
 
 ```ruby
-Elasticsearch::Client.new request_timeout: 5*60
+Elasticsearch::Client.new(request_timeout: 5*60)
 ```
 
 You can also use the `transport_options` argument documented below.
@@ -222,7 +222,7 @@ keep connecting to the same nodes "at once". To prevent this, you can randomize
 the hosts collection on initialization and reloading:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true)
 ```
 
 
@@ -234,7 +234,7 @@ When the client is initialized with multiple hosts, it makes sense to retry a
 failed request on a different host:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true)
 ```
 
 By default, the client retries the request 3 times. You can specify how many 
@@ -242,20 +242,20 @@ times to retry before it raises an exception by passing a number to
 `retry_on_failure`:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+ Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5)
 ```
 
 You can also use `retry_on_status` to retry when specific status codes are 
 returned:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503]
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503])
 ```
 
 These two parameters can also be used together:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503], retry_on_failure: 10
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503], retry_on_failure: 10)
 ```
 
 
@@ -271,27 +271,27 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-in
 on every 10,000th request:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true)
 ```
 
 You can pass a specific number of requests after which reloading should be 
 performed:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000)
 ```
 
 To reload connections on failures, use:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true)
 ```
 
 The reloading timeouts if not finished under 1 second by default. To change the 
 setting:
 
 ```ruby
-Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
+Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3)
 ```
 
 NOTE: When using reloading hosts ("sniffing") together with authentication, pass 
@@ -300,10 +300,12 @@ the scheme, user and password with the host info – or, for more clarity, in th
 
 [source,ruby]
 ------------------------------------
-Elasticsearch::Client.new host: 'localhost:9200',
-                          http: { scheme: 'https', user: 'U', password: 'P' },
-                          reload_connections: true,
-                          reload_on_failure: true
+Elasticsearch::Client.new(
+  host: 'localhost:9200',
+  http: { scheme: 'https', user: 'U', password: 'P' },
+  reload_connections: true,
+  reload_on_failure: true
+)
 ------------------------------------
 
 
@@ -312,7 +314,7 @@ Elasticsearch::Client.new host: 'localhost:9200',
 ==== Connection Selector
 
 By default, the client rotates the connections in a round-robin fashion, using 
-the {Elasticsearch::Transport::Transport::Connections::Selector::RoundRobin} 
+the `Elasticsearch::Transport::Transport::Connections::Selector::RoundRobin` 
 strategy.
 
 You can implement your own strategy to customize the behaviour. For example, 
@@ -345,7 +347,7 @@ as the serializer implementation, and it picks up the "right" adapter based on
 gems available.
 
 The serialization component is pluggable, though, so you can write your own by 
-including the {Elasticsearch::Transport::Transport::Serializer::Base} module, 
+including the `Elasticsearch::Transport::Transport::Serializer::Base` module, 
 implementing the required contract, and passing it to the client as the 
 `serializer_class` or `serializer` parameter.
 
@@ -359,14 +361,14 @@ https://github.com/elastic/elasticsearch-ruby/blob/master/elasticsearch-transpor
 for various client and server errors, as well as unsuccessful HTTP responses, 
 making it possible to rescue specific exceptions with desired granularity.
 
-The highest-level exception is {Elasticsearch::Transport::Transport::Error} and 
+The highest-level exception is `Elasticsearch::Transport::Transport::Error` and 
 is raised for any generic client or server errors.
 
-{Elasticsearch::Transport::Transport::ServerError} is raised for server errors 
+`Elasticsearch::Transport::Transport::ServerError` is raised for server errors 
 only.
 
 As an example for response-specific errors, a 404 response status raises an 
-{Elasticsearch::Transport::Transport::Errors::NotFound} exception.
+`Elasticsearch::Transport::Transport::Errors::NotFound` exception.
 
-Finally, {Elasticsearch::Transport::Transport::SnifferTimeoutError} is raised 
+Finally, `Elasticsearch::Transport::Transport::SnifferTimeoutError` is raised 
 when connection reloading ("sniffing") times out.
