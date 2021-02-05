@@ -1,0 +1,9 @@
+[[ruby-config]]
+== Configuration
+
+This page contains information about how to configure the Ruby client tailored 
+to your needs. Almost every aspect of the client is configurable. However, in 
+most cases you only need to set a couple of parameters.
+
+* <<basic-config>>
+* <<advanced-config>>
