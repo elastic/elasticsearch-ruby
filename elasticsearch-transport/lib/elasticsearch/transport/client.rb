@@ -224,10 +224,18 @@ module Elasticsearch
         if defined?(Elastic::META_HEADER_SERVICE_VERSION)
           Elastic::META_HEADER_SERVICE_VERSION
         elsif defined?(Elasticsearch::VERSION)
-          ['es', Elasticsearch::VERSION]
+          [:es, client_meta_version(Elasticsearch::VERSION)]
         else
-          ['es', Elasticsearch::Transport::VERSION]
+          [:es, client_meta_version(Elasticsearch::Transport::VERSION)]
         end
+      end
+
+      def client_meta_version(version)
+        regexp = /^([0-9]+\.[0-9]+\.[0-9]+)(\.?[a-z0-9.-]+)?$/
+        match = version.match(regexp)
+        return "#{match[1]}p" if (match[2])
+
+        version
       end
 
       def meta_header_engine
