@@ -20,15 +20,34 @@ require 'spec_helper'
 describe Elasticsearch::Transport::Client do
   context 'meta-header' do
     let(:subject) { client.transport.connections.first.connection.headers }
+    let(:client) { described_class.new }
     let(:regexp) { /^[a-z]{1,}=[a-z0-9.\-]{1,}(?:,[a-z]{1,}=[a-z0-9._\-]+)*$/ }
     let(:adapter) { :net_http }
     let(:adapter_code) { "nh=#{defined?(Net::HTTP::VERSION) ? Net::HTTP::VERSION : Net::HTTP::HTTPVersion}" }
     let(:meta_header) do
       if jruby?
-        "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
+        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
       else
-        "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
+        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
       end
+    end
+
+    context 'client_meta_version_' do
+      let(:version) { ['7.1.0-alpha', '7.11.0.pre.1', '8.0.0-beta', '8.0.0.beta.2']}
+
+      it 'converts the version to X.X.Xp' do
+        expect(client.send(:client_meta_version, '7.0.0-alpha')).to eq('7.0.0p')
+        expect(client.send(:client_meta_version, '7.11.0.pre.1')).to eq('7.11.0p')
+        expect(client.send(:client_meta_version, '8.1.0-beta')).to eq('8.1.0p')
+        expect(client.send(:client_meta_version, '8.0.0.beta.2')).to eq('8.0.0p')
+        expect(client.send(:client_meta_version, '12.16.4.pre')).to eq('12.16.4p')
+      end
+    end
+
+    # We are testing this method in the previous block, so now using it inside the test to make the
+    # Elasticsearch version in the meta header string dynamic
+    def meta_version
+      client.send(:client_meta_version, Elasticsearch::VERSION)
     end
 
     context 'single use of meta header' do
@@ -78,9 +97,9 @@ describe Elasticsearch::Transport::Client do
     context 'adapters' do
       let(:meta_header) do
         if jruby?
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION}"
         else
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION}"
         end
       end
       let(:client) { described_class.new(adapter: adapter) }
@@ -167,9 +186,9 @@ describe Elasticsearch::Transport::Client do
       let(:subject){ client.instance_variable_get("@arguments")[:transport_options][:headers] }
       let(:meta_header) do
         if jruby?
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
         else
-          "es=#{Elasticsearch::VERSION},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION}"
         end
       end
 
@@ -181,15 +200,7 @@ describe Elasticsearch::Transport::Client do
 
     context 'when using a different service version' do
       before do
-        module Elastic
-          META_HEADER_SERVICE_VERSION = [:ent, '8.0.0']
-        end
-      end
-
-      after do
-        module Elastic
-          META_HEADER_SERVICE_VERSION = [:es, Elasticsearch::VERSION]
-        end
+        stub_const("Elastic::META_HEADER_SERVICE_VERSION", [:ent, '8.0.0'])
       end
 
       let(:client) { Elasticsearch::Client.new }
