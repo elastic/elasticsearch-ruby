@@ -173,13 +173,6 @@ module Elasticsearch
         add_header('Authorization' => "ApiKey #{@api_key}")
         @arguments.delete(:user)
         @arguments.delete(:password)
-        # headers = @arguments[:transport_options]&.[](:headers) || {}
-        # headers.merge!('Authorization' => "ApiKey #{@api_key}")
-        # @arguments[:transport_options].merge!(
-        #   headers: headers
-        # )
-        # @arguments.delete(:user)
-        # @arguments.delete(:password)
       end
 
       def add_header(header)
