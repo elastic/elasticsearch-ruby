@@ -1,3 +1,11 @@
+## 6.8.3
+
+### Client
+
+* Adds Typhoeus 1.4, now compatible with Faraday 1.0
+* Converts all argument keys to symbol in Client initializer
+* Adds the `X-Elastic-Client-Meta` HTTP header which is used by Elastic Cloud and can be disabled with the `enable_meta_header` parameter set to `false``.
+
 ## 6.8.2
 
 ### Client

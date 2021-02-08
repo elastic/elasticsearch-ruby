@@ -3,5 +3,5 @@
 # See the LICENSE file in the project root for more information
 
 module Elasticsearch
-  VERSION = '6.8.2'
+  VERSION = '6.8.3'
 end
