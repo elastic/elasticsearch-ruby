@@ -1,3 +1,27 @@
+## 7.11.0
+
+### Client
+
+- Fixes a bug with headers in our default Faraday class. [Commit](https://github.com/elastic/elasticsearch-ruby/commit/9c4afc452467cc6344359b54b98bbe5af1469219).
+- Adds the `X-Elastic-Client-Meta` HTTP header which is used by Elastic Cloud and can be disabled with the `enable_meta_header` parameter set to `false`.
+
+### API
+
+#### API Changes
+
+- `cat.tasks` - Parameter `node_id` changes name to `nodes`, a comma-separated list of node IDS or names. Parameter `parent_task` changes name to `parent_task_id`.
+- APIs that are no longer experimental: `cluster.delete_component_template`, `cluster.exists_component_template`, `cluster.get_component_template`, `cluster.put_component_template`, `indices.delete_index_template`, `indices.exists_index_template`, `indices.get_index_template`, `indices.put_index_template`, `indices.simulate_index_template`, `indices.simulate_template`.
+- Deprecation notice: The _upgrade API is no longer useful and will be removed. Instead, see `_reindex API`. Deprecated since version 8.0.0. Endpoints: `indices.get_upgrade`, `indices.upgrade`
+
+#### X-Pack
+
+- New endpoints:`async_search.status`, `autoscaling.get_autoscaling_capacity` (experimental), `indices.migrate_to_data_stream`, `indices.promote_data_stream`, `machine_learning.upgrade_job_snapshot`, `rollup.rollup`, `watcher.query_watches`.
+- APIs that are no longer experimental: `eql.delete`, `eql.get`, `eql.search`,
+- APIs promoted from experimental to beta: `machine_learning.delete_data_frame_analytics`, `ml.delete_trained_model`, `machine_learning.evaluate_data_frame`, `machine_learning.explain_data_frame_analytics`, `machine_learning.get_data_frame_analytics`, `machine_learning.get_datafeed_stats`, `machine_learning.get_trained_models`, `machine_learning.get_trained_models_stats`, `machine_learning.put_data_frame_analytics`, `machine_learning.put_trained_model`, `machine_learning.start_data_frame_analytics`, `machine_learning.stop_data_frame_analytics`, `machine_learning.update_data_frame_analytics`
+- `indices.delete_data_stream`, `indices.get_data_stream` add parameter `expand_wildcards`, wether wildcard expressions should get expanded to open or closed indices (default: open). Options: open, closed, hidden, none, all.
+- `machine_learning.get_data_frame_analytics`, `machine_learning.get_datafeeds`, `machine_learning.get_jobs`, `machine_learning.get_trained_models`, `transform.get_transform` add parameter `exclude_generated` - omits fields that are illegal to set on PUT.
+- `data_frame_transform_deprecated.get_transform` (_data_frame/transforms/ is deprecated, use _transform/ in the future) adds parameter `exclude_generated` - omits generated files.
+
 ## 7.10.1
 
 - Use 443 for default cloud port, 9200 as the default port for http
