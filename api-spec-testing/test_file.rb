@@ -194,7 +194,11 @@ module Elasticsearch
           else
             client.indices.delete_template(name: '*')
             client.indices.delete_index_template(name: '*')
-            client.cluster.delete_component_template(name: '*')
+            client.cluster.get_component_template['component_templates'].each do |template|
+              next if xpack_template? template['name']
+
+              client.cluster.delete_component_template(name: template['name'], ignore: 404)
+            end
           end
           clear_cluster_settings(client)
           return unless xpack?
