@@ -20,11 +20,7 @@ module Elasticsearch
     module API
       module Autoscaling
         module Actions
-          # Creates a new autoscaling policy.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
+          # Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
           #
           # @option arguments [String] :name the name of the autoscaling policy
           # @option arguments [Hash] :headers Custom HTTP headers
