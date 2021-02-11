@@ -150,6 +150,17 @@ describe Elasticsearch::Transport::Client do
           end
         end
       end
+
+      context 'using other' do
+        let(:adapter) { :some_other_adapter }
+
+        it 'sets adapter in the meta header' do
+          require 'net/http/persistent'
+          Faraday::Adapter.register_middleware some_other_adapter: Faraday::Adapter::NetHttpPersistent
+          expect(headers['x-elastic-client-meta']).to match(regexp)
+          expect(headers).to include('x-elastic-client-meta' => meta_header)
+        end
+      end
     end
 
     if defined?(JRUBY_VERSION)
