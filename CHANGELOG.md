@@ -1,3 +1,9 @@
+## 7.11.1
+
+### Client
+
+* Bug fix in meta header, adds support for unknown Faraday adapters. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1204).
+
 ## 7.11.0
 
 ### Client
