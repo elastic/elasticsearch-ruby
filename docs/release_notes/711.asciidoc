@@ -2,6 +2,19 @@
 === 7.11 Release notes
 
 [discrete]
+[[release_notes_7111]]
+=== 7.11.1 Release notes
+
+[discrete]
+==== Client
+
+* Bug fix in meta header, adds support for unknown Faraday adapters. https://github.com/elastic/elasticsearch-ruby/pull/1204[Pull Request].
+
+[discrete]
+[[release_notes_7110]]
+=== 7.11.0 Release notes
+
+[discrete]
 ==== Client
 
 - Support for Elasticsearch version `7.11.0`.
