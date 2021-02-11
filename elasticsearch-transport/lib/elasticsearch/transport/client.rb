@@ -265,6 +265,8 @@ module Elasticsearch
               {hc: HTTPClient::VERSION}
             when :net_http_persistent
               {np: Net::HTTP::Persistent::VERSION}
+            else
+              {}
             end
           )
         elsif defined?(Transport::HTTP::Curb) && @transport_class == Transport::HTTP::Curb
