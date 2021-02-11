@@ -61,6 +61,11 @@ END
     --volume $ssl_ca:/usr/share/elasticsearch/config/certs/ca.crt
 END
 ))
+else
+  environment+=($(cat <<-END
+    --env node.roles=data,ingest,master,remote_cluster_client
+END
+))
 fi
 
 cert_validation_flags=""
