@@ -161,7 +161,7 @@ RSpec::Matchers.define :match_response do |pairs, test|
   end
 
   failure_message do |response|
-    "the actual response pair/value(s) #{@mismatched_pairs}" +
+    "the expected response pair/value(s) #{@mismatched_pairs}" +
         " does not match the pair/value(s) in the response #{response}"
   end
 
@@ -233,7 +233,7 @@ RSpec::Matchers.define :match_response do |pairs, test|
         parsed = parsed.gsub(/\$\{?#{match.first}\}?/, test.cached_values[match.first])
       end
       /#{parsed.tr("/", "")}/ =~ actual_value
-    elsif !!(expected.match?(/[0-9]{1}\.[0-9]+E[0-9]+/))
+    elsif !!(expected.match?(/^[0-9]{1}\.[0-9]+E[0-9]+/))
       # When the value in the yaml test is a big number, the format is
       # different from what Ruby uses, so we transform  X.XXXXEXX to X.XXXXXe+XX
       # to be able to compare the values
