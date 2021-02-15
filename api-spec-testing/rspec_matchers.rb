@@ -187,7 +187,15 @@ RSpec::Matchers.define :match_response do |pairs, test|
         # Sometimes the expected *key* is a cached value from a previous request.
         test.get_cached_value(k)
       end
-      actual_value = TestFile::Test.find_value_in_document(split_key, actual_hash)
+      # We now accept 'nested.keys' so let's try the previous implementation and if that doesn't
+      # work, try with the nested key, otherwise, raise exception.
+      begin
+        actual_value = TestFile::Test.find_value_in_document(split_key, actual_hash)
+      rescue TypeError => e
+        actual_value = TestFile::Test.find_value_in_document(expected_key, actual_hash)
+      rescue StandardError => e
+        raise e
+      end
       # When the expected_key is ''
       actual_value = actual_hash if split_key.empty?
       # Sometimes the key includes dots. See watcher/put_watch/60_put_watch_with_action_condition.yml
