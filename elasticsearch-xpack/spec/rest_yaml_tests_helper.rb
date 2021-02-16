@@ -83,114 +83,20 @@ SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 end
               end
 
-SKIPPED_TESTS = []
-
-# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
-SKIPPED_TESTS << { file:        'ssl/10_basic.yml',
-                   description: 'Test get SSL certificates' }
-
-# ArgumentError for empty body
-SKIPPED_TESTS << { file:        'watcher/put_watch/10_basic.yml',
-                   description: 'Test empty body is rejected by put watch' }
-
-# The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
-SKIPPED_TESTS << { file:        'snapshot/10_basic.yml',
-                   description: 'Create a source only snapshot and then restore it' }
-
-# The test inserts an invalid license, which makes all subsequent tests fail.
-SKIPPED_TESTS << { file:        'xpack/15_basic.yml',
-                   description: '*' }
-
-# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
-SKIPPED_TESTS << { file:        'token/10_basic.yml',
-                   description: "Test invalidate user's tokens" }
-
-SKIPPED_TESTS << { file:        'token/10_basic.yml',
-                   description: "Test invalidate realm's tokens" }
-
-# Possible Docker issue. The IP from the response cannot be used to connect.HTTP input supports extracting of keys
-SKIPPED_TESTS << { file:        'watcher/execute_watch/60_http_input.yml',
-                   description: 'HTTP input supports extracting of keys' }
-
-# Searching the monitoring index returns no results.
-SKIPPED_TESTS << { file:        'monitoring/bulk/10_basic.yml',
-                   description: 'Bulk indexing of monitoring data on closed indices should throw an export exception' }
-
-# Searching the monitoring index returns no results.
-SKIPPED_TESTS << { file:        'monitoring/bulk/20_privileges.yml',
-                   description: 'Monitoring Bulk API' }
-
-# Operation times out "failed_node_exception"
-SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
-                   description: 'Setting upgrade_mode to enabled' }
-
-# Operation times out "failed_node_exception"
-SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
-                   description: 'Setting upgrade_mode to disabled' }
-
-# Operation times out "failed_node_exception"
-SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
-                   description: 'Setting upgrade mode to disabled from enabled' }
-
-# Operation times out "failed_node_exception"
-SKIPPED_TESTS << { file:        'ml/set_upgrade_mode.yml',
-                   description: 'Attempt to open job when upgrade_mode is enabled' }
-
-# 'calendar3' in the field instead of 'calendar2'
-SKIPPED_TESTS << { file:        'ml/calendar_crud.yml',
-                   description: 'Test PageParams' }
-
-# Error about creating a job that already exists.
-SKIPPED_TESTS << { file:        'ml/jobs_crud.yml',
-                   description: 'Test close job with body params' }
-
-# Feature is currently experimental.
-SKIPPED_TESTS << { file:        'ml/evaluate_data_frame.yml',
-                   description: '*' }
-
-# Feature is currently experimental.
-SKIPPED_TESTS << { file:        'ml/start_data_frame_analytics.yml',
-                   description: '*' }
-
-# Feature is currently experimental.
-SKIPPED_TESTS << { file:        'ml/stop_data_frame_analytics.yml',
-                   description: '*' }
-
-# Feature is currently experimental.
-SKIPPED_TESTS << { file:        'ml/data_frame_analytics_crud.yml',
-                   description: '*' }
-
-# https://github.com/elastic/clients-team/issues/142
-SKIPPED_TESTS << { file: 'ml/forecast.yml',
-                   description: 'Test forecast unknown job' }
-SKIPPED_TESTS << { file: 'ml/post_data.yml',
-                   description: 'Test POST data with invalid parameters' }
-SKIPPED_TESTS << { file: 'ml/post_data.yml',
-                   description: 'Test Flush data with invalid parameters' }
-
-# TODO: To be fixed with a release patch
-SKIPPED_TESTS << { file: 'api_key/10_basic.yml',
-                   description: 'Test get api key' }
-
-# TODO: Failing due to processing of regexp in test
-SKIPPED_TESTS << { file: 'ml/explain_data_frame_analytics.yml',
-                   description: 'Test non-empty data frame given body'}
-
-# Stats is not working in versions earlier than 8.0.0
-SKIPPED_TESTS << { file: 'analytics/usage.yml',
-  description: 'Usage stats on analytics indices'}
-
-# TODO https://github.com/elastic/elasticsearch-ruby/issues/853
-SKIPPED_TESTS << { file: 'ml/jobs_crud.yml',
-                   description: 'Test put job with model_memory_limit as string and lazy open' }
-
-SKIPPED_TESTS << { file: 'ml/inference_crud.yml',
-                   description: 'Test delete given unused trained model' }
-SKIPPED_TESTS << { file: 'ml/filter_crud.yml',
-                   description: '*' }
+# Skipped tests
+file = File.expand_path(__dir__ + '/skipped_tests.yml')
+skipped_tests = YAML.load_file(file)
 
 # The directory of rest api YAML files.
-REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+REST_API_YAML_FILES = if ENV['RUN_SKIPPED_TESTS'] # only run the skipped tests if true
+                        SKIPPED_TESTS = []
+                        skipped_tests.map { |test| "#{YAML_FILES_DIRECTORY}/#{test[:file]}" }
+                      else
+                        # If not, define the skipped tests constant and try the single test or all
+                        # the tests
+                        SKIPPED_TESTS = skipped_tests
+                        SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+                      end
 
 # The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
