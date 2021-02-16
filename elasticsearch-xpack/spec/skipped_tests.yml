@@ -1,46 +1,7 @@
-# Respone from Elasticsearch includes the ca.crt, so length doesn't match.
+# Response from Elasticsearch includes the ca.crt, so length doesn't match.
 -
   :file:        'ssl/10_basic.yml'
   :description: 'Test get SSL certificates'
-
-# ArgumentError for empty body
--
-  :file:        'watcher/put_watch/10_basic.yml'
-  :description: 'Test empty body is rejected by put watch'
-
-# The number of shards when a snapshot is successfully created is more than 1. Maybe because of the security index?
--
-  :file:        'snapshot/10_basic.yml'
-  :description: 'Create a source only snapshot and then restore it'
-
-# The test inserts an invalid license, which makes all subsequent tests fail.
--
-  :file:        'xpack/15_basic.yml'
-  :description: '*'
-
-# 'invalidated_tokens' is returning 5 in 'Test invalidate user's tokens' test.
--
-  :file:        'token/10_basic.yml'
-  :description: "Test invalidate user's tokens"
-
--
-  :file:        'token/10_basic.yml'
-  :description: "Test invalidate realm's tokens"
-
-# Possible Docker issue. The IP from the response cannot be used to connect.HTTP input supports extracting of keys
--
-  :file:        'watcher/execute_watch/60_http_input.yml'
-  :description: 'HTTP input supports extracting of keys'
-
-# Searching the monitoring index returns no results.
--
-  :file:        'monitoring/bulk/10_basic.yml'
-  :description: 'Bulk indexing of monitoring data on closed indices should throw an export exception'
-
-# Searching the monitoring index returns no results.
--
-  :file:        'monitoring/bulk/20_privileges.yml'
-  :description: 'Monitoring Bulk API'
 
 # Operation times out "failed_node_exception"
 -
@@ -62,79 +23,15 @@
   :file:        'ml/set_upgrade_mode.yml'
   :description: 'Attempt to open job when upgrade_mode is enabled'
 
-# 'calendar3' in the field instead of 'calendar2'
--
-  :file:        'ml/calendar_crud.yml'
-  :description: 'Test PageParams'
-
 # Error about creating a job that already exists.
 -
   :file:        'ml/jobs_crud.yml'
   :description: 'Test close job with body params'
 
-# Feature is currently experimental.
--
-  :file:        'ml/evaluate_data_frame.yml'
-  :description: '*'
-
-# # Feature is currently experimental.
--
-  :file:        'ml/start_data_frame_analytics.yml'
-  :description: '*'
-
-# # Feature is currently experimental.
--
-  :file:        'ml/stop_data_frame_analytics.yml'
-  :description: '*'
-
-# Feature is currently experimental.
--
-  :file:        'ml/data_frame_analytics_crud.yml'
-  :description: '*'
-
-# # https://github.com/elastic/clients-team/issues/142
--
-  :file: 'ml/forecast.yml'
-  :description: 'Test forecast unknown job'
--
-  :file: 'ml/post_data.yml'
-  :description: 'Test POST data with invalid parameters'
--
-  :file: 'ml/post_data.yml'
-  :description: 'Test Flush data with invalid parameters'
-
-# # TODO: To be fixed with a release patch
--
-  :file: 'api_key/10_basic.yml'
-  :description: 'Test get api key'
-
 # TODO: Failing due to processing of regexp in test
 -
   :file: 'ml/explain_data_frame_analytics.yml'
   :description: 'Test non-empty data frame given body'
-
-# Transform tests have issues with text fields/keywords in setup
--
-  :file: 'transform/transforms_stats.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_update.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_cat_apis.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_crud.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_stats_continuous.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_force_delete.yml'
-  :description: '*'
--
-  :file: 'transform/transforms_start_stop.yml'
-  :description: '*'
 
 # TODO https://github.com/elastic/elasticsearch-ruby/issues/852
 -
