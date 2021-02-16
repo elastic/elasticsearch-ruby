@@ -17,8 +17,3 @@
 -
   :file:        'cat.templates/10_basic.yml'
   :description: '*'
-
-# TODO
--
-  :file: 'indices.resolve_index/10_basic_resolve_index.yml'
-  :description: 'Resolve index with hidden and closed indices'
