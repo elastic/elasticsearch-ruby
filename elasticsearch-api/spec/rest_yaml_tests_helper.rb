@@ -64,48 +64,21 @@ SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 end
               end
 
-skipped_tests = []
 
-# Response from Elasticsearch is just a String, so it's not possible to compare using headers.
-skipped_tests << { file:        'cat.aliases/20_headers.yml',
-                   description: 'Simple alias with yaml body through Accept header' }
-
-# Check version skip logic
-skipped_tests << { file:        'create/15_without_id.yml',
-                   description: 'Create without ID' }
-
-# No error is raised
-skipped_tests << { file:        'create/15_without_id_with_types.yml',
-                   description: 'Create without ID' }
-
-# Error message doesn't match
-skipped_tests << { file:        'tasks.get/10_basic.yml',
-                   description: 'get task test' }
-
-# No error is raised
-skipped_tests << { file:        'cat.allocation/10_basic.yml',
-                   description: '*' }
-
-# Figure out how to match response when there is an error
-skipped_tests << { file:        'delete/70_mix_typeless_typeful.yml',
-                   description: '*' }
-
-# Figure out how to match response when there is an error
-skipped_tests << { file:        'cat.templates/10_basic.yml',
-                   description: '*' }
-
-# Responses are there but not equal (eg.: yellow status)
-skipped_tests << { file: 'cluster.health/10_basic.yml',
-                   description: 'cluster health with closed index (pre 7.2.0)' }
-
-# Regular expression not catching exact match:
-skipped_tests << { file: 'cat.indices/10_basic.yml',
-                   description: 'Test cat indices output for closed index (pre 7.2.0)' }
-
-SKIPPED_TESTS = skipped_tests
+# Skipped tests
+file = File.expand_path(__dir__ + '/skipped_tests.yml')
+skipped_tests = YAML.load_file(file)
 
 # The directory of rest api YAML files.
-REST_API_YAML_FILES = SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+REST_API_YAML_FILES = if ENV['RUN_SKIPPED_TESTS'] # only run the skipped tests if true
+                        SKIPPED_TESTS = []
+                        skipped_tests.map { |test| "#{YAML_FILES_DIRECTORY}/#{test[:file]}" }
+                      else
+                        # If not, define the skipped tests constant and try the single test or all
+                        # the tests
+                        SKIPPED_TESTS = skipped_tests
+                        SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
+                      end
 
 # The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
