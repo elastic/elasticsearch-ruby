@@ -1,0 +1,24 @@
+# Response from Elasticsearch is just a String, so it's not possible to compare using headers.
+-
+  :file:        'cat.aliases/20_headers.yml'
+  :description: 'Simple alias with yaml body through Accept header'
+
+# Check version skip logic
+-
+  :file:        'create/15_without_id.yml'
+  :description: 'Create without ID'
+
+# Error message doesn't match
+-
+  :file:        'tasks.get/10_basic.yml'
+  :description: 'get task test'
+
+# Figure out how to match response when there is an error
+-
+  :file:        'cat.templates/10_basic.yml'
+  :description: '*'
+
+# TODO
+-
+  :file: 'indices.resolve_index/10_basic_resolve_index.yml'
+  :description: 'Resolve index with hidden and closed indices'
