@@ -17,29 +17,22 @@
 
 module Elasticsearch
   module API
-    module Cat
+    module Snapshot
       module Actions
-        # Returns information about installed plugins across nodes node.
+        # Returns a list of features which can be snapshotted in this cluster.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [Boolean] :include_bootstrap Include bootstrap plugins in the response
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-plugins.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
         #
-        def plugins(arguments = {})
+        def get_features(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/plugins"
+          path   = "_snapshottable_features"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
@@ -49,15 +42,8 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:plugins, [
-          :format,
-          :local,
-          :master_timeout,
-          :h,
-          :help,
-          :include_bootstrap,
-          :s,
-          :v
+        ParamsRegistry.register(:get_features, [
+          :master_timeout
         ].freeze)
       end
     end
