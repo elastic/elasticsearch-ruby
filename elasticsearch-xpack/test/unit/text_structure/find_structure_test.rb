@@ -15,28 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'test_helper'
+
 module Elasticsearch
-  module XPack
-    module API
-      module Autoscaling
-        module Actions
-          # Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-capacity.html
-          #
-          def get_autoscaling_capacity(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module Test
+    class XPackTextStructureFindStructureTest < Minitest::Test
+      context 'Text Structure: Find Text Structure' do
+        subject { FakeClient.new }
 
-            arguments = arguments.clone
+        should 'perform correct request' do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'POST', method
+            assert_equal '_text_structure/find_structure', url
+            assert_equal({}, params)
+            assert_equal({}, body)
+            true
+          end.returns(FakeResponse.new)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_autoscaling/capacity"
-            params = {}
+          subject.xpack.text_structure.find_structure(body: {})
+        end
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
+        should 'raise argument error without body' do
+          assert_raises ArgumentError do
+            subject.xpack.text_structure.find_structure
           end
         end
       end

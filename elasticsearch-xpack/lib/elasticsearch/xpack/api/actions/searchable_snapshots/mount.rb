@@ -30,6 +30,7 @@ module Elasticsearch
           # @option arguments [String] :snapshot The name of the snapshot of the index to mount
           # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
           # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
+          # @option arguments [String] :storage Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The restore configuration for mounting the snapshot as searchable (*Required*)
           #
@@ -61,7 +62,8 @@ module Elasticsearch
           # @since 6.2.0
           ParamsRegistry.register(:mount, [
             :master_timeout,
-            :wait_for_completion
+            :wait_for_completion,
+            :storage
           ].freeze)
         end
       end

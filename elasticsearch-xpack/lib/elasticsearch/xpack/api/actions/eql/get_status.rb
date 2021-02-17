@@ -18,21 +18,26 @@
 module Elasticsearch
   module XPack
     module API
-      module Autoscaling
+      module Eql
         module Actions
-          # Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+          # Returns the status of a previously submitted async or stored Event Query Language (EQL) search
           #
+          # @option arguments [String] :id The async search ID
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-capacity.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
           #
-          def get_autoscaling_capacity(arguments = {})
+          def get_status(arguments = {})
+            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
+            _id = arguments.delete(:id)
+
             method = Elasticsearch::API::HTTP_GET
-            path   = "_autoscaling/capacity"
+            path   = "_eql/search/status/#{Elasticsearch::API::Utils.__listify(_id)}"
             params = {}
 
             body = nil
