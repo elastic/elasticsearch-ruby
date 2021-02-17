@@ -15,28 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'test_helper'
+
 module Elasticsearch
-  module XPack
-    module API
-      module Autoscaling
-        module Actions
-          # Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-get-autoscaling-capacity.html
-          #
-          def get_autoscaling_capacity(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module Test
+    class XPackEqlGetStatusTest < Minitest::Test
+      context 'Eql: Get Status' do
+        subject { FakeClient.new }
 
-            arguments = arguments.clone
+        should 'perform correct request' do
+          subject.expects(:perform_request).with do |method, url, params, body|
+            assert_equal 'GET', method
+            assert_equal '_eql/search/status/foo', url
+            assert_equal({}, params)
+            assert_nil body
+            true
+          end.returns(FakeResponse.new)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_autoscaling/capacity"
-            params = {}
+          subject.xpack.eql.get_status(id: 'foo')
+        end
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
+        should 'raise argument error without id' do
+          assert_raises ArgumentError do
+            subject.xpack.eql.get_status
           end
         end
       end
