@@ -156,6 +156,10 @@ module Elasticsearch
       def text_structure
         @text_structure ||= xpack.text_structure
       end
+
+      def logstash
+        @logstash ||= xpack.logstash
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
