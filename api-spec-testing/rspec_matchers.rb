@@ -238,7 +238,7 @@ RSpec::Matchers.define :match_response do |pairs, test|
       # different from what Ruby uses, so we transform  X.XXXXEXX to X.XXXXXe+XX
       # to be able to compare the values
       actual_value.to_s == expected.gsub('E', 'e+')
-    elsif expected == ''
+    elsif expected == '' && actual_value != ''
       actual_value == response
     else
       expected == actual_value
