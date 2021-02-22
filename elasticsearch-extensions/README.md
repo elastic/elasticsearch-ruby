@@ -1,3 +1,10 @@
+> :warning: **This library will be deprecated in the future** :warning:
+>
+> You'll still be able to use previous versions of this gem, but there will be no new releases following to the [0.0.33](https://rubygems.org/gems/elasticsearch-extensions/versions/0.0.33) one.
+> 
+> The feature set of this gem will be migrated into the `elasticsearch` gem. 
+> 
+
 # Elasticsearch::Extensions
 
 This library provides a set of extensions to the
