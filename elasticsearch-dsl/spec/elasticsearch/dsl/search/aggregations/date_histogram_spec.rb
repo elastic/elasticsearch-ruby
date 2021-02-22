@@ -18,26 +18,22 @@
 require 'spec_helper'
 
 describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
-
   let(:search) do
     described_class.new
   end
 
   describe '#to_hash' do
-
     it 'can be converted to a hash' do
       expect(search.to_hash).to eq(date_histogram: {})
     end
   end
 
   context 'when options methods are called' do
-
     let(:search) do
       described_class.new(:foo)
     end
 
     describe '#field' do
-
       before do
         search.field('bar')
       end
@@ -47,19 +43,7 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
       end
     end
 
-    describe '#interval' do
-
-      before do
-        search.interval('bar')
-      end
-
-      it 'applies the option' do
-        expect(search.to_hash[:date_histogram][:foo][:interval]).to eq('bar')
-      end
-    end
-
     describe '#fixed_interval' do
-
       before do
         search.fixed_interval('bar')
       end
@@ -70,7 +54,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#calendar_interval' do
-
       before do
         search.calendar_interval('bar')
       end
@@ -81,7 +64,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#pre_zone' do
-
       before do
         search.pre_zone('bar')
       end
@@ -92,7 +74,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#post_zone' do
-
       before do
         search.post_zone('bar')
       end
@@ -103,7 +84,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#time_zone' do
-
       before do
         search.time_zone('bar')
       end
@@ -114,7 +94,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#pre_zone_adjust_large_interval' do
-
       before do
         search.pre_zone_adjust_large_interval('bar')
       end
@@ -125,7 +104,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#pre_offest' do
-
       before do
         search.pre_offset('bar')
       end
@@ -136,7 +114,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#post_offset' do
-
       before do
         search.post_offset('bar')
       end
@@ -147,7 +124,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#format' do
-
       before do
         search.format('bar')
       end
@@ -158,7 +134,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#min_doc_count' do
-
       before do
         search.min_doc_count('bar')
       end
@@ -169,7 +144,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#extended_bounds' do
-
       before do
         search.extended_bounds('bar')
       end
@@ -180,7 +154,6 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
     end
 
     describe '#order' do
-
       before do
         search.order('bar')
       end
@@ -192,19 +165,17 @@ describe Elasticsearch::DSL::Search::Aggregations::DateHistogram do
   end
 
   describe '#initialize' do
-
     context 'when a block is provided' do
-
       let(:search) do
         described_class.new do
           field    'bar'
-          interval 'day'
+          calendar_interval 'day'
           format   'yyyy-MM-dd'
         end
       end
 
       it 'executes the block' do
-        expect(search.to_hash).to eq(date_histogram: { field: 'bar', interval: 'day', format: 'yyyy-MM-dd' })
+        expect(search.to_hash).to eq(date_histogram: { field: 'bar', calendar_interval: 'day', format: 'yyyy-MM-dd' })
       end
     end
   end
