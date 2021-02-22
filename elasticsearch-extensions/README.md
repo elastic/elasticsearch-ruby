@@ -1,3 +1,10 @@
+> This library is being deprecated
+>
+> It will be migrated to be part of the `elasticsearch` gem. You'll still be able to use
+> previous versions, but current development will be migrated there and only the current stable
+> version of Elasticsearch and future versions will be tested and supported.
+>
+
 # Elasticsearch::Extensions
 
 This library provides a set of extensions to the
