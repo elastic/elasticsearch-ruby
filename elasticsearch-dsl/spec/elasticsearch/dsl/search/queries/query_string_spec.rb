@@ -18,9 +18,7 @@
 require 'spec_helper'
 
 describe Elasticsearch::DSL::Search::Queries::QueryString do
-
   describe '#to_hash' do
-
     let(:search) do
       described_class.new
     end
@@ -31,12 +29,12 @@ describe Elasticsearch::DSL::Search::Queries::QueryString do
   end
 
   context 'when options methods are called' do
-
     let(:search) do
       described_class.new
     end
 
-    [ 'query',
+    [
+      'query',
       'fields',
       'type',
       'default_field',
@@ -50,17 +48,16 @@ describe Elasticsearch::DSL::Search::Queries::QueryString do
       'phrase_slop',
       'boost',
       'analyze_wildcard',
-      'auto_generate_phrase_queries',
       'auto_generate_synonyms_phrase_query',
       'minimum_should_match',
       'lenient',
       'locale',
       'use_dis_max',
       'tie_breaker',
-      'time_zone'].each do |option|
+      'time_zone'
+    ].each do |option|
 
       describe "##{option}" do
-
         before do
           search.send(option, 'bar')
         end
@@ -73,9 +70,7 @@ describe Elasticsearch::DSL::Search::Queries::QueryString do
   end
 
   describe '#initialize' do
-
     context 'when a block is provided' do
-
       let(:search) do
         described_class.new do
           query 'foo AND bar'
