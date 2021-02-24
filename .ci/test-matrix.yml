@@ -6,7 +6,6 @@ RUBY_TEST_VERSION:
 - 3.0.0
 - 2.7.2
 - 2.6.6
-- 2.5.8
 
 TEST_SUITE:
 - free
