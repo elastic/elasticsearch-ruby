@@ -2,6 +2,15 @@
 === 7.11 Release notes
 
 [discrete]
+[[release_notes_7112]]
+=== 7.11.2 Release notes
+
+[discrete]
+==== Client
+
+* Bug fix in meta header, fixes fail when http adapter library hasn't been loaded yet: https://github.com/elastic/elasticsearch-ruby/issues/1224[Issue].
+
+[discrete]
 [[release_notes_7111]]
 === 7.11.1 Release notes
 
