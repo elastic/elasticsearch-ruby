@@ -32,7 +32,7 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
-    context 'client_meta_version_' do
+    context 'client_meta_version' do
       let(:version) { ['7.1.0-alpha', '7.11.0.pre.1', '8.0.0-beta', '8.0.0.beta.2']}
 
       it 'converts the version to X.X.Xp' do
@@ -108,6 +108,14 @@ describe Elasticsearch::Transport::Client do
       context 'using net/http/persistent' do
         let(:adapter) { :net_http_persistent }
 
+        it 'sets adapter in the meta header version to 0 when not loaded' do
+          fork {
+            expect(headers['x-elastic-client-meta']).to match(regexp)
+            meta = "#{meta_header},np=0"
+            expect(headers).to include('x-elastic-client-meta' => meta)
+          }
+        end unless jruby?
+
         it 'sets adapter in the meta header' do
           require 'net/http/persistent'
           expect(headers['x-elastic-client-meta']).to match(regexp)
@@ -118,6 +126,14 @@ describe Elasticsearch::Transport::Client do
 
       context 'using httpclient' do
         let(:adapter) { :httpclient }
+
+        it 'sets adapter in the meta header version to 0 when not loaded' do
+          fork {
+            expect(headers['x-elastic-client-meta']).to match(regexp)
+            meta = "#{meta_header},hc=0"
+            expect(headers).to include('x-elastic-client-meta' => meta)
+          }
+        end unless jruby?
 
         it 'sets adapter in the meta header' do
           require 'httpclient'
@@ -130,6 +146,14 @@ describe Elasticsearch::Transport::Client do
       context 'using typhoeus' do
         let(:adapter) { :typhoeus }
 
+        it 'sets adapter in the meta header version to 0 when not loaded' do
+          fork {
+            expect(headers['x-elastic-client-meta']).to match(regexp)
+            meta = "#{meta_header},ty=0"
+            expect(headers).to include('x-elastic-client-meta' => meta)
+          }
+        end unless jruby?
+
         it 'sets adapter in the meta header' do
           require 'typhoeus'
           expect(headers['x-elastic-client-meta']).to match(regexp)
@@ -138,8 +162,18 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
-      unless defined?(JRUBY_VERSION)
+      unless jruby?
         let(:adapter) { :patron }
+
+        context 'using patron without requiring it' do
+          it 'sets adapter in the meta header version to 0 when not loaded' do
+            fork {
+              expect(headers['x-elastic-client-meta']).to match(regexp)
+              meta = "#{meta_header},pt=0"
+              expect(headers).to include('x-elastic-client-meta' => meta)
+            }
+          end
+        end
 
         context 'using patron' do
           it 'sets adapter in the meta header' do
@@ -153,6 +187,12 @@ describe Elasticsearch::Transport::Client do
 
       context 'using other' do
         let(:adapter) { :some_other_adapter }
+
+        it 'sets adapter in the meta header without requiring' do
+          Faraday::Adapter.register_middleware some_other_adapter: Faraday::Adapter::NetHttpPersistent
+          expect(headers['x-elastic-client-meta']).to match(regexp)
+          expect(headers).to include('x-elastic-client-meta' => meta_header)
+        end
 
         it 'sets adapter in the meta header' do
           require 'net/http/persistent'
