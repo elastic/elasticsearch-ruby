@@ -4,18 +4,11 @@
 
 require 'test_helper'
 require 'logger'
+require 'ansi'
 
 module Elasticsearch
   module Test
     class ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
-      startup do
-        Elasticsearch::Extensions::Test::Cluster.start(number_of_nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 2)
-      end
-
-      shutdown do
-        Elasticsearch::Extensions::Test::Cluster.stop(number_of_nodes: 2) if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 2)
-      end
-
       context "Elasticsearch client" do
         setup do
           system "curl -X DELETE http://#{TEST_HOST}:#{TEST_PORT}/_all > /dev/null 2>&1"
@@ -42,24 +35,24 @@ module Elasticsearch
 
             # Refresh the index
             #
-            @client.indices.refresh index: 'test-index'
+            @client.indices.refresh(index: 'test-index')
 
             # Search
             #
-            response = @client.search index: 'test-index', body: { query: { match: { title: 'test' } } }
+            response = @client.search(index: 'test-index', body: { query: { match: { title: 'test' } } })
 
-            assert_equal 1,      response['hits']['total']['value']
-            assert_equal 'Test', response['hits']['hits'][0]['_source']['title']
+            assert_equal(1, response['hits']['total']['value'])
+            assert_equal('Test', response['hits']['hits'][0]['_source']['title'])
 
             # Delete the index
             #
-            @client.indices.delete index: 'test-index'
+            @client.indices.delete(index: 'test-index')
           end
         end
 
         should 'report the right meta header' do
           headers = @client.transport.connections.first.connection.headers
-          assert_match /^es=#{Elasticsearch::VERSION}/, headers['x-elastic-client-meta']
+          assert_match(/^es=#{Elasticsearch::VERSION}/, headers['x-elastic-client-meta'])
         end
       end
     end
