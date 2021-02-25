@@ -16,6 +16,7 @@
 # under the License.
 
 require 'base64'
+require 'elasticsearch/transport/meta_header'
 
 module Elasticsearch
   module Transport
@@ -25,6 +26,7 @@ module Elasticsearch
     #
     class Client
       DEFAULT_TRANSPORT_CLASS = Transport::HTTP::Faraday
+      include MetaHeader
 
       DEFAULT_LOGGER = lambda do
         require 'logger'
@@ -163,13 +165,13 @@ module Elasticsearch
           @transport_class = @arguments[:transport_class] || DEFAULT_TRANSPORT_CLASS
           @transport = if @transport_class == Transport::HTTP::Faraday
                          @arguments[:adapter] ||= __auto_detect_adapter
-                         set_meta_header
+                         set_meta_header # from include MetaHeader
                          @transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
                            faraday.adapter(@arguments[:adapter])
                            block&.call faraday
                          end
                        else
-                         set_meta_header
+                         set_meta_header # from include MetaHeader
                          @transport_class.new(hosts: @seeds, options: @arguments)
                        end
         end
@@ -202,78 +204,6 @@ module Elasticsearch
         @arguments[:transport_options].merge!(
           headers: headers
         )
-      end
-
-      def set_meta_header
-        return if @arguments[:enable_meta_header] == false
-
-        service, version = meta_header_service_version
-
-        meta_headers = {
-          service.to_sym => version,
-          rb: RUBY_VERSION,
-          t: Elasticsearch::Transport::VERSION
-        }
-        meta_headers.merge!(meta_header_engine) if meta_header_engine
-        meta_headers.merge!(meta_header_adapter) if meta_header_adapter
-
-        add_header({ 'x-elastic-client-meta' => meta_headers.map { |k, v| "#{k}=#{v}" }.join(',') })
-      end
-
-      def meta_header_service_version
-        if defined?(Elastic::META_HEADER_SERVICE_VERSION)
-          Elastic::META_HEADER_SERVICE_VERSION
-        elsif defined?(Elasticsearch::VERSION)
-          [:es, client_meta_version(Elasticsearch::VERSION)]
-        else
-          [:es, client_meta_version(Elasticsearch::Transport::VERSION)]
-        end
-      end
-
-      def client_meta_version(version)
-        regexp = /^([0-9]+\.[0-9]+\.[0-9]+)(\.?[a-z0-9.-]+)?$/
-        match = version.match(regexp)
-        return "#{match[1]}p" if (match[2])
-
-        version
-      end
-
-      def meta_header_engine
-        case RUBY_ENGINE
-        when 'ruby'
-          {}
-        when 'jruby'
-          { jv: ENV_JAVA['java.version'], jr: JRUBY_VERSION }
-        when 'rbx'
-          { rbx: RUBY_VERSION }
-        else
-          { RUBY_ENGINE.to_sym => RUBY_VERSION }
-        end
-      end
-
-      def meta_header_adapter
-        if @transport_class == Transport::HTTP::Faraday
-          {fd: Faraday::VERSION}.merge(
-            case @arguments[:adapter]
-            when :patron
-              {pt: Patron::VERSION}
-            when :net_http
-              {nh: defined?(Net::HTTP::VERSION) ? Net::HTTP::VERSION : Net::HTTP::HTTPVersion}
-            when :typhoeus
-              {ty: Typhoeus::VERSION}
-            when :httpclient
-              {hc: HTTPClient::VERSION}
-            when :net_http_persistent
-              {np: Net::HTTP::Persistent::VERSION}
-            else
-              {}
-            end
-          )
-        elsif defined?(Transport::HTTP::Curb) && @transport_class == Transport::HTTP::Curb
-          {cl: Curl::CURB_VERSION}
-        elsif defined?(Transport::HTTP::Manticore) && @transport_class == Transport::HTTP::Manticore
-          {mc: Manticore::VERSION}
-        end
       end
 
       def extract_cloud_creds(arguments)
