@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module Transport
-    VERSION = '7.11.1'.freeze
+    VERSION = '7.11.2'.freeze
   end
 end
