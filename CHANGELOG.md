@@ -1,3 +1,10 @@
+## 7.11.2
+
+### Client
+
+* Bug fix in meta header, fixes fail when http adapter library hasn't been loaded yet: [Issue](https://github.com/elastic/elasticsearch-ruby/issues/1224).
+
+
 ## 7.11.1
 
 ### Client
