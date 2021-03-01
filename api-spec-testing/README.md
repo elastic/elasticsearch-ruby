@@ -9,11 +9,24 @@ The file that traverses the yaml files and loads a **TestFile** object per each 
 
 You can use the SINGLE_TEST env variable to run just one test or one test directory. E.g.:
 ```
-cd elasticsearch-api && SINGLE_TEST=indices.resolve_index/10_basic_resolve_index.yml TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+$ cd elasticsearch-api && SINGLE_TEST=indices.resolve_index/10_basic_resolve_index.yml TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
 ```
 And:
-```ruby
-cd elasticsearch-api && SINGLE_TEST=indices.resolve_index TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+```
+$ cd elasticsearch-api && SINGLE_TEST=indices.resolve_index TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+```
+
+## Skipped tests
+
+We sometimes skip tests, generally due to limitations on how we run the CI server or for stuff that hasn't been completely implemented on the client yet. Skipped tests are located in `elasticsearch-(api|xpack)/spec/skipped_tests.yml`. You can run just the tests which are currently being skipped by running:
+```
+$ cd elasticsearch-api && RUN_SKIPPED_TESTS=true TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+```
+
+Or
+
+```
+$ cd elasticsearch-xpack && RUN_SKIPPED_TESTS=true ELASTIC_PASSWORD=changeme TEST_SUITE=platinum TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
 ```
 
 ## TestFile
