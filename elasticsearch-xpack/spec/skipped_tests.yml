@@ -3,31 +3,6 @@
   :file:        'ssl/10_basic.yml'
   :description: 'Test get SSL certificates'
 
-# Operation times out "failed_node_exception"
--
-  :file:        'ml/set_upgrade_mode.yml'
-  :description: 'Setting upgrade_mode to enabled'
-
-# Operation times out "failed_node_exception"
--
-  :file:        'ml/set_upgrade_mode.yml'
-  :description: 'Setting upgrade_mode to disabled'
-
-# Operation times out "failed_node_exception"
--
-  :file:        'ml/set_upgrade_mode.yml'
-  :description: 'Setting upgrade mode to disabled from enabled'
-
-# Operation times out "failed_node_exception"
--
-  :file:        'ml/set_upgrade_mode.yml'
-  :description: 'Attempt to open job when upgrade_mode is enabled'
-
-# Error about creating a job that already exists.
--
-  :file:        'ml/jobs_crud.yml'
-  :description: 'Test close job with body params'
-
 # TODO: Failing due to processing of regexp in test
 -
   :file: 'ml/explain_data_frame_analytics.yml'
@@ -37,9 +12,3 @@
 -
   :file: 'analytics/usage.yml'
   :description: 'Usage stats on analytics indices'
-
-# TODO https://github.com/elastic/elasticsearch-ruby/issues/853
--
-  :file: 'ml/jobs_crud.yml'
-  :description: 'Test put job with model_memory_limit as string and lazy open'
-
