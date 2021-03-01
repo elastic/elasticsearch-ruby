@@ -201,8 +201,7 @@ time rake test:unit
 time rake test:integration
 ```
 
-Unit tests have to use Ruby 1.8 compatible syntax, integration tests
-can use Ruby 2.x syntax and features.
+You can read more about how we test the API using the Elasticsearch spec in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/master/api-spec-testing#rest-api-yaml-test-runner).
 
 ## License
 
