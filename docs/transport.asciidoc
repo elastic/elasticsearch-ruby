@@ -14,15 +14,6 @@ It does not handle calling the {es} API.
 The library is compatible with Ruby 1.9 or higher and with all versions of {es} 
 since 0.90.
 
-Feature overview:
-
-* Pluggable logging and tracing
-* Pluggable connection selection strategies (round-robin, random, custom)
-* Pluggable transport implementation, customizable and extendable
-* Pluggable serializer implementation
-* Request retries and dead connections handling
-* Node reloading (based on cluster state) on errors or on demand
-
 For optimal performance, use a HTTP library which supports persistent 
 ("keep-alive") connections, such as https://github.com/toland/patron[patron] or 
 https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library 
