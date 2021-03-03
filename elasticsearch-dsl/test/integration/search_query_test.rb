@@ -23,10 +23,6 @@ module Elasticsearch
       include Elasticsearch::DSL::Search
 
       context "Queries integration" do
-        startup do
-          Elasticsearch::Extensions::Test::Cluster.start(number_of_nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 1)
-        end
-
         setup do
           @client.indices.create index: 'test'
           @client.index index: 'test', id: '1', body: { title: 'Test', tags: ['one'] }
