@@ -22,12 +22,7 @@ require 'logger'
 require 'yaml'
 require 'active_support/inflector'
 require 'ansi'
-
 require 'elasticsearch'
-require 'elasticsearch/extensions/test/cluster'
-require 'elasticsearch/extensions/test/startup_shutdown'
-require 'elasticsearch/extensions/test/profiling' unless JRUBY
-
 require 'test_helper'
 
 # Skip features
