@@ -32,6 +32,7 @@ module Elasticsearch
         # @option arguments [List] :types A comma-separated list of document types for the `indexing` index metric
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
+        # @option arguments [Boolean] :include_unloaded_segments If set to true segment stats will include stats for segments that are not currently loaded into memory
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-nodes-stats.html
@@ -78,7 +79,8 @@ module Elasticsearch
           :level,
           :types,
           :timeout,
-          :include_segment_file_sizes
+          :include_segment_file_sizes,
+          :include_unloaded_segments
         ].freeze)
       end
     end
