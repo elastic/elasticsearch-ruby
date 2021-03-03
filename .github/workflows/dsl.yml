@@ -1,0 +1,40 @@
+name: elasticsearch-dsl
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  test-master:
+    env:
+      TEST_ES_SERVER: http://localhost:9250
+      PORT: 9250
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [ 2.6, 2.7, 3.0, jruby-9.2 ]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Increase system limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 8.0.0-SNAPSHOT
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+    - name: Build
+      run: |
+        sudo apt-get update
+        sudo apt-get install libcurl4-openssl-dev
+        rake bundle:clean
+        rake bundle:install
+    - name: Test with Rake
+      run: cd elasticsearch-dsl && rake test:all
