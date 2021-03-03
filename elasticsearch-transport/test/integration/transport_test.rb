@@ -17,15 +17,7 @@
 
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
-  startup do
-    Elasticsearch::Extensions::Test::Cluster.start(number_of_nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 2)
-  end
-
-  shutdown do
-    Elasticsearch::Extensions::Test::Cluster.stop(number_of_nodes: 2) if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 2)
-  end
-
+class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
   context "Transport" do
     setup do
       @host, @port = ELASTICSEARCH_HOSTS.first.split(':')
@@ -90,5 +82,4 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_equal 'application/json', response.headers['content-type']
     end unless JRUBY
   end
-
 end

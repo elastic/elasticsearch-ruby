@@ -17,11 +17,7 @@
 
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientProfilingTest < Elasticsearch::Test::ProfilingTest
-  startup do
-    Elasticsearch::Extensions::Test::Cluster.start if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
-  end
-
+class Elasticsearch::Transport::ClientProfilingTest < Minitest::Test
   context "Elasticsearch client benchmark" do
     setup do
       @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
