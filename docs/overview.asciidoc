@@ -51,12 +51,8 @@ supports persistent ("keep-alive") HTTP connections.
 [[extensions]]
 === Extensions
 
-The 
-https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[`elasticsearch-extensions`]
-Rubygem provides a number of extensions to the core client, such as an API to 
-programmatically launch {es} clusters (for example, for testing purposes), and 
-more.
+*This library is being deprecated and won't be maintained after 8.0*
 
-Consult the 
-https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[documentation]
-for more information.
+The https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[`elasticsearch-extensions`] Rubygem provides a number of extensions to the core client, such as an API to programmatically launch {es} clusters (for example, for testing purposes), and more.
+
+Consult the https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[documentation] for more information.
