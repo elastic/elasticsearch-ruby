@@ -60,22 +60,6 @@ namespace :test do
     test.libs << 'lib' << 'test'
     test.test_files = FileList["test/profile/**/*_test.rb"]
   end
-
-  namespace :cluster do
-    desc "Start Elasticsearch nodes for tests"
-    task :start do
-      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.start
-    end
-
-    desc "Stop Elasticsearch nodes for tests"
-    task :stop do
-      $LOAD_PATH << File.expand_path('../lib', __FILE__) << File.expand_path('../test', __FILE__)
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.stop
-    end
-  end
 end
 
 # ----- Documentation tasks ---------------------------------------------------

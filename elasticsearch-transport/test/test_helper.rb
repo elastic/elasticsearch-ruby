@@ -38,12 +38,6 @@ if ENV['CI']
   SimpleCov.start { add_filter "/test|test_" }
 end
 
-# Register `at_exit` handler for integration tests shutdown.
-# MUST be called before requiring `test/unit`.
-if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
-end
-
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
@@ -57,12 +51,6 @@ require 'logger'
 require 'hashie'
 
 RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
-
-if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  require 'elasticsearch/extensions/test/cluster'
-  require 'elasticsearch/extensions/test/startup_shutdown'
-  require 'elasticsearch/extensions/test/profiling' unless JRUBY
-end
 
 class FixedMinitestSpecReporter < Minitest::Reporters::SpecReporter
   def before_test(test)
@@ -103,22 +91,3 @@ module Minitest
 end
 
 Minitest::Reporters.use! FixedMinitestSpecReporter.new
-
-module Elasticsearch
-  module Test
-    class IntegrationTestCase < Minitest::Test
-      extend Elasticsearch::Extensions::Test::StartupShutdown
-
-      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
-    end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  end
-
-  module Test
-    class ProfilingTest < Minitest::Test
-      extend Elasticsearch::Extensions::Test::StartupShutdown
-      extend Elasticsearch::Extensions::Test::Profiling
-
-      shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
-    end unless JRUBY
-  end
-end
