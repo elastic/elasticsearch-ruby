@@ -30,8 +30,6 @@ if ENV['COVERAGE'] || ENV['CI']
   SimpleCov.start { add_filter "/test|test_" }
 end
 
-at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
-
 require 'minitest/autorun'
 require 'shoulda-context'
 require 'mocha/setup'
@@ -43,10 +41,9 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 #                            Minitest::Reporters::HtmlReporter.new ]
 
 require 'elasticsearch'
-require 'elasticsearch/extensions/test/cluster'
-require 'elasticsearch/extensions/test/startup_shutdown'
-
 require 'elasticsearch/dsl'
+require 'logger'
+require 'ansi'
 
 module Elasticsearch
   module Test
@@ -66,20 +63,6 @@ module Elasticsearch
       include Assertions
       alias_method :assert_not_nil, :refute_nil
       alias_method :assert_raise, :assert_raises
-
-      include Elasticsearch::Extensions::Test
-      extend  StartupShutdown
-
-      startup do
-        Cluster.start(number_of_nodes: 1) if ENV['SERVER'] \
-                                && ! Elasticsearch::Extensions::Test::Cluster.running?(number_of_nodes: 1)
-      end
-
-      shutdown do
-        Cluster.stop if ENV['SERVER'] \
-                     && started?      \
-                     && Elasticsearch::Extensions::Test::Cluster.running?
-      end
 
       def setup
         @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i

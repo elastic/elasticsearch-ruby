@@ -49,7 +49,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.3'
 
   s.add_development_dependency 'elasticsearch'
-  s.add_development_dependency 'elasticsearch-extensions'
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'minitest', '~> 5'
