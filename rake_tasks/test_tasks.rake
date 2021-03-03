@@ -20,8 +20,7 @@ UNIT_TESTED_PROJECTS = [
   'elasticsearch-transport',
   'elasticsearch-dsl',
   'elasticsearch-api',
-  'elasticsearch-xpack',
-  'elasticsearch-extensions'
+  'elasticsearch-xpack'
 ].freeze
 
 INTEGRATION_TESTED_PROJECTS = (UNIT_TESTED_PROJECTS - ['elasticsearch-api']).freeze
@@ -66,25 +65,5 @@ namespace :test do
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-xpack')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api"
     puts "\n"
-  end
-
-  namespace :cluster do
-    desc 'Start Elasticsearch nodes for tests'
-    task :start do
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.start
-    end
-
-    desc 'Stop Elasticsearch nodes for tests'
-    task :stop do
-      require 'elasticsearch/extensions/test/cluster'
-      Elasticsearch::Extensions::Test::Cluster.stop
-    end
-
-    task :status do
-      require 'elasticsearch/extensions/test/cluster'
-      (puts "\e[31m[!] Test cluster not running\e[0m"; exit(1)) unless Elasticsearch::Extensions::Test::Cluster.running?
-      Elasticsearch::Extensions::Test::Cluster.__print_cluster_info(ENV['TEST_CLUSTER_PORT'] || 9250)
-    end
   end
 end
