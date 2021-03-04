@@ -4,8 +4,10 @@
 
 require "bundler/gem_tasks"
 
+task(:default) { system 'rake --tasks' }
+
 desc "Run unit tests"
-task :test    => 'test:unit'
+task test: 'test:unit'
 
 # ----- Test tasks ------------------------------------------------------------
 
@@ -31,11 +33,11 @@ namespace :test do
     test.warning = false
   end
 
-  Rake::TestTask.new(:all) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
+  desc "Run unit and integration tests"
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
   end
-
 end
 
 # ----- Documentation tasks ---------------------------------------------------
