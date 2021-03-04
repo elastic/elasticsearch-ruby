@@ -215,3 +215,39 @@ You can write your own transport implementation by including the
 {Elasticsearch::Transport::Transport::Base} module, implementing the required 
 contract, and passing it to the client as the `transport_class` parameter – or 
 by injecting it directly.
+
+[discrete]
+[[transport-architecture]]
+==== Transport architecture
+
+* `Elasticsearch::Transport::Client` is composed of 
+  `Elasticsearch::Transport::Transport`.
+
+* `Elasticsearch::Transport::Transport` is composed of 
+  `Elasticsearch::Transport::Transport::Connections`, and an instance of logger, 
+  tracer, serializer and sniffer.
+
+* Logger and tracer can be any object conforming to Ruby logging interface, for 
+  example, an instance of 
+  https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html[`Logger`], 
+  https://rubygems.org/gems/log4r[log4r], 
+  https://github.com/TwP/logging/[logging], and so on.
+
+* The `Elasticsearch::Transport::Transport::Serializer::Base` implementations 
+  handle converting data for {es} (for example, to JSON). You can implement your 
+  own serializer.
+
+* `Elasticsearch::Transport::Transport::Sniffer` allows to discover nodes in the 
+  cluster and use them as connections.
+
+* `Elasticsearch::Transport::Transport::Connections::Collection` is composed of 
+  `Elasticsearch::Transport::Transport::Connections::Connection` instances and a 
+  selector instance.
+
+* `Elasticsearch::Transport::Transport::Connections::Connection` contains the 
+  connection attributes such as hostname and port, as well as the concrete 
+  persistent "session" connected to a specific node.
+
+* The `Elasticsearch::Transport::Transport::Connections::Selector::Base` 
+  implementations allow to choose connections from the pool, for example, in a 
+  round-robin or random fashion. You can implement your own selector strategy.
