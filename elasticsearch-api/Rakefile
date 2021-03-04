@@ -41,6 +41,7 @@ namespace :test do
 
   # Unit tests - rake test:unit
   #
+  desc 'Run unit tests'
   task unit: :spec
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
