@@ -84,6 +84,10 @@ module Elasticsearch
             end
           when 'catch', 'warnings', 'allowed_warnings'
             client
+          when 'put_trained_model_alias'
+            args.merge!('reassign' => true) unless args['reassign'] === false
+            @response = client.send(_method, prepare_arguments(args, test))
+            client
           else
             @response = client.send(_method, prepare_arguments(args, test))
             client
