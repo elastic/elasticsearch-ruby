@@ -16,10 +16,6 @@ include::basic-config.asciidoc[]
 
 include::advanced-config.asciidoc[]
 
-include::model.asciidoc[]
-
-include::rails.asciidoc[]
-
-include::persistence.asciidoc[]
+include::integrations.asciidoc[]
 
 include::release_notes/index.asciidoc[]
