@@ -23,16 +23,10 @@ module Elasticsearch
           # Explore extracted and summarized information about the documents and terms in an index.
           #
           # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-          # @option arguments [List] :type A comma-separated list of document types to search; leave empty to perform the operation on all types *Deprecated*
           # @option arguments [String] :routing Specific routing value
           # @option arguments [Time] :timeout Explicit operation timeout
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Graph Query DSL
-          #
-          # *Deprecation notice*:
-          # Specifying types in urls has been deprecated
-          # Deprecated since version 7.0.0
-          #
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/graph-explore-api.html
           #
@@ -45,19 +39,13 @@ module Elasticsearch
 
             _index = arguments.delete(:index)
 
-            _type = arguments.delete(:type)
-
             method = if arguments[:body]
                        Elasticsearch::API::HTTP_POST
                      else
                        Elasticsearch::API::HTTP_GET
                      end
 
-            path = if _index && _type
-                     "#{Elasticsearch::API::Utils.__listify(_index)}/#{Elasticsearch::API::Utils.__listify(_type)}/_graph/explore"
-                   else
-                     "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
-                   end
+            path = "#{Elasticsearch::API::Utils.__listify(_index)}/_graph/explore"
             params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
