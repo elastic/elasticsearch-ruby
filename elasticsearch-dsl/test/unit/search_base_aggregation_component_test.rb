@@ -52,6 +52,20 @@ module Elasticsearch
 
           assert_equal 'foo', subject.to_hash[:aggregations][:inner][:dummy][:field]
         end
+
+        should "add a nested aggregation instance" do
+          nested = Elasticsearch::DSL::Search::Aggregation.new do
+            dummy field: 'foo'
+          end
+          subject.aggregation :inner, nested
+
+          assert !subject.aggregations.empty?, "#{subject.aggregations.inspect} is empty"
+
+          assert_instance_of Elasticsearch::DSL::Search::Aggregation, subject.aggregations[:inner]
+          assert_equal({ dummy: { field: 'foo' } }, subject.aggregations[:inner].to_hash)
+
+          assert_equal 'foo', subject.to_hash[:aggregations][:inner][:dummy][:field]
+        end
       end
     end
   end
