@@ -173,7 +173,8 @@ module Elasticsearch
           'logs-mappings', 'metrics', 'metrics-settings', 'metrics-mappings',
           'synthetics', 'synthetics-settings', 'synthetics-mappings',
           '.snapshot-blob-cache', '.deprecation-indexing-template',
-          '.deprecation-indexing-mappings', '.deprecation-indexing-settings'
+          '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
+          'security-index-template'
         ].freeze
 
         # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -278,17 +279,13 @@ module Elasticsearch
         end
 
         def clear_templates_xpack(client)
-          templates = client.cat.templates(h: 'name').split("\n")
+          templates = client.indices.get_index_template
 
-          templates.each do |template|
-            next if xpack_template? template
+          templates['index_templates'].each do |template|
+            next if xpack_template? template['name']
 
             begin
-              client.indices.delete_template(name: template)
-            rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
-              if e.message.include?("index_template [#{template}] missing")
-                client.indices.delete_index_template(name: template, ignore: 404)
-              end
+              client.indices.delete_index_template(name: template['name'], ignore: 404)
             end
           end
           # Delete component template
@@ -298,6 +295,18 @@ module Elasticsearch
             next if xpack_template? template['name']
 
             client.cluster.delete_component_template(name: template['name'], ignore: 404)
+          end
+
+          # Always check for legacy templates
+          templates = client.indices.get_template
+
+          templates.each do |name, _|
+            next if xpack_template? name
+
+            begin
+              client.indices.delete_template(name: name)
+            end
+
           end
         end
 
