@@ -1,0 +1,28 @@
+[[release_notes_712]]
+=== 7.12 Release notes
+
+[discrete]
+==== Client
+
+- Support for Elasticsearch version 7.12.0
+- Ruby 3 is now tested, it was added to the entire test suite.
+- New official documentation pages for configuration: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/basic-config.html[Basic Configuration] and https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/advanced-config.html[Advanced Configuration].
+- Integration tests runner refactored to keep skipped tests in a yaml file.
+
+[discrete]
+==== API
+
+- New API namespace: `features` and endpoints `features.get_features` and `snapshot.get_features`.
+- `cat.plugins` adds parameter `include_bootstrap`: Include bootstrap plugins in the response.
+- Update in `indices.close` parameter `wait_for_active_shards`: Sets the number of active shards to wait for before the operation returns. Set to `index-setting` to wait according to the index setting `index.write.wait_for_active_shards`, or `all` to wait for all shards, or an integer. Defaults to `0`.
+- `actions.search` adds parameter `min_compatible_shard_node`: The minimum compatible version that all shards involved in search should have for this request to be successful.
+
+[discrete]
+==== X-Pack
+
+- New API namespace: `text_structure` and endpoints `text_structure.find_structure`.
+- New API namespace: `logstash` and endpoints `logstash.delete_pipeline`, `logstash.get_pipeline`, `logstash.put_pipeline`.
+- New API: `eql.get_status`.
+- APIs migrated from experimental to stable: `autoscaling.delete_autoscaling_policy`, `autoscaling.get_autoscaling_capacity`, `autoscaling.get_autoscaling_policy`, `autoscaling.put_autoscaling_policy`.
+- `searchable_snapshots.mount` adds parameter `storage`: Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`.
+- `searchable_snapshots.stats` adds parameter `level`: Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards).
