@@ -145,8 +145,8 @@ else
         transport = Manticore.new :hosts => [ { :host => 'foobar', :port => 1234 } ], :options => options
         transport.connections.first.connection
           .expects(:get)
-          .with do |host, options|
-            assert_equal 'myapp-0.0', options[:headers]['User-Agent']
+          .with do |host, _options|
+            assert_equal 'myapp-0.0', _options[:headers]['User-Agent']
             true
           end
           .returns(stub_everything)
