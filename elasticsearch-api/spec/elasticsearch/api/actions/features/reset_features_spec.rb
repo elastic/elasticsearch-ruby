@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client.featues#get_features' do
+describe 'client.featues#reset_features' do
   let(:expected_args) do
     [
-      'GET',
-      '_features',
+      'POST',
+      '_features/_reset',
       {},
       nil,
       {}
@@ -29,6 +29,6 @@ describe 'client.featues#get_features' do
   end
 
   it 'performs the request' do
-    expect(client_double.features.get_features).to eq({})
+    expect(client_double.features.reset_features).to eq({})
   end
 end

@@ -19,32 +19,28 @@ module Elasticsearch
   module API
     module Features
       module Actions
-        # Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
+        # Resets the internal state of features, usually by deleting system indices
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-features-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/modules-snapshots.html
         #
-        def get_features(arguments = {})
+        def reset_features(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = "_features"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_features/_reset"
+          params = {}
 
           body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_features, [
-          :master_timeout
-        ].freeze)
       end
     end
   end
