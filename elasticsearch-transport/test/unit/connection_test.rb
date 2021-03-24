@@ -63,8 +63,8 @@ class Elasticsearch::Transport::Transport::Connections::ConnectionTest < Minites
 
     should "have a string representation" do
       c = Connection.new :host => 'x'
-      assert_match /host: x/, c.to_s
-      assert_match /alive/,   c.to_s
+      assert_match(/host: x/, c.to_s)
+      assert_match(/alive/,   c.to_s)
     end
 
     should "not be dead by default" do
