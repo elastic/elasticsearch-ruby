@@ -149,7 +149,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Minitest::Test
 
       transport.connections.first.connection.expects(:run_request).
         with do |method, url, params, body|
-          assert_match /\?format=yaml/, url
+          assert_match(/\?format=yaml/, url)
           true
         end.
         returns(stub_everything)
@@ -167,7 +167,7 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Minitest::Test
 
       transport.connections.first.connection.expects(:run_request).
         with do |method, url, params, body|
-          assert_match /\?format=json/, url
+          assert_match(/\?format=json/, url)
           true
         end.
         returns(stub_everything)
