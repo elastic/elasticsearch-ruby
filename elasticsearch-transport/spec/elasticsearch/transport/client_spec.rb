@@ -266,7 +266,7 @@ describe Elasticsearch::Transport::Client do
       it 'uses Faraday with the adapter' do
         expect(adapter).to eq Faraday::Adapter::Typhoeus
       end
-    end
+    end unless jruby?
 
     context 'when the adapter is specified as a string key' do
       let(:adapter) do
@@ -1758,7 +1758,7 @@ describe Elasticsearch::Transport::Client do
             it 'preserves the other headers' do
               expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
-          end
+          end unless jruby?
         end
       end
 
