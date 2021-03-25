@@ -24,7 +24,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
       begin; Object.send(:remove_const, :Patron);   rescue NameError; end
     end
 
-    should "allow to customize the Faraday adapter" do
+    should "allow to customize the Faraday adapter to Typhoeus" do
       require 'typhoeus'
       require 'typhoeus/adapters/faraday'
 
@@ -33,6 +33,19 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
           f.response :logger
           f.adapter  :typhoeus
         end
+
+      client = Elasticsearch::Transport::Client.new transport: transport
+      client.perform_request 'GET', ''
+    end unless jruby?
+
+    should "allow to customize the Faraday adapter to NetHttpPersistent" do
+      require 'net/http/persistent'
+
+      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+                                                                       :hosts => [ { host: @host, port: @port } ] do |f|
+        f.response :logger
+        f.adapter  :net_http_persistent
+      end
 
       client = Elasticsearch::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
