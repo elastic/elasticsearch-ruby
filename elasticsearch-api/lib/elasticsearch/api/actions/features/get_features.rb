@@ -19,12 +19,12 @@ module Elasticsearch
   module API
     module Features
       module Actions
-        # Returns a list of features which can be snapshotted in this cluster.
+        # Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
         #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.12/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.12/get-features-api.html
         #
         def get_features(arguments = {})
           headers = arguments.delete(:headers) || {}
