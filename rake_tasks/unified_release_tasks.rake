@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Licensed to Elasticsearch B.V. under one or more contributor
 # license agreements. See the NOTICE file distributed with
 # this work for additional information regarding copyright
@@ -54,36 +52,5 @@ namespace :unified_release do
   def create_zip_file(output_dir)
     sh "cd #{CURRENT_PATH.join(output_dir)} && " \
        "zip -r #{@zip_filename}.zip * " \
-  end
-
-  desc 'Publish gems to Rubygems'
-  task :publish do
-    setup_credentials
-
-    RELEASE_TOGETHER.each do |gem|
-      puts '-' * 80
-      puts "Releasing #{gem} v#{Elasticsearch::VERSION}"
-      sh "cd #{CURRENT_PATH.join(gem)} && bundle exec rake release"
-    end
-  end
-
-  def setup_credentials
-    raise ArgumentError, 'You need to set the env value for GITHUB_TOKEN' unless ENV['GITHUB_TOKEN']
-    raise ArgumentError, 'You need to set the env value for RUBYGEMS_API_KEY' unless ENV['RUBYGEMS_API_KEY']
-
-    sh 'git config --global user.email ${GIT_EMAIL} && ' \
-       'git config --global user.name ${GIT_NAME}'
-
-    file_name = File.expand_path('~/.gem/credentials')
-    text = <<~CREDENTIALS
-      ---
-      :github: Bearer #{ENV['GITHUB_TOKEN']}
-      :rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}
-    CREDENTIALS
-    File.open(file_name, 'w') do |file|
-      file.write(text)
-    end
-
-    FileUtils.chmod 0o600, file_name
   end
 end
