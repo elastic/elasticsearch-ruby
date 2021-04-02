@@ -16,14 +16,7 @@
 # under the License.
 
 require 'bundler/gem_tasks'
-
-def __current__
-  Pathname( File.expand_path('..', __FILE__) )
-end
-
-def git_specs(command, options={})
-  sh "git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} #{command}", options
-end
+require 'json'
 
 task(:default) { system 'rake --tasks' }
 task test: 'test:unit'
@@ -47,78 +40,74 @@ namespace :test do
     t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
-  # Rest API Spec tests - rake test:rest_api
-  RSpec::Core::RakeTask.new(:rest_api) do |t|
-    t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
-  end
-
-  desc 'Update the repository with YAML tests'
-  task :update do
-    git_specs 'fetch origin', verbose: true
-  end
-
-  desc "Run integration tests"
-  task integration: :update do
+  desc "Run Rest API Spec tests, use `rake test:rest_api[true]` to update artifacts"
+  RSpec::Core::RakeTask.new(:rest_api, :refresh) do |t, args|
     require 'elasticsearch'
-    branches = `git --git-dir=#{__current__.join('../tmp/elasticsearch/.git')} --work-tree=#{__current__.join('../tmp/elasticsearch')} branch --no-color`
-
-    current_branch = branches.
-      split("\n").
-      select { |b| b =~ /^\*/ }.
-      reject { |b| b =~ /no branch|detached/ }.
-      map    { |b| b.gsub(/^\*\s*/, '') }.
-      first
-
-    unless current_branch
-      STDERR.puts "[!] Unable to determine current branch, defaulting to 'master'"
-      current_branch = 'master'
-    end
-
     # Check if a test cluster is running
     begin
       url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
-      url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}" unless url
+      url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9200}" unless url
       client = Elasticsearch::Client.new :url => url
       es_version_info = client.info['version']
+      version_number = es_version_info['number']
       build_hash      = es_version_info['build_hash']
       cluster_running = true
     rescue Faraday::ConnectionFailed
       STDERR.puts "[!] Test cluster not running?"
       cluster_running = false
+      exit 1
     end
 
-    checkout_specs_version = ENV['TEST_NO_CHECKOUT'].nil? ? true : false
-    checkout_build_hash    = ENV['TEST_BUILD_REF'] || build_hash
-    ENV['TEST_BUILD_REF']  = checkout_build_hash
+    refresh_artifacts(build_hash, version_number) if args[:refresh]
 
-    begin
-      unless checkout_specs_version
-        STDERR.puts '-'*80, "YAML tests: Not switching, TEST_NO_CHECKOUT=y", '-'*80
-      end
+    t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
+  end
 
-      if checkout_specs_version && !checkout_build_hash
-        STDERR.puts "[!] Cannot determine checkout build hash -- server not running or TEST_BUILD_REF not specified"
-        exit(1)
-      end
-
-      if checkout_specs_version && checkout_build_hash
-        # Checkout the commit corresponding to the running server build, or passed TEST_BUILD_REF
-        name = ENV['CI'] ? checkout_build_hash : "[\e[1m#{checkout_build_hash}\e[0m]"
-        STDERR.puts '-'*80, "YAML tests: Switching to #{name} from #{current_branch}", '-'*80
-        git_specs "checkout #{checkout_build_hash} --force --quiet"
-      end
-
-      Rake::Task['test:rest_api'].invoke
-
-    ensure
-      git_specs "checkout #{current_branch} --force --quiet" if checkout_specs_version && current_branch
-    end
+  desc "Run integration tests"
+  task :integration do
+    Rake::Task['test:rest_api'].invoke
   end
 
   desc 'Run unit and integration tests'
   task :all do
     Rake::Task['test:unit'].invoke
     Rake::Task['test:integration'].invoke
+  end
+
+  def refresh_artifacts(build_hash, version_number)
+    unless build_hash
+      STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
+      exit(1)
+    end
+
+    puts 'Downloading artifacts file...'
+    filename = 'tmp/artifacts.json'
+    `curl -s https://artifacts-api.elastic.co/v1/versions/#{version_number} -o #{filename}`
+
+    unless File.exists?("./#{filename}")
+      STDERR.puts '[!] Couldn\'t download artifacts file'
+      exit 1
+    end
+
+    artifacts = JSON.parse(File.read('./tmp/artifacts.json'))
+
+    build_hash_artifact = artifacts['version']['builds'].select do |a|
+      a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
+    end.first
+    # Dig into the elasticsearch packages, search for the rest-resources-zip package and catch the URL:
+    zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+
+    filename = zip_url.split('/').last
+    puts 'Downloading zip file:'
+    `curl -s #{zip_url} -o tmp/#{filename}`
+
+    unless File.exists?("./tmp/#{filename}")
+      STDERR.puts '[!] Couldn\'t download artifact'
+      exit 1
+    end
+
+    puts "Unzipping file #{filename}"
+    `unzip -o tmp/#{filename} -d tmp/`
   end
 end
 
