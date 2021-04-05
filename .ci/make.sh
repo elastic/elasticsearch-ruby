@@ -135,7 +135,7 @@ mkdir -p "$OUTPUT_DIR"
 
 # Convert ARGS to comma separated string for Rake:
 args_string="${TASK_ARGS[*]}"
-args_string="${args_string// /,}
+args_string="${args_string// /,}"
 
 docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
@@ -143,14 +143,14 @@ docker run \
        --volume $REPO_BINDING \
        --rm \
        $product \
-       bundle exec rake unified_release:"$TASK"["$args_string""]
+       bundle exec rake unified_release:"$TASK"["$args_string"]
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
 # ------------------------------------------------------- #
 
 if [[ "$CMD" == "assemble" ]]; then
-	  if compgen -G ".ci/output/*" > /dev/null; then
+	  if compgen -G ".ci/output" > /dev/null; then
 		    echo -e "\033[32;1mTARGET: successfully assembled client v$VERSION\033[0m"
 	  else
 		    echo -e "\033[31;1mTARGET: assemble failed, empty workspace!\033[0m"
