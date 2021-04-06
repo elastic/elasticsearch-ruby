@@ -141,6 +141,7 @@ docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
        --name test-runner \
        --volume $REPO_BINDING \
+       --volume $repo:/usr/src/app \
        --rm \
        $product \
        bundle exec rake unified_release:"$TASK"["$args_string"]
