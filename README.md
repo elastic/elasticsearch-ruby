@@ -105,37 +105,8 @@ This will clone the Elasticsearch repository into the project, and run `bundle i
 
 To run tests, you need to start a testing cluster on port 9250, or provide a different one in the `TEST_CLUSTER_PORT` environment variable.
 
-There's a Rake task to start the testing cluster. By default this is going to try and use the `elasticsearch` command on your system:
+There's a Rake task to start a testing cluster in a Docker container:
 
-```
-rake test:cluster:start
-```
-
-You can also configure where the elasticsearch startup script is found with the `TEST_CLUSTER_COMMAND` environment variable, e.g.:
-```
-TEST_CLUSTER_COMMAND=~/elasticsearch/bin/elasticsearch rake test:cluster:stop
-```
-
-You also can configure the port, number of nodes, and other settings with environment variables:
-
-```
-TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
-TEST_CLUSTER_PORT=9250 \
-TEST_CLUSTER_NODES=2 \
-TEST_CLUSTER_NAME=my_cluster \
-ES_JAVA_OPTS='-Xms500m -Xmx500m' \
-TEST_CLUSTER_TIMEOUT=120 \
-rake test:cluster:start
-```
-
-You can stop the cluster with a rake task, passing in the `TEST_CLUSTER_COMMAND` variable:
-
-```
-TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
-rake test:cluster:stop
-```
-
-There's also a rake task for starting up Elasticsearch in a Docker container:
 `rake docker:start[version]` - E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with X-Pack, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`.
 
 To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build` Rake task to build Elasticsearch from the cloned source (use `rake elasticsearch:update` to update the repository):
