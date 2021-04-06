@@ -6,6 +6,13 @@ require 'spec_helper'
 require 'rest_yaml_tests_helper'
 
 describe 'Rest API YAML tests' do
+  if REST_API_YAML_FILES.empty?
+    logger = Logger.new($stdout)
+    logger.error 'No test files found!'
+    logger.info 'Use rake test:rest_api[true] to download the test artifacts.'
+    exit 1
+  end
+
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
     begin
