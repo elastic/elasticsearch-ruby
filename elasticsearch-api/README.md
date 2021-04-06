@@ -13,8 +13,7 @@ It does not provide an Elasticsearch client; see the
 
 The library is compatible with Ruby 1.9 and higher.
 
-It is compatible with Elasticsearch's API versions from 0.90 till current,
-just use a release matching major version of Elasticsearch.
+It is compatible with Elasticsearch's API versions from 0.90 till current, just use a release matching major version of Elasticsearch.
 
 | Ruby          |   | Elasticsearch |
 |:-------------:|:-:| :-----------: |
@@ -190,18 +189,18 @@ Elasticsearch::API.serializer.dump({foo: 'bar'})
 
 ## Development
 
-To work on the code, clone and bootstrap the main repository first --
-please see instructions in the main [README](../README.md#development).
+To work on the code, clone and bootstrap the main repository first -- please see instructions in the main [README](../README.md#development).
 
-To run tests, launch a testing cluster -- again, see instructions
-in the main [README](../README.md#development) -- and use the Rake tasks:
+To run tests, launch a testing cluster -- again, see instructions in the main [README](../README.md#development) -- and use the Rake tasks:
 
 ```
 time rake test:unit
 time rake test:integration
 ```
 
-You can read more about how we test the API using the Elasticsearch spec in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/master/api-spec-testing#rest-api-yaml-test-runner).
+We generate the API implementation using the Elasticsearch REST API specification. We also run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/master/api-spec-testing#rest-api-yaml-test-runner).
+
+The `rest_api` needs the test files from Elasticsearch. You can pass in `true` to the task for it to download abd extract the test files: `rake test:rest_api[true]`.
 
 ## License
 
