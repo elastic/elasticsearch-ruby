@@ -57,11 +57,61 @@ namespace :test do
   end
 
   desc 'Run security (Platinum) rest api yaml tests'
-  task security: 'elasticsearch:update' do
-    Rake::Task['elasticsearch:wait_for_green'].invoke
-    Rake::Task['elasticsearch:checkout_build'].invoke
+  task security: 'elasticsearch:wait_for_green' do
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-xpack')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api"
     puts "\n"
+  end
+
+  desc 'Download test artifacts for running cluster'
+  task :download_artifacts do
+    require 'elasticsearch'
+    begin
+      url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER'] ||
+            "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9200}"
+      client = Elasticsearch::Client.new(url: url)
+      es_version_info = client.info['version']
+      version_number = es_version_info['number']
+      build_hash      = es_version_info['build_hash']
+    rescue Faraday::ConnectionFailed
+      STDERR.puts "[!] Test cluster not running?"
+      exit 1
+    end
+
+    unless build_hash
+      STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
+      exit(1)
+    end
+
+    puts 'Downloading artifacts file.'
+    filename = 'tmp/artifacts.json'
+    `curl -s https://artifacts-api.elastic.co/v1/versions/#{version_number} -o #{filename}`
+
+    unless File.exists?("./#{filename}")
+      STDERR.puts '[!] Couldn\'t download artifacts file'
+      exit 1
+    end
+
+    artifacts = JSON.parse(File.read('./tmp/artifacts.json'))
+
+    build_hash_artifact = artifacts['version']['builds'].select do |a|
+      a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
+    end.first
+    # Dig into the elasticsearch packages, search for the rest-resources-zip package and catch the URL:
+    zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+
+    filename = zip_url.split('/').last
+    puts 'Downloading zip file.'
+    `curl -s #{zip_url} -o tmp/#{filename}`
+
+    unless File.exists?("./tmp/#{filename}")
+      STDERR.puts '[!] Couldn\'t download artifact'
+      exit 1
+    end
+
+    puts "Unzipping file #{filename}"
+    `unzip -o tmp/#{filename} -d tmp/`
+    `rm tmp/#{filename}`
+    puts 'Artifacts downloaded in ./tmp'
   end
 end

@@ -47,17 +47,17 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/test/free"
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/free"
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
                 path = File.expand_path(File.dirname('..'), '..')
 
                 if test_target.match?(/\.yml$/)
-                  ["#{PROJECT_PATH}/tmp/rest-api-spec/test/free/#{test_target}"]
+                  ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/free/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/tmp/rest-api-spec/test/free/#{test_target}/*.yml"]
+                    ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/free/#{test_target}/*.yml"]
                   )
                 end
               end
