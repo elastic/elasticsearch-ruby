@@ -19,6 +19,13 @@ require 'spec_helper'
 require 'rest_yaml_tests_helper'
 
 describe 'XPack Rest API YAML tests' do
+  if REST_API_YAML_FILES.empty?
+    logger = Logger.new($stdout)
+    logger.error 'No test files found!'
+    logger.info 'Use rake test:rest_api[true] to download the test artifacts.'
+    exit 1
+  end
+
   REST_API_YAML_FILES.each do |file|
     begin
       test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
