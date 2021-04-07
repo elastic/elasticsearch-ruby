@@ -88,15 +88,12 @@ namespace :test do
   task :download_artifacts do
     require 'elasticsearch'
     begin
-      url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER'] ||
-            "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9200}"
-      client = Elasticsearch::Client.new(url: url)
-      es_version_info = client.info['version']
+      es_version_info = admin_client.info['version']
       version_number = es_version_info['number']
-      build_hash      = es_version_info['build_hash']
-    rescue Faraday::ConnectionFailed
+      build_hash = es_version_info['build_hash']
+    rescue Faraday::ConnectionFailed => e
       STDERR.puts "[!] Test cluster not running?"
-      exit 1
+      abort e
     end
 
     unless build_hash
@@ -106,7 +103,22 @@ namespace :test do
 
     puts 'Downloading artifacts file.'
     filename = CURRENT_PATH.join('tmp/artifacts.json')
-    `curl -s https://artifacts-api.elastic.co/v1/versions/#{version_number} -o #{filename}`
+
+    # Download with Ruby
+    begin
+      Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
+      require 'open-uri'
+      File.open(filename, "w") do |downloaded_file|
+        URI.open("https://artifacts-api.elastic.co/v1/versions/#{version_number}", "rb") do |artifact_file|
+          downloaded_file.write(artifact_file.read)
+        end
+      end
+      puts "Successfully downloaded #{filename}"
+    rescue StandardError => e
+      STDERR.puts "[!] Failed to download artifact to #{filename}"
+      raise e
+      exit 1
+    end
 
     unless File.exists?(filename)
       STDERR.puts '[!] Couldn\'t download artifacts file'

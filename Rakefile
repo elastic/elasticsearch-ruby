@@ -15,6 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 
+# Admin client is used by tests and other rake tasks to communicate with a running cluster.
+def admin_client
+  $admin_client ||= begin
+                      transport_options = {}
+                      test_suite = ENV['TEST_SUITE'].freeze
+
+                      if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
+                        split_hosts = hosts.split(',').map do |host|
+                          /(http\:\/\/)?\S+/.match(host)
+                        end
+                        uri = URI.parse(split_hosts.first[0])
+                      end
+
+                      if test_suite == 'platinum'
+                        transport_options.merge!(
+                          ssl: {
+                            verify: false,
+                            ca_path: CERT_DIR
+                          }
+                        )
+
+                        password = ENV['ELASTIC_PASSWORD']
+                        user     = ENV['ELASTIC_USER'] || 'elastic'
+                        url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                      else
+                        url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
+                      end
+                      puts "Elasticsearch Client url: #{url}"
+                      Elasticsearch::Client.new(host: url, transport_options: transport_options)
+                    end
+end
+
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'rake_tasks/docker_tasks.rake'
@@ -43,37 +75,6 @@ CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 
 # Import build task after setting constants:
 import 'rake_tasks/unified_release_tasks.rake'
-
-def admin_client
-  $admin_client ||= begin
-    transport_options = {}
-    test_suite = ENV['TEST_SUITE'].freeze
-
-    if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
-      split_hosts = hosts.split(',').map do |host|
-        /(http\:\/\/)?\S+/.match(host)
-      end
-      uri = URI.parse(split_hosts.first[0])
-    end
-
-    if test_suite == 'platinum'
-      transport_options.merge!(
-        ssl: {
-          verify: false,
-          ca_path: CERT_DIR
-        }
-      )
-
-      password = ENV['ELASTIC_PASSWORD']
-      user     = ENV['ELASTIC_USER'] || 'elastic'
-      url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
-    else
-      url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
-    end
-    puts "Elasticsearch Client url: #{url}"
-    Elasticsearch::Client.new(host: url, transport_options: transport_options)
-  end
-end
 
 # TODO: Figure out "bundle exec or not"
 # subprojects.each { |project| $LOAD_PATH.unshift CURRENT_PATH.join(project, "lib").to_s }
