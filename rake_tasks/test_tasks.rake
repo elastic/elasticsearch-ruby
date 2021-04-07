@@ -84,15 +84,15 @@ namespace :test do
     end
 
     puts 'Downloading artifacts file.'
-    filename = 'tmp/artifacts.json'
+    filename = CURRENT_PATH.join('tmp/artifacts.json')
     `curl -s https://artifacts-api.elastic.co/v1/versions/#{version_number} -o #{filename}`
 
-    unless File.exists?("./#{filename}")
+    unless File.exists?(filename)
       STDERR.puts '[!] Couldn\'t download artifacts file'
       exit 1
     end
 
-    artifacts = JSON.parse(File.read('./tmp/artifacts.json'))
+    artifacts = JSON.parse(File.read(filename))
 
     build_hash_artifact = artifacts['version']['builds'].select do |a|
       a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash

@@ -50,7 +50,7 @@ if [[ $TEST_SUITE != "platinum" ]]; then
            --name elasticsearch-ruby \
            --rm \
            elastic/elasticsearch-ruby \
-           bundle exec rake test:rest_api
+           bundle exec rake test:download_artifacts test:rest_api
 else
     docker run \
            --network="${network_name}" \
@@ -63,5 +63,5 @@ else
            --name elasticsearch-ruby \
            --rm \
            elastic/elasticsearch-ruby \
-           bundle exec rake test:security
+           bundle exec rake test:download_artifacts test:security
 fi
