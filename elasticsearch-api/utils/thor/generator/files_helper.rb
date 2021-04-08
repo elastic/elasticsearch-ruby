@@ -21,34 +21,50 @@ require_relative '../../../lib/elasticsearch/api/version.rb'
 module Elasticsearch
   module API
     module FilesHelper
-      OSS_SRC_PATH   = '../../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/'.freeze
+      PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
+      SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/')
       OSS_OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
-
-      XPACK_SRC_PATH   = '../../../../../tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/api'.freeze
       XPACK_OUTPUT_DIR = '../../elasticsearch-xpack/lib/elasticsearch/xpack/api/actions'.freeze
 
-      # Path to directory with JSON API specs
-      def self.input_dir(api)
-        input_dir = if api == :xpack
-                      File.expand_path(XPACK_SRC_PATH, __FILE__)
-                    else
-                      File.expand_path(OSS_SRC_PATH, __FILE__)
-                    end
-        Pathname(input_dir)
+      TESTS_DIRECTORIES = {
+        oss: "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/free",
+        xpack: "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/platinum"
+      }.freeze
+
+      # Only get JSON files and remove hidden files
+      def self.files(api)
+        json_files = if api == :xpack
+                       xpack_files
+                     else
+                       Dir.entries(SRC_PATH) - xpack_files
+                     end
+        json_files.reject do |file|
+          File.extname(file) != '.json' ||
+            File.basename(file) == '_common.json'
+        end.map { |file| "#{SRC_PATH}#{file}" }
+      end
+
+      XPACK_ENDPOINTS = [
+        'autoscaling', 'cross_cluster_replication', 'ccr', 'data_frame_transform_deprecated',
+        'enrich', 'eql', 'ilm', 'logstash', 'migration', 'watcher', 'slm'
+      ]
+      XPACK_ENDPOINTS_REGEXP = /data_stream|ml_|reload_search_analyzers|transform/
+
+      def self.xpack_files
+        xpack_tests = Dir.entries(TESTS_DIRECTORIES[:xpack])
+        Dir.entries(SRC_PATH).map do |entry|
+          filename = entry.split('.').first
+          if xpack_tests.include?(filename) ||
+                                  XPACK_ENDPOINTS.include?(filename) ||
+                                  entry.match?(XPACK_ENDPOINTS_REGEXP)
+            entry
+          end
+        end.compact
       end
 
       # Path to directory to copy generated files
       def self.output_dir(api)
         api == :xpack ? Pathname(XPACK_OUTPUT_DIR) : Pathname(OSS_OUTPUT_DIR)
-      end
-
-      # Only get JSON files and remove hidden files
-      def self.files(api)
-        Dir.entries(input_dir(api).to_s).reject do |f|
-          f.start_with?('.') ||
-            f.start_with?('_') ||
-            File.extname(f) != '.json'
-        end
       end
 
       def self.documentation_url(documentation_url)
@@ -57,7 +73,12 @@ module Elasticsearch
 
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         version = Elasticsearch::API::VERSION.match(regex)[0]
-        documentation_url.gsub(/\/(current|master)\//, "/#{version}/")
+        # TODO - How do we fix this so it doesn't depend on which branch we're running from
+        if version == '8.0'
+          documentation_url
+        else
+          documentation_url.gsub(/\/(current|master)\//, "/#{version}/")
+        end
       end
     end
   end
