@@ -66,11 +66,10 @@ module Elasticsearch
 
       def __generate_source(api)
         @current_api = api
-        @input = FilesHelper.input_dir(api)
         @output = FilesHelper.output_dir(api)
 
         FilesHelper.files(api).each do |filepath|
-          @path = Pathname(@input.join(filepath))
+          @path = Pathname(filepath)
           @json = MultiJson.load(File.read(@path))
           @spec = @json.values.first
           say_status 'json', @path, :yellow
