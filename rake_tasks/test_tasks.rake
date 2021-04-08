@@ -26,6 +26,7 @@ UNIT_TESTED_PROJECTS = [
 INTEGRATION_TESTED_PROJECTS = (UNIT_TESTED_PROJECTS - ['elasticsearch-api']).freeze
 
 namespace :test do
+  require 'open-uri'
   task bundle: 'bundle:install'
 
   desc 'Run all tests in all subprojects'
@@ -65,65 +66,74 @@ namespace :test do
 
   desc 'Download test artifacts for running cluster'
   task :download_artifacts do
+    json_filename = CURRENT_PATH.join('tmp/artifacts.json')
+
+    # Get version number and build hash of running cluster:
+    es_info = cluster_info
+    version_number = cluster_info['number']
+    build_hash = cluster_info['build_hash']
+
+    # Create ./tmp if it doesn't exist
+    Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
+
+    # Download json file with package information for version:
+    json_url = "https://artifacts-api.elastic.co/v1/versions/#{version_number}"
+    download_file!(json_url, json_filename)
+
+    # Get the package url from the json file given the build hash
+    zip_url = package_url(json_filename, build_hash)
+
+    # Download the zip file
+    filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
+    download_file!(zip_url, filename)
+
+    puts "Unzipping file #{filename}"
+    `unzip -o #{filename} -d tmp/`
+    `rm #{filename}`
+    puts 'Artifacts downloaded in ./tmp'
+  end
+
+  # Returns: version_number, build_hash
+  def cluster_info
     require 'elasticsearch'
+    version_info = admin_client.info['version']
+    abort('[!] Cannot determine cluster version information -- Is the server running?') unless version_info
+
+    version_info
+  rescue Faraday::ConnectionFailed => e
+    STDERR.puts "[!] Test cluster not running?"
+    abort e
+  end
+
+  def package_url(filename, build_hash)
     begin
-      es_version_info = admin_client.info['version']
-      version_number = es_version_info['number']
-      build_hash = es_version_info['build_hash']
-    rescue Faraday::ConnectionFailed => e
-      STDERR.puts "[!] Test cluster not running?"
-      abort e
-    end
-
-    unless build_hash
-      STDERR.puts "[!] Cannot determine checkout build hash -- server not running"
-      exit(1)
-    end
-
-    puts 'Downloading artifacts file.'
-    filename = CURRENT_PATH.join('tmp/artifacts.json')
-
-    # Download with Ruby
-    begin
-      Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
-      require 'open-uri'
-      File.open(filename, "w") do |downloaded_file|
-        URI.open("https://artifacts-api.elastic.co/v1/versions/#{version_number}", "rb") do |artifact_file|
-          downloaded_file.write(artifact_file.read)
-        end
-      end
-      puts "Successfully downloaded #{filename}"
+      artifacts = JSON.parse(File.read(filename))
     rescue StandardError => e
-      STDERR.puts "[!] Failed to download artifact to #{filename}"
-      raise e
+      STDERR.puts "[!] Couldn't read JSON file #{filename}"
       exit 1
     end
-
-    unless File.exists?(filename)
-      STDERR.puts '[!] Couldn\'t download artifacts file'
-      exit 1
-    end
-
-    artifacts = JSON.parse(File.read(filename))
 
     build_hash_artifact = artifacts['version']['builds'].select do |a|
       a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
     end.first
-    # Dig into the elasticsearch packages, search for the rest-resources-zip package and catch the URL:
-    zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+    # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
+    build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+  end
 
-    filename = zip_url.split('/').last
-    puts 'Downloading zip file.'
-    `curl -s #{zip_url} -o tmp/#{filename}`
+  def download_file!(url, filename)
+    puts "Downloading #{filename} from #{url}"
+    File.open(filename, "w") do |downloaded_file|
+      URI.open(url, "rb") do |artifact_file|
+        downloaded_file.write(artifact_file.read)
+      end
+    end
+    puts "Successfully downloaded #{filename}"
 
-    unless File.exists?("./tmp/#{filename}")
-      STDERR.puts '[!] Couldn\'t download artifact'
+    unless File.exists?(filename)
+      STDERR.puts "[!] Couldn't download #{filename}"
       exit 1
     end
-
-    puts "Unzipping file #{filename}"
-    `unzip -o tmp/#{filename} -d tmp/`
-    `rm tmp/#{filename}`
-    puts 'Artifacts downloaded in ./tmp'
+  rescue StandardError => e
+    abort e
   end
 end

@@ -45,11 +45,9 @@ ca_file = File.join(PROJECT_PATH, '/.ci/certs/ca.crt')
 
 if defined?(TEST_HOST) && defined?(TEST_PORT)
   if TEST_SUITE == 'platinum'
-    TRANSPORT_OPTIONS.merge!(:ssl => { verify: false,
-                                       client_cert: certificate,
-                                       client_key: key,
-                                       ca_file: ca_file })
-
+    TRANSPORT_OPTIONS.merge!(
+      ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file }
+    )
     password = ENV['ELASTIC_PASSWORD']
     URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
   else
