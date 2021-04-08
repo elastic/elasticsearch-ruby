@@ -40,8 +40,8 @@ namespace :test do
     t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
-  desc "Run Rest API Spec tests, use `rake test:rest_api[true]` to update artifacts"
-  RSpec::Core::RakeTask.new(:rest_api, :refresh) do |t, args|
+  desc "Run Rest API Spec tests"
+  RSpec::Core::RakeTask.new(:rest_api) do |t|
     require 'elasticsearch'
     # Check if a test cluster is running
     begin
@@ -51,10 +51,8 @@ namespace :test do
       es_version_info = client.info['version']
       version_number = es_version_info['number']
       build_hash      = es_version_info['build_hash']
-      cluster_running = true
     rescue Faraday::ConnectionFailed
       STDERR.puts "[!] Test cluster not running?"
-      cluster_running = false
       exit 1
     end
 
