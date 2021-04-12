@@ -67,7 +67,7 @@ END
 ))
 else
   environment+=($(cat <<-END
-    --env node.roles=data,ingest,master,remote_cluster_client
+    --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,ml,remote_cluster_client,transform
 END
 ))
 fi
