@@ -73,6 +73,7 @@ namespace :test do
     version_number = cluster_info['number']
     build_hash = cluster_info['build_hash']
 
+    puts "Build hash: #{build_hash}"
     # Create ./tmp if it doesn't exist
     Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
 
