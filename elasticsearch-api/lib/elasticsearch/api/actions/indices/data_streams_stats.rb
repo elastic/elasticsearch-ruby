@@ -22,10 +22,6 @@ module Elasticsearch
         # Provides statistics on operations happening in a data stream.
         #
         # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both.
-        #   (options: open,closed,hidden,none,all)
-
-        # @option arguments [Boolean] :forbid_closed_indices If set to false stats will also collected from closed indices if explicitly specified or if expand_wildcards expands to closed indices
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
@@ -43,19 +39,11 @@ module Elasticsearch
                    else
                      "_data_stream/_stats"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = {}
 
           body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:data_streams_stats, [
-          :expand_wildcards,
-          :forbid_closed_indices
-        ].freeze)
       end
     end
   end

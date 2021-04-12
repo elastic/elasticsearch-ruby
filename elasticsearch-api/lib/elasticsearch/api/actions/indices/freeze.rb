@@ -19,37 +19,47 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # In order to keep indices available and queryable for a longer period but at the same time reduce their
-        #   hardware requirements they can be transitioned into a frozen state. Once an index is frozen, all of its
-        #   transient shard memory (aside from mappings and analyzers) is moved to persistent storage.
+        # Freezes an index. A frozen index has almost no overhead on the cluster (except for maintaining its metadata in memory) and is read-only.
         #
-        # @option arguments [List] :index A comma separated list of indices to freeze. (*Required*)
+        # @option arguments [String] :index The name of the index to freeze
+        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+        # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @note This feature is available in the Platinum distribution of Elasticsearch.
-        #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/freeze-index-api.html
         #
         def freeze(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-          valid_params = [
-            :timeout,
-            :master_timeout,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :wait_for_active_shards
-          ]
+          headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
-          index = arguments.delete(:index)
+
+          _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), '_freeze'
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+          path   = "#{Utils.__listify(_index)}/_freeze"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          perform_request(method, path, params).body
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:freeze, [
+          :timeout,
+          :master_timeout,
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :wait_for_active_shards
+        ].freeze)
       end
     end
   end
