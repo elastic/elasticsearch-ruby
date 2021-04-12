@@ -18,18 +18,25 @@
 module Elasticsearch
   module API
     module Ingest
-      module Actions; end
+      module Actions
+        # Returns statistical information about geoip databases
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-stats-api.html
+        #
+        def geo_ip_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "ingest" namespace (includes the {Ingest::Actions} methods)
-      #
-      class IngestClient
-        include Common::Client, Common::Client::Base, Ingest::Actions
-      end
+          arguments = arguments.clone
 
-      # Proxy method for {IngestClient}, available in the receiving object
-      #
-      def ingest
-        @ingest ||= IngestClient.new(self)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_ingest/geoip/stats"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end

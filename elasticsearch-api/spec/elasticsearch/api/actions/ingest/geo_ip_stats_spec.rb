@@ -15,22 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module Ingest
-      module Actions; end
+require 'spec_helper'
 
-      # Client for the "ingest" namespace (includes the {Ingest::Actions} methods)
-      #
-      class IngestClient
-        include Common::Client, Common::Client::Base, Ingest::Actions
-      end
+describe 'client.ingest#geo_ip_stats' do
+  let(:expected_args) do
+    [
+      'GET',
+      '_ingest/geoip/stats',
+      {},
+      nil,
+      {}
+    ]
+  end
 
-      # Proxy method for {IngestClient}, available in the receiving object
-      #
-      def ingest
-        @ingest ||= IngestClient.new(self)
-      end
-    end
+  let(:client) do
+    Class.new { include Elasticsearch::API }.new
+  end
+
+  it 'performs the request' do
+    expect(client_double.ingest.geo_ip_stats).to eq({})
   end
 end
