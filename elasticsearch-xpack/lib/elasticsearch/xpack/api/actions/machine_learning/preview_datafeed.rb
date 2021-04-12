@@ -24,23 +24,31 @@ module Elasticsearch
           #
           # @option arguments [String] :datafeed_id The ID of the datafeed to preview
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
           #
           def preview_datafeed(arguments = {})
-            raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
-
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
             _datafeed_id = arguments.delete(:datafeed_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path = if _datafeed_id
+                     "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
+                   else
+                     "_ml/datafeeds/_preview"
+                   end
             params = {}
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
         end
