@@ -35,7 +35,7 @@ else
   TEST_HOST, TEST_PORT = 'localhost', '9200'
 end
 
-raw_certificate = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.crt'))
+raw_certificate = File.read(File.join(PROJECT_PATH, '.ci/certs/testnode.crt'))
 certificate = OpenSSL::X509::Certificate.new(raw_certificate)
 
 raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
@@ -69,13 +69,13 @@ YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum"
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
-                path = File.expand_path(File.dirname('..'), '..')
+                path = File.expand_path(File.dirname('..'))
 
                 if test_target.match?(/\.yml$/)
                   ["#{path}/../tmp/rest-api-spec/test/platinum/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/platinum/#{test_target}/*.yml"]
+                    ["#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum/#{test_target}/*.yml"]
                   )
                 end
               end
