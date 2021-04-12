@@ -55,18 +55,4 @@ describe 'client.indices#data_streams_stats' do
       expect(client_double.indices.data_streams_stats(name: 'foo')).to eq({})
     end
   end
-
-  context 'when params are specified' do
-    let(:params) do
-      { expand_wildcards: '*' }
-    end
-
-    let(:url) do
-      '_data_stream/foo/_stats'
-    end
-
-    it 'performs the request' do
-      expect(client_double.indices.data_streams_stats(name: 'foo', expand_wildcards: '*')).to eq({})
-    end
-  end
 end

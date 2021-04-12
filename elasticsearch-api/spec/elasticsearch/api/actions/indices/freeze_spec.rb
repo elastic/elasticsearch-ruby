@@ -25,7 +25,7 @@ describe 'client.indices#freeze' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 
