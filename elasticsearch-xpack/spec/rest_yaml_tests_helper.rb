@@ -22,7 +22,7 @@ include Elasticsearch::RestAPIYAMLTests
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
 TRANSPORT_OPTIONS = {}
-TEST_SUITE = ENV['TEST_SUITE'].freeze
+TEST_SUITE = ENV['TEST_SUITE'].freeze || 'platinum'
 
 if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
   split_hosts = hosts.split(',').map do |host|
@@ -48,7 +48,7 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
     TRANSPORT_OPTIONS.merge!(
       ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file }
     )
-    password = ENV['ELASTIC_PASSWORD']
+    password = ENV['ELASTIC_PASSWORD'] || 'changeme'
     URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
   else
     URL = "http://#{TEST_HOST}:#{TEST_PORT}"
