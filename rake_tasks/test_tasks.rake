@@ -114,9 +114,15 @@ namespace :test do
       exit 1
     end
 
-    build_hash_artifact = artifacts['version']['builds'].select do |a|
-      a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
+    build_hash_artifact = artifacts['version']['builds'].select do |build|
+      build.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
     end.first
+
+    unless build_hash_artifact
+      STDERR.puts "[!] Could not find artifact with build hash #{build_hash}, using latest instead"
+      build_hash_artifact = artifacts['version']['builds'].first
+    end
+
     # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
     build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
   end
