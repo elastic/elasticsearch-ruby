@@ -46,7 +46,7 @@ module Elasticsearch
 
       XPACK_ENDPOINTS = [
         'autoscaling', 'cross_cluster_replication', 'ccr', 'data_frame_transform_deprecated',
-        'enrich', 'eql', 'ilm', 'logstash', 'migration', 'watcher', 'slm'
+        'enrich', 'eql', 'fleet', 'ilm', 'logstash', 'migration', 'watcher', 'slm'
       ]
       XPACK_ENDPOINTS_REGEXP = /data_stream|ml_|reload_search_analyzers|transform/
 
