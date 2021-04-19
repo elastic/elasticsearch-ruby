@@ -21,10 +21,6 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Creates an inference trained model.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
           #
           # @option arguments [String] :model_id The ID of the trained models to store
           # @option arguments [Hash] :headers Custom HTTP headers

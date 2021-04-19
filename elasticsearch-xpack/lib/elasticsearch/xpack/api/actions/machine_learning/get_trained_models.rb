@@ -21,10 +21,6 @@ module Elasticsearch
       module MachineLearning
         module Actions
           # Retrieves configuration information for a trained inference model.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
           #
           # @option arguments [String] :model_id The ID of the trained models to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
