@@ -161,6 +161,10 @@ module Elasticsearch
       def logstash
         @logstash ||= xpack.logstash
       end
+
+      def fleet
+        @fleet ||= xpack.fleet
+      end
     end
   end
 end if defined?(Elasticsearch::Transport::Client)
