@@ -125,7 +125,7 @@ client.bulk(body: body)
 === Searching for a document
 
 This example uses the same data that is used in the 
-{ref}/current//current/find-structure.html#find-structure-example-nld-json[Find structure API documentation].
+{ref}/current/find-structure.html#find-structure-example-nld-json[Find structure API documentation].
 
 First, bulk index it:
 
