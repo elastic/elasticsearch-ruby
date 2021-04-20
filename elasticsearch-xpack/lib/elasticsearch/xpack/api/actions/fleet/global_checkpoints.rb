@@ -28,6 +28,7 @@ module Elasticsearch
           #
           # @option arguments [String] :index The name of the index.
           # @option arguments [Boolean] :wait_for_advance Whether to wait for the global checkpoint to advance past the specified current checkpoints
+          # @option arguments [Boolean] :wait_for_index Whether to wait for the target index to exist and all primary shards be active
           # @option arguments [List] :checkpoints Comma separated list of checkpoints
           # @option arguments [Time] :timeout Timeout to wait for global checkpoint to advance
           # @option arguments [Hash] :headers Custom HTTP headers
@@ -56,6 +57,7 @@ module Elasticsearch
           # @since 6.2.0
           ParamsRegistry.register(:global_checkpoints, [
             :wait_for_advance,
+            :wait_for_index,
             :checkpoints,
             :timeout
           ].freeze)

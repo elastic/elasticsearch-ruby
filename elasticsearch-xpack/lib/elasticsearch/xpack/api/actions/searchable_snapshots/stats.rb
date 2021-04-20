@@ -20,7 +20,7 @@ module Elasticsearch
     module API
       module SearchableSnapshots
         module Actions
-          # Retrieve various statistics about searchable snapshots.
+          # Retrieve shard-level statistics about searchable snapshots.
           # This functionality is Experimental and may be changed or removed
           # completely in a future release. Elastic will take a best effort approach
           # to fix any issues, but experimental features are not subject to the
