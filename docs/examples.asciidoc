@@ -68,9 +68,10 @@ client.update(index: 'books', id: id, body: { doc: { page_count: 225 } })
 [[ex-delete]]
 === Deleting a document
 
-id = 'l7LRjXgB2_ry9btNEv_V'
+You can delete a document by ID:
 
 ```ruby
+id = 'l7LRjXgB2_ry9btNEv_V'
 client.delete(index: 'books', id: id)
 ```
 
