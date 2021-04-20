@@ -54,6 +54,8 @@ module Elasticsearch
         xpack_tests = Dir.entries(TESTS_DIRECTORIES[:xpack])
         Dir.entries(SRC_PATH).map do |entry|
           filename = entry.split('.').first
+          next if filename == 'snapshot'
+
           if xpack_tests.include?(filename) ||
                                   XPACK_ENDPOINTS.include?(filename) ||
                                   entry.match?(XPACK_ENDPOINTS_REGEXP)
