@@ -130,7 +130,8 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/find-structure.h
 
 First, bulk index it:
 
-ruby```
+[source,console]
+----
 body = [
   { index: { _index: 'books', data: {name: "Leviathan Wakes", "author": "James S.A. Corey", "release_date": "2011-06-02", "page_count": 561} } },
   { index: { _index: 'books', data: {name: "Hyperion", "author": "Dan Simmons", "release_date": "1989-05-26", "page_count": 482} } },
@@ -158,7 +159,7 @@ body = [
   { index: { _index: 'books', data: {name: "The Moon is a Harsh Mistress", "author": "Robert A. Heinlein", "release_date": "1966-04-01", "page_count": 288 } } }
 ]
 client.bulk(body: body)
-```
+----
 
 The `field` parameter is a common parameter, so it can be passed in directly in 
 the following way:
