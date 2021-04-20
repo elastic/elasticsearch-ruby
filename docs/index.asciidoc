@@ -18,4 +18,6 @@ include::advanced-config.asciidoc[]
 
 include::integrations.asciidoc[]
 
+include::examples.asciidoc[]
+
 include::release_notes/index.asciidoc[]
