@@ -59,7 +59,7 @@ You can update the document by using the following script:
 
 ```ruby
 response = client.index(index: 'books', body: book)
-id = response[‘_id’]
+id = response['_id']
 client.update(index: 'books', id: id, body: { doc: { page_count: 225 } })
 ```
 
