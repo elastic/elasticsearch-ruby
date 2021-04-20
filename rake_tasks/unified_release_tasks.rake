@@ -55,4 +55,39 @@ namespace :unified_release do
     sh "cd #{CURRENT_PATH.join(output_dir)} && " \
        "zip -r #{@zip_filename}.zip * " \
   end
+
+  desc <<-DESC
+  Update Rubygems versions in version.rb and *.gemspec files
+
+  Example:
+
+      $ rake unified_release:bump[42.0.0]
+  DESC
+  task :bump, :version do |_, args|
+    abort('[!] Required argument [version] missing') unless args[:version]
+
+    files = ['elasticsearch/elasticsearch.gemspec']
+    RELEASE_TOGETHER.each do |gem|
+      files << Dir["./#{gem}/**/**/version.rb"]
+    end
+
+    version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
+    gemspec_regexp = Regexp.new(/('elasticsearch-transport'|'elasticsearch-api'),\s+'([0-9.]+)'/)
+
+    files.flatten.each do |file|
+      content = File.read(file)
+      regexp = file.match?('gemspec') ? gemspec_regexp : version_regexp
+
+      if (match = content.match(regexp))
+        old_version = match[2]
+        content.gsub!(old_version, args[:version])
+        puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
+        File.open(file, 'w') { |f| f.puts content }
+      else
+        puts "- [#{file}]".ljust(longest_line+20) + " -"
+      end
+    rescue StandardError => e
+      abort "[!!!] #{e.class} : #{e.message}"
+    end
+  end
 end
