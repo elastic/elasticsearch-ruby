@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-settings.html
         #
         def get_settings(arguments = {})
           headers = arguments.delete(:headers) || {}
@@ -38,7 +38,7 @@ module Elasticsearch
           path   = "_cluster/settings"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body   = nil
           perform_request(method, path, params, body, headers).body
         end
 
