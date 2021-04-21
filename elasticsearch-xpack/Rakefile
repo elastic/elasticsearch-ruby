@@ -35,11 +35,25 @@ desc 'Run integration tests'
 task :integration
 
 namespace :test do
-  RSpec::Core::RakeTask.new(:spec)
+  desc 'Run REST API YAML tests'
+  RSpec::Core::RakeTask.new(:rest_api) do |t|
+    t.pattern = 'spec/xpack/rest_api_yaml_spec.rb'
+  end
 
-  desc 'Run rest api yaml tests'
-  Rake::TestTask.new(:rest_api) do |test|
-    `rm Gemfile.lock`
-    test.deps = [:spec]
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = 'spec/xpack/**/*_spec.rb'
+    t.exclude_pattern = 'spec/xpack/rest_api_yaml_spec.rb'
+  end
+
+  desc "Run integration tests"
+  task :integration do
+    Rake::Task['test:rest_api'].invoke
+  end
+
+  desc "Run all tests"
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:spec'].invoke
+    Rake::Task['test:rest_api'].invoke
   end
 end
