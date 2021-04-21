@@ -31,19 +31,30 @@ Rake::TestTask.new('test:unit') do |test|
 end
 
 namespace :test do
-  RSpec::Core::RakeTask.new(:spec)
+  desc 'Run REST API YAML tests'
+  RSpec::Core::RakeTask.new(:rest_api) do |t|
+    t.pattern = 'spec/xpack/rest_api_yaml_spec.rb'
+  end
 
-  desc 'Run rest api yaml tests'
-  Rake::TestTask.new(:rest_api) do |test|
-    `rm Gemfile.lock`
-    test.deps = [:spec]
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = 'spec/xpack/**/*_spec.rb'
+    t.exclude_pattern = 'spec/xpack/rest_api_yaml_spec.rb'
   end
 
   desc "Run integration tests"
-  task :integration
+  task :integration do
+    Rake::Task['test:rest_api'].invoke
+  end
+
+  desc "Run all tests"
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:spec'].invoke
+    Rake::Task['test:rest_api'].invoke
+  end
 
   desc "Run Elasticsearch with X-Pack installed (Docker)"
-    task :elasticsearch do
+    task :elasticsearch, :stack_version do |_, args|
       sh <<-COMMAND.gsub(/^\s*/, '').gsub(/\s{1,}/, ' ')
         docker run \
           --name elasticsearch-xpack \
@@ -56,14 +67,13 @@ namespace :test do
           --env "path.repo=/tmp" \
           --env "repositories.url.allowed_urls=http://snapshot.test*" \
           --env "bootstrap.memory_lock=true" \
-          --env "ELASTIC_PASSWORD=MagicWord" \
+          --env "ELASTIC_PASSWORD=changeme" \
           --ulimit nofile=65536:65536 \
           --ulimit memlock=-1:-1 \
           --publish 9260:9200 \
-          --volume $(pwd)/tmp/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
           --memory 4g \
           --rm \
-          docker.elastic.co/elasticsearch/elasticsearch:7.0.0-SNAPSHOT
+          docker.elastic.co/elasticsearch/elasticsearch:#{args[:stack_version]}
       COMMAND
     end
 end
