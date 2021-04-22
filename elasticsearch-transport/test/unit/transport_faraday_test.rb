@@ -50,9 +50,9 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Minitest::Test
 
     should "properly prepare the request" do
       @transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
-        assert_equal :post, method
-        assert_equal '{"foo":"bar"}', body
-        assert_nil   headers['Accept']
+        assert_equal(:post, method)
+        assert_equal('{"foo":"bar"}', body)
+        assert_equal(headers['Accept'], Elasticsearch::Transport::Transport::Base::DEFAULT_ACCEPT)
         true
       end.returns(stub_everything)
 
@@ -61,10 +61,10 @@ class Elasticsearch::Transport::Transport::HTTP::FaradayTest < Minitest::Test
 
     should "properly prepare the request with custom headers" do
       @transport.connections.first.connection.expects(:run_request).with do |method, url, body, headers|
-        assert_equal :post, method
-        assert_equal '{"foo":"bar"}', body
-        assert_nil   headers['Accept']
-        assert_equal "application/x-ndjson", headers['Content-Type']
+        assert_equal(:post, method)
+        assert_equal('{"foo":"bar"}', body)
+        assert_equal(headers['Accept'], Elasticsearch::Transport::Transport::Base::DEFAULT_ACCEPT)
+        assert_equal("application/x-ndjson", headers['Content-Type'])
         true
       end.returns(stub_everything)
 

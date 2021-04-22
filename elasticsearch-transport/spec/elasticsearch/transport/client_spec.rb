@@ -52,8 +52,8 @@ describe Elasticsearch::Transport::Client do
     expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['target_cpu']}/)
   end
 
-  it 'sets the \'Content-Type\' header to \'application/json\' by default' do
-    expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+  it 'sets the \'Content-Type\' header to \'compatibility header\' by default' do
+    expect(client.transport.connections.first.connection.headers['Content-Type']).to eq(Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE)
   end
 
   it 'uses localhost by default' do
@@ -125,7 +125,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when a Content-Type header is specified as client option' do
-
     let(:client) do
       described_class.new(transport_options: { headers: { 'Content-Type' => 'testing' } })
     end
@@ -172,8 +171,8 @@ describe Elasticsearch::Transport::Client do
       expect(client.transport.connections.first.connection.headers['User-Agent']).to match(/#{RbConfig::CONFIG['target_cpu']}/)
     end
 
-    it 'sets the \'Content-Type\' header to \'application/json\' by default' do
-      expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+    it 'sets the \'Content-Type\' header to the compatibility header by default' do
+      expect(client.transport.connections.first.connection.headers['Content-Type']).to eq(Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE)
     end
 
     it 'uses localhost by default' do
@@ -181,7 +180,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when a User-Agent header is specified as a client option' do
-
       let(:client) do
         described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
                             transport_options: { headers: { 'User-Agent' => 'testing' } })
@@ -193,7 +191,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when a user-agent header is specified as a client option as lower-case' do
-
       let(:client) do
         described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb,
                             transport_options: { headers: { 'user-agent' => 'testing' } })
@@ -1420,6 +1417,17 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
+    it 'sets the API compatibility headers' do
+      client = described_class.new(host: hosts)
+      headers = client.transport.connections.first.connection.headers
+
+      expect(headers['Content-Type']).to eq(Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE)
+      expect(headers['Accept']).to eq(Elasticsearch::Transport::Transport::Base::DEFAULT_ACCEPT)
+
+      response = client.perform_request('GET', '/')
+      expect(response.headers['content-type']).to eq('application/vnd.elasticsearch+json;compatible-with=8')
+    end
+
     context 'when Elasticsearch response includes a warning header' do
       let(:client) do
         Elasticsearch::Transport::Client.new(hosts: hosts)
@@ -1843,9 +1851,8 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when request headers are specified' do
-
         let(:response) do
-          client.perform_request('GET', '/', {}, nil, { 'Content-Type' => 'application/yaml' })
+          client.perform_request('GET', '/', {}, nil, { 'Accept' => 'application/yaml' })
         end
 
         it 'passes them to the transport' do

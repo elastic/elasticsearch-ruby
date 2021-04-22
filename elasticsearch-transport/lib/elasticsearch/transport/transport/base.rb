@@ -388,7 +388,8 @@ module Elasticsearch
         USER_AGENT_REGEX = /user\-?\_?agent/
         CONTENT_TYPE_STR = 'Content-Type'.freeze
         CONTENT_TYPE_REGEX = /content\-?\_?type/
-        DEFAULT_CONTENT_TYPE = 'application/json'.freeze
+        DEFAULT_CONTENT_TYPE = 'application/vnd.elasticsearch+json; compatible-with=8'.freeze
+        DEFAULT_ACCEPT = 'application/vnd.elasticsearch+json;compatible-with=8'.freeze
         GZIP = 'gzip'.freeze
         ACCEPT_ENCODING = 'Accept-Encoding'.freeze
         GZIP_FIRST_TWO_BYTES = '1f8b'.freeze
@@ -420,6 +421,7 @@ module Elasticsearch
           headers = options[:headers] || {}
           headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
           headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header(client)
+          headers['Accept'] = client.headers['Accept'] || headers['Accept'] || DEFAULT_ACCEPT
           client.headers[ACCEPT_ENCODING] = GZIP if use_compression?
           client.headers.merge!(headers)
         end

@@ -58,7 +58,7 @@ module Elasticsearch
               connection.connection.http(method.to_sym)
 
               response_headers = {}
-              response_headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
+              response_headers['content-type'] = 'application/json' if connection.connection.header_str =~ /json/
 
               Response.new connection.connection.response_code,
                            decompress_response(connection.connection.body_str),
