@@ -145,14 +145,15 @@ module Elasticsearch
         @options[:http]                 ||= {}
 
         set_api_key if (@api_key = @arguments[:api_key])
+        set_compatibility_header if ENV['ELASTIC_CLIENT_APIVERSIONING']
 
         @seeds = extract_cloud_creds(@arguments)
         @seeds ||= __extract_hosts(@arguments[:hosts] ||
-                                     @arguments[:host] ||
-                                     @arguments[:url] ||
-                                     @arguments[:urls] ||
-                                     ENV['ELASTICSEARCH_URL'] ||
-                                     DEFAULT_HOST)
+                                   @arguments[:host] ||
+                                   @arguments[:url] ||
+                                   @arguments[:urls] ||
+                                   ENV['ELASTICSEARCH_URL'] ||
+                                   DEFAULT_HOST)
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
         @opaque_id_prefix = @arguments[:opaque_id_prefix] || nil
@@ -198,6 +199,17 @@ module Elasticsearch
         add_header('Authorization' => "ApiKey #{@api_key}")
         @arguments.delete(:user)
         @arguments.delete(:password)
+      end
+
+      def set_compatibility_header
+        return unless ['1', 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+
+        add_header(
+          {
+            'Accept' => 'application/vnd.elasticsearch+json;compatible-with=7',
+            'Content-Type' => 'application/vnd.elasticsearch+json; compatible-with=7'
+          }
+        )
       end
 
       def add_header(header)
