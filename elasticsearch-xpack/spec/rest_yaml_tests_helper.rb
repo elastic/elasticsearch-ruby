@@ -22,18 +22,18 @@ include Elasticsearch::RestAPIYAMLTests
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
 TRANSPORT_OPTIONS = {}
-TEST_SUITE = ENV['TEST_SUITE'].freeze || 'platinum'
+TEST_SUITE = ENV['TEST_SUITE'] || 'platinum'
 
-if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
-  split_hosts = hosts.split(',').map do |host|
-    /(http\:\/\/)?\S+/.match(host)
-  end
-  uri = URI.parse(split_hosts.first[0])
-  TEST_HOST = uri.host
-  TEST_PORT = uri.port
-else
-  TEST_HOST, TEST_PORT = 'localhost', '9200'
+hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
+raise URI::InvalidURIError unless hosts =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+
+split_hosts = hosts.split(',').map do |host|
+  /(http:\/\/)?\S+/.match(host)
 end
+
+uri = URI.parse(split_hosts.first[0])
+TEST_HOST = uri.host
+TEST_PORT = uri.port
 
 raw_certificate = File.read(File.join(PROJECT_PATH, '.ci/certs/testnode.crt'))
 certificate = OpenSSL::X509::Certificate.new(raw_certificate)
@@ -49,9 +49,9 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
       ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file }
     )
     password = ENV['ELASTIC_PASSWORD'] || 'changeme'
-    URL = "https://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
+    URL = "#{uri.scheme}://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
   else
-    URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+    URL = "#{uri.scheme}://#{TEST_HOST}:#{TEST_PORT}"
   end
 
   ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
