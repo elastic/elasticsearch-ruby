@@ -42,20 +42,6 @@ namespace :test do
 
   desc "Run Rest API Spec tests"
   RSpec::Core::RakeTask.new(:rest_api) do |t|
-    require 'elasticsearch'
-    # Check if a test cluster is running
-    begin
-      url = ENV['TEST_CLUSTER_URL'] || ENV['TEST_ES_SERVER']
-      url = "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9200}" unless url
-      client = Elasticsearch::Client.new :url => url
-      es_version_info = client.info['version']
-      version_number = es_version_info['number']
-      build_hash      = es_version_info['build_hash']
-    rescue Faraday::ConnectionFailed
-      STDERR.puts "[!] Test cluster not running?"
-      exit 1
-    end
-
     t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 

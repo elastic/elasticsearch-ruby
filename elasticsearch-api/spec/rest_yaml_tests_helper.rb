@@ -22,29 +22,25 @@ include Elasticsearch::RestAPIYAMLTests
 TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
 
-if (hosts = ELASTICSEARCH_URL)
-  split_hosts = hosts.split(',').map do |host|
-    /(http\:\/\/)?\S+/.match(host)
-  end
-  uri = URI.parse(split_hosts.first[0])
-  TEST_HOST = uri.host
-  TEST_PORT = uri.port
-else
-  TEST_HOST, TEST_PORT = 'localhost', '9200'
+hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
+raise URI::InvalidURIError unless hosts =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+
+split_hosts = hosts.split(',').map do |host|
+  /(http:\/\/)?\S+/.match(host)
 end
+uri = URI.parse(split_hosts.first[0])
+TEST_HOST = uri.host
+TEST_PORT = uri.port
 
-if defined?(TEST_HOST) && defined?(TEST_PORT)
-  URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
 
-  ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
-
-  if ENV['QUIET'] == 'true'
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
-  else
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
-                                               transport_options: TRANSPORT_OPTIONS,
-                                               tracer: Logger.new($stdout))
-  end
+if ENV['QUIET'] == 'true'
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+else
+  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                             transport_options: TRANSPORT_OPTIONS,
+                                             tracer: Logger.new($stdout))
 end
 
 YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/free"
