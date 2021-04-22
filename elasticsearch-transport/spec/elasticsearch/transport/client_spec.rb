@@ -1428,6 +1428,46 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
+    context 'when using the API Compatibility Header' do
+      it 'sets the API compatibility headers' do
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = 'true'
+        client = described_class.new(host: hosts)
+        headers = client.transport.connections.first.connection.headers
+
+        expect(headers['Content-Type']).to eq('application/vnd.elasticsearch+json; compatible-with=7')
+        expect(headers['Accept']).to eq('application/vnd.elasticsearch+json;compatible-with=7')
+
+        response = client.perform_request('GET', '/')
+        expect(response.headers['content-type']).to eq('application/json; charset=UTF-8')
+
+        ENV.delete('ELASTIC_CLIENT_APIVERSIONING')
+      end
+
+      it 'does not use API compatibility headers' do
+        val = ENV.delete('ELASTIC_CLIENT_APIVERSIONING')
+        client = described_class.new(host: hosts)
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = val
+      end
+
+      it 'does not use API compatibility headers when it is set to unsupported values' do
+        val = ENV.delete('ELASTIC_CLIENT_APIVERSIONING')
+
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = 'test'
+        client = described_class.new(host: hosts)
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = 'false'
+        client = described_class.new(host: hosts)
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = '3'
+        client = described_class.new(host: hosts)
+        expect(client.transport.connections.first.connection.headers['Content-Type']).to eq('application/json')
+        ENV['ELASTIC_CLIENT_APIVERSIONING'] = val
+      end
+    end
+
     context 'when Elasticsearch response includes a warning header' do
       let(:client) do
         Elasticsearch::Transport::Client.new(hosts: hosts)
