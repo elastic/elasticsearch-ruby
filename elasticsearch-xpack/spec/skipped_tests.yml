@@ -22,3 +22,8 @@
 -
   :file: 'searchable_snapshots/10_usage.yml'
   :description: 'Tests searchable snapshots usage stats with full_copy and shared_cache indices'
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/1291
+-
+  :file: 'service_accounts/10_basic.yml'
+  :description: 'Test service account tokens'
