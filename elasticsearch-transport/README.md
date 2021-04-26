@@ -1,7 +1,6 @@
 # Elasticsearch::Transport
 
-**This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
-please refer to it, unless you want to use this library standalone.**
+**This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package; please refer to it, unless you want to use this library standalone.**
 
 ----
 
@@ -483,10 +482,7 @@ client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
 end
 ```
 
-You can use any standard Faraday middleware and plugins in the configuration block, for example sign the requests for the [AWS Elasticsearch service](https://aws.amazon.com/elasticsearch-service/). See [the AWS documentation](https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-request-signing.html#es-request-signing-ruby) for an example.
-
-You can also initialize the transport class yourself, and pass it to the client constructor
-as the `transport` argument:
+You can use any standard Faraday middleware and plugins in the configuration block. You can also initialize the transport class yourself, and pass it to the client constructor as the `transport` argument:
 
 ```ruby
 require 'patron'
