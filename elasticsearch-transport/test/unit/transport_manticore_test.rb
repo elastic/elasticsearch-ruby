@@ -51,49 +51,78 @@ else
 
       should "perform the request" do
         @transport.connections.first.connection.expects(:get).returns(stub_everything)
-        @transport.perform_request 'GET', '/'
+        @transport.perform_request('GET', '/')
       end
 
       should "set body for GET request" do
-        @transport.connections.first.connection.expects(:get).
-          with('http://127.0.0.1:8080/', {:body => '{"foo":"bar"}',
-                                           :headers => {"Content-Type" => "application/json",
-                                                        "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.perform_request 'GET', '/', {}, '{"foo":"bar"}'
+        @transport.connections.first.connection.expects(:get).with(
+          'http://127.0.0.1:8080/',
+          {
+            body: '{"foo":"bar"}',
+            headers: {
+              'Content-Type' => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+              'User-Agent' => @transport.send(:user_agent_header)
+            }
+          }
+        ).returns(stub_everything)
+        @transport.perform_request('GET', '/', {}, '{"foo":"bar"}')
       end
 
       should "set body for PUT request" do
-        @transport.connections.first.connection.expects(:put).
-          with('http://127.0.0.1:8080/', {:body => '{"foo":"bar"}',
-                                           :headers => {"Content-Type" => "application/json",
-                                                        "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.perform_request 'PUT', '/', {}, {:foo => 'bar'}
+        @transport.connections.first.connection.expects(:put).with(
+          'http://127.0.0.1:8080/',
+          {
+            body: '{"foo":"bar"}',
+            headers: {
+              'Content-Type' => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+              'User-Agent' => @transport.send(:user_agent_header)
+            }
+          }
+        ).returns(stub_everything)
+        @transport.perform_request('PUT', '/', {}, { foo: 'bar' })
       end
 
       should "serialize the request body" do
-        @transport.connections.first.connection.expects(:post).
-          with('http://127.0.0.1:8080/', {:body => '{"foo":"bar"}',
-                                           :headers => {"Content-Type" => "application/json",
-                                                        "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.perform_request 'POST', '/', {}, {'foo' => 'bar'}
+        @transport.connections.first.connection.expects(:post). with(
+          'http://127.0.0.1:8080/',
+          {
+            body: '{"foo":"bar"}',
+            headers: {
+              'Content-Type' => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+              'User-Agent' => @transport.send(:user_agent_header)
+            }
+          }
+        ).returns(stub_everything)
+        @transport.perform_request 'POST', '/', {}, { 'foo' => 'bar' }
       end
 
       should "set custom headers for PUT request" do
-        @transport.connections.first.connection.expects(:put).
-          with('http://127.0.0.1:8080/', {:body => '{"foo":"bar"}',
-                                           :headers => {"Content-Type" => "application/json",
-                                                        "User-Agent" => @transport.send(:user_agent_header)}})
-          .returns(stub_everything)
+        @transport.connections.first.connection.expects(:put). with(
+          'http://127.0.0.1:8080/',
+          {
+            body: '{"foo":"bar"}',
+            headers: {
+              'Content-Type' => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+              'User-Agent' => @transport.send(:user_agent_header)
+            }
+          }
+        ).returns(stub_everything)
         @transport.perform_request 'PUT', '/', {}, '{"foo":"bar"}', {"Content-Type" => "application/x-ndjson"}
       end
 
       should "not serialize a String request body" do
-        @transport.connections.first.connection.expects(:post).
-          with('http://127.0.0.1:8080/', {:body => '{"foo":"bar"}',
-                                           :headers => {"Content-Type" => "application/json",
-                                                        "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
+        @transport.connections.first.connection.expects(:post). with(
+          'http://127.0.0.1:8080/',
+          {
+            body: '{"foo":"bar"}',
+            headers: {
+              'Content-Type' => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+              'User-Agent' => @transport.send(:user_agent_header)
+            }
+          }
+        ).returns(stub_everything)
         @transport.serializer.expects(:dump).never
-        @transport.perform_request 'POST', '/', {}, '{"foo":"bar"}'
+        @transport.perform_request('POST', '/', {}, '{"foo":"bar"}')
       end
 
       should "set application/json header" do
@@ -103,8 +132,15 @@ else
 
         transport = Manticore.new :hosts => [ { :host => 'localhost', :port => 8080 } ], :options => options
 
-        transport.connections.first.connection.stub("http://localhost:8080/", :body => "\"\"", :headers => {"Content-Type" => "application/x-ndjson",
-                                                                                                             "User-Agent" => @transport.send(:user_agent_header)}, :code => 200 )
+        transport.connections.first.connection.stub(
+          "http://localhost:8080/",
+          body: "\"\"",
+          headers: {
+            'Content-Type' => 'application/x-ndjson',
+            'User-Agent' => @transport.send(:user_agent_header)
+          },
+          :code => 200
+        )
 
         response = transport.perform_request 'GET', '/', {}
         assert_equal response.status, 200
@@ -123,17 +159,16 @@ else
         # TODO: Needs to check @request_options
       end
 
-      should "handle HTTP methods" do
-        @transport.connections.first.connection.expects(:delete).with('http://127.0.0.1:8080/', { headers: {"Content-Type" => "application/json",
-                                                                                                             "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.connections.first.connection.expects(:head).with('http://127.0.0.1:8080/', { headers: {"Content-Type" => "application/json",
-                                                                                                           "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.connections.first.connection.expects(:get).with('http://127.0.0.1:8080/', { headers: {"Content-Type" => "application/json",
-                                                                                                          "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.connections.first.connection.expects(:put).with('http://127.0.0.1:8080/', { headers: {"Content-Type" => "application/json",
-                                                                                                          "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
-        @transport.connections.first.connection.expects(:post).with('http://127.0.0.1:8080/', { headers: {"Content-Type" => "application/json",
-                                                                                                           "User-Agent" => @transport.send(:user_agent_header)}}).returns(stub_everything)
+      should 'handle HTTP methods' do
+        headers = {
+          "Content-Type" => Elasticsearch::Transport::Transport::Base::DEFAULT_CONTENT_TYPE,
+          "User-Agent" => @transport.send(:user_agent_header)
+        }
+        @transport.connections.first.connection.expects(:delete).with('http://127.0.0.1:8080/', { headers: headers }).returns(stub_everything)
+        @transport.connections.first.connection.expects(:head).with('http://127.0.0.1:8080/', { headers: headers }).returns(stub_everything)
+        @transport.connections.first.connection.expects(:get).with('http://127.0.0.1:8080/', { headers: headers }).returns(stub_everything)
+        @transport.connections.first.connection.expects(:put).with('http://127.0.0.1:8080/', { headers: headers }).returns(stub_everything)
+        @transport.connections.first.connection.expects(:post).with('http://127.0.0.1:8080/', { headers: headers }).returns(stub_everything)
 
         %w| HEAD GET PUT POST DELETE |.each { |method| @transport.perform_request method, '/' }
 
