@@ -251,7 +251,7 @@ describe Elasticsearch::Transport::Client do
 
     context 'when using a different service version' do
       before do
-        stub_const("Elastic::META_HEADER_SERVICE_VERSION", [:ent, '8.0.0'])
+        stub_const('Elastic::ELASTICSEARCH_SERVICE_VERSION', [:ent, '8.0.0'])
       end
 
       let(:client) { Elasticsearch::Client.new }
