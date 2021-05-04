@@ -37,5 +37,5 @@ module Elastic
   end
 
   # Constant for elasticsearch-transport meta-header
-  META_HEADER_SERVICE_VERSION = [:es, client_meta_version].freeze
+  ELASTICSEARCH_SERVICE_VERSION = [:es, client_meta_version].freeze
 end
