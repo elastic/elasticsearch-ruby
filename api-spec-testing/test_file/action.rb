@@ -75,12 +75,16 @@ module Elasticsearch
             end
             if ENV['QUIET'] == 'true'
               # todo: create a method on Elasticsearch::Client that can clone the client with new options
-              Elasticsearch::Client.new(host: URL,
-                                        transport_options: TRANSPORT_OPTIONS.merge( headers: headers))
+              Elasticsearch::Client.new(
+                host: URL,
+                transport_options: TRANSPORT_OPTIONS.merge(headers: headers)
+              )
             else
-              Elasticsearch::Client.new(host: URL,
-                                        tracer: Logger.new($stdout),
-                                        transport_options: TRANSPORT_OPTIONS.merge( headers: headers))
+              Elasticsearch::Client.new(
+                host: URL,
+                tracer: Logger.new($stdout),
+                transport_options: TRANSPORT_OPTIONS.merge(headers: headers)
+              )
             end
           when 'catch', 'warnings', 'allowed_warnings'
             client
