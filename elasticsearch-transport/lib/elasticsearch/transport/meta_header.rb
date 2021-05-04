@@ -41,13 +41,29 @@ module Elasticsearch
       end
 
       def meta_header_service_version
-        if defined?(Elastic::META_HEADER_SERVICE_VERSION)
-          Elastic::META_HEADER_SERVICE_VERSION
+        if enterprise_search?
+          Elastic::ENTERPRISE_SERVICE_VERSION
+        elsif elasticsearch?
+          Elastic::ELASTICSEARCH_SERVICE_VERSION
         elsif defined?(Elasticsearch::VERSION)
           [:es, client_meta_version(Elasticsearch::VERSION)]
         else
           [:es, client_meta_version(Elasticsearch::Transport::VERSION)]
         end
+      end
+
+      def enterprise_search?
+        defined?(Elastic::ENTERPRISE_SERVICE_VERSION) &&
+          called_from?('enterprise-search-ruby')
+      end
+
+      def elasticsearch?
+        defined?(Elastic::ELASTICSEARCH_SERVICE_VERSION) &&
+          called_from?('elasticsearch')
+      end
+
+      def called_from?(service)
+        !caller.select { |c| c.match?(service) }.empty?
       end
 
       # We return the current version if it's a release, but if it's a pre/alpha/beta release we
