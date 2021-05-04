@@ -19,7 +19,6 @@ require 'base64'
 
 module Elasticsearch
   module Transport
-
     # Methods for the Elastic meta header used by Cloud.
     # X-Elastic-Client-Meta HTTP header which is used by Elastic Cloud and can be disabled when
     # instantiating the Client with the :enable_meta_header parameter set to `false`.
