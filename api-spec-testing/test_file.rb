@@ -302,7 +302,7 @@ module Elasticsearch
         end
 
         def xpack_template?(template)
-          xpack_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform'].freeze
+          xpack_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
           xpack_prefixes.map { |a| return true if a.include? template }
 
           XPACK_TEMPLATES.include? template
