@@ -46,7 +46,7 @@ module Elasticsearch
                      end
             params = {}
 
-            body   = nil
+            body = nil
             perform_request(method, path, params, body, headers).body
           end
         end
