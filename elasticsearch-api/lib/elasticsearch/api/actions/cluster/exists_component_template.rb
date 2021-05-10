@@ -46,6 +46,7 @@ module Elasticsearch
         end
 
         alias_method :exists_component_template?, :exists_component_template
+
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
