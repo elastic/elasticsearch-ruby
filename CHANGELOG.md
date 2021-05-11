@@ -1,3 +1,8 @@
+## 7.13.0.pre
+
+-Support for Elasticsearch version 7.13.0
+-This is a pre-release, full Changelog details will be published with the final release of 7.13.0
+
 ## 7.12.0
 
 ### Client
