@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client.indices#freeze' do
-
   let(:expected_args) do
     [
-        'POST',
-        url,
-        params,
-        nil,
-        {}
+      'POST',
+      url,
+      params,
+      nil,
+      {}
     ]
   end
 
@@ -34,9 +33,8 @@ describe 'client.indices#freeze' do
   end
 
   context 'when there is no index specified' do
-
     let(:client) do
-      Class.new { include Elasticsearch::API }.new
+      Class.new { include Elasticsearch::XPack::API }.new
     end
 
     it 'raises an exception' do
@@ -47,7 +45,6 @@ describe 'client.indices#freeze' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_freeze'
     end
@@ -58,7 +55,6 @@ describe 'client.indices#freeze' do
   end
 
   context 'when params are specified' do
-
     let(:params) do
       { timeout: '1s' }
     end
@@ -73,7 +69,6 @@ describe 'client.indices#freeze' do
   end
 
   context 'when the path must be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_freeze'
     end
