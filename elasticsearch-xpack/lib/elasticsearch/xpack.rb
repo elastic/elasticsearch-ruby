@@ -50,8 +50,6 @@ module Elasticsearch
       # E.g.: client.xpack.usage => client.usage
       # Excluding `info` since OSS and XPACK both have info endpoints.
       TOP_LEVEL_METHODS = [
-        :open_point_in_time,
-        :close_point_in_time,
         :usage
       ].freeze
 
