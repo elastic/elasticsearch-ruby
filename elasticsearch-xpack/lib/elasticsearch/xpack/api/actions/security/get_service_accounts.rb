@@ -30,7 +30,7 @@ module Elasticsearch
           # @option arguments [String] :service An identifier for the service name
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-service-accounts.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.13/security-api-get-service-accounts.html
           #
           def get_service_accounts(arguments = {})
             headers = arguments.delete(:headers) || {}
