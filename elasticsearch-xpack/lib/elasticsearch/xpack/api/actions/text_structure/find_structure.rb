@@ -39,7 +39,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The contents of the file to be analyzed (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/find-structure.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.13/find-structure.html
           #
           def find_structure(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
