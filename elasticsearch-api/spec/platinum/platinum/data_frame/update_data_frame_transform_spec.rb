@@ -21,11 +21,11 @@ describe 'client#update_transform' do
 
   let(:expected_args) do
     [
-        'POST',
-        '_transform/foo/_update',
-        params,
-        {},
-        {}
+      'POST',
+      '_transform/foo/_update',
+      params,
+      {},
+      {}
     ]
   end
 
@@ -42,7 +42,7 @@ describe 'client#update_transform' do
 
   context 'when body is not provided' do
     let(:client) do
-      Class.new { include Elasticsearch::XPack::API }.new
+      Class.new { include Elasticsearch::API }.new
     end
 
     it 'raises an exception' do
@@ -55,7 +55,7 @@ describe 'client#update_transform' do
   context 'when a transform_id is not provided' do
 
     let(:client) do
-      Class.new { include Elasticsearch::XPack::API }.new
+      Class.new { include Elasticsearch::API }.new
     end
 
     it 'raises an exception' do
