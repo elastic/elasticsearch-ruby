@@ -250,17 +250,17 @@ module Elasticsearch
         end
 
         def clear_sml_policies(client)
-          policies = client.xpack.snapshot_lifecycle_management.get_lifecycle
+          policies = client.snapshot_lifecycle_management.get_lifecycle
 
           policies.each do |name, _|
-            client.xpack.snapshot_lifecycle_management.delete_lifecycle(policy_id: name)
+            client.snapshot_lifecycle_management.delete_lifecycle(policy_id: name)
           end
         end
 
         def clear_ilm_policies(client)
-          policies = client.xpack.ilm.get_lifecycle
+          policies = client.ilm.get_lifecycle
           policies.each do |policy|
-            client.xpack.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+            client.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
           end
         end
 
@@ -328,46 +328,46 @@ module Elasticsearch
         private
 
         def create_x_pack_rest_user(client)
-          client.xpack.security.put_user(username: 'x_pack_rest_user',
+          client.security.put_user(username: 'x_pack_rest_user',
                                          body: { password: 'x-pack-test-password', roles: ['superuser'] })
         end
 
         def clear_roles(client)
-          client.xpack.security.get_role.each do |role, _|
-            begin; client.xpack.security.delete_role(name: role); rescue; end
+          client.security.get_role.each do |role, _|
+            begin; client.security.delete_role(name: role); rescue; end
           end
         end
 
         def clear_users(client)
-          client.xpack.security.get_user.each do |user, _|
-            begin; client.xpack.security.delete_user(username: user); rescue; end
+          client.security.get_user.each do |user, _|
+            begin; client.security.delete_user(username: user); rescue; end
           end
         end
 
         def clear_privileges(client)
-          client.xpack.security.get_privileges.each do |privilege, _|
-            begin; client.xpack.security.delete_privileges(name: privilege); rescue; end
+          client.security.get_privileges.each do |privilege, _|
+            begin; client.security.delete_privileges(name: privilege); rescue; end
           end
         end
 
         def clear_datafeeds(client)
-          client.xpack.ml.stop_datafeed(datafeed_id: '_all', force: true)
-          client.xpack.ml.get_datafeeds['datafeeds'].each do |d|
-            client.xpack.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
+          client.ml.stop_datafeed(datafeed_id: '_all', force: true)
+          client.ml.get_datafeeds['datafeeds'].each do |d|
+            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
           end
         end
 
         def clear_ml_jobs(client)
-          client.xpack.ml.close_job(job_id: '_all', force: true)
-          client.xpack.ml.get_jobs['jobs'].each do |d|
-            client.xpack.ml.delete_job(job_id: d['job_id'])
+          client.ml.close_job(job_id: '_all', force: true)
+          client.ml.get_jobs['jobs'].each do |d|
+            client.ml.delete_job(job_id: d['job_id'])
           end
         end
 
         def clear_rollup_jobs(client)
-          client.xpack.rollup.get_jobs(id: '_all')['jobs'].each do |d|
-            client.xpack.rollup.stop_job(id: d['config']['id'])
-            client.xpack.rollup.delete_job(id: d['config']['id'])
+          client.rollup.get_jobs(id: '_all')['jobs'].each do |d|
+            client.rollup.stop_job(id: d['config']['id'])
+            client.rollup.delete_job(id: d['config']['id'])
           end
         end
 
@@ -410,9 +410,9 @@ module Elasticsearch
         end
 
         def clear_datastreams(client)
-          datastreams = client.xpack.indices.get_data_stream(name: '*', expand_wildcards: 'all')
+          datastreams = client.indices.get_data_stream(name: '*', expand_wildcards: 'all')
           datastreams['data_streams'].each do |datastream|
-            client.xpack.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
+            client.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
           end
           begin
             client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
@@ -423,9 +423,9 @@ module Elasticsearch
         end
 
         def clear_ml_filters(client)
-          filters = client.xpack.ml.get_filters['filters']
+          filters = client.ml.get_filters['filters']
           filters.each do |filter|
-            client.xpack.ml.delete_filter(filter_id: filter['filter_id'])
+            client.ml.delete_filter(filter_id: filter['filter_id'])
           end
         end
 
