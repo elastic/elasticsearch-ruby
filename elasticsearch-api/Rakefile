@@ -45,6 +45,11 @@ namespace :test do
     t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
   end
 
+  desc "Run Platinum Rest API Spec tests"
+  RSpec::Core::RakeTask.new(:platinum_api) do |t|
+    t.pattern = 'spec/platinum/**{,/*/**}/platinum_api_yaml_spec.rb'
+  end
+
   desc "Run integration tests"
   task :integration do
     Rake::Task['test:rest_api'].invoke
