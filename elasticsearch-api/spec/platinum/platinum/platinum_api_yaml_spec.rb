@@ -16,9 +16,9 @@
 # under the License.
 
 require 'spec_helper'
-require 'rest_yaml_tests_helper'
+require_relative '../../platinum/platinum_yaml_tests_helper.rb'
 
-describe 'XPack Rest API YAML tests' do
+describe 'Platinum Rest API YAML tests' do
   if REST_API_YAML_FILES.empty?
     logger = Logger.new($stdout)
     logger.error 'No test files found!'

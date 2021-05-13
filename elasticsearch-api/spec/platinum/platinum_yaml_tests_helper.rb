@@ -19,7 +19,7 @@ require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_fil
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/rspec_matchers"
 include Elasticsearch::RestAPIYAMLTests
 
-PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
+PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..', '..')
 
 TRANSPORT_OPTIONS = {}
 TEST_SUITE = ENV['TEST_SUITE'] || 'platinum'
