@@ -35,7 +35,7 @@ describe 'client#security#get_service_credentials' do
   end
 
   let(:client) do
-    Class.new { include Elasticsearch::XPack::API }.new
+    Class.new { include Elasticsearch::API }.new
   end
 
   it 'requires the :namespace argument' do

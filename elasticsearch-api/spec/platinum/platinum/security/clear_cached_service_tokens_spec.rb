@@ -35,7 +35,7 @@ describe 'client#security#clear_cached_service_tokens' do
   end
 
   let(:client) do
-    Class.new { include Elasticsearch::XPack::API }.new
+    Class.new { include Elasticsearch::API }.new
   end
 
   it 'requires the :namespace argument' do
