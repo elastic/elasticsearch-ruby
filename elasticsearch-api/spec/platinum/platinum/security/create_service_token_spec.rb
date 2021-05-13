@@ -37,7 +37,7 @@ describe 'client#security#create_service_token' do
   end
 
   let(:client) do
-    Class.new { include Elasticsearch::XPack::API }.new
+    Class.new { include Elasticsearch::API }.new
   end
 
   it 'requires the :namespace argument' do

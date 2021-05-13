@@ -20,9 +20,7 @@ require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/rspec_ma
 include Elasticsearch::RestAPIYAMLTests
 
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..', '..')
-
 TRANSPORT_OPTIONS = {}
-TEST_SUITE = ENV['TEST_SUITE'] || 'platinum'
 
 hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
 raise URI::InvalidURIError unless hosts =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
@@ -41,31 +39,27 @@ certificate = OpenSSL::X509::Certificate.new(raw_certificate)
 raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
 key = OpenSSL::PKey::RSA.new(raw_key)
 
-ca_file = File.join(PROJECT_PATH, '/.ci/certs/ca.crt')
+ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
 
 if defined?(TEST_HOST) && defined?(TEST_PORT)
-  if TEST_SUITE == 'platinum'
-    TRANSPORT_OPTIONS.merge!(
-      ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file }
-    )
-    password = ENV['ELASTIC_PASSWORD'] || 'changeme'
-    URL = "#{uri.scheme}://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}"
-  else
-    URL = "#{uri.scheme}://#{TEST_HOST}:#{TEST_PORT}"
-  end
+  TRANSPORT_OPTIONS.merge!(
+    ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file }
+  )
+  password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+  URL = "#{uri.scheme}://elastic:#{password}@#{TEST_HOST}:#{TEST_PORT}".freeze
 
   ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
 
-  if ENV['QUIET'] == 'true'
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
-  else
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+  DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
+                     Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+                   else
+                     Elasticsearch::Client.new(host: URL,
                                                transport_options: TRANSPORT_OPTIONS,
                                                tracer: Logger.new($stdout))
-  end
+                   end
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum"
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']

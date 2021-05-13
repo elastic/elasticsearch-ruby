@@ -33,7 +33,7 @@ describe 'client#searchable_snapshots.repository_stats' do
   end
 
   let(:client) do
-    Class.new { include Elasticsearch::XPack::API }.new
+    Class.new { include Elasticsearch::API }.new
   end
 
   it 'requires the :repository argument' do
