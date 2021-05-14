@@ -31,6 +31,8 @@ module Elasticsearch
       def snapshot_lifecycle_management
         @snapshot_lifecycle_management ||= SnapshotLifecycleManagementClient.new(self)
       end
+
+      alias slm snapshot_lifecycle_management
     end
   end
 end

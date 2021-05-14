@@ -31,6 +31,8 @@ module Elasticsearch
       def machine_learning
         @machine_learning ||= MachineLearningClient.new(self)
       end
+
+      alias ml machine_learning
     end
   end
 end

@@ -28,9 +28,11 @@ module Elasticsearch
 
       # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
       #
-      def index_lifecycle_management
-        @index_lifecycle_management ||= IndexLifecycleManagementClient.new(self)
+      def ilm
+        @ilm ||= IndexLifecycleManagementClient.new(self)
       end
+
+      alias index_lifecycle_management ilm
     end
   end
 end
