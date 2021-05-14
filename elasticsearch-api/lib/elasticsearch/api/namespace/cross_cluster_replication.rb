@@ -31,6 +31,8 @@ module Elasticsearch
       def cross_cluster_replication
         @cross_cluster_replication ||= CrossClusterReplicationClient.new(self)
       end
+
+      alias ccr cross_cluster_replication
     end
   end
 end
