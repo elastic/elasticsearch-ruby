@@ -43,13 +43,12 @@ namespace :test do
   desc 'Run Rest API Spec tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
     t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
-    t.exclude_pattern = 'spec/**{,/*/**}/platinum_api_yaml_spec.rb'
   end
 
   desc 'Run Platinum Rest API Spec tests'
   RSpec::Core::RakeTask.new(:platinum_api) do |t|
-    t.pattern = 'spec/platinum/**{,/*/**}/platinum_api_yaml_spec.rb'
-    t.exclude_pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
+    ENV['TEST_SUITE'] = 'platinum'
+    Rake::Task['test:rest_api'].invoke
   end
 
   desc 'Run integration tests'

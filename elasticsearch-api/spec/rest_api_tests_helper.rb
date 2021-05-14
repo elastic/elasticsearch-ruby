@@ -15,50 +15,58 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
-require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/rspec_matchers"
+require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/test_file"
+require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/rspec_matchers"
 include Elasticsearch::RestAPIYAMLTests
 
-TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
+host = ENV['TEST_ES_SERVER'] || 'http://localhost:9200'
+raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
-hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
-raise URI::InvalidURIError unless hosts =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+test_suite = ENV['TEST_SUITE'] || 'free'
 
-split_hosts = hosts.split(',').map do |host|
-  /(http:\/\/)?\S+/.match(host)
-end
-uri = URI.parse(split_hosts.first[0])
-TEST_HOST = uri.host
-TEST_PORT = uri.port
-
-URL = "http://#{TEST_HOST}:#{TEST_PORT}"
-ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
-
-if ENV['QUIET'] == 'true'
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+if test_suite == 'platinum'
+  raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
+  certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+  raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
+  key = OpenSSL::PKey::RSA.new(raw_key)
+  ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
+  password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+  uri = URI.parse(host)
+  host = "#{uri.scheme}://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
+  transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
 else
-  DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
-                                             transport_options: TRANSPORT_OPTIONS,
-                                             tracer: Logger.new($stdout))
+  transport_options = {}
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/free"
+ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
+
+DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
+                   Elasticsearch::Client.new(host: host, transport_options: transport_options)
+                 else
+                   Elasticsearch::Client.new(
+                     host: host,
+                     tracer: Logger.new($stdout),
+                     transport_options: transport_options
+                   )
+                 end
+
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
 
                 if test_target.match?(/\.yml$/)
-                  ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/free/#{test_target}"]
+                  ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/free/#{test_target}/*.yml"]
+                    ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}/#{test_target}/*.yml"]
                   )
                 end
               end
 
 # Skipped tests
-file = File.expand_path(__dir__ + '/skipped_tests.yml')
+file = File.expand_path("#{__dir__}/skipped_tests_#{test_suite}.yml")
 skipped_tests = YAML.load_file(file)
 
 # The directory of rest api YAML files.
