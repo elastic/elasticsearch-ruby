@@ -18,21 +18,29 @@
 module Elasticsearch
   module API
     module MachineLearning
-      module Actions; end
+      module Actions
+        # Validates an anomaly detection detector.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The detector (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
+        #
+        def validate_detector(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-      # Client for the "machine_learning" namespace (includes the {MachineLearning::Actions} methods)
-      #
-      class MachineLearningClient
-        include Common::Client, Common::Client::Base, MachineLearning::Actions
+          headers = arguments.delete(:headers) || {}
+
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/_validate/detector"
+          params = {}
+
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {MachineLearningClient}, available in the receiving object
-      #
-      def machine_learning
-        @machine_learning ||= MachineLearningClient.new(self)
-      end
-
-      alias ml machine_learning
     end
   end
 end

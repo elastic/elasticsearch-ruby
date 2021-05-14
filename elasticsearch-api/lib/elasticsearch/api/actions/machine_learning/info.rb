@@ -17,22 +17,27 @@
 
 module Elasticsearch
   module API
-    module IndexLifecycleManagement
-      module Actions; end
+    module MachineLearning
+      module Actions
+        # Returns defaults and limits used by machine learning.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
+        #
+        def info(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "index_lifecycle_management" namespace (includes the {IndexLifecycleManagement::Actions} methods)
-      #
-      class IndexLifecycleManagementClient
-        include Common::Client, Common::Client::Base, IndexLifecycleManagement::Actions
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_ml/info"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
-      #
-      def ilm
-        @ilm ||= IndexLifecycleManagementClient.new(self)
-      end
-
-      alias index_lifecycle_management ilm
     end
   end
 end

@@ -17,22 +17,27 @@
 
 module Elasticsearch
   module API
-    module IndexLifecycleManagement
-      module Actions; end
+    module SnapshotLifecycleManagement
+      module Actions
+        # Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats.html
+        #
+        def get_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "index_lifecycle_management" namespace (includes the {IndexLifecycleManagement::Actions} methods)
-      #
-      class IndexLifecycleManagementClient
-        include Common::Client, Common::Client::Base, IndexLifecycleManagement::Actions
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_slm/stats"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
-      #
-      def ilm
-        @ilm ||= IndexLifecycleManagementClient.new(self)
-      end
-
-      alias index_lifecycle_management ilm
     end
   end
 end

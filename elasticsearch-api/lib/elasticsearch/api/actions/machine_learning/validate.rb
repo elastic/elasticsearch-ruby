@@ -17,22 +17,30 @@
 
 module Elasticsearch
   module API
-    module IndexLifecycleManagement
-      module Actions; end
+    module MachineLearning
+      module Actions
+        # Validates an anomaly detection job.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The job config (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
+        #
+        def validate(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-      # Client for the "index_lifecycle_management" namespace (includes the {IndexLifecycleManagement::Actions} methods)
-      #
-      class IndexLifecycleManagementClient
-        include Common::Client, Common::Client::Base, IndexLifecycleManagement::Actions
+          headers = arguments.delete(:headers) || {}
+
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/_validate"
+          params = {}
+
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
-      #
-      def ilm
-        @ilm ||= IndexLifecycleManagementClient.new(self)
-      end
-
-      alias index_lifecycle_management ilm
     end
   end
 end

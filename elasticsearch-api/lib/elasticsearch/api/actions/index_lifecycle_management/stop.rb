@@ -18,21 +18,26 @@
 module Elasticsearch
   module API
     module IndexLifecycleManagement
-      module Actions; end
+      module Actions
+        # Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
+        #
+        def stop(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "index_lifecycle_management" namespace (includes the {IndexLifecycleManagement::Actions} methods)
-      #
-      class IndexLifecycleManagementClient
-        include Common::Client, Common::Client::Base, IndexLifecycleManagement::Actions
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ilm/stop"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
-      #
-      def ilm
-        @ilm ||= IndexLifecycleManagementClient.new(self)
-      end
-
-      alias index_lifecycle_management ilm
     end
   end
 end

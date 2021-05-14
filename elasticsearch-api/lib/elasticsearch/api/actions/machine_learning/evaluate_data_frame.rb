@@ -18,21 +18,29 @@
 module Elasticsearch
   module API
     module MachineLearning
-      module Actions; end
+      module Actions
+        # Evaluates the data frame analytics for an annotated index.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The evaluation definition (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
+        #
+        def evaluate_data_frame(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-      # Client for the "machine_learning" namespace (includes the {MachineLearning::Actions} methods)
-      #
-      class MachineLearningClient
-        include Common::Client, Common::Client::Base, MachineLearning::Actions
+          headers = arguments.delete(:headers) || {}
+
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/data_frame/_evaluate"
+          params = {}
+
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {MachineLearningClient}, available in the receiving object
-      #
-      def machine_learning
-        @machine_learning ||= MachineLearningClient.new(self)
-      end
-
-      alias ml machine_learning
     end
   end
 end

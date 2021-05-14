@@ -17,22 +17,27 @@
 
 module Elasticsearch
   module API
-    module IndexLifecycleManagement
-      module Actions; end
+    module SnapshotLifecycleManagement
+      module Actions
+        # Deletes any snapshots that are expired according to the policy's retention rules.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
+        #
+        def execute_retention(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-      # Client for the "index_lifecycle_management" namespace (includes the {IndexLifecycleManagement::Actions} methods)
-      #
-      class IndexLifecycleManagementClient
-        include Common::Client, Common::Client::Base, IndexLifecycleManagement::Actions
+          arguments = arguments.clone
+
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_slm/_execute_retention"
+          params = {}
+
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
-
-      # Proxy method for {IndexLifecycleManagementClient}, available in the receiving object
-      #
-      def ilm
-        @ilm ||= IndexLifecycleManagementClient.new(self)
-      end
-
-      alias index_lifecycle_management ilm
     end
   end
 end
