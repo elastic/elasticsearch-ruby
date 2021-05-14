@@ -42,7 +42,10 @@ describe 'Rest API YAML tests' do
     context ctx do
       test_file.tests.each do |test|
         context "#{test.description}" do
-          skip 'Test contains feature(s) not yet supported or version is not satisfied' if test.skip_test?(ADMIN_CLIENT)
+          if test.skip_test?(ADMIN_CLIENT)
+            skip 'Test contains feature(s) not yet supported or version is not satisfied'
+            next
+          end
 
           let(:client) do
             DEFAULT_CLIENT
