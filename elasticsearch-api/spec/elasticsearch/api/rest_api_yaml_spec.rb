@@ -53,11 +53,6 @@ describe 'Rest API YAML tests' do
 
           # Runs once before each test in a test file
           before(:all) do
-            if ENV['TEST_SUITE'] == 'platinum'
-              # todo: remove these two lines when Dimitris' PR is merged
-              ADMIN_CLIENT.cluster.put_settings(body: { transient: { 'xpack.ml.max_model_memory_limit' => nil } })
-              ADMIN_CLIENT.cluster.put_settings(body: { persistent: { 'xpack.ml.max_model_memory_limit' => nil } })
-            end
             test_file.setup
           end
 
