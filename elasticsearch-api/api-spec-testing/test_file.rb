@@ -393,12 +393,10 @@ module Elasticsearch
         end
 
         def clear_snapshots_and_repositories(client)
-          return unless (repositories = client.snapshot.get_repository)
+          return unless (repositories = client.snapshot.get_repository(repository: '_all'))
 
           repositories.each_key do |repository|
-
-            client.snapshot.delete(repository: repository, snapshot: '*', ignore: 404) if(repositories[repository]['type'] == 'fs')
-
+            client.snapshot.delete(repository: repository, snapshot: '*', ignore: 404) if repositories[repository]['type'] == 'fs'
             client.snapshot.delete_repository(repository: repository, ignore: 404)
           end
         end

@@ -37,12 +37,12 @@ namespace :test do
   desc 'Run unit tests'
   task unit: :spec
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.exclude_pattern = 'spec/**{,/*/**}/*_api_yaml_spec.rb'
+    t.exclude_pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
   end
 
   desc 'Run Rest API Spec tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
-    t.pattern = 'spec/**{,/*/**}/rest_api_yaml_spec.rb'
+    t.pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
   end
 
   desc 'Run Platinum Rest API Spec tests'
