@@ -17,32 +17,29 @@
 
 module Elasticsearch
   module API
-    module Actions
-      # Returns whether the cluster is running.
-      #
-      # @option arguments [Hash] :headers Custom HTTP headers
-      #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
-      #
-      def ping(arguments = {})
-        headers = arguments.delete(:headers) || {}
+    module MachineLearning
+      module Actions
+        # Validates an anomaly detection job.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The job config (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
+        #
+        def validate(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-        arguments = arguments.clone
+          headers = arguments.delete(:headers) || {}
 
-        method = Elasticsearch::API::HTTP_HEAD
-        path   = ""
-        params = {}
+          arguments = arguments.clone
 
-        body = nil
-        begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
-        rescue Exception => e
-          if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
-            false
-          else
-            raise e
-          end
-      end
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/_validate"
+          params = {}
+
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end
