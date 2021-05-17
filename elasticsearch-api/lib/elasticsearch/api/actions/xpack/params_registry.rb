@@ -17,7 +17,7 @@
 
 module Elasticsearch
   module API
-    module Watcher
+    module Xpack
       module Actions
         module ParamsRegistry
           extend self
