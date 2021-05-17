@@ -17,32 +17,29 @@
 
 module Elasticsearch
   module API
-    module Actions
-      # Returns whether the cluster is running.
-      #
-      # @option arguments [Hash] :headers Custom HTTP headers
-      #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
-      #
-      def ping(arguments = {})
-        headers = arguments.delete(:headers) || {}
+    module SQL
+      module Actions
+        # Translates SQL into Elasticsearch queries
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate.html
+        #
+        def translate(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-        arguments = arguments.clone
+          headers = arguments.delete(:headers) || {}
 
-        method = Elasticsearch::API::HTTP_HEAD
-        path   = ""
-        params = {}
+          arguments = arguments.clone
 
-        body = nil
-        begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
-        rescue Exception => e
-          if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
-            false
-          else
-            raise e
-          end
-      end
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_sql/translate"
+          params = {}
+
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end

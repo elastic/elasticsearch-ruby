@@ -17,32 +17,26 @@
 
 module Elasticsearch
   module API
-    module Actions
-      # Returns whether the cluster is running.
-      #
-      # @option arguments [Hash] :headers Custom HTTP headers
-      #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
-      #
-      def ping(arguments = {})
-        headers = arguments.delete(:headers) || {}
+    module SSL
+      module Actions
+        # Retrieves information about the X.509 certificates used to encrypt communications in the cluster.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
+        #
+        def certificates(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-        arguments = arguments.clone
+          arguments = arguments.clone
 
-        method = Elasticsearch::API::HTTP_HEAD
-        path   = ""
-        params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_ssl/certificates"
+          params = {}
 
-        body = nil
-        begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
-        rescue Exception => e
-          if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
-            false
-          else
-            raise e
-          end
-      end
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end

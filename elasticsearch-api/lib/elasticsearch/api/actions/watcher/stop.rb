@@ -17,32 +17,26 @@
 
 module Elasticsearch
   module API
-    module Actions
-      # Returns whether the cluster is running.
-      #
-      # @option arguments [Hash] :headers Custom HTTP headers
-      #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
-      #
-      def ping(arguments = {})
-        headers = arguments.delete(:headers) || {}
+    module Watcher
+      module Actions
+        # Stops Watcher if it is running.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
+        #
+        def stop(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-        arguments = arguments.clone
+          arguments = arguments.clone
 
-        method = Elasticsearch::API::HTTP_HEAD
-        path   = ""
-        params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_watcher/_stop"
+          params = {}
 
-        body = nil
-        begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
-        rescue Exception => e
-          if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
-            false
-          else
-            raise e
-          end
-      end
+          body = nil
+          perform_request(method, path, params, body, headers).body
+        end
       end
     end
   end
