@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client#termsenum' do
+describe 'client#terms_enum' do
   let(:expected_args) do
     [
       method,
@@ -33,7 +33,7 @@ describe 'client#termsenum' do
     let(:body) { nil }
 
     it 'performs a GET request' do
-      expect(client_double.termsenum(index: 'foo')).to eq({})
+      expect(client_double.terms_enum(index: 'foo')).to eq({})
     end
   end
 
@@ -42,11 +42,11 @@ describe 'client#termsenum' do
     let(:body) { {} }
 
     it 'performs a POST request' do
-      expect(client_double.termsenum(index: 'foo', body: body)).to eq({})
+      expect(client_double.terms_enum(index: 'foo', body: body)).to eq({})
     end
   end
 
   it 'requires the :index argument' do
-    expect { client.termsenum }.to raise_exception(ArgumentError)
+    expect { client.terms_enum }.to raise_exception(ArgumentError)
   end
 end

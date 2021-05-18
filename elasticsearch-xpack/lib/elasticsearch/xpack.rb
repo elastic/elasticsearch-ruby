@@ -53,6 +53,7 @@ module Elasticsearch
       TOP_LEVEL_METHODS = [
         :open_point_in_time,
         :close_point_in_time,
+        :terms_enum,
         :usage
       ].freeze
 
