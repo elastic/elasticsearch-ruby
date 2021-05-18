@@ -138,7 +138,7 @@ client = Elasticsearch::Client.new log: true
 
 client.cluster.health
 
-client.index(index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' })
+client.index(index: 'my-index', id: 1, body: { title: 'Test' })
 
 client.indices.refresh(index: 'my-index')
 
