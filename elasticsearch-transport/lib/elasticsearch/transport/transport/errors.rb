@@ -64,6 +64,7 @@ module Elasticsearch
         418 => 'ImATeapot',
         421 => 'TooManyConnectionsFromThisIP',
         426 => 'UpgradeRequired',
+        429 => 'TooManyRequests',
         450 => 'BlockedByWindowsParentalControls',
         494 => 'RequestHeaderTooLarge',
         497 => 'HTTPToHTTPS',
