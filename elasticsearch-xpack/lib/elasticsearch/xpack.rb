@@ -50,7 +50,8 @@ module Elasticsearch
       # E.g.: client.xpack.usage => client.usage
       # Excluding `info` since OSS and XPACK both have info endpoints.
       TOP_LEVEL_METHODS = [
-        :usage
+        :usage,
+        :terms_enum
       ].freeze
 
       def method_missing(method, *args, &block)
