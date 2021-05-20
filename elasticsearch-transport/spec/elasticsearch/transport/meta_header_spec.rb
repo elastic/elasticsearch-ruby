@@ -109,11 +109,17 @@ describe Elasticsearch::Transport::Client do
         let(:adapter) { :net_http_persistent }
 
         it 'sets adapter in the meta header version to 0 when not loaded' do
-          fork {
-            expect(headers['x-elastic-client-meta']).to match(regexp)
-            meta = "#{meta_header},np=0"
-            expect(headers).to include('x-elastic-client-meta' => meta)
-          }
+          was_required = defined?(Net::HTTP::Persistent)
+          if was_required
+            @klass = Net::HTTP::Persistent.clone
+            Net::HTTP.send(:remove_const, :Persistent)
+          end
+
+          expect(headers['x-elastic-client-meta']).to match(regexp)
+          meta = "#{meta_header},np=0"
+          expect(headers).to include('x-elastic-client-meta' => meta)
+
+          Net::HTTP::Persistent = @klass if was_required
         end unless jruby?
 
         it 'sets adapter in the meta header' do
@@ -128,15 +134,22 @@ describe Elasticsearch::Transport::Client do
         let(:adapter) { :httpclient }
 
         it 'sets adapter in the meta header version to 0 when not loaded' do
-          fork {
-            expect(headers['x-elastic-client-meta']).to match(regexp)
-            meta = "#{meta_header},hc=0"
-            expect(headers).to include('x-elastic-client-meta' => meta)
-          }
+          was_required = defined?(HTTPClient)
+          if was_required
+            @klass = HTTPClient.clone
+            Object.send(:remove_const, :HTTPClient)
+          end
+
+          expect(headers['x-elastic-client-meta']).to match(regexp)
+          meta = "#{meta_header},hc=0"
+          expect(headers).to include('x-elastic-client-meta' => meta)
+
+          HTTPClient = @klass if was_required
         end unless jruby?
 
         it 'sets adapter in the meta header' do
           require 'httpclient'
+
           expect(headers['x-elastic-client-meta']).to match(regexp)
           meta = "#{meta_header},hc=#{HTTPClient::VERSION}"
           expect(headers).to include('x-elastic-client-meta' => meta)
@@ -147,11 +160,17 @@ describe Elasticsearch::Transport::Client do
         let(:adapter) { :typhoeus }
 
         it 'sets adapter in the meta header version to 0 when not loaded' do
-          fork {
-            expect(headers['x-elastic-client-meta']).to match(regexp)
-            meta = "#{meta_header},ty=0"
-            expect(headers).to include('x-elastic-client-meta' => meta)
-          }
+          was_required = defined?(Typhoeus)
+          if was_required
+            @klass = Typhoeus.clone
+            Object.send(:remove_const, :Typhoeus)
+          end
+
+          expect(headers['x-elastic-client-meta']).to match(regexp)
+          meta = "#{meta_header},ty=0"
+          expect(headers).to include('x-elastic-client-meta' => meta)
+
+          Typhoeus = @klass if was_required
         end unless jruby?
 
         it 'sets adapter in the meta header' do
@@ -167,11 +186,17 @@ describe Elasticsearch::Transport::Client do
 
         context 'using patron without requiring it' do
           it 'sets adapter in the meta header version to 0 when not loaded' do
-            fork {
-              expect(headers['x-elastic-client-meta']).to match(regexp)
-              meta = "#{meta_header},pt=0"
-              expect(headers).to include('x-elastic-client-meta' => meta)
-            }
+            was_required = defined?(Patron)
+            if was_required
+              @klass = Patron.clone
+              Object.send(:remove_const, :Patron)
+            end
+
+            expect(headers['x-elastic-client-meta']).to match(regexp)
+            meta = "#{meta_header},pt=0"
+            expect(headers).to include('x-elastic-client-meta' => meta)
+
+            Patron = @klass if was_required
           end
         end
 
