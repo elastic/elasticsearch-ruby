@@ -263,6 +263,15 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       end
     end
 
+    should 'raise TooManyRequestsError on 429' do
+      @transport.expects(:get_connection).returns(stub_everything :failures => 1)
+      assert_raise Elasticsearch::Transport::Transport::Errors::TooManyRequests do
+        @transport.perform_request 'GET', '/' do
+          Elasticsearch::Transport::Transport::Response.new 429, 'ERROR'
+        end
+      end
+    end
+
     should "not raise an error when the :ignore argument has been passed" do
       @transport.stubs(:get_connection).returns(stub_everything :failures => 1)
 
