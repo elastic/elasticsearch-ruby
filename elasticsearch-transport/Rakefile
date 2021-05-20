@@ -27,38 +27,38 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 
 namespace :test do
-
-  desc "Wait for Elasticsearch to be in a green state"
+  desc 'Wait for Elasticsearch to be in a green state'
   task :wait_for_green do
     sh '../scripts/wait-cluster.sh'
   end
 
-  task :spec => :wait_for_green
+  task spec: :wait_for_green
   RSpec::Core::RakeTask.new(:spec)
 
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb"]
+    test.test_files = FileList['test/unit/**/*_test.rb']
     test.verbose = false
     test.warning = false
   end
 
   Rake::TestTask.new(:integration) do |test|
     test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/integration/**/*_test.rb"]
-    test.deps = [ 'test:wait_for_green', 'test:spec' ]
+    test.test_files = FileList['test/integration/**/*_test.rb']
+    test.deps = ['test:wait_for_green', 'test:spec']
     test.verbose = false
     test.warning = false
   end
 
-  Rake::TestTask.new(:all) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
+  desc 'Run all tests'
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
   end
 
   Rake::TestTask.new(:profile) do |test|
     test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/profile/**/*_test.rb"]
+    test.test_files = FileList['test/profile/**/*_test.rb']
   end
 end
 
