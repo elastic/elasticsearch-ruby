@@ -20,6 +20,8 @@ ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOS
                         hosts.split(',').map do |host|
                           /(http\:\/\/)?(\S+)/.match(host)[2]
                         end
+                      else
+                        ['localhost:9200']
                       end.freeze
 
 TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS

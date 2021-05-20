@@ -32,10 +32,12 @@ end
 # The hosts to use for creating a elasticsearch client.
 #
 # @since 7.0.0
-ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
+ELASTICSEARCH_HOSTS = if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
                         hosts.split(',').map do |host|
                           /(http\:\/\/)?(\S+)/.match(host)[2]
                         end
+                      else
+                        ['localhost:9200']
                       end.freeze
 
 TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
@@ -70,9 +72,7 @@ def default_client
 end
 
 module Config
-
   def self.included(context)
-
     # Get the hosts to use to connect an elasticsearch client.
     #
     # @since 7.0.0
