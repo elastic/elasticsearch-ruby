@@ -1,11 +1,21 @@
 # Rest API YAML Test Runner
 
-The specs in `elasticsearch-api` and `elasticsearch-xpack` automatically run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in each of these project's `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
+The specs in `elasticsearch-api` automatically run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in the `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
+
+You can run the tests with Rake. The main task is `rake test:rest_api`. This task will evaluate the `TEST_SUITE` environment variable. It will run either the `free` or `platinum` tests suites depending on the value of `TEST_SUITE`. If you don't set this value, the task will run the `free` test suite by default. To run the `platinum` test suite use:
+```
+TEST_SUITE=platinum rake test:rest_api
+```
+
+Or the shortcut:
+```
+rake test:platinum_api
+```
 
 ## REST API YAML Spec
 
 The file that traverses the yaml files and loads a **TestFile** object per each of them:
-`elasticsearch-(api|xpack)/spec/elasticsearch/api/rest_api_yaml_spec.rb`
+`elasticsearch-api/spec/elasticsearch/api/rest_api_yaml_spec.rb`
 
 You can use the SINGLE_TEST env variable to run just one test or one test directory. E.g.:
 ```
@@ -18,15 +28,9 @@ $ cd elasticsearch-api && SINGLE_TEST=indices.resolve_index TEST_ES_SERVER='http
 
 ## Skipped tests
 
-We sometimes skip tests, generally due to limitations on how we run the CI server or for stuff that hasn't been completely implemented on the client yet. Skipped tests are located in `elasticsearch-(api|xpack)/spec/skipped_tests.yml`. You can run just the tests which are currently being skipped by running:
+We sometimes skip tests, generally due to limitations on how we run the CI server or for stuff that hasn't been completely implemented on the client yet. Skipped tests are located in `elasticsearch-api/spec/skipped_tests.yml`. You can run just the tests which are currently being skipped by running:
 ```
-$ cd elasticsearch-api && RUN_SKIPPED_TESTS=true TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
-```
-
-Or
-
-```
-$ cd elasticsearch-xpack && RUN_SKIPPED_TESTS=true ELASTIC_PASSWORD=changeme TEST_SUITE=platinum TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
+$ cd elasticsearch-api && TEST_SUITE=(free|platinum) RUN_SKIPPED_TESTS=true TEST_ES_SERVER='http://localhost:9200' be rake test:rest_api
 ```
 
 ## TestFile
@@ -55,7 +59,7 @@ Task Groups are a representation of a block of actions consisting of 'do' action
  - match:   { _version: 1}
 ```
 
-**Before** each test, the spec runner runs `clear_data` on the test_file. This clears indices, index templates, snapshots and repositories. For xpack it also clears roles, users, privileges, datafeeds, ml_jobs and more.
+**Before** each test, the spec runner runs `clear_data` on the test_file. This clears indices, index templates, snapshots and repositories. For platinum it also clears roles, users, privileges, datafeeds, ml_jobs and more.
 
 **After** each test, it runs the test file teardown and `clear_data` again.
 
@@ -67,7 +71,7 @@ This file is where the action is executed, where we call the client with the met
 
 ## Rest YAML tests Helper
 
-`elasticsearch-(api|xpack)/spec/rest_yaml_tests_helper.rb`
+`elasticsearch-api/spec/rest_yaml_tests_helper.rb`
 
 - `ADMIN_CLIENT` is defined here.
 - `SINGLE_TEST` is defined here.
