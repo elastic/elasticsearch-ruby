@@ -17,19 +17,19 @@
 
 module Elasticsearch
   module API
-    module Xpack
+    module XPack
       module Actions; end
 
-      # Client for the "xpack" namespace (includes the {Xpack::Actions} methods)
+      # Client for the "xpack" namespace (includes the {XPack::Actions} methods)
       #
-      class XpackClient
-        include Common::Client, Common::Client::Base, Xpack::Actions
+      class XPackClient
+        include Common::Client, Common::Client::Base, XPack::Actions
       end
 
-      # Proxy method for {XpackClient}, available in the receiving object
+      # Proxy method for {XPackClient}, available in the receiving object
       #
       def xpack
-        @xpack ||= XpackClient.new(self)
+        @xpack ||= XPackClient.new(self)
       end
     end
   end

@@ -78,7 +78,7 @@ module Elasticsearch
       def module_name_helper(name)
         return name.upcase if %w[sql ssl].include? name
 
-        name.split('_').map(&:capitalize).join
+        name.split('_').map(&:capitalize).map{ |n| n == 'Xpack' ? 'XPack' : n }.join
       end
 
       def ping_perform_request
