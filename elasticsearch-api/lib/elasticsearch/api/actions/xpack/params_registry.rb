@@ -17,7 +17,7 @@
 
 module Elasticsearch
   module API
-    module Xpack
+    module XPack
       module Actions
         module ParamsRegistry
           extend self

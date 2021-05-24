@@ -17,7 +17,7 @@
 
 module Elasticsearch
   module API
-    module Xpack
+    module XPack
       module Actions
         # Retrieves information about the installed X-Pack features.
         #
