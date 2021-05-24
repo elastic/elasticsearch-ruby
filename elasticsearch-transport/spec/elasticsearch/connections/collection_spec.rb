@@ -249,6 +249,18 @@ describe Elasticsearch::Transport::Transport::Connections::Collection do
           collection.get_connection.host[:host]
         end).to eq((0..9).to_a)
       end
+
+      it 'always returns a connection' do
+        threads = 20.times.map do
+          Thread.new do
+            20.times.map do
+              collection.get_connection.dead!
+            end
+          end
+        end
+
+        expect(threads.flat_map(&:value).size).to eq(400)
+      end
     end
   end
 end
