@@ -166,7 +166,7 @@ module Elasticsearch
           'metrics'
         ].freeze
 
-        XPACK_TEMPLATES = [
+        PLATINUM_TEMPLATES = [
           '.watches', 'logstash-index-template', '.logstash-management',
           'security_audit_log', '.slm-history', '.async-search',
           'saml-service-provider', 'ilm-history', 'logs', 'logs-settings',
@@ -180,29 +180,29 @@ module Elasticsearch
         # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
         # https://github.com/elastic/elasticsearch-php/blob/7.10/tests/Elasticsearch/Tests/Utility.php#L97
         def wipe_cluster(client)
-          if xpack?
+          if platinum?
             clear_rollup_jobs(client)
             wait_for_pending_tasks(client)
             clear_sml_policies(client)
           end
           clear_snapshots_and_repositories(client)
-          clear_datastreams(client) if xpack?
+          clear_datastreams(client) if platinum?
           clear_indices(client)
-          if xpack?
-            clear_templates_xpack(client)
+          if platinum?
+            clear_templates_platinum(client)
             clear_datafeeds(client)
             clear_ml_jobs(client)
           else
             client.indices.delete_template(name: '*')
             client.indices.delete_index_template(name: '*')
             client.cluster.get_component_template['component_templates'].each do |template|
-              next if xpack_template? template['name']
+              next if platinum_template? template['name']
 
               client.cluster.delete_component_template(name: template['name'], ignore: 404)
             end
           end
           clear_cluster_settings(client)
-          return unless xpack?
+          return unless platinum?
 
           clear_ml_filters(client)
           clear_ilm_policies(client)
@@ -212,7 +212,7 @@ module Elasticsearch
           wait_for_cluster_tasks(client)
         end
 
-        def xpack?
+        def platinum?
           ENV['TEST_SUITE'] == 'platinum'
         end
 
@@ -278,11 +278,11 @@ module Elasticsearch
           client.cluster.put_settings(body: new_settings) unless new_settings.empty?
         end
 
-        def clear_templates_xpack(client)
+        def clear_templates_platinum(client)
           templates = client.indices.get_index_template
 
           templates['index_templates'].each do |template|
-            next if xpack_template? template['name']
+            next if platinum_template? template['name']
 
             begin
               client.indices.delete_index_template(name: template['name'], ignore: 404)
@@ -292,7 +292,7 @@ module Elasticsearch
           result = client.cluster.get_component_template
 
           result['component_templates'].each do |template|
-            next if xpack_template? template['name']
+            next if platinum_template? template['name']
 
             client.cluster.delete_component_template(name: template['name'], ignore: 404)
           end
@@ -301,20 +301,19 @@ module Elasticsearch
           templates = client.indices.get_template
 
           templates.each do |name, _|
-            next if xpack_template? name
+            next if platinum_template? name
 
             begin
               client.indices.delete_template(name: name)
             end
-
           end
         end
 
-        def xpack_template?(template)
-          xpack_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
-          xpack_prefixes.map { |a| return true if a.include? template }
+        def platinum_template?(template)
+          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
+          platinum_prefixes.map { |a| return true if a.include? template }
 
-          XPACK_TEMPLATES.include? template
+          PLATINUM_TEMPLATES.include? template
         end
 
         def clear_auto_follow_patterns(client)
@@ -327,7 +326,7 @@ module Elasticsearch
 
         private
 
-        def create_x_pack_rest_user(client)
+        def create_xpack_rest_user(client)
           client.security.put_user(
             username: 'x_pack_rest_user',
             body: { password: 'x-pack-test-password', roles: ['superuser'] }
