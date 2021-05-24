@@ -42,8 +42,6 @@ This repository contains these additional Ruby libraries:
 * [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions), *deprecated*.
 * [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
   which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
-* [`elasticsearch-xpack`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-xpack),
-  which provides a Ruby API for X-Pack APIs. This API is going to be merged into `elasticsearch-api` on v8.0.
 
 Please see their respective READMEs for information and documentation.
 
@@ -107,7 +105,7 @@ To run tests, you need to start a testing cluster on port 9250, or provide a dif
 
 There's a Rake task to start a testing cluster in a Docker container:
 
-`rake docker:start[version]` - E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with X-Pack, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`.
+`rake docker:start[version]` - E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with Platinum, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`.
 
 To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build` Rake task to build Elasticsearch from the cloned source (use `rake elasticsearch:update` to update the repository):
 

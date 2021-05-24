@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-transport/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-dsl/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
-$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-xpack/lib', __dir__))
 
 require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'elasticsearch-api'
+require 'elasticsearch-dsl'
 
-gems_not_loaded = ['elasticsearch-dsl', 'elasticsearch/xpack'].reject do |gem|
+gems_not_loaded = ['elasticsearch-dsl'].reject do |gem|
   begin
     (require gem) || true
   rescue LoadError
