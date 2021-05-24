@@ -53,14 +53,14 @@ namespace :test do
   desc 'Run rest api tests'
   task rest_api: ['elasticsearch:wait_for_green'] do
     puts '-' * 80
-    sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api[true]"
+    sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api"
     puts "\n"
   end
 
   desc 'Run security (Platinum) rest api yaml tests'
   task security: 'elasticsearch:wait_for_green' do
     puts '-' * 80
-    sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:platinum_api"
+    sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && TEST_SUITE=platinum bundle exec rake test:rest_api"
     puts "\n"
   end
 

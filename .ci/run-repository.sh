@@ -63,5 +63,5 @@ else
            --name elasticsearch-ruby \
            --rm \
            elastic/elasticsearch-ruby \
-           bundle exec rake test:download_artifacts test:security
+           bundle exec rake test:download_artifacts test:rest_api
 fi

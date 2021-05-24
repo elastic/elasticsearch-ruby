@@ -328,8 +328,10 @@ module Elasticsearch
         private
 
         def create_x_pack_rest_user(client)
-          client.security.put_user(username: 'x_pack_rest_user',
-                                         body: { password: 'x-pack-test-password', roles: ['superuser'] })
+          client.security.put_user(
+            username: 'x_pack_rest_user',
+            body: { password: 'x-pack-test-password', roles: ['superuser'] }
+          )
         end
 
         def clear_roles(client)
