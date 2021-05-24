@@ -78,16 +78,13 @@ module Elasticsearch
 
           # Returns a connection.
           #
-          # If there are no alive connections, resurrects a connection with least failures.
+          # If there are no alive connections, returns a connection with least failures.
           # Delegates to selector's `#select` method to get the connection.
           #
           # @return [Connection]
           #
           def get_connection(options={})
-            if connections.empty? && dead_connection = dead.sort { |a,b| a.failures <=> b.failures }.first
-              dead_connection.alive!
-            end
-            selector.select(options)
+            selector.select(options) || @connections.min_by(&:failures)
           end
 
           def each(&block)
