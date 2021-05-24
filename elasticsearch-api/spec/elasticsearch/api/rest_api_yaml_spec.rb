@@ -47,15 +47,8 @@ describe 'Rest API YAML tests' do
             next
           end
 
-          let(:client) do
-            DEFAULT_CLIENT
-          end
-
-          # Runs once before each test in a test file
-          before(:all) do
-            test_file.setup
-          end
-
+          let(:client) { DEFAULT_CLIENT }
+          before(:all) { test_file.setup }
           after(:all) do
             test_file.teardown
             Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
