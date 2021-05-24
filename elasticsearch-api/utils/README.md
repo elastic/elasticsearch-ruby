@@ -8,19 +8,11 @@ This directory hosts The Generator, a tool that generates the classes for each A
 
 To generate the code, you need to run (from this folder):
 ```bash
-$ thor api:code:generate
+$ thor code:generate
 ```
 
-- The oss Ruby code will be generated in `elasticsearch-api/lib/elasticsearch/api/actions`.  
-- The xpack Ruby code will be generated in `elasticsearch-xpack/lib/elasticsearch/xpack/api/actions`.
+- The Ruby code will be generated in `elasticsearch-api/lib/elasticsearch/api/actions`.
 - The generator runs Rubocop to autolint and clean up the generated files.
-
-Alternatively, you can pass in `oss` or `xpack` as parameters to generate only one of the 2 sets of endpoints:
-
-```bash
-$ thor api:code:generate --api=xpack
-$ thor api:code:generate --api=oss
-```
 
 ### Development
 

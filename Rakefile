@@ -60,15 +60,13 @@ SUBPROJECTS = [
   'elasticsearch',
   'elasticsearch-transport',
   'elasticsearch-dsl',
-  'elasticsearch-api',
-  'elasticsearch-xpack'
+  'elasticsearch-api'
 ].freeze
 
 RELEASE_TOGETHER = [
   'elasticsearch',
   'elasticsearch-transport',
-  'elasticsearch-api',
-  'elasticsearch-xpack'
+  'elasticsearch-api'
 ].freeze
 
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'

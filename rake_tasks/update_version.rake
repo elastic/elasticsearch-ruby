@@ -62,7 +62,6 @@ task :update_changelog do
   log_entries[:client] = log.select { |l| l =~ /\[CLIENT\]/ }
   log_entries[:api] = log.select { |l| l =~ /\[API\]/ }
   log_entries[:dsl] = log.select { |l| l =~ /\[DSL\]/ }
-  log_entries[:xpack] = log.select { |l| l =~ /\[XPACK\]/ }
 
   changelog = File.read(File.open('CHANGELOG.md', 'r'))
 
@@ -96,15 +95,6 @@ task :update_changelog do
                           .map { |l| l.gsub /\[DSL\] /, '' }
                           .map { |l| "#{l}" }
                           .join("\n")
-    changelog_update << "\n\n"
-  end
-
-  unless log_entries[:xpack].empty?
-    changelog_update << "### XPACK\n\n"
-    changelog_update << log_entries[:xpack]
-                            .map { |l| l.gsub /\[XPACK\] /, '' }
-                            .map { |l| "#{l}" }
-                            .join("\n")
     changelog_update << "\n\n"
   end
 

@@ -61,7 +61,7 @@ end
 
 # Register a new watch
 #
-client.xpack.watcher.put_watch id: 'error_500', body: {
+client.watcher.put_watch id: 'error_500', body: {
   # Label the watch
   #
   metadata: { tags: ['errors'] },
@@ -186,4 +186,4 @@ end
 
 # Delete the watch
 #
-client.xpack.watcher.delete_watch id: 'error_500'
+client.watcher.delete_watch id: 'error_500'
