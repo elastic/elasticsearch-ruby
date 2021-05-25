@@ -39,6 +39,6 @@ jobs:
     - name: elasticsearch
       run: cd elasticsearch && bundle exec rake test:all
     - name: elasticsearch-api
-      run: cd elasticsearch-api && bundle exec rake test:spec
+      run: cd elasticsearch-api && bundle exec rake test:spec test:platinum:unit
     - name: elasticsearch-transport
       run: cd elasticsearch-transport && bundle exec rake test:all
