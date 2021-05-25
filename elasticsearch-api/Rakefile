@@ -40,15 +40,25 @@ namespace :test do
     t.exclude_pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
   end
 
+  namespace :platinum do
+    desc 'Run Platinum Rest API Spec tests'
+    RSpec::Core::RakeTask.new(:api) do |t|
+      ENV['TEST_SUITE'] = 'platinum'
+      Rake::Task['test:rest_api'].invoke
+    end
+
+    desc 'Run Platinum Unit tests - DEPRECATED: Will be migrated to RSpec'
+    Rake::TestTask.new(:unit) do |test|
+      test.libs << 'spec/unit_tests_platinum'
+      test.test_files = FileList['spec/unit_tests_platinum/unit/**/*_test.rb']
+      test.verbose = false
+      test.warning = false
+    end
+  end
+
   desc 'Run Rest API Spec tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
     t.pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
-  end
-
-  desc 'Run Platinum Rest API Spec tests'
-  RSpec::Core::RakeTask.new(:platinum_api) do |t|
-    ENV['TEST_SUITE'] = 'platinum'
-    Rake::Task['test:rest_api'].invoke
   end
 
   desc 'Run integration tests'

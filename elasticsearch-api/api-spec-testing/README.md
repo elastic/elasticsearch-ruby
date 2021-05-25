@@ -9,7 +9,7 @@ TEST_SUITE=platinum rake test:rest_api
 
 Or the shortcut:
 ```
-rake test:platinum_api
+rake test:platinum:api
 ```
 
 ## REST API YAML Spec
