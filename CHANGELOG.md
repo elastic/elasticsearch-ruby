@@ -1,6 +1,11 @@
 ## 7.13.0
 
 ### Client
+- Fixes thread safety issue in `get_connection` - [https://github.com/elastic/elasticsearch-ruby/pull/1325](Pull Request).
+
+## 7.13.0
+
+### Client
 
 - Support for Elasticsearch version 7.13.0
 - Adds support for compatibility header for Elasticsearch. If the environment variable 'ELASTIC_CLIENT_APIVERSIONING' is set to `true` or `1`, the client will send the headers `Accept` and `Content-Type` with the following value: `application/vnd.elasticsearch+json;compatible-with=7`.
