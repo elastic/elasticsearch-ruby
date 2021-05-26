@@ -28,16 +28,9 @@ TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOS
 
 JRUBY    = defined?(JRUBY_VERSION)
 
-if ENV['COVERAGE'] && ENV['CI'].nil?
+if ENV['COVERAGE']
   require 'simplecov'
-  SimpleCov.start { add_filter "/test|test_/" }
-end
-
-if ENV['CI']
-  require 'simplecov'
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  SimpleCov.start { add_filter "/test|test_" }
+  SimpleCov.start { add_filter %r{^/test/} }
 end
 
 require 'minitest/autorun'
