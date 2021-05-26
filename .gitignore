@@ -13,3 +13,4 @@ Gemfile.lock
 .idea/*
 profile/**/data/*.json
 .ci/output
+parsed_alternative_report.json
