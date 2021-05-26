@@ -2,6 +2,18 @@
 === 7.13 Release notes
 
 [discrete]
+[[release_notes_7131]]
+=== 7.13.1 Release notes
+
+[discrete]
+==== Client
+- Fixes thread safety issue in `get_connection` - https://github.com/elastic/elasticsearch-ruby/pull/1325[Pull Request].
+
+[discrete]
+[[release_notes_7130]]
+=== 7.13.0 Release notes
+
+[discrete]
 ==== Client
 
 - Support for Elasticsearch version 7.13.0
