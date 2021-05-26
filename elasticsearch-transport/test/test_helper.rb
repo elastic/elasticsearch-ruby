@@ -29,23 +29,9 @@ TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOS
 RUBY_1_8 = defined?(RUBY_VERSION) && RUBY_VERSION < '1.9'
 JRUBY    = defined?(JRUBY_VERSION)
 
-if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
-  require 'rubygems'
-  gem 'test-unit'
-end
-
-require 'rubygems' if RUBY_1_8
-
-if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
+if ENV['COVERAGE']
   require 'simplecov'
-  SimpleCov.start { add_filter "/test|test_/" }
-end
-
-if ENV['CI'] && !RUBY_1_8
-  require 'simplecov'
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  SimpleCov.start { add_filter "/test|test_" }
+  SimpleCov.start { add_filter %r{^/test/} }
 end
 
 # Register `at_exit` handler for integration tests shutdown.

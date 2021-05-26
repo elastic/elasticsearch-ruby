@@ -30,7 +30,6 @@ gem 'rake'
 gem 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
 gem 'ruby-prof'    unless defined?(JRUBY_VERSION) || defined?(Rubinius)
 gem 'shoulda-context'
-gem 'simplecov', '~> 0.17', '< 0.18'
-gem 'simplecov-rcov'
+gem 'simplecov'
 gem 'test-unit', '~> 2'
 gem 'yard'

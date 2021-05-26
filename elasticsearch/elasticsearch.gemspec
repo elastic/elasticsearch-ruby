@@ -55,21 +55,17 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'elasticsearch-extensions'
 
   s.add_development_dependency 'ansi'
-  s.add_development_dependency 'shoulda-context'
-  s.add_development_dependency 'mocha'
-  s.add_development_dependency 'yard'
-  s.add_development_dependency 'pry'
-
-
+  s.add_development_dependency 'cane'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'pry'
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-  s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
-  s.add_development_dependency 'simplecov-rcov'
-  s.add_development_dependency 'cane'
-
+  s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  s.add_development_dependency 'shoulda-context'
+  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'test-unit', '~> 2'
+  s.add_development_dependency 'yard'
 
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby integrations for Elasticsearch (client, API, etc.)
