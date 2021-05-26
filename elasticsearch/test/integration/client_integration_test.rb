@@ -24,7 +24,7 @@ module Elasticsearch
     class ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
       context "Elasticsearch client" do
         setup do
-          system "curl -X DELETE http://#{TEST_HOST}:#{TEST_PORT}/_all > /dev/null 2>&1"
+          system "curl -X DELETE http://#{ELASTICSEARCH_URL}/_all > /dev/null 2>&1"
 
           @logger =  Logger.new(STDERR)
           @logger.formatter = proc do |severity, datetime, progname, msg|
@@ -37,14 +37,17 @@ module Elasticsearch
             ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
           end
 
-          @client = Elasticsearch::Client.new host: "#{TEST_HOST}:#{TEST_PORT}", logger: (ENV['QUIET'] ? nil : @logger)
+          @client = Elasticsearch::Client.new(
+            host: ELASTICSEARCH_URL,
+            logger: (ENV['QUIET'] ? nil : @logger)
+          )
         end
 
         should "perform the API methods" do
           assert_nothing_raised do
             # Index a document
             #
-            @client.index index: 'test-index', id: '1', body: { title: 'Test', type: 'test-type' }
+            @client.index(index: 'test-index', id: '1', body: { title: 'Test', type: 'test-type' })
 
             # Refresh the index
             #

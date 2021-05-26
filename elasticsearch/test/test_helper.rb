@@ -14,26 +14,16 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+require 'uri'
 
-ELASTICSEARCH_HOSTS = if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
-                        hosts.split(',').map do |host|
-                          /(http\:\/\/)?(\S+)/.match(host)[2]
-                        end
-                      end.freeze
-
-TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
+ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] ||
+                    "http://localhost:#{(ENV['PORT'] || 9200)}"
+raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
 JRUBY = defined?(JRUBY_VERSION)
 
-if ENV['COVERAGE'] && ENV['CI'].nil? && !RUBY_1_8
+if ENV['COVERAGE']
   require 'simplecov'
-  SimpleCov.start { add_filter "/test|test_/" }
-end
-
-if ENV['CI']
-  require 'simplecov'
-  require 'simplecov-rcov'
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
   SimpleCov.start { add_filter "/test|test_" }
 end
 

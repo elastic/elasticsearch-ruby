@@ -61,7 +61,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'simplecov-rcov'
   s.add_development_dependency 'test-unit', '~> 2'
   s.add_development_dependency 'yard'
 

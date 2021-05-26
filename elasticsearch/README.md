@@ -86,6 +86,10 @@ Please refer to the specific library documentation for details:
    [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
    [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
 
+## Development
+
+You can run `rake -T` to check the test tasks. Use `COVERAGE=true` before running a test task to check the coverage with Simplecov.
+
 ## License
 
 This software is licensed under the [Apache 2 license](./LICENSE).

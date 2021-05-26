@@ -29,7 +29,6 @@ gem 'rake'
 gem 'rubocop'
 gem 'shoulda-context'
 gem 'simplecov'
-gem 'simplecov-rcov'
 gem 'test-unit', '~> 2'
 gem 'yard'
 unless defined?(JRUBY_VERSION) || defined?(Rubinius)
