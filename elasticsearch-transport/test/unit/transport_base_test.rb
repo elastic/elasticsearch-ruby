@@ -319,7 +319,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @transport.perform_request('GET', '/', &@block)
       assert_equal 2, @transport.counter
     end
-  end unless RUBY_1_8
+  end
 
   context "performing a request with retry on connection failures" do
     setup do
@@ -353,7 +353,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
         @transport.perform_request('GET', '/', &@block)
       end
     end
-  end unless RUBY_1_8
+  end
 
   context "performing a request with retry on status" do
     setup do
@@ -400,7 +400,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
         @transport.perform_request('GET', '/', &@block)
       end
     end
-  end  unless RUBY_1_8
+  end
 
   context "logging" do
     setup do
@@ -456,7 +456,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
-    end unless RUBY_1_8
+    end
 
     should "not log a failed Elasticsearch request as fatal" do
       @block = Proc.new { |c, u| puts "ERROR" }
@@ -467,7 +467,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
 
       # No `BadRequest` error
       @transport.perform_request('POST', '_search', :ignore => 500, &@block)
-    end unless RUBY_1_8
+    end
 
     should "log and re-raise a Ruby exception" do
       @block = Proc.new { |c, u| puts "ERROR" }
@@ -477,7 +477,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       @transport.logger.expects(:fatal)
 
       assert_raise(Exception) { @transport.perform_request('POST', '_search', &@block) }
-    end unless RUBY_1_8
+    end
   end
 
   context "tracing" do
@@ -531,7 +531,7 @@ class Elasticsearch::Transport::Transport::BaseTest < Minitest::Test
       assert_raise Elasticsearch::Transport::Transport::Errors::InternalServerError do
         @transport.perform_request('POST', '_search', &@block)
       end
-    end unless RUBY_1_8
+    end
 
   end
 
