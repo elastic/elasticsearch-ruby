@@ -24,7 +24,7 @@ PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 TRANSPORT_OPTIONS = {}
 TEST_SUITE = ENV['TEST_SUITE'] || 'platinum'
 
-hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'http://localhost:9200'
+hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'https://localhost:9200'
 raise URI::InvalidURIError unless hosts =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
 split_hosts = hosts.split(',').map do |host|
@@ -37,10 +37,8 @@ TEST_PORT = uri.port
 
 raw_certificate = File.read(File.join(PROJECT_PATH, '.ci/certs/testnode.crt'))
 certificate = OpenSSL::X509::Certificate.new(raw_certificate)
-
 raw_key = File.read(File.join(PROJECT_PATH, '/.ci/certs/testnode.key'))
 key = OpenSSL::PKey::RSA.new(raw_key)
-
 ca_file = File.join(PROJECT_PATH, '/.ci/certs/ca.crt')
 
 if defined?(TEST_HOST) && defined?(TEST_PORT)
