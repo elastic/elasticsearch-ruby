@@ -33,8 +33,6 @@ if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 end
 
-require 'test/unit' if RUBY_1_8
-
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'shoulda/context'
@@ -83,8 +81,7 @@ module Elasticsearch
       extend Elasticsearch::Extensions::Test::StartupShutdown
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
-      context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
-    end if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+    end
   end
 
   module Test
@@ -93,7 +90,6 @@ module Elasticsearch
       extend Elasticsearch::Extensions::Test::Profiling
 
       shutdown { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] && started? && Elasticsearch::Extensions::Test::Cluster.running? }
-      context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
-    end unless RUBY_1_8 || JRUBY
+    end unless JRUBY
   end
 end

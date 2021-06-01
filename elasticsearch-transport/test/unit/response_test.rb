@@ -26,7 +26,7 @@ class Elasticsearch::Transport::Transport::ResponseTest < Minitest::Test
 
       response = Elasticsearch::Transport::Transport::Response.new 200, body
       assert_equal 'UTF-8', response.body.encoding.name
-    end unless RUBY_1_8
+    end
 
   end
 end
