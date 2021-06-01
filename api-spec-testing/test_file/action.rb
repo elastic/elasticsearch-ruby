@@ -67,6 +67,17 @@ module Elasticsearch
 
           _method = chain[-1]
           case _method
+          when 'put_transform'
+            begin
+              @response = client.send(_method, prepare_arguments(args, test))
+            rescue StandardError => e
+              logger = Logger.new($stdout)
+              logger.error e.message
+              sleep 5
+              @response = client.send(_method, prepare_arguments(args, test))
+            ensure
+              client
+            end
           when 'headers'
             headers = prepare_arguments(args, test)
             # TODO: Remove Authorization headers while x_pack_rest_user is fixed
