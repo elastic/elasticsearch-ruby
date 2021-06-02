@@ -3,9 +3,9 @@ STACK_VERSION:
   - 8.0.0-SNAPSHOT
 
 RUBY_TEST_VERSION:
-- 3.0.0
-- 2.7.2
-- 2.6.6
+- 3.0
+- 2.7
+- 2.6
 
 TEST_SUITE:
 - free
