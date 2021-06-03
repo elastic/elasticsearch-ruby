@@ -176,7 +176,6 @@ module Elasticsearch
                        end
         end
       end
-
       # Performs a request through delegation to {#transport}.
       #
       def perform_request(method, path, params = {}, body = nil, headers = nil)

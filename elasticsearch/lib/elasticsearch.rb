@@ -20,12 +20,27 @@ require 'elasticsearch/transport'
 require 'elasticsearch/api'
 
 module Elasticsearch
-  module Transport
-    class Client
-      include Elasticsearch::API
+  class Client
+    include Elasticsearch::API
+
+    def initialize(arguments = {}, &block)
+      @transport = Elasticsearch::Transport::Client.new(arguments, &block)
+    end
+
+    def method_missing(name, *args, &block)
+      if methods.include?(name)
+        super
+      else
+        @transport.send(name, *args, &block)
+      end
+    end
+
+    def respond_to_missing?(method_name, *args)
+      @transport.respond_to?(method_name) || super
     end
   end
 end
+
 module Elastic
   # If the version is X.X.X.pre/alpha/beta, use X.X.Xp for the meta-header:
   def self.client_meta_version
