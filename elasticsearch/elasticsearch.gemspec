@@ -48,20 +48,14 @@ Gem::Specification.new do |s|
   s.add_dependency 'elasticsearch-transport', '8.0.0'
   s.add_dependency 'elasticsearch-api',       '8.0.0'
 
-  s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'cane'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
-  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'byebug' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
-  s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'test-unit', '~> 2'
   s.add_development_dependency 'yard'
 
   s.description = <<-DESC.gsub(/^    /, '')
