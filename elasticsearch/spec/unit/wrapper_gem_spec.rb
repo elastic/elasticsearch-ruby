@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require 'elasticsearch'
+require 'spec_helper'
 
 describe 'Elasticsearch: wrapper gem' do
   it 'requires all neccessary subgems' do

@@ -32,8 +32,10 @@ module Elasticsearch
     # Create a client connected to an Elasticsearch cluster.
     #
     # @option arguments [String] :cloud_id - The Cloud ID to connect to Elastic Cloud
-    #
+    # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
+    #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
     def initialize(arguments = {}, &block)
+      api_key(arguments) if arguments[:api_key]
       if arguments[:cloud_id]
         arguments[:hosts] = setup_cloud_host(
           arguments[:cloud_id],
@@ -73,11 +75,22 @@ module Elasticsearch
       [{ scheme: 'https', user: user, password: password, host: host, port: port.to_i }]
     end
 
-    def set_api_key
-      @api_key = encode(@api_key) if @api_key.is_a? Hash
-      add_header('Authorization' => "ApiKey #{@api_key}")
-      @arguments.delete(:user)
-      @arguments.delete(:password)
+    def api_key(arguments)
+      api_key = if arguments[:api_key].is_a? Hash
+                  encode(arguments[:api_key])
+                else
+                  arguments[:api_key]
+                end
+      arguments.delete(:user)
+      arguments.delete(:password)
+      authorization = { 'Authorization' => "ApiKey #{api_key}" }
+      if (headers = arguments.dig(:transport_options, :headers))
+        headers.merge!(authorization)
+      else
+        arguments[:transport_options] = {
+          headers: authorization
+        }
+      end
     end
 
     # Encode credentials for the Authorization Header
