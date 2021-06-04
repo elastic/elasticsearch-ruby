@@ -14,30 +14,19 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+require 'elasticsearch'
 
-require 'test_helper'
+describe 'Elasticsearch: wrapper gem' do
+  it 'requires all neccessary subgems' do
+    expect(defined?(Elasticsearch::Client))
+    expect(defined?(Elasticsearch::API))
+  end
 
-module Elasticsearch
-  module Test
-    class WrapperGemTest < Minitest::Test
+  it 'mixes the API into the client' do
+    client = Elasticsearch::Client.new
 
-      context "Wrapper gem" do
-
-        should "require all neccessary subgems" do
-          assert defined? Elasticsearch::Client
-          assert defined? Elasticsearch::API
-        end
-
-        should "mix the API into the client" do
-          client = Elasticsearch::Client.new
-
-          assert_respond_to client, :search
-          assert_respond_to client, :cluster
-          assert_respond_to client, :indices
-        end
-
-      end
-
-    end
+    expect(client).to respond_to(:search)
+    expect(client).to respond_to(:cluster)
+    expect(client).to respond_to(:indices)
   end
 end
