@@ -78,22 +78,6 @@ describe Elasticsearch::Transport::Client do
       end
     end
 
-    context 'when using API Key' do
-      let(:client) do
-        described_class.new(api_key: 'an_api_key', adapter: adapter)
-      end
-
-      let(:authorization_header) do
-        client.transport.connections.first.connection.headers['Authorization']
-      end
-
-      it 'adds the ApiKey header to the connection' do
-        expect(authorization_header).to eq('ApiKey an_api_key')
-        expect(subject['x-elastic-client-meta']).to match(regexp)
-        expect(subject).to include('x-elastic-client-meta' => meta_header)
-      end
-    end
-
     context 'adapters' do
       let(:meta_header) do
         if jruby?

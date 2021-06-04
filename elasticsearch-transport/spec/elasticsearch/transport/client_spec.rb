@@ -70,48 +70,6 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
-  context 'when an encoded api_key is provided' do
-    let(:client) do
-      described_class.new(api_key: 'an_api_key')
-    end
-    let(:authorization_header) do
-      client.transport.connections.first.connection.headers['Authorization']
-    end
-
-    it 'Adds the ApiKey header to the connection' do
-      expect(authorization_header).to eq('ApiKey an_api_key')
-    end
-  end
-
-  context 'when an un-encoded api_key is provided' do
-    let(:client) do
-      described_class.new(api_key: { id: 'my_id', api_key: 'my_api_key' })
-    end
-    let(:authorization_header) do
-      client.transport.connections.first.connection.headers['Authorization']
-    end
-
-    it 'Adds the ApiKey header to the connection' do
-      expect(authorization_header).to eq("ApiKey #{Base64.strict_encode64('my_id:my_api_key')}")
-    end
-  end
-
-  context 'when basic auth and api_key are provided' do
-    let(:client) do
-      described_class.new(
-        api_key: { id: 'my_id', api_key: 'my_api_key' },
-        host: 'http://elastic:password@localhost:9200'
-      )
-    end
-    let(:authorization_header) do
-      client.transport.connections.first.connection.headers['Authorization']
-    end
-
-    it 'removes basic auth credentials' do
-      expect(authorization_header).not_to match(/^Basic/)
-      expect(authorization_header).to match(/^ApiKey/)
-    end
-  end
 
   context 'when a user-agent header is specified as client option in lower-case' do
 

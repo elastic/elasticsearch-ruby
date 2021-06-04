@@ -113,8 +113,6 @@ module Elasticsearch
       #   The default is false. Responses will automatically be inflated if they are compressed.
       #   If a custom transport object is used, it must handle the request compression and response inflation.
       #
-      # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
-      #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
       # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
       #                                                     This will be prepended to the id you set before each request
       #                                                     if you're using X-Opaque-Id
@@ -124,7 +122,7 @@ module Elasticsearch
       # @yield [faraday] Access and configure the `Faraday::Connection` instance directly with a block
       #
       def initialize(arguments = {}, &block)
-        @options = arguments.each_with_object({}) { |(k, v), args| args[k.to_sym] = v }
+        @options = arguments.transform_keys(&:to_sym)
         @arguments = @options
         @arguments[:logger] ||= @arguments[:log]   ? DEFAULT_LOGGER.call() : nil
         @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
@@ -134,10 +132,8 @@ module Elasticsearch
         @arguments[:randomize_hosts]    ||= false
         @arguments[:transport_options]  ||= {}
         @arguments[:http]               ||= {}
-        @arguments[:enable_meta_header] = arguments.fetch(:enable_meta_header) { true }
+        @arguments[:enable_meta_header] = arguments.fetch(:enable_meta_header, true)
         @options[:http]                 ||= {}
-
-        set_api_key if (@api_key = @arguments[:api_key])
 
         @hosts = __extract_hosts(@arguments[:hosts] ||
                                  @arguments[:host] ||
@@ -183,13 +179,6 @@ module Elasticsearch
       end
 
       private
-
-      def set_api_key
-        @api_key = __encode(@api_key) if @api_key.is_a? Hash
-        add_header('Authorization' => "ApiKey #{@api_key}")
-        @arguments.delete(:user)
-        @arguments.delete(:password)
-      end
 
       def add_header(header)
         headers = @arguments[:transport_options]&.[](:headers) || {}
@@ -296,13 +285,6 @@ module Elasticsearch
         else
           ::Faraday.default_adapter
         end
-      end
-
-      # Encode credentials for the Authorization Header
-      # Credentials is the base64 encoding of id and api_key joined by a colon
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
-      def __encode(api_key)
-        Base64.strict_encode64([api_key[:id], api_key[:api_key]].join(':'))
       end
     end
   end
