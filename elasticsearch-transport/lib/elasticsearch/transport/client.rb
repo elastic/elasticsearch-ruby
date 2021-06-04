@@ -49,11 +49,6 @@ module Elasticsearch
       # @since 7.0.0
       DEFAULT_HOST = 'localhost:9200'.freeze
 
-      # The default port to use if connecting using a Cloud ID.
-      #
-      # @since 7.2.0
-      DEFAULT_CLOUD_PORT = 9243
-
       # The default port to use if not otherwise specified.
       #
       # @since 7.2.0
@@ -144,13 +139,12 @@ module Elasticsearch
 
         set_api_key if (@api_key = @arguments[:api_key])
 
-        @seeds = extract_cloud_creds(@arguments)
-        @seeds ||= __extract_hosts(@arguments[:hosts] ||
-                                   @arguments[:host] ||
-                                   @arguments[:url] ||
-                                   @arguments[:urls] ||
-                                   ENV['ELASTICSEARCH_URL'] ||
-                                   DEFAULT_HOST)
+        @hosts = __extract_hosts(@arguments[:hosts] ||
+                                 @arguments[:host] ||
+                                 @arguments[:url] ||
+                                 @arguments[:urls] ||
+                                 ENV['ELASTICSEARCH_URL'] ||
+                                 DEFAULT_HOST)
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
         @opaque_id_prefix = @arguments[:opaque_id_prefix] || nil
@@ -166,13 +160,13 @@ module Elasticsearch
           @transport = if @transport_class == Transport::HTTP::Faraday
                          @arguments[:adapter] ||= __auto_detect_adapter
                          set_meta_header # from include MetaHeader
-                         @transport_class.new(hosts: @seeds, options: @arguments) do |faraday|
+                         @transport_class.new(hosts: @hosts, options: @arguments) do |faraday|
                            faraday.adapter(@arguments[:adapter])
                            block&.call faraday
                          end
                        else
                          set_meta_header # from include MetaHeader
-                         @transport_class.new(hosts: @seeds, options: @arguments)
+                         @transport_class.new(hosts: @hosts, options: @arguments)
                        end
         end
       end
@@ -203,30 +197,6 @@ module Elasticsearch
         @arguments[:transport_options].merge!(
           headers: headers
         )
-      end
-
-      def extract_cloud_creds(arguments)
-        return unless arguments[:cloud_id] && !arguments[:cloud_id].empty?
-
-        name = arguments[:cloud_id].split(':')[0]
-        cloud_url, elasticsearch_instance = Base64.decode64(arguments[:cloud_id].gsub("#{name}:", '')).split('$')
-
-        if cloud_url.include?(':')
-          url, port = cloud_url.split(':')
-          host = "#{elasticsearch_instance}.#{url}"
-        else
-          host = "#{elasticsearch_instance}.#{cloud_url}"
-          port = arguments[:port] || DEFAULT_CLOUD_PORT
-        end
-        [
-          {
-            scheme: 'https',
-            user: arguments[:user],
-            password: arguments[:password],
-            host: host,
-            port: port.to_i
-          }
-        ]
       end
 
       # Normalizes and returns hosts configuration.
