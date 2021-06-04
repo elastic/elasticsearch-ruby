@@ -17,38 +17,31 @@
 
 require "bundler/gem_tasks"
 
-desc "Run unit tests"
-task :test    => 'test:unit'
+desc 'Run unit tests'
+task test: 'test:spec'
 
 # ----- Test tasks ------------------------------------------------------------
+require 'rspec/core/rake_task'
 
-require 'rake/testtask'
 namespace :test do
-  desc "Wait for Elasticsearch to be in a green state"
+  desc 'Wait for Elasticsearch to be in a green state'
   task :wait_for_green do
     sh '../scripts/wait-cluster.sh'
   end
 
-  Rake::TestTask.new(:unit) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb"]
-    test.verbose = false
-    test.warning = false
+  RSpec::Core::RakeTask.new(:integration) do |t|
+    t.pattern = 'spec/integration/**{,/*/**}/*_spec.rb'
   end
 
-  Rake::TestTask.new(:integration) do |test|
-    test.deps = [ :wait_for_green ]
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/integration/**/*_test.rb"]
-    test.verbose = false
-    test.warning = false
+  RSpec::Core::RakeTask.new(:unit) do |t|
+    t.pattern = 'spec/unit/**{,/*/**}/*_spec.rb'
   end
 
-  Rake::TestTask.new(:all) do |test|
-    test.libs << 'lib' << 'test'
-    test.test_files = FileList["test/unit/**/*_test.rb", "test/integration/**/*_test.rb"]
+  desc 'Run unit and integration tests'
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
   end
-
 end
 
 # ----- Documentation tasks ---------------------------------------------------
