@@ -26,7 +26,7 @@ require 'mocha/minitest'
 
 require 'ansi'
 
-require 'elasticsearch/transport'
+require 'elasticsearch'
 require 'elasticsearch/xpack'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
