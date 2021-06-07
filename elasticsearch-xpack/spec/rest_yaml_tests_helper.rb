@@ -75,7 +75,7 @@ SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                   ["#{path}/../tmp/rest-api-spec/test/platinum/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum/#{test_target}/*.yml"]
+                    ["#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum/#{test_target}/**/*.yml"]
                   )
                 end
               end
