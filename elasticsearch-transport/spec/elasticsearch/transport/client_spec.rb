@@ -355,7 +355,6 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when there is a port specified \'http://myhost:7101\'' do
-
             let(:host) do
               'http://myhost:7101'
             end
@@ -373,7 +372,6 @@ describe Elasticsearch::Transport::Client do
             end
 
             context 'when there is a path specified \'http://myhost:7101/api\'' do
-
               let(:host) do
                 'http://myhost:7101/api'
               end
@@ -405,9 +403,7 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when the protocol is https' do
-
           context 'when there is no port specified \'https://myhost\'' do
-
             let(:host) do
               'https://myhost'
             end
@@ -426,7 +422,6 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when there is a port specified \'https://myhost:7101\'' do
-
             let(:host) do
               'https://myhost:7101'
             end
@@ -828,7 +823,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when the hosts is invalid' do
-
       let(:host) do
         123
       end
@@ -842,7 +836,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'host\' key' do
-
     let(:client) do
       described_class.new(host: ['host1', 'host2', 'host3', 'host4'], randomize_hosts: true)
     end
@@ -857,7 +850,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'host\' key as a String' do
-
     let(:client) do
       described_class.new('host' => ['host1', 'host2', 'host3', 'host4'], 'randomize_hosts' => true)
     end
@@ -872,7 +864,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'hosts\' key' do
-
     let(:client) do
       described_class.new(hosts: host)
     end
@@ -885,7 +876,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'hosts\' key as a String' do
-
     let(:client) do
       described_class.new('hosts' => host)
     end
@@ -898,7 +888,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'url\' key' do
-
     let(:client) do
       described_class.new(url: host)
     end
@@ -911,7 +900,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'url\' key as a String' do
-
     let(:client) do
       described_class.new('url' => host)
     end
@@ -924,7 +912,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'urls\' key' do
-
     let(:client) do
       described_class.new(urls: host)
     end
@@ -937,7 +924,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   context 'when hosts are specified with the \'urls\' key as a String' do
-
     let(:client) do
       described_class.new('urls' => host)
     end
@@ -1134,7 +1120,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when \'request_timeout\' is defined' do
-
       let(:client) do
         described_class.new(request_timeout: 120)
       end
@@ -1145,7 +1130,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when \'request_timeout\' is defined as a String key' do
-
       let(:client) do
         described_class.new('request_timeout' => 120)
       end
@@ -1157,7 +1141,6 @@ describe Elasticsearch::Transport::Client do
   end
 
   describe '#perform_request' do
-
     let(:transport_instance) do
       Class.new { def initialize(*); end }.new
     end
@@ -1172,15 +1155,17 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when the \'send_get_body_as\' option is specified' do
-
       let(:client) do
         described_class.new(transport: transport_instance, :send_get_body_as => 'POST')
       end
 
       before do
-        expect(transport_instance).to receive(:perform_request).with('POST', '/', {},
-                                                                     '{"foo":"bar"}',
-                                                                     '{"Content-Type":"application/x-ndjson"}').and_return(true)
+        expect(transport_instance).to receive(:perform_request)
+                                        .with(
+                                          'POST', '/', {},
+                                          '{"foo":"bar"}',
+                                          '{"Content-Type":"application/x-ndjson"}'
+                                        ).and_return(true)
       end
 
       let(:request) do
