@@ -14,6 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+
 require 'spec_helper'
 
 describe Elasticsearch::Client do
@@ -81,9 +82,6 @@ describe Elasticsearch::Client do
         end
       end
 
-      def meta_version
-        client.send(:client_meta_version, Elasticsearch::VERSION)
-      end
       context 'when using API Key' do
         let(:client) do
           described_class.new(api_key: 'an_api_key')

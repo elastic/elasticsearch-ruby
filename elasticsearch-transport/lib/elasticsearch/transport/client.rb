@@ -113,9 +113,6 @@ module Elasticsearch
       #   The default is false. Responses will automatically be inflated if they are compressed.
       #   If a custom transport object is used, it must handle the request compression and response inflation.
       #
-      # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
-      #                                                     This will be prepended to the id you set before each request
-      #                                                     if you're using X-Opaque-Id
       # @option enable_meta_header [Boolean] :enable_meta_header Enable sending the meta data header to Cloud.
       #                                                          (Default: true)
       #
@@ -143,7 +140,6 @@ module Elasticsearch
                                  DEFAULT_HOST)
 
         @send_get_body_as = @arguments[:send_get_body_as] || 'GET'
-        @opaque_id_prefix = @arguments[:opaque_id_prefix] || nil
 
         if @arguments[:request_timeout]
           @arguments[:transport_options][:request] = { timeout: @arguments[:request_timeout] }
@@ -170,11 +166,6 @@ module Elasticsearch
       #
       def perform_request(method, path, params = {}, body = nil, headers = nil)
         method = @send_get_body_as if 'GET' == method && body
-        if (opaque_id = params.delete(:opaque_id))
-          headers = {} if headers.nil?
-          opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
-          headers.merge!('X-Opaque-Id' => opaque_id)
-        end
         transport.perform_request(method, path, params, body, headers)
       end
 
