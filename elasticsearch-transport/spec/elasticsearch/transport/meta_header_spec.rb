@@ -242,8 +242,8 @@ describe Elasticsearch::Transport::Client do
         include Elasticsearch::Transport::Transport::Base
         def initialize(args); end
       end
-      let(:client) { Elasticsearch::Client.new(transport_class: MyTransport) }
-      let(:subject){ client.instance_variable_get("@arguments")[:transport_options][:headers] }
+      let(:client) { Elasticsearch::Transport::Client.new(transport_class: MyTransport) }
+      let(:subject) { client.instance_variable_get('@arguments')[:transport_options][:headers] }
       let(:meta_header) do
         if jruby?
           "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
