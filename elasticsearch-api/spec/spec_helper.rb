@@ -46,7 +46,6 @@ DEFAULT_CLIENT = Elasticsearch::Client.new(host: ELASTICSEARCH_URL,
 
 module HelperModule
   def self.included(context)
-
     context.let(:client_double) do
       Class.new { include Elasticsearch::API }.new.tap do |client|
         expect(client).to receive(:perform_request).with(*expected_args).and_return(response_double)
