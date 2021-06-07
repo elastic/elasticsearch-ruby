@@ -21,3 +21,7 @@ require 'rspec'
 RSpec.configure do |config|
   config.formatter = :documentation
 end
+
+def meta_version
+  client.send(:client_meta_version, Elasticsearch::VERSION)
+end

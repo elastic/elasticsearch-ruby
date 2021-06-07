@@ -34,7 +34,11 @@ module Elasticsearch
     # @option arguments [String] :cloud_id - The Cloud ID to connect to Elastic Cloud
     # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
     #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
+    # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
+    #                                                     This will be prepended to the id you set before each request
+    #                                                     if you're using X-Opaque-Id
     def initialize(arguments = {}, &block)
+      @opaque_id_prefix = arguments[:opaque_id_prefix] || nil
       api_key(arguments) if arguments[:api_key]
       if arguments[:cloud_id]
         arguments[:hosts] = setup_cloud_host(
@@ -50,6 +54,15 @@ module Elasticsearch
     def method_missing(name, *args, &block)
       if methods.include?(name)
         super
+      elsif name == :perform_request
+        # The signature for perform_request is:
+        # method, path, params, body, headers
+        if (opaque_id = args[2]&.delete(:opaque_id))
+          headers = args[4] || {}
+          opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
+          args[4] = headers.merge('X-Opaque-Id' => opaque_id)
+        end
+        @transport.send(name, *args, &block)
       else
         @transport.send(name, *args, &block)
       end
