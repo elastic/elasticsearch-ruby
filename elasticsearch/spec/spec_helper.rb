@@ -25,3 +25,7 @@ end
 def meta_version
   client.send(:client_meta_version, Elasticsearch::VERSION)
 end
+
+def jruby?
+  defined?(JRUBY_VERSION)
+end
