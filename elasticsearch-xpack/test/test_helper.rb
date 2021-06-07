@@ -58,7 +58,7 @@ module Elasticsearch
       end
 
       # Top level methods:
-      Elasticsearch::Transport::Client::TOP_LEVEL_METHODS.each do |method|
+      Elasticsearch::Client::TOP_LEVEL_METHODS.each do |method|
         define_method method do |*args|
           xpack.send(method, *args)
         end

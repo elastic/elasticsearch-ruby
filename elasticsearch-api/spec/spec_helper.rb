@@ -28,7 +28,6 @@ require 'yaml'
 require 'jbuilder'
 require 'jsonify'
 require 'elasticsearch'
-require 'elasticsearch-transport'
 require 'elasticsearch-api'
 
 require 'ansi'
