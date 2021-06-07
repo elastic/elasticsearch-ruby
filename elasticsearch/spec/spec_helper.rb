@@ -15,19 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'spec_helper'
+require 'elasticsearch'
+require 'rspec'
 
-describe 'Elasticsearch: wrapper gem' do
-  it 'requires all neccessary subgems' do
-    expect(defined? Elasticsearch::Client)
-    expect(defined? Elasticsearch::API)
-  end
-
-  it 'mixes the API into the client' do
-    client = Elasticsearch::Client.new
-
-    expect(client).to respond_to(:search)
-    expect(client).to respond_to(:cluster)
-    expect(client).to respond_to(:indices)
-  end
+RSpec.configure do |config|
+  config.formatter = :documentation
 end
