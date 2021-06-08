@@ -26,7 +26,7 @@ TEST_SUITE = ENV['TEST_SUITE'].freeze || 'platinum'
 
 if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
   split_hosts = hosts.split(',').map do |host|
-    /(http\:\/\/)?\S+/.match(host)
+    /(http\:s?\/\/)?\S+/.match(host)
   end
   uri = URI.parse(split_hosts.first[0])
   TEST_HOST = uri.host
