@@ -1,6 +1,14 @@
+## 7.13.2
+
+### Client
+
+- Support for Elasticsearch version 7.13.2
+
 ## 7.13.1
 
 ### Client
+
+- Support for Elasticsearch version 7.13.1
 - Fixes thread safety issue in `get_connection` - [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1325).
 
 ## 7.13.0
