@@ -37,6 +37,7 @@ task :integration
 namespace :test do
   desc 'Run REST API YAML tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
+    ENV['TEST_SUITE'] = 'platinum'
     t.pattern = 'spec/xpack/rest_api_yaml_spec.rb'
   end
 
