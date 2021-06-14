@@ -73,8 +73,8 @@ module Elasticsearch
             if headers[:Authorization] == 'Basic eF9wYWNrX3Jlc3RfdXNlcjp4LXBhY2stdGVzdC1wYXNzd29yZA=='
               headers.delete(:Authorization)
             end
-            host = client.instance_variable_get('@options')[:host]
-            transport_options = client.instance_variable_get('@arguments')[:transport_options]
+            host = client.transport.instance_variable_get('@hosts')
+            transport_options = client.transport.instance_variable_get('@options')&.dig(:transport_options) || {}
             if ENV['QUIET'] == 'true'
               # todo: create a method on Elasticsearch::Client that can clone the client with new options
               Elasticsearch::Client.new(

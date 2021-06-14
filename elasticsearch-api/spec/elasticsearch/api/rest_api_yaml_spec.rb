@@ -40,6 +40,8 @@ describe 'Rest API YAML tests' do
 
     ctx = file.gsub("#{YAML_FILES_DIRECTORY}/", '')
     context ctx do
+      let(:client) { DEFAULT_CLIENT }
+
       test_file.tests.each do |test|
         context "#{test.description}" do
           if test.skip_test?(ADMIN_CLIENT)
@@ -47,7 +49,6 @@ describe 'Rest API YAML tests' do
             next
           end
 
-          let(:client) { DEFAULT_CLIENT }
           before(:all) { test_file.setup }
           after(:all) do
             test_file.teardown
