@@ -45,7 +45,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "#{Elasticsearch::API::Utils.__listify(_index)}/_terms_enum"
+        path   = "#{Utils.__listify(_index)}/_terms_enum"
         params = {}
 
         body = arguments[:body]

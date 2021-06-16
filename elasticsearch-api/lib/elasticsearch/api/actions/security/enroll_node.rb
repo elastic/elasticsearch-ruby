@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-enroll-node.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-node-enrollment.html
         #
         def enroll_node(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -18,7 +18,6 @@
 require 'spec_helper'
 
 describe 'client#set_upgrade_mode' do
-
   let(:expected_args) do
     [
        'POST',
