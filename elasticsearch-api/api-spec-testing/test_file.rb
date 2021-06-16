@@ -398,7 +398,17 @@ module Elasticsearch
 
           repositories.each_key do |repository|
             client.snapshot.delete(repository: repository, snapshot: '*', ignore: 404) if repositories[repository]['type'] == 'fs'
-            client.snapshot.delete_repository(repository: repository, ignore: 404)
+            begin
+              response = client.perform_request('DELETE', "_snapshot/#{repository}", ignore: [500, 404])
+              client.snapshot.delete_repository(repository: repository, ignore: 404)
+            rescue Elasticsearch::Transport::Transport::Errors::InternalServerError => e
+              regexp = /indices that use the repository: \[docs\/([a-zA-Z0-9]+)/
+              raise e unless response.body['error']['root_cause'].first['reason'].match(regexp)
+
+              # Try again after clearing indices if we get a 500 error from delete repository
+              clear_indices(client)
+              client.snapshot.delete_repository(repository: repository, ignore: 404)
+            end
           end
         end
 
