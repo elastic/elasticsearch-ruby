@@ -45,4 +45,5 @@ jobs:
       run: cd elasticsearch-xpack && bundle exec rake test:unit test:spec
     - name: elasticsearch-transport
       run: cd elasticsearch-transport && bundle exec rake test:all
-
+    - name: elasticsearch-dsl
+      run: cd elasticsearch-dsl && bundle exec rake test:all
