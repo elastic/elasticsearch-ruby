@@ -42,3 +42,5 @@ jobs:
       run: cd elasticsearch-api && bundle exec rake test:spec test:platinum:unit
     - name: elasticsearch-transport
       run: cd elasticsearch-transport && bundle exec rake test:all
+    - name: elasticsearch-dsl
+      run: cd elasticsearch-dsl && bundle exec rake test:all
