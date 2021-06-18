@@ -19,6 +19,8 @@ ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOS
                         hosts.split(',').map do |host|
                           /(http\:\/\/)?(\S+)/.match(host)[2]
                         end
+                      else
+                        ['localhost:9200']
                       end.freeze
 
 TEST_HOST, TEST_PORT = ELASTICSEARCH_HOSTS.first.split(':') if ELASTICSEARCH_HOSTS
@@ -38,9 +40,6 @@ require 'mocha/setup'
 
 require 'minitest/reporters'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-# Minitest::Reporters.use! [ Minitest::Reporters::SpecReporter.new,
-#                            Minitest::Reporters::JUnitReporter.new,
-#                            Minitest::Reporters::HtmlReporter.new ]
 
 require 'elasticsearch'
 require 'elasticsearch/extensions/test/cluster'
@@ -95,7 +94,7 @@ module Elasticsearch
           ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
         end
 
-        @client = Elasticsearch::Client.new host: "#{TEST_HOST}:#{TEST_PORT}", logger: (ENV['QUIET'] ? nil : @logger)
+        @client = Elasticsearch::Client.new(host: "#{TEST_HOST}:#{TEST_PORT}", logger: (ENV['QUIET'] ? nil : @logger))
         @version = @client.info['version']['number']
       end
 
