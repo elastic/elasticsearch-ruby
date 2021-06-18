@@ -54,22 +54,19 @@ The Elasticsearch client is compatible with currently maintained Ruby versions. 
 
 The gem's version numbers follow Elasticsearch's major versions. The `master` branch is compatible with the Elasticsearch `master` branch, which is the next major version.
 
-| Gem Version   |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+|  Client version | Elasticsearch version | Supported | Tests                                                                                                                                                                           |
+| :-------------: | :-------------------:  | :-:       |                                                     :---:                                                                                                                       |
+|            0.90 |                  0.90 | :x:       |                                                                                                                                                                                 |
+|             1.x |                   1.x | :x:       |                                                                                                                                                                                 |
+|             2.x |                   2.x | :x:       |                                                                                                                                                                                 |
+|             5.x |                   5.x | :x:       |                                                                                                                                                                                 |
+|             6.x |                   6.x | :white_check_mark:       | [![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml)|
+|             7.x |                   7.x | :white_check_mark:       | [![7.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) |
+|          master |                master | :x:       | [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml)                                                                                                                                                                                |
 
-Use a release that matches the major version of Elasticsearch in your stack. Each client version is
-backwards compatible with all minor versions of the same major version. The client's API is
-compatible with Elasticsearch's API versions from 0.90 till current.
+Use a release that matches the major version of Elasticsearch in your stack. Each client version is backwards compatible with all minor versions of the same major version. The client's API is compatible with Elasticsearch's API versions from 0.90 till current.
 
-Check out [Elastic product end of life dates](https://www.elastic.co/support/eol)
-to learn which releases are still actively supported and tested.
+Check out [Elastic product end of life dates](https://www.elastic.co/support/eol) to learn which releases are still actively supported and tested.
 
 ## Installation
 
