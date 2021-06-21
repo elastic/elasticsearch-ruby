@@ -26,8 +26,27 @@ module Elasticsearch
       class Client
         # The client.xpack namespace
         def xpack
+          @xpack ||= XPackClient.new(self)
+        end
+      end
+
+      class XPackClient
+        include Elasticsearch::API::XPack::Actions
+
+        def initialize(client)
           warn('Warning: The XPack namespace is being deprecated and will go away in version 8.0.0')
-          @xpack ||= Elasticsearch::API::Client.new(self)
+          @client = client
+        end
+
+        def method_missing(name, *args, &block)
+          case name
+          when :info
+            info
+          when :usage
+            usage
+          else
+            @client.send(name, *args, &block)
+          end
         end
       end
     end
