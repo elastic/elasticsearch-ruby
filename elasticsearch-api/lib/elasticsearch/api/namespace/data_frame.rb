@@ -16,19 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Graph
-        module Actions; end
+  module API
+    module Graph
+      module Actions; end
 
-        class DataFrameClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, DataFrameTransformDeprecated::Actions
-        end
+      class DataFrameClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, DataFrameTransformDeprecated::Actions
+      end
 
-        def data_frame
-          @data_frame ||= DataFrameClient.new(self)
-        end
-
+      def data_frame
+        @data_frame ||= DataFrameClient.new(self)
       end
     end
   end

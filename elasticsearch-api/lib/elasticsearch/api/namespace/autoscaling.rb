@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Autoscaling
-        module Actions; end
+  module API
+    module Autoscaling
+      module Actions; end
 
-        class AutoscalingClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Autoscaling::Actions
-        end
+      class AutoscalingClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Autoscaling::Actions
+      end
 
-        def autoscaling
-          @autoscaling ||= AutoscalingClient.new(self)
-        end
+      def autoscaling
+        @autoscaling ||= AutoscalingClient.new(self)
       end
     end
   end

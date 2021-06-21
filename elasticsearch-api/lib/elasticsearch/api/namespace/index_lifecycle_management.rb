@@ -16,19 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module IndexLifecycleManagement
-        module Actions; end
+  module API
+    module IndexLifecycleManagement
+      module Actions; end
 
-        class IndexLifecycleManagementClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, IndexLifecycleManagement::Actions
-        end
+      class IndexLifecycleManagementClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, IndexLifecycleManagement::Actions
+      end
 
-        def ilm
-          @ilm ||= IndexLifecycleManagementClient.new(self)
-        end
-
+      def ilm
+        @ilm ||= IndexLifecycleManagementClient.new(self)
       end
     end
   end

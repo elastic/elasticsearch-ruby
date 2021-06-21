@@ -16,19 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Watcher
-        module Actions; end
+  module API
+    module Watcher
+      module Actions; end
 
-        class WatcherClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Watcher::Actions
-        end
+      class WatcherClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Watcher::Actions
+      end
 
-        def watcher
-          @watcher ||= WatcherClient.new(self)
-        end
-
+      def watcher
+        @watcher ||= WatcherClient.new(self)
       end
     end
   end

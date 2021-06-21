@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SearchableSnapshots
-        module Actions; end
+  module API
+    module SearchableSnapshots
+      module Actions; end
 
-        class SearchableSnapshotsClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SearchableSnapshots::Actions
-        end
+      class SearchableSnapshotsClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SearchableSnapshots::Actions
+      end
 
-        def searchable_snapshots
-          @searchable_snapshots ||= SearchableSnapshotsClient.new(self)
-        end
+      def searchable_snapshots
+        @searchable_snapshots ||= SearchableSnapshotsClient.new(self)
       end
     end
   end

@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module AsyncSearch
-        module Actions; end
+  module API
+    module AsyncSearch
+      module Actions; end
 
-        class AsyncSearchClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, AsyncSearch::Actions
-        end
+      class AsyncSearchClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, AsyncSearch::Actions
+      end
 
-        def async_search
-          @async_search ||= AsyncSearchClient.new(self)
-        end
+      def async_search
+        @async_search ||= AsyncSearchClient.new(self)
       end
     end
   end

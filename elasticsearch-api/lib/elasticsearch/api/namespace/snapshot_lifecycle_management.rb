@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions; end
+  module API
+    module SnapshotLifecycleManagement
+      module Actions; end
 
-        class SnapshotLifecycleManagementClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SnapshotLifecycleManagement::Actions
-        end
+      class SnapshotLifecycleManagementClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, SnapshotLifecycleManagement::Actions
+      end
 
-        def snapshot_lifecycle_management
-          @snapshot_lifecycle_management ||= SnapshotLifecycleManagementClient.new(self)
-        end
+      def snapshot_lifecycle_management
+        @snapshot_lifecycle_management ||= SnapshotLifecycleManagementClient.new(self)
       end
     end
   end

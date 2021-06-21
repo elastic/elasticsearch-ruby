@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions; end
+  module API
+    module CrossClusterReplication
+      module Actions; end
 
-        class CrossClusterReplicationClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, CrossClusterReplication::Actions
-        end
+      class CrossClusterReplicationClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, CrossClusterReplication::Actions
+      end
 
-        def cross_cluster_replication
-          @cross_cluster_replication ||= CrossClusterReplicationClient.new(self)
-        end
+      def cross_cluster_replication
+        @cross_cluster_replication ||= CrossClusterReplicationClient.new(self)
       end
     end
   end

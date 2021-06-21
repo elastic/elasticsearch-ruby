@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module TextStructure
-        module Actions; end
+  module API
+    module TextStructure
+      module Actions; end
 
-        class TextStructureClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, TextStructure::Actions
-        end
+      class TextStructureClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, TextStructure::Actions
+      end
 
-        def text_structure
-          @text_structure ||= TextStructureClient.new(self)
-        end
+      def text_structure
+        @text_structure ||= TextStructureClient.new(self)
       end
     end
   end

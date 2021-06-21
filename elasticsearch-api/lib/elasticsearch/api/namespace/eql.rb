@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Eql
-        module Actions; end
+  module API
+    module Eql
+      module Actions; end
 
-        class EqlClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Eql::Actions
-        end
+      class EqlClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Eql::Actions
+      end
 
-        def eql
-          @eql ||= EqlClient.new(self)
-        end
+      def eql
+        @eql ||= EqlClient.new(self)
       end
     end
   end

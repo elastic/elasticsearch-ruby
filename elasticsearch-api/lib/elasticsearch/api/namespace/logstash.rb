@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Logstash
-        module Actions; end
+  module API
+    module Logstash
+      module Actions; end
 
-        class LogstashClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Logstash::Actions
-        end
+      class LogstashClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Logstash::Actions
+      end
 
-        def logstash
-          @logstash ||= LogstashClient.new(self)
-        end
+      def logstash
+        @logstash ||= LogstashClient.new(self)
       end
     end
   end

@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Fleet
-        module Actions; end
+  module API
+    module Fleet
+      module Actions; end
 
-        class FleetClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Fleet::Actions
-        end
+      class FleetClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Fleet::Actions
+      end
 
-        def fleet
-          @fleet ||= FleetClient.new(self)
-        end
+      def fleet
+        @fleet ||= FleetClient.new(self)
       end
     end
   end

@@ -16,18 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Enrich
-        module Actions; end
+  module API
+    module Enrich
+      module Actions; end
 
-        class EnrichClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Enrich::Actions
-        end
+      class EnrichClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Enrich::Actions
+      end
 
-        def enrich
-          @enrich ||= EnrichClient.new(self)
-        end
+      def enrich
+        @enrich ||= EnrichClient.new(self)
       end
     end
   end

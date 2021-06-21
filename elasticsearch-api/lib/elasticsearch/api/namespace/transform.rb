@@ -16,19 +16,16 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Transform
-        module Actions; end
+  module API
+    module Transform
+      module Actions; end
 
-        class TransformClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Transform::Actions
-        end
+      class TransformClient
+        include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, Transform::Actions
+      end
 
-        def transform
-          @transform ||= TransformClient.new(self)
-        end
-
+      def transform
+        @transform ||= TransformClient.new(self)
       end
     end
   end
