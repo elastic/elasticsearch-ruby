@@ -20,58 +20,36 @@ require_relative '../../../lib/elasticsearch/api/version.rb'
 
 module Elasticsearch
   module API
+    # Helper with file related methods for code generation
     module FilesHelper
       PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
       SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/')
-      OSS_OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
-      XPACK_OUTPUT_DIR = '../../elasticsearch-xpack/lib/elasticsearch/xpack/api/actions'.freeze
-
-      TESTS_DIRECTORIES = {
-        oss: "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/free",
-        xpack: "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/platinum"
-      }.freeze
+      OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
+      TESTS_DIRECTORY = "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/free".freeze
 
       # Only get JSON files and remove hidden files
-      def self.files(api)
-        json_files = if api == :xpack
-                       xpack_files
-                     else
-                       Dir.entries(SRC_PATH) - xpack_files
-                     end
+      def self.files
+        json_files = Dir.entries(SRC_PATH)
+
         json_files.reject do |file|
           File.extname(file) != '.json' ||
             File.basename(file) == '_common.json'
         end.map { |file| "#{SRC_PATH}#{file}" }
       end
 
-      XPACK_ENDPOINTS = [
-        'autoscaling', 'cross_cluster_replication', 'ccr', 'data_frame_transform_deprecated',
-        'enrich', 'eql', 'fleet', 'ilm', 'logstash', 'migration', 'watcher', 'slm'
-      ]
-      XPACK_ENDPOINTS_REGEXP = /data_stream|ml_|reload_search_analyzers|transform|freeze|unfreeze/
-
-      def self.xpack_files
-        xpack_tests = Dir.entries(TESTS_DIRECTORIES[:xpack])
-        Dir.entries(SRC_PATH).map do |entry|
-          filename = entry.split('.').first
-          next if filename == 'snapshot'
-
-          if xpack_tests.include?(filename) ||
-                                  XPACK_ENDPOINTS.include?(filename) ||
-                                  entry.match?(XPACK_ENDPOINTS_REGEXP)
-            entry
-          end
-        end.compact
-      end
-
       # Path to directory to copy generated files
-      def self.output_dir(api)
-        api == :xpack ? Pathname(XPACK_OUTPUT_DIR) : Pathname(OSS_OUTPUT_DIR)
+      def self.output_dir
+        Pathname(OUTPUT_DIR)
       end
 
       def self.gem_version
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         Elasticsearch::API::VERSION.match(regex)[0]
+      end
+
+      def cleanup_output_dir!
+        FileUtils.remove_dir(OUTPUT_DIR)
+        Dir.mkdir(OUTPUT_DIR)
       end
     end
   end

@@ -37,7 +37,13 @@ module Elasticsearch
       :body,                          # Request body
       :node_id,                       # Cluster
       :name,                          # Alias, template, settings, warmer, ...
-      :field                          # Get field mapping
+      :field,                         # Get field mapping
+      :job_id,
+      :datafeed_id,
+      :filter_id,
+      :snapshot_id,
+      :category_id,
+      :policy_id
     ]
 
     COMMON_QUERY_PARAMS = [
