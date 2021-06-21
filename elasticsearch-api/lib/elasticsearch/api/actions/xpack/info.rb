@@ -16,24 +16,25 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
+  module API
+    module Xpack
       module Actions
-        # Retrieves usage information about the installed X-Pack features.
+        # Retrieves information about the installed X-Pack features.
         #
-        # @option arguments [Time] :master_timeout Specify timeout for watch write operation
+        # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
+        # @option arguments [Boolean] :accept_enterprise If an enterprise license is installed, return the type and mode as 'enterprise' (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/usage-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/info-api.html
         #
-        def usage(arguments = {})
+        def info(arguments = {})
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_xpack/usage"
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = "_xpack"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
           perform_request(method, path, params, body, headers).body
@@ -42,8 +43,9 @@ module Elasticsearch
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
-        ParamsRegistry.register(:usage, [
-          :master_timeout
+        ParamsRegistry.register(:info, [
+          :categories,
+          :accept_enterprise
         ].freeze)
       end
     end
