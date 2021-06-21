@@ -16,41 +16,39 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Previews a datafeed.
-          #
-          # @option arguments [String] :datafeed_id The ID of the datafeed to preview
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-preview-datafeed.html
-          #
-          def preview_datafeed(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module MachineLearning
+      module Actions
+        # Previews a datafeed.
+        #
+        # @option arguments [String] :datafeed_id The ID of the datafeed to preview
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-preview-datafeed.html
+        #
+        def preview_datafeed(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _datafeed_id = arguments.delete(:datafeed_id)
+          _datafeed_id = arguments.delete(:datafeed_id)
 
-            method = if arguments[:body]
-                       Elasticsearch::API::HTTP_POST
-                     else
-                       Elasticsearch::API::HTTP_GET
-                     end
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
 
-            path = if _datafeed_id
-                     "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
+          path   = if _datafeed_id
+                     "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}/_preview"
                    else
                      "_ml/datafeeds/_preview"
                    end
-            params = {}
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

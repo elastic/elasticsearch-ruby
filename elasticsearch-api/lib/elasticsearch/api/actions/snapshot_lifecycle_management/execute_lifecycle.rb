@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
-          #
-          # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-lifecycle.html
-          #
-          def execute_lifecycle(arguments = {})
-            raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
+        #
+        # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-lifecycle.html
+        #
+        def execute_lifecycle(arguments = {})
+          raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _policy_id = arguments.delete(:policy_id)
+          _policy_id = arguments.delete(:policy_id)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_slm/policy/#{Elasticsearch::API::Utils.__listify(_policy_id)}/_execute"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_slm/policy/#{Utils.__listify(_policy_id)}/_execute"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

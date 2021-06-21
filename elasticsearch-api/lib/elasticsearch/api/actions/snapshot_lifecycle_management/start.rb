@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Turns on snapshot lifecycle management (SLM).
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-start.html
-          #
-          def start(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Turns on snapshot lifecycle management (SLM).
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-start.html
+        #
+        def start(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_slm/start"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_slm/start"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

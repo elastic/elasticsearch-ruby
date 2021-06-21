@@ -16,39 +16,37 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Rollup
-        module Actions
-          # Rollup an index
-          #
-          # @option arguments [String] :index The index to roll up (*Required*)
-          # @option arguments [String] :rollup_index The name of the rollup index to create (*Required*)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The rollup configuration (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-api.html
-          #
-          def rollup(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-            raise ArgumentError, "Required argument 'rollup_index' missing" unless arguments[:rollup_index]
+  module API
+    module Rollup
+      module Actions
+        # Rollup an index
+        #
+        # @option arguments [String] :index The index to roll up (*Required*)
+        # @option arguments [String] :rollup_index The name of the rollup index to create (*Required*)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The rollup configuration (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-api.html
+        #
+        def rollup(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+          raise ArgumentError, "Required argument 'rollup_index' missing" unless arguments[:rollup_index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            _rollup_index = arguments.delete(:rollup_index)
+          _rollup_index = arguments.delete(:rollup_index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_rollup/#{Elasticsearch::API::Utils.__listify(_rollup_index)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_rollup/#{Utils.__listify(_rollup_index)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

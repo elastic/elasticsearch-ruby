@@ -16,39 +16,37 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Rollup
-        module Actions
-          # Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
-          #
-          # @option arguments [String] :id The ID of the index to check rollup capabilities on, or left blank for all jobs
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-get-rollup-caps.html
-          #
-          def get_rollup_caps(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Rollup
+      module Actions
+        # Returns the capabilities of any rollup jobs that have been configured for a specific index or index pattern.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
+        #
+        # @option arguments [String] :id The ID of the index to check rollup capabilities on, or left blank for all jobs
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/rollup-get-rollup-caps.html
+        #
+        def get_rollup_caps(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _id
-                       "_rollup/data/#{Elasticsearch::API::Utils.__listify(_id)}"
-                     else
-                       "_rollup/data"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _id
+                     "_rollup/data/#{Utils.__listify(_id)}"
+                   else
+                     "_rollup/data"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

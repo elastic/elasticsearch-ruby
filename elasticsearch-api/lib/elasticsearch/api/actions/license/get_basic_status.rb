@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module License
-        module Actions
-          # Retrieves information about the status of the basic license.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-basic-status.html
-          #
-          def get_basic_status(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module License
+      module Actions
+        # Retrieves information about the status of the basic license.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-basic-status.html
+        #
+        def get_basic_status(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_license/basic_status"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_license/basic_status"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

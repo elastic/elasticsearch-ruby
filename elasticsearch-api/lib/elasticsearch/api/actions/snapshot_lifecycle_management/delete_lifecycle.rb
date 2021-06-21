@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Deletes an existing snapshot lifecycle policy.
-          #
-          # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-delete-policy.html
-          #
-          def delete_lifecycle(arguments = {})
-            raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Deletes an existing snapshot lifecycle policy.
+        #
+        # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-delete-policy.html
+        #
+        def delete_lifecycle(arguments = {})
+          raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _policy_id = arguments.delete(:policy_id)
+          _policy_id = arguments.delete(:policy_id)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_slm/policy/#{Elasticsearch::API::Utils.__listify(_policy_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

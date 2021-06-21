@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Enrich
-        module Actions
-          # Creates a new enrich policy.
-          #
-          # @option arguments [String] :name The name of the enrich policy
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The enrich policy to register (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-enrich-policy-api.html
-          #
-          def put_policy(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+  module API
+    module Enrich
+      module Actions
+        # Creates a new enrich policy.
+        #
+        # @option arguments [String] :name The name of the enrich policy
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The enrich policy to register (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-enrich-policy-api.html
+        #
+        def put_policy(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_enrich/policy/#{Elasticsearch::API::Utils.__listify(_name)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_enrich/policy/#{Utils.__listify(_name)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

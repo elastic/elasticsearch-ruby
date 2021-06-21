@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Logstash
-        module Actions
-          # Adds and updates Logstash Pipelines used for Central Management
-          #
-          # @option arguments [String] :id The ID of the Pipeline
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The Pipeline to add or update (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/logstash-api-put-pipeline.html
-          #
-          def put_pipeline(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module Logstash
+      module Actions
+        # Adds and updates Logstash Pipelines used for Central Management
+        #
+        # @option arguments [String] :id The ID of the Pipeline
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The Pipeline to add or update (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/logstash-api-put-pipeline.html
+        #
+        def put_pipeline(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_logstash/pipeline/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_logstash/pipeline/#{Utils.__listify(_id)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

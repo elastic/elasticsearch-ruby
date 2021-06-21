@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Autoscaling
-        module Actions
-          # Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
-          #
-          # @option arguments [String] :name the name of the autoscaling policy
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-delete-autoscaling-policy.html
-          #
-          def delete_autoscaling_policy(arguments = {})
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+  module API
+    module Autoscaling
+      module Actions
+        # Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
+        #
+        # @option arguments [String] :name the name of the autoscaling policy
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/autoscaling-delete-autoscaling-policy.html
+        #
+        def delete_autoscaling_policy(arguments = {})
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_autoscaling/policy/#{Elasticsearch::API::Utils.__listify(_name)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_autoscaling/policy/#{Utils.__listify(_name)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

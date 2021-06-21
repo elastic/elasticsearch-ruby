@@ -16,38 +16,36 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Determines whether the specified user has a specified list of privileges.
-          #
-          # @option arguments [String] :user Username
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The privileges to test (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-has-privileges.html
-          #
-          def has_privileges(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module Security
+      module Actions
+        # Determines whether the specified user has a specified list of privileges.
+        #
+        # @option arguments [String] :user Username
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The privileges to test (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-has-privileges.html
+        #
+        def has_privileges(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _user = arguments.delete(:user)
+          _user = arguments.delete(:user)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = if _user
-                       "_security/user/#{Elasticsearch::API::Utils.__listify(_user)}/_has_privileges"
-                     else
-                       "_security/user/_has_privileges"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = if _user
+                     "_security/user/#{Utils.__listify(_user)}/_has_privileges"
+                   else
+                     "_security/user/_has_privileges"
+                   end
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

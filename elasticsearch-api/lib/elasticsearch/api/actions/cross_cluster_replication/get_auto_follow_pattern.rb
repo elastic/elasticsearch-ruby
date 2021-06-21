@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
-          #
-          # @option arguments [String] :name The name of the auto follow pattern.
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-auto-follow-pattern.html
-          #
-          def get_auto_follow_pattern(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
+        #
+        # @option arguments [String] :name The name of the auto follow pattern.
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-auto-follow-pattern.html
+        #
+        def get_auto_follow_pattern(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _name
-                       "_ccr/auto_follow/#{Elasticsearch::API::Utils.__listify(_name)}"
-                     else
-                       "_ccr/auto_follow"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _name
+                     "_ccr/auto_follow/#{Utils.__listify(_name)}"
+                   else
+                     "_ccr/auto_follow"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

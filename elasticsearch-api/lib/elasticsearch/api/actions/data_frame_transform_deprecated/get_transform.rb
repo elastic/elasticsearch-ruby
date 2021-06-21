@@ -16,59 +16,57 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module DataFrameTransformDeprecated
-        module Actions
-          # Retrieves configuration information for transforms.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
-          #
-          # @option arguments [String] :transform_id The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-          # @option arguments [Int] :from skips a number of transform configs, defaults to 0
-          # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
-          # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
-          # @option arguments [Boolean] :exclude_generated Omits generated fields. Allows transform configurations to be easily copied between clusters and within the same cluster
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # *Deprecation notice*:
-          # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
-          # Deprecated since version 7.5.0
-          #
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-transform.html
-          #
-          def get_transform(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module DataFrameTransformDeprecated
+      module Actions
+        # Retrieves configuration information for transforms.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
+        #
+        # @option arguments [String] :transform_id The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
+        # @option arguments [Int] :from skips a number of transform configs, defaults to 0
+        # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
+        # @option arguments [Boolean] :exclude_generated Omits generated fields. Allows transform configurations to be easily copied between clusters and within the same cluster
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # *Deprecation notice*:
+        # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
+        # Deprecated since version 7.5.0
+        #
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-transform.html
+        #
+        def get_transform(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _transform_id = arguments.delete(:transform_id)
+          _transform_id = arguments.delete(:transform_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _transform_id
-                       "_data_frame/transforms/#{Elasticsearch::API::Utils.__listify(_transform_id)}"
-                     else
-                       "_data_frame/transforms"
-                     end
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _transform_id
+                     "_data_frame/transforms/#{Utils.__listify(_transform_id)}"
+                   else
+                     "_data_frame/transforms"
+                   end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get_transform, [
-            :from,
-            :size,
-            :allow_no_match,
-            :exclude_generated
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get_transform, [
+          :from,
+          :size,
+          :allow_no_match,
+          :exclude_generated
+        ].freeze)
       end
     end
   end

@@ -16,41 +16,39 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Explains a data frame analytics config.
-          #
-          # @option arguments [String] :id The ID of the data frame analytics to explain
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The data frame analytics config to explain
-          #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/7.x/explain-dfanalytics.html
-          #
-          def explain_data_frame_analytics(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module MachineLearning
+      module Actions
+        # Explains a data frame analytics config.
+        #
+        # @option arguments [String] :id The ID of the data frame analytics to explain
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The data frame analytics config to explain
+        #
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/7.x/explain-dfanalytics.html
+        #
+        def explain_data_frame_analytics(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = if arguments[:body]
-                       Elasticsearch::API::HTTP_POST
-                     else
-                       Elasticsearch::API::HTTP_GET
-                     end
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
 
-            path = if _id
-                     "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_explain"
+          path   = if _id
+                     "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_explain"
                    else
                      "_ml/data_frame/analytics/_explain"
                    end
-            params = {}
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

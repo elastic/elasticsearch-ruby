@@ -16,34 +16,32 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Creates or updates a snapshot lifecycle policy.
-          #
-          # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-put-policy.html
-          #
-          def put_lifecycle(arguments = {})
-            raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Creates or updates a snapshot lifecycle policy.
+        #
+        # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-put-policy.html
+        #
+        def put_lifecycle(arguments = {})
+          raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _policy_id = arguments.delete(:policy_id)
+          _policy_id = arguments.delete(:policy_id)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_slm/policy/#{Elasticsearch::API::Utils.__listify(_policy_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

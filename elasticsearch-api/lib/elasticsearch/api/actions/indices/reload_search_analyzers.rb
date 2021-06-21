@@ -16,46 +16,44 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Indices
-        module Actions
-          # Reloads an index's search analyzers and their resources.
-          #
-          # @option arguments [List] :index A comma-separated list of index names to reload analyzers for
-          # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-          # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-          # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-reload-analyzers.html
-          #
-          def reload_search_analyzers(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module Indices
+      module Actions
+        # Reloads an index's search analyzers and their resources.
+        #
+        # @option arguments [List] :index A comma-separated list of index names to reload analyzers for
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-reload-analyzers.html
+        #
+        def reload_search_analyzers(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_reload_search_analyzers"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "#{Utils.__listify(_index)}/_reload_search_analyzers"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:reload_search_analyzers, [
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:reload_search_analyzers, [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards
+        ].freeze)
       end
     end
   end

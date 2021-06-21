@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module IndexLifecycleManagement
-        module Actions
-          # Removes the assigned lifecycle policy and stops managing the specified index
-          #
-          # @option arguments [String] :index The name of the index to remove policy on
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-remove-policy.html
-          #
-          def remove_policy(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module IndexLifecycleManagement
+      module Actions
+        # Removes the assigned lifecycle policy and stops managing the specified index
+        #
+        # @option arguments [String] :index The name of the index to remove policy on
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-remove-policy.html
+        #
+        def remove_policy(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ilm/remove"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_ilm/remove"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

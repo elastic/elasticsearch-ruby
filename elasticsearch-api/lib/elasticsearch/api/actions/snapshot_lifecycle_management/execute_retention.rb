@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Deletes any snapshots that are expired according to the policy's retention rules.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-retention.html
-          #
-          def execute_retention(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Deletes any snapshots that are expired according to the policy's retention rules.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-execute-retention.html
+        #
+        def execute_retention(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_slm/_execute_retention"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_slm/_execute_retention"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

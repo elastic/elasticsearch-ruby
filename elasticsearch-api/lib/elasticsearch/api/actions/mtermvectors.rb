@@ -60,13 +60,13 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mtermvectors"
-               elsif _index
-                 "#{Utils.__listify(_index)}/_mtermvectors"
-               else
-                 "_mtermvectors"
-               end
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mtermvectors"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_mtermvectors"
+                 else
+                   "_mtermvectors"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         if ids

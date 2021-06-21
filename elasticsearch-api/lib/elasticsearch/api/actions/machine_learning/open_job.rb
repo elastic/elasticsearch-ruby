@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Opens one or more anomaly detection jobs.
-          #
-          # @option arguments [String] :job_id The ID of the job to open
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-open-job.html
-          #
-          def open_job(arguments = {})
-            raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Opens one or more anomaly detection jobs.
+        #
+        # @option arguments [String] :job_id The ID of the job to open
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-open-job.html
+        #
+        def open_job(arguments = {})
+          raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _job_id = arguments.delete(:job_id)
+          _job_id = arguments.delete(:job_id)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_open"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_open"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

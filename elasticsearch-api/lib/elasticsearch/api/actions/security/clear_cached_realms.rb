@@ -16,42 +16,40 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Evicts users from the user cache. Can completely clear the cache or evict specific users.
-          #
-          # @option arguments [List] :realms Comma-separated list of realms to clear
-          # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-cache.html
-          #
-          def clear_cached_realms(arguments = {})
-            raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
+  module API
+    module Security
+      module Actions
+        # Evicts users from the user cache. Can completely clear the cache or evict specific users.
+        #
+        # @option arguments [List] :realms Comma-separated list of realms to clear
+        # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-cache.html
+        #
+        def clear_cached_realms(arguments = {})
+          raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _realms = arguments.delete(:realms)
+          _realms = arguments.delete(:realms)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_security/realm/#{Elasticsearch::API::Utils.__listify(_realms)}/_clear_cache"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_security/realm/#{Utils.__listify(_realms)}/_clear_cache"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:clear_cached_realms, [
-            :usernames
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:clear_cached_realms, [
+          :usernames
+        ].freeze)
       end
     end
   end

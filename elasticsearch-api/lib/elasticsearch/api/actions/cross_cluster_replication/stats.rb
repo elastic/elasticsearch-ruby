@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Gets all stats related to cross-cluster replication.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-stats.html
-          #
-          def stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Gets all stats related to cross-cluster replication.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-stats.html
+        #
+        def stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ccr/stats"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_ccr/stats"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

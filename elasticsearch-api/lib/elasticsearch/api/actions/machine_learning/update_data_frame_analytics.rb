@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Updates certain properties of a data frame analytics job.
-          #
-          # @option arguments [String] :id The ID of the data frame analytics to update
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The data frame analytics settings to update (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/update-dfanalytics.html
-          #
-          def update_data_frame_analytics(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module MachineLearning
+      module Actions
+        # Updates certain properties of a data frame analytics job.
+        #
+        # @option arguments [String] :id The ID of the data frame analytics to update
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The data frame analytics settings to update (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/update-dfanalytics.html
+        #
+        def update_data_frame_analytics(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_update"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_update"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

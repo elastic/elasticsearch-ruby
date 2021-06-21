@@ -16,39 +16,37 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SearchableSnapshots
-        module Actions
-          # Retrieve node-level cache statistics about searchable snapshots.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
-          #
-          # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
-          #
-          def cache_stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SearchableSnapshots
+      module Actions
+        # Retrieve node-level cache statistics about searchable snapshots.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
+        #
+        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
+        #
+        def cache_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _node_id = arguments.delete(:node_id)
+          _node_id = arguments.delete(:node_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _node_id
-                       "_searchable_snapshots/#{Elasticsearch::API::Utils.__listify(_node_id)}/cache/stats"
-                     else
-                       "_searchable_snapshots/cache/stats"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _node_id
+                     "_searchable_snapshots/#{Utils.__listify(_node_id)}/cache/stats"
+                   else
+                     "_searchable_snapshots/cache/stats"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

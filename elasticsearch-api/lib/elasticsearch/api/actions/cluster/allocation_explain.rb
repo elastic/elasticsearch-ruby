@@ -39,7 +39,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_cluster/allocation/explain"
+          path   = "_cluster/allocation/explain"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]

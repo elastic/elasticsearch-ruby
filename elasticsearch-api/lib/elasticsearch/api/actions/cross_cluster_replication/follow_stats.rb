@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
-          #
-          # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-follow-stats.html
-          #
-          def follow_stats(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
+        #
+        # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-get-follow-stats.html
+        #
+        def follow_stats(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ccr/stats"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "#{Utils.__listify(_index)}/_ccr/stats"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

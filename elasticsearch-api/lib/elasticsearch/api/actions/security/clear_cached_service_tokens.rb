@@ -16,45 +16,43 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Evicts tokens from the service account token caches.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
-          #
-          # @option arguments [String] :namespace An identifier for the namespace
-          # @option arguments [String] :service An identifier for the service name
-          # @option arguments [List] :name A comma-separated list of service token names
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-service-token-caches.html
-          #
-          def clear_cached_service_tokens(arguments = {})
-            raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
-            raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+  module API
+    module Security
+      module Actions
+        # Evicts tokens from the service account token caches.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
+        #
+        # @option arguments [String] :namespace An identifier for the namespace
+        # @option arguments [String] :service An identifier for the service name
+        # @option arguments [List] :name A comma-separated list of service token names
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-service-token-caches.html
+        #
+        def clear_cached_service_tokens(arguments = {})
+          raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
+          raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _namespace = arguments.delete(:namespace)
+          _namespace = arguments.delete(:namespace)
 
-            _service = arguments.delete(:service)
+          _service = arguments.delete(:service)
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_security/service/#{Elasticsearch::API::Utils.__listify(_namespace)}/#{Elasticsearch::API::Utils.__listify(_service)}/credential/token/#{Elasticsearch::API::Utils.__listify(_name)}/_clear_cache"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token/#{Utils.__listify(_name)}/_clear_cache"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

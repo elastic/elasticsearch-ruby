@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Removes the follower retention leases from the leader.
-          #
-          # @option arguments [String] :index the name of the leader index for which specified follower retention leases should be removed
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-forget-follower.html
-          #
-          def forget_follower(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Removes the follower retention leases from the leader.
+        #
+        # @option arguments [String] :index the name of the leader index for which specified follower retention leases should be removed
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-forget-follower.html
+        #
+        def forget_follower(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ccr/forget_follower"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_ccr/forget_follower"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

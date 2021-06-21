@@ -16,31 +16,29 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Verifies the logout response sent from the SAML IdP
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The logout response to verify (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-saml-complete-logout.html
-          #
-          def saml_complete_logout(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module Security
+      module Actions
+        # Verifies the logout response sent from the SAML IdP
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The logout response to verify (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-saml-complete-logout.html
+        #
+        def saml_complete_logout(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_security/saml/complete_logout"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_security/saml/complete_logout"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

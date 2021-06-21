@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Enrich
-        module Actions
-          # Gets enrich coordinator statistics and information about enrich policies that are currently executing.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/enrich-stats-api.html
-          #
-          def stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Enrich
+      module Actions
+        # Gets enrich coordinator statistics and information about enrich policies that are currently executing.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/enrich-stats-api.html
+        #
+        def stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_enrich/_stats"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_enrich/_stats"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

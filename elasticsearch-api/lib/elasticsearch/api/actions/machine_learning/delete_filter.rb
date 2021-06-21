@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Deletes a filter.
-          #
-          # @option arguments [String] :filter_id The ID of the filter to delete
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-delete-filter.html
-          #
-          def delete_filter(arguments = {})
-            raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Deletes a filter.
+        #
+        # @option arguments [String] :filter_id The ID of the filter to delete
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-delete-filter.html
+        #
+        def delete_filter(arguments = {})
+          raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _filter_id = arguments.delete(:filter_id)
+          _filter_id = arguments.delete(:filter_id)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_ml/filters/#{Elasticsearch::API::Utils.__listify(_filter_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_ml/filters/#{Utils.__listify(_filter_id)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

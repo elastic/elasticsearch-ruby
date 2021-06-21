@@ -91,13 +91,13 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_search"
-               elsif _index
-                 "#{Utils.__listify(_index)}/_search"
-               else
-                 "_search"
-               end
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_search"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_search"
+                 else
+                   "_search"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]

@@ -16,48 +16,46 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Retrieves usage information for trained inference models.
-          #
-          # @option arguments [String] :model_id The ID of the trained models stats to fetch
-          # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-          # @option arguments [Int] :from skips a number of trained models
-          # @option arguments [Int] :size specifies a max number of trained models to get
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-trained-models-stats.html
-          #
-          def get_trained_models_stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module MachineLearning
+      module Actions
+        # Retrieves usage information for trained inference models.
+        #
+        # @option arguments [String] :model_id The ID of the trained models stats to fetch
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
+        # @option arguments [Int] :from skips a number of trained models
+        # @option arguments [Int] :size specifies a max number of trained models to get
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-trained-models-stats.html
+        #
+        def get_trained_models_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _model_id = arguments.delete(:model_id)
+          _model_id = arguments.delete(:model_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _model_id
-                       "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}/_stats"
-                     else
-                       "_ml/trained_models/_stats"
-                     end
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _model_id
+                     "_ml/trained_models/#{Utils.__listify(_model_id)}/_stats"
+                   else
+                     "_ml/trained_models/_stats"
+                   end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get_trained_models_stats, [
-            :allow_no_match,
-            :from,
-            :size
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get_trained_models_stats, [
+          :allow_no_match,
+          :from,
+          :size
+        ].freeze)
       end
     end
   end

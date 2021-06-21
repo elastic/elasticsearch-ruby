@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Clear a subset or all entries from the API key cache.
-          #
-          # @option arguments [List] :ids A comma-separated list of IDs of API keys to clear from the cache
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-api-key-cache.html
-          #
-          def clear_api_key_cache(arguments = {})
-            raise ArgumentError, "Required argument 'ids' missing" unless arguments[:ids]
+  module API
+    module Security
+      module Actions
+        # Clear a subset or all entries from the API key cache.
+        #
+        # @option arguments [List] :ids A comma-separated list of IDs of API keys to clear from the cache
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-api-key-cache.html
+        #
+        def clear_api_key_cache(arguments = {})
+          raise ArgumentError, "Required argument 'ids' missing" unless arguments[:ids]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _ids = arguments.delete(:ids)
+          _ids = arguments.delete(:ids)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_security/api_key/#{Elasticsearch::API::Utils.__listify(_ids)}/_clear_cache"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_security/api_key/#{Utils.__listify(_ids)}/_clear_cache"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

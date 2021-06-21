@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
-          #
-          # @option arguments [String] :index The name of the follower index that should pause following its leader index.
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-pause-follow.html
-          #
-          def pause_follow(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
+        #
+        # @option arguments [String] :index The name of the follower index that should pause following its leader index.
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-pause-follow.html
+        #
+        def pause_follow(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ccr/pause_follow"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_ccr/pause_follow"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

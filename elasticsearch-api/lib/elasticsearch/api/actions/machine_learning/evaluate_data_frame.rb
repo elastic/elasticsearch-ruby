@@ -16,31 +16,29 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Evaluates the data frame analytics for an annotated index.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The evaluation definition (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/evaluate-dfanalytics.html
-          #
-          def evaluate_data_frame(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module MachineLearning
+      module Actions
+        # Evaluates the data frame analytics for an annotated index.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The evaluation definition (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/evaluate-dfanalytics.html
+        #
+        def evaluate_data_frame(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/data_frame/_evaluate"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/data_frame/_evaluate"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

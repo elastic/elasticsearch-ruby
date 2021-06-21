@@ -16,34 +16,32 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Watcher
-        module Actions
-          # Retrieves stored watches.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body From, size, query, sort and search_after
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/watcher-api-query-watches.html
-          #
-          def query_watches(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Watcher
+      module Actions
+        # Retrieves stored watches.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body From, size, query, sort and search_after
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/watcher-api-query-watches.html
+        #
+        def query_watches(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = if arguments[:body]
-                       Elasticsearch::API::HTTP_POST
-                     else
-                       Elasticsearch::API::HTTP_GET
-                     end
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
 
-            path = "_watcher/_query/watches"
-            params = {}
+          path   = "_watcher/_query/watches"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

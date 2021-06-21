@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
-          #
-          # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-policy.html
-          #
-          def get_lifecycle(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+        #
+        # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-policy.html
+        #
+        def get_lifecycle(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _policy_id = arguments.delete(:policy_id)
+          _policy_id = arguments.delete(:policy_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _policy_id
-                       "_slm/policy/#{Elasticsearch::API::Utils.__listify(_policy_id)}"
-                     else
-                       "_slm/policy"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _policy_id
+                     "_slm/policy/#{Utils.__listify(_policy_id)}"
+                   else
+                     "_slm/policy"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

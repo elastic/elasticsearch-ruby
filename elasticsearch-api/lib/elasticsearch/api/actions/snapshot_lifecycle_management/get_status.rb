@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Retrieves the status of snapshot lifecycle management (SLM).
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-status.html
-          #
-          def get_status(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Retrieves the status of snapshot lifecycle management (SLM).
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-status.html
+        #
+        def get_status(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_slm/status"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_slm/status"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

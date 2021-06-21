@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Eql
-        module Actions
-          # Returns the status of a previously submitted async or stored Event Query Language (EQL) search
-          #
-          # @option arguments [String] :id The async search ID
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
-          #
-          def get_status(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module Eql
+      module Actions
+        # Returns the status of a previously submitted async or stored Event Query Language (EQL) search
+        #
+        # @option arguments [String] :id The async search ID
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+        #
+        def get_status(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_eql/search/status/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_eql/search/status/#{Utils.__listify(_id)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

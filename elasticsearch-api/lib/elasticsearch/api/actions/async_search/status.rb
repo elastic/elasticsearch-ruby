@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module AsyncSearch
-        module Actions
-          # Retrieves the status of a previously submitted async search request given its ID.
-          #
-          # @option arguments [String] :id The async search ID
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/async-search.html
-          #
-          def status(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module AsyncSearch
+      module Actions
+        # Retrieves the status of a previously submitted async search request given its ID.
+        #
+        # @option arguments [String] :id The async search ID
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/async-search.html
+        #
+        def status(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_async_search/status/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_async_search/status/#{Utils.__listify(_id)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

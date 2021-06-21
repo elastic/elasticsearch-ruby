@@ -16,31 +16,29 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SQL
-        module Actions
-          # Translates SQL into Elasticsearch queries
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-translate.html
-          #
-          def translate(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module SQL
+      module Actions
+        # Translates SQL into Elasticsearch queries
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-translate.html
+        #
+        def translate(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_sql/translate"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_sql/translate"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

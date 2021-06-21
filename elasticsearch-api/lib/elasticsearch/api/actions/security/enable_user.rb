@@ -16,42 +16,40 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Enables users in the native realm.
-          #
-          # @option arguments [String] :username The username of the user to enable
-          # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-enable-user.html
-          #
-          def enable_user(arguments = {})
-            raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
+  module API
+    module Security
+      module Actions
+        # Enables users in the native realm.
+        #
+        # @option arguments [String] :username The username of the user to enable
+        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-enable-user.html
+        #
+        def enable_user(arguments = {})
+          raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _username = arguments.delete(:username)
+          _username = arguments.delete(:username)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_security/user/#{Elasticsearch::API::Utils.__listify(_username)}/_enable"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_security/user/#{Utils.__listify(_username)}/_enable"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:enable_user, [
-            :refresh
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:enable_user, [
+          :refresh
+        ].freeze)
       end
     end
   end

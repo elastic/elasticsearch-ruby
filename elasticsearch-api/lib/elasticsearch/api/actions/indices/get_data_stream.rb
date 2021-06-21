@@ -16,44 +16,42 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Indices
-        module Actions
-          # Returns data streams.
-          #
-          # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
-          # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
-          #
-          def get_data_stream(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Indices
+      module Actions
+        # Returns data streams.
+        #
+        # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
+        #
+        def get_data_stream(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _name
-                       "_data_stream/#{Elasticsearch::API::Utils.__listify(_name)}"
-                     else
-                       "_data_stream"
-                     end
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _name
+                     "_data_stream/#{Utils.__listify(_name)}"
+                   else
+                     "_data_stream"
+                   end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get_data_stream, [
-            :expand_wildcards
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get_data_stream, [
+          :expand_wildcards
+        ].freeze)
       end
     end
   end

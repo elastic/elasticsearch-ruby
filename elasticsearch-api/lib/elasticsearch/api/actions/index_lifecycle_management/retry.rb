@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module IndexLifecycleManagement
-        module Actions
-          # Retries executing the policy for an index that is in the ERROR step.
-          #
-          # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-retry-policy.html
-          #
-          def retry(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module IndexLifecycleManagement
+      module Actions
+        # Retries executing the policy for an index that is in the ERROR step.
+        #
+        # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ilm-retry-policy.html
+        #
+        def retry(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ilm/retry"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_ilm/retry"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

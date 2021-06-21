@@ -16,42 +16,40 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Actions
-        # The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
-        #
-        # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results
-        #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-terms-enum.html
-        #
-        def terms_enum(arguments = {})
-          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module Actions
+      # The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
+      # This functionality is in Beta and is subject to change. The design and
+      # code is less mature than official GA features and is being provided
+      # as-is with no warranties. Beta features are not subject to the support
+      # SLA of official GA features.
+      #
+      # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+      # @option arguments [Hash] :headers Custom HTTP headers
+      # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results
+      #
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-terms-enum.html
+      #
+      def terms_enum(arguments = {})
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-          headers = arguments.delete(:headers) || {}
+        headers = arguments.delete(:headers) || {}
 
-          arguments = arguments.clone
+        arguments = arguments.clone
 
-          _index = arguments.delete(:index)
+        _index = arguments.delete(:index)
 
-          method = if arguments[:body]
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
+                 else
+                   Elasticsearch::API::HTTP_GET
+                 end
 
-          path = "#{Elasticsearch::API::Utils.__listify(_index)}/_terms_enum"
-          params = {}
+        path   = "#{Utils.__listify(_index)}/_terms_enum"
+        params = {}
 
-          body = arguments[:body]
-          perform_request(method, path, params, body, headers).body
-        end
+        body = arguments[:body]
+        perform_request(method, path, params, body, headers).body
       end
     end
   end

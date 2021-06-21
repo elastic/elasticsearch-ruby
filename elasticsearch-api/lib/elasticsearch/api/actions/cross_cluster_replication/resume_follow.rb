@@ -16,34 +16,32 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Resumes a follower index that has been paused
-          #
-          # @option arguments [String] :index The name of the follow index to resume following.
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-resume-follow.html
-          #
-          def resume_follow(arguments = {})
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Resumes a follower index that has been paused
+        #
+        # @option arguments [String] :index The name of the follow index to resume following.
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-post-resume-follow.html
+        #
+        def resume_follow(arguments = {})
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ccr/resume_follow"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "#{Utils.__listify(_index)}/_ccr/resume_follow"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

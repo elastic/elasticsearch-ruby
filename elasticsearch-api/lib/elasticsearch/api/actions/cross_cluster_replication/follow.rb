@@ -16,44 +16,42 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Creates a new follower index configured to follow the referenced leader index.
-          #
-          # @option arguments [String] :index The name of the follower index
-          # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-put-follow.html
-          #
-          def follow(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Creates a new follower index configured to follow the referenced leader index.
+        #
+        # @option arguments [String] :index The name of the follower index
+        # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-put-follow.html
+        #
+        def follow(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "#{Elasticsearch::API::Utils.__listify(_index)}/_ccr/follow"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "#{Utils.__listify(_index)}/_ccr/follow"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:follow, [
-            :wait_for_active_shards
-          ].freeze)
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:follow, [
+          :wait_for_active_shards
+        ].freeze)
       end
     end
   end

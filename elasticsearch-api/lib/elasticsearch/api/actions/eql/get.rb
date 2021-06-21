@@ -16,44 +16,42 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Eql
-        module Actions
-          # Returns async results from previously executed Event Query Language (EQL) search
-          #
-          # @option arguments [String] :id The async search ID
-          # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
-          # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
-          #
-          def get(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module Eql
+      module Actions
+        # Returns async results from previously executed Event Query Language (EQL) search
+        #
+        # @option arguments [String] :id The async search ID
+        # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
+        # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+        #
+        def get(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_eql/search/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_eql/search/#{Utils.__listify(_id)}"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get, [
-            :wait_for_completion_timeout,
-            :keep_alive
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get, [
+          :wait_for_completion_timeout,
+          :keep_alive
+        ].freeze)
       end
     end
   end

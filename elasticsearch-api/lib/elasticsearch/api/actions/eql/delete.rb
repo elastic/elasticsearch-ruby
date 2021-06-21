@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Eql
-        module Actions
-          # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
-          #
-          # @option arguments [String] :id The async search ID
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
-          #
-          def delete(arguments = {})
-            raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+  module API
+    module Eql
+      module Actions
+        # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+        #
+        # @option arguments [String] :id The async search ID
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/eql-search-api.html
+        #
+        def delete(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_DELETE
-            path   = "_eql/search/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_eql/search/#{Utils.__listify(_id)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

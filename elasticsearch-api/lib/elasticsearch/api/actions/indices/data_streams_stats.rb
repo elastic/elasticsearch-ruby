@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Indices
-        module Actions
-          # Provides statistics on operations happening in a data stream.
-          #
-          # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
-          #
-          def data_streams_stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Indices
+      module Actions
+        # Provides statistics on operations happening in a data stream.
+        #
+        # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
+        #
+        def data_streams_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _name
-                       "_data_stream/#{Elasticsearch::API::Utils.__listify(_name)}/_stats"
-                     else
-                       "_data_stream/_stats"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _name
+                     "_data_stream/#{Utils.__listify(_name)}/_stats"
+                   else
+                     "_data_stream/_stats"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,34 +16,32 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Instantiates a calendar.
-          #
-          # @option arguments [String] :calendar_id The ID of the calendar to create
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The calendar details
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-put-calendar.html
-          #
-          def put_calendar(arguments = {})
-            raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Instantiates a calendar.
+        #
+        # @option arguments [String] :calendar_id The ID of the calendar to create
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The calendar details
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-put-calendar.html
+        #
+        def put_calendar(arguments = {})
+          raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _calendar_id = arguments.delete(:calendar_id)
+          _calendar_id = arguments.delete(:calendar_id)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

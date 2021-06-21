@@ -16,28 +16,26 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SnapshotLifecycleManagement
-        module Actions
-          # Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-stats.html
-          #
-          def get_stats(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SnapshotLifecycleManagement
+      module Actions
+        # Returns global and policy-level statistics about actions taken by snapshot lifecycle management.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/slm-api-get-stats.html
+        #
+        def get_stats(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_slm/stats"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_slm/stats"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

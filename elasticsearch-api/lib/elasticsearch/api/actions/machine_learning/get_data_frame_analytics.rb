@@ -16,50 +16,48 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Retrieves configuration information for data frame analytics jobs.
-          #
-          # @option arguments [String] :id The ID of the data frame analytics to fetch
-          # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-          # @option arguments [Int] :from skips a number of analytics
-          # @option arguments [Int] :size specifies a max number of analytics to get
-          # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on data frame analytics PUT
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-dfanalytics.html
-          #
-          def get_data_frame_analytics(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module MachineLearning
+      module Actions
+        # Retrieves configuration information for data frame analytics jobs.
+        #
+        # @option arguments [String] :id The ID of the data frame analytics to fetch
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
+        # @option arguments [Int] :from skips a number of analytics
+        # @option arguments [Int] :size specifies a max number of analytics to get
+        # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on data frame analytics PUT
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-dfanalytics.html
+        #
+        def get_data_frame_analytics(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _id = arguments.delete(:id)
+          _id = arguments.delete(:id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _id
-                       "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}"
-                     else
-                       "_ml/data_frame/analytics"
-                     end
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _id
+                     "_ml/data_frame/analytics/#{Utils.__listify(_id)}"
+                   else
+                     "_ml/data_frame/analytics"
+                   end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get_data_frame_analytics, [
-            :allow_no_match,
-            :from,
-            :size,
-            :exclude_generated
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get_data_frame_analytics, [
+          :allow_no_match,
+          :from,
+          :size,
+          :exclude_generated
+        ].freeze)
       end
     end
   end

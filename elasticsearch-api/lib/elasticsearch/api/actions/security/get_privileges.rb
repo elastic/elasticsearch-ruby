@@ -16,40 +16,38 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Retrieves application privileges.
-          #
-          # @option arguments [String] :application Application name
-          # @option arguments [String] :name Privilege name
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-privileges.html
-          #
-          def get_privileges(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Security
+      module Actions
+        # Retrieves application privileges.
+        #
+        # @option arguments [String] :application Application name
+        # @option arguments [String] :name Privilege name
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-privileges.html
+        #
+        def get_privileges(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _application = arguments.delete(:application)
+          _application = arguments.delete(:application)
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _application && _name
-                       "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}/#{Elasticsearch::API::Utils.__listify(_name)}"
-                     elsif _application
-                       "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}"
-                     else
-                       "_security/privilege"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _application && _name
+                     "_security/privilege/#{Utils.__listify(_application)}/#{Utils.__listify(_name)}"
+                   elsif _application
+                     "_security/privilege/#{Utils.__listify(_application)}"
+                   else
+                     "_security/privilege"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Evicts application privileges from the native application privileges cache.
-          #
-          # @option arguments [List] :application A comma-separated list of application names
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-privilege-cache.html
-          #
-          def clear_cached_privileges(arguments = {})
-            raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
+  module API
+    module Security
+      module Actions
+        # Evicts application privileges from the native application privileges cache.
+        #
+        # @option arguments [List] :application A comma-separated list of application names
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-clear-privilege-cache.html
+        #
+        def clear_cached_privileges(arguments = {})
+          raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _application = arguments.delete(:application)
+          _application = arguments.delete(:application)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_security/privilege/#{Elasticsearch::API::Utils.__listify(_application)}/_clear_cache"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_security/privilege/#{Utils.__listify(_application)}/_clear_cache"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,53 +16,51 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SearchableSnapshots
-        module Actions
-          # Clear the cache of searchable snapshots.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
-          #
-          # @option arguments [List] :index A comma-separated list of index names
-          # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-          # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-          # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
-          #
-          def clear_cache(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module SearchableSnapshots
+      module Actions
+        # Clear the cache of searchable snapshots.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
+        #
+        # @option arguments [List] :index A comma-separated list of index names
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, none, all)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
+        #
+        def clear_cache(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _index = arguments.delete(:index)
+          _index = arguments.delete(:index)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = if _index
-                       "#{Elasticsearch::API::Utils.__listify(_index)}/_searchable_snapshots/cache/clear"
-                     else
-                       "_searchable_snapshots/cache/clear"
-                     end
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_POST
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_searchable_snapshots/cache/clear"
+                   else
+                     "_searchable_snapshots/cache/clear"
+                   end
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:clear_cache, [
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :index
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:clear_cache, [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :expand_wildcards,
+          :index
+        ].freeze)
       end
     end
   end

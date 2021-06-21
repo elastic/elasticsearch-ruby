@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Creates an inference trained model.
-          #
-          # @option arguments [String] :model_id The ID of the trained models to store
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The trained model configuration (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-trained-models.html
-          #
-          def put_trained_model(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Creates an inference trained model.
+        #
+        # @option arguments [String] :model_id The ID of the trained models to store
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The trained model configuration (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/put-trained-models.html
+        #
+        def put_trained_model(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _model_id = arguments.delete(:model_id)
+          _model_id = arguments.delete(:model_id)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ml/trained_models/#{Elasticsearch::API::Utils.__listify(_model_id)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,56 +16,54 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module SearchableSnapshots
-        module Actions
-          # Mount a snapshot as a searchable index.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
-          #
-          # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount
-          # @option arguments [String] :snapshot The name of the snapshot of the index to mount
-          # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-          # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
-          # @option arguments [String] :storage Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The restore configuration for mounting the snapshot as searchable (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-api-mount-snapshot.html
-          #
-          def mount(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
-            raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
+  module API
+    module SearchableSnapshots
+      module Actions
+        # Mount a snapshot as a searchable index.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
+        #
+        # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount
+        # @option arguments [String] :snapshot The name of the snapshot of the index to mount
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
+        # @option arguments [String] :storage Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The restore configuration for mounting the snapshot as searchable (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-api-mount-snapshot.html
+        #
+        def mount(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
+          raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _repository = arguments.delete(:repository)
+          _repository = arguments.delete(:repository)
 
-            _snapshot = arguments.delete(:snapshot)
+          _snapshot = arguments.delete(:snapshot)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_snapshot/#{Elasticsearch::API::Utils.__listify(_repository)}/#{Elasticsearch::API::Utils.__listify(_snapshot)}/_mount"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}/_mount"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:mount, [
-            :master_timeout,
-            :wait_for_completion,
-            :storage
-          ].freeze)
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:mount, [
+          :master_timeout,
+          :wait_for_completion,
+          :storage
+        ].freeze)
       end
     end
   end

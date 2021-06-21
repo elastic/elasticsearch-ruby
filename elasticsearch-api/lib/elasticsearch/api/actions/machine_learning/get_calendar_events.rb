@@ -16,50 +16,48 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Retrieves information about the scheduled events in calendars.
-          #
-          # @option arguments [String] :calendar_id The ID of the calendar containing the events
-          # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
-          # @option arguments [String] :start Get events after this time
-          # @option arguments [Date] :end Get events before this time
-          # @option arguments [Int] :from Skips a number of events
-          # @option arguments [Int] :size Specifies a max number of events to get
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-calendar-event.html
-          #
-          def get_calendar_events(arguments = {})
-            raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Retrieves information about the scheduled events in calendars.
+        #
+        # @option arguments [String] :calendar_id The ID of the calendar containing the events
+        # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
+        # @option arguments [String] :start Get events after this time
+        # @option arguments [Date] :end Get events before this time
+        # @option arguments [Int] :from Skips a number of events
+        # @option arguments [Int] :size Specifies a max number of events to get
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-calendar-event.html
+        #
+        def get_calendar_events(arguments = {})
+          raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _calendar_id = arguments.delete(:calendar_id)
+          _calendar_id = arguments.delete(:calendar_id)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}/events"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get_calendar_events, [
-            :job_id,
-            :start,
-            :end,
-            :from,
-            :size
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get_calendar_events, [
+          :job_id,
+          :start,
+          :end,
+          :from,
+          :size
+        ].freeze)
       end
     end
   end

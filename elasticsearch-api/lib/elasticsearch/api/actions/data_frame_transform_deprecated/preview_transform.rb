@@ -16,40 +16,38 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module DataFrameTransformDeprecated
-        module Actions
-          # Previews a transform.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
-          #
-          # *Deprecation notice*:
-          # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
-          # Deprecated since version 7.5.0
-          #
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/preview-transform.html
-          #
-          def preview_transform(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module DataFrameTransformDeprecated
+      module Actions
+        # Previews a transform.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
+        #
+        # *Deprecation notice*:
+        # [_data_frame/transforms/] is deprecated, use [_transform/] in the future.
+        # Deprecated since version 7.5.0
+        #
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/preview-transform.html
+        #
+        def preview_transform(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_data_frame/transforms/_preview"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_data_frame/transforms/_preview"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

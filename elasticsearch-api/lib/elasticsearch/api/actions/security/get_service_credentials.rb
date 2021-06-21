@@ -16,41 +16,39 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Security
-        module Actions
-          # Retrieves information of all service credentials for a service account.
-          # This functionality is in Beta and is subject to change. The design and
-          # code is less mature than official GA features and is being provided
-          # as-is with no warranties. Beta features are not subject to the support
-          # SLA of official GA features.
-          #
-          # @option arguments [String] :namespace An identifier for the namespace
-          # @option arguments [String] :service An identifier for the service name
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-service-credentials.html
-          #
-          def get_service_credentials(arguments = {})
-            raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
-            raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
+  module API
+    module Security
+      module Actions
+        # Retrieves information of all service credentials for a service account.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
+        #
+        # @option arguments [String] :namespace An identifier for the namespace
+        # @option arguments [String] :service An identifier for the service name
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-service-credentials.html
+        #
+        def get_service_credentials(arguments = {})
+          raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
+          raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _namespace = arguments.delete(:namespace)
+          _namespace = arguments.delete(:namespace)
 
-            _service = arguments.delete(:service)
+          _service = arguments.delete(:service)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_security/service/#{Elasticsearch::API::Utils.__listify(_namespace)}/#{Elasticsearch::API::Utils.__listify(_service)}/credential"
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

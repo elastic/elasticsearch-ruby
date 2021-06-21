@@ -16,31 +16,29 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Validates an anomaly detection detector.
-          #
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The detector (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/machine-learning/7.x/ml-jobs.html
-          #
-          def validate_detector(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+  module API
+    module MachineLearning
+      module Actions
+        # Validates an anomaly detection detector.
+        #
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The detector (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/machine-learning/7.x/ml-jobs.html
+        #
+        def validate_detector(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/anomaly_detectors/_validate/detector"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/_validate/detector"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,33 +16,31 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Indices
-        module Actions
-          # Migrates an alias to a data stream
-          #
-          # @option arguments [String] :name The name of the alias to migrate
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
-          #
-          def migrate_to_data_stream(arguments = {})
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+  module API
+    module Indices
+      module Actions
+        # Migrates an alias to a data stream
+        #
+        # @option arguments [String] :name The name of the alias to migrate
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/data-streams.html
+        #
+        def migrate_to_data_stream(arguments = {})
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_data_stream/_migrate/#{Elasticsearch::API::Utils.__listify(_name)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_data_stream/_migrate/#{Utils.__listify(_name)}"
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

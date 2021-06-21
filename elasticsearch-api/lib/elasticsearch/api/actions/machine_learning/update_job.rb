@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Updates certain properties of an anomaly detection job.
-          #
-          # @option arguments [String] :job_id The ID of the job to create
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The job update settings (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-update-job.html
-          #
-          def update_job(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Updates certain properties of an anomaly detection job.
+        #
+        # @option arguments [String] :job_id The ID of the job to create
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The job update settings (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-update-job.html
+        #
+        def update_job(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _job_id = arguments.delete(:job_id)
+          _job_id = arguments.delete(:job_id)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_update"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_update"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

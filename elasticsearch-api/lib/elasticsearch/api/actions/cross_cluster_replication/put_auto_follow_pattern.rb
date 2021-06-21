@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module CrossClusterReplication
-        module Actions
-          # Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
-          #
-          # @option arguments [String] :name The name of the auto follow pattern.
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body The specification of the auto follow pattern (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-put-auto-follow-pattern.html
-          #
-          def put_auto_follow_pattern(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+  module API
+    module CrossClusterReplication
+      module Actions
+        # Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
+        #
+        # @option arguments [String] :name The name of the auto follow pattern.
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The specification of the auto follow pattern (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ccr-put-auto-follow-pattern.html
+        #
+        def put_auto_follow_pattern(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_PUT
-            path   = "_ccr/auto_follow/#{Elasticsearch::API::Utils.__listify(_name)}"
-            params = {}
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_ccr/auto_follow/#{Utils.__listify(_name)}"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module Enrich
-        module Actions
-          # Gets information about an enrich policy.
-          #
-          # @option arguments [List] :name A comma-separated list of enrich policy names
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-enrich-policy-api.html
-          #
-          def get_policy(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module Enrich
+      module Actions
+        # Gets information about an enrich policy.
+        #
+        # @option arguments [List] :name A comma-separated list of enrich policy names
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-enrich-policy-api.html
+        #
+        def get_policy(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _name = arguments.delete(:name)
+          _name = arguments.delete(:name)
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = if _name
-                       "_enrich/policy/#{Elasticsearch::API::Utils.__listify(_name)}"
-                     else
-                       "_enrich/policy"
-                     end
-            params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = if _name
+                     "_enrich/policy/#{Utils.__listify(_name)}"
+                   else
+                     "_enrich/policy"
+                   end
+          params = {}
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

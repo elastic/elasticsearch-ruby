@@ -16,35 +16,33 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module MachineLearning
-        module Actions
-          # Posts scheduled events in a calendar.
-          #
-          # @option arguments [String] :calendar_id The ID of the calendar to modify
-          # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body A list of events (*Required*)
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-post-calendar-event.html
-          #
-          def post_calendar_events(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-            raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
+  module API
+    module MachineLearning
+      module Actions
+        # Posts scheduled events in a calendar.
+        #
+        # @option arguments [String] :calendar_id The ID of the calendar to modify
+        # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body A list of events (*Required*)
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-post-calendar-event.html
+        #
+        def post_calendar_events(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
 
-            headers = arguments.delete(:headers) || {}
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            _calendar_id = arguments.delete(:calendar_id)
+          _calendar_id = arguments.delete(:calendar_id)
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_ml/calendars/#{Elasticsearch::API::Utils.__listify(_calendar_id)}/events"
-            params = {}
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
+          params = {}
 
-            body = arguments[:body]
-            perform_request(method, path, params, body, headers).body
-          end
+          body = arguments[:body]
+          perform_request(method, path, params, body, headers).body
         end
       end
     end

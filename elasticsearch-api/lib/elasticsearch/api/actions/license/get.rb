@@ -16,39 +16,37 @@
 # under the License.
 
 module Elasticsearch
-  module XPack
-    module API
-      module License
-        module Actions
-          # Retrieves licensing information for the cluster
-          #
-          # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-          # @option arguments [Boolean] :accept_enterprise If the active license is an enterprise license, return type as 'enterprise' (default: false)
-          # @option arguments [Hash] :headers Custom HTTP headers
-          #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-license.html
-          #
-          def get(arguments = {})
-            headers = arguments.delete(:headers) || {}
+  module API
+    module License
+      module Actions
+        # Retrieves licensing information for the cluster
+        #
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Boolean] :accept_enterprise If the active license is an enterprise license, return type as 'enterprise' (default: false)
+        # @option arguments [Hash] :headers Custom HTTP headers
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-license.html
+        #
+        def get(arguments = {})
+          headers = arguments.delete(:headers) || {}
 
-            arguments = arguments.clone
+          arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_GET
-            path   = "_license"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_license"
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-            body = nil
-            perform_request(method, path, params, body, headers).body
-          end
-
-          # Register this action with its valid params when the module is loaded.
-          #
-          # @since 6.2.0
-          ParamsRegistry.register(:get, [
-            :local,
-            :accept_enterprise
-          ].freeze)
+          body = nil
+          perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:get, [
+          :local,
+          :accept_enterprise
+        ].freeze)
       end
     end
   end
