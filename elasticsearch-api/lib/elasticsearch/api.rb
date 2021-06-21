@@ -80,7 +80,31 @@ module Elasticsearch
                 Elasticsearch::API::Remote,
                 Elasticsearch::API::DanglingIndices,
                 Elasticsearch::API::Features,
-                Elasticsearch::API::Shutdown
+                Elasticsearch::API::Shutdown,
+                Elasticsearch::API::AsyncSearch,
+                Elasticsearch::API::Autoscaling,
+                Elasticsearch::API::CrossClusterReplication,
+                Elasticsearch::API::DataFrameTransformDeprecated,
+                Elasticsearch::API::Enrich,
+                Elasticsearch::API::Eql,
+                Elasticsearch::API::Fleet,
+                Elasticsearch::API::Graph,
+                Elasticsearch::API::IndexLifecycleManagement,
+                Elasticsearch::API::License,
+                Elasticsearch::API::Logstash,
+                Elasticsearch::API::Migration,
+                Elasticsearch::API::MachineLearning,
+                Elasticsearch::API::Monitoring,
+                Elasticsearch::API::Rollup,
+                Elasticsearch::API::SearchableSnapshots,
+                Elasticsearch::API::Security,
+                Elasticsearch::API::SnapshotLifecycleManagement,
+                Elasticsearch::API::SQL,
+                Elasticsearch::API::SSL,
+                Elasticsearch::API::TextStructure,
+                Elasticsearch::API::Transform,
+                Elasticsearch::API::Watcher,
+                Elasticsearch::API::XPack
     end
 
     # The serializer class
