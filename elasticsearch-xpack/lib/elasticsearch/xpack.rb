@@ -18,8 +18,11 @@
 require 'elasticsearch/api'
 
 # Since XPack is being deprecated, alias Elasticsearch::XPack::API to Elasticsearch::API:
+module Elasticsearch; module XPack; end; end
 Elasticsearch::XPack::API = Elasticsearch::API
 
+# Workaround to keep maintaining compatibility with client.xpack, calling code from
+# elasticsearch-api, but keeping the xpack namespace for 7.x
 module Elasticsearch
   if defined?(Elasticsearch::Transport::Client)
     module Transport
@@ -30,6 +33,7 @@ module Elasticsearch
         end
       end
 
+      # XPack transitional client
       class XPackClient
         include Elasticsearch::API::XPack::Actions
 
@@ -47,6 +51,10 @@ module Elasticsearch
           else
             @client.send(name, *args, &block)
           end
+        end
+
+        def respond_to_missing?(method_name)
+          ['info', 'usage'].include? method_name || @client.respond_to?(method_name)
         end
       end
     end
