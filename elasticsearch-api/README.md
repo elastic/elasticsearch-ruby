@@ -1,56 +1,36 @@
 # Elasticsearch::API
 
-**This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
-please refer to it, unless you want to use this library standalone.**
+**This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package; please refer to it, unless you want to use this library standalone.**
 
 ----
 
-The `elasticsearch-api` library provides a Ruby implementation of
-the [Elasticsearch](http://elasticsearch.com) REST API.
+The `elasticsearch-api` library provides a Ruby implementation of the [Elasticsearch](http://elasticsearch.com) REST API.
 
-It does not provide an Elasticsearch client; see the
-[`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport) library.
+It does not provide an Elasticsearch client; see the [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport) library.
 
-The library is compatible with Ruby 1.9 and higher.
-
-It is compatible with Elasticsearch's API versions from 0.90 till current, just use a release matching major version of Elasticsearch.
-
-| Ruby          |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch. Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
 
 ## Installation
 
 Install the package from [Rubygems](https://rubygems.org):
 
-    gem install elasticsearch-api
+```
+gem install elasticsearch-api
+```
 
-To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
+Or add it to your Gemfile:
 
-    gem 'elasticsearch-api', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
-
-or install it from a source code checkout:
-
-    git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-    cd elasticsearch-ruby/elasticsearch-api
-    bundle install
-    rake install
+```
+gem 'elasticsearch-api'
+```
 
 ## Usage
 
-The library is designed as a group of standalone Ruby modules, which can be mixed into a class
-providing connection to Elasticsearch -- an Elasticsearch client.
+The library is designed as a group of standalone Ruby modules, which can be mixed into a class providing connection to Elasticsearch -- an Elasticsearch client. It's possible to mix it into any client, and the methods will be available in the top namespace.
 
 ### Usage with the `elasticsearch` gem
 
-**When you use the client from the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package,
-the library modules have been already included**, so you just call the API methods:
+**When you use the client from the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package, the library modules have been already included**, so you just call the API methods:
 
 ```ruby
 require 'elasticsearch'
@@ -64,8 +44,7 @@ client.search(index: 'myindex', body: { query: { match: { title: 'test' } } })
 # => {"took"=>2, ..., "hits"=>{"total":5, ...}}
 ```
 
-Full documentation and examples are included as RDoc annotations in the source code
-and available online at <http://rubydoc.info/gems/elasticsearch-api>.
+Full documentation is included as RDoc annotations in the source code and available online at <http://rubydoc.info/gems/elasticsearch-api>.
 
 ### Usage with a custom client
 
