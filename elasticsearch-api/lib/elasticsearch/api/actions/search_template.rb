@@ -29,7 +29,7 @@ module Elasticsearch
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
-      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
+      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
       # @option arguments [Boolean] :profile Specify whether to profile the query execution
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
