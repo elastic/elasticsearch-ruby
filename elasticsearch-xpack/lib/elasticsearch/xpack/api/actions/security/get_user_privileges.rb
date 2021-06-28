@@ -20,11 +20,11 @@ module Elasticsearch
     module API
       module Security
         module Actions
-          # Retrieves application privileges.
+          # Retrieves security privileges for the logged in user.
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-privileges.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-get-user-privileges.html
           #
           def get_user_privileges(arguments = {})
             headers = arguments.delete(:headers) || {}
