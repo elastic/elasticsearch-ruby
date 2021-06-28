@@ -14,12 +14,8 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
-raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
-
-require 'elasticsearch'
+require 'spec_helper'
 require 'logger'
-require 'rspec'
 
 context 'Elasticsearch client' do
   let(:logger) { Logger.new($stderr) }
@@ -53,7 +49,7 @@ context 'Elasticsearch client' do
   end
 
   context 'Reports the right meta header' do
-    it 'Reports es service name and gem versio' do
+    it 'Reports es service name and gem version' do
       headers = client.transport.connections.first.connection.headers
       expect(headers['x-elastic-client-meta']).to match /^es=#{Elasticsearch::VERSION}/
     end

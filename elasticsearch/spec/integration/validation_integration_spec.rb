@@ -14,20 +14,17 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require 'elasticsearch'
-require 'webmock/rspec'
+require 'spec_helper'
+require 'logger'
 
-describe 'Elasticsearch: wrapper gem' do
-  it 'requires all neccessary subgems' do
-    expect(defined?(Elasticsearch::Client))
-    expect(defined?(Elasticsearch::API))
-  end
-
-  it 'mixes the API into the client' do
-    client = Elasticsearch::Client.new
-
-    expect(client).to respond_to(:search)
-    expect(client).to respond_to(:cluster)
-    expect(client).to respond_to(:indices)
+describe 'Elasticsearch validation integration' do
+  it 'Validates for Elasticsearch > 7.14' do
+    client = Elasticsearch::Client.new(
+      host: ELASTICSEARCH_URL,
+      logger: Logger.new($stderr)
+    )
+    expect(client.instance_variable_get('@verified')).to be false
+    client.count
+    expect(client.instance_variable_get('@verified')).to be true
   end
 end
