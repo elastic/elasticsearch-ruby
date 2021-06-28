@@ -43,132 +43,127 @@ end
 Elasticsearch::API::COMMON_PARAMS.push :job_id, :datafeed_id, :filter_id, :snapshot_id, :category_id, :policy_id
 
 module Elasticsearch
-  module Transport
-    class Client
-      # When a method is called on the client, if it's one of the xpack root
-      # namespace methods, send them to the xpack client.
-      # E.g.: client.xpack.usage => client.usage
-      # Excluding `info` since OSS and XPACK both have info endpoints.
-      TOP_LEVEL_METHODS = [
-        :usage,
-        :terms_enum
-      ].freeze
+  class Client
+    # When a method is called on the client, if it's one of the xpack root
+    # namespace methods, send them to the xpack client.
+    # E.g.: client.xpack.usage => client.usage
+    # Excluding `info` since OSS and XPACK both have info endpoints.
+    TOP_LEVEL_METHODS = [
+      :usage,
+      :terms_enum
+    ].freeze
 
-      def method_missing(method, *args, &block)
-        return xpack.send(method, *args, &block) if TOP_LEVEL_METHODS.include?(method)
-
-        super
-      end
-
-      def respond_to_missing?(method_name, *args)
-        TOP_LEVEL_METHODS.include?(method_name) || super
-      end
-
-      def xpack
-        unless @xpack
-          warn('Deprecation notice: The elasticsearch-xpack gem will be deprecated and all the ' \
-               "functionality will be available from elasticsearch-api.\n" \
-               'See https://github.com/elastic/elasticsearch-ruby/issues/1274'
-              )
-        end
-        @xpack ||= Elasticsearch::XPack::API::Client.new(self)
-      end
-
-      def security
-        @security ||= xpack.security
-      end
-
-      def ml
-        @ml ||= xpack.ml
-      end
-
-      def rollup
-        @rollup ||= xpack.rollup
-      end
-
-      def watcher
-        @watcher ||= xpack.watcher
-      end
-
-      def graph
-        @graph ||= xpack.graph
-      end
-
-      def migration
-        @migration ||= xpack.migration
-      end
-
-      def sql
-        @sql ||= xpack.sql
-      end
-
-      def deprecation
-        @deprecation ||= xpack.deprecation
-      end
-
-      def data_frame
-        @data_frame ||= xpack.data_frame
-      end
-
-      def ilm
-        @ilm ||= xpack.ilm
-      end
-
-      def license
-        @license ||= xpack.license
-      end
-
-      def transform
-        @transform ||= xpack.transform
-      end
-
-      def async_search
-        @async_search ||= xpack.async_search
-      end
-
-      def cat
-        @cat ||= xpack.cat
-      end
-
-      def indices
-        @indices ||= xpack.indices
-      end
-
-      def searchable_snapshots
-        @searchable_snapshots ||= xpack.searchable_snapshots
-      end
-
-      def cross_cluster_replication
-        @cross_cluster_replication ||= xpack.cross_cluster_replication
-      end
-
-      def autoscaling
-        @autoscaling ||= xpack.autoscaling
-      end
-
-      def enrich
-        @enrich ||= xpack.enrich
-      end
-
-      def eql
-        @eql ||= xpack.eql
-      end
-
-      def snapshot_lifecycle_management
-        @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
-      end
-
-      def text_structure
-        @text_structure ||= xpack.text_structure
-      end
-
-      def logstash
-        @logstash ||= xpack.logstash
-      end
-
-      def fleet
-        @fleet ||= xpack.fleet
+    TOP_LEVEL_METHODS.each do |method_name|
+      define_method method_name do |attr|
+        xpack.send(method_name, attr)
       end
     end
+
+    def xpack
+      unless @xpack
+        warn(
+          'Deprecation notice: The elasticsearch-xpack gem will be deprecated and all the ' \
+          "functionality will be available from elasticsearch-api.\n" \
+          'See https://github.com/elastic/elasticsearch-ruby/issues/1274'
+        )
+      end
+      @xpack ||= Elasticsearch::XPack::API::Client.new(self)
+    end
+
+    def security
+      @security ||= xpack.security
+    end
+
+    def ml
+      @ml ||= xpack.ml
+    end
+
+    def rollup
+      @rollup ||= xpack.rollup
+    end
+
+    def watcher
+      @watcher ||= xpack.watcher
+    end
+
+    def graph
+      @graph ||= xpack.graph
+    end
+
+    def migration
+      @migration ||= xpack.migration
+    end
+
+    def sql
+      @sql ||= xpack.sql
+    end
+
+    def deprecation
+      @deprecation ||= xpack.deprecation
+    end
+
+    def data_frame
+      @data_frame ||= xpack.data_frame
+    end
+
+    def ilm
+      @ilm ||= xpack.ilm
+    end
+
+    def license
+      @license ||= xpack.license
+    end
+
+    def transform
+      @transform ||= xpack.transform
+    end
+
+    def async_search
+      @async_search ||= xpack.async_search
+    end
+
+    def cat
+      @cat ||= xpack.cat
+    end
+
+    def indices
+      @indices ||= xpack.indices
+    end
+
+    def searchable_snapshots
+      @searchable_snapshots ||= xpack.searchable_snapshots
+    end
+
+    def cross_cluster_replication
+      @cross_cluster_replication ||= xpack.cross_cluster_replication
+    end
+
+    def autoscaling
+      @autoscaling ||= xpack.autoscaling
+    end
+
+    def enrich
+      @enrich ||= xpack.enrich
+    end
+
+    def eql
+      @eql ||= xpack.eql
+    end
+
+    def snapshot_lifecycle_management
+      @snapshot_lifecycle_management ||= xpack.snapshot_lifecycle_management
+    end
+
+    def text_structure
+      @text_structure ||= xpack.text_structure
+    end
+
+    def logstash
+      @logstash ||= xpack.logstash
+    end
+
+    def fleet
+      @fleet ||= xpack.fleet
+    end
   end
-end if defined?(Elasticsearch::Transport::Client)
+end if defined?(Elasticsearch::Client)
