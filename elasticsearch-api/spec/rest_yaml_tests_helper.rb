@@ -61,9 +61,8 @@ SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 end
               end
 
-
 # Skipped tests
-file = File.expand_path(__dir__ + '/skipped_tests.yml')
+file = File.expand_path("#{__dir__}/skipped_tests.yml")
 skipped_tests = YAML.load_file(file)
 
 # The directory of rest api YAML files.
