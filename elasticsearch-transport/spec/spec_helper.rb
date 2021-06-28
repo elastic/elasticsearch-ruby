@@ -19,7 +19,6 @@ if ENV['COVERAGE'] && ENV['CI'].nil?
   SimpleCov.start { add_filter %r{^/test|spec/} }
 end
 
-require 'elasticsearch'
 require 'elasticsearch-transport'
 require 'logger'
 require 'ansi/code'
@@ -61,7 +60,8 @@ end
 #
 # @since 7.0.0
 def node_names
-  $node_names ||= default_client.nodes.stats['nodes'].collect do |name, stats|
+  node_stats = default_client.perform_request('GET', '_nodes/stats').body
+  $node_names ||= node_stats['nodes'].collect do |name, stats|
     stats['name']
   end
 end

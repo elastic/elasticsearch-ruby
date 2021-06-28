@@ -16,6 +16,7 @@
 # under the License.
 
 require 'spec_helper'
+require 'elasticsearch'
 
 describe Elasticsearch::Transport::Client do
   context 'meta-header' do
