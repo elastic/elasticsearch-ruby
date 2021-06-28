@@ -15,7 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
+
+task(:default) { system 'rake --tasks' }
 
 desc 'Run unit tests'
 task test: 'test:spec'
