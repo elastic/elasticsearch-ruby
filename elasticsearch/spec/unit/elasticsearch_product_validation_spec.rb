@@ -368,4 +368,19 @@ describe 'Elasticsearch: Validation' do
       end
     end
   end
+
+  context 'When doing a yaml content-type request' do
+    let(:client) do
+      Elasticsearch::Client.new(transport_options: {headers: { accept: 'application/yaml', content_type: 'application/yaml' }})
+    end
+
+    let(:headers) { { 'content-type' => 'application/yaml', 'X-Elastic-Product' => 'Elasticsearch' } }
+    let(:body) { "---\nversion:\n  number: \"7.14.0-SNAPSHOT\"\n" }
+
+    it 'validates' do
+      verify_request_stub
+      count_request_stub
+      valid_requests_and_expectations
+    end
+  end
 end
