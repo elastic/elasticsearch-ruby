@@ -45,7 +45,7 @@ module Elasticsearch
 
     def verify_elasticsearch
       begin
-        response = @transport.perform_request('GET', '/')
+        response = elasticsearch_validation_request
       rescue Elasticsearch::Transport::Transport::Errors::Unauthorized,
              Elasticsearch::Transport::Transport::Errors::Forbidden
         @verified = true
@@ -53,31 +53,41 @@ module Elasticsearch
         return
       end
 
-      verify_with_version_or_header(response)
+      body = if response.headers['content-type'] == 'application/yaml'
+               require 'yaml'
+               YAML.load(response.body)
+             else
+               response.body
+             end
+      version = body.dig('version', 'number')
+      verify_with_version_or_header(body, version, response.headers)
     end
 
-    def verify_with_version_or_header(response)
-      version = response.body.dig('version', 'number')
+    def verify_with_version_or_header(body, version, headers)
       raise Elasticsearch::NotElasticsearchError if version.nil? || version < '6.0.0'
 
       if version == '7.x-SNAPSHOT' || Gem::Version.new(version) >= Gem::Version.new('7.14-SNAPSHOT')
-        raise Elasticsearch::NotElasticsearchError unless response.headers['x-elastic-product'] == 'Elasticsearch'
+        raise Elasticsearch::NotElasticsearchError unless headers['x-elastic-product'] == 'Elasticsearch'
 
         @verified = true
       elsif Gem::Version.new(version) > Gem::Version.new('6.0.0') &&
-         Gem::Version.new(version) < Gem::Version.new('7.0.0')
+            Gem::Version.new(version) < Gem::Version.new('7.0.0')
         raise Elasticsearch::NotElasticsearchError unless
-          response.body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH
+          body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH
 
         @verified = true
       elsif Gem::Version.new(version) >= Gem::Version.new('7.0.0') &&
             Gem::Version.new(version) < Gem::Version.new('7.14-SNAPSHOT')
         raise Elasticsearch::NotElasticsearchError unless
-          response.body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH &&
-          response.body.dig('version', 'build_flavor') == 'default'
+          body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH &&
+          body.dig('version', 'build_flavor') == 'default'
 
         @verified = true
       end
+    end
+
+    def elasticsearch_validation_request
+      @transport.perform_request('GET', '/')
     end
   end
 
