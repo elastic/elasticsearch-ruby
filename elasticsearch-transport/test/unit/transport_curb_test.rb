@@ -84,7 +84,6 @@ else
         @transport.connections.first.connection.expects(:http).with(:GET).returns(stub_everything)
         @transport.connections.first.connection.expects(:body_str).returns('{"foo":"bar"}')
         @transport.connections.first.connection.expects(:header_str).returns('HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nContent-Length: 311\r\n\r\n')
-
         response = @transport.perform_request 'GET', '/'
 
         assert_equal 'application/json', response.headers['content-type']
