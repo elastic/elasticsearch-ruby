@@ -37,33 +37,44 @@ module Elasticsearch
               connection.connection.url = connection.full_url(path, params)
 
               case method
-                when 'HEAD'
-                  connection.connection.set :nobody, true
-                when 'GET', 'POST', 'PUT', 'DELETE'
-                  connection.connection.set :nobody, false
-
-                  connection.connection.put_data = __convert_to_json(body) if body
-
-                  if headers
-                    if connection.connection.headers
-                      connection.connection.headers.merge!(headers)
-                    else
-                      connection.connection.headers = headers
-                    end
+              when 'HEAD'
+                connection.connection.set :nobody, true
+              when 'GET', 'POST', 'PUT', 'DELETE'
+                connection.connection.set :nobody, false
+                connection.connection.put_data = __convert_to_json(body) if body
+                if headers
+                  if connection.connection.headers
+                    connection.connection.headers.merge!(headers)
+                  else
+                    connection.connection.headers = headers
                   end
-
-                else raise ArgumentError, "Unsupported HTTP method: #{method}"
+                end
+              else
+                raise ArgumentError, "Unsupported HTTP method: #{method}"
               end
 
               connection.connection.http(method.to_sym)
 
-              response_headers = {}
-              response_headers['content-type'] = 'application/json' if connection.connection.header_str =~ /\/json/
-
-              Response.new connection.connection.response_code,
-                           decompress_response(connection.connection.body_str),
-                           response_headers
+              Response.new(
+                connection.connection.response_code,
+                decompress_response(connection.connection.body_str),
+                headers(connection)
+              )
             end
+          end
+
+          def headers(connection)
+            headers_string = connection.connection.header_str
+            return nil if headers_string.nil?
+
+            response_headers = headers_string&.split(/\\r\\n|\r\n/).reject(&:empty?)
+            response_headers.shift # Removes HTTP status string
+            processed_header = response_headers.flat_map { |s| s.scan(/^(\S+): (.+)/) }
+            headers_hash = Hash[processed_header].transform_keys(&:downcase)
+            if headers_hash['content-type']&.match?(/application\/json/)
+              headers_hash['content-type'] = 'application/json'
+            end
+            headers_hash
           end
 
           # Builds and returns a connection
@@ -72,9 +83,8 @@ module Elasticsearch
           #
           def __build_connection(host, options={}, block=nil)
             client = ::Curl::Easy.new
-
             apply_headers(client, options)
-            client.url     = __full_url(host)
+            client.url = __full_url(host)
 
             if host[:user]
               client.http_auth_types = host[:auth_type] || :basic
@@ -106,13 +116,13 @@ module Elasticsearch
 
           def user_agent_header(client)
             @user_agent ||= begin
-              meta = ["RUBY_VERSION: #{RUBY_VERSION}"]
-              if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
-                meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
-              end
-              meta << "Curb #{Curl::CURB_VERSION}"
-              "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
-            end
+                              meta = ["RUBY_VERSION: #{RUBY_VERSION}"]
+                              if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+                                meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+                              end
+                              meta << "Curb #{Curl::CURB_VERSION}"
+                              "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
+                            end
           end
         end
       end
