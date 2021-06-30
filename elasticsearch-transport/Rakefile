@@ -32,7 +32,6 @@ namespace :test do
     sh '../scripts/wait-cluster.sh'
   end
 
-  task spec: :wait_for_green
   RSpec::Core::RakeTask.new(:spec)
 
   Rake::TestTask.new(:unit) do |test|
