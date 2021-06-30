@@ -1814,11 +1814,12 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Curb as the transport', unless: jruby? do
-
         let(:client) do
-          described_class.new(hosts: ELASTICSEARCH_HOSTS,
-                              compression: true,
-                              transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
+          described_class.new(
+            hosts: ELASTICSEARCH_HOSTS,
+            compression: true,
+            transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+          )
         end
 
         it 'compresses the request and decompresses the response' do
@@ -1835,7 +1836,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Manticore as the transport', if: jruby? do
-
         let(:client) do
           described_class.new(hosts: ELASTICSEARCH_HOSTS,
                               compression: true,
@@ -1849,9 +1849,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#perform_request' do
-
       context 'when a request is made' do
-
         before do
           client.perform_request('DELETE', '_all')
           client.perform_request('DELETE', 'myindex') rescue
@@ -1874,7 +1872,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when an invalid url is specified' do
-
         it 'raises an exception' do
           expect {
             client.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ')
@@ -1883,7 +1880,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when the \'ignore\' parameter is specified' do
-
         let(:response) do
           client.perform_request('PUT', '_foobar', ignore: 400)
         end
