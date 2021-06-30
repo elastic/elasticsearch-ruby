@@ -65,6 +65,12 @@ module Elasticsearch
       end
 
       def xpack
+        unless @xpack
+          warn('Deprecation notice: The elasticsearch-xpack gem will be deprecated and all the ' \
+               "functionality will be available from elasticsearch-api.\n" \
+               'See https://github.com/elastic/elasticsearch-ruby/issues/1274'
+              )
+        end
         @xpack ||= Elasticsearch::XPack::API::Client.new(self)
       end
 
