@@ -26,6 +26,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :model_id The ID of the model to deploy
+        # @option arguments [Time] :timeout Controls the time to wait until the model is deployed
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-trained-model-deployment.html
@@ -41,11 +42,18 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_start"
-          params = {}
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
           perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:start_trained_model_deployment, [
+          :timeout
+        ].freeze)
       end
     end
   end

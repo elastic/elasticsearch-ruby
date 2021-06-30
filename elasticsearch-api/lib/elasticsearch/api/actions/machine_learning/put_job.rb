@@ -22,6 +22,10 @@ module Elasticsearch
         # Instantiates an anomaly detection job.
         #
         # @option arguments [String] :job_id The ID of the job to create
+        # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false). Only set if datafeed_config is provided.
+        # @option arguments [Boolean] :allow_no_indices Ignore if the source indices expressions resolves to no concrete indices (default: true). Only set if datafeed_config is provided.
+        # @option arguments [Boolean] :ignore_throttled Ignore indices that are marked as throttled (default: true). Only set if datafeed_config is provided.
+        # @option arguments [String] :expand_wildcards Whether source index expressions should get expanded to open or closed indices (default: open). Only set if datafeed_config is provided. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job (*Required*)
         #
@@ -39,11 +43,21 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}"
-          params = {}
+          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
+
+        # Register this action with its valid params when the module is loaded.
+        #
+        # @since 6.2.0
+        ParamsRegistry.register(:put_job, [
+          :ignore_unavailable,
+          :allow_no_indices,
+          :ignore_throttled,
+          :expand_wildcards
+        ].freeze)
       end
     end
   end
