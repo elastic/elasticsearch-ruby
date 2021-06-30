@@ -40,7 +40,7 @@ module Elasticsearch
     # here.
     #
     class SourceGenerator < Thor
-      namespace 'api:code'
+      namespace 'code'
       include Thor::Actions
       include EndpointSpecifics
 
@@ -49,26 +49,20 @@ module Elasticsearch
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
-      method_option :api,     type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
 
       def generate
         self.class.source_root File.expand_path(__dir__)
-        @xpack = options[:api].include? 'xpack'
-        @oss   = options[:api].include? 'oss'
-
-        __generate_source(:xpack) if @xpack
-        __generate_source(:oss) if @oss
+        generate_source
         # -- Tree output
         print_tree if options[:verbose]
       end
 
       private
 
-      def __generate_source(api)
-        @current_api = api
-        @output = FilesHelper.output_dir(api)
+      def generate_source
+        @output = FilesHelper.output_dir
 
-        FilesHelper.files(api).each do |filepath|
+        FilesHelper.files.each do |filepath|
           @path = Pathname(filepath)
           @json = MultiJson.load(File.read(@path))
           @spec = @json.values.first
@@ -91,7 +85,6 @@ module Elasticsearch
           @http_path        = __http_path
           @required_parts   = __required_parts
 
-          @module_namespace.shift if @module_namespace.first == 'xpack'
           @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
           dir = @output.join(@module_namespace.join('/'))
           empty_directory(dir, verbose: false)
@@ -106,23 +99,18 @@ module Elasticsearch
           puts
         end
 
-        run_rubocop(api)
+        run_rubocop
       end
 
       def __full_namespace
         names = @endpoint_name.split('.')
-        if @current_api == :xpack
-          names = (names.first == 'xpack' ? names : ['xpack', names].flatten)
-          # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
-          names.map do |name|
-            name
-              .gsub(/^ml$/, 'machine_learning')
-              .gsub(/^ilm$/, 'index_lifecycle_management')
-              .gsub(/^ccr/, 'cross_cluster_replication')
-              .gsub(/^slm/, 'snapshot_lifecycle_management')
-          end
-        else
-          names
+        # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
+        names.map do |name|
+          name
+            .gsub(/^ml$/, 'machine_learning')
+            .gsub(/^ilm$/, 'index_lifecycle_management')
+            .gsub(/^ccr/, 'cross_cluster_replication')
+            .gsub(/^slm/, 'snapshot_lifecycle_management')
         end
       end
 
@@ -195,7 +183,7 @@ module Elasticsearch
       def __parse_path(path)
         path.gsub(/^\//, '')
             .gsub(/\/$/, '')
-            .gsub('{', "\#{#{__utils}.__listify(_")
+            .gsub('{', "\#{Utils.__listify(_")
             .gsub('}', ')}')
       end
 
@@ -289,12 +277,8 @@ module Elasticsearch
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
       end
 
-      def __utils
-        (@current_api == :xpack) ? 'Elasticsearch::API::Utils' : 'Utils'
-      end
-
-      def run_rubocop(api)
-        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir(api)}")
+      def run_rubocop
+        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir}")
       end
     end
   end

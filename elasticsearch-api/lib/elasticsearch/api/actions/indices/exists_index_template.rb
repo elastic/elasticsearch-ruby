@@ -47,6 +47,7 @@ module Elasticsearch
         end
 
         alias_method :exists_index_template?, :exists_index_template
+
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0

@@ -21,14 +21,14 @@ case @endpoint_name
 when 'mtermvectors'
 -%>
   if ids
-    body = { :ids => ids }
+  body = { :ids => ids }
   else
-    body = arguments[:body]
+  body = arguments[:body]
   end
 <%- when 'cluster.reroute', 'cluster.put_settings' %>
   body = arguments[:body] || {}
 <%- when 'ml.find_file_structure' %>
-  body = <%= __utils %>.__bulkify(arguments.delete(:body))
+  body = Utils.__bulkify(arguments.delete(:body))
 <%- else -%>
   <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments[:body]' %>
 <%- end -%>
@@ -40,12 +40,12 @@ when 'mtermvectors'
   <%= ping_perform_request %>
 <%- else -%>
   <%- if needs_ignore_404?(@endpoint_name) %>
-    <%= __utils %>.__rescue_from_not_found do
+    Utils.__rescue_from_not_found do
       perform_request(method, path, params, body, headers).status == 200 ? true : false
     end
   <%- elsif needs_complex_ignore_404?(@endpoint_name) -%>
     if Array(arguments[:ignore]).include?(404)
-      <%= __utils %>.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+      Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
     else
       perform_request(method, path, params, body, headers).body
     end

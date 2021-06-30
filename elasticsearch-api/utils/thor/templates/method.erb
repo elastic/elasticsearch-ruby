@@ -16,9 +16,6 @@
 # under the License.
 
 module Elasticsearch
-<%- if @current_api == :xpack -%>
-  <%= '  '*(@namespace_depth) %>module XPack
-<%- end %>
 <%= '  '*(@namespace_depth) %>module API
 <%- @module_namespace.each_with_index do |name, i| -%>
   <%= '  '*i %>module <%= module_name_helper(name) %>

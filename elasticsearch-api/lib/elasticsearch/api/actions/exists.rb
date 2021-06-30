@@ -72,6 +72,7 @@ module Elasticsearch
       end
 
       alias_method :exists?, :exists
+
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.2.0

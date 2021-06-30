@@ -64,15 +64,15 @@ module Elasticsearch
                  end
 
         endpoint = arguments.delete(:endpoint) || '_termvectors'
-        path = if _index && _type && _id
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/#{endpoint}"
-               elsif _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{endpoint}"
-               elsif _index && _id
-                 "#{Utils.__listify(_index)}/#{endpoint}/#{Utils.__listify(_id)}"
-               else
-                 "#{Utils.__listify(_index)}/#{endpoint}"
-               end
+        path   = if _index && _type && _id
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/#{endpoint}"
+                 elsif _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{endpoint}"
+                 elsif _index && _id
+                   "#{Utils.__listify(_index)}/#{endpoint}/#{Utils.__listify(_id)}"
+                 else
+                   "#{Utils.__listify(_index)}/#{endpoint}"
+                 end
 
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
@@ -85,6 +85,7 @@ module Elasticsearch
       def termvector(arguments = {})
         termvectors(arguments.merge endpoint: '_termvector')
       end
+
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.2.0

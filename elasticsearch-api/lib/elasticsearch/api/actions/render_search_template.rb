@@ -39,11 +39,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _id
-                 "_render/template/#{Utils.__listify(_id)}"
-               else
-                 "_render/template"
-               end
+        path   = if _id
+                   "_render/template/#{Utils.__listify(_id)}"
+                 else
+                   "_render/template"
+                 end
         params = {}
 
         body = arguments[:body]
