@@ -232,7 +232,9 @@ describe Elasticsearch::Transport::Client do
     if defined?(JRUBY_VERSION)
       context 'when using manticore' do
         let(:client) do
-          Elasticsearch::Client.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore)
+          described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Manticore).tap do |client|
+            client.instance_variable_set('@verified', true)
+          end
         end
         let(:subject) { client.transport.connections.first.connection.instance_variable_get("@options")[:headers]}
 
@@ -244,7 +246,9 @@ describe Elasticsearch::Transport::Client do
     else
       context 'when using curb' do
         let(:client) do
-          Elasticsearch::Client.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
+          described_class.new(transport_class: Elasticsearch::Transport::Transport::HTTP::Curb).tap do |client|
+            client.instance_variable_set('@verified', true)
+          end
         end
 
         it 'sets curb in the metaheader' do
@@ -255,15 +259,13 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when using custom transport implementation' do
-      let (:transport_class) do
+      let(:transport_class) do
         Class.new do
-          include Elasticsearch::Transport::Transport::Base
-
           def initialize(args)
           end
         end
       end
-      let(:client) { Elasticsearch::Client.new(transport_class: transport_class) }
+      let(:client) { Elasticsearch::Transport::Client.new(transport_class: transport_class) }
       let(:subject) { client.instance_variable_get('@arguments')[:transport_options][:headers] }
       let(:meta_header) do
         if jruby?
@@ -284,7 +286,11 @@ describe Elasticsearch::Transport::Client do
         stub_const('Elastic::ELASTICSEARCH_SERVICE_VERSION', [:ent, '8.0.0'])
       end
 
-      let(:client) { Elasticsearch::Client.new }
+      let(:client) do
+        described_class.new.tap do |client|
+          client.instance_variable_set('@verified', true)
+        end
+      end
 
       it 'sets the service version in the metaheader' do
         expect(subject['x-elastic-client-meta']).to match(regexp)

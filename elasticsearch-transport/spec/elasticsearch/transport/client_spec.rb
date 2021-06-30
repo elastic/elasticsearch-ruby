@@ -1584,7 +1584,7 @@ describe Elasticsearch::Transport::Client do
 
       context 'when a block is provided' do
         let(:client) do
-          Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
+          described_class.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
             client.headers['Accept'] = 'application/yaml'
           end
         end
@@ -1600,7 +1600,7 @@ describe Elasticsearch::Transport::Client do
 
         context 'when the Faraday adapter is set in the block' do
           let(:client) do
-            Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
+            described_class.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
               client.adapter(:net_http_persistent)
             end
           end
