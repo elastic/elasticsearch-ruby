@@ -17,15 +17,14 @@
 
 require 'spec_helper'
 
-describe 'client#security#create_api_key' do
-
+describe 'client.security#invalidate_api_key_sp' do
   let(:expected_args) do
     [
-        'DELETE',
-        '_security/api_key',
-        {},
-        body,
-        {}
+      'DELETE',
+      '_security/api_key',
+      {},
+      body,
+      {}
     ]
   end
 
