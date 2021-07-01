@@ -35,14 +35,14 @@ module Elasticsearch
 
         body = nil
         begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
+          perform_request(method, path, params, body, headers).status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false
           else
             raise e
           end
-      end
+        end
       end
     end
   end
