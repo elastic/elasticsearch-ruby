@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client#security.saml_complete_logout' do
+describe 'client.security#saml_invalidate' do
   let(:expected_args) do
     [
       'POST',
-      '_security/saml/complete_logout',
+      '_security/saml/invalidate',
       {},
       {},
       {}
@@ -29,16 +29,16 @@ describe 'client#security.saml_complete_logout' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.saml_complete_logout(body: {})).to eq({})
+    expect(client_double.security.saml_invalidate(body: {})).to eq({})
   end
 
   let(:client) do
     Class.new { include Elasticsearch::API }.new
   end
 
-  it 'requires the :namespace argument' do
+  it 'raises an error if no body is provided' do
     expect do
-      client.security.saml_complete_logout
+      client.security.saml_invalidate
     end.to raise_exception(ArgumentError)
   end
 end
