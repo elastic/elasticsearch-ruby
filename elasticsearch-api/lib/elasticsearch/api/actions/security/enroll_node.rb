@@ -31,7 +31,7 @@ module Elasticsearch
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/enroll_node"
+          path   = "_security/enroll/node"
           params = {}
 
           body = nil
