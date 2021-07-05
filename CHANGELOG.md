@@ -1,3 +1,15 @@
+### DSL 0.1.10
+- Adds auto_generate_synonyms_phrase_query (@andreasklinger) (3587ebe4dcecedd1f5e09adce4ddcf6cb163e9fa)
+- Adds minimum_should_match option to bool filters (@MothOnMars) (c127661f368970ad9158706b6c6134462524af56)
+- Adds support for calendar_interval to DateHistogram (@tmaier) (a3214c57ee876432a165f3e75f95a947a28d1484)
+- Removes auto_generate_phrase_queries deprecated parameter (850eabaff268eacbce6179e76fb9d34f271bc586)
+- Removes deprecated interval parameter (6b2e3bac39cf520d52adc17aee696fb7fa1de77a)
+- Use pry-byebug for MRI and pry-nav for JRuby
+- Improves running tests (default value for cluster set to 'http://localhost:9200')
+
+### DSL 0.1.9
+- Adds track_total_hits option (@andreasklinger)
+
 ## 7.13.1
 
 ### Client
