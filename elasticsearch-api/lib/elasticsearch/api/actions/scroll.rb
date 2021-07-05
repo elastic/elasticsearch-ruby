@@ -31,7 +31,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
         headers = arguments.delete(:headers) || {}
@@ -46,11 +46,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _scroll_id
-                 "_search/scroll/#{Utils.__listify(_scroll_id)}"
-               else
-                 "_search/scroll"
-               end
+        path   = if _scroll_id
+                   "_search/scroll/#{Utils.__listify(_scroll_id)}"
+                 else
+                   "_search/scroll"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]

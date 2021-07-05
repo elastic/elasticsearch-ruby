@@ -22,7 +22,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/index.html
       #
       def ping(arguments = {})
         headers = arguments.delete(:headers) || {}
@@ -35,14 +35,14 @@ module Elasticsearch
 
         body = nil
         begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
+          perform_request(method, path, params, body, headers).status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false
           else
             raise e
           end
-      end
+        end
       end
     end
   end

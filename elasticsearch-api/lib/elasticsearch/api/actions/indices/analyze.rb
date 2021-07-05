@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-analyze.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/indices-analyze.html
         #
         def analyze(arguments = {})
           headers = arguments.delete(:headers) || {}
@@ -40,11 +40,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index
-                   "#{Utils.__listify(_index)}/_analyze"
-                 else
-                   "_analyze"
-                 end
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_analyze"
+                   else
+                     "_analyze"
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]

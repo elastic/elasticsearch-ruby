@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-preview-datafeed.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/ml-preview-datafeed.html
           #
           def preview_datafeed(arguments = {})
             headers = arguments.delete(:headers) || {}
@@ -41,11 +41,11 @@ module Elasticsearch
                        Elasticsearch::API::HTTP_GET
                      end
 
-            path = if _datafeed_id
-                     "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
-                   else
-                     "_ml/datafeeds/_preview"
-                   end
+            path   = if _datafeed_id
+                       "_ml/datafeeds/#{Elasticsearch::API::Utils.__listify(_datafeed_id)}/_preview"
+                     else
+                       "_ml/datafeeds/_preview"
+                     end
             params = {}
 
             body = arguments[:body]

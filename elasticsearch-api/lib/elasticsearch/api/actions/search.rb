@@ -73,7 +73,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/search-search.html
       #
       def search(arguments = {})
         headers = arguments.delete(:headers) || {}
@@ -91,13 +91,13 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_search"
-               elsif _index
-                 "#{Utils.__listify(_index)}/_search"
-               else
-                 "_search"
-               end
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_search"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_search"
+                 else
+                   "_search"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
