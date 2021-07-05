@@ -129,7 +129,7 @@ describe Elasticsearch::Transport::Transport::Base do
 
       let(:arguments) do
         {
-          hosts: ['http://localhost:9250'],
+          hosts: ELASTICSEARCH_HOSTS,
           retry_on_status: ['404']
         }
       end
