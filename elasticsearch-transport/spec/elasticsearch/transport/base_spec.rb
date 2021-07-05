@@ -65,7 +65,27 @@ describe Elasticsearch::Transport::Transport::Base do
         }
       end
 
-      it_behaves_like 'a redacted string'
+      if jruby?
+        let(:client) { Elasticsearch::Transport::Client.new(arguments) }
+        let(:logger) { double('logger', fatal?: true, fatal: '') }
+
+        it 'does not include the password in the logged string' do
+          expect(logger).not_to receive(:fatal).with(/secret_password/)
+
+          expect {
+            client.cluster.stats
+          }.to raise_exception(Faraday::SSLError)
+        end
+
+        it 'replaces the password with the string \'REDACTED\'' do
+          expect(logger).to receive(:fatal).with(/REDACTED/)
+          expect {
+            client.cluster.stats
+          }.to raise_exception(Faraday::SSLError)
+        end
+      else
+        it_behaves_like 'a redacted string'
+      end
     end
 
     context 'when the user and password are provided in the URI object' do
@@ -75,8 +95,27 @@ describe Elasticsearch::Transport::Transport::Base do
           logger: logger
         }
       end
+      if jruby?
+        let(:client) { Elasticsearch::Transport::Client.new(arguments) }
+        let(:logger) { double('logger', fatal?: true, fatal: '') }
 
-      it_behaves_like 'a redacted string'
+        it 'does not include the password in the logged string' do
+          expect(logger).not_to receive(:fatal).with(/secret_password/)
+
+          expect {
+            client.cluster.stats
+          }.to raise_exception(Faraday::SSLError)
+        end
+
+        it 'replaces the password with the string \'REDACTED\'' do
+          expect(logger).to receive(:fatal).with(/REDACTED/)
+          expect {
+            client.cluster.stats
+          }.to raise_exception(Faraday::SSLError)
+        end
+      else
+        it_behaves_like 'a redacted string'
+      end
     end
   end
 
