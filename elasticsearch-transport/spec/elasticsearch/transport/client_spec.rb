@@ -231,17 +231,14 @@ describe Elasticsearch::Transport::Client do
 
   describe 'adapter' do
     context 'when no adapter is specified' do
-      before do
-        @klass = Net::HTTP::Persistent.clone
-        Net::HTTP.send(:remove_const, :Persistent) if defined?(Net::HTTP::Persistent)
-      end
-      after { Net::HTTP::Persistent = @klass }
+      fork do
+        let(:client) { described_class.new }
+        let(:adapter) { client.transport.connections.all.first.connection.builder.adapter }
 
-      let(:adapter) { client.transport.connections.all.first.connection.builder.adapter }
-
-      it 'uses Faraday NetHttp' do
-        expect(adapter).to eq Faraday::Adapter::NetHttp
-      end
+        it 'uses Faraday NetHttp' do
+          expect(adapter).to eq Faraday::Adapter::NetHttp
+        end
+      end unless jruby?
     end
 
     context 'when the adapter is patron' do
