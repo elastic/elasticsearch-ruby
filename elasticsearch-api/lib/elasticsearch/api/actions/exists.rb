@@ -40,7 +40,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/docs-get.html
       #
       def exists(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -72,6 +72,7 @@ module Elasticsearch
       end
 
       alias_method :exists?, :exists
+
       # Register this action with its valid params when the module is loaded.
       #
       # @since 6.2.0

@@ -42,7 +42,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-multi-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
         headers = arguments.delete(:headers) || {}
@@ -60,13 +60,13 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index && _type
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mtermvectors"
-               elsif _index
-                 "#{Utils.__listify(_index)}/_mtermvectors"
-               else
-                 "_mtermvectors"
-               end
+        path   = if _index && _type
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_mtermvectors"
+                 elsif _index
+                   "#{Utils.__listify(_index)}/_mtermvectors"
+                 else
+                   "_mtermvectors"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         if ids

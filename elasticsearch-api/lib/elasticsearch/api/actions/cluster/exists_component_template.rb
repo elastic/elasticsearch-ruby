@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/indices-component-template.html
         #
         def exists_component_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -46,6 +46,7 @@ module Elasticsearch
         end
 
         alias_method :exists_component_template?, :exists_component_template
+
         # Register this action with its valid params when the module is loaded.
         #
         # @since 6.2.0
