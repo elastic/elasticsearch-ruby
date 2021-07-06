@@ -33,7 +33,7 @@ describe 'client.security#saml_authenticate' do
   end
 
   let(:client) do
-     Class.new { include Elasticsearch::API }.new
+     Class.new { include Elasticsearch::XPack::API }.new
    end
 
    it 'raises an error if no body is provided' do
