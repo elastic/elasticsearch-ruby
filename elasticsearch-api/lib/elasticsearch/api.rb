@@ -74,8 +74,7 @@ module Elasticsearch
                 Elasticsearch::API::Remote,
                 Elasticsearch::API::DanglingIndices,
                 Elasticsearch::API::Features,
-                Elasticsearch::API::Shutdown,
-                Elasticsearch::API::Security
+                Elasticsearch::API::Shutdown
     end
 
     # The serializer class
