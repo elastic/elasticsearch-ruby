@@ -1,8 +1,10 @@
+## 7.13.3
+
+- API Support for Elasticsearch version 7.13.3
+
 ## 7.13.2
 
-### Client
-
-- Support for Elasticsearch version 7.13.2
+- Mute release, yanked from RubyGems.
 
 ## 7.13.1
 
