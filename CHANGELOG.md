@@ -1,3 +1,65 @@
+## 7.14.0.pre
+
+This is a pre-release, but there are some important changes coming in version 7.14.0 of the client:
+
+### Client
+
+This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+
+`Elasticsearch::Client` has an `attr_accessor` for the transport instance:
+
+```ruby
+> client = Elasticsearch::Client.new
+> client.transport.class
+=> Elasticsearch::Transport::Client
+> client.transport.transport.class
+=> Elasticsearch::Transport::Transport::HTTP::Faraday
+```
+
+The interaction with `elasticsearch-api` remains unchanged. You can use the API endpoints just like before:
+
+```ruby
+> client.info
+=> {"name"=>"instance",
+ "cluster_name"=>"elasticsearch",
+ "cluster_uuid"=>"id",
+ "version"=>
+  {"number"=>"7.14.0",
+  ...
+},
+ "tagline"=>"You Know, for Search"}
+```
+
+Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+
+```ruby
+> client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=> #<Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=>"instance",
+   "cluster_name"=>"elasticsearch",
+   "cluster_uuid"=>"id",
+   "version"=>
+    {"number"=>"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=>"You Know, for Search"},
+ @headers=
+  {"content-type"=>"application/json; charset=UTF-8",
+   "content-length"=>"571",
+   ...
+   },
+ @status=200>
+```
+
+If you have any problems, please report them in [this issue](https://github.com/elastic/elasticsearch-ruby/issues/1344).
+
+## 7.13.3
+
+- API Support for Elasticsearch version 7.13.3
+
+>>>>>>> b6539da3... [DOCS] Adds 7.14 Release Notes about changes in transport
 ## 7.13.2
 
 ### Client
