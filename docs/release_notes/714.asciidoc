@@ -1,0 +1,59 @@
+[[release_notes_714]]
+=== 7.14 Release notes
+
+[discrete]
+==== Client
+
+
+This release changes the way in which the transport layer and the client interact. Before, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper so it could be used as `Elasticsearch::Client`. We are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much should change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+
+`Elasticsearch::Client` has an `attr_accessor` for the transport instance:
+
+[source,ruby]
+------------------------------------
+> client = Elasticsearch::Client.new
+> client.transport.class
+=> Elasticsearch::Transport::Client
+> client.transport.transport.class
+=> Elasticsearch::Transport::Transport::HTTP::Faraday
+------------------------------------
+
+The interaction with `elasticsearch-api` remains unchanged. You can use the API endpoints just like before:
+
+[source,ruby]
+------------------------------------
+> client.info
+=> {"name"=>"instance",
+ "cluster_name"=>"elasticsearch",
+ "cluster_uuid"=>"id",
+ "version"=>
+  {"number"=>"7.14.0",
+  ...
+},
+ "tagline"=>"You Know, for Search"}
+------------------------------------
+
+Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+[source,ruby]
+------------------------------------
+> client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=> #<Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=>"instance",
+   "cluster_name"=>"elasticsearch",
+   "cluster_uuid"=>"id",
+   "version"=>
+    {"number"=>"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=>"You Know, for Search"},
+ @headers=
+  {"content-type"=>"application/json; charset=UTF-8",
+   "content-length"=>"571",
+   ...
+   },
+ @status=200>
+------------------------------------
+
+If you have any problems, please report them in https://github.com/elastic/elasticsearch-ruby/issues/1344[this issue].
