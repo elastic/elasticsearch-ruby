@@ -2,6 +2,18 @@
 === 7.13 Release notes
 
 [discrete]
+[[release_notes_7133]]
+=== 7.13.3 Release notes
+
+- API Support for Elasticsearch version 7.13.3
+
+[discrete]
+[[release_notes_7132]]
+=== 7.13.2 Release notes
+
+- Mute release, yanked from RubyGems.
+
+[discrete]
 [[release_notes_7131]]
 === 7.13.1 Release notes
 

@@ -1,3 +1,11 @@
+## 7.13.3
+
+- API Support for Elasticsearch version 7.13.3
+
+## 7.13.2
+
+- Mute release, yanked from RubyGems.
+
 ### DSL 0.1.10
 - Adds auto_generate_synonyms_phrase_query (@andreasklinger) (3587ebe4dcecedd1f5e09adce4ddcf6cb163e9fa)
 - Adds minimum_should_match option to bool filters (@MothOnMars) (c127661f368970ad9158706b6c6134462524af56)
