@@ -26,7 +26,7 @@ module Elasticsearch
     #
     class Client
       include MetaHeader
-      DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
+      DEFAULT_TRANSPORT_CLASS = Transport::HTTP::Faraday
 
       DEFAULT_LOGGER = lambda do
         require 'logger'
