@@ -30,4 +30,10 @@ describe 'Elasticsearch: wrapper gem' do
     expect(client).to respond_to(:cluster)
     expect(client).to respond_to(:indices)
   end
+
+  it 'can access the client transport' do
+    client = Elasticsearch::Client.new
+    expect(client.transport).to be_a(Elasticsearch::Transport::Client)
+    expect(client.transport.transport).to be_a(Elasticsearch::Transport::Transport::HTTP::Faraday)
+  end
 end

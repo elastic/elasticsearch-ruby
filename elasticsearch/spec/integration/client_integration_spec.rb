@@ -50,7 +50,7 @@ context 'Elasticsearch client' do
 
   context 'Reports the right meta header' do
     it 'Reports es service name and gem version' do
-      headers = client.transport.connections.first.connection.headers
+      headers = client.transport.transport.connections.first.connection.headers
       expect(headers['x-elastic-client-meta']).to match /^es=#{Elasticsearch::VERSION}/
     end
   end

@@ -19,7 +19,6 @@ module Elasticsearch
   module Transport
     module Transport
       module HTTP
-
         # The default transport implementation, using the [_Faraday_](https://rubygems.org/gems/faraday)
         # library for abstracting the HTTP client.
         #

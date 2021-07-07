@@ -26,7 +26,9 @@ module Elasticsearch
 
   class Client
     include Elasticsearch::API
+    attr_accessor :transport
 
+    # See Elasticsearch::Transport::Client for initializer parameters
     def initialize(arguments = {}, &block)
       @verified = false
       @transport = Elasticsearch::Transport::Client.new(arguments, &block)
