@@ -68,6 +68,28 @@ describe Elasticsearch::DSL::Search::Aggregations::Filters do
         expect(search.to_hash).to eq(filters: { filters: { foo: 'bar' } })
       end
     end
+
+    context 'when other_bucket is passed' do
+
+      let(:search) do
+        described_class.new(other_bucket: true)
+      end
+
+      it 'defines other_bucket' do
+        expect(search.to_hash).to eq(filters: { other_bucket: true })
+      end
+    end
+
+    context 'when other_bucket_key is passed' do
+
+      let(:search) do
+        described_class.new(other_bucket_key: 'foobar')
+      end
+
+      it 'defines other_bucket_key' do
+        expect(search.to_hash).to eq(filters: { other_bucket_key: 'foobar' })
+      end
+    end
   end
 
   context 'when another aggregation is nested' do
