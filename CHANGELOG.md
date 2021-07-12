@@ -2,7 +2,7 @@
 
 ### Client
 
-This release changes the way in which the transport layer and the client interact. Before, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper so it could be used as `Elasticsearch::Client`. We are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much should change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
 
 `Elasticsearch::Client` has an `attr_accessor` for the transport instance:
 
@@ -29,6 +29,7 @@ The interaction with `elasticsearch-api` remains unchanged. You can use the API 
 ```
 
 Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+
 ```ruby
 > client.perform_request('GET', '/')
 # This is the same as doing client.transport.perform_request('GET', '/')
