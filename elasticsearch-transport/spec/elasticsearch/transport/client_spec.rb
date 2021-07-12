@@ -24,10 +24,6 @@ describe Elasticsearch::Transport::Client do
     end
   end
 
-  it 'is aliased as Elasticsearch::Client' do
-    expect(Elasticsearch::Client.new).to be_a(described_class)
-  end
-
   it 'has a default transport' do
     expect(client.transport).to be_a(Elasticsearch::Transport::Client::DEFAULT_TRANSPORT_CLASS)
   end
@@ -1417,14 +1413,14 @@ describe Elasticsearch::Transport::Client do
         let(:client) { described_class.new(host: hosts) }
 
         it 'doesnae raise an ArgumentError' do
-          expect { client.search(opaque_id: 'no_error') }.not_to raise_error
+          expect { client.perform_request('GET', '_search', opaque_id: 'no_error') }.not_to raise_error
         end
 
         it 'uses X-Opaque-Id in the header' do
           allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
-          expect { client.search(opaque_id: 'opaque_id') }.not_to raise_error
+          expect { client.perform_request('GET', '_search', {}, nil, opaque_id: 'opaque_id') }.not_to raise_error
           expect(client).to have_received(:perform_request)
-                              .with('GET', '_search', { opaque_id: 'opaque_id' }, nil, {})
+                              .with('GET', '_search', {}, nil, { opaque_id: 'opaque_id' })
         end
       end
     end
@@ -1501,7 +1497,7 @@ describe Elasticsearch::Transport::Client do
 
       it 'performs the request with the header' do
         allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
-        expect { client.search(headers: headers) }.not_to raise_error
+        expect { client.perform_request('GET', '_search', {}, nil, headers) }.not_to raise_error
         expect(client).to have_received(:perform_request)
                             .with('GET', '_search', {}, nil, headers)
       end
@@ -1515,7 +1511,7 @@ describe Elasticsearch::Transport::Client do
         )
       end
       let(:instance_headers) { { set_in_instantiation: 'header value' } }
-      let(:param_headers) {{'user-agent' => 'My Ruby Tests', 'set-on-method-call' => 'header value'}}
+      let(:param_headers) { {'user-agent' => 'My Ruby Tests', 'set-on-method-call' => 'header value'} }
 
       it 'performs the request with the header' do
         expected_headers = client.transport.connections.connections.first.connection.headers.merge(param_headers)
@@ -1524,7 +1520,7 @@ describe Elasticsearch::Transport::Client do
           .to receive(:run_request)
                 .with(:get, "http://#{hosts[0]}/_search", nil, expected_headers) { OpenStruct.new(body: '')}
 
-        client.search(headers: param_headers)
+        client.perform_request('GET', '_search', {}, nil, param_headers)
       end
     end
   end
@@ -1561,7 +1557,6 @@ describe Elasticsearch::Transport::Client do
     end
 
     context 'when a request is made' do
-
       let!(:response) do
         client.perform_request('GET', '_cluster/health')
       end
@@ -1572,9 +1567,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#initialize' do
-
       context 'when options are specified' do
-
         let(:transport_options) do
           { headers: { accept: 'application/yaml', content_type: 'application/yaml' } }
         end
@@ -1590,9 +1583,8 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when a block is provided' do
-
         let(:client) do
-          Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
+          described_class.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
             client.headers['Accept'] = 'application/yaml'
           end
         end
@@ -1608,7 +1600,7 @@ describe Elasticsearch::Transport::Client do
 
         context 'when the Faraday adapter is set in the block' do
           let(:client) do
-            Elasticsearch::Client.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
+            described_class.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
               client.adapter(:net_http_persistent)
             end
           end
@@ -1822,11 +1814,12 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Curb as the transport', unless: jruby? do
-
         let(:client) do
-          described_class.new(hosts: ELASTICSEARCH_HOSTS,
-                              compression: true,
-                              transport_class: Elasticsearch::Transport::Transport::HTTP::Curb)
+          described_class.new(
+            hosts: ELASTICSEARCH_HOSTS,
+            compression: true,
+            transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+          )
         end
 
         it 'compresses the request and decompresses the response' do
@@ -1843,7 +1836,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when using Manticore as the transport', if: jruby? do
-
         let(:client) do
           described_class.new(hosts: ELASTICSEARCH_HOSTS,
                               compression: true,
@@ -1857,9 +1849,7 @@ describe Elasticsearch::Transport::Client do
     end
 
     describe '#perform_request' do
-
       context 'when a request is made' do
-
         before do
           client.perform_request('DELETE', '_all')
           client.perform_request('DELETE', 'myindex') rescue
@@ -1882,7 +1872,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when an invalid url is specified' do
-
         it 'raises an exception' do
           expect {
             client.perform_request('GET', 'myindex/mydoc/1?routing=FOOBARBAZ')
@@ -1891,7 +1880,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when the \'ignore\' parameter is specified' do
-
         let(:response) do
           client.perform_request('PUT', '_foobar', ignore: 400)
         end
@@ -1928,7 +1916,7 @@ describe Elasticsearch::Transport::Client do
           end
 
           let(:node_names) do
-            client.nodes.stats['nodes'].collect do |name, stats|
+            client.perform_request('GET', '_nodes/stats').body('nodes').collect do |name, stats|
               stats['name']
             end
           end
@@ -1947,7 +1935,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when patron is used as an adapter', unless: jruby? do
-
         before do
           require 'patron'
         end

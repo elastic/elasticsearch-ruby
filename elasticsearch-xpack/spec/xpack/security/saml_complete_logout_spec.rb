@@ -33,7 +33,7 @@ describe 'client.security#saml_complete_logout' do
   end
 
   let(:client) do
-    Class.new { include Elasticsearch::API }.new
+    Class.new { include Elasticsearch::XPack::API }.new
   end
 
   it 'requires the :namespace argument' do

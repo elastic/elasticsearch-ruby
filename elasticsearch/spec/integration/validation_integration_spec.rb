@@ -14,25 +14,17 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+require 'spec_helper'
+require 'logger'
 
-source 'https://rubygems.org'
-
-# Specify your gem's dependencies in elasticsearch-transport.gemspec
-gemspec
-
-if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
-  gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
-end
-
-if File.exist? File.expand_path('../elasticsearch/elasticsearch.gemspec', __dir__)
-  gem 'elasticsearch', path: File.expand_path('../elasticsearch', __dir__), require: false
-end
-
-group :development, :test do
-  gem 'rspec'
-  if defined?(JRUBY_VERSION)
-    gem 'pry-nav'
-  else
-    gem 'pry-byebug'
+describe 'Elasticsearch validation integration' do
+  it 'Validates for Elasticsearch > 7.14' do
+    client = Elasticsearch::Client.new(
+      host: ELASTICSEARCH_URL,
+      logger: Logger.new($stderr)
+    )
+    expect(client.instance_variable_get('@verified')).to be false
+    client.count
+    expect(client.instance_variable_get('@verified')).to be true
   end
 end

@@ -19,7 +19,6 @@ module Elasticsearch
   module Transport
     module Transport
       module HTTP
-
         # The default transport implementation, using the [_Faraday_](https://rubygems.org/gems/faraday)
         # library for abstracting the HTTP client.
         #
@@ -45,10 +44,12 @@ module Elasticsearch
                           headers
                         end
 
-              response = connection.connection.run_request(method.downcase.to_sym,
-                                                           url,
-                                                           ( body ? __convert_to_json(body) : nil ),
-                                                           headers)
+              response = connection.connection.run_request(
+                method.downcase.to_sym,
+                url,
+                (body ? __convert_to_json(body) : nil),
+                headers
+              )
 
               Response.new response.status, decompress_response(response.body), response.headers
             end

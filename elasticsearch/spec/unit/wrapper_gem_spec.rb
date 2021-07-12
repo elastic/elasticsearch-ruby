@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 require 'elasticsearch'
+require 'webmock/rspec'
 
 describe 'Elasticsearch: wrapper gem' do
   it 'requires all neccessary subgems' do
@@ -28,5 +29,11 @@ describe 'Elasticsearch: wrapper gem' do
     expect(client).to respond_to(:search)
     expect(client).to respond_to(:cluster)
     expect(client).to respond_to(:indices)
+  end
+
+  it 'can access the client transport' do
+    client = Elasticsearch::Client.new
+    expect(client.transport).to be_a(Elasticsearch::Transport::Client)
+    expect(client.transport.transport).to be_a(Elasticsearch::Transport::Transport::HTTP::Faraday)
   end
 end

@@ -15,24 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 
-source 'https://rubygems.org'
+require 'spec_helper'
 
-# Specify your gem's dependencies in elasticsearch-transport.gemspec
-gemspec
+describe 'client.security#saml_prepare_authentication' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_security/saml/logout',
+      {},
+      {},
+      {}
+    ]
+  end
 
-if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
-  gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
-end
+  it 'performs the request' do
+    expect(client_double.security.saml_logout(body: {})).to eq({})
+  end
 
-if File.exist? File.expand_path('../elasticsearch/elasticsearch.gemspec', __dir__)
-  gem 'elasticsearch', path: File.expand_path('../elasticsearch', __dir__), require: false
-end
+  let(:client) do
+    Class.new { include Elasticsearch::XPack::API }.new
+  end
 
-group :development, :test do
-  gem 'rspec'
-  if defined?(JRUBY_VERSION)
-    gem 'pry-nav'
-  else
-    gem 'pry-byebug'
+  it 'raises an error if no body is provided' do
+    expect do
+      client.security.saml_logout
+    end.to raise_exception(ArgumentError)
   end
 end

@@ -15,24 +15,32 @@
 # specific language governing permissions and limitations
 # under the License.
 
-source 'https://rubygems.org'
+require 'spec_helper'
 
-# Specify your gem's dependencies in elasticsearch-transport.gemspec
-gemspec
+describe 'client.security#saml_service_provider_metadata' do
+  let(:expected_args) do
+    [
+      'GET',
+      "_security/saml/metadata/#{realm_name}",
+      {},
+      nil,
+      {}
+    ]
+  end
 
-if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
-  gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
-end
+  let(:realm_name) { 'foo' }
 
-if File.exist? File.expand_path('../elasticsearch/elasticsearch.gemspec', __dir__)
-  gem 'elasticsearch', path: File.expand_path('../elasticsearch', __dir__), require: false
-end
+  it 'performs the request' do
+    expect(client_double.security.saml_service_provider_metadata(realm_name: realm_name)).to eq({})
+  end
 
-group :development, :test do
-  gem 'rspec'
-  if defined?(JRUBY_VERSION)
-    gem 'pry-nav'
-  else
-    gem 'pry-byebug'
+  let(:client) do
+    Class.new { include Elasticsearch::XPack::API }.new
+  end
+
+  it 'raises an error if no realm name is provided' do
+    expect do
+      client.security.saml_service_provider_metadata
+    end.to raise_exception(ArgumentError)
   end
 end

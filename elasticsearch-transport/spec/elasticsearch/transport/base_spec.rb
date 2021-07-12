@@ -32,14 +32,14 @@ describe Elasticsearch::Transport::Transport::Base do
         expect(logger).not_to receive(:error).with(/secret_password/)
 
         expect {
-          client.cluster.stats
+          client.perform_request('GET', '_cluster/stats')
         }.to raise_exception(Faraday::ConnectionFailed)
       end
 
       it 'replaces the password with the string \'REDACTED\'' do
         expect(logger).to receive(:error).with(/REDACTED/)
         expect {
-          client.cluster.stats
+          client.perform_request('GET', '_cluster/stats')
         }.to raise_exception(Faraday::ConnectionFailed)
       end
     end
@@ -73,14 +73,14 @@ describe Elasticsearch::Transport::Transport::Base do
           expect(logger).not_to receive(:fatal).with(/secret_password/)
 
           expect {
-            client.cluster.stats
+            client.perform_request('GET', '_cluster/stats')
           }.to raise_exception(Faraday::SSLError)
         end
 
         it 'replaces the password with the string \'REDACTED\'' do
           expect(logger).to receive(:fatal).with(/REDACTED/)
           expect {
-            client.cluster.stats
+            client.perform_request('GET', '_cluster/stats')
           }.to raise_exception(Faraday::SSLError)
         end
       else
@@ -103,14 +103,14 @@ describe Elasticsearch::Transport::Transport::Base do
           expect(logger).not_to receive(:fatal).with(/secret_password/)
 
           expect {
-            client.cluster.stats
+            client.perform_request('GET', '_cluster/stats')
           }.to raise_exception(Faraday::SSLError)
         end
 
         it 'replaces the password with the string \'REDACTED\'' do
           expect(logger).to receive(:fatal).with(/REDACTED/)
           expect {
-            client.cluster.stats
+            client.perform_request('GET', '_cluster/stats')
           }.to raise_exception(Faraday::SSLError)
         end
       else
@@ -133,7 +133,7 @@ describe Elasticsearch::Transport::Transport::Base do
     end
 
     it 'raises an exception' do
-      expect { client.info }.to raise_exception(Faraday::ConnectionFailed)
+      expect { client.perform_request('GET', '/') }.to raise_exception(Faraday::ConnectionFailed)
     end
   end
 

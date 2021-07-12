@@ -20,14 +20,13 @@ require 'elasticsearch/transport/meta_header'
 
 module Elasticsearch
   module Transport
-
     # Handles communication with an Elasticsearch cluster.
     #
     # See {file:README.md README} for usage and code examples.
     #
     class Client
       include MetaHeader
-      DEFAULT_TRANSPORT_CLASS  = Transport::HTTP::Faraday
+      DEFAULT_TRANSPORT_CLASS = Transport::HTTP::Faraday
 
       DEFAULT_LOGGER = lambda do
         require 'logger'
