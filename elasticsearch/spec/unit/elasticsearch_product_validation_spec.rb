@@ -228,9 +228,9 @@ describe 'Elasticsearch: Validation' do
       let(:body) do
         {
           'version' => {
-            'number' => '7.4.0',
-            'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
-          }
+            'number' => '7.4.0'
+          },
+          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
         }.to_json
       end
 
@@ -247,9 +247,9 @@ describe 'Elasticsearch: Validation' do
         {
           'version' => {
             'number' => '7.4.0',
-            'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH,
             'build_flavor' => 'default'
-          }
+          },
+          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
         }.to_json
       end
 
@@ -284,9 +284,9 @@ describe 'Elasticsearch: Validation' do
       let(:body) do
         {
           'version' => {
-            'number' => '6.8.10',
-            'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
-          }
+            'number' => '6.8.10'
+          },
+          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
         }.to_json
       end
 
@@ -318,9 +318,9 @@ describe 'Elasticsearch: Validation' do
         {
           'version' => {
             'number' => '7.10.0',
-            'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH,
             'build_flavor' => 'default'
-          }
+          },
+          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
         }.to_json
       end
 
@@ -354,9 +354,9 @@ describe 'Elasticsearch: Validation' do
       let(:body) do
         {
           'version' => {
-            'number' => '7.10.0',
-            'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
-          }
+            'number' => '7.10.0'
+          },
+          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
         }.to_json
       end
 
