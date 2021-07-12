@@ -75,13 +75,13 @@ module Elasticsearch
       elsif Gem::Version.new(version) > Gem::Version.new('6.0.0') &&
             Gem::Version.new(version) < Gem::Version.new('7.0.0')
         raise Elasticsearch::NotElasticsearchError unless
-          body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH
+          body['tagline'] == YOU_KNOW_FOR_SEARCH
 
         @verified = true
       elsif Gem::Version.new(version) >= Gem::Version.new('7.0.0') &&
             Gem::Version.new(version) < Gem::Version.new('7.14-SNAPSHOT')
         raise Elasticsearch::NotElasticsearchError unless
-          body.dig('version', 'tagline') == YOU_KNOW_FOR_SEARCH &&
+          body['tagline'] == YOU_KNOW_FOR_SEARCH &&
           body.dig('version', 'build_flavor') == 'default'
 
         @verified = true
