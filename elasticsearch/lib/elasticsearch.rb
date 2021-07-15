@@ -20,9 +20,9 @@ require 'elasticsearch/transport'
 require 'elasticsearch/api'
 
 module Elasticsearch
-  SECURITY_PRIVILEGES_VALIDATION_WARNING = 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side.'.freeze
+  SECURITY_PRIVILEGES_VALIDATION_WARNING = 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.'.freeze
   NOT_ELASTICSEARCH_WARNING = 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.'.freeze
-  YOU_KNOW_FOR_SEARCH = 'You know, for Search'.freeze
+  YOU_KNOW_FOR_SEARCH = 'You Know, for Search'.freeze
 
   class Client
     include Elasticsearch::API
