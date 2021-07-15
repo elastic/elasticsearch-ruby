@@ -105,6 +105,7 @@ describe 'Elasticsearch: Validation' do
           'content-type' => 'json'
         }
       end
+
       it 'Makes requests and passes validation' do
         verify_request_stub
         count_request_stub
@@ -134,6 +135,7 @@ describe 'Elasticsearch: Validation' do
           'content-type' => 'json'
         }
       end
+
       it 'Makes requests and passes validation' do
         verify_request_stub
         count_request_stub
@@ -242,6 +244,25 @@ describe 'Elasticsearch: Validation' do
       end
     end
 
+    context 'When the tagline is different' do
+      let(:body) do
+        {
+          'version' => {
+            'number' => '7.4.0',
+            'build_flavor' => 'default'
+          },
+          'tagline' => 'You Know, for other stuff'
+        }.to_json
+      end
+
+      it 'Fails validation' do
+        verify_request_stub
+        count_request_stub
+
+        error_requests_and_expectations
+      end
+    end
+
     context 'With a valid Elasticsearch response' do
       let(:body) do
         {
@@ -249,7 +270,7 @@ describe 'Elasticsearch: Validation' do
             'number' => '7.4.0',
             'build_flavor' => 'default'
           },
-          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
+          'tagline' => 'You Know, for Search'
         }.to_json
       end
 
@@ -286,7 +307,7 @@ describe 'Elasticsearch: Validation' do
           'version' => {
             'number' => '6.8.10'
           },
-          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
+          'tagline' => 'You Know, for Search'
         }.to_json
       end
 
@@ -310,6 +331,25 @@ describe 'Elasticsearch: Validation' do
         error_requests_and_expectations
       end
     end
+
+    context 'When the tagline is different' do
+      let(:body) do
+        {
+          'version' => {
+            'number' => '6.8.10',
+            'build_flavor' => 'default'
+          },
+          'tagline' => 'You Know, for Stuff'
+        }.to_json
+      end
+
+      it 'Fails validation' do
+        verify_request_stub
+        count_request_stub
+
+        error_requests_and_expectations
+      end
+    end
   end
 
   context 'When Elasticsearch version is between 7.0.0 and 7.14.0' do
@@ -320,7 +360,7 @@ describe 'Elasticsearch: Validation' do
             'number' => '7.10.0',
             'build_flavor' => 'default'
           },
-          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
+          'tagline' => 'You Know, for Search'
         }.to_json
       end
 
@@ -350,13 +390,32 @@ describe 'Elasticsearch: Validation' do
       end
     end
 
+    context 'When the tagline is different' do
+      let(:body) do
+        {
+          'version' => {
+            'number' => '7.10.0',
+            'build_flavor' => 'default'
+          },
+          'tagline' => 'You Know, for other stuff'
+        }.to_json
+      end
+
+      it 'Fails validation' do
+        verify_request_stub
+        count_request_stub
+
+        error_requests_and_expectations
+      end
+    end
+
     context 'When the build_flavor is not present' do
       let(:body) do
         {
           'version' => {
             'number' => '7.10.0'
           },
-          'tagline' => Elasticsearch::YOU_KNOW_FOR_SEARCH
+          'tagline' => 'You Know, for Search'
         }.to_json
       end
 
