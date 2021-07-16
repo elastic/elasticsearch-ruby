@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module XPack
-    module API
-      module IndexLifecycleManagement
-        module Actions; end
+require 'spec_helper'
 
-        class IndexLifecycleManagementClient
-          include Elasticsearch::API::Common::Client, Elasticsearch::API::Common::Client::Base, IndexLifecycleManagement::Actions
-        end
+describe 'client.index_lifecycle_management#migrate_to_data_tiers' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_ilm/migrate_to_data_tiers',
+      {},
+      nil,
+      {}
+    ]
+  end
 
-        def ilm
-          @ilm ||= IndexLifecycleManagementClient.new(self)
-        end
-      end
-    end
+  let(:index) { 'foo' }
+
+  it 'performs the request' do
+    expect(client_double.ilm.migrate_to_data_tiers).to eq({})
   end
 end
