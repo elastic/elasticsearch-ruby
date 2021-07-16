@@ -27,3 +27,11 @@
 -
   :file:        'cat.templates/10_basic.yml'
   :description: '*'
+
+# Skipping until new build of 7.x which updates these tests:
+-
+  :file:        'indices.stats/50_disk_usage.yml'
+  :description: '*'
+-
+  :file:        'indices.stats/60_field_usage.yml'
+  :description: '*'
