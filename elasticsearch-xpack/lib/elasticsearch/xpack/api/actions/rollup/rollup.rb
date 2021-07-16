@@ -21,13 +21,17 @@ module Elasticsearch
       module Rollup
         module Actions
           # Rollup an index
+          # This functionality is Experimental and may be changed or removed
+          # completely in a future release. Elastic will take a best effort approach
+          # to fix any issues, but experimental features are not subject to the
+          # support SLA of official GA features.
           #
           # @option arguments [String] :index The index to roll up (*Required*)
           # @option arguments [String] :rollup_index The name of the rollup index to create (*Required*)
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The rollup configuration (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/rollup-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/xpack-rollup.html
           #
           def rollup(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
