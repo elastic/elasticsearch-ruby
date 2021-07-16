@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The logout response to verify (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-saml-complete-logout.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.14/security-api-saml-complete-logout.html
           #
           def saml_complete_logout(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
