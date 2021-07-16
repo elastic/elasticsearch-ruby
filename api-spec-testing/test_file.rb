@@ -173,7 +173,8 @@ module Elasticsearch
           'logs-mappings', 'metrics', 'metrics-settings', 'metrics-mappings',
           'synthetics', 'synthetics-settings', 'synthetics-mappings',
           '.snapshot-blob-cache', '.deprecation-indexing-template',
-          '.deprecation-indexing-mappings', '.deprecation-indexing-settings'
+          '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
+          'security-index-template', 'data-streams-mappings'
         ].freeze
 
         # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -183,6 +184,7 @@ module Elasticsearch
             clear_rollup_jobs(client)
             wait_for_pending_tasks(client)
             clear_sml_policies(client)
+            wipe_searchable_snapshot_indices(client)
           end
           clear_snapshots_and_repositories(client)
           clear_datastreams(client) if xpack?
@@ -208,6 +210,7 @@ module Elasticsearch
           clear_auto_follow_patterns(client)
           clear_tasks(client)
           clear_transforms(client)
+          delete_all_node_shutdown_metadata(client)
           wait_for_cluster_tasks(client)
         end
 
@@ -430,6 +433,24 @@ module Elasticsearch
 
         def clear_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
+        end
+
+        def wipe_searchable_snapshot_indices(client)
+          indices = client.cluster.state(metric: 'metadata', filter_path: 'metadata.indices.*.settings.index.store.snapshot')
+          return if indices.dig('metadata', 'indices')
+
+          indices.each do |index|
+            client.indices.delete(index: index, ignore: 404)
+          end
+        end
+
+        def delete_all_node_shutdown_metadata(client)
+          nodes = client.shutdown.get_node
+          return if nodes['_nodes'] && nodes['cluster_name']
+
+          nodes.each do |node|
+            client.shutdown.delete_node(node['node_id'])
+          end
         end
       end
     end
