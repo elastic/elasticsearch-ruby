@@ -27,3 +27,8 @@
 -
   :file: 'service_accounts/10_basic.yml'
   :description: 'Test service account tokens'
+
+# TODO: https://github.com/elastic/elasticsearch-ruby/issues/1393
+-
+  :file: 'ml/jobs_crud.yml'
+  :description: 'Test put job with datafeed with indices options in params'
