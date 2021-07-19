@@ -85,36 +85,6 @@ namespace :test do
     end
   end
 
-  desc 'Download test artifacts for running cluster'
-  task :download_artifacts do
-    json_filename = CURRENT_PATH.join('tmp/artifacts.json')
-
-    # Get version number and build hash of running cluster:
-    es_info = cluster_info
-    version_number = cluster_info['number']
-    build_hash = cluster_info['build_hash']
-
-    puts "Build hash: #{build_hash}"
-    # Create ./tmp if it doesn't exist
-    Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
-
-    # Download json file with package information for version:
-    json_url = "https://artifacts-api.elastic.co/v1/versions/#{version_number}"
-    download_file!(json_url, json_filename)
-
-    # Get the package url from the json file given the build hash
-    zip_url = package_url(json_filename, build_hash)
-
-    # Download the zip file
-    filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
-    download_file!(zip_url, filename)
-
-    puts "Unzipping file #{filename}"
-    `unzip -o #{filename} -d tmp/`
-    `rm #{filename}`
-    puts 'Artifacts downloaded in ./tmp'
-  end
-
   # Returns: version_number, build_hash
   def cluster_info
     require 'elasticsearch'
