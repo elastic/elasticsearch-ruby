@@ -50,19 +50,34 @@ namespace :elasticsearch do
     end
   end
 
-  desc 'Update the submodule with Elasticsearch core repository'
-  task update: :setup do
-    sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} fetch origin --quiet"
-    begin
-      %x[git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} pull]
-    rescue Exception => @e
-      @failed = true
-    end
+  desc 'Download artifacts (tests and REST spec) for currently running cluster'
+  task :download_artifacts do
+    json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
-    STDERR.puts '', "[!] Error while pulling -- #{@e}" if @failed || !$?.success?
+    # Get version number and build hash of running cluster:
+    es_info = cluster_info
+    version_number = cluster_info['number']
+    build_hash = cluster_info['build_hash']
 
-    puts "\n", "CHANGES:", '-' * 80
-    sh "git --git-dir=#{CURRENT_PATH.join('tmp/elasticsearch/.git')} --work-tree=#{CURRENT_PATH.join('tmp/elasticsearch')} log --oneline ORIG_HEAD..HEAD | cat", :verbose => false
+    puts "Build hash: #{build_hash}"
+    # Create ./tmp if it doesn't exist
+    Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
+
+    # Download json file with package information for version:
+    json_url = "https://artifacts-api.elastic.co/v1/versions/#{version_number}"
+    download_file!(json_url, json_filename)
+
+    # Get the package url from the json file given the build hash
+    zip_url = package_url(json_filename, build_hash)
+
+    # Download the zip file
+    filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
+    download_file!(zip_url, filename)
+
+    puts "Unzipping file #{filename}"
+    `unzip -o #{filename} -d tmp/`
+    `rm #{filename}`
+    puts 'Artifacts downloaded in ./tmp'
   end
 
   desc <<-DESC

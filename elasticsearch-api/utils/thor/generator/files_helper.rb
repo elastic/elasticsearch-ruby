@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module FilesHelper
       PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
-      SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/')
+      SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/rest-api-spec/api/')
       OSS_OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
       XPACK_OUTPUT_DIR = '../../elasticsearch-xpack/lib/elasticsearch/xpack/api/actions'.freeze
 
