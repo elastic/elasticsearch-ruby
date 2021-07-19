@@ -6,7 +6,12 @@ This directory hosts The Generator, a tool that generates the classes for each A
 
 ### Generate
 
-To generate the code, you need to run (from this folder):
+To generate the code, you need to have the Elasticsearch REST API spec files in `tmp/rest-api-spec` in the root of the project. You can run a rake task from the root of the project to download the specs corresponding to the current running cluster:
+```bash
+$ rake elasticsearch:download_artifacts
+```
+
+Once the JSON files have been downloaded, you need to run (from this folder):
 ```bash
 $ thor code:generate
 ```
