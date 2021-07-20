@@ -35,13 +35,13 @@ describe 'Elasticsearch: Validation' do
     { 'content-type' => 'json' }
   end
 
-  def error_requests_and_expectations
-    expect { client.count }.to raise_error Elasticsearch::NotElasticsearchError
+  def error_requests_and_expectations(message = Elasticsearch::NOT_ELASTICSEARCH_WARNING)
+    expect { client.count }.to raise_error Elasticsearch::UnsupportedProductError, message
     assert_requested :get, host
     assert_not_requested :post, "#{host}/_count"
-    expect { client.cluster.health }.to raise_error Elasticsearch::NotElasticsearchError
+    expect { client.cluster.health }.to raise_error Elasticsearch::UnsupportedProductError, message
     expect(client.instance_variable_get('@verified')).to be false
-    expect { client.cluster.health }.to raise_error Elasticsearch::NotElasticsearchError
+    expect { client.cluster.health }.to raise_error Elasticsearch::UnsupportedProductError, message
   end
 
   def valid_requests_and_expectations
@@ -240,7 +240,7 @@ describe 'Elasticsearch: Validation' do
         verify_request_stub
         count_request_stub
 
-        error_requests_and_expectations
+        error_requests_and_expectations(Elasticsearch::NOT_SUPPORTED_ELASTICSEARCH_WARNING)
       end
     end
 
@@ -423,7 +423,7 @@ describe 'Elasticsearch: Validation' do
         verify_request_stub
         count_request_stub
 
-        error_requests_and_expectations
+        error_requests_and_expectations(Elasticsearch::NOT_SUPPORTED_ELASTICSEARCH_WARNING)
       end
     end
   end
