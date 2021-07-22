@@ -159,10 +159,6 @@ if [[ "$CMD" == "assemble" ]]; then
 	  fi
 fi
 
-if [[ "$CMD" == "bump" ]]; then
-    echo "TODO"
-fi
-
 if [[ "$CMD" == "codegen" ]]; then
     echo "TODO"
 fi
