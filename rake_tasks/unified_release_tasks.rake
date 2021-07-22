@@ -64,7 +64,7 @@ namespace :unified_release do
       $ rake unified_release:bump[42.0.0]
   DESC
   task :bump, :version do |_, args|
-    abort('[!] Required argument [version] missing') unless args[:version]
+    abort('[!] Required argument [version] missing') unless (version = args[:version])
 
     files = ['elasticsearch/elasticsearch.gemspec']
     RELEASE_TOGETHER.each do |gem|
@@ -72,13 +72,20 @@ namespace :unified_release do
     end
 
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
-    gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9.]+)'/)
+    gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9x.]+)'/)
 
     files.flatten.each do |file|
       content = File.read(file)
-      if file.match?('gemspec')
-        match = content.match(gemspec_regexp)
-        content.gsub!(match[0], "'elasticsearch-api', '#{args[:version]}'")
+      is_gemspec_file = file.match?('gemspec')
+      regexp = is_gemspec_file ? gemspec_regexp : version_regexp
+
+      if (match = content.match(regexp))
+        old_version = match[1]
+        if is_gemspec_file
+          content.gsub!("'elasticsearch-api', '#{old_version}'", "'elasticsearch-api', '#{version}'")
+        else
+          content.gsub!(old_version, "'#{version}'")
+        end
       else
         match = content.match(version_regexp)
         old_version = match[1]
