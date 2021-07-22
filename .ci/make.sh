@@ -139,6 +139,7 @@ args_string="${args_string// /,}"
 
 docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
+       --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
        --name test-runner \
        --volume $REPO_BINDING \
        --volume $repo:/usr/src/app \
@@ -157,10 +158,6 @@ if [[ "$CMD" == "assemble" ]]; then
 		    echo -e "\033[31;1mTARGET: assemble failed, empty workspace!\033[0m"
 		    exit 1
 	  fi
-fi
-
-if [[ "$CMD" == "bump" ]]; then
-    echo "TODO"
 fi
 
 if [[ "$CMD" == "codegen" ]]; then
