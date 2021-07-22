@@ -17,6 +17,7 @@
 
 require 'fileutils'
 require_relative '../elasticsearch/lib/elasticsearch/version'
+require 'elasticsearch-transport'
 
 namespace :unified_release do
   desc 'Build gem releases and snapshots'
@@ -64,8 +65,36 @@ namespace :unified_release do
       $ rake unified_release:bump[42.0.0]
   DESC
   task :bump, :version do |_, args|
-    abort('[!] Required argument [version] missing') unless args[:version]
+    abort('[!] Required argument [version] missing') unless (version = args[:version])
 
+    branch = `git branch --show-current`.gsub("\n",'')
+    branch_name = "bump_#{branch}_to_#{version}"
+    # `git checkout #{branch}`
+    puts `git checkout -b #{branch_name}`
+    bump_version(version)
+
+    puts `git add .`
+    puts `git commit -m "Bumps to version ${version}"`
+    puts `git push --set-upstream origin #{branch_name}`
+
+    token = ENV['CLIENTS_GITHUB_TOKEN'] || File.read(File.expand_path('~/.elastic/github.token'))
+
+    client = Elasticsearch::Transport::Client.new(host: 'https://api.github.com/')
+    headers = {
+      'Accept' => 'application/vnd.github.v3+json',
+      'Authorization' => "token #{token}"
+    }
+    body = {
+      title: "Bumps #{branch}",
+      maintainer_can_modify: true,
+      head: 'head',
+      base: branch
+    }
+
+    pull_request = client.perform_request('POST', "/repos/elastic/elasticsearch-ruby/pulls", {}, body, headers)
+  end
+
+  def bump_version(version)
     files = ['elasticsearch/elasticsearch.gemspec']
     RELEASE_TOGETHER.each do |gem|
       files << Dir["./#{gem}/**/**/version.rb"]
@@ -80,8 +109,8 @@ namespace :unified_release do
 
       if (match = content.match(regexp))
         old_version = match[2]
-        content.gsub!(old_version, args[:version])
-        puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
+        content.gsub!(old_version, version)
+        puts "[#{old_version}] -> [#{version}] in #{file.gsub('./','')}"
         File.open(file, 'w') { |f| f.puts content }
       else
         puts "- [#{file}]".ljust(longest_line+20) + " -"
