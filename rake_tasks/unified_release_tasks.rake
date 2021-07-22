@@ -87,11 +87,21 @@ namespace :unified_release do
     body = {
       title: "Bumps #{branch}",
       maintainer_can_modify: true,
-      head: 'head',
+      head: branch_name,
       base: branch
     }
 
+    require 'byebug'; byebug
+
     pull_request = client.perform_request('POST', "/repos/elastic/elasticsearch-ruby/pulls", {}, body, headers)
+
+    begin
+      pull_request = client.perform_request('POST', "/repos/elastic/elasticsearch-ruby/pulls", {}, body, headers)
+      1
+    rescue StandardError => e
+      require 'byebug'; byebug
+      1
+    end
   end
 
   def bump_version(version)

@@ -45,8 +45,8 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.5'
 
-  s.add_dependency 'elasticsearch-transport', '8.0.0'
-  s.add_dependency 'elasticsearch-api',       '8.0.0'
+  s.add_dependency 'elasticsearch-transport', '7.15.5'
+  s.add_dependency 'elasticsearch-api',       '7.15.5'
 
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'byebug' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
