@@ -31,6 +31,11 @@ module Elasticsearch
           # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
           # @option arguments [Hash] :headers Custom HTTP headers
           #
+          # *Deprecation notice*:
+          # Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+          # Deprecated since version 7.14.0
+          #
+          #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/freeze-index-api.html
           #
           def freeze(arguments = {})
