@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Use the `query` element to start a query. Use the `cursor` element to continue a query. (*Required*)
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-rest-overview.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/sql-search-api.html
           #
           def query(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -37,7 +37,8 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_POST
             path   = "_sql"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments,
+                                                                             ParamsRegistry.get(__method__)
 
             body = arguments[:body]
             perform_request(method, path, params, body, headers).body
