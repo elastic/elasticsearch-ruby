@@ -45,14 +45,3 @@ http://rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions[Rubydoc].
 
 Keep in mind, that for optimal performance, you should use an HTTP library which 
 supports persistent ("keep-alive") HTTP connections.
-
-
-[discrete]
-[[extensions]]
-=== Extensions
-
-*This library is being deprecated and won't be maintained after 8.0*
-
-The https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[`elasticsearch-extensions`] Rubygem provides a number of extensions to the core client, such as an API to programmatically launch {es} clusters (for example, for testing purposes), and more.
-
-Consult the https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions[documentation] for more information.
