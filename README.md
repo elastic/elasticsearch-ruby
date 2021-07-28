@@ -53,19 +53,23 @@ see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-r
 
 ## Compatibility
 
-The Elasticsearch client is compatible with currently maintained Ruby versions. See [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/). We don't provide support to versions which have reached their end of life.
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
+
+Elastic language clients are guaranteed to be able to communicate with Elasticsearch or Elastic solutions running on the same major version and greater or equal minor version.
+
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are not guaranteed to be backwards compatible.
 
 The gem's version numbers follow Elasticsearch's major versions. The `master` branch is compatible with the Elasticsearch `master` branch, which is the next major version.
 
-| Gem Version   |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+|  Client version | Elasticsearch version | Supported | Tests                                                                                                                                                                           |
+| :-------------: | :-------------------:  | :-:       |                                                     :---:                                                                                                                       |
+|            0.90 |                  0.90 | :x:       |                                                                                                                                                                                 |
+|             1.x |                   1.x | :x:       |                                                                                                                                                                                 |
+|             2.x |                   2.x | :x:       |                                                                                                                                                                                 |
+|             5.x |                   5.x | :x:       |                                                                                                                                                                                 |
+|             6.x |                   6.x | :white_check_mark:       | [![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml)|
+|             7.x |                   7.x | :white_check_mark:       | [![7.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) |
+|          master |                master | :x:       | [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml)                                                                                                                                                                                |
 
 ## Installation
 
