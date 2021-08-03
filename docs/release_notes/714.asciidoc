@@ -58,3 +58,22 @@ Or perform request directly from the client which will return an `Elasticsearch:
 ------------------------------------
 
 If you have any problems, please report them in https://github.com/elastic/elasticsearch-ruby/issues/1344[this issue].
+
+[discrete]
+==== API
+
+Code is now generated from Elastic artifacts instead of checked out code of Elasticsearch. See https://github.com/elastic/elasticsearch-ruby/blob/7.14/elasticsearch-api/utils/README.md#generate[the Generator README] for more info.
+
+- Endpoints `msearch`, `msearch_template` and `search_template` remove `query_and_fetch` and `dfs_query_and_fetch` options from the `search_type` parameter.
+- New parameter `include_repository` in `snapshot.get`: (boolean) Whether to include the repository name in the snapshot info. Defaults to true.
+
+[discrete]
+==== X-Pack
+
+X-Pack is being deprecated. The first time using `xpack` on the client, a warning will be triggered. Please check https://github.com/elastic/elasticsearch-ruby/issues/1274[this issue] for more information.
+
+
+- New endpoints: `index_lifecycle_management.migrate_to_data_tiers`, `machine_learning.reset_job`, `security.saml_authenticate`, `security.saml_complete_logout`, `security.saml_invalidate`, `security.saml_logout`, `security.saml_prepare_authentication`, `security.saml_service_provider_metadata`, `sql.delete_async`, `sql.get_async`, `sql.get_async_status`, `terms_enum`.
+- New experimental endpoints: `machine_learning.infer_trained_model_deployment`, `machine_learning.start_trained_model_deployment`, `machine_learning.stop_trained_model_deployment`.
+- Deprecation: `indices.freeze` and `indices.unfreeze`: Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+
