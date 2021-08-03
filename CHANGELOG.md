@@ -1,3 +1,78 @@
+## 7.14.0
+
+### Client
+
+This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+
+`Elasticsearch::Client` has an `attr_accessor` for the transport instance:
+
+```ruby
+> client = Elasticsearch::Client.new
+> client.transport.class
+=> Elasticsearch::Transport::Client
+> client.transport.transport.class
+=> Elasticsearch::Transport::Transport::HTTP::Faraday
+```
+
+The interaction with `elasticsearch-api` remains unchanged. You can use the API endpoints just like before:
+
+```ruby
+> client.info
+=> {"name"=>"instance",
+ "cluster_name"=>"elasticsearch",
+ "cluster_uuid"=>"id",
+ "version"=>
+  {"number"=>"7.14.0",
+  ...
+},
+ "tagline"=>"You Know, for Search"}
+```
+
+Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+
+```ruby
+> client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=> #<Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=>"instance",
+   "cluster_name"=>"elasticsearch",
+   "cluster_uuid"=>"id",
+   "version"=>
+    {"number"=>"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=>"You Know, for Search"},
+ @headers=
+  {"content-type"=>"application/json; charset=UTF-8",
+   "content-length"=>"571",
+   ...
+   },
+ @status=200>
+```
+
+If you have any problems, please report them in [this issue](https://github.com/elastic/elasticsearch-ruby/issues/1344).
+
+### API
+
+Code is now generated from Elastic artifacts instead of checked out code of Elasticsearch. See [the Generator README](https://github.com/elastic/elasticsearch-ruby/blob/7.14/elasticsearch-api/utils/README.md#generate) for more info.
+
+- Endpoints `msearch`, `msearch_template` and `search_template` remove `query_and_fetch` and `dfs_query_and_fetch` options from the `search_type` parameter.
+- New parameter `include_repository` in `snapshot.get`: (boolean) Whether to include the repository name in the snapshot info. Defaults to true.
+
+### X-Pack
+
+X-Pack is being deprecated. The first time using `xpack` on the client, a warning will be triggered. Please check [this issue](https://github.com/elastic/elasticsearch-ruby/issues/1274) for more information.
+
+
+- New endpoints: `index_lifecycle_management.migrate_to_data_tiers`, `machine_learning.reset_job`, `security.saml_authenticate`, `security.saml_complete_logout`, `security.saml_invalidate`, `security.saml_logout`, `security.saml_prepare_authentication`, `security.saml_service_provider_metadata`, `sql.delete_async`, `sql.get_async`, `sql.get_async_status`, `terms_enum`.
+- New experimental endpoints: `machine_learning.infer_trained_model_deployment`, `machine_learning.start_trained_model_deployment`, `machine_learning.stop_trained_model_deployment`.
+- Deprecation: `indices.freeze` and `indices.unfreeze`: Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+
+## 7.13.3
+
+- API Support for Elasticsearch version 7.13.3
+
 ## 7.13.2
 
 ### Client
