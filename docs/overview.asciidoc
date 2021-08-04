@@ -5,11 +5,7 @@ The `elasticsearch` http://rubygems.org/gems/elasticsearch[Rubygem] provides a
 low-level client for communicating with an {es} cluster, fully compatible with 
 other official clients.
 
-Full documentation is hosted at 
-https://github.com/elastic/elasticsearch-ruby[Github] and 
-http://rubydoc.info/gems/elasticsearch[RubyDoc]. This documentation provides 
-only an overview of features.
-
+More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Github] and http://rubydoc.info/gems/elasticsearch[RubyDoc].
 
 [discrete]
 === Features
