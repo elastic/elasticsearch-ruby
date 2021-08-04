@@ -2,6 +2,8 @@
 
 ### Client
 
+Added check that client is connected to an Elasticsearch cluster. If the client isn't connected to a supported Elasticsearch cluster the `UnsupportedProductError` exception will be raised.
+
 This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
 
 `Elasticsearch::Client` has an `attr_accessor` for the transport instance:
