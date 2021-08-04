@@ -446,7 +446,7 @@ module Elasticsearch
 
         def delete_all_node_shutdown_metadata(client)
           nodes = client.shutdown.get_node
-          return if nodes['_nodes'] && nodes['cluster_name']
+          return if nodes['_nodes'] && nodes['cluster_name'] || nodes&.[]("nodes").empty?
 
           nodes.each do |node|
             client.shutdown.delete_node(node['node_id'])
