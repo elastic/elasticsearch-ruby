@@ -55,7 +55,6 @@ namespace :elasticsearch do
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
     # Get version number and build hash of running cluster:
-    es_info = cluster_info
     version_number = cluster_info['number']
     build_hash = cluster_info['build_hash']
 
@@ -73,6 +72,9 @@ namespace :elasticsearch do
     # Download the zip file
     filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
     download_file!(zip_url, filename)
+
+    spec = CURRENT_PATH.join('tmp/rest-api-spec')
+    FileUtils.remove_dir(spec) if File.directory?(spec)
 
     puts "Unzipping file #{filename}"
     `unzip -o #{filename} -d tmp/`
