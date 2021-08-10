@@ -50,12 +50,50 @@ namespace :elasticsearch do
     end
   end
 
+
+  def package_url(filename, build_hash)
+    begin
+      artifacts = JSON.parse(File.read(filename))
+    rescue StandardError => e
+      STDERR.puts "[!] Couldn't read JSON file #{filename}"
+      exit 1
+    end
+
+    build_hash_artifact = artifacts['version']['builds'].select do |build|
+      build.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
+    end.first
+
+    unless build_hash_artifact
+      STDERR.puts "[!] Could not find artifact with build hash #{build_hash}, using latest instead"
+      build_hash_artifact = artifacts['version']['builds'].first
+    end
+
+    # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
+    build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
+  end
+
+  def download_file!(url, filename)
+    puts "Downloading #{filename} from #{url}"
+    File.open(filename, "w") do |downloaded_file|
+      URI.open(url, "rb") do |artifact_file|
+        downloaded_file.write(artifact_file.read)
+      end
+    end
+    puts "Successfully downloaded #{filename}"
+
+    unless File.exists?(filename)
+      STDERR.puts "[!] Couldn't download #{filename}"
+      exit 1
+    end
+  rescue StandardError => e
+    abort e
+  end
+
   desc 'Download artifacts (tests and REST spec) for currently running cluster'
   task :download_artifacts do
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
     # Get version number and build hash of running cluster:
-    es_info = cluster_info
     version_number = cluster_info['number']
     build_hash = cluster_info['build_hash']
 
