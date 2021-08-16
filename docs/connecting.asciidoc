@@ -8,7 +8,7 @@ This page contains the information you need to connect and use the Client with
 
 * <<client-auth, Authentication options>>
 * <<client-usage, Using the client>>
-
+* <<client-faas, Using the Client in a Function-as-a-Service Environment>>
 
 [discrete]
 [[client-auth]]
@@ -143,4 +143,74 @@ client.index(index: 'my-index', id: 1, body: { title: 'Test' })
 client.indices.refresh(index: 'my-index')
 
 client.search(index: 'my-index', body: { query: { match: { title: 'test' } } })
+------------------------------------
+
+
+[discrete]
+[[client-faas]]
+=== Using the Client in a Function-as-a-Service Environment
+
+This section illustrates the best practices for leveraging the {es} client in a Function-as-a-Service (FaaS) environment. The most influential optimization is to initialize the client outside of the function, the global scope. This practice does not only improve performance but also enables background functionality as – for example – sniffing. The following examples provide a skeleton for the best practices.
+
+[discrete]
+==== GCP Cloud Functions
+
+[source,ruby]
+------------------------------------
+require 'functions_framework'
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new(
+  cloud_id: "elasic-cloud-id",
+  user: "elastic",
+  password: "password",
+  log: true
+)
+
+FunctionsFramework.http "hello_world" do |request|
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
+------------------------------------
+
+[discrete]
+==== AWS Lambda
+
+[source,ruby]
+------------------------------------
+require 'elasticsearch'
+
+def client
+  @client ||= Elasticsearch::Client.new(
+    cloud_id: "elastic-cloud-id",
+    user: "elastic",
+    password: "password",
+    log: true
+  )
+end
+
+def lambda_handler(event:, context:)
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
 ------------------------------------
