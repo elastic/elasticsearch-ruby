@@ -184,7 +184,7 @@ if JRUBY
 
               should 'allow to set options for Manticore' do
                 options = { headers: { 'User-Agent' => 'myapp-0.0' } }
-                transport = Manticore.new hosts: [{ host: 'foobar', port: 1234 }], options: options
+                transport = Manticore.new(hosts: [{ host: 'foobar', port: 1234 }], options: options)
                 transport.connections.first.connection
                   .expects(:get)
                   .with do |_host, _options|
@@ -209,13 +209,35 @@ if JRUBY
                 transport = Manticore.new hosts: [{ host: 'foobar', port: 1234 }], options: options
               end
 
+              should 'allow custom headers' do
+                transport_options = { headers: { 'Authorization' => 'Basic token' } }
+                transport = Manticore.new(
+                  hosts: [{ host: 'foobar', port: 1234 }],
+                  transport_options: transport_options
+                )
+
+                assert_equal(
+                  transport.instance_variable_get(:@request_options)[:headers]['Authorization'],
+                  'Basic token'
+                )
+                transport.connections.first.connection
+                  .expects(:get)
+                  .with do |_host, _options|
+                  assert_equal('Basic token', _options[:headers]['Authorization'])
+                  true
+                end
+                  .returns(stub_everything)
+
+                transport.perform_request('GET', '/', {})
+              end
+
               should 'pass :transport_options to Manticore::Client' do
                 options = {
                   transport_options: { potatoes: 1 }
                 }
 
                 ::Manticore::Client.expects(:new).with(potatoes: 1, ssl: {})
-                transport = Manticore.new hosts: [{ host: 'foobar', port: 1234 }], options: options
+                transport = Manticore.new(hosts: [{ host: 'foobar', port: 1234 }], options: options)
               end
             end
           end
