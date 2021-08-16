@@ -2,7 +2,7 @@
 
 This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
-[![master](https://github.com/elastic/elasticsearch-ruby/workflows/master/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
 The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
 library is a wrapper for two separate libraries:
@@ -53,20 +53,6 @@ see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-r
 We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
 Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
-
-The gem's version numbers follow Elasticsearch's major versions. The `master` branch is compatible with the Elasticsearch `master` branch, which is the next major version.
-
-|  Client version | Elasticsearch version | Supported | Tests                                                                                                                                                                           |
-| :-------------: | :-------------------:  | :-:       |                                                     :---:                                                                                                                       |
-|            0.90 |                  0.90 | :x:       |                                                                                                                                                                                 |
-|             1.x |                   1.x | :x:       |                                                                                                                                                                                 |
-|             2.x |                   2.x | :x:       |                                                                                                                                                                                 |
-|             5.x |                   5.x | :x:       |                                                                                                                                                                                 |
-|             6.x |                   6.x | :white_check_mark:       | [![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml)|
-|             7.x |                   7.x | :white_check_mark:       | [![7.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) |
-|          master |                master | :x:       | [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml)                                                                                                                                                                                |
-
-Check out [Elastic product end of life dates](https://www.elastic.co/support/eol) to learn which releases are still actively supported and tested.
 
 ## Installation
 
