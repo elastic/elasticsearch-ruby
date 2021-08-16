@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_yes_decisions Return 'YES' decisions in explanation (default: false)
         # @option arguments [Boolean] :include_disk_info Return information about disk usage and shard sizes (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The index, shard, and primary flag to explain. Empty means 'explain the first unassigned shard'
+        # @option arguments [Hash] :body The index, shard, and primary flag to explain. Empty means 'explain a randomly-chosen unassigned shard'
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-allocation-explain.html
         #
