@@ -1,3 +1,11 @@
+## 7.14.1.pre
+
+This is a pre-release of 7.14.1.
+
+### Client
+
+- Updates Manticore implementation to keep headers from initialization, fixes [a bug](https://github.com/elastic/elasticsearch-ruby/issues/1428) introduced in 7.2. [Commit](3732dd4f6de75365460fa99c1cd89668b107ef1c)
+
 ## 7.14.0
 
 ### Client
