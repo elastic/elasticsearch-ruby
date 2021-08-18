@@ -24,20 +24,15 @@ host = ENV['TEST_ES_SERVER'] || 'http://localhost:9200'
 raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
 test_suite = ENV['TEST_SUITE'] || 'free'
-
-if test_suite == 'platinum'
-  raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
-  certificate = OpenSSL::X509::Certificate.new(raw_certificate)
-  raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
-  key = OpenSSL::PKey::RSA.new(raw_key)
-  ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
-  password = ENV['ELASTIC_PASSWORD'] || 'changeme'
-  uri = URI.parse(host)
-  host = "#{uri.scheme}://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
-  transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
-else
-  transport_options = {}
-end
+raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
+certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
+key = OpenSSL::PKey::RSA.new(raw_key)
+ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
+password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+uri = URI.parse(host)
+host = "#{uri.scheme}://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
+transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
 
 ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
 

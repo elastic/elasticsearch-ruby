@@ -41,27 +41,15 @@ mkdir -p elasticsearch-api/tmp
 repo=`pwd`
 
 # run the client tests
-if [[ $TEST_SUITE != "platinum" ]]; then
-    docker run \
-           --network="${network_name}" \
-           --env "TEST_ES_SERVER=${elasticsearch_url}" \
-           --env "TEST_SUITE=${TEST_SUITE}" \
-           --volume $repo:/usr/src/app \
-           --name elasticsearch-ruby \
-           --rm \
-           elastic/elasticsearch-ruby \
-           bundle exec rake elasticsearch:download_artifacts test:rest_api
-else
-    docker run \
-           --network="${network_name}" \
-           --env "TEST_ES_SERVER=${elasticsearch_url}" \
-           --env "ELASTIC_PASSWORD=${elastic_password}" \
-           --env "TEST_SUITE=${TEST_SUITE}" \
-           --env "ELASTIC_USER=elastic" \
-           --env "SINGLE_TEST=${SINGLE_TEST}" \
-           --volume $repo:/usr/src/app \
-           --name elasticsearch-ruby \
-           --rm \
-           elastic/elasticsearch-ruby \
-           bundle exec rake elasticsearch:download_artifacts test:rest_api
-fi
+docker run \
+       --network="${network_name}" \
+       --env "TEST_ES_SERVER=${elasticsearch_url}" \
+       --env "ELASTIC_PASSWORD=${elastic_password}" \
+       --env "TEST_SUITE=${TEST_SUITE}" \
+       --env "ELASTIC_USER=elastic" \
+       --env "SINGLE_TEST=${SINGLE_TEST}" \
+       --volume $repo:/usr/src/app \
+       --name elasticsearch-ruby \
+       --rm \
+       elastic/elasticsearch-ruby \
+       bundle exec rake elasticsearch:download_artifacts test:rest_api
