@@ -25,13 +25,15 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :model_id The ID of the model to perform inference on
-        # @option arguments [Time] :timeout Controls the time to wait for the inference result
+        # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [Time] :timeout Controls the amount of time to wait for inference results.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The input text to be evaluated. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-df-analytics-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model-deployment.html
         #
         def infer_trained_model_deployment(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
           headers = arguments.delete(:headers) || {}
@@ -44,7 +46,7 @@ module Elasticsearch
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_infer"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
-          body = nil
+          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
 

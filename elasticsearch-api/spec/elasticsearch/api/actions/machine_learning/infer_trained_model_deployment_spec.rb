@@ -23,13 +23,13 @@ describe 'client#ml.infer_trained_model_deployment' do
       'POST',
       '_ml/trained_models/foo/deployment/_infer',
       {},
-      nil,
+      {},
       {}
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.ml.infer_trained_model_deployment(model_id: 'foo')).to eq({})
+    expect(client_double.ml.infer_trained_model_deployment(model_id: 'foo', body: {})).to eq({})
   end
 
   let(:client) do
