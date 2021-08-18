@@ -18,24 +18,27 @@
 module Elasticsearch
   module XPack
     module API
-      module SQL
+      module Security
         module Actions
-          # Clears the SQL cursor
+          # Retrieves information for API keys using a subset of query DSL
           #
           # @option arguments [Hash] :headers Custom HTTP headers
-          # @option arguments [Hash] :body Specify the cursor value in the `cursor` element to clean the cursor. (*Required*)
+          # @option arguments [Hash] :body From, size, query, sort and search_after
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/clear-sql-cursor-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-query-api-key.html
           #
-          def clear_cursor(arguments = {})
-            raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
+          def query_api_keys(arguments = {})
             headers = arguments.delete(:headers) || {}
 
             arguments = arguments.clone
 
-            method = Elasticsearch::API::HTTP_POST
-            path   = "_sql/close"
+            method = if arguments[:body]
+                       Elasticsearch::API::HTTP_POST
+                     else
+                       Elasticsearch::API::HTTP_GET
+                     end
+
+            path   = "_security/_query/api_key"
             params = {}
 
             body = arguments[:body]
