@@ -46,8 +46,15 @@ curl_data()
 EOF
 }
 
-git checkout $branch
+# git checkout $branch
+git config --global user.email "fernando.briano@elastic.co"
+git config --global user.name "Clients machine"
+
+echo "GITHUB TOKEN: ${token}"
+
 branch_name=bump_${branch}_to_${version}
+git remote set-url origin https://picandocodigo:${token}@github.com/elastic/elasticsearch-ruby.git
+
 git checkout -b $branch_name
 git add .
 git commit -m "Bumps to version ${version}"
