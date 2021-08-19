@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module XPack
-    VERSION = '7.16.0'.freeze
+    VERSION = '7.99.0'.freeze
   end
 end
