@@ -20,6 +20,8 @@ def admin_client
   $admin_client ||= begin
                       transport_options = {}
                       test_suite = ENV['TEST_SUITE'].freeze
+                      password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+                      user     = ENV['ELASTIC_USER'] || 'elastic'
 
                       if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
                         split_hosts = hosts.split(',').map do |host|
@@ -36,11 +38,9 @@ def admin_client
                           }
                         )
 
-                        password = ENV['ELASTIC_PASSWORD']
-                        user     = ENV['ELASTIC_USER'] || 'elastic'
                         url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
                       else
-                        url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
+                        url      = "http://#{user}:#{password}@#{uri.host}:#{uri.port}"
                       end
                       puts "Elasticsearch Client url: #{url}"
                       Elasticsearch::Client.new(host: url, transport_options: transport_options)
