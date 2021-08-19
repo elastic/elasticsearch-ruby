@@ -48,22 +48,30 @@ curl_data()
 EOF
 }
 
-# git checkout $branch
+
+wget -q https://github.com/cli/cli/releases/download/v1.14.0/gh_1.14.0_linux_amd64.tar.gz
+tar -zxf gh_1.14.0_linux_amd64.tar.gz
+mv gh_1.14.0_linux_amd64/bin/gh /usr/local/bin/
+rm gh_1.14.0_linux_amd64 -rf
+
+gh auth login --with-token <<< $token
+gh auth status
+
 git config --global user.email "fernando.briano@elastic.co"
 git config --global user.name "Clients machine"
 
-echo "GITHUB TOKEN: ${token}"
-
 branch_name=bump_${branch}_to_${version}
-git remote set-url origin https://${github_user}:${token}@github.com/elastic/elasticsearch-ruby.git
+# git remote set-url origin https://${github_user}:${token}@github.com/elastic/elasticsearch-ruby.git
 
 git checkout -b $branch_name
 git add .
 git commit -m "Bumps to version ${version}"
 git push --set-upstream origin $branch_name
-curl \
-    -X POST \
-    -H "Accept: application/vnd.github.v3+json" \
-    -H "Authorization: token ${token}" \
-    https://api.github.com/repos/elastic/$repo/pulls \
-    -d "$(curl_data)"
+gh pr create --title "Bumps ${branch} to ${version}" --base ${branch} --body "As titled"
+
+# curl \
+#     -X POST \
+#     -H "Accept: application/vnd.github.v3+json" \
+#     -H "Authorization: token ${token}" \
+#     https://api.github.com/repos/elastic/$repo/pulls \
+#     -d "$(curl_data)"
