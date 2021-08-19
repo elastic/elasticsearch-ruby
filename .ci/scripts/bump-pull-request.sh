@@ -43,8 +43,8 @@ mv gh_1.14.0_linux_amd64/bin/gh /usr/local/bin/
 rm gh_1.14.0_linux_amd64 -rf
 
 gh auth login --with-token <<< $token
-git config --global user.email "clients-team@elastic.co"
-git config --global user.name "Clients machine"
+git config --global user.email "elasticmachine@users.noreply.github.com"
+git config --global user.name "Elastic Machine"
 
 branch_name=bump_${branch}_to_${version}
 git checkout -b $branch_name
