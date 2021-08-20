@@ -31,11 +31,13 @@ gem 'shoulda-context'
 gem 'simplecov'
 gem 'test-unit', '~> 2'
 gem 'yard'
+
 unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   gem 'require-prof'
   gem 'ruby-prof'
 end
 
-group :development do
+group :development, :test do
+  gem 'byebug'
   gem 'rspec'
 end
