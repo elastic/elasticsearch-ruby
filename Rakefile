@@ -19,11 +19,11 @@
 def admin_client
   $admin_client ||= begin
                       transport_options = {}
-                      test_suite = ENV['TEST_SUITE'].freeze
+                      test_suite = ENV['TEST_SUITE'].freeze || 'free'
                       password = ENV['ELASTIC_PASSWORD'] || 'changeme'
                       user     = ENV['ELASTIC_USER'] || 'elastic'
 
-                      if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
+                      if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'https://localhost:9200')
                         split_hosts = hosts.split(',').map do |host|
                           /(http\:\/\/)?\S+/.match(host)
                         end
