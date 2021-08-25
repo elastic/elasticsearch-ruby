@@ -13,7 +13,7 @@ discovering nodes in the cluster, and provides an abstraction for
 data serialization and transport.
 
 It does not handle calling the Elasticsearch API;
-see the [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api) library.
+see the [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api) library.
 
 The library is compatible with Ruby 1.9 or higher and with all versions of Elasticsearch since 0.90.
 
@@ -256,7 +256,7 @@ client = Elasticsearch::Client.new(logger: log)
 ```
 ### APM integration
 
-This client integrates seamlessly with Elastic APM via the [Elastic APM Agent](https://github.com/elastic/apm-agent-ruby). It will automatically capture client requests if you are using the agent on your code. If you're using `elastic-apm` v3.8.0 or up, you can set `capture_elasticsearch_queries` to `true` in `config/elastic_apm.yml` to also capture the body from requests in Elasticsearch. See [here](https://github.com/elastic/elasticsearch-ruby/tree/master/docs/examples/apm) for an example.
+This client integrates seamlessly with Elastic APM via the [Elastic APM Agent](https://github.com/elastic/apm-agent-ruby). It will automatically capture client requests if you are using the agent on your code. If you're using `elastic-apm` v3.8.0 or up, you can set `capture_elasticsearch_queries` to `true` in `config/elastic_apm.yml` to also capture the body from requests in Elasticsearch. See [here](https://github.com/elastic/elasticsearch-ruby/tree/main/docs/examples/apm) for an example.
 
 ### Custom HTTP Headers
 
@@ -567,7 +567,7 @@ and passing it to the client as the `serializer_class` or `serializer` parameter
 
 ### Exception Handling
 
-The library defines a [number of exception classes](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb)
+The library defines a [number of exception classes](https://github.com/elasticsearch/elasticsearch-ruby/blob/main/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb)
 for various client and server errors, as well as unsuccessful HTTP responses,
 making it possible to `rescue` specific exceptions with desired granularity.
 

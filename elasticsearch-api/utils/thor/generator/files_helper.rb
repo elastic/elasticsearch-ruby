@@ -44,7 +44,7 @@ module Elasticsearch
 
       def self.documentation_url(documentation_url)
         branch = `git rev-parse --abbrev-ref HEAD`
-        return documentation_url if branch == "master\n"
+        return documentation_url if branch == "main\n"
 
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         version = Elasticsearch::API::VERSION.match(regex)[0]
@@ -52,7 +52,7 @@ module Elasticsearch
         if version == '8.0'
           documentation_url
         else
-          documentation_url.gsub(/\/(current|master)\//, "/#{version}/")
+          documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
         end
       end
 

@@ -9,7 +9,7 @@ The `elasticsearch-api` library provides a Ruby implementation of
 the [Elasticsearch](http://elasticsearch.com) REST API.
 
 It does not provide an Elasticsearch client; see the
-[`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport) library.
+[`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport) library.
 
 The library is compatible with Ruby 1.9 and higher.
 
@@ -198,7 +198,7 @@ time rake test:unit
 time rake test:integration
 ```
 
-We run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/master/api-spec-testing#rest-api-yaml-test-runner).
+We run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/main/api-spec-testing#rest-api-yaml-test-runner).
 
 The `rest_api` needs the test files from Elasticsearch. You can run the rake task to download the test artifacts in the root folder of the project. This task needs a running cluster to determine which version and build hash of Elasticsearch to use and test against. `TEST_ES_SERVER=http://localhost:9200 rake elasticsearch:download_artifacts`. This will download the necessary files used for the integration tests to `./tmp`.
 

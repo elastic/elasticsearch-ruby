@@ -6,8 +6,8 @@ The `elasticsearch` library provides a Ruby client and API for [Elasticsearch](h
 
 This gem is a wrapper for two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport), which provides a low-level Ruby client for connecting to [Elastic](http://elasticsearch.com) services.
-* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api), which provides a Ruby API for the Elasticsearch RESTful API.
+* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport), which provides a low-level Ruby client for connecting to [Elastic](http://elasticsearch.com) services.
+* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api), which provides a Ruby API for the Elasticsearch RESTful API.
 
 Install the `elasticsearch` package and use the API directly:
 
@@ -127,11 +127,11 @@ Elasticsearch::Client.new(
 Please refer to the specific library documentation for details:
 
 * **Transport**:
-   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-transport/README.md)
+   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/main/elasticsearch-transport/README.md)
    [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport/file/README.markdown)
 
 * **API**:
-   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/master/elasticsearch-api/README.md)
+   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/main/elasticsearch-api/README.md)
    [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
 
 
