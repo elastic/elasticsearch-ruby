@@ -1,6 +1,6 @@
 # Rest API YAML Test Runner
 
-The specs in `elasticsearch-api` automatically run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in the `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
+The specs in `elasticsearch-api` automatically run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in the `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
 
 You can run the tests with Rake. The main task is `rake test:rest_api`. This task will evaluate the `TEST_SUITE` environment variable. It will run either the `free` or `platinum` tests suites depending on the value of `TEST_SUITE`. If you don't set this value, the task will run the `free` test suite by default. To run the `platinum` test suite use:
 ```
@@ -83,7 +83,7 @@ This file is where the action is executed, where we call the client with the met
 
 ## Enable Logging
 
-To enable logging, set the environment `QUIET` to false before running the tests. In CI, this is located in the [Dockerfile](https://github.com/elastic/elasticsearch-ruby/blob/master/.ci/Dockerfile). The environment variable is evaluated in the Rest YAML tests Helper file.
+To enable logging, set the environment `QUIET` to false before running the tests. In CI, this is located in the [Dockerfile](https://github.com/elastic/elasticsearch-ruby/blob/main/.ci/Dockerfile). The environment variable is evaluated in the Rest YAML tests Helper file.
 
 # Features
 

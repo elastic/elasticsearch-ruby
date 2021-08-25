@@ -2,14 +2,14 @@
 
 This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
-[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
-The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
+The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch)
 library is a wrapper for two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport),
+* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport),
   which provides a low-level Ruby client for connecting to an Elasticsearch cluster
-* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
+* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api),
   which provides a Ruby API for the Elasticsearch RESTful API
 
 ```ruby
@@ -32,15 +32,15 @@ client.search q: 'test'
 Both of these libraries are extensively documented.
 **Please read the [`elasticsearch-transport`](http://rubydoc.info/gems/elasticsearch-transport) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
 
-See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/master/docs/examples/README.md) for some practical examples.
+See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/README.md) for some practical examples.
 
 **For optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
 
 This repository contains these additional Ruby libraries:
 
-* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions), *deprecated*.
-* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
+* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-extensions), *deprecated*.
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-dsl),
   which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
 
 Please see their respective READMEs for information and documentation.
