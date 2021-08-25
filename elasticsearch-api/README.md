@@ -11,19 +11,9 @@ the [Elasticsearch](http://elasticsearch.com) REST API.
 It does not provide an Elasticsearch client; see the
 [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport) library.
 
-The library is compatible with Ruby 1.9 and higher.
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
-It is compatible with Elasticsearch's API versions from 0.90 till current, just use a release matching major version of Elasticsearch.
-
-| Ruby          |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
 
 ## Installation
 
