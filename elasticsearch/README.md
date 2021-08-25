@@ -41,19 +41,9 @@ Features overview:
 
 ## Compatibility
 
-The Elasticsearch client is compatible with currently maintained Ruby versions. See [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/). We don't provide support to versions which have reached their end of life.
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
-The client's API is compatible with Elasticsearch's API versions from 0.90 till current, just use a release matching major version of Elasticsearch.
-
-|  Client version | Elasticsearch version | Supported | Tests                                                                                                                                                                          |
-| :-------------: | :-------------------: | :-------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-|            0.90 |                  0.90 | :x:       |                                                                                                                                                                                 |
-|             1.x |                   1.x | :x:       |                                                                                                                                                                                 |
-|             2.x |                   2.x | :x:       |                                                                                                                                                                                 |
-|             5.x |                   5.x | :x:       |                                                                                                                                                                                 |
-|             6.x |                   6.x | :white_check_mark:       | [![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml)|
-|             7.x |                   7.x | :white_check_mark:       | [![7.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) |
-|          master |                master | :x:       | [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml)                                                                                                                                                                                |
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
 
 ## Installation
 
