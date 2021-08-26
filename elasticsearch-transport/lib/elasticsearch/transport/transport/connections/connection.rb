@@ -33,6 +33,7 @@ module Elasticsearch
           DEFAULT_RESURRECT_TIMEOUT = 60
 
           attr_reader :host, :connection, :options, :failures, :dead_since
+          attr_accessor :verified
 
           # @option arguments [Hash]   :host       Host information (example: `{host: 'localhost', port: 9200}`)
           # @option arguments [Object] :connection The transport-specific physical connection or "session"
@@ -42,6 +43,7 @@ module Elasticsearch
             @host       = arguments[:host].is_a?(Hash) ? Redacted.new(arguments[:host]) : arguments[:host]
             @connection = arguments[:connection]
             @options    = arguments[:options] || {}
+            @verified   = false
             @state_mutex = Mutex.new
 
             @options[:resurrect_timeout] ||= DEFAULT_RESURRECT_TIMEOUT
@@ -153,7 +155,6 @@ module Elasticsearch
             "<#{self.class.name} host: #{host} (#{dead? ? 'dead since ' + dead_since.to_s : 'alive'})>"
           end
         end
-
       end
     end
   end

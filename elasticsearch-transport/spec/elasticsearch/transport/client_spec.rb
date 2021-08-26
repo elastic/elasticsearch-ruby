@@ -1564,7 +1564,6 @@ describe Elasticsearch::Transport::Client do
       end
 
       context 'when request headers are specified' do
-
         let(:response) do
           client.perform_request('GET', '/', {}, nil, { 'Content-Type' => 'application/yaml' })
         end
@@ -1575,9 +1574,7 @@ describe Elasticsearch::Transport::Client do
       end
 
       describe 'selector' do
-
         context 'when the round-robin selector is used' do
-
           let(:nodes) do
             3.times.collect do
               client.perform_request('GET', '_nodes/_local').body['nodes'].to_a[0][1]['name']
@@ -1655,6 +1652,74 @@ describe Elasticsearch::Transport::Client do
           connections_after = response.body['nodes'].values.find { |n| n['name'] == node_names.first }['http']['total_opened']
           expect(connections_after).to be >= (connections_before)
         end
+      end
+    end
+  end
+
+  context 'CA Fingerprinting' do
+    context 'when setting a ca_fingerprint' do
+      let(:subject) { "/C=BE/O=Test/OU=Test/CN=Test" }
+
+      let(:certificate) do
+        OpenSSL::X509::Certificate.new.tap do |cert|
+          cert.subject = cert.issuer = OpenSSL::X509::Name.parse(subject)
+          cert.not_before = Time.now
+          cert.not_after = Time.now + 365 * 24 * 60 * 60
+          cert.public_key = OpenSSL::PKey::RSA.new(1024).public_key
+          cert.serial = 0x0
+          cert.version = 2
+        end
+      end
+
+      let(:client) do
+        Elasticsearch::Transport::Client.new(
+          host: 'https://elastic:changeme@localhost:9200',
+          ca_fingerprint: OpenSSL::Digest::SHA256.hexdigest(certificate.to_der)
+        )
+      end
+
+      it 'validates CA fingerprints on perform request' do
+        expect(client.transport.connections.connections.map(&:verified).uniq).to eq [false]
+        allow(client.transport).to receive(:perform_request) { 'Hello' }
+
+        server = double('server').as_null_object
+        allow(TCPSocket).to receive(:new) { server }
+        allow_any_instance_of(OpenSSL::SSL::SSLSocket).to receive(:connect) { nil }
+        allow_any_instance_of(OpenSSL::SSL::SSLSocket).to receive(:peer_cert_chain) { [certificate] }
+        response = client.perform_request('GET', '/')
+        expect(client.transport.connections.connections.map(&:verified).uniq).to eq [true]
+        expect(response).to eq 'Hello'
+      end
+    end
+
+    context 'when using an http host' do
+      let(:client) do
+        Elasticsearch::Transport::Client.new(
+          host: 'http://elastic:changeme@localhost:9200',
+          ca_fingerprint: 'test'
+        )
+      end
+
+      it 'raises an error' do
+        expect do
+          client.perform_request('GET', '/')
+        end.to raise_exception(Elasticsearch::Transport::Transport::Error)
+      end
+    end
+
+    context 'when not setting a ca_fingerprint' do
+      let(:client) do
+        Elasticsearch::Transport::Client.new(
+          host: 'http://elastic:changeme@localhost:9200'
+        )
+      end
+
+      it 'has unvalidated connections' do
+        allow(client).to receive(:validate_ca_fingerprints) { nil }
+        allow(client.transport).to receive(:perform_request) { nil }
+
+        client.perform_request('GET', '/')
+        expect(client).to_not have_received(:validate_ca_fingerprints)
       end
     end
   end
