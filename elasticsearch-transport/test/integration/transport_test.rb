@@ -21,6 +21,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
   context "Transport" do
     setup do
       @host, @port = ELASTICSEARCH_HOSTS.first.split(':')
+      @hosts = { hosts: [ { host: @host, port: @port } ] }
       begin; Object.send(:remove_const, :Patron);   rescue NameError; end
     end
 
@@ -28,11 +29,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
       require 'typhoeus'
       require 'typhoeus/adapters/faraday'
 
-      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-        :hosts => [ { host: @host, port: @port } ] do |f|
-          f.response :logger
-          f.adapter  :typhoeus
-        end
+      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new(@hosts) do |f|
+        f.response :logger
+        f.adapter  :typhoeus
+      end
 
       client = Elasticsearch::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
@@ -41,8 +41,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
     should "allow to customize the Faraday adapter to NetHttpPersistent" do
       require 'net/http/persistent'
 
-      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-                                                                       :hosts => [ { host: @host, port: @port } ] do |f|
+      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new(@hosts) do |f|
         f.response :logger
         f.adapter  :net_http_persistent
       end
@@ -52,13 +51,10 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
     end
 
     should "allow to define connection parameters and pass them" do
-      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-                    :hosts => [ { host: @host, port: @port } ],
-                    :options => { :transport_options => {
-                                    :params => { :format => 'yaml' }
-                                  }
-                                }
-
+      transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new(
+        hosts: [ { host: @host, port: @port } ],
+        options: { transport_options: { params: { :format => 'yaml' } } }
+      )
       client = Elasticsearch::Transport::Client.new transport: transport
       response = client.perform_request 'GET', ''
 
@@ -68,24 +64,20 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
     should "use the Curb client" do
       require 'curb'
       require 'elasticsearch/transport/transport/http/curb'
-
-      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-        :hosts => [ { host: @host, port: @port } ] do |curl|
-          curl.verbose = true
-        end
+      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new(@hosts) do |curl|
+        curl.verbose = true
+      end
 
       client = Elasticsearch::Transport::Client.new transport: transport
       client.perform_request 'GET', ''
-    end unless JRUBY
+    end unless jruby?
 
     should "deserialize JSON responses in the Curb client" do
       require 'curb'
       require 'elasticsearch/transport/transport/http/curb'
-
-      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
-        :hosts => [ { host: @host, port: @port } ] do |curl|
-          curl.verbose = true
-        end
+      transport = Elasticsearch::Transport::Transport::HTTP::Curb.new(@hosts) do |curl|
+        curl.verbose = true
+      end
 
       client = Elasticsearch::Transport::Client.new transport: transport
       response = client.perform_request 'GET', ''
@@ -93,6 +85,6 @@ class Elasticsearch::Transport::ClientIntegrationTest < Minitest::Test
       assert_respond_to(response.body, :to_hash)
       assert_not_nil response.body['name']
       assert_equal 'application/json', response.headers['content-type']
-    end unless JRUBY
+    end unless jruby?
   end
 end
