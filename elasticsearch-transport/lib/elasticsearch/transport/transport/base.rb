@@ -272,7 +272,6 @@ module Elasticsearch
           end
 
           params = params.clone
-
           ignore = Array(params.delete(:ignore)).compact.map { |s| s.to_i }
 
           begin
@@ -284,9 +283,7 @@ module Elasticsearch
             end
 
             url      = connection.full_url(path, params)
-
             response = block.call(connection, url)
-
             connection.healthy! if connection.failures > 0
 
             # Raise an exception so we can catch it for `retry_on_status`
@@ -336,14 +333,10 @@ module Elasticsearch
           duration = Time.now - start
 
           if response.status.to_i >= 300
-            __log_response    method, path, params, body, url, response, nil, 'N/A', duration
-            __trace  method, path, params, connection.connection.headers, body, url, response, nil, 'N/A', duration if tracer
-
+            __log_response(method, path, params, body, url, response, nil, 'N/A', duration)
+            __trace(method, path, params, connection_headers(connection), body, url, response, nil, 'N/A', duration) if tracer
             # Log the failure only when `ignore` doesn't match the response status
-            unless ignore.include?(response.status.to_i)
-              log_fatal "[#{response.status}] #{response.body}"
-            end
-
+            log_fatal "[#{response.status}] #{response.body}" unless ignore.include?(response.status.to_i)
             __raise_transport_error response unless ignore.include?(response.status.to_i)
           end
 
@@ -354,10 +347,8 @@ module Elasticsearch
             __log_response   method, path, params, body, url, response, json, took, duration
           end
 
-          __trace  method, path, params, connection.connection.headers, body, url, response, nil, 'N/A', duration if tracer
-
+          __trace(method, path, params, connection_headers(connection), body, url, response, nil, 'N/A', duration) if tracer
           warnings(response.headers['warning']) if response.headers&.[]('warning')
-
           Response.new response.status, json || response.body, response.headers
         ensure
           @last_request_at = Time.now
@@ -434,6 +425,14 @@ module Elasticsearch
 
         def warnings(warning)
           warn("warning: #{warning}")
+        end
+
+        def connection_headers(connection)
+          if defined?(Elasticsearch::Transport::Transport::HTTP::Manticore) && self.class == Elasticsearch::Transport::Transport::HTTP::Manticore
+            @request_options[:headers]
+          else
+            connection.connection.headers
+          end
         end
       end
     end
