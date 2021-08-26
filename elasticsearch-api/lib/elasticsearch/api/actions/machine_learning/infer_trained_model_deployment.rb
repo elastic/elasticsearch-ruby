@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Time] :timeout Controls the amount of time to wait for inference results.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The input text to be evaluated. (*Required*)
+        # @option arguments [Hash] :body The docs to apply inference on (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model-deployment.html
         #
