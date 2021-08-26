@@ -17,3 +17,8 @@
 -
   :file:        'cat.templates/10_basic.yml'
   :description: '*'
+
+# https://github.com/elastic/elasticsearch-ruby/issues/1469
+-
+  :file:        'indices.get_alias/10_basic.yml'
+  :description: 'Get alias against closed indices'
