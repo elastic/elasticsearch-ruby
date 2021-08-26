@@ -21,20 +21,30 @@ module Elasticsearch
       module Actions
         # Previews a transform.
         #
+        # @option arguments [String] :transform_id The id of the transform to preview.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The definition for the transform to preview (*Required*)
+        # @option arguments [Hash] :body The definition for the transform to preview
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
         #
         def preview_transform(arguments = {})
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-
           headers = arguments.delete(:headers) || {}
 
           arguments = arguments.clone
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = "_transform/_preview"
+          _transform_id = arguments.delete(:transform_id)
+
+          method = if arguments[:body]
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
+          path   = if _transform_id
+                     "_transform/#{Utils.__listify(_transform_id)}/_preview"
+                   else
+                     "_transform/_preview"
+                   end
           params = {}
 
           body = arguments[:body]
