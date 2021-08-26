@@ -62,7 +62,7 @@ module Elasticsearch
           def __build_connection(host, options={}, block=nil)
             client = ::Faraday.new(__full_url(host), options, &block)
             apply_headers(client, options)
-            Connections::Connection.new :host => host, :connection => client
+            Connections::Connection.new(host: host, connection: client)
           end
 
           # Returns an array of implementation specific connection errors.
