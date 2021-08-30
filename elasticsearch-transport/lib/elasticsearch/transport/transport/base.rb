@@ -379,17 +379,17 @@ module Elasticsearch
 
         USER_AGENT_STR = 'User-Agent'.freeze
         USER_AGENT_REGEX = /user\-?\_?agent/
+        ACCEPT_ENCODING = 'Accept-Encoding'.freeze
+        CONTENT_ENCODING = 'Content-Encoding'.freeze
         CONTENT_TYPE_STR = 'Content-Type'.freeze
         CONTENT_TYPE_REGEX = /content\-?\_?type/
         DEFAULT_CONTENT_TYPE = 'application/json'.freeze
         GZIP = 'gzip'.freeze
-        ACCEPT_ENCODING = 'Accept-Encoding'.freeze
         GZIP_FIRST_TWO_BYTES = '1f8b'.freeze
         HEX_STRING_DIRECTIVE = 'H*'.freeze
         RUBY_ENCODING = '1.9'.respond_to?(:force_encoding)
 
         def decompress_response(body)
-          return body unless use_compression?
           return body unless gzipped?(body)
 
           io = StringIO.new(body)
@@ -413,7 +413,10 @@ module Elasticsearch
           headers = options[:headers] || {}
           headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
           headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header(client)
-          client.headers[ACCEPT_ENCODING] = GZIP if use_compression?
+          if use_compression?
+            client.headers[ACCEPT_ENCODING] = GZIP
+            client.headers[CONTENT_ENCODING] = GZIP
+          end
           client.headers.merge!(headers)
         end
 
