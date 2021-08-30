@@ -19,29 +19,31 @@ module Elasticsearch
   module Transport
     module Transport
       module HTTP
-
         # Alternative HTTP transport implementation, using the [_Curb_](https://rubygems.org/gems/curb) client.
         #
         # @see Transport::Base
         #
         class Curb
           include Base
-
           # Performs the request by invoking {Transport::Base#perform_request} with a block.
           #
           # @return [Response]
           # @see    Transport::Base#perform_request
           #
           def perform_request(method, path, params={}, body=nil, headers=nil, opts={})
-            super do |connection, url|
+            super do |connection, _url|
               connection.connection.url = connection.full_url(path, params)
+              body = body ? __convert_to_json(body) : nil
+              body, headers = compress_request(body, headers)
 
               case method
               when 'HEAD'
                 connection.connection.set :nobody, true
               when 'GET', 'POST', 'PUT', 'DELETE'
                 connection.connection.set :nobody, false
-                connection.connection.put_data = __convert_to_json(body) if body
+
+                connection.connection.put_data = body if body
+
                 if headers
                   if connection.connection.headers
                     connection.connection.headers.merge!(headers)
