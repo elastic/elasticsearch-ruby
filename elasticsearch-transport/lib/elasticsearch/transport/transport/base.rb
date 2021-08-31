@@ -234,7 +234,7 @@ module Elasticsearch
         # @api private
         #
         def __convert_to_json(o=nil, options={})
-          o = o.is_a?(String) ? o : serializer.dump(o, options)
+          o.is_a?(String) ? o : serializer.dump(o, options)
         end
 
         # Returns a full URL based on information from host
@@ -293,12 +293,6 @@ module Elasticsearch
 
             if connection.connection.respond_to?(:params) && connection.connection.params.respond_to?(:to_hash)
               params = connection.connection.params.merge(params.to_hash)
-            end
-
-            if body && body.is_a?(String) && gzipped?(body)
-              connection.connection.headers[CONTENT_ENCODING] = GZIP
-            else
-              connection.connection.headers.delete(CONTENT_ENCODING)
             end
 
             url      = connection.full_url(path, params)
@@ -394,6 +388,25 @@ module Elasticsearch
         GZIP_FIRST_TWO_BYTES = '1f8b'.freeze
         HEX_STRING_DIRECTIVE = 'H*'.freeze
         RUBY_ENCODING = '1.9'.respond_to?(:force_encoding)
+
+        def compress_request(body, headers)
+          if body
+            headers ||= {}
+
+            if gzipped?(body)
+              headers[CONTENT_ENCODING] = GZIP
+            elsif use_compression?
+              headers[CONTENT_ENCODING] = GZIP
+              gzip = Zlib::GzipWriter.new(StringIO.new)
+              gzip << body
+              body = gzip.close.string
+            else
+              headers.delete(CONTENT_ENCODING)
+            end
+          end
+
+          [body, headers]
+        end
 
         def decompress_response(body)
           return body unless gzipped?(body)

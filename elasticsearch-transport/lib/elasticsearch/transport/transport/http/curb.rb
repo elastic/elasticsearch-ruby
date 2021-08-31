@@ -33,8 +33,10 @@ module Elasticsearch
           # @see    Transport::Base#perform_request
           #
           def perform_request(method, path, params={}, body=nil, headers=nil, opts={})
-            super do |connection, url|
+            super do |connection, _url|
               connection.connection.url = connection.full_url(path, params)
+              body = body ? __convert_to_json(body) : nil
+              body, headers = compress_request(body, headers)
 
               case method
                 when 'HEAD'
@@ -42,7 +44,7 @@ module Elasticsearch
                 when 'GET', 'POST', 'PUT', 'DELETE'
                   connection.connection.set :nobody, false
 
-                  connection.connection.put_data = __convert_to_json(body) if body
+                  connection.connection.put_data = body if body
 
                   if headers
                     if connection.connection.headers
