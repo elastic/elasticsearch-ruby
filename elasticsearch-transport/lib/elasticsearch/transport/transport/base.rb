@@ -295,6 +295,12 @@ module Elasticsearch
               params = connection.connection.params.merge(params.to_hash)
             end
 
+            if body && body.is_a?(String) && gzipped?(body)
+              connection.connection.headers[CONTENT_ENCODING] = GZIP
+            else
+              connection.connection.headers.delete(CONTENT_ENCODING)
+            end
+
             url      = connection.full_url(path, params)
             response = block.call(connection, url)
             connection.healthy! if connection.failures > 0
