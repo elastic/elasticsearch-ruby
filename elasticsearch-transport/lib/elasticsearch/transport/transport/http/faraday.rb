@@ -61,8 +61,12 @@ module Elasticsearch
           #
           def __build_connection(host, options={}, block=nil)
             client = ::Faraday.new(__full_url(host), options, &block)
+            if host[:user]
+              auth = Base64.strict_encode64("#{host[:user]}:#{host[:password]}")
+              (options[:headers] ||= {}).merge!({'Authorization' => "Basic #{auth}"})
+            end
             apply_headers(client, options)
-            Connections::Connection.new :host => host, :connection => client
+            Connections::Connection.new(host: host, connection: client)
           end
 
           # Returns an array of implementation specific connection errors.

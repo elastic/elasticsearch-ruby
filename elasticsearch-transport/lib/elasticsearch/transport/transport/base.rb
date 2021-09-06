@@ -233,7 +233,6 @@ module Elasticsearch
         # @api private
         def __full_url(host)
           url  = "#{host[:protocol]}://"
-          url += "#{CGI.escape(host[:user])}:#{CGI.escape(host[:password])}@" if host[:user]
           url += host[:host]
           url += ":#{host[:port]}" if host[:port]
           url += host[:path] if host[:path]
