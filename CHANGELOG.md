@@ -1,3 +1,9 @@
+## 7.14.1
+
+### Client
+
+ - Fixes for Manticore Implementation: Addresses custom headers on initialization (https://github.com/elastic/elasticsearch-ruby/commit/3732dd4f6de75365460fa99c1cd89668b107ef1c) and fixes tracing (https://github.com/elastic/elasticsearch-ruby/commit/3c48ebd9a783988d1f71bfb9940459832ccd63e4). Related to #1426 and #1428.
+
 ## 7.14.0
 
 ### Client
