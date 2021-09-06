@@ -2,6 +2,19 @@
 === 7.14 Release notes
 
 [discrete]
+[[release_notes_7141]]
+=== 7.14.1 Release notes
+
+[discrete]
+==== Client
+
+ - Fixes for Manticore Implementation: Addresses custom headers on initialization (https://github.com/elastic/elasticsearch-ruby/commit/3732dd4f6de75365460fa99c1cd89668b107ef1c[3732dd4]) and fixes tracing (https://github.com/elastic/elasticsearch-ruby/commit/3c48ebd9a783988d1f71bfb9940459832ccd63e4[3c48ebd]). Related to https://github.com/elastic/elasticsearch-ruby/issues/1426[#1426] and https://github.com/elastic/elasticsearch-ruby/issues/1428[#1428].
+
+[discrete]
+[[release_notes_7140]]
+=== 7.14.0 Release notes
+
+[discrete]
 ==== Client
 
 Added check that client is connected to an Elasticsearch cluster. If the client isn't connected to a supported Elasticsearch cluster the `UnsupportedProductError` exception will be raised.
