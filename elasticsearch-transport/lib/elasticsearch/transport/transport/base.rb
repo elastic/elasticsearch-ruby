@@ -403,6 +403,8 @@ module Elasticsearch
             else
               headers.delete(CONTENT_ENCODING)
             end
+          elsif headers
+            headers.delete(CONTENT_ENCODING)
           end
 
           [body, headers]
@@ -421,6 +423,7 @@ module Elasticsearch
         end
 
         def gzipped?(body)
+          return unless body
           body[0..1].unpack(HEX_STRING_DIRECTIVE)[0] == GZIP_FIRST_TWO_BYTES
         end
 

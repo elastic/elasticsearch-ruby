@@ -1417,10 +1417,6 @@ describe Elasticsearch::Transport::Client do
               expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
             end
 
-            it 'sets the Content-Encoding header' do
-              expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
-            end
-
             it 'preserves the other headers' do
               expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
@@ -1438,10 +1434,6 @@ describe Elasticsearch::Transport::Client do
 
             it 'sets the Accept-Encoding header' do
               expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
-            end
-
-            it 'sets the Content-Encoding header' do
-              expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
             end
 
             it 'preserves the other headers' do
@@ -1462,10 +1454,6 @@ describe Elasticsearch::Transport::Client do
               expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
             end
 
-            it 'sets the Content-Encoding header' do
-              expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
-            end
-
             it 'preserves the other headers' do
               expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
@@ -1484,10 +1472,6 @@ describe Elasticsearch::Transport::Client do
               expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
             end
 
-            it 'sets the Content-Encoding header' do
-              expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
-            end
-
             it 'preserves the other headers' do
               expect(client.transport.connections[0].connection.headers['User-Agent'])
             end
@@ -1504,10 +1488,6 @@ describe Elasticsearch::Transport::Client do
 
             it 'sets the Accept-Encoding header' do
               expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
-            end
-
-            it 'sets the Content-Encoding header' do
-              expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
             end
 
             it 'preserves the other headers' do
@@ -1530,10 +1510,6 @@ describe Elasticsearch::Transport::Client do
 
         it 'sets the Accept-Encoding header' do
           expect(client.transport.connections[0].connection.headers['Accept-Encoding']).to eq 'gzip'
-        end
-
-        it 'sets the Content-Encoding header' do
-          expect(client.transport.connections[0].connection.headers['Content-Encoding']).to eq 'gzip'
         end
 
         it 'preserves the other headers' do
