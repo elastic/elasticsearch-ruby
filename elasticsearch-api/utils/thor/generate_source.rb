@@ -226,6 +226,7 @@ module Elasticsearch
 
       def docs_helper(name, info)
         info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
+        info['type'] = 'Integer' if info['type'] == 'int' # Rename 'int' to 'Integer'
         tipo = info['type'] ? info['type'].capitalize : 'String'
         description = info['description'] ? info['description'].strip : '[TODO]'
         options = info['options'] ? "(options: #{info['options'].join(', ').strip})" : nil
