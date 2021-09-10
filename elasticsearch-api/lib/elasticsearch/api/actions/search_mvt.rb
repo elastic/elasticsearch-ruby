@@ -60,12 +60,7 @@ module Elasticsearch
 
         _y = arguments.delete(:y)
 
-        method = if arguments[:body]
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
+        method = Elasticsearch::API::HTTP_POST
         path   = "#{Utils.__listify(_index)}/_mvt/#{Utils.__listify(_field)}/#{Utils.__listify(_zoom)}/#{Utils.__listify(_x)}/#{Utils.__listify(_y)}"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
