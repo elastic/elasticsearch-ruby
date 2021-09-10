@@ -45,3 +45,6 @@
 -
   :file: 'transform/transforms_update.yml'
   :description: '*'
+-
+  :file: 'transform/preview_transforms.yml'
+  :description: 'Test preview transform by id'
