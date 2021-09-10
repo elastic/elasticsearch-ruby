@@ -27,6 +27,7 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to deploy.
+        # @option arguments [String] :wait_for The allocation status for which to wait (options: starting, started, fully_allocated)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trained-model-deployment.html
@@ -52,7 +53,8 @@ module Elasticsearch
         #
         # @since 6.2.0
         ParamsRegistry.register(:start_trained_model_deployment, [
-          :timeout
+          :timeout,
+          :wait_for
         ].freeze)
       end
     end
