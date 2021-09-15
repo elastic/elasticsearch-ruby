@@ -304,7 +304,7 @@ module Elasticsearch
                   fields.include?(key)
                 end.values if fields
 
-                to_set = Base64.encode64(values_to_encode.join(':'))
+                to_set = Base64.strict_encode64(values_to_encode.join(':'))
                 @test.cache_value(response_key, to_set)
               end
             end
