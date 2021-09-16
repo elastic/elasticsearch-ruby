@@ -38,6 +38,10 @@ echo -e "\033[1m>>>>> Run [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>
 
 repo=`pwd`
 
+if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
+  ELASTIC_API_VERSIONING=true
+fi
+
 # run the client tests
 if [[ $TEST_SUITE != "platinum" ]]; then
     docker run \
@@ -58,6 +62,7 @@ else
            --env "TEST_SUITE=${TEST_SUITE}" \
            --env "ELASTIC_USER=elastic" \
            --env "SINGLE_TEST=${SINGLE_TEST}" \
+           --env "ELASTIC_CLIENT_APIVERSIONING=${ELASTIC_API_VERSIONING:-false}" \
            --volume $repo:/usr/src/app \
            --name elasticsearch-ruby \
            --rm \
