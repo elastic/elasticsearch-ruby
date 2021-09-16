@@ -40,7 +40,7 @@ repo=`pwd`
 
 if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
     environment=($(cat <<-EOF
-    --env ELASTIC_API_VERSIONING=true
+    --env ELASTIC_CLIENT_APIVERSIONING=true
     --env ELASTIC_PASSWORD=${elastic_password}
     --env ELASTIC_USER=elastic
     --env QUIET=false
@@ -51,18 +51,33 @@ EOF
 fi
 
 # run the client tests
-if [[ $TEST_SUITE != "platinum" ]]; then
-    docker run \
-           --network="${network_name}" \
-           --env "TEST_ES_SERVER=${elasticsearch_url}" \
-           --env "TEST_SUITE=${TEST_SUITE}" \
-           "${environment[@]:-}" \
-           --volume $repo:/usr/src/app \
-           --volume=/tmp:/tmp \
-           --name elasticsearch-ruby \
-           --rm \
-           elastic/elasticsearch-ruby \
-           bundle exec rake elasticsearch:download_artifacts test:rest_api
+if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
+  docker run \
+         --network="${network_name}" \
+         --env "ELASTIC_CLIENT_APIVERSIONING=true" \
+         --env "ELASTIC_PASSWORD=${elastic_password}" \
+         --env "ELASTIC_USER=elastic" \
+         --env "QUIET=false" \
+         --env "STACK_VERSION=${STACK_VERSION}" \
+         --env "TEST_ES_SERVER=${elasticsearch_url}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
+         --volume $repo:/usr/src/app \
+         --volume=/tmp:/tmp \
+         --name elasticsearch-ruby \
+         --rm \
+         elastic/elasticsearch-ruby \
+         bundle exec rake elasticsearch:download_artifacts test:rest_api
+elif [[ $TEST_SUITE != "platinum" ]]; then
+  docker run \
+         --network="${network_name}" \
+         --env "TEST_ES_SERVER=${elasticsearch_url}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
+         --volume $repo:/usr/src/app \
+         --volume=/tmp:/tmp \
+         --name elasticsearch-ruby \
+         --rm \
+         elastic/elasticsearch-ruby \
+         bundle exec rake elasticsearch:download_artifacts test:rest_api
 else
     docker run \
            --network="${network_name}" \
