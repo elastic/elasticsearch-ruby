@@ -16,7 +16,7 @@
 # under the License.
 
 require 'elasticsearch/version'
-require 'elasticsearch/transport'
+require 'elastic/transport'
 require 'elasticsearch/api'
 
 module Elasticsearch
@@ -48,7 +48,7 @@ module Elasticsearch
           arguments[:port]
         )
       end
-      @transport = Elasticsearch::Transport::Client.new(arguments, &block)
+      @transport = Elastic::Transport::Client.new(arguments, &block)
     end
 
     def method_missing(name, *args, &block)
