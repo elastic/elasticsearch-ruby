@@ -72,7 +72,7 @@ namespace :unified_release do
     end
 
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
-    gemspec_regexp = Regexp.new(/('elasticsearch-transport'|'elasticsearch-api'),\s+'([0-9.]+)'/)
+    gemspec_regexp = Regexp.new(/('elasticsearch-api'),\s+'([0-9.]+)'/)
 
     files.flatten.each do |file|
       content = File.read(file)
