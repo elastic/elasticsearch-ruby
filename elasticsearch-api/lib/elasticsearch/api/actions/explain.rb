@@ -43,7 +43,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-explain.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/search-explain.html
       #
       def explain(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -65,11 +65,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index && _type && _id
-                 "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_explain"
-               else
-                 "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
-               end
+        path   = if _index && _type && _id
+                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_explain"
+                 else
+                   "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]

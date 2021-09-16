@@ -24,7 +24,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/render-search-template-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/render-search-template-api.html
       #
       def render_search_template(arguments = {})
         headers = arguments.delete(:headers) || {}
@@ -39,11 +39,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _id
-                 "_render/template/#{Utils.__listify(_id)}"
-               else
-                 "_render/template"
-               end
+        path   = if _id
+                   "_render/template/#{Utils.__listify(_id)}"
+                 else
+                   "_render/template"
+                 end
         params = {}
 
         body = arguments[:body]

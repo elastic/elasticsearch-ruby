@@ -30,14 +30,14 @@ module Elasticsearch
       # @option arguments [Integer] :x X coordinate for the vector tile to search
       # @option arguments [Integer] :y Y coordinate for the vector tile to search
       # @option arguments [Boolean] :exact_bounds If false, the meta layer's feature is the bounding box of the tile. If true, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation.
-      # @option arguments [Number] :extent Size, in pixels, of a side of the vector tile.
-      # @option arguments [Number] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
+      # @option arguments [Integer] :extent Size, in pixels, of a side of the vector tile.
+      # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
       # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point)
-      # @option arguments [Number] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
+      # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Search request body.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/search-vector-tile-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/search-vector-tile-api.html
       #
       def search_mvt(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -60,12 +60,7 @@ module Elasticsearch
 
         _y = arguments.delete(:y)
 
-        method = if arguments[:body]
-                   Elasticsearch::API::HTTP_POST
-                 else
-                   Elasticsearch::API::HTTP_GET
-                 end
-
+        method = Elasticsearch::API::HTTP_POST
         path   = "#{Utils.__listify(_index)}/_mvt/#{Utils.__listify(_field)}/#{Utils.__listify(_zoom)}/#{Utils.__listify(_x)}/#{Utils.__listify(_y)}"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 

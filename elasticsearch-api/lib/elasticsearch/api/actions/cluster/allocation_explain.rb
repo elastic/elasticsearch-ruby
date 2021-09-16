@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The index, shard, and primary flag to explain. Empty means 'explain a randomly-chosen unassigned shard'
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cluster-allocation-explain.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/cluster-allocation-explain.html
         #
         def allocation_explain(arguments = {})
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_cluster/allocation/explain"
+          path   = "_cluster/allocation/explain"
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]
