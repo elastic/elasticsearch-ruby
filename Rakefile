@@ -39,6 +39,10 @@ def admin_client
                         password = ENV['ELASTIC_PASSWORD']
                         user     = ENV['ELASTIC_USER'] || 'elastic'
                         url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                      elsif ENV['STACK_VERSION'] == '8.0.0-SNAPSHOT'
+                        password = ENV['ELASTIC_PASSWORD']
+                        user     = ENV['ELASTIC_USER'] || 'elastic'
+                        url      = "http://#{user}:#{password}@#{uri.host}:#{uri.port}"
                       else
                         url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
                       end
