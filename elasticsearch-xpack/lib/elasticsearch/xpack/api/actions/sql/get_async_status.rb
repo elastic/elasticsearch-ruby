@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [String] :id The async search ID
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-async-sql-search-status-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/get-async-sql-search-status-api.html
           #
           def get_async_status(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

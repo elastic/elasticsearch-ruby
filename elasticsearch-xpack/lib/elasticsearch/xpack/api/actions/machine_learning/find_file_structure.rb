@@ -26,8 +26,8 @@ module Elasticsearch
           # to fix any issues, but experimental features are not subject to the
           # support SLA of official GA features.
           #
-          # @option arguments [Int] :lines_to_sample How many lines of the file should be included in the analysis
-          # @option arguments [Int] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
+          # @option arguments [Integer] :lines_to_sample How many lines of the file should be included in the analysis
+          # @option arguments [Integer] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
           # @option arguments [Time] :timeout Timeout after which the analysis will be aborted
           # @option arguments [String] :charset Optional parameter to specify the character set of the file
           # @option arguments [String] :format Optional parameter to specify the high level file format (options: ndjson, xml, delimited, semi_structured_text)
@@ -48,7 +48,7 @@ module Elasticsearch
           # Deprecated since version 7.12.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/find-structure.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/find-structure.html
           #
           def find_file_structure(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

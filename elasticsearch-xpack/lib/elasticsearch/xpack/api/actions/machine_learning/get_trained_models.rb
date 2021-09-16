@@ -27,13 +27,13 @@ module Elasticsearch
           # @option arguments [String] :include A comma-separate list of fields to optionally include. Valid options are 'definition' and 'total_feature_importance'. Default is none.
           # @option arguments [Boolean] :include_model_definition Should the full model definition be included in the results. These definitions can be large. So be cautious when including them. Defaults to false. *Deprecated*
           # @option arguments [Boolean] :decompress_definition Should the model definition be decompressed into valid JSON or returned in a custom compressed format. Defaults to true.
-          # @option arguments [Int] :from skips a number of trained models
-          # @option arguments [Int] :size specifies a max number of trained models to get
+          # @option arguments [Integer] :from skips a number of trained models
+          # @option arguments [Integer] :size specifies a max number of trained models to get
           # @option arguments [List] :tags A comma-separated list of tags that the model must have.
           # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on model PUT
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-trained-models.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/get-trained-models.html
           #
           def get_trained_models(arguments = {})
             headers = arguments.delete(:headers) || {}

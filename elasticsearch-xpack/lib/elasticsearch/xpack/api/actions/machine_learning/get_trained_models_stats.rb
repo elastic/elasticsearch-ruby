@@ -24,11 +24,11 @@ module Elasticsearch
           #
           # @option arguments [String] :model_id The ID of the trained models stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-          # @option arguments [Int] :from skips a number of trained models
-          # @option arguments [Int] :size specifies a max number of trained models to get
+          # @option arguments [Integer] :from skips a number of trained models
+          # @option arguments [Integer] :size specifies a max number of trained models to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-trained-models-stats.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/get-trained-models-stats.html
           #
           def get_trained_models_stats(arguments = {})
             headers = arguments.delete(:headers) || {}

@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id Identifier for the anomaly detection job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of influencers
-          # @option arguments [Int] :size specifies a max number of influencers to get
+          # @option arguments [Integer] :from skips a number of influencers
+          # @option arguments [Integer] :size specifies a max number of influencers to get
           # @option arguments [String] :start start timestamp for the requested influencers
           # @option arguments [String] :end end timestamp for the requested influencers
           # @option arguments [Double] :influencer_score influencer score threshold for the requested influencers
@@ -34,7 +34,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Influencer selection criteria
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-influencer.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/ml-get-influencer.html
           #
           def get_influencers(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

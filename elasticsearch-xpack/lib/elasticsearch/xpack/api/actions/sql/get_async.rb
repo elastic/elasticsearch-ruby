@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Time] :wait_for_completion_timeout Duration to wait for complete results
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-async-sql-search-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/get-async-sql-search-api.html
           #
           def get_async(arguments = {})
             raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -42,7 +42,8 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_GET
             path   = "_sql/async/#{Elasticsearch::API::Utils.__listify(_id)}"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments,
+                                                                             ParamsRegistry.get(__method__)
 
             body = nil
             perform_request(method, path, params, body, headers).body

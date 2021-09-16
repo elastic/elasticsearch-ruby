@@ -23,12 +23,12 @@ module Elasticsearch
           # Retrieves configuration information for calendars.
           #
           # @option arguments [String] :calendar_id The ID of the calendar to fetch
-          # @option arguments [Int] :from skips a number of calendars
-          # @option arguments [Int] :size specifies a max number of calendars to get
+          # @option arguments [Integer] :from skips a number of calendars
+          # @option arguments [Integer] :size specifies a max number of calendars to get
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The from and size parameters optionally sent in the body
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-calendar.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/ml-get-calendar.html
           #
           def get_calendars(arguments = {})
             headers = arguments.delete(:headers) || {}
