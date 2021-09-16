@@ -29,9 +29,9 @@ module Elasticsearch
         # @option arguments [Long] :max_archive_version Specifies the maximum archive_version to be cleared from the archive.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/clear-repositories-metering-archive-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/clear-repositories-metering-archive-api.html
         #
-        def clear_metering_archive(arguments = {})
+        def clear_repositories_metering_archive(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
 
           raise ArgumentError,
