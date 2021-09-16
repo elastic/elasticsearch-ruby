@@ -295,12 +295,12 @@ RSpec::Matchers.define :match_error do |expected_error|
       message =~ /\[400\]/ ||
           actual_error.is_a?(ArgumentError)
     when 'unauthorized'
-      actual_error.is_a?(Elasticsearch::Transport::Transport::Errors::Unauthorized)
+      actual_error.is_a?(Elastic::Transport::Transport::Errors::Unauthorized)
     when 'forbidden'
-      actual_error.is_a?(Elasticsearch::Transport::Transport::Errors::Forbidden)
+      actual_error.is_a?(Elastic::Transport::Transport::Errors::Forbidden)
     when /error parsing field/
       message =~ /\[400\]/ ||
-        actual_error.is_a?(Elasticsearch::Transport::Transport::Errors::BadRequest)
+        actual_error.is_a?(Elastic::Transport::Transport::Errors::BadRequest)
     else
       message =~ /#{expected_error}/
     end
