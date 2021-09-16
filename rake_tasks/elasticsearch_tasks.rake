@@ -37,7 +37,7 @@ namespace :elasticsearch do
           ready = true
           break
         end
-      rescue Elasticsearch::Transport::Transport::Errors::RequestTimeout => e
+      rescue Elastic::Transport::Transport::Errors::RequestTimeout => e
         puts "Couldn't confirm green status.\n#{e.inspect}."
       rescue Faraday::ConnectionFailed => e
         puts "Couldn't connect to Elasticsearch.\n#{e.inspect}."
