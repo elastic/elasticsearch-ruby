@@ -125,7 +125,7 @@ module Elasticsearch
             begin
               action.execute(client)
               true
-            rescue Elasticsearch::Transport::Transport::Errors::ServiceUnavailable => e
+            rescue Elastic::Transport::Transport::Errors::ServiceUnavailable => e
               # The action sometimes gets the cluster in a recovering state, so we
               # retry a few times and then raise an exception if it's still
               # happening
@@ -403,7 +403,7 @@ module Elasticsearch
             begin
               response = client.perform_request('DELETE', "_snapshot/#{repository}", ignore: [500, 404])
               client.snapshot.delete_repository(repository: repository, ignore: 404)
-            rescue Elasticsearch::Transport::Transport::Errors::InternalServerError => e
+            rescue Elastic::Transport::Transport::Errors::InternalServerError => e
               regexp = /indices that use the repository: \[docs\/([a-zA-Z0-9]+)/
               raise e unless response.body['error']['root_cause'].first['reason'].match(regexp)
 
