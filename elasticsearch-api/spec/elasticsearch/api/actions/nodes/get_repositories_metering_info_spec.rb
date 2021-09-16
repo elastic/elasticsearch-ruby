@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.nodes#get_metering_info' do
+describe 'client.nodes#get_repositories_metering_info' do
   let(:expected_args) do
     [
       'GET',
@@ -29,7 +29,7 @@ describe 'client.nodes#get_metering_info' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.get_metering_info(node_id: 'foo', max_archive_version: 'bar')).to eq({})
+    expect(client_double.nodes.get_repositories_metering_info(node_id: 'foo', max_archive_version: 'bar')).to eq({})
   end
 
   let(:client) do
@@ -38,7 +38,7 @@ describe 'client.nodes#get_metering_info' do
 
   it 'raises an error if no node_id is provided' do
     expect do
-      client.nodes.get_metering_info
+      client.nodes.get_repositories_metering_info
     end.to raise_exception(ArgumentError)
   end
 end
