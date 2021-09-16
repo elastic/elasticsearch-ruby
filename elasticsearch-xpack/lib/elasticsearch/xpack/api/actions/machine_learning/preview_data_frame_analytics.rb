@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The data frame analytics config to preview
           #
-          # @see http://www.elastic.co/guide/en/elasticsearch/reference/7.x/preview-dfanalytics.html
+          # @see http://www.elastic.co/guide/en/elasticsearch/reference/7.15/preview-dfanalytics.html
           #
           def preview_data_frame_analytics(arguments = {})
             headers = arguments.delete(:headers) || {}
@@ -41,11 +41,11 @@ module Elasticsearch
                        Elasticsearch::API::HTTP_GET
                      end
 
-            path = if _id
-                     "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_preview"
-                   else
-                     "_ml/data_frame/analytics/_preview"
-                   end
+            path   = if _id
+                       "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_preview"
+                     else
+                       "_ml/data_frame/analytics/_preview"
+                     end
             params = {}
 
             body = arguments[:body]

@@ -24,13 +24,13 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The name of the job
           # @option arguments [Long] :category_id The identifier of the category definition of interest
-          # @option arguments [Int] :from skips a number of categories
-          # @option arguments [Int] :size specifies a max number of categories to get
+          # @option arguments [Integer] :from skips a number of categories
+          # @option arguments [Integer] :size specifies a max number of categories to get
           # @option arguments [String] :partition_field_value Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Category selection details if not provided in URI
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-category.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/ml-get-category.html
           #
           def get_categories(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

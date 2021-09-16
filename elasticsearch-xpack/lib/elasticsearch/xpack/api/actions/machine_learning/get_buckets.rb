@@ -26,8 +26,8 @@ module Elasticsearch
           # @option arguments [String] :timestamp The timestamp of the desired single bucket result
           # @option arguments [Boolean] :expand Include anomaly records
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of buckets
-          # @option arguments [Int] :size specifies a max number of buckets to get
+          # @option arguments [Integer] :from skips a number of buckets
+          # @option arguments [Integer] :size specifies a max number of buckets to get
           # @option arguments [String] :start Start time filter for buckets
           # @option arguments [String] :end End time filter for buckets
           # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets
@@ -36,7 +36,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Bucket selection details if not provided in URI
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-bucket.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/ml-get-bucket.html
           #
           def get_buckets(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]

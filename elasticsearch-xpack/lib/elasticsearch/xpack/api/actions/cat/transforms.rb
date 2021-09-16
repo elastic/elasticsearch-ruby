@@ -23,8 +23,8 @@ module Elasticsearch
           # Gets configuration and usage information about transforms.
           #
           # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
-          # @option arguments [Int] :from skips a number of transform configs, defaults to 0
-          # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
+          # @option arguments [Integer] :from skips a number of transform configs, defaults to 0
+          # @option arguments [Integer] :size specifies a max number of transforms to get, defaults to 100
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
           # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
           # @option arguments [List] :h Comma-separated list of column names to display
@@ -34,7 +34,7 @@ module Elasticsearch
           # @option arguments [Boolean] :v Verbose mode. Display column headers
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/cat-transforms.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/cat-transforms.html
           #
           def transforms(arguments = {})
             headers = arguments.delete(:headers) || {}

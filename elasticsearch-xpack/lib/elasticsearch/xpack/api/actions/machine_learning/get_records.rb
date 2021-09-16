@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The ID of the job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of records
-          # @option arguments [Int] :size specifies a max number of records to get
+          # @option arguments [Integer] :from skips a number of records
+          # @option arguments [Integer] :size specifies a max number of records to get
           # @option arguments [String] :start Start time filter for records
           # @option arguments [String] :end End time filter for records
           # @option arguments [Double] :record_score Returns records with anomaly scores greater or equal than this value
@@ -34,7 +34,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body Record selection criteria
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-record.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.15/ml-get-record.html
           #
           def get_records(arguments = {})
             raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
