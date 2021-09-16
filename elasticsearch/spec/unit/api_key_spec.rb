@@ -76,9 +76,9 @@ describe Elasticsearch::Client do
       let(:adapter_code) { "nh=#{defined?(Net::HTTP::VERSION) ? Net::HTTP::VERSION : Net::HTTP::HTTPVersion}" }
       let(:meta_header) do
         if jruby?
-          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elastic::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
         else
-          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
+          "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elastic::Transport::VERSION},fd=#{Faraday::VERSION},#{adapter_code}"
         end
       end
 

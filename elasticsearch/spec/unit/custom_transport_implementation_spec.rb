@@ -19,7 +19,7 @@ require 'spec_helper'
 describe Elasticsearch::Client do
   context 'when using custom transport implementation' do
     class MyTransport
-      include Elasticsearch::Transport::Transport::Base
+      include Elastic::Transport::Transport::Base
       def initialize(args); end
     end
     let(:client) { Elasticsearch::Client.new(transport_class: MyTransport) }
@@ -30,9 +30,9 @@ describe Elasticsearch::Client do
 
     let(:meta_header) do
       if jruby?
-        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
+        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elastic::Transport::VERSION},jv=#{ENV_JAVA['java.version']},jr=#{JRUBY_VERSION}"
       else
-        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elasticsearch::Transport::VERSION}"
+        "es=#{meta_version},rb=#{RUBY_VERSION},t=#{Elastic::Transport::VERSION}"
       end
     end
 

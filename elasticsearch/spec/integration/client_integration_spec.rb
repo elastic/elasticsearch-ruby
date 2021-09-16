@@ -26,7 +26,9 @@ context 'Elasticsearch client' do
   let(:client) do
     Elasticsearch::Client.new(
       host: ELASTICSEARCH_URL,
-      logger: logger
+      logger: logger,
+      user: 'elastic',
+      password: 'changeme'
     )
   end
 
