@@ -44,6 +44,15 @@ environment=($(cat <<-END
   --env cluster.deprecation_indexing.enabled=false
 END
 ))
+
+if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
+    environment+=($(cat <<-EOF
+    --env ELASTIC_PASSWORD=$elastic_password
+    --env xpack.security.enabled=true
+EOF
+))
+fi
+
 if [[ "$TEST_SUITE" == "platinum" ]]; then
   environment+=($(cat <<-END
     --env ELASTIC_PASSWORD=$elastic_password
