@@ -43,6 +43,7 @@ if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
     --env ELASTIC_API_VERSIONING=true
     --env ELASTIC_PASSWORD=${elastic_password}
     --env ELASTIC_USER=elastic
+    --env QUIET=false
     --env STACK_VERSION=${STACK_VERSION}
 EOF
 ))
@@ -55,7 +56,7 @@ if [[ $TEST_SUITE != "platinum" ]]; then
            --network="${network_name}" \
            --env "TEST_ES_SERVER=${elasticsearch_url}" \
            --env "TEST_SUITE=${TEST_SUITE}" \
-           "${environment[@]}" \
+           "${environment[@]:-}" \
            --volume $repo:/usr/src/app \
            --volume=/tmp:/tmp \
            --name elasticsearch-ruby \

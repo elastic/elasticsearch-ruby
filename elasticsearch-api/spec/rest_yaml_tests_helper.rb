@@ -37,14 +37,42 @@ end
 if defined?(TEST_HOST) && defined?(TEST_PORT)
   URL = "http://#{TEST_HOST}:#{TEST_PORT}"
 
-  ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+  if ENV['STACK_VERSION'] == '8.0.0-SNAPSHOT'
+    user = 'elastic'.freeze
+    password = 'changeme'.freeze
+    ADMIN_CLIENT = Elasticsearch::Client.new(
+      host: URL,
+      transport_options: TRANSPORT_OPTIONS,
+      user: user,
+      password: password
+    )
 
-  if ENV['QUIET'] == 'true'
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+    if ENV['QUIET'] == 'true'
+      DEFAULT_CLIENT = Elasticsearch::Client.new(
+        host: URL,
+        transport_options: TRANSPORT_OPTIONS,
+        user: user,
+        password: password
+      )
+    else
+      DEFAULT_CLIENT = Elasticsearch::Client.new(
+        host: URL,
+        transport_options: TRANSPORT_OPTIONS,
+        user: user,
+        password: password,
+        tracer: Logger.new($stdout)
+      )
+    end
   else
-    DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
-                                               transport_options: TRANSPORT_OPTIONS,
-                                               tracer: Logger.new($stdout))
+    ADMIN_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+
+    if ENV['QUIET'] == 'true'
+      DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL, transport_options: TRANSPORT_OPTIONS)
+    else
+      DEFAULT_CLIENT = Elasticsearch::Client.new(host: URL,
+                                                 transport_options: TRANSPORT_OPTIONS,
+                                                 tracer: Logger.new($stdout))
+    end
   end
 end
 
