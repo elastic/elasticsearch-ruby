@@ -1,3 +1,21 @@
+## 7.15.0
+
+### Client
+
+We've tested and added documentation on best practices for leveraging the client in a Function-as-a-Service (FaaS) environment to the [official docs](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-faas).
+
+### API
+
+- New experimental endpoints: `indices.disk_usage`. `indices.field_usage_stats`, `nodes.clear_repositories_metering_archive`, `get_repositories_metering_info`, [`search_mvt`](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html)
+- The `index` parameter is now required for `open_point_in_time`.
+- The `index_metric` parameter in `nodes.stats` adds the `shards` option.
+
+### X-Pack
+
+- New parameters for `ml.put_job`: `ignore_unavailable`, `allow_no_indices`, `ignore_throttled`, `expand_wildcards`.
+- New endpoint: `security.query_api_keys`. [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/7.15/security-api-query-api-key.html)
+
+
 ## 7.14.1
 
 ### Client
