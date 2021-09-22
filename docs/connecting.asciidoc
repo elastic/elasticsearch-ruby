@@ -214,3 +214,8 @@ def lambda_handler(event:, context:)
   )
 end
 ------------------------------------
+
+Resources used to assess these recommendations:
+
+* https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations[GCP Cloud Functions: Tips & Tricks]
+* https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html[Best practices for working with AWS Lambda functions]
