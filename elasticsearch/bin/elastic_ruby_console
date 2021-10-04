@@ -1,12 +1,10 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
-$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-transport/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-dsl/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
 
 require 'elasticsearch'
-require 'elasticsearch-transport'
 require 'elasticsearch-api'
 require 'elasticsearch-dsl'
 
