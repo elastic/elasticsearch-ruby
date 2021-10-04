@@ -227,7 +227,7 @@ module Elasticsearch
           ssl = OpenSSL::SSL::SSLSocket.new(socket, ctx)
           ssl.connect
           cert_store = ssl.peer_cert_chain
-          matching_certs = cert_store.chain.select do |cert|
+          matching_certs = cert_store.select do |cert|
             OpenSSL::Digest::SHA256.hexdigest(cert.to_der).upcase == @ca_fingerprint.upcase
           end
           if matching_certs.empty?
