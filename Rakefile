@@ -79,6 +79,11 @@ task :default do
   system 'rake --tasks'
 end
 
+desc 'Run Ruby console with the Elasticsearch client libraries loaded'
+task :console do
+  system './elasticsearch/bin/elastic_ruby_console'
+end
+
 desc 'Display information about subprojects'
 task :subprojects do
   puts '-' * 80
