@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Licensed to Elasticsearch B.V. under one or more contributor
 # license agreements. See the NOTICE file distributed with
 # this work for additional information regarding copyright
@@ -20,6 +22,6 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in elasticsearch.gemspec
 gemspec
 
-if File.exist? File.expand_path('../../elasticsearch-api/elasticsearch-api.gemspec', __FILE__)
-  gem 'elasticsearch-api', path: File.expand_path('../../elasticsearch-api', __FILE__), require: false
+if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
+  gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
 end
