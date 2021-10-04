@@ -1658,6 +1658,11 @@ describe Elasticsearch::Transport::Client do
 
   context 'CA Fingerprinting' do
     context 'when setting a ca_fingerprint' do
+      after do
+        File.delete('./certificate.crt')
+        File.delete('./certificate.key')
+      end
+
       let(:certificate) do
         system(
           'openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj "/C=BE/O=Test/CN=Test"' \
