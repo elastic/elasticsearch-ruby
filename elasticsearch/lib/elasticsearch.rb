@@ -20,7 +20,7 @@ require 'elastic/transport'
 require 'elasticsearch/api'
 
 module Elasticsearch
-  # This is the stateful Elasticsearch::Client, using an instance of elasticsearch-transport.
+  # This is the stateful Elasticsearch::Client, using an instance of elastic-transport.
   class Client
     include Elasticsearch::API
     # The default port to use if connecting using a Cloud ID.
@@ -126,6 +126,6 @@ module Elastic
     Elasticsearch::VERSION
   end
 
-  # Constant for elasticsearch-transport meta-header
+  # Constant for elastic-transport meta-header
   ELASTICSEARCH_SERVICE_VERSION = [:es, client_meta_version].freeze
 end
