@@ -28,7 +28,7 @@ namespace :unified_release do
                  args[:version]
                end
 
-    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version) unless @version == Elasticsearch::VERSION
+    Rake::Task['unified_release:bump'].invoke(@version) unless @version == Elasticsearch::VERSION
 
     build_gems(args[:output_dir])
     create_zip_file(args[:output_dir])
@@ -72,22 +72,22 @@ namespace :unified_release do
     end
 
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
-    gemspec_regexp = Regexp.new(/('elasticsearch-api'),\s+'([0-9.]+)'/)
+    gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9.]+)'/)
 
     files.flatten.each do |file|
       content = File.read(file)
-      regexp = file.match?('gemspec') ? gemspec_regexp : version_regexp
-
-      if (match = content.match(regexp))
-        old_version = match[2]
-        content.gsub!(old_version, args[:version])
-        puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
-        File.open(file, 'w') { |f| f.puts content }
+      if file.match?('gemspec')
+        match = content.match(gemspec_regexp)
+        content.gsub!(match[0], "'elasticsearch-api', '#{args[:version]}'")
       else
-        puts "- [#{file}]".ljust(longest_line+20) + " -"
+        match = content.match(version_regexp)
+        old_version = match[1]
+        content.gsub!(old_version, "'#{args[:version]}'")
       end
-    rescue StandardError => e
-      abort "[!!!] #{e.class} : #{e.message}"
+      puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
+      File.open(file, 'w') { |f| f.puts content }
     end
+  rescue StandardError => e
+    abort "[!!!] #{e.class} : #{e.message}"
   end
 end
