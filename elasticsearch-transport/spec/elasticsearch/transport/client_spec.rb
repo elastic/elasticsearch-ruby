@@ -1658,17 +1658,13 @@ describe Elasticsearch::Transport::Client do
 
   context 'CA Fingerprinting' do
     context 'when setting a ca_fingerprint' do
-      let(:subject) { "/C=BE/O=Test/OU=Test/CN=Test" }
-
       let(:certificate) do
-        OpenSSL::X509::Certificate.new.tap do |cert|
-          cert.subject = cert.issuer = OpenSSL::X509::Name.parse(subject)
-          cert.not_before = Time.now
-          cert.not_after = Time.now + 365 * 24 * 60 * 60
-          cert.public_key = OpenSSL::PKey::RSA.new(1024).public_key
-          cert.serial = 0x0
-          cert.version = 2
-        end
+        system(
+          'openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj "/C=BE/O=Test/CN=Test"' \
+          ' -keyout certificate.key -out certificate.crt',
+          err: File::NULL
+        )
+        OpenSSL::X509::Certificate.new File.read('./certificate.crt')
       end
 
       let(:client) do
@@ -1684,8 +1680,11 @@ describe Elasticsearch::Transport::Client do
 
         server = double('server').as_null_object
         allow(TCPSocket).to receive(:new) { server }
-        allow_any_instance_of(OpenSSL::SSL::SSLSocket).to receive(:connect) { nil }
-        allow_any_instance_of(OpenSSL::SSL::SSLSocket).to receive(:peer_cert_chain) { [certificate] }
+        socket = double('socket')
+        allow(OpenSSL::SSL::SSLSocket).to receive(:new) { socket }
+        allow(socket).to receive(:connect) { nil }
+        allow(socket).to receive(:peer_cert_chain) { [certificate] }
+
         response = client.perform_request('GET', '/')
         expect(client.transport.connections.connections.map(&:verified).uniq).to eq [true]
         expect(response).to eq 'Hello'
