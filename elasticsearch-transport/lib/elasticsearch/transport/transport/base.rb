@@ -348,7 +348,7 @@ module Elasticsearch
           end
 
           __trace(method, path, params, connection_headers(connection), body, url, response, nil, 'N/A', duration) if tracer
-          warnings(response.headers['warning']) if response.headers&.[]('warning')
+          log_warn(response.headers['warning']) if response.headers&.[]('warning')
           Response.new response.status, json || response.body, response.headers
         ensure
           @last_request_at = Time.now
@@ -421,10 +421,6 @@ module Elasticsearch
             end
             "elasticsearch-ruby/#{VERSION} (#{meta.join('; ')})"
           end
-        end
-
-        def warnings(warning)
-          warn("warning: #{warning}")
         end
 
         def connection_headers(connection)
