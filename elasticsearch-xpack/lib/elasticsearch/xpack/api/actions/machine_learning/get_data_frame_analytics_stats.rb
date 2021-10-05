@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :id The ID of the data frame analytics stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-          # @option arguments [Int] :from skips a number of analytics
-          # @option arguments [Int] :size specifies a max number of analytics to get
+          # @option arguments [Integer] :from skips a number of analytics
+          # @option arguments [Integer] :size specifies a max number of analytics to get
           # @option arguments [Boolean] :verbose whether the stats response should be verbose
           # @option arguments [Hash] :headers Custom HTTP headers
           #

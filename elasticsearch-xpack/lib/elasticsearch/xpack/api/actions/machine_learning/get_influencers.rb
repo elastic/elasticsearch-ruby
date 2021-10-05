@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id Identifier for the anomaly detection job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of influencers
-          # @option arguments [Int] :size specifies a max number of influencers to get
+          # @option arguments [Integer] :from skips a number of influencers
+          # @option arguments [Integer] :size specifies a max number of influencers to get
           # @option arguments [String] :start start timestamp for the requested influencers
           # @option arguments [String] :end end timestamp for the requested influencers
           # @option arguments [Double] :influencer_score influencer score threshold for the requested influencers

@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The ID of the job
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of records
-          # @option arguments [Int] :size specifies a max number of records to get
+          # @option arguments [Integer] :from skips a number of records
+          # @option arguments [Integer] :size specifies a max number of records to get
           # @option arguments [String] :start Start time filter for records
           # @option arguments [String] :end End time filter for records
           # @option arguments [Double] :record_score Returns records with anomaly scores greater or equal than this value

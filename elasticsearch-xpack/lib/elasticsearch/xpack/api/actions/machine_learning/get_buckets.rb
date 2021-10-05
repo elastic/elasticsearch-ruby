@@ -26,8 +26,8 @@ module Elasticsearch
           # @option arguments [String] :timestamp The timestamp of the desired single bucket result
           # @option arguments [Boolean] :expand Include anomaly records
           # @option arguments [Boolean] :exclude_interim Exclude interim results
-          # @option arguments [Int] :from skips a number of buckets
-          # @option arguments [Int] :size specifies a max number of buckets to get
+          # @option arguments [Integer] :from skips a number of buckets
+          # @option arguments [Integer] :size specifies a max number of buckets to get
           # @option arguments [String] :start Start time filter for buckets
           # @option arguments [String] :end End time filter for buckets
           # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets

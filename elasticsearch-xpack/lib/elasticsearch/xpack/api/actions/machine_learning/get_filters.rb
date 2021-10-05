@@ -23,8 +23,8 @@ module Elasticsearch
           # Retrieves filters.
           #
           # @option arguments [String] :filter_id The ID of the filter to fetch
-          # @option arguments [Int] :from skips a number of filters
-          # @option arguments [Int] :size specifies a max number of filters to get
+          # @option arguments [Integer] :from skips a number of filters
+          # @option arguments [Integer] :size specifies a max number of filters to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-filter.html

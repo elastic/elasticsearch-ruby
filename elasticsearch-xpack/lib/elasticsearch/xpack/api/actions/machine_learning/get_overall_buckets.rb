@@ -23,7 +23,7 @@ module Elasticsearch
           # Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
           #
           # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results
-          # @option arguments [Int] :top_n The number of top job bucket scores to be used in the overall_score calculation
+          # @option arguments [Integer] :top_n The number of top job bucket scores to be used in the overall_score calculation
           # @option arguments [String] :bucket_span The span of the overall buckets. Defaults to the longest job bucket_span
           # @option arguments [Double] :overall_score Returns overall buckets with overall scores higher than this value
           # @option arguments [Boolean] :exclude_interim If true overall buckets that include interim buckets will be excluded

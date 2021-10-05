@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :model_id The ID of the trained models stats to fetch
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-          # @option arguments [Int] :from skips a number of trained models
-          # @option arguments [Int] :size specifies a max number of trained models to get
+          # @option arguments [Integer] :from skips a number of trained models
+          # @option arguments [Integer] :size specifies a max number of trained models to get
           # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
           # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
           # @option arguments [List] :h Comma-separated list of column names to display

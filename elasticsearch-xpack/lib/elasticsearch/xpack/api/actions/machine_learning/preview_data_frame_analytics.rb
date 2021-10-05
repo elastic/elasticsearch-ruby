@@ -41,11 +41,11 @@ module Elasticsearch
                        Elasticsearch::API::HTTP_GET
                      end
 
-            path = if _id
-                     "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_preview"
-                   else
-                     "_ml/data_frame/analytics/_preview"
-                   end
+            path   = if _id
+                       "_ml/data_frame/analytics/#{Elasticsearch::API::Utils.__listify(_id)}/_preview"
+                     else
+                       "_ml/data_frame/analytics/_preview"
+                     end
             params = {}
 
             body = arguments[:body]
