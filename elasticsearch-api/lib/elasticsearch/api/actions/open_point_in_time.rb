@@ -31,6 +31,8 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/point-in-time-api.html
       #
       def open_point_in_time(arguments = {})
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
         headers = arguments.delete(:headers) || {}
 
         arguments = arguments.clone
@@ -38,11 +40,7 @@ module Elasticsearch
         _index = arguments.delete(:index)
 
         method = Elasticsearch::API::HTTP_POST
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_pit"
-                 else
-                   "_pit"
-                 end
+        path   = "#{Utils.__listify(_index)}/_pit"
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = nil

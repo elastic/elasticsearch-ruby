@@ -40,7 +40,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "_scripts/painless/_execute"
+        path   = "_scripts/painless/_execute"
         params = {}
 
         body = arguments[:body]

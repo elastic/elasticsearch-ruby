@@ -19,11 +19,7 @@ module Elasticsearch
   module API
     module Shutdown
       module Actions
-        # Removes a node from the shutdown list
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
         #
         # @option arguments [String] :node_id The node id of node to be removed from the shutdown state
         # @option arguments [Hash] :headers Custom HTTP headers
