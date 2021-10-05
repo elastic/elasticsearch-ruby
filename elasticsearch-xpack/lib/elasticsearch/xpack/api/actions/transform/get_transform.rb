@@ -23,8 +23,8 @@ module Elasticsearch
           # Retrieves configuration information for transforms.
           #
           # @option arguments [String] :transform_id The id or comma delimited list of id expressions of the transforms to get, '_all' or '*' implies get all transforms
-          # @option arguments [Int] :from skips a number of transform configs, defaults to 0
-          # @option arguments [Int] :size specifies a max number of transforms to get, defaults to 100
+          # @option arguments [Integer] :from skips a number of transform configs, defaults to 0
+          # @option arguments [Integer] :size specifies a max number of transforms to get, defaults to 100
           # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
           # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on transform PUT
           # @option arguments [Hash] :headers Custom HTTP headers

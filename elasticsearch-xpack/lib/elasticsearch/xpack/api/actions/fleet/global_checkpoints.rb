@@ -21,10 +21,6 @@ module Elasticsearch
       module Fleet
         module Actions
           # Returns the current global checkpoints for an index. This API is design for internal use by the fleet server project.
-          # This functionality is Experimental and may be changed or removed
-          # completely in a future release. Elastic will take a best effort approach
-          # to fix any issues, but experimental features are not subject to the
-          # support SLA of official GA features.
           #
           # @option arguments [String] :index The name of the index.
           # @option arguments [Boolean] :wait_for_advance Whether to wait for the global checkpoint to advance past the specified current checkpoints
@@ -33,7 +29,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Timeout to wait for global checkpoint to advance
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see [TODO]
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-global-checkpoints.html
           #
           def global_checkpoints(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

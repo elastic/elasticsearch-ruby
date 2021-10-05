@@ -24,8 +24,8 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The ID of the job to fetch
           # @option arguments [String] :snapshot_id The ID of the snapshot to fetch
-          # @option arguments [Int] :from Skips a number of documents
-          # @option arguments [Int] :size The default number of documents returned in queries as a string.
+          # @option arguments [Integer] :from Skips a number of documents
+          # @option arguments [Integer] :size The default number of documents returned in queries as a string.
           # @option arguments [Date] :start The filter 'start' query parameter
           # @option arguments [Date] :end The filter 'end' query parameter
           # @option arguments [String] :sort Name of the field to sort on

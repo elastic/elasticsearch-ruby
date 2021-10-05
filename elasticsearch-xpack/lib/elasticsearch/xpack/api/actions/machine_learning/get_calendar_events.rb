@@ -26,8 +26,8 @@ module Elasticsearch
           # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
           # @option arguments [String] :start Get events after this time
           # @option arguments [Date] :end Get events before this time
-          # @option arguments [Int] :from Skips a number of events
-          # @option arguments [Int] :size Specifies a max number of events to get
+          # @option arguments [Integer] :from Skips a number of events
+          # @option arguments [Integer] :size Specifies a max number of events to get
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-get-calendar-event.html
