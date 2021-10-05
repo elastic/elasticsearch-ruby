@@ -30,7 +30,7 @@ describe 'client.nodes#clear_metering_archive' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.clear_metering_archive(node_id: 'foo', max_archive_version: 'bar')).to eq({})
+    expect(client_double.nodes.clear_repositories_metering_archive(node_id: 'foo', max_archive_version: 'bar')).to eq({})
   end
 
   let(:client) do
@@ -39,13 +39,13 @@ describe 'client.nodes#clear_metering_archive' do
 
   it 'raises an error if no node_id is provided' do
     expect do
-      client.nodes.clear_metering_archive(max_archive_version: 'bar')
+      client.nodes.clear_repositories_metering_archive(max_archive_version: 'bar')
     end.to raise_exception(ArgumentError)
   end
 
   it 'raises an error if no max_archive_version is provided' do
     expect do
-      client.nodes.clear_metering_archive(node_id: 'foo')
+      client.nodes.clear_repositories_metering_archive(node_id: 'foo')
     end.to raise_exception(ArgumentError)
   end
 end
