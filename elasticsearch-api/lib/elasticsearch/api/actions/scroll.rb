@@ -46,11 +46,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _scroll_id
-                 "_search/scroll/#{Utils.__listify(_scroll_id)}"
-               else
-                 "_search/scroll"
-               end
+        path   = if _scroll_id
+                   "_search/scroll/#{Utils.__listify(_scroll_id)}"
+                 else
+                   "_search/scroll"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]

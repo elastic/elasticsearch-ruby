@@ -40,11 +40,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index
-                   "#{Utils.__listify(_index)}/_analyze"
-                 else
-                   "_analyze"
-                 end
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_analyze"
+                   else
+                     "_analyze"
+                   end
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = arguments[:body]

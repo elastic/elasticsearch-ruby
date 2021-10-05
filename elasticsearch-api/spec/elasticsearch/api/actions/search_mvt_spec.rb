@@ -20,7 +20,7 @@ require 'spec_helper'
 describe 'client#search_mvt' do
   let(:expected_args) do
     [
-      method,
+      'POST',
       url,
       params,
       body,
@@ -29,7 +29,6 @@ describe 'client#search_mvt' do
   end
 
   context 'with right parameters' do
-    let(:method) { 'GET' }
     let(:url) { 'foo/_mvt/field/10/57.2127/6.2348' }
     let(:params) { {} }
     let(:body) { nil }

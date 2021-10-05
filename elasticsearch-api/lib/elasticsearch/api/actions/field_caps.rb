@@ -44,11 +44,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_field_caps"
-               else
-                 "_field_caps"
-               end
+        path   = if _index
+                   "#{Utils.__listify(_index)}/_field_caps"
+                 else
+                   "_field_caps"
+                 end
         params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
         body = arguments[:body]
