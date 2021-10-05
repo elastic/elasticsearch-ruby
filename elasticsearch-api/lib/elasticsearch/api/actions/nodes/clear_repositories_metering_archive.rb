@@ -31,7 +31,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/clear-repositories-metering-archive-api.html
         #
-        def clear_metering_archive(arguments = {})
+        def clear_repositories_metering_archive(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
 
           raise ArgumentError,
