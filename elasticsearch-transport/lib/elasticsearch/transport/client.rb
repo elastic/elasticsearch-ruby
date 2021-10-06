@@ -86,8 +86,6 @@ module Elasticsearch
       #
       # @option arguments [Boolean,Number] :retry_on_failure   Retry X times when request fails before raising and
       #                                                        exception (false by default)
-      # @option arguments [Number] :delay_on_retry  Delay in milliseconds between each retry (0 by default)
-      #
       # @option arguments Array<Number> :retry_on_status Retry when specific status codes are returned
       #
       # @option arguments [Boolean] :reload_on_failure Reload connections after failure (false by default)
@@ -128,7 +126,6 @@ module Elasticsearch
         @arguments[:tracer] ||= @arguments[:trace] ? DEFAULT_TRACER.call() : nil
         @arguments[:reload_connections] ||= false
         @arguments[:retry_on_failure]   ||= false
-        @arguments[:delay_on_retry]     ||= 0
         @arguments[:reload_on_failure]  ||= false
         @arguments[:randomize_hosts]    ||= false
         @arguments[:transport_options]  ||= {}

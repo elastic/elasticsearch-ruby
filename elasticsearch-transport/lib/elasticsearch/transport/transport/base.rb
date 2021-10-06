@@ -54,7 +54,6 @@ module Elasticsearch
           @options     = arguments[:options] || {}
           @options[:http] ||= {}
           @options[:retry_on_status] ||= []
-          @options[:delay_on_retry]  ||= 0
 
           @block       = block
           @compression = !!@options[:compression]
@@ -275,7 +274,6 @@ module Elasticsearch
           start = Time.now
           tries = 0
           reload_on_failure = opts.fetch(:reload_on_failure, @options[:reload_on_failure])
-          delay_on_retry = opts.fetch(:delay_on_retry, @options[:delay_on_retry])
 
           max_retries = if opts.key?(:retry_on_failure)
             opts[:retry_on_failure] === true ? DEFAULT_MAX_RETRIES : opts[:retry_on_failure]
@@ -287,7 +285,6 @@ module Elasticsearch
           ignore = Array(params.delete(:ignore)).compact.map { |s| s.to_i }
 
           begin
-            sleep(delay_on_retry / 1000.0) if tries > 0
             tries     += 1
             connection = get_connection or raise Error.new('Cannot get new connection from pool.')
 
@@ -319,6 +316,7 @@ module Elasticsearch
             log_error "[#{e.class}] #{e.message} #{connection.host.inspect}"
 
             connection.dead!
+
             if reload_on_failure and tries < connections.all.size
               log_warn "[#{e.class}] Reloading connections (attempt #{tries} of #{connections.all.size})"
               reload_connections! and retry
