@@ -1659,6 +1659,29 @@ describe Elasticsearch::Transport::Client do
         end
       end
 
+      context 'when retry_on_failure is true and delay_on_retry is specified' do
+        context 'when a node is unreachable' do
+          let(:hosts) do
+            [ELASTICSEARCH_HOSTS.first, "foobar1", "foobar2"]
+          end
+
+          let(:options) do
+            { retry_on_failure: true, delay_on_retry: 3000 }
+          end
+
+          let(:responses) do
+            5.times.collect do
+              client.perform_request('GET', '_nodes/_local')
+            end
+          end
+
+          it 'retries on failure' do
+            allow_any_instance_of(Object).to receive(:sleep).with(3000 / 1000)
+            expect(responses.all? { true }).to be(true)
+          end
+        end
+      end
+
       context 'when reload_on_failure is true' do
 
         let(:hosts) do
