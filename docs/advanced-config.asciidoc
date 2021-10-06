@@ -259,6 +259,11 @@ These two parameters can also be used together:
 Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503], retry_on_failure: 10)
 ```
 
+You can also set a `delay_on_retry` value in milliseconds. This will add a delay to wait between retries:
+
+```ruby
+ Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5, delay_on_retry: 1000)
+```
 
 [discrete]
 [[reload-hosts]]
