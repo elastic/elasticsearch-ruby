@@ -47,8 +47,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'elasticsearch-api', '>= 6'
 
   spec.add_development_dependency 'elasticsearch', '>= 6'
-  spec.add_development_dependency 'elasticsearch-transport', '>= 6'
   spec.add_development_dependency 'elasticsearch-extensions'
+  spec.add_development_dependency 'elasticsearch-transport', '>= 6'
 
   spec.add_development_dependency 'activesupport'
   spec.add_development_dependency 'ansi'
@@ -58,4 +58,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'shoulda-context'
   spec.add_development_dependency 'yard'
+  spec.post_install_message = <<~MSG
+    WARNING: This library is deprecated
+
+    The API endpoints currently living in elasticsearch-xpack will be moved into elasticsearch-api in version 8.0.0 and forward. You should be able to keep using elasticsearch-xpack and the xpack namespace in 7.x. We're running the same tests in elasticsearch-xpack, but if you encounter any problems, please let us know in this issue: https://github.com/elastic/elasticsearch-ruby/issues/1274 \n
+  MSG
 end
