@@ -88,6 +88,7 @@ module Elasticsearch
 
               params[:body] = body if body
               params[:headers] = headers if headers
+              params = params.merge @request_options
               case method
               when "GET"
                 resp = connection.connection.get(url, params)
