@@ -423,7 +423,8 @@ module Elasticsearch
         end
 
         def gzipped?(body)
-          return unless body
+          return unless body && !body.empty?
+
           body[0..1].unpack(HEX_STRING_DIRECTIVE)[0] == GZIP_FIRST_TWO_BYTES
         end
 
