@@ -95,18 +95,6 @@ module Elasticsearch
         SRC
       end
 
-      def indices_stats_params_registry
-        <<~SRC
-          ParamsRegistry.register(:stats_params, [
-            #{@spec['params'].keys.map { |k| ":#{k}" }.join(",\n")}
-          ].freeze)
-
-          ParamsRegistry.register(:stats_parts, [
-            #{@parts['metric']['options'].push('metric').map { |k| ":#{k}" }.join(",\n")}
-          ].freeze)
-        SRC
-      end
-
       def msearch_body_helper
         <<~SRC
           case
