@@ -57,10 +57,6 @@ module Elasticsearch
     termvectors(arguments.merge endpoint: '_termvector')
   end
 <%- end -%>
-<%# Params Registry Template -%>
-<%- unless @endpoint_name == 'create' -%>
-  <%= ERB.new(File.new("./thor/templates/_params_registry.erb").read, trim_mode: '-').result(binding) %>
-<%- end -%>
 
 <%- @namespace_depth.downto(1) do |i| -%>
 <%= '  '*(i-1) %>end
