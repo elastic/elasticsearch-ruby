@@ -21,33 +21,13 @@ require "multi_json"
 require "elasticsearch/api/version"
 require "elasticsearch/api/namespace/common"
 require "elasticsearch/api/utils"
-require "elasticsearch/api/actions/params_registry"
 
-Dir[ File.expand_path('../api/actions/**/params_registry.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require f }
 
 module Elasticsearch
   module API
     DEFAULT_SERIALIZER = MultiJson
-
-    COMMON_PARAMS = [
-      :ignore,                        # Client specific parameters
-      :index, :type, :id,             # :index/:type/:id
-      :body,                          # Request body
-      :node_id,                       # Cluster
-      :name,                          # Alias, template, settings, warmer, ...
-      :field                          # Get field mapping
-    ]
-
-    COMMON_QUERY_PARAMS = [
-      :ignore,                        # Client specific parameters
-      :format,                        # Search, Cat, ...
-      :pretty,                        # Pretty-print the response
-      :human,                         # Return numeric values in human readable format
-      :filter_path,                   # Filter the JSON response
-      :opaque_id                      # Use X-Opaque-Id
-    ]
 
     HTTP_GET          = 'GET'.freeze
     HTTP_HEAD         = 'HEAD'.freeze
