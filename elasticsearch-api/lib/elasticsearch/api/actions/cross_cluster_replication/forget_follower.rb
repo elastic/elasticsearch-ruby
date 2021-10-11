@@ -33,6 +33,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -41,7 +43,6 @@ module Elasticsearch
           path   = "#{Utils.__listify(_index)}/_ccr/forget_follower"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

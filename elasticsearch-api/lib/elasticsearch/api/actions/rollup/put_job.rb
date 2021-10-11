@@ -37,6 +37,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -45,7 +47,6 @@ module Elasticsearch
           path   = "_rollup/job/#{Utils.__listify(_id)}"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

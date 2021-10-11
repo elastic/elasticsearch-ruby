@@ -36,6 +36,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
           arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
 
@@ -43,20 +45,10 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "#{Utils.__listify(_index)}/_eql/search"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:search, [
-          :wait_for_completion_timeout,
-          :keep_on_completion,
-          :keep_alive
-        ].freeze)
       end
     end
   end

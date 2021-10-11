@@ -44,6 +44,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -54,30 +56,10 @@ module Elasticsearch
                  else
                    "_search/template"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:search_template, [
-        :ignore_unavailable,
-        :ignore_throttled,
-        :allow_no_indices,
-        :expand_wildcards,
-        :preference,
-        :routing,
-        :scroll,
-        :search_type,
-        :explain,
-        :profile,
-        :typed_keys,
-        :rest_total_hits_as_int,
-        :ccs_minimize_roundtrips
-      ].freeze)
     end
   end
 end

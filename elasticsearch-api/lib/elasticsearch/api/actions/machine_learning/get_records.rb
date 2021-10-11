@@ -23,8 +23,8 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id The ID of the job
         # @option arguments [Boolean] :exclude_interim Exclude interim results
-        # @option arguments [Int] :from skips a number of records
-        # @option arguments [Int] :size specifies a max number of records to get
+        # @option arguments [Integer] :from skips a number of records
+        # @option arguments [Integer] :size specifies a max number of records to get
         # @option arguments [String] :start Start time filter for records
         # @option arguments [String] :end End time filter for records
         # @option arguments [Double] :record_score Returns records with anomaly scores greater or equal than this value
@@ -40,6 +40,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -50,26 +52,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/records"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/records"
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_records, [
-          :exclude_interim,
-          :from,
-          :size,
-          :start,
-          :end,
-          :record_score,
-          :sort,
-          :desc
-        ].freeze)
       end
     end
   end

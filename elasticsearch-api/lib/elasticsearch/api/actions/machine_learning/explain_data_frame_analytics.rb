@@ -30,6 +30,8 @@ module Elasticsearch
         def explain_data_frame_analytics(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -40,14 +42,13 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _id
-                   "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_explain"
-                 else
-                   "_ml/data_frame/analytics/_explain"
-                 end
+          path   = if _id
+                     "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_explain"
+                   else
+                     "_ml/data_frame/analytics/_explain"
+                   end
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

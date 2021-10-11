@@ -39,6 +39,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -49,7 +51,6 @@ module Elasticsearch
           path   = "_nodes/#{Utils.__listify(_node_id)}/_repositories_metering/#{Utils.__listify(_max_archive_version)}"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

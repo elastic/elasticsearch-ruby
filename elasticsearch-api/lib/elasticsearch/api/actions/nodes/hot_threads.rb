@@ -35,6 +35,8 @@ module Elasticsearch
         def hot_threads(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -45,23 +47,10 @@ module Elasticsearch
                    else
                      "_nodes/hot_threads"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:hot_threads, [
-          :interval,
-          :snapshots,
-          :threads,
-          :ignore_idle_threads,
-          :type,
-          :timeout
-        ].freeze)
       end
     end
   end

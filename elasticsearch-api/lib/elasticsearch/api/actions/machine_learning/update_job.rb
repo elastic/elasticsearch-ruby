@@ -33,6 +33,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -41,7 +43,6 @@ module Elasticsearch
           path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_update"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

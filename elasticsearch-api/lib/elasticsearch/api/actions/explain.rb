@@ -45,6 +45,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -57,30 +59,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:explain, [
-        :analyze_wildcard,
-        :analyzer,
-        :default_operator,
-        :df,
-        :stored_fields,
-        :lenient,
-        :preference,
-        :q,
-        :routing,
-        :_source,
-        :_source_excludes,
-        :_source_includes
-      ].freeze)
     end
   end
 end

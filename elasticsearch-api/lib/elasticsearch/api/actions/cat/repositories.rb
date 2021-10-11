@@ -35,28 +35,16 @@ module Elasticsearch
         def repositories(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_cat/repositories"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:repositories, [
-          :format,
-          :local,
-          :master_timeout,
-          :h,
-          :help,
-          :s,
-          :v
-        ].freeze)
       end
     end
   end

@@ -31,6 +31,8 @@ module Elasticsearch
         def allocation_explain(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           method = if arguments[:body]
@@ -39,20 +41,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_cluster/allocation/explain"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = "_cluster/allocation/explain"
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:allocation_explain, [
-          :include_yes_decisions,
-          :include_disk_info
-        ].freeze)
       end
     end
   end

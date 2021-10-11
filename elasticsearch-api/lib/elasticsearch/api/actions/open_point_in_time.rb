@@ -31,34 +31,22 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/point-in-time-api.html
       #
       def open_point_in_time(arguments = {})
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+
         headers = arguments.delete(:headers) || {}
+
+        body = nil
 
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
 
         method = Elasticsearch::API::HTTP_POST
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_pit"
-                 else
-                   "_pit"
-                 end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = "#{Utils.__listify(_index)}/_pit"
+        params = Utils.process_params(arguments)
 
-        body = nil
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:open_point_in_time, [
-        :preference,
-        :routing,
-        :ignore_unavailable,
-        :expand_wildcards,
-        :keep_alive
-      ].freeze)
     end
   end
 end

@@ -26,14 +26,15 @@ module Elasticsearch
       #
       # @option arguments [List] :index Comma-separated list of data streams, indices, or aliases to search
       # @option arguments [String] :field Field containing geospatial data to return
-      # @option arguments [Int] :zoom Zoom level for the vector tile to search
-      # @option arguments [Int] :x X coordinate for the vector tile to search
-      # @option arguments [Int] :y Y coordinate for the vector tile to search
+      # @option arguments [Integer] :zoom Zoom level for the vector tile to search
+      # @option arguments [Integer] :x X coordinate for the vector tile to search
+      # @option arguments [Integer] :y Y coordinate for the vector tile to search
       # @option arguments [Boolean] :exact_bounds If false, the meta layer's feature is the bounding box of the tile. If true, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation.
-      # @option arguments [Int] :extent Size, in pixels, of a side of the vector tile.
-      # @option arguments [Int] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
+      # @option arguments [Integer] :extent Size, in pixels, of a side of the vector tile.
+      # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
       # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point)
-      # @option arguments [Int] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
+      # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
+      # @option arguments [Boolean|long] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Search request body.
       #
@@ -47,6 +48,8 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'y' missing" unless arguments[:y]
 
         headers = arguments.delete(:headers) || {}
+
+        body = arguments.delete(:body)
 
         arguments = arguments.clone
 
@@ -62,22 +65,10 @@ module Elasticsearch
 
         method = Elasticsearch::API::HTTP_POST
         path   = "#{Utils.__listify(_index)}/_mvt/#{Utils.__listify(_field)}/#{Utils.__listify(_zoom)}/#{Utils.__listify(_x)}/#{Utils.__listify(_y)}"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:search_mvt, [
-        :exact_bounds,
-        :extent,
-        :grid_precision,
-        :grid_type,
-        :size
-      ].freeze)
     end
   end
 end

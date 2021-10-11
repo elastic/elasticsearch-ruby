@@ -37,6 +37,8 @@ module Elasticsearch
         def ml_data_frame_analytics(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -47,25 +49,10 @@ module Elasticsearch
                    else
                      "_cat/ml/data_frame/analytics"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:ml_data_frame_analytics, [
-          :allow_no_match,
-          :bytes,
-          :format,
-          :h,
-          :help,
-          :s,
-          :time,
-          :v
-        ].freeze)
       end
     end
   end

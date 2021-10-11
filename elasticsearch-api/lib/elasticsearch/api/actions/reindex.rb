@@ -40,29 +40,16 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_POST
         path   = "_reindex"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:reindex, [
-        :refresh,
-        :timeout,
-        :wait_for_active_shards,
-        :wait_for_completion,
-        :requests_per_second,
-        :scroll,
-        :slices,
-        :max_docs
-      ].freeze)
     end
   end
 end

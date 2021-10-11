@@ -25,8 +25,8 @@ module Elasticsearch
         # @option arguments [String] :timestamp The timestamp of the desired single bucket result
         # @option arguments [Boolean] :expand Include anomaly records
         # @option arguments [Boolean] :exclude_interim Exclude interim results
-        # @option arguments [Int] :from skips a number of buckets
-        # @option arguments [Int] :size specifies a max number of buckets to get
+        # @option arguments [Integer] :from skips a number of buckets
+        # @option arguments [Integer] :size specifies a max number of buckets to get
         # @option arguments [String] :start Start time filter for buckets
         # @option arguments [String] :end End time filter for buckets
         # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets
@@ -42,6 +42,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -54,31 +56,15 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _job_id && _timestamp
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets/#{Utils.__listify(_timestamp)}"
-                 else
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _job_id && _timestamp
+                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets/#{Utils.__listify(_timestamp)}"
+                   else
+                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_buckets, [
-          :expand,
-          :exclude_interim,
-          :from,
-          :size,
-          :start,
-          :end,
-          :anomaly_score,
-          :sort,
-          :desc
-        ].freeze)
       end
     end
   end

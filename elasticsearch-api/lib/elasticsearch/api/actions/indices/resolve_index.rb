@@ -20,10 +20,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns information about any matching indices, aliases, and data streams
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [List] :name A comma-separated list of names or wildcard expressions
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
@@ -36,24 +32,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_resolve/index/#{Utils.__listify(_name)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:resolve_index, [
-          :expand_wildcards
-        ].freeze)
       end
     end
   end

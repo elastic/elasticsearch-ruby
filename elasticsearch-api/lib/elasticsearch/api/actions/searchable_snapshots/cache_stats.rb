@@ -33,6 +33,8 @@ module Elasticsearch
         def cache_stats(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -45,7 +47,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

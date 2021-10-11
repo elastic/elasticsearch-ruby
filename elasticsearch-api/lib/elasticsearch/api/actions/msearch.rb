@@ -38,6 +38,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -48,9 +50,8 @@ module Elasticsearch
                  else
                    "_msearch"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         case
         when body.is_a?(Array) && body.any? { |d| d.has_key? :search }
           payload = body
@@ -76,19 +77,6 @@ module Elasticsearch
         headers.merge!("Content-Type" => "application/x-ndjson")
         perform_request(method, path, params, payload, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:msearch, [
-        :search_type,
-        :max_concurrent_searches,
-        :typed_keys,
-        :pre_filter_shard_size,
-        :max_concurrent_shard_requests,
-        :rest_total_hits_as_int,
-        :ccs_minimize_roundtrips
-      ].freeze)
     end
   end
 end

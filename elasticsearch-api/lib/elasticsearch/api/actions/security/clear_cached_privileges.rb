@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _application = arguments.delete(:application)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "_security/privilege/#{Utils.__listify(_application)}/_clear_cache"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

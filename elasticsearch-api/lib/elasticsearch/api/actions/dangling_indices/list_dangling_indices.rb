@@ -28,13 +28,14 @@ module Elasticsearch
         def list_dangling_indices(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_dangling"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

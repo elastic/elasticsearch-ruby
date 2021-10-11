@@ -19,11 +19,7 @@ module Elasticsearch
   module API
     module Shutdown
       module Actions
-        # Adds a node to be shut down
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
         #
         # @option arguments [String] :node_id The node id of node to be shut down
         # @option arguments [Hash] :headers Custom HTTP headers
@@ -37,6 +33,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -45,7 +43,6 @@ module Elasticsearch
           path   = "_nodes/#{Utils.__listify(_node_id)}/shutdown"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

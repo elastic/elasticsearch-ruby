@@ -32,24 +32,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _realms = arguments.delete(:realms)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_security/realm/#{Utils.__listify(_realms)}/_clear_cache"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:clear_cached_realms, [
-          :usernames
-        ].freeze)
       end
     end
   end

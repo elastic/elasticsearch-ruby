@@ -21,8 +21,8 @@ module Elasticsearch
       module Actions
         # Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
         #
-        # @option arguments [Int] :lines_to_sample How many lines of the file should be included in the analysis
-        # @option arguments [Int] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
+        # @option arguments [Integer] :lines_to_sample How many lines of the file should be included in the analysis
+        # @option arguments [Integer] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
         # @option arguments [Time] :timeout Timeout after which the analysis will be aborted
         # @option arguments [String] :charset Optional parameter to specify the character set of the file
         # @option arguments [String] :format Optional parameter to specify the high level file format (options: ndjson, xml, delimited, semi_structured_text)
@@ -45,13 +45,14 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_text_structure/find_structure"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           if body.is_a? Array
             payload = Elasticsearch::API::Utils.__bulkify(body)
           else
@@ -61,26 +62,6 @@ module Elasticsearch
           headers.merge!("Content-Type" => "application/x-ndjson")
           perform_request(method, path, params, payload, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:find_structure, [
-          :lines_to_sample,
-          :line_merge_size_limit,
-          :timeout,
-          :charset,
-          :format,
-          :has_header_row,
-          :column_names,
-          :delimiter,
-          :quote,
-          :should_trim_fields,
-          :grok_pattern,
-          :timestamp_field,
-          :timestamp_format,
-          :explain
-        ].freeze)
       end
     end
   end

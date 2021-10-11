@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "#{Utils.__listify(_index)}/_ilm/retry"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

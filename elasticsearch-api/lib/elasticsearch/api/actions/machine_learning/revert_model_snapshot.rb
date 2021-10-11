@@ -35,6 +35,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -43,18 +45,10 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}/_revert"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:revert_model_snapshot, [
-          :delete_intervening_results
-        ].freeze)
       end
     end
   end

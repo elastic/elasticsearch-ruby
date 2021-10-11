@@ -30,6 +30,8 @@ module Elasticsearch
         def preview_transform(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _transform_id = arguments.delete(:transform_id)
@@ -47,7 +49,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

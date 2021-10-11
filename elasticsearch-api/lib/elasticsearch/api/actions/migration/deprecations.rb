@@ -29,6 +29,8 @@ module Elasticsearch
         def deprecations(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -41,7 +43,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -19,10 +19,6 @@ module Elasticsearch
   module API
     module Actions
       # The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
-      # This functionality is in Beta and is subject to change. The design and
-      # code is less mature than official GA features and is being provided
-      # as-is with no warranties. Beta features are not subject to the support
-      # SLA of official GA features.
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Hash] :headers Custom HTTP headers
@@ -34,6 +30,8 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
         headers = arguments.delete(:headers) || {}
+
+        body = arguments.delete(:body)
 
         arguments = arguments.clone
 
@@ -48,7 +46,6 @@ module Elasticsearch
         path   = "#{Utils.__listify(_index)}/_terms_enum"
         params = {}
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
     end

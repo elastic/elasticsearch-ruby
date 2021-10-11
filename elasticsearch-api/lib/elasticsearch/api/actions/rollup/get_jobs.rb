@@ -33,6 +33,8 @@ module Elasticsearch
         def get_jobs(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -45,7 +47,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end
