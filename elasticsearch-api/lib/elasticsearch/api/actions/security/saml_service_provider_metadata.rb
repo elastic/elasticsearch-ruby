@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _realm_name = arguments.delete(:realm_name)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "_security/saml/metadata/#{Utils.__listify(_realm_name)}"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -32,6 +32,8 @@ module Elasticsearch
         def refresh(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -42,20 +44,10 @@ module Elasticsearch
                    else
                      "_refresh"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:refresh, [
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards
-        ].freeze)
       end
     end
   end

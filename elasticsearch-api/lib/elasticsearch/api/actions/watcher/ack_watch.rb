@@ -32,6 +32,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _watch_id = arguments.delete(:watch_id)
@@ -46,7 +48,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -31,6 +31,8 @@ module Elasticsearch
         def reload_secure_settings(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -41,18 +43,10 @@ module Elasticsearch
                    else
                      "_nodes/reload_secure_settings"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:reload_secure_settings, [
-          :timeout
-        ].freeze)
       end
     end
   end

@@ -23,8 +23,8 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id The name of the job
         # @option arguments [Long] :category_id The identifier of the category definition of interest
-        # @option arguments [Int] :from skips a number of categories
-        # @option arguments [Int] :size specifies a max number of categories to get
+        # @option arguments [Integer] :from skips a number of categories
+        # @option arguments [Integer] :size specifies a max number of categories to get
         # @option arguments [String] :partition_field_value Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Category selection details if not provided in URI
@@ -35,6 +35,8 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
           headers = arguments.delete(:headers) || {}
+
+          body = arguments.delete(:body)
 
           arguments = arguments.clone
 
@@ -48,25 +50,15 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _job_id && _category_id
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories/#{Utils.__listify(_category_id)}"
-                 else
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _job_id && _category_id
+                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories/#{Utils.__listify(_category_id)}"
+                   else
+                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_categories, [
-          :from,
-          :size,
-          :partition_field_value
-        ].freeze)
       end
     end
   end

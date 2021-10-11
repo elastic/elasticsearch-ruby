@@ -34,28 +34,20 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_HEAD
           path   = "_index_template/#{Utils.__listify(_name)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
 
         alias_method :exists_index_template?, :exists_index_template
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:exists_index_template, [
-          :flat_settings,
-          :master_timeout,
-          :local
-        ].freeze)
       end
     end
   end

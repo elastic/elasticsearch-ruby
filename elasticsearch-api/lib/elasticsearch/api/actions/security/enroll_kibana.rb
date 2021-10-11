@@ -28,13 +28,14 @@ module Elasticsearch
         def enroll_kibana(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_security/enroll/kibana"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

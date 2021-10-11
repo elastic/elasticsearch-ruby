@@ -28,13 +28,14 @@ module Elasticsearch
         def delete(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_license"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

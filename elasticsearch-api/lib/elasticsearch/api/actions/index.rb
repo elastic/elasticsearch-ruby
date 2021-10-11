@@ -44,6 +44,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -56,28 +58,10 @@ module Elasticsearch
                  else
                    "#{Utils.__listify(_index)}/_doc"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:index, [
-        :wait_for_active_shards,
-        :op_type,
-        :refresh,
-        :routing,
-        :timeout,
-        :version,
-        :version_type,
-        :if_seq_no,
-        :if_primary_term,
-        :pipeline,
-        :require_alias
-      ].freeze)
     end
   end
 end

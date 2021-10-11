@@ -19,10 +19,6 @@ module Elasticsearch
   module API
     module Actions
       # Allows to evaluate the quality of ranked search results over a set of typical search queries
-      # This functionality is Experimental and may be changed or removed
-      # completely in a future release. Elastic will take a best effort approach
-      # to fix any issues, but experimental features are not subject to the
-      # support SLA of official GA features.
       #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
@@ -39,6 +35,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -49,21 +47,10 @@ module Elasticsearch
                  else
                    "_rank_eval"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:rank_eval, [
-        :ignore_unavailable,
-        :allow_no_indices,
-        :expand_wildcards,
-        :search_type
-      ].freeze)
     end
   end
 end

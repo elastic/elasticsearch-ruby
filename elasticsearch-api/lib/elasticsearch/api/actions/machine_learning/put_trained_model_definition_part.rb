@@ -39,6 +39,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
@@ -49,7 +51,6 @@ module Elasticsearch
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/definition/#{Utils.__listify(_part)}"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

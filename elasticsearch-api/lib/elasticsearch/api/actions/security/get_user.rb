@@ -29,6 +29,8 @@ module Elasticsearch
         def get_user(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _username = arguments.delete(:username)
@@ -41,7 +43,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else

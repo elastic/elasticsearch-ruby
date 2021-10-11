@@ -32,6 +32,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _policy_id = arguments.delete(:policy_id)
@@ -40,7 +42,6 @@ module Elasticsearch
           path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "_watcher/watch/#{Utils.__listify(_id)}"
           params = {}
 
-          body = nil
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
           else

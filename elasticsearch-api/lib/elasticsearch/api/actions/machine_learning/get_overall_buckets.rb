@@ -22,7 +22,7 @@ module Elasticsearch
         # Retrieves overall bucket results that summarize the bucket results of multiple anomaly detection jobs.
         #
         # @option arguments [String] :job_id The job IDs for which to calculate overall bucket results
-        # @option arguments [Int] :top_n The number of top job bucket scores to be used in the overall_score calculation
+        # @option arguments [Integer] :top_n The number of top job bucket scores to be used in the overall_score calculation
         # @option arguments [String] :bucket_span The span of the overall buckets. Defaults to the longest job bucket_span
         # @option arguments [Double] :overall_score Returns overall buckets with overall scores higher than this value
         # @option arguments [Boolean] :exclude_interim If true overall buckets that include interim buckets will be excluded
@@ -40,6 +40,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -50,26 +52,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/overall_buckets"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/overall_buckets"
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_overall_buckets, [
-          :top_n,
-          :bucket_span,
-          :overall_score,
-          :exclude_interim,
-          :start,
-          :end,
-          :allow_no_match,
-          :allow_no_jobs
-        ].freeze)
       end
     end
   end

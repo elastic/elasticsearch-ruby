@@ -42,6 +42,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = nil
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -50,9 +52,7 @@ module Elasticsearch
 
         method = Elasticsearch::API::HTTP_HEAD
         path   = "#{Utils.__listify(_index)}/_doc/#{Utils.__listify(_id)}"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
-
-        body = nil
+        params = Utils.process_params(arguments)
 
         Utils.__rescue_from_not_found do
           perform_request(method, path, params, body, headers).status == 200 ? true : false
@@ -60,22 +60,6 @@ module Elasticsearch
       end
 
       alias_method :exists?, :exists
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:exists, [
-        :stored_fields,
-        :preference,
-        :realtime,
-        :refresh,
-        :routing,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :version,
-        :version_type
-      ].freeze)
     end
   end
 end

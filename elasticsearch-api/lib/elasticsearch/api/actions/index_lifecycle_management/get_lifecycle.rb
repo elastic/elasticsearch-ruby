@@ -29,6 +29,8 @@ module Elasticsearch
         def get_lifecycle(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _policy = arguments.delete(:policy)
@@ -41,7 +43,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -37,25 +37,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_start"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:start_trained_model_deployment, [
-          :timeout,
-          :wait_for
-        ].freeze)
       end
     end
   end

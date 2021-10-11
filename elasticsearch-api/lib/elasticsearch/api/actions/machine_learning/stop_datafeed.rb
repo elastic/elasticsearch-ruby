@@ -36,27 +36,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _datafeed_id = arguments.delete(:datafeed_id)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}/_stop"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:stop_datafeed, [
-          :allow_no_match,
-          :allow_no_datafeeds,
-          :force,
-          :timeout
-        ].freeze)
       end
     end
   end

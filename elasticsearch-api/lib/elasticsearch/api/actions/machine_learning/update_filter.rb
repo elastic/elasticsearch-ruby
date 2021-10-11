@@ -33,6 +33,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _filter_id = arguments.delete(:filter_id)
@@ -41,7 +43,6 @@ module Elasticsearch
           path   = "_ml/filters/#{Utils.__listify(_filter_id)}/_update"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

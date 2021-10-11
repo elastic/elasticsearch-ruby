@@ -29,6 +29,8 @@ module Elasticsearch
         def query_api_keys(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           method = if arguments[:body]
@@ -40,7 +42,6 @@ module Elasticsearch
           path   = "_security/_query/api_key"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

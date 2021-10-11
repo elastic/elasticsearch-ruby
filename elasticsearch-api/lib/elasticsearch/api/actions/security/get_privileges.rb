@@ -30,6 +30,8 @@ module Elasticsearch
         def get_privileges(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _application = arguments.delete(:application)
@@ -46,7 +48,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -34,6 +34,8 @@ module Elasticsearch
       def field_caps(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -44,27 +46,15 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_field_caps"
-               else
-                 "_field_caps"
-               end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = if _index
+                   "#{Utils.__listify(_index)}/_field_caps"
+                 else
+                   "_field_caps"
+                 end
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:field_caps, [
-        :fields,
-        :ignore_unavailable,
-        :allow_no_indices,
-        :expand_wildcards,
-        :include_unmapped
-      ].freeze)
     end
   end
 end

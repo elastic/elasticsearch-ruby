@@ -32,6 +32,8 @@ module Elasticsearch
         def get_template(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
@@ -42,20 +44,10 @@ module Elasticsearch
                    else
                      "_template"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_template, [
-          :flat_settings,
-          :master_timeout,
-          :local
-        ].freeze)
       end
     end
   end

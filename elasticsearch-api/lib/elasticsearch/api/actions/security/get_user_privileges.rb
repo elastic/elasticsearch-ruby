@@ -28,13 +28,14 @@ module Elasticsearch
         def get_user_privileges(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_security/user/_privileges"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -20,10 +20,6 @@ module Elasticsearch
     module Security
       module Actions
         # Retrieves information about service accounts.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
         #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
@@ -33,6 +29,8 @@ module Elasticsearch
         #
         def get_service_accounts(arguments = {})
           headers = arguments.delete(:headers) || {}
+
+          body = nil
 
           arguments = arguments.clone
 
@@ -50,7 +48,6 @@ module Elasticsearch
                    end
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

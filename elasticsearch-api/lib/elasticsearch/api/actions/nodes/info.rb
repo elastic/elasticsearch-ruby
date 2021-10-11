@@ -32,6 +32,8 @@ module Elasticsearch
         def info(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -48,19 +50,10 @@ module Elasticsearch
                    else
                      "_nodes"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:info, [
-          :flat_settings,
-          :timeout
-        ].freeze)
       end
     end
   end

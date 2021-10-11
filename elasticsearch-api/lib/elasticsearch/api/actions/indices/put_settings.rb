@@ -39,6 +39,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -49,24 +51,10 @@ module Elasticsearch
                    else
                      "_settings"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:put_settings, [
-          :master_timeout,
-          :timeout,
-          :preserve_existing,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :flat_settings
-        ].freeze)
       end
     end
   end

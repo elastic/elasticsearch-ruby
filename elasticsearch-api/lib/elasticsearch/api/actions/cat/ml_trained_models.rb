@@ -23,8 +23,8 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The ID of the trained models stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-        # @option arguments [Int] :from skips a number of trained models
-        # @option arguments [Int] :size specifies a max number of trained models to get
+        # @option arguments [Integer] :from skips a number of trained models
+        # @option arguments [Integer] :size specifies a max number of trained models to get
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [List] :h Comma-separated list of column names to display
@@ -39,6 +39,8 @@ module Elasticsearch
         def ml_trained_models(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
@@ -49,27 +51,10 @@ module Elasticsearch
                    else
                      "_cat/ml/trained_models"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:ml_trained_models, [
-          :allow_no_match,
-          :from,
-          :size,
-          :bytes,
-          :format,
-          :h,
-          :help,
-          :s,
-          :time,
-          :v
-        ].freeze)
       end
     end
   end

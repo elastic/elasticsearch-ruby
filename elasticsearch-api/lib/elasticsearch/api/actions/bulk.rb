@@ -42,6 +42,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -56,9 +58,8 @@ module Elasticsearch
                  else
                    "_bulk"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         if body.is_a? Array
           payload = Elasticsearch::API::Utils.__bulkify(body)
         else
@@ -68,22 +69,6 @@ module Elasticsearch
         headers.merge!("Content-Type" => "application/x-ndjson")
         perform_request(method, path, params, payload, headers).body
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:bulk, [
-        :wait_for_active_shards,
-        :refresh,
-        :routing,
-        :timeout,
-        :type,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :pipeline,
-        :require_alias
-      ].freeze)
     end
   end
 end

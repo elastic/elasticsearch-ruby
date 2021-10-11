@@ -36,6 +36,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
@@ -44,19 +46,10 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}/_restore"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:restore, [
-          :master_timeout,
-          :wait_for_completion
-        ].freeze)
       end
     end
   end

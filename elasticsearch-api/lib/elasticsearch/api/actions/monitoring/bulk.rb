@@ -20,10 +20,6 @@ module Elasticsearch
     module Monitoring
       module Actions
         # Used by the monitoring features to send monitoring data.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :type Default document type for items which don't provide one *Deprecated*
         # @option arguments [String] :system_id Identifier of the monitored system
@@ -45,6 +41,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _type = arguments.delete(:type)
@@ -55,9 +53,8 @@ module Elasticsearch
                    else
                      "_monitoring/bulk"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           if body.is_a? Array
             payload = Elasticsearch::API::Utils.__bulkify(body)
           else
@@ -67,15 +64,6 @@ module Elasticsearch
           headers.merge!("Content-Type" => "application/x-ndjson")
           perform_request(method, path, params, payload, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:bulk, [
-          :system_id,
-          :system_api_version,
-          :interval
-        ].freeze)
       end
     end
   end

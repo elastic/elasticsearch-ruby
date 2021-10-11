@@ -20,10 +20,6 @@ module Elasticsearch
     module Security
       module Actions
         # Creates a service account token for access without requiring basic authentication.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
         #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
@@ -39,6 +35,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _namespace = arguments.delete(:namespace)
@@ -53,18 +51,10 @@ module Elasticsearch
                    else
                      "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:create_service_token, [
-          :refresh
-        ].freeze)
       end
     end
   end

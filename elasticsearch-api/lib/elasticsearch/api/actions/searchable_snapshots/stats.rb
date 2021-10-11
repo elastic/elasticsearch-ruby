@@ -20,10 +20,6 @@ module Elasticsearch
     module SearchableSnapshots
       module Actions
         # Retrieve shard-level statistics about searchable snapshots.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
@@ -33,6 +29,8 @@ module Elasticsearch
         #
         def stats(arguments = {})
           headers = arguments.delete(:headers) || {}
+
+          body = nil
 
           arguments = arguments.clone
 
@@ -44,18 +42,10 @@ module Elasticsearch
                    else
                      "_searchable_snapshots/stats"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:stats, [
-          :level
-        ].freeze)
       end
     end
   end

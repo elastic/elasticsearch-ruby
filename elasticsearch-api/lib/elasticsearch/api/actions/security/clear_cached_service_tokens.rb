@@ -20,10 +20,6 @@ module Elasticsearch
     module Security
       module Actions
         # Evicts tokens from the service account token caches.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
         #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
@@ -39,6 +35,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _namespace = arguments.delete(:namespace)
@@ -51,7 +49,6 @@ module Elasticsearch
           path   = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token/#{Utils.__listify(_name)}/_clear_cache"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

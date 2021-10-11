@@ -52,6 +52,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -66,33 +68,14 @@ module Elasticsearch
                  else
                    "#{Utils.__listify(_index)}/_update/#{Utils.__listify(_id)}"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         if Array(arguments[:ignore]).include?(404)
           Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
         else
           perform_request(method, path, params, body, headers).body
         end
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:update, [
-        :wait_for_active_shards,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :lang,
-        :refresh,
-        :retry_on_conflict,
-        :routing,
-        :timeout,
-        :if_seq_no,
-        :if_primary_term,
-        :require_alias
-      ].freeze)
     end
   end
 end

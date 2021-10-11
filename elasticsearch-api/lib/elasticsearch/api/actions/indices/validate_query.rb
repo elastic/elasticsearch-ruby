@@ -48,6 +48,8 @@ module Elasticsearch
         def validate_query(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -60,36 +62,17 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index && _type
-                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
-                 elsif _index
-                   "#{Utils.__listify(_index)}/_validate/query"
-                 else
-                   "_validate/query"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _index && _type
+                     "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
+                   elsif _index
+                     "#{Utils.__listify(_index)}/_validate/query"
+                   else
+                     "_validate/query"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:validate_query, [
-          :explain,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :q,
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :lenient,
-          :rewrite,
-          :all_shards
-        ].freeze)
       end
     end
   end

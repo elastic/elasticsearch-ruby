@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _id = arguments.delete(:id)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "_async_search/#{Utils.__listify(_id)}"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -34,6 +34,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _model_alias = arguments.delete(:model_alias)
@@ -42,18 +44,10 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/model_aliases/#{Utils.__listify(_model_alias)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:put_trained_model_alias, [
-          :reassign
-        ].freeze)
       end
     end
   end

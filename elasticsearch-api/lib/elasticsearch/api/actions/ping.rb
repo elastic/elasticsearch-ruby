@@ -27,22 +27,23 @@ module Elasticsearch
       def ping(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = nil
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_HEAD
         path   = ""
         params = {}
 
-        body = nil
         begin
-        perform_request(method, path, params, body, headers).status == 200 ? true : false
+          perform_request(method, path, params, body, headers).status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false
           else
             raise e
           end
-      end
+        end
       end
     end
   end

@@ -31,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
@@ -39,7 +41,6 @@ module Elasticsearch
           path   = "_data_stream/_promote/#{Utils.__listify(_name)}"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

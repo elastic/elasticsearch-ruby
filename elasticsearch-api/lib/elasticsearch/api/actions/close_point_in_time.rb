@@ -28,13 +28,14 @@ module Elasticsearch
       def close_point_in_time(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_DELETE
         path   = "_pit"
         params = {}
 
-        body = arguments[:body]
         perform_request(method, path, params, body, headers).body
       end
     end

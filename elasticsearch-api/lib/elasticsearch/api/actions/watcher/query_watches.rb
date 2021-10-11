@@ -29,6 +29,8 @@ module Elasticsearch
         def query_watches(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           method = if arguments[:body]
@@ -37,10 +39,9 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_watcher/_query/watches"
+          path   = "_watcher/_query/watches"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -42,34 +42,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_snapshot/#{Utils.__listify(_repository)}/_analyze"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:repository_analyze, [
-          :blob_count,
-          :concurrency,
-          :read_node_count,
-          :early_read_node_count,
-          :seed,
-          :rare_action_probability,
-          :max_blob_size,
-          :max_total_data_size,
-          :timeout,
-          :detailed,
-          :rarely_abort_writes
-        ].freeze)
       end
     end
   end

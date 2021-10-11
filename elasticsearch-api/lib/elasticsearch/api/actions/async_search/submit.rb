@@ -71,6 +71,8 @@ module Elasticsearch
         def submit(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -81,58 +83,10 @@ module Elasticsearch
                    else
                      "_async_search"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:submit, [
-          :wait_for_completion_timeout,
-          :keep_on_completion,
-          :keep_alive,
-          :batched_reduce_size,
-          :request_cache,
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :explain,
-          :stored_fields,
-          :docvalue_fields,
-          :from,
-          :ignore_unavailable,
-          :ignore_throttled,
-          :allow_no_indices,
-          :expand_wildcards,
-          :lenient,
-          :preference,
-          :q,
-          :routing,
-          :search_type,
-          :size,
-          :sort,
-          :_source,
-          :_source_excludes,
-          :_source_includes,
-          :terminate_after,
-          :stats,
-          :suggest_field,
-          :suggest_mode,
-          :suggest_size,
-          :suggest_text,
-          :timeout,
-          :track_scores,
-          :track_total_hits,
-          :allow_partial_search_results,
-          :typed_keys,
-          :version,
-          :seq_no_primary_term,
-          :max_concurrent_shard_requests
-        ].freeze)
       end
     end
   end

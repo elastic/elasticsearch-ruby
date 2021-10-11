@@ -25,8 +25,8 @@ module Elasticsearch
         # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
         # @option arguments [String] :start Get events after this time
         # @option arguments [Date] :end Get events before this time
-        # @option arguments [Int] :from Skips a number of events
-        # @option arguments [Int] :size Specifies a max number of events to get
+        # @option arguments [Integer] :from Skips a number of events
+        # @option arguments [Integer] :size Specifies a max number of events to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html
@@ -36,28 +36,18 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_calendar_events, [
-          :job_id,
-          :start,
-          :end,
-          :from,
-          :size
-        ].freeze)
       end
     end
   end

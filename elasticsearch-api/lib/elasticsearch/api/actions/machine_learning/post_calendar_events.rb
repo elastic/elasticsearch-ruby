@@ -33,6 +33,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
@@ -41,7 +43,6 @@ module Elasticsearch
           path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
           params = {}
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
       end

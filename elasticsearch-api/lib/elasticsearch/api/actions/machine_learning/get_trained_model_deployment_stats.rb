@@ -20,10 +20,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Get information about trained model deployments.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :model_id The ID of the trained model deployment stats to fetch
         # @option arguments [Hash] :headers Custom HTTP headers
@@ -35,6 +31,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
@@ -43,7 +41,6 @@ module Elasticsearch
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_stats"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

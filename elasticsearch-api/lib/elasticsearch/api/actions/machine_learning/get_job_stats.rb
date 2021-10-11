@@ -31,6 +31,8 @@ module Elasticsearch
         def get_job_stats(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
@@ -41,19 +43,10 @@ module Elasticsearch
                    else
                      "_ml/anomaly_detectors/_stats"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_job_stats, [
-          :allow_no_match,
-          :allow_no_jobs
-        ].freeze)
       end
     end
   end

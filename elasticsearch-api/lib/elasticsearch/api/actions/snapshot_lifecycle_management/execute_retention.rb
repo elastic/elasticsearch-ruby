@@ -28,13 +28,14 @@ module Elasticsearch
         def execute_retention(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_slm/_execute_retention"
           params = {}
 
-          body = nil
           perform_request(method, path, params, body, headers).body
         end
       end

@@ -22,8 +22,8 @@ module Elasticsearch
         # Retrieves configuration information for calendars.
         #
         # @option arguments [String] :calendar_id The ID of the calendar to fetch
-        # @option arguments [Int] :from skips a number of calendars
-        # @option arguments [Int] :size specifies a max number of calendars to get
+        # @option arguments [Integer] :from skips a number of calendars
+        # @option arguments [Integer] :size specifies a max number of calendars to get
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The from and size parameters optionally sent in the body
         #
@@ -31,6 +31,8 @@ module Elasticsearch
         #
         def get_calendars(arguments = {})
           headers = arguments.delete(:headers) || {}
+
+          body = arguments.delete(:body)
 
           arguments = arguments.clone
 
@@ -42,24 +44,15 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _calendar_id
-                   "_ml/calendars/#{Utils.__listify(_calendar_id)}"
-                 else
-                   "_ml/calendars"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _calendar_id
+                     "_ml/calendars/#{Utils.__listify(_calendar_id)}"
+                   else
+                     "_ml/calendars"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
           perform_request(method, path, params, body, headers).body
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_calendars, [
-          :from,
-          :size
-        ].freeze)
       end
     end
   end
