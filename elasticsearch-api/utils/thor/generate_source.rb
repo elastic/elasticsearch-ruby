@@ -143,8 +143,9 @@ module Elasticsearch
           if @spec['body']['required']
             'Elasticsearch::API::HTTP_POST'
           else
+            # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
             <<~SRC
-              if arguments[:body]
+              if body
                 Elasticsearch::API::HTTP_POST
               else
                 Elasticsearch::API::HTTP_GET

@@ -16,22 +16,6 @@
 # specific language governing permissions and limitations
 # under the License.
 %>
-<%-
-case @endpoint_name
-when 'mtermvectors'
--%>
-  if ids
-  body = { :ids => ids }
-  else
-  body = arguments.delete(:body)
-  end
-<%- when 'cluster.reroute', 'cluster.put_settings' %>
-  body = arguments.delete(:body) || {}
-<%- when 'ml.find_file_structure' %>
-  body = Utils.__bulkify(arguments.delete(:body))
-<%- else -%>
-  <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments.delete(:body)' %>
-<%- end -%>
 <%- if ['bulk', 'msearch', 'msearch_template', 'find_structure'].include? @method_name -%>
   <%= self.send("#{@method_name}_body_helper".to_s) %>
   headers.merge!("Content-Type" => "application/x-ndjson")

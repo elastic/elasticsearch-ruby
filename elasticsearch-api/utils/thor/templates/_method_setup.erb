@@ -16,30 +16,29 @@
 # specific language governing permissions and limitations
 # under the License.
 %>
-  <%= '  '*(@namespace_depth+4) %>arguments = arguments.clone
-  <%- if @method_name == 'mtermvectors' -%>
-    ids = arguments.delete(:ids)
+<%= '  '*(@namespace_depth+4) %>arguments = arguments.clone
+<%- if @method_name == 'mtermvectors' -%>
+  ids = arguments.delete(:ids)
+<%- end -%>
+<%- if @method_name == 'search' -%>
+  arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
+<%- end -%>
+<%- @parts.each do |name, _| %>
+  <%- unless @method_name == 'get_field_mapping' && name == 'fields' %>
+    <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
   <%- end -%>
-  <%- if @method_name == 'search' -%>
-    arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
-  <%- end -%>
-  <%- @parts.each do |name, _| %>
-    <%- unless @method_name == 'get_field_mapping' && name == 'fields' %>
-      <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
-    <%- end -%>
-  <%- end -%>
+<%- end -%>
 
-  <%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
-  <%- if @method_name == 'termvectors' %>
-    endpoint = arguments.delete(:endpoint) || '_termvectors'
-  <%- end -%>
-  <%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
-  <%- unless @params.empty? -%>
-    <%= '  '*(@namespace_depth+4) %>params = Utils.process_params(arguments)
-  <%- else -%>
-    <%= '  '*(@namespace_depth+4) %>params = {}
-  <%- end -%>
-  <%- @specific_params.each do |param| -%>
-    <%= param %>
-  <%- end -%>
-
+<%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
+<%- if @method_name == 'termvectors' %>
+  endpoint = arguments.delete(:endpoint) || '_termvectors'
+<%- end -%>
+<%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
+<%- unless @params.empty? -%>
+  <%= '  '*(@namespace_depth+4) %>params = Utils.process_params(arguments)
+<%- else -%>
+  <%= '  '*(@namespace_depth+4) %>params = {}
+<%- end -%>
+<%- @specific_params.each do |param| -%>
+  <%= param %>
+<%- end -%>
