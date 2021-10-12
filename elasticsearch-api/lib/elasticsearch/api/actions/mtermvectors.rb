@@ -52,7 +52,7 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
