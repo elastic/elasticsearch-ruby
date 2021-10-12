@@ -42,7 +42,7 @@ module Elasticsearch
 
         _scroll_id = arguments.delete(:scroll_id)
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET

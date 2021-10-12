@@ -38,7 +38,7 @@ module Elasticsearch
 
           _calendar_id = arguments.delete(:calendar_id)
 
-          method = if arguments[:body]
+          method = if body
                      Elasticsearch::API::HTTP_POST
                    else
                      Elasticsearch::API::HTTP_GET

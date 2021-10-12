@@ -44,7 +44,7 @@ module Elasticsearch
 
           _category_id = arguments.delete(:category_id)
 
-          method = if arguments[:body]
+          method = if body
                      Elasticsearch::API::HTTP_POST
                    else
                      Elasticsearch::API::HTTP_GET

@@ -50,7 +50,7 @@ module Elasticsearch
 
           _timestamp = arguments.delete(:timestamp)
 
-          method = if arguments[:body]
+          method = if body
                      Elasticsearch::API::HTTP_POST
                    else
                      Elasticsearch::API::HTTP_GET
