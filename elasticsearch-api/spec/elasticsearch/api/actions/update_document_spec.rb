@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client#update' do
-
   let(:expected_args) do
     [
-        'POST',
-        url,
-        params,
-        body,
-        {}
+      'POST',
+      url,
+      params,
+      body,
+      {}
     ]
   end
 
@@ -62,7 +61,6 @@ describe 'client#update' do
   end
 
   context 'when URL parameters are provided' do
-
     let(:url) do
       'foo/bar/1/_update'
     end
@@ -76,17 +74,7 @@ describe 'client#update' do
     end
   end
 
-  context 'when invalid parameters are specified' do
-
-    it 'raises an ArgumentError' do
-      expect {
-        client.update(index: 'foo', type: 'bar', id: '1', body: { doc: {} }, qwertypoiuy: 'asdflkjhg')
-      }.to raise_exception(ArgumentError)
-    end
-  end
-
   context 'when the request needs to be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/bar%2Fbam/1/_update'
     end
@@ -101,7 +89,6 @@ describe 'client#update' do
   end
 
   context 'when a NotFound exception is raised' do
-
     before do
       allow(client).to receive(:perform_request).and_raise(NotFound)
     end
@@ -113,7 +100,6 @@ describe 'client#update' do
     end
 
     context 'when the :ignore parameter is specified' do
-
       it 'does not raise the error to the user' do
         expect(client.update(index: 'foo', type: 'bar', id: 'XXX', body: {}, ignore: 404)).to eq(false)
       end

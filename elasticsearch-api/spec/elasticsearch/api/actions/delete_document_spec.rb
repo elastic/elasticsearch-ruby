@@ -54,7 +54,6 @@ describe 'client#delete' do
   end
 
   context 'when url params are provided' do
-
     let(:params) do
       { routing: 'abc123' }
     end
@@ -64,17 +63,7 @@ describe 'client#delete' do
     end
   end
 
-  context 'when invalid url params are provided' do
-
-    it 'raises an ArgumentError' do
-      expect {
-        client.delete(index: 'foo', type: 'bar', id: '1', qwertypoiuy: 'asdflkjhg')
-      }.to raise_exception(ArgumentError)
-    end
-  end
-
   context 'when the url params need to be escaped' do
-
     let(:expected_args) do
       [
           'DELETE',
@@ -91,7 +80,6 @@ describe 'client#delete' do
   end
 
   context 'when the index is not found' do
-
     before do
       expect(client).to receive(:perform_request).and_raise(NotFound)
     end
@@ -103,7 +91,6 @@ describe 'client#delete' do
     end
 
     context 'when the :ignore option is provided' do
-
       it 'does not raise the NotFound exception' do
         expect(client.delete(index: 'foo', type: 'bar', id: 1, ignore: 404)).to eq(false)
       end
