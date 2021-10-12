@@ -1,4 +1,4 @@
-= Ruby and Rails Integrations
+= Elasticsearch Ruby Client
 
 :doctype:           book
 
