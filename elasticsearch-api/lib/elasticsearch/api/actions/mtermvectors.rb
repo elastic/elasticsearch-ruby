@@ -41,14 +41,13 @@ module Elasticsearch
       def mtermvectors(arguments = {})
         headers = arguments.delete(:headers) || {}
 
-        if ids
-          body = { :ids => ids }
-        else
-          body = arguments.delete(:body)
-        end
+        body = if (ids = arguments.delete(:ids))
+                 { :ids => ids }
+               else
+                 arguments.delete(:body)
+               end
 
         arguments = arguments.clone
-        ids = arguments.delete(:ids)
 
         _index = arguments.delete(:index)
 

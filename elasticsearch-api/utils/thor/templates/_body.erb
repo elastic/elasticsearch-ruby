@@ -20,10 +20,10 @@
 case @endpoint_name
 when 'mtermvectors'
 -%>
-  if ids
-  body = { :ids => ids }
+  body = if(ids = arguments.delete(:ids))
+    { :ids => ids }
   else
-  body = arguments.delete(:body)
+    arguments.delete(:body)
   end
 <%- when 'cluster.reroute', 'cluster.put_settings' %>
   body = arguments.delete(:body) || {}
