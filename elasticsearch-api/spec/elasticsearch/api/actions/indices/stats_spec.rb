@@ -46,7 +46,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_stats'
     end
@@ -57,7 +56,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when multiple indicies are specified as a list' do
-
     let(:url) do
       'foo,bar/_stats'
     end
@@ -68,7 +66,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when multiple indicies are specified as a string' do
-
     let(:url) do
       'foo,bar/_stats'
     end
@@ -93,7 +90,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when the fields parameter is specified as a list' do
-
     let(:params) do
       { fields: 'foo,bar' }
     end
@@ -108,7 +104,6 @@ describe 'client.cluster#stats' do
   end
 
   context 'when the groups parameter is specified as a list' do
-
     let(:params) do
       { groups: 'groupA,groupB' }
     end

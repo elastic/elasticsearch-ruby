@@ -18,13 +18,11 @@
 require 'spec_helper'
 
 describe Elasticsearch::API::Utils do
-
   let(:utils) do
     Class.new { include Elasticsearch::API::Utils }.new
   end
 
   describe '#__escape' do
-
     it 'encodes Unicode characters' do
       expect(utils.__escape('中文')).to eq('%E4%B8%AD%E6%96%87')
     end
@@ -53,7 +51,6 @@ describe Elasticsearch::API::Utils do
   end
 
   describe '#__listify' do
-
     it 'creates a list from a single value' do
       expect(utils.__listify('foo')).to eq('foo')
     end
@@ -75,7 +72,6 @@ describe Elasticsearch::API::Utils do
     end
 
     context 'when the escape option is set to false' do
-
       it 'does not escape the characters' do
         expect(utils.__listify(['foo', 'bar^bam'], :escape => false)).to eq('foo,bar^bam')
       end
@@ -83,7 +79,6 @@ describe Elasticsearch::API::Utils do
   end
 
   describe '#__pathify' do
-
     it 'creates a path from a single value' do
       expect(utils.__pathify('foo')).to eq('foo')
     end
@@ -102,9 +97,7 @@ describe Elasticsearch::API::Utils do
   end
 
   describe '#__bulkify' do
-
     context 'when the input is an array of hashes' do
-
       let(:result) do
         utils.__bulkify [
           { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
@@ -192,7 +185,6 @@ describe Elasticsearch::API::Utils do
     end
 
     context 'when the payload has nested :data options' do
-
       let(:data) do
         { data: { a: 'b', data: { c: 'd' } } }
       end
@@ -226,83 +218,28 @@ describe Elasticsearch::API::Utils do
   end
 
   context '#__validate_and_extract_params' do
-
     it 'listify Arrays' do
-      expect(utils.__validate_and_extract_params({ foo: ['a', 'b'] }, [:foo] )).to eq(foo: 'a,b')
+      expect(utils.process_params({ foo: ['a', 'b'] })).to eq(foo: 'a,b')
     end
 
     it 'does not escape the parameters' do
-      expect(utils.__validate_and_extract_params({ foo: ['a.*', 'b.*'] }, [:foo] )).to eq(foo: 'a.*,b.*')
+      expect(utils.process_params({ foo: ['a.*', 'b.*'] })).to eq(foo: 'a.*,b.*')
     end
 
     context 'when the params are valid' do
-
       it 'extracts the valid params from the hash' do
-        expect(utils.__validate_and_extract_params({ foo: 'qux' }, [:foo, :bar]) ).to eq(foo: 'qux')
-      end
-    end
-
-    context 'when the params are invalid' do
-
-      it 'raises an ArgumentError' do
-        expect {
-          utils.__validate_and_extract_params({ foo: 'qux', bam: 'mux' }, [:foo, :bar])
-        }.to raise_exception(ArgumentError)
-      end
-    end
-
-    context 'when COMMON_PARAMS are provided' do
-
-      it 'extracts the params' do
-        expect(utils.__validate_and_extract_params({ index: 'foo'}, [:foo])).to eq({})
-      end
-    end
-
-    context 'when COMMON_QUERY_PARAMS are provided' do
-
-      it 'extracts the params' do
-        expect(utils.__validate_and_extract_params(format: 'yaml')).to eq(format: 'yaml')
-      end
-    end
-
-    context 'when the :skip_paramter_validation option is set' do
-
-      let(:result) do
-        utils.__validate_and_extract_params( { foo: 'q', bam: 'm' }, [:foo, :bar], { skip_parameter_validation: true } )
-      end
-
-      it 'skips parameter validation' do
-        expect(result).to eq(foo: 'q', bam: 'm')
-      end
-    end
-
-    context 'when the module has the setting to skip parameter validation' do
-
-      around do |example|
-        original_value = Elasticsearch::API.settings[:skip_parameter_validation]
-        Elasticsearch::API.settings[:skip_parameter_validation] = true
-        example.run
-        Elasticsearch::API.settings[:skip_parameter_validation] = original_value
-      end
-
-      let(:result) do
-        utils.__validate_and_extract_params( { foo: 'q', bam: 'm' }, [:foo, :bar])
-      end
-
-      it 'applies the module setting' do
-        expect(result).to eq(foo: 'q', bam: 'm')
+        expect(utils.process_params({ foo: 'qux' })).to eq(foo: 'qux')
       end
     end
   end
 
   describe '#__extract_parts' do
-
     it 'extracts parts with true value from a Hash' do
-      expect(utils.__extract_parts({ foo: true, moo: 'blah' }, [:foo, :bar])).to eq(['foo'])
+      expect(utils.__extract_parts({ foo: true, moo: 'blah' })).to eq(['foo', 'blah'])
     end
 
     it 'extracts parts with string value from a Hash' do
-      expect(utils.__extract_parts({ foo: 'qux', moo: 'blah' }, [:foo, :bar])).to eq(['qux'])
+      expect(utils.__extract_parts({ foo: 'qux', moo: 'blah' })).to eq(['qux', 'blah'])
     end
   end
 

@@ -18,7 +18,6 @@
 require 'spec_helper'
 
 describe 'client.cluster#get_mapping' do
-
   let(:expected_args) do
     [
         'GET',
@@ -38,7 +37,6 @@ describe 'client.cluster#get_mapping' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_mapping'
     end
@@ -49,7 +47,6 @@ describe 'client.cluster#get_mapping' do
   end
 
   context 'when multiple indices are specified' do
-
     let(:url) do
       'foo,bar/_mapping'
     end
@@ -60,13 +57,12 @@ describe 'client.cluster#get_mapping' do
   end
 
   context 'when the path must be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_mapping'
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: 'foo^bar', type: 'bar/bam')).to eq({})
+      expect(client_double.indices.get_mapping(index: 'foo^bar')).to eq({})
     end
   end
 end

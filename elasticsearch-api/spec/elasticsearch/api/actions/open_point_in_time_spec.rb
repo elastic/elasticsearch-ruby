@@ -21,24 +21,14 @@ describe 'client#open_point_in_time' do
   let(:expected_args) do
     [
       'POST',
-      url,
+      'foo/_pit',
       {},
       nil,
       {}
     ]
   end
 
-  let (:url) { '_pit'}
-
   it 'performs the request' do
-    expect(client_double.open_point_in_time).to eq({})
-  end
-
-  context 'with index' do
-    let (:url) { 'foo/_pit'}
-
-    it 'performs the request' do
-      expect(client_double.open_point_in_time(index: 'foo')).to eq({})
-    end
+    expect(client_double.open_point_in_time(index: 'foo')).to eq({})
   end
 end
