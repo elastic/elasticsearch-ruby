@@ -8,11 +8,6 @@
   :file: 'ml/explain_data_frame_analytics.yml'
   :description: 'Test non-empty data frame given body'
 
-# TODO https://github.com/elastic/elasticsearch-ruby/issues/852
--
-  :file: 'analytics/usage.yml'
-  :description: 'Usage stats on analytics indices'
-
 # TODO https://github.com/elastic/elasticsearch-ruby/issues/1269
 -
   :file: 'searchable_snapshots/10_usage.yml'
