@@ -99,7 +99,7 @@ describe 'client.cluster#stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.stats(index: 'foo', fielddata: true, fields: [ 'foo', 'bar'])).to eq({})
+      expect(client_double.indices.stats(index: 'foo', metric: 'fielddata', fields: ['foo', 'bar'])).to eq({})
     end
   end
 
@@ -113,7 +113,7 @@ describe 'client.cluster#stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.stats(search: true, groups: [ 'groupA', 'groupB'])).to eq({})
+      expect(client_double.indices.stats(groups: [ 'groupA', 'groupB'], metric: 'search')).to eq({})
     end
   end
 end
