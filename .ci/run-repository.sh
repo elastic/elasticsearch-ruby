@@ -72,6 +72,7 @@ elif [[ $TEST_SUITE != "platinum" ]]; then
          --network="${network_name}" \
          --env "TEST_ES_SERVER=${elasticsearch_url}" \
          --env "TEST_SUITE=${TEST_SUITE}" \
+         --env "STACK_VERSION=${STACK_VERSION}" \
          --volume $repo:/usr/src/app \
          --volume=/tmp:/tmp \
          --name elasticsearch-ruby \
@@ -86,6 +87,7 @@ else
            --env "TEST_SUITE=${TEST_SUITE}" \
            --env "ELASTIC_USER=elastic" \
            --env "SINGLE_TEST=${SINGLE_TEST}" \
+           --env "STACK_VERSION=${STACK_VERSION}" \
            --env "ELASTIC_CLIENT_APIVERSIONING=${ELASTIC_API_VERSIONING:-false}" \
            --volume $repo:/usr/src/app \
            --name elasticsearch-ruby \
