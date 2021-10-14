@@ -55,7 +55,11 @@ module Elasticsearch
 
         _type = arguments.delete(:type)
 
-        method = Elasticsearch::API::HTTP_POST
+        method = if arguments[:body]
+                   Elasticsearch::API::HTTP_POST
+                 else
+                   Elasticsearch::API::HTTP_GET
+                 end
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_count"
                  elsif _index
