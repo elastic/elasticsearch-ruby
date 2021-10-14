@@ -25,7 +25,7 @@ describe 'Elasticsearch: Validation' do
       .to_return(status: status, body: body, headers: headers)
   end
   let(:count_request_stub) do
-    stub_request(:post, "#{host}/_count")
+    stub_request(:get, "#{host}/_count")
       .to_return(status: 200, body: nil, headers: {})
   end
   let(:status) { 200 }
@@ -38,7 +38,7 @@ describe 'Elasticsearch: Validation' do
   def error_requests_and_expectations(message = Elasticsearch::NOT_ELASTICSEARCH_WARNING)
     expect { client.count }.to raise_error Elasticsearch::UnsupportedProductError, message
     assert_requested :get, host
-    assert_not_requested :post, "#{host}/_count"
+    assert_not_requested :get, "#{host}/_count"
     expect { client.cluster.health }.to raise_error Elasticsearch::UnsupportedProductError, message
     expect(client.instance_variable_get('@verified')).to be false
     expect { client.cluster.health }.to raise_error Elasticsearch::UnsupportedProductError, message
@@ -51,7 +51,7 @@ describe 'Elasticsearch: Validation' do
     client.count
     expect(client.instance_variable_get('@verified'))
     assert_requested :get, host
-    assert_requested :post, "#{host}/_count"
+    assert_requested :get, "#{host}/_count"
   end
 
   context 'When Elasticsearch replies with status 401' do
