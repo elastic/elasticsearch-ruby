@@ -18,11 +18,11 @@
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/rspec_matchers"
 include Elasticsearch::RestAPIYAMLTests
-require 'elasticsearch/xpack'
 
 TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
 STACK_VERSION = ENV['STACK_VERSION']
+require 'elasticsearch/xpack'
 
 if (hosts = ELASTICSEARCH_URL)
   split_hosts = hosts.split(',').map do |host|
