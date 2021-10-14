@@ -16,5 +16,5 @@
 # under the License.
 
 module Elasticsearch
-  VERSION = '7.15.1'.freeze
+  VERSION = '7.15.2'.freeze
 end
