@@ -136,6 +136,7 @@ module Elasticsearch
 
       def __http_method
         return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
+        return post_and_get if @endpoint_name == 'count'
 
         default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
         if @spec['body'] && default_method == 'GET'
@@ -143,18 +144,22 @@ module Elasticsearch
           if @spec['body']['required']
             'Elasticsearch::API::HTTP_POST'
           else
-            # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
-            <<~SRC
-              if body
-                Elasticsearch::API::HTTP_POST
-              else
-                Elasticsearch::API::HTTP_GET
-              end
-            SRC
+            post_and_get
           end
         else
           "Elasticsearch::API::HTTP_#{default_method}"
         end
+      end
+
+      def post_and_get
+        # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
+        <<~SRC
+          if body
+            Elasticsearch::API::HTTP_POST
+          else
+            Elasticsearch::API::HTTP_GET
+          end
+        SRC
       end
 
       def __http_path
@@ -182,9 +187,9 @@ module Elasticsearch
 
       def __parse_path(path)
         path.gsub(/^\//, '')
-            .gsub(/\/$/, '')
-            .gsub('{', "\#{Utils.__listify(_")
-            .gsub('}', ')}')
+          .gsub(/\/$/, '')
+          .gsub('{', "\#{Utils.__listify(_")
+          .gsub('}', ')}')
       end
 
       def __path_variables
