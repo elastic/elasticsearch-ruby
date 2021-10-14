@@ -22,6 +22,7 @@ require 'elasticsearch/xpack'
 
 TRANSPORT_OPTIONS = {}
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
+STACK_VERSION = ENV['STACK_VERSION']
 
 if (hosts = ELASTICSEARCH_URL)
   split_hosts = hosts.split(',').map do |host|
@@ -37,7 +38,7 @@ end
 if defined?(TEST_HOST) && defined?(TEST_PORT)
   URL = "http://#{TEST_HOST}:#{TEST_PORT}"
 
-  if ENV['STACK_VERSION'] == '8.0.0-SNAPSHOT'
+  if STACK_VERSION.match?(/^8\./)
     user = 'elastic'.freeze
     password = 'changeme'.freeze
     ADMIN_CLIENT = Elasticsearch::Client.new(
@@ -76,7 +77,7 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/free"
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/#{STACK_VERSION.match?(/^8\./) ? 'compatTest' : 'test'}/free"
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']

@@ -23,6 +23,7 @@ PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
 TRANSPORT_OPTIONS = {}
 TEST_SUITE = ENV['TEST_SUITE'].freeze || 'platinum'
+STACK_VERSION = ENV['STACK_VERSION']
 
 if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS']
   split_hosts = hosts.split(',').map do |host|
@@ -65,7 +66,7 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum"
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/#{STACK_VERSION.match?(/^8\./) ? 'compatTest' : 'test'}/platinum"
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
