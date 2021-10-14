@@ -49,7 +49,12 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        method = Elasticsearch::API::HTTP_POST
+        method = if body
+                   Elasticsearch::API::HTTP_POST
+                 else
+                   Elasticsearch::API::HTTP_GET
+                 end
+
         path   = if _index
                    "#{Utils.__listify(_index)}/_count"
                  else
