@@ -52,3 +52,8 @@
 -
   :file: 'transform/transforms_upgrade.yml'
   :description: 'Test upgrade transform'
+
+# TODO: https://github.com/elastic/elasticsearch-ruby/issues/1539
+-
+  :file: 'ml/categorization_agg.yml'
+  :description: 'Test categorization aggregation with poor settings'
