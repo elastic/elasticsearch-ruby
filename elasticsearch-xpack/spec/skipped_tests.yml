@@ -32,3 +32,8 @@
 -
   :file: 'ml/jobs_crud.yml'
   :description: 'Test put job with datafeed with indices options in params'
+
+# TODO: https://github.com/elastic/elasticsearch-ruby/issues/1539
+-
+  :file: 'ml/categorization_agg.yml'
+  :description: 'Test categorization aggregation with poor settings'
