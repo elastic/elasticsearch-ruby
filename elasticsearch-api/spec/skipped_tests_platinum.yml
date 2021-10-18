@@ -48,3 +48,7 @@
 -
   :file: 'transform/preview_transforms.yml'
   :description: 'Test preview transform by id'
+
+-
+  :file: 'transform/transforms_upgrade.yml'
+  :description: 'Test upgrade transform
