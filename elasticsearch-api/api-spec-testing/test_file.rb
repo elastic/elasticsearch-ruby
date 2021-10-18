@@ -187,7 +187,7 @@ module Elasticsearch
             wipe_searchable_snapshot_indices(client)
           end
           clear_snapshots_and_repositories(client)
-          clear_datastreams(client) if platinum?
+          wipe_datastreams(client)
           clear_indices(client)
           if platinum?
             clear_templates_platinum(client)
@@ -420,7 +420,7 @@ module Elasticsearch
           end
         end
 
-        def clear_datastreams(client)
+        def wipe_datastreams(client)
           datastreams = client.indices.get_data_stream(name: '*', expand_wildcards: 'all')
           datastreams['data_streams'].each do |datastream|
             client.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
