@@ -43,7 +43,11 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          perform_request(method, path, params, body, headers).body
+          if Array(arguments[:ignore]).include?(404)
+            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+          else
+            perform_request(method, path, params, body, headers).body
+          end
         end
 
         alias_method :exists_index_template?, :exists_index_template
