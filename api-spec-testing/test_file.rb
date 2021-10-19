@@ -166,17 +166,6 @@ module Elasticsearch
           'metrics'
         ].freeze
 
-        XPACK_TEMPLATES = [
-          '.watches', 'logstash-index-template', '.logstash-management',
-          'security_audit_log', '.slm-history', '.async-search',
-          'saml-service-provider', 'ilm-history', 'logs', 'logs-settings',
-          'logs-mappings', 'metrics', 'metrics-settings', 'metrics-mappings',
-          'synthetics', 'synthetics-settings', 'synthetics-mappings',
-          '.snapshot-blob-cache', '.deprecation-indexing-template',
-          '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-          'security-index-template', 'data-streams-mappings'
-        ].freeze
-
         # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
         # https://github.com/elastic/elasticsearch-php/blob/7.10/tests/Elasticsearch/Tests/Utility.php#L97
         def wipe_cluster(client)
@@ -187,7 +176,7 @@ module Elasticsearch
             wipe_searchable_snapshot_indices(client)
           end
           clear_snapshots_and_repositories(client)
-          clear_datastreams(client) if xpack?
+          clear_datastreams(client)
           clear_indices(client)
           if xpack?
             clear_templates_xpack(client)
@@ -304,8 +293,20 @@ module Elasticsearch
           end
         end
 
+        XPACK_TEMPLATES = [
+          '.watches', 'logstash-index-template', '.logstash-management',
+          'security_audit_log', '.slm-history', '.async-search',
+          'saml-service-provider', 'ilm-history', 'logs', 'logs-settings',
+          'logs-mappings', 'metrics', 'metrics-settings', 'metrics-mappings',
+          'synthetics', 'synthetics-settings', 'synthetics-mappings',
+          '.snapshot-blob-cache', '.deprecation-indexing-template',
+          '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
+          'security-index-template', 'data-streams-mappings'
+        ].freeze
+
         def xpack_template?(template)
-          xpack_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings', '.deprecation-'].freeze
+          xpack_prefixes = [
+            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
           xpack_prefixes.map { |a| return true if a.include? template }
 
           XPACK_TEMPLATES.include? template
