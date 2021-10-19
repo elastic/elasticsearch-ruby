@@ -163,7 +163,7 @@ module Elasticsearch
         PRESERVE_ILM_POLICY_IDS = [
           'ilm-history-ilm-policy', 'slm-history-ilm-policy',
           'watch-history-ilm-policy', 'ml-size-based-ilm-policy', 'logs',
-          'metrics'
+          'metrics', '.deprecation-indexing-ilm-policy'
         ].freeze
 
         # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
