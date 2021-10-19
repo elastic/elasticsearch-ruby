@@ -184,7 +184,12 @@ module Elasticsearch
             clear_ml_jobs(client)
           else
             client.indices.delete_template(name: '*')
-            client.indices.delete_index_template(name: '*')
+            client.indices.get_index_template['index_templates'].each do |template|
+              next if xpack_template? template['name']
+
+              client.indices.delete_index_template(name: template['name'])
+            end
+
             client.cluster.get_component_template['component_templates'].each do |template|
               next if xpack_template? template['name']
 
@@ -306,7 +311,9 @@ module Elasticsearch
 
         def xpack_template?(template)
           xpack_prefixes = [
-            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
+            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
+            'data-streams-mappings'
+          ].freeze
           xpack_prefixes.map { |a| return true if a.include? template }
 
           XPACK_TEMPLATES.include? template
