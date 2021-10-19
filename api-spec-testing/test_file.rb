@@ -441,6 +441,8 @@ module Elasticsearch
 
         def clear_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
+        rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+          LOGGER.info "Exception trying to delete index #{e}"
         end
 
         def wipe_searchable_snapshot_indices(client)
