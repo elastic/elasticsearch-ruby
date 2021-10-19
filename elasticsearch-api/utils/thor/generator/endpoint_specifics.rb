@@ -37,8 +37,10 @@ module Elasticsearch
         delete
         get
         indices.flush_synced
-        indices.delete_template
         indices.delete
+        indices.delete_index_template
+        indices.exists_index_template
+        indices.delete_template
         security.get_role
         security.get_user
         snapshot.status
