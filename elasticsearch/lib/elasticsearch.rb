@@ -20,6 +20,9 @@ require 'elastic/transport'
 require 'elasticsearch/api'
 
 module Elasticsearch
+  NOT_ELASTICSEARCH_WARNING = 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.'.freeze
+  SECURITY_PRIVILEGES_VALIDATION_WARNING = 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.'.freeze
+
   # This is the stateful Elasticsearch::Client, using an instance of elastic-transport.
   class Client
     include Elasticsearch::API
@@ -38,6 +41,7 @@ module Elasticsearch
     #                                                     This will be prepended to the id you set before each request
     #                                                     if you're using X-Opaque-Id
     def initialize(arguments = {}, &block)
+      @verified = false
       @opaque_id_prefix = arguments[:opaque_id_prefix] || nil
       api_key(arguments) if arguments[:api_key]
       if arguments[:cloud_id]
@@ -62,7 +66,10 @@ module Elasticsearch
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
           args[4] = headers.merge('X-Opaque-Id' => opaque_id)
         end
-        @transport.send(name, *args, &block)
+        if name == :perform_request
+          verify_elasticsearch unless @verified
+          @transport.perform_request(*args, &block)
+        end
       else
         @transport.send(name, *args, &block)
       end
@@ -73,6 +80,37 @@ module Elasticsearch
     end
 
     private
+
+    def verify_elasticsearch
+      begin
+        response = elasticsearch_validation_request
+      rescue Elastic::Transport::Transport::Errors::Unauthorized,
+             Elastic::Transport::Transport::Errors::Forbidden
+        @verified = true
+        warn(SECURITY_PRIVILEGES_VALIDATION_WARNING)
+        return
+      end
+
+      body = if response.headers['content-type'] == 'application/yaml'
+               require 'yaml'
+               YAML.load(response.body)
+             else
+               response.body
+             end
+      version = body.dig('version', 'number')
+      verify_with_version_or_header(version, response.headers)
+    end
+
+    def verify_with_version_or_header(version, headers)
+      if version.nil? ||
+         Gem::Version.new(version) < Gem::Version.new('8.0.0.pre') && version != '8.0.0-SNAPSHOT' ||
+         headers['x-elastic-product'] != 'Elasticsearch'
+
+        raise Elasticsearch::UnsupportedProductError
+      end
+
+      @verified = true
+    end
 
     def setup_cloud_host(cloud_id, user, password, port)
       name = cloud_id.split(':')[0]
@@ -111,6 +149,17 @@ module Elasticsearch
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
     def encode(api_key)
       Base64.strict_encode64([api_key[:id], api_key[:api_key]].join(':'))
+    end
+
+    def elasticsearch_validation_request
+      @transport.perform_request('GET', '/')
+    end
+  end
+
+  # Error class for when we detect an unsupported version of Elasticsearch
+  class UnsupportedProductError < StandardError
+    def initialize(message = NOT_ELASTICSEARCH_WARNING)
+      super(message)
     end
   end
 end
