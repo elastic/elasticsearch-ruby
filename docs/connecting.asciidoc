@@ -55,7 +55,7 @@ client = Elasticsearch::Client.new(
 ==== API Key authentication
 
 You can also use the 
-https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.16/security-api-create-api-key.html[ApiKey] 
 authentication.
 
 NOTE: If you provide both basic authentication credentials and the ApiKey 
