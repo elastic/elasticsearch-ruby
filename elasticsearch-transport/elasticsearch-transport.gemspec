@@ -26,12 +26,12 @@ Gem::Specification.new do |s|
   s.authors       = ['Karel Minarik']
   s.email         = ['karel.minarik@elasticsearch.org']
   s.summary       = 'Ruby client for Elasticsearch.'
-  s.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.x/index.html'
+  s.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.16/index.html'
   s.license       = 'Apache-2.0'
   s.metadata = {
-    'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.x/index.html',
-    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/7.x/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport',
+    'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.16/index.html',
+    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/7.16/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/7.16/elasticsearch-transport',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
   s.files         = `git ls-files`.split($/)
