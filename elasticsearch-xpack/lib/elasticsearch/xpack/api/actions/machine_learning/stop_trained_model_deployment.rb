@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [String] :model_id The ID of the model to undeploy
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-df-analytics-apis.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/ml-df-analytics-apis.html
           #
           def stop_trained_model_deployment(arguments = {})
             raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]

@@ -26,7 +26,7 @@ module Elasticsearch
           # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/searchable-snapshots-apis.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/searchable-snapshots-apis.html
           #
           def stats(arguments = {})
             headers = arguments.delete(:headers) || {}

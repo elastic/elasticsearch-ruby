@@ -28,12 +28,12 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Ruby integrations for the X-Pack extensions for Elasticsearch'
   spec.description   = 'Ruby integrations for the X-Pack extensions for Elasticsearch'
-  spec.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.x/index.html'
+  spec.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.16/index.html'
   spec.license       = 'Apache-2.0'
   spec.metadata = {
-    'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.x/index.html',
-    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/7.x/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-xpack',
+    'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/7.16/index.html',
+    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/7.16/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/7.16/elasticsearch-xpack',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
