@@ -29,7 +29,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Timeout to wait for global checkpoint to advance
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/get-global-checkpoints.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/get-global-checkpoints.html
           #
           def global_checkpoints(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

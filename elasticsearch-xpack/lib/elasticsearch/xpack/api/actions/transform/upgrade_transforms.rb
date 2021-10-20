@@ -25,7 +25,7 @@ module Elasticsearch
           # @option arguments [Boolean] :dry_run Whether to only check for updates but don't execute
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/upgrade-transforms.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/upgrade-transforms.html
           #
           def upgrade_transforms(arguments = {})
             headers = arguments.delete(:headers) || {}

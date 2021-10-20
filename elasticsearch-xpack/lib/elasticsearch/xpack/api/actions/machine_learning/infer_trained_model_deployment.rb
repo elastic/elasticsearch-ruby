@@ -30,7 +30,7 @@ module Elasticsearch
           # @option arguments [Time] :timeout Controls the time to wait for the inference result
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.x/ml-df-analytics-apis.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/ml-df-analytics-apis.html
           #
           def infer_trained_model_deployment(arguments = {})
             raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
