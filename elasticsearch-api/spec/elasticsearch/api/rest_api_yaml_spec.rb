@@ -52,7 +52,7 @@ describe 'Rest API YAML tests' do
           before(:all) { test_file.setup }
           after(:all) do
             test_file.teardown
-            Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
           end
 
           test.task_groups.each do |task_group|
