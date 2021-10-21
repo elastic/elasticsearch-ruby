@@ -19,7 +19,7 @@ require 'ostruct'
 
 describe Elasticsearch::Client do
   let(:transport) { client.instance_variable_get('@transport') }
-  let(:client) { described_class.new }
+  let(:client) { described_class.new.tap { |cl| cl.instance_variable_set('@verified', true) } }
 
   before do
     allow(transport).to receive(:perform_request) { OpenStruct.new(body: '') }
@@ -29,20 +29,20 @@ describe Elasticsearch::Client do
     it 'uses x-opaque-id on a request' do
       client.search(opaque_id: '12345')
       expect(transport).to have_received(:perform_request)
-                             .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => '12345' })
+        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => '12345' })
     end
   end
 
   context 'when an x-opaque-id prefix is set on initialization' do
     let(:prefix) { 'elastic_cloud' }
     let(:client) do
-      described_class.new(opaque_id_prefix: prefix)
+      described_class.new(opaque_id_prefix: prefix).tap { |cl| cl.instance_variable_set('@verified', true) }
     end
 
     it 'uses x-opaque-id on a request' do
       expect { client.search(opaque_id: '12345') }.not_to raise_error
       expect(transport).to have_received(:perform_request)
-                             .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => 'elastic_cloud12345' })
+        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => 'elastic_cloud12345' })
     end
   end
 end
