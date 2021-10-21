@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require_relative 'logging'
+
 module Elasticsearch
   module RestAPIYAMLTests
     module WipeCluster
@@ -87,7 +89,7 @@ module Elasticsearch
             results.each do |task|
               next if task.empty?
 
-              LOGGER.debug "Pending task: #{task}"
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending task: #{task}"
               count += 1 if task.include?(filter)
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -103,7 +105,7 @@ module Elasticsearch
             results['tasks'].each do |task|
               next if task.empty?
 
-              LOGGER.debug "Pending cluster task: #{task}"
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending cluster task: #{task}"
               count += 1
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -287,7 +289,7 @@ module Elasticsearch
           begin
             client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           rescue StandardError => e
-            LOGGER.error "Caught exception attempting to delete data streams: #{e}"
+            Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Caught exception attempting to delete data streams: #{e}"
             client.indices.delete_data_stream(name: '*')
           end
         end
@@ -302,7 +304,7 @@ module Elasticsearch
         def clear_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-          LOGGER.info "Exception trying to delete index #{e}"
+          Elasticsearch::RestAPIYAMLTests::Logging.logger.info "Exception trying to delete index #{e}"
         end
 
         def wipe_searchable_snapshot_indices(client)

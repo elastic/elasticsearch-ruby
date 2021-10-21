@@ -18,7 +18,7 @@
 require_relative 'test_file/action'
 require_relative 'test_file/test'
 require_relative 'test_file/task_group'
-require 'logger'
+require_relative 'logging'
 
 module Elasticsearch
   module RestAPIYAMLTests
@@ -32,8 +32,6 @@ module Elasticsearch
     # @since 6.2.0
     class TestFile
       attr_reader :features_to_skip, :name, :client
-
-      LOGGER = Logger.new($stdout)
 
       # Initialize a single test file.
       #
@@ -51,8 +49,8 @@ module Elasticsearch
         begin
           documents = YAML.load_stream(File.new(file_name))
         rescue StandardError => e
-          LOGGER.error e
-          LOGGER.error "Filename : #{@name}"
+          Elasticsearch::RestAPIYAMLTests::Logging.logger.error e
+          Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Filename : #{@name}"
         end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
