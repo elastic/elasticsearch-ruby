@@ -53,6 +53,11 @@ DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
                    )
                  end
 
+unless ADMIN_CLIENT.ping
+  raise('Couldn\'t connect to Elasticsearch cluster')
+  exit
+end
+
 YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
