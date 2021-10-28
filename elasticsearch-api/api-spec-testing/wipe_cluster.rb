@@ -52,7 +52,11 @@ module Elasticsearch
         wipe_datastreams(client)
         wipe_all_indices(client)
         if platinum?
-          clear_templates_platinum(client)
+          wipe_templates_for_xpack(client)
+        else
+          wipe_all_templates(client)
+        end
+        if platinum?
           clear_datafeeds(client)
           clear_ml_jobs(client)
         else
@@ -157,7 +161,7 @@ module Elasticsearch
           client.cluster.put_settings(body: new_settings) unless new_settings.empty?
         end
 
-        def clear_templates_platinum(client)
+        def wipe_templates_for_xpack(client)
           templates = client.indices.get_index_template
 
           templates['index_templates'].each do |template|
@@ -178,13 +182,24 @@ module Elasticsearch
 
           # Always check for legacy templates
           templates = client.indices.get_template
-
           templates.each do |name, _|
             next if platinum_template? name
 
             begin
               client.indices.delete_template(name: name)
+            rescue StandardError => e
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.info("Unable to remove index template #{name}")
             end
+          end
+        end
+
+        def wipe_all_templates(client)
+          client.indices.delete_template(name: '*')
+          begin
+            client.indices.delete_index_template(name: '*')
+            client.cluster.delete_component_template(name: '*')
+          rescue StandardError => e
+            Elasticsearch::RestAPIYAMLTests::Logging.logger.info('Using a version of ES that doesn\'t support index templates v2 yet, so it\'s safe to ignore')
           end
         end
 
