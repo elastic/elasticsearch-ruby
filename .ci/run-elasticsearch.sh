@@ -33,7 +33,6 @@ cluster_name=${moniker}${suffix}
 declare -a volumes
 environment=($(cat <<-END
   --env ELASTIC_PASSWORD=$elastic_password
-  --env xpack.security.enabled=true
   --env node.name=$es_node_name
   --env cluster.name=$cluster_name
   --env cluster.initial_master_nodes=$master_node_name
@@ -72,6 +71,7 @@ END
 else
   environment+=($(cat <<-END
     --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,ml,remote_cluster_client,transform
+    --env xpack.security.enabled=false
 END
 ))
 fi
