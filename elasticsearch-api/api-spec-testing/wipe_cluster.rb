@@ -308,7 +308,7 @@ module Elasticsearch
 
         def wipe_searchable_snapshot_indices(client)
           indices = client.cluster.state(metric: 'metadata', filter_path: 'metadata.indices.*.settings.index.store.snapshot')
-          return if indices.dig('metadata', 'indices')
+          return unless indices.dig('metadata', 'indices')
 
           indices.each do |index|
             client.indices.delete(index: index, ignore: 404)
