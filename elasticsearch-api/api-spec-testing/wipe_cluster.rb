@@ -41,12 +41,13 @@ module Elasticsearch
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
       # https://github.com/elastic/elasticsearch-php/blob/7.10/tests/Elasticsearch/Tests/Utility.php#L97
       def self.run(client)
-        if platinum?
-          clear_rollup_jobs(client)
-          wait_for_pending_tasks(client)
-          clear_sml_policies(client)
-          wipe_searchable_snapshot_indices(client)
+        read_plugins(client)
+        if @has_rollups
+          wipe_rollup_jobs(client)
+          wait_for_pending_rollup_tasks(client)
         end
+        clear_sml_policies(client)
+        wipe_searchable_snapshot_indices(client) if @has_xpack
         wipe_snapshots(client)
         wipe_datastreams(client)
         wipe_all_indices(client)
@@ -80,7 +81,21 @@ module Elasticsearch
           ENV['TEST_SUITE'] == 'platinum'
         end
 
-        def wait_for_pending_tasks(client)
+        def read_plugins(client)
+          response = client.perform_request('GET', '_nodes/plugins').body
+
+          response['nodes'].each do |node|
+            node[1]['modules'].each do |mod|
+              @has_xpack = true if mod['name'].include?('x-pack')
+              @has_ilm = true if mod['name'].include?('x-pack-ilm')
+              @has_rollups = true if mod['name'].include?('x-pack-rollup')
+              @has_ccr = true if mod['name'].include?('x-pack-ccr')
+              @has_shutdown = true if mod['name'].include?('x-pack-shutdown')
+            end
+          end
+        end
+
+        def wait_for_pending_rollup_tasks(client)
           filter = 'xpack/rollup/job'
           loop do
             results = client.cat.tasks(detailed: true).split("\n")
@@ -229,10 +244,10 @@ module Elasticsearch
           end
         end
 
-        def clear_rollup_jobs(client)
+        def wipe_rollup_jobs(client)
           client.rollup.get_jobs(id: '_all')['jobs'].each do |d|
-            client.rollup.stop_job(id: d['config']['id'])
-            client.rollup.delete_job(id: d['config']['id'])
+            client.rollup.stop_job(id: d['config']['id'], wait_for_completion: true, timeout: '10s', ignore: 404)
+            client.rollup.delete_job(id: d['config']['id'], ignore: 404)
           end
         end
 
@@ -279,15 +294,11 @@ module Elasticsearch
         end
 
         def wipe_datastreams(client)
-          datastreams = client.indices.get_data_stream(name: '*', expand_wildcards: 'all')
-          datastreams['data_streams'].each do |datastream|
-            client.indices.delete_data_stream(name: datastream['name'], expand_wildcards: 'all')
-          end
           begin
             client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           rescue StandardError => e
             Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Caught exception attempting to delete data streams: #{e}"
-            client.indices.delete_data_stream(name: '*')
+            client.indices.delete_data_stream(name: '*') if @has_xpack
           end
         end
 
