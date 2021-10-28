@@ -49,7 +49,7 @@ module Elasticsearch
         end
         clear_snapshots_and_repositories(client)
         wipe_datastreams(client)
-        clear_indices(client)
+        wipe_all_indices(client)
         if platinum?
           clear_templates_platinum(client)
           clear_datafeeds(client)
@@ -270,7 +270,7 @@ module Elasticsearch
               raise e unless response.body['error']['root_cause'].first['reason'].match(regexp)
 
               # Try again after clearing indices if we get a 500 error from delete repository
-              clear_indices(client)
+              wipe_all_indices(client)
               client.snapshot.delete_repository(repository: repository, ignore: 404)
             end
           end
@@ -302,7 +302,7 @@ module Elasticsearch
           end
         end
 
-        def clear_indices(client)
+        def wipe_all_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         end
 
