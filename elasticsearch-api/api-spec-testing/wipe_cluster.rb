@@ -273,12 +273,11 @@ module Elasticsearch
         end
 
         def wipe_snapshots(client)
-          return unless (repositories = client.snapshot.get_repository(repository: '_all'))
+          repositories = client.snapshot.get_repository(repository: '_all')
 
           repositories.each_key do |repository|
             if repositories[repository]['type'] == 'fs'
               response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
-              # response ={"snapshots"=>[], "total"=>0, "remaining"=>0}
               response['snapshots'].each do |snapshot|
                 client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
               end
@@ -311,15 +310,19 @@ module Elasticsearch
 
         def wipe_all_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
-          client.indices.refresh(expand_wildcards: 'open,hidden')
         end
 
         def wipe_searchable_snapshot_indices(client)
           indices = client.cluster.state(metric: 'metadata', filter_path: 'metadata.indices.*.settings.index.store.snapshot')
           return unless indices.dig('metadata', 'indices')
 
-          indices.each do |index|
-            client.indices.delete(index: index, ignore: 404)
+          indices['metadata']['indices'].each do |index|
+            case index.class
+            when Array
+              client.indices.delete(index: index[0], ignore: 404)
+            when Hash
+              client.indices.delete(index: index.keys.first, ignore: 404)
+            end
           end
         end
 
