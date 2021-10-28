@@ -47,7 +47,7 @@ module Elasticsearch
           clear_sml_policies(client)
           wipe_searchable_snapshot_indices(client)
         end
-        clear_snapshots_and_repositories(client)
+        wipe_snapshots(client)
         wipe_datastreams(client)
         wipe_all_indices(client)
         if platinum?
@@ -257,22 +257,18 @@ module Elasticsearch
           end
         end
 
-        def clear_snapshots_and_repositories(client)
+        def wipe_snapshots(client)
           return unless (repositories = client.snapshot.get_repository(repository: '_all'))
 
           repositories.each_key do |repository|
-            client.snapshot.delete(repository: repository, snapshot: '*', ignore: 404) if repositories[repository]['type'] == 'fs'
-            begin
-              response = client.perform_request('DELETE', "_snapshot/#{repository}", ignore: [500, 404])
-              client.snapshot.delete_repository(repository: repository, ignore: 404)
-            rescue Elastic::Transport::Transport::Errors::InternalServerError => e
-              regexp = /indices that use the repository: \[docs\/([a-zA-Z0-9]+)/
-              raise e unless response.body['error']['root_cause'].first['reason'].match(regexp)
-
-              # Try again after clearing indices if we get a 500 error from delete repository
-              wipe_all_indices(client)
-              client.snapshot.delete_repository(repository: repository, ignore: 404)
+            if repositories[repository]['type'] == 'fs'
+              response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
+              # response ={"snapshots"=>[], "total"=>0, "remaining"=>0}
+              response['snapshots'].each do |snapshot|
+                client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
+              end
             end
+            client.snapshot.delete_repository(repository: repository, ignore: 404)
           end
         end
 
@@ -304,6 +300,7 @@ module Elasticsearch
 
         def wipe_all_indices(client)
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
+          client.indices.refresh(expand_wildcards: 'open,hidden')
         end
 
         def wipe_searchable_snapshot_indices(client)
