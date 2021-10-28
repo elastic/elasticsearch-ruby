@@ -94,6 +94,16 @@ module Elasticsearch
             args.merge!('reassign' => true) unless args['reassign'] === false
             @response = client.send(_method, prepare_arguments(args, test))
             client
+          when 'create'
+            begin
+              @response = client.send(_method, prepare_arguments(args, test))
+            rescue Elastic::Transport::Transport::Errors::BadRequest => e
+              raise e unless e.message.match 'resource_already_exists_exception'
+
+              client.delete(index: args['index'])
+              @response = client.send(_method, prepare_arguments(args, test))
+            end
+            client
           else
             @response = client.send(_method, prepare_arguments(args, test))
             client
