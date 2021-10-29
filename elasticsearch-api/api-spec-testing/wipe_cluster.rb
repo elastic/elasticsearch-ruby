@@ -46,7 +46,7 @@ module Elasticsearch
           wipe_rollup_jobs(client)
           wait_for_pending_rollup_tasks(client)
         end
-        clear_sml_policies(client)
+        delete_all_slm_policies(client)
         wipe_searchable_snapshot_indices(client) if @has_xpack
         wipe_snapshots(client)
         wipe_datastreams(client)
@@ -56,31 +56,25 @@ module Elasticsearch
         else
           wipe_all_templates(client)
         end
+        wipe_cluster_settings(client)
+
         if platinum?
-          clear_datafeeds(client)
           clear_ml_jobs(client)
-        else
-          client.indices.delete_template(name: '*')
-          client.indices.delete_index_template(name: '*')
-          client.cluster.get_component_template['component_templates'].each do |template|
-            next if platinum_template? template['name']
-
-            client.cluster.delete_component_template(name: template['name'], ignore: 404)
-          end
+          clear_datafeeds(client)
         end
-        clear_cluster_settings(client)
-        return unless platinum?
 
-        clear_ml_filters(client)
-        clear_ilm_policies(client)
-        clear_auto_follow_patterns(client)
-        clear_tasks(client)
-        clear_transforms(client)
+        delete_all_ilm_policies(client) if @has_ilm
+        delete_all_follow_patterns(client) if @has_ccr
         delete_all_node_shutdown_metadata(client)
+        # clear_ml_filters(client)
+        # clear_tasks(client)
+        # clear_transforms(client)
         wait_for_cluster_tasks(client)
       end
 
       class << self
+        private
+
         def platinum?
           ENV['TEST_SUITE'] == 'platinum'
         end
@@ -96,6 +90,13 @@ module Elasticsearch
               @has_ccr = true if mod['name'].include?('x-pack-ccr')
               @has_shutdown = true if mod['name'].include?('x-pack-shutdown')
             end
+          end
+        end
+
+        def wipe_rollup_jobs(client)
+          client.rollup.get_jobs(id: '_all')['jobs'].each do |d|
+            client.rollup.stop_job(id: d['config']['id'], wait_for_completion: true, timeout: '10s', ignore: 404)
+            client.rollup.delete_job(id: d['config']['id'], ignore: 404)
           end
         end
 
@@ -116,23 +117,7 @@ module Elasticsearch
           end
         end
 
-        def wait_for_cluster_tasks(client)
-          time = Time.now.to_i
-          count = 0
-
-          loop do
-            results = client.cluster.pending_tasks
-            results['tasks'].each do |task|
-              next if task.empty?
-
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending cluster task: #{task}"
-              count += 1
-            end
-            break unless count.positive? && Time.now.to_i < (time + 30)
-          end
-        end
-
-        def clear_sml_policies(client)
+        def delete_all_slm_policies(client)
           policies = client.snapshot_lifecycle_management.get_lifecycle
 
           policies.each do |name, _|
@@ -140,25 +125,50 @@ module Elasticsearch
           end
         end
 
-        def clear_ilm_policies(client)
-          policies = client.ilm.get_lifecycle
-          policies.each do |policy|
-            client.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+        def wipe_searchable_snapshot_indices(client)
+          indices = client.cluster.state(metric: 'metadata', filter_path: 'metadata.indices.*.settings.index.store.snapshot')
+          return unless indices.dig('metadata', 'indices')
+
+          indices['metadata']['indices'].each do |index|
+            case index.class
+            when Array
+              client.indices.delete(index: index[0], ignore: 404)
+            when Hash
+              client.indices.delete(index: index.keys.first, ignore: 404)
+            end
           end
         end
 
-        def clear_cluster_settings(client)
-          settings = client.cluster.get_settings
-          new_settings = []
-          settings.each do |name, value|
-            next unless !value.empty? && value.is_a?(Array)
+        def wipe_snapshots(client)
+          # Repeatedly delete the snapshots until there aren't any
+          loop do
+            repositories = client.snapshot.get_repository(repository: '_all')
+            break if repositories.empty?
 
-            new_settings[name] = [] if new_settings[name].empty?
-            value.each do |key, _v|
-              new_settings[name]["#{key}.*"] = nil
+            repositories = client.snapshot.get_repository(repository: '_all')
+            repositories.each_key do |repository|
+              if repositories[repository]['type'] == 'fs'
+                response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
+                response['snapshots'].each do |snapshot|
+                  client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
+                end
+              end
+              client.snapshot.delete_repository(repository: repository, ignore: 404)
             end
           end
-          client.cluster.put_settings(body: new_settings) unless new_settings.empty?
+        end
+
+        def wipe_datastreams(client)
+          begin
+            client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
+          rescue StandardError => e
+            Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Caught exception attempting to delete data streams: #{e}"
+            client.indices.delete_data_stream(name: '*')
+          end
+        end
+
+        def wipe_all_indices(client)
+          client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         end
 
         def wipe_templates_for_xpack(client)
@@ -210,15 +220,50 @@ module Elasticsearch
           PLATINUM_TEMPLATES.include? template
         end
 
-        def clear_auto_follow_patterns(client)
+        def wait_for_cluster_tasks(client)
+          time = Time.now.to_i
+          count = 0
+
+          loop do
+            results = client.cluster.pending_tasks
+            results['tasks'].each do |task|
+              next if task.empty?
+
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending cluster task: #{task}"
+              count += 1
+            end
+            break unless count.positive? && Time.now.to_i < (time + 30)
+          end
+        end
+
+        def delete_all_ilm_policies(client)
+          policies = client.ilm.get_lifecycle
+          policies.each do |policy|
+            client.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+          end
+        end
+
+        def wipe_cluster_settings(client)
+          settings = client.cluster.get_settings
+          new_settings = []
+          settings.each do |name, value|
+            next unless !value.empty? && value.is_a?(Array)
+
+            new_settings[name] = [] if new_settings[name].empty?
+            value.each do |key, _v|
+              new_settings[name]["#{key}.*"] = nil
+            end
+          end
+          client.cluster.put_settings(body: new_settings) unless new_settings.empty?
+        end
+
+        def delete_all_follow_patterns(client)
           patterns = client.cross_cluster_replication.get_auto_follow_pattern
 
           patterns['patterns'].each do |pattern|
             client.cross_cluster_replication.delete_auto_follow_pattern(name: pattern)
           end
         end
-
-        private
 
         def create_xpack_rest_user(client)
           client.security.put_user(
@@ -245,24 +290,10 @@ module Elasticsearch
           end
         end
 
-        def clear_datafeeds(client)
-          client.ml.stop_datafeed(datafeed_id: '_all', force: true)
-          client.ml.get_datafeeds['datafeeds'].each do |d|
-            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
-          end
-        end
-
         def clear_ml_jobs(client)
           client.ml.close_job(job_id: '_all', force: true)
           client.ml.get_jobs['jobs'].each do |d|
             client.ml.delete_job(job_id: d['job_id'])
-          end
-        end
-
-        def wipe_rollup_jobs(client)
-          client.rollup.get_jobs(id: '_all')['jobs'].each do |d|
-            client.rollup.stop_job(id: d['config']['id'], wait_for_completion: true, timeout: '10s', ignore: 404)
-            client.rollup.delete_job(id: d['config']['id'], ignore: 404)
           end
         end
 
@@ -287,32 +318,9 @@ module Elasticsearch
           end
         end
 
-        def wipe_snapshots(client)
-          repositories = client.snapshot.get_repository(repository: '_all')
-
-          repositories.each_key do |repository|
-            if repositories[repository]['type'] == 'fs'
-              response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
-              response['snapshots'].each do |snapshot|
-                client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
-              end
-            end
-            client.snapshot.delete_repository(repository: repository, ignore: 404)
-          end
-        end
-
         def clear_transforms(client)
           client.transform.get_transform(transform_id: '*')['transforms'].each do |transform|
             client.transform.delete_transform(transform_id: transform[:id])
-          end
-        end
-
-        def wipe_datastreams(client)
-          begin
-            client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
-          rescue StandardError => e
-            Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Caught exception attempting to delete data streams: #{e}"
-            client.indices.delete_data_stream(name: '*') if @has_xpack
           end
         end
 
@@ -323,29 +331,11 @@ module Elasticsearch
           end
         end
 
-        def wipe_all_indices(client)
-          client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
-        end
-
-        def wipe_searchable_snapshot_indices(client)
-          indices = client.cluster.state(metric: 'metadata', filter_path: 'metadata.indices.*.settings.index.store.snapshot')
-          return unless indices.dig('metadata', 'indices')
-
-          indices['metadata']['indices'].each do |index|
-            case index.class
-            when Array
-              client.indices.delete(index: index[0], ignore: 404)
-            when Hash
-              client.indices.delete(index: index.keys.first, ignore: 404)
-            end
-          end
-        end
-
         def delete_all_node_shutdown_metadata(client)
           nodes = client.shutdown.get_node
-          return if nodes['_nodes'] && nodes['cluster_name'] || nodes&.[]("nodes").empty?
+          return unless nodes
 
-          nodes.each do |node|
+          nodes['nodes'].each do |node|
             client.shutdown.delete_node(node['node_id'])
           end
         end
