@@ -1,11 +1,11 @@
-name: main
+name: 8.0
 on:
   push:
     branches:
-      - main
+      - 8.0
   pull_request:
     branches:
-      - main
+      - 8.0
 jobs:
   test-main:
     env:
