@@ -297,6 +297,13 @@ module Elasticsearch
           end
         end
 
+        def clear_datafeeds(client)
+          client.ml.stop_datafeed(datafeed_id: '_all', force: true)
+          client.ml.get_datafeeds['datafeeds'].each do |d|
+            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
+          end
+        end
+
         def clear_tasks(client)
           tasks = client.tasks.get['nodes'].values.first['tasks'].values.select do |d|
             d['cancellable']
