@@ -18,11 +18,12 @@
 require 'spec_helper'
 require 'rest_api_tests_helper'
 
+LOGGER = Logger.new($stdout)
+
 describe 'Rest API YAML tests' do
   if REST_API_YAML_FILES.empty?
-    logger = Logger.new($stdout)
-    logger.error 'No test files found!'
-    logger.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
+    LOGGER.error 'No test files found!'
+    LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
     exit 1
   end
 
@@ -33,8 +34,7 @@ describe 'Rest API YAML tests' do
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
-      logger = Logger.new($stdout)
-      logger.info "Skipping #{file} due to 'skip all'."
+      LOGGER.info "Skipping #{file} due to 'skip all'."
       next
     end
 
@@ -64,6 +64,9 @@ describe 'Rest API YAML tests' do
             if task_group.catch_exception?
               it 'sends the request and throws the expected error' do
                 expect(task_group.exception).to match_error(task_group.expected_exception_message)
+              rescue StandardError => e
+                LOGGER.error e
+                next
               end
 
               # 'match' on error description is in the task group definition
@@ -71,6 +74,9 @@ describe 'Rest API YAML tests' do
                 task_group.match_clauses.each do |match|
                   it 'contains the expected error in the request response' do
                     expect(task_group.exception.message).to match(Regexp.new(Regexp.escape(match['match'].values.first.to_s)))
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -80,6 +86,9 @@ describe 'Rest API YAML tests' do
                 task_group.match_clauses.each do |match|
                   it "has the expected value (#{match['match'].values.join(',')}) in the response field (#{match['match'].keys.join(',')})" do
                     expect(task_group.response).to match_response(match['match'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -89,6 +98,9 @@ describe 'Rest API YAML tests' do
                 task_group.length_match_clauses.each do |match|
                   it "the '#{match['length'].keys.join(',')}' field have the expected length" do
                     expect(task_group.response).to match_response_field_length(match['length'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -98,6 +110,9 @@ describe 'Rest API YAML tests' do
                 task_group.true_clauses.each do |match|
                   it "sends the request and the '#{match['is_true']}' field is set to true" do
                     expect(task_group.response).to match_true_field(match['is_true'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -107,6 +122,9 @@ describe 'Rest API YAML tests' do
                 task_group.false_clauses.each do |match|
                   it "sends the request and the '#{match['is_false']}' field is set to true" do
                     expect(task_group.response).to match_false_field(match['is_false'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -116,6 +134,9 @@ describe 'Rest API YAML tests' do
                 task_group.gte_clauses.each do |match|
                   it "sends the request and the '#{match['gte']}' field is greater than or equal to the expected value" do
                     expect(task_group.response).to match_gte_field(match['gte'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -125,6 +146,9 @@ describe 'Rest API YAML tests' do
                 task_group.gt_clauses.each do |match|
                   it "sends the request and the '#{match['gt']}' field is greater than the expected value" do
                     expect(task_group.response).to match_gt_field(match['gt'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -134,6 +158,9 @@ describe 'Rest API YAML tests' do
                 task_group.lte_clauses.each do |match|
                   it "sends the request and the '#{match['lte']}' field is less than or equal to the expected value" do
                     expect(task_group.response).to match_lte_field(match['lte'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -143,6 +170,9 @@ describe 'Rest API YAML tests' do
                 task_group.lt_clauses.each do |match|
                   it "sends the request and the '#{match['lt']}' field is less than the expected value" do
                     expect(task_group.response).to match_lt_field(match['lt'], test)
+                  rescue StandardError => e
+                    LOGGER.error e
+                    next
                   end
                 end
               end
@@ -153,4 +183,3 @@ describe 'Rest API YAML tests' do
     end
   end
 end
-
