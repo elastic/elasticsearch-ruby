@@ -41,39 +41,70 @@ module Elasticsearch
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
       # https://github.com/elastic/elasticsearch-php/blob/7.10/tests/Elasticsearch/Tests/Utility.php#L97
       def self.run(client)
-        read_plugins(client)
-        if @has_rollups
-          wipe_rollup_jobs(client)
-          wait_for_pending_rollup_tasks(client)
-        end
-        delete_all_slm_policies(client)
-        wipe_searchable_snapshot_indices(client) if @has_xpack
-        wipe_snapshots(client)
-        wipe_datastreams(client)
-        wipe_all_indices(client)
-        if platinum?
-          wipe_templates_for_xpack(client)
-        else
-          wipe_all_templates(client)
-        end
-        wipe_cluster_settings(client)
-
-        if platinum?
-          clear_ml_jobs(client)
-          clear_datafeeds(client)
-        end
-
-        delete_all_ilm_policies(client) if @has_ilm
-        delete_all_follow_patterns(client) if @has_ccr
-        delete_all_node_shutdown_metadata(client)
-        # clear_ml_filters(client)
-        # clear_tasks(client)
-        # clear_transforms(client)
+        ensure_no_initializing_shards(client)
+        wipe_cluster(client)
         wait_for_cluster_tasks(client)
+        check_for_unexpectedly_recreated_objects(client)
       end
 
       class << self
         private
+
+        def wipe_cluster(client)
+          read_plugins(client)
+          if @has_rollups
+            wipe_rollup_jobs(client)
+            wait_for_pending_rollup_tasks(client)
+          end
+          delete_all_slm_policies(client)
+          wipe_searchable_snapshot_indices(client) if @has_xpack
+          wipe_snapshots(client)
+          wipe_datastreams(client)
+          wipe_all_indices(client)
+          if platinum?
+            wipe_templates_for_xpack(client)
+          else
+            wipe_all_templates(client)
+          end
+          wipe_cluster_settings(client)
+
+          if platinum?
+            clear_ml_jobs(client)
+            clear_datafeeds(client)
+          end
+
+          delete_all_ilm_policies(client) if @has_ilm
+          delete_all_follow_patterns(client) if @has_ccr
+          delete_all_node_shutdown_metadata(client)
+          # clear_ml_filters(client)
+          # clear_tasks(client)
+          # clear_transforms(client)
+        end
+
+        def ensure_no_initializing_shards(client)
+          client.cluster.health(wait_for_no_initializing_shards: true, timeout: '70s', level: 'shards')
+        end
+
+        def check_for_unexpectedly_recreated_objects(client)
+          unexpected_ilm_policies = client.index_lifecycle_management.get_lifecycle
+          unexpected_ilm_policies.reject! { |k, _| PRESERVE_ILM_POLICY_IDS.include? k }
+          Elasticsearch::RestAPIYAMLTests::Logging.logger.info(
+            "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
+          ) unless unexpected_ilm_policies.empty?
+          return unless platinum?
+
+          templates = client.indices.get_index_template
+          unexpected_templates = templates['index_templates'].reject do |t|
+            # reject platinum templates
+            PLATINUM_TEMPLATES.include? t['name']
+          end.map { |t| t['name'] } # only keep the names
+          legacy_templates = client.indices.get_template
+          unexpected_templates << legacy_templates.keys.reject { |t| PLATINUM_TEMPLATES.include? t }
+
+          Elasticsearch::RestAPIYAMLTests::Logging.logger.info(
+            "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
+          ) unless unexpected_templates.empty?
+        end
 
         def platinum?
           ENV['TEST_SUITE'] == 'platinum'
@@ -110,7 +141,7 @@ module Elasticsearch
             results.each do |task|
               next if task.empty?
 
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending task: #{task}"
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug("Pending task: #{task}")
               count += 1 if task.include?(filter)
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
