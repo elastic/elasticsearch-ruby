@@ -118,25 +118,7 @@ module Elasticsearch
         return unless @setup
 
         actions = @setup['setup'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
-        count = 0
-        loop do
-          actions.delete_if do |action|
-            begin
-              action.execute(client)
-              true
-            rescue Elastic::Transport::Transport::Errors::ServiceUnavailable => e
-              # The action sometimes gets the cluster in a recovering state, so we
-              # retry a few times and then raise an exception if it's still
-              # happening
-              count += 1
-              raise e if count > 9
-
-              false
-            end
-          end
-          break if actions.empty?
-        end
-
+        run_actions_and_retry(actions)
         self
       end
 
@@ -154,9 +136,39 @@ module Elasticsearch
         return unless @teardown
 
         actions = @teardown['teardown'].select { |action| action['do'] }.map { |action| Action.new(action['do']) }
-        actions.each { |action| action.execute(client) }
+        run_actions_and_retry(actions)
         self
       end
+
+      # Helper function to run actions. If the server returns an error, give it some time and retry
+      # for a few times.
+      def run_actions_and_retry(actions)
+        count = 0
+        loop do
+          actions.delete_if do |action|
+            begin
+              action.execute(client)
+              true
+            rescue Elastic::Transport::Transport::Errors::RequestTimeout,
+                   Elastic::Transport::Transport::Errors::ServiceUnavailable => e
+              # The action sometimes gets the cluster in a recovering state, so we
+              # retry a few times and then raise an exception if it's still
+              # happening
+              count += 1
+              sleep 10
+              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug(
+                "The server responded with an #{e.class} error. Retrying action - (#{count})"
+              )
+              raise e if count > 11
+
+              false
+            end
+          end
+          break if actions.empty?
+        end
+
+      end
+
     end
   end
 end

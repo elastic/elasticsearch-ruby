@@ -19,10 +19,10 @@ require 'spec_helper'
 require 'rest_api_tests_helper'
 
 describe 'Rest API YAML tests' do
+  LOGGER = Logger.new($stdout)
   if REST_API_YAML_FILES.empty?
-    logger = Logger.new($stdout)
-    logger.error 'No test files found!'
-    logger.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
+    LOGGER.error 'No test files found!'
+    LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
     exit 1
   end
 
@@ -33,8 +33,7 @@ describe 'Rest API YAML tests' do
     rescue SkipTestsException => _e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
-      logger = Logger.new($stdout)
-      logger.info "Skipping #{file} due to 'skip all'."
+      LOGGER.info "Skipping #{file} due to 'skip all'."
       next
     end
 
@@ -153,4 +152,3 @@ describe 'Rest API YAML tests' do
     end
   end
 end
-
