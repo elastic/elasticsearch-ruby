@@ -42,7 +42,9 @@ module Elasticsearch
           path   = "_resolve/index/#{Utils.__listify(_name)}"
           params = Utils.process_params(arguments)
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

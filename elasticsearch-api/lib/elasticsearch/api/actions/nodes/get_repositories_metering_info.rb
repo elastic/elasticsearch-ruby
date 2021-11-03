@@ -45,7 +45,9 @@ module Elasticsearch
           path   = "_nodes/#{Utils.__listify(_node_id)}/_repositories_metering"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

@@ -41,7 +41,9 @@ module Elasticsearch
           path   = "_watcher/watch/#{Utils.__listify(_watch_id)}/_activate"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

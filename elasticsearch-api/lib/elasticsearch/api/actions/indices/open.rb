@@ -47,7 +47,9 @@ module Elasticsearch
           path   = "#{Utils.__listify(_index)}/_open"
           params = Utils.process_params(arguments)
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

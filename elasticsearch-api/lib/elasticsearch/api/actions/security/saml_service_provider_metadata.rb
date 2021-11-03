@@ -41,7 +41,9 @@ module Elasticsearch
           path   = "_security/saml/metadata/#{Utils.__listify(_realm_name)}"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end
