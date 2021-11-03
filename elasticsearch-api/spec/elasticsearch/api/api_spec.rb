@@ -18,9 +18,7 @@
 require 'spec_helper'
 
 describe Elasticsearch::API do
-
   describe '#settings' do
-
     it 'allows access to settings' do
       expect(described_class.settings).not_to be_nil
     end
@@ -30,7 +28,6 @@ describe Elasticsearch::API do
     end
 
     context 'when settings are changed' do
-
       before do
         Elasticsearch::API.settings[:foo] = 'bar'
       end
