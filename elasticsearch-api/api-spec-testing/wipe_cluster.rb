@@ -16,6 +16,7 @@
 # under the License.
 
 require_relative 'logging'
+include Elasticsearch::RestAPIYAMLTests::Logging
 
 module Elasticsearch
   module RestAPIYAMLTests
@@ -67,12 +68,10 @@ module Elasticsearch
             wipe_all_templates(client)
           end
           wipe_cluster_settings(client)
-
           if platinum?
             clear_ml_jobs(client)
             clear_datafeeds(client)
           end
-
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
@@ -88,9 +87,11 @@ module Elasticsearch
         def check_for_unexpectedly_recreated_objects(client)
           unexpected_ilm_policies = client.index_lifecycle_management.get_lifecycle
           unexpected_ilm_policies.reject! { |k, _| PRESERVE_ILM_POLICY_IDS.include? k }
-          Elasticsearch::RestAPIYAMLTests::Logging.logger.info(
-            "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
-          ) unless unexpected_ilm_policies.empty?
+          unless unexpected_ilm_policies.empty?
+            logger.info(
+              "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
+            )
+          end
           return unless platinum?
 
           templates = client.indices.get_index_template
@@ -101,9 +102,11 @@ module Elasticsearch
           legacy_templates = client.indices.get_template
           unexpected_templates << legacy_templates.keys.reject { |t| PLATINUM_TEMPLATES.include? t }
 
-          Elasticsearch::RestAPIYAMLTests::Logging.logger.info(
-            "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
-          ) unless unexpected_templates.empty?
+          unless unexpected_templates.empty?
+            logger.info(
+              "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
+            )
+          end
         end
 
         def platinum?
@@ -141,7 +144,7 @@ module Elasticsearch
             results.each do |task|
               next if task.empty?
 
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug("Pending task: #{task}")
+              logger.debug("Pending task: #{task}")
               count += 1 if task.include?(filter)
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -161,12 +164,12 @@ module Elasticsearch
           return unless indices.dig('metadata', 'indices')
 
           indices['metadata']['indices'].each do |index|
-            case index.class
-            when Array
-              client.indices.delete(index: index[0], ignore: 404)
-            when Hash
-              client.indices.delete(index: index.keys.first, ignore: 404)
-            end
+            index_name = if index.is_a?(Array)
+                           index[0]
+                         elsif index.is_a?(Hash)
+                           index.keys.first
+                         end
+            client.indices.delete(index: index_name, ignore: 404)
           end
         end
 
@@ -176,11 +179,13 @@ module Elasticsearch
             repositories = client.snapshot.get_repository(repository: '_all')
             break if repositories.empty?
 
-            repositories = client.snapshot.get_repository(repository: '_all')
             repositories.each_key do |repository|
               if repositories[repository]['type'] == 'fs'
                 response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
                 response['snapshots'].each do |snapshot|
+                  if snapshot['state'] != 'SUCCESS'
+                    logger.debug("Found snapshot that did not succeed #{snapshot}")
+                  end
                   client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
                 end
               end
@@ -193,7 +198,7 @@ module Elasticsearch
           begin
             client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           rescue StandardError => e
-            Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Caught exception attempting to delete data streams: #{e}"
+            logger.error "Caught exception attempting to delete data streams: #{e}"
             client.indices.delete_data_stream(name: '*')
           end
         end
@@ -229,7 +234,7 @@ module Elasticsearch
             begin
               client.indices.delete_template(name: name)
             rescue StandardError => e
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.info("Unable to remove index template #{name}")
+              logger.info("Unable to remove index template #{name}")
             end
           end
         end
@@ -240,7 +245,7 @@ module Elasticsearch
             client.indices.delete_index_template(name: '*')
             client.cluster.delete_component_template(name: '*')
           rescue StandardError => e
-            Elasticsearch::RestAPIYAMLTests::Logging.logger.info('Using a version of ES that doesn\'t support index templates v2 yet, so it\'s safe to ignore')
+            logger.info('Using a version of ES that doesn\'t support index templates v2 yet, so it\'s safe to ignore')
           end
         end
 
@@ -260,7 +265,7 @@ module Elasticsearch
             results['tasks'].each do |task|
               next if task.empty?
 
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug "Pending cluster task: #{task}"
+              logger.debug "Pending cluster task: #{task}"
               count += 1
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
