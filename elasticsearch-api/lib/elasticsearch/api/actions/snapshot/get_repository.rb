@@ -46,9 +46,15 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+            Utils.__rescue_from_not_found {
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers)
+              )
+            }
           else
-            perform_request(method, path, params, body, headers).body
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
           end
         end
       end

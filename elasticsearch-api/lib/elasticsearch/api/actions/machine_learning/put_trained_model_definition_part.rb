@@ -51,7 +51,9 @@ module Elasticsearch
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/definition/#{Utils.__listify(_part)}"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

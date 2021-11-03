@@ -67,7 +67,9 @@ module Elasticsearch
         path   = "#{Utils.__listify(_index)}/_mvt/#{Utils.__listify(_field)}/#{Utils.__listify(_zoom)}/#{Utils.__listify(_x)}/#{Utils.__listify(_y)}"
         params = Utils.process_params(arguments)
 
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
     end
   end

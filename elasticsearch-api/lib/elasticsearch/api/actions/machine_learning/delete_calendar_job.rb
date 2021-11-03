@@ -45,7 +45,9 @@ module Elasticsearch
           path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/jobs/#{Utils.__listify(_job_id)}"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end
