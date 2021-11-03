@@ -42,7 +42,9 @@ module Elasticsearch
           path   = "_watcher/_query/watches"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

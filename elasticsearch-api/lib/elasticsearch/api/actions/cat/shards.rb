@@ -52,7 +52,9 @@ module Elasticsearch
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

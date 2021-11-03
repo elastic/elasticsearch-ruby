@@ -45,7 +45,9 @@ module Elasticsearch
           path   = "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}/_start"
           params = Utils.process_params(arguments)
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

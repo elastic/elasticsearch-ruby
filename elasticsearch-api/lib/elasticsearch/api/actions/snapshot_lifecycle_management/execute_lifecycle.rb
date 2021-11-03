@@ -41,7 +41,9 @@ module Elasticsearch
           path   = "_slm/policy/#{Utils.__listify(_policy_id)}/_execute"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

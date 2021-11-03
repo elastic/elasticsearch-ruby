@@ -45,7 +45,9 @@ module Elasticsearch
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_stop"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end
