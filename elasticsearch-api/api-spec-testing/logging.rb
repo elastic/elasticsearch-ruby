@@ -20,7 +20,7 @@ require 'logger'
 module Elasticsearch
   module RestAPIYAMLTests
     module Logging
-      def self.logger
+      def logger
         @logger ||= Logger.new($stdout)
       end
     end
