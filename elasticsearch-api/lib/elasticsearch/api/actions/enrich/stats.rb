@@ -36,7 +36,9 @@ module Elasticsearch
           path   = "_enrich/_stats"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

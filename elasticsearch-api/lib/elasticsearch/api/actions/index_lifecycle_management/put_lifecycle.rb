@@ -42,7 +42,9 @@ module Elasticsearch
           path   = "_ilm/policy/#{Utils.__listify(_policy)}"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

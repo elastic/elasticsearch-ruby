@@ -45,7 +45,9 @@ module Elasticsearch
           path   = "_rollup/job/#{Utils.__listify(_id)}"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

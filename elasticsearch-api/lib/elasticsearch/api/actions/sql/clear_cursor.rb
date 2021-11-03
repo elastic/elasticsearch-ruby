@@ -39,7 +39,9 @@ module Elasticsearch
           path   = "_sql/close"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

@@ -41,7 +41,9 @@ module Elasticsearch
           path   = "_security/api_key/#{Utils.__listify(_ids)}/_clear_cache"
           params = {}
 
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

@@ -60,7 +60,9 @@ module Elasticsearch
           end
 
           headers.merge!("Content-Type" => "application/x-ndjson")
-          perform_request(method, path, params, payload, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, payload, headers)
+          )
         end
       end
     end
