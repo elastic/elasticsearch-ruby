@@ -31,6 +31,7 @@ module Elasticsearch
     #
     # @since 6.2.0
     class TestFile
+      include Elasticsearch::RestAPIYAMLTests::Logging
       attr_reader :features_to_skip, :name, :client
 
       # Initialize a single test file.
@@ -49,8 +50,8 @@ module Elasticsearch
         begin
           documents = YAML.load_stream(File.new(file_name))
         rescue StandardError => e
-          Elasticsearch::RestAPIYAMLTests::Logging.logger.error e
-          Elasticsearch::RestAPIYAMLTests::Logging.logger.error "Filename : #{@name}"
+          logger.error e
+          logger.error "Filename : #{@name}"
         end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
@@ -156,7 +157,7 @@ module Elasticsearch
               # happening
               count += 1
               sleep 10
-              Elasticsearch::RestAPIYAMLTests::Logging.logger.debug(
+              logger.debug(
                 "The server responded with an #{e.class} error. Retrying action - (#{count})"
               )
               raise e if count > 11
@@ -166,9 +167,7 @@ module Elasticsearch
           end
           break if actions.empty?
         end
-
       end
-
     end
   end
 end
