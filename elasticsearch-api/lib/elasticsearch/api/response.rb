@@ -21,12 +21,14 @@ module Elasticsearch
     # the initializer and behaves like a Hash, except when status or headers are called upon it, in
     # which case it returns the original object's status and headers.
     class Response
+      RESPONSE_METHODS = [:status, :body, :headers]
+
       def initialize(response)
         @response = response
       end
 
       def method_missing(method, *args, &block)
-        if [:status, :body, :headers].include? method
+        if RESPONSE_METHODS.include? method
           @response.send method.to_sym
         else
           @response.body.send(method.to_sym, *args, &block)
@@ -35,7 +37,7 @@ module Elasticsearch
 
       def respond_to_missing?(method_name, include_private = false)
         @response.body.respond_to?(method_name, include_private) ||
-          [:body, :headers, :status].include?(method_name)
+          RESPONSE_METHODS.include?(method_name)
       end
 
       def to_s
