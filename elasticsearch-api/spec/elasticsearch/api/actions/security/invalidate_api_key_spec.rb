@@ -33,6 +33,6 @@ describe 'client.security#invalidate_api_key_sp' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.invalidate_api_key(body: body)).to eq({})
+    expect(client_double.security.invalidate_api_key(body: body)).to be_a Elasticsearch::API::Response
   end
 end

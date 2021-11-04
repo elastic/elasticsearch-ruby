@@ -33,7 +33,7 @@ describe 'client#terms_enum' do
     let(:body) { nil }
 
     it 'performs a GET request' do
-      expect(client_double.terms_enum(index: 'foo')).to eq({})
+      expect(client_double.terms_enum(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -42,7 +42,7 @@ describe 'client#terms_enum' do
     let(:body) { {} }
 
     it 'performs a POST request' do
-      expect(client_double.terms_enum(index: 'foo', body: body)).to eq({})
+      expect(client_double.terms_enum(index: 'foo', body: body)).to be_a Elasticsearch::API::Response
     end
   end
 

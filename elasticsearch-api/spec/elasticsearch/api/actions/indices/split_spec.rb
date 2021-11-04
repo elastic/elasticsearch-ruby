@@ -30,6 +30,6 @@ describe 'client.cluster#split' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.split(index: 'foo', target: 'bar')).to eq({})
+    expect(client_double.indices.split(index: 'foo', target: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

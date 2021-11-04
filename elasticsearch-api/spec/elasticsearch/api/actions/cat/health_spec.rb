@@ -30,6 +30,6 @@ describe 'client.cat#health' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.health).to eq({})
+    expect(client_double.cat.health).to be_a Elasticsearch::API::Response
   end
 end

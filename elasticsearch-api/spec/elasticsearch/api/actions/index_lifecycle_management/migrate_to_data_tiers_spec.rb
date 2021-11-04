@@ -31,6 +31,6 @@ describe 'client.index_lifecycle_management#migrate_to_data_tiers' do
   let(:index) { 'foo' }
 
   it 'performs the request' do
-    expect(client_double.index_lifecycle_management.migrate_to_data_tiers).to eq({})
+    expect(client_double.index_lifecycle_management.migrate_to_data_tiers).to be_a Elasticsearch::API::Response
   end
 end

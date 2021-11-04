@@ -29,7 +29,7 @@ describe 'client#ml.stop_trained_model_deployment' do
   end
 
   it 'performs the request' do
-    expect(client_double.ml.stop_trained_model_deployment(model_id: 'foo')).to eq({})
+    expect(client_double.ml.stop_trained_model_deployment(model_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

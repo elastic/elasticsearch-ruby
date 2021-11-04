@@ -57,7 +57,7 @@ describe 'client#update' do
   end
 
   it 'performs the request' do
-    expect(client_double.update(index: 'foo', type: 'bar', id: '1', body: { doc: {} })).to eq({})
+    expect(client_double.update(index: 'foo', type: 'bar', id: '1', body: { doc: {} })).to be_a Elasticsearch::API::Response
   end
 
   context 'when URL parameters are provided' do

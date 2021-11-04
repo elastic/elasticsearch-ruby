@@ -34,7 +34,7 @@ describe 'client.indices#add_block' do
   it 'performs the request' do
     expect(
       client_double.indices.add_block(index: index, block: block)
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is not specified' do

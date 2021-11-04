@@ -38,7 +38,7 @@ describe 'client.indices#clear_cache' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.clear_cache).to eq({})
+    expect(client_double.indices.clear_cache).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -48,7 +48,7 @@ describe 'client.indices#clear_cache' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.clear_cache(index: 'foo')).to eq({})
+      expect(client_double.indices.clear_cache(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -59,7 +59,7 @@ describe 'client.indices#clear_cache' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.clear_cache(fielddata: true)).to eq({})
+      expect(client_double.indices.clear_cache(fielddata: true)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -74,7 +74,7 @@ describe 'client.indices#clear_cache' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.clear_cache(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.clear_cache(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

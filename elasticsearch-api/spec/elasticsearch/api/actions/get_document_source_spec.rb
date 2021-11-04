@@ -59,7 +59,7 @@ describe 'client#get_source' do
     end
 
     it 'Passes the URL params' do
-      expect(client_double.get_source(index: 'foo', id: '1', routing: 'abc123')).to eq({})
+      expect(client_double.get_source(index: 'foo', id: '1', routing: 'abc123')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -70,7 +70,7 @@ describe 'client#get_source' do
     end
 
     it 'URL-escapes the parts' do
-      expect(client_double.get_source(index: 'foo^bar', id: '1')).to eq({})
+      expect(client_double.get_source(index: 'foo^bar', id: '1')).to be_a Elasticsearch::API::Response
     end
   end
 

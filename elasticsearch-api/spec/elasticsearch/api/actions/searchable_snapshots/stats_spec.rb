@@ -30,14 +30,14 @@ describe 'client#searchable_snapshots.stats' do
   let(:url) { '_searchable_snapshots/stats' }
 
   it 'performs the request' do
-    expect(client_double.searchable_snapshots.stats).to eq({})
+    expect(client_double.searchable_snapshots.stats).to be_a Elasticsearch::API::Response
   end
 
   context 'using index' do
     let(:url) { 'foo/_searchable_snapshots/stats' }
 
     it 'performs the request' do
-      expect(client_double.searchable_snapshots.stats(index: 'foo')).to eq({})
+      expect(client_double.searchable_snapshots.stats(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

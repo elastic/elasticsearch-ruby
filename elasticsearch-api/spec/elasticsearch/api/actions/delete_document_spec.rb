@@ -50,7 +50,7 @@ describe 'client#delete' do
   end
 
   it 'performs the request' do
-    expect(client_double.delete(index: 'foo', type: 'bar', id: '1')).to eq({})
+    expect(client_double.delete(index: 'foo', type: 'bar', id: '1')).to be_a Elasticsearch::API::Response
   end
 
   context 'when url params are provided' do
@@ -59,7 +59,7 @@ describe 'client#delete' do
     end
 
     it 'performs the request' do
-      expect(client_double.delete(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to eq({})
+      expect(client_double.delete(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -75,7 +75,7 @@ describe 'client#delete' do
     end
 
     it 'escapes the url params' do
-      expect(client_double.delete(index: 'foo^bar', type: 'bar/bam', id: 1)).to eq({})
+      expect(client_double.delete(index: 'foo^bar', type: 'bar/bam', id: 1)).to be_a Elasticsearch::API::Response
     end
   end
 

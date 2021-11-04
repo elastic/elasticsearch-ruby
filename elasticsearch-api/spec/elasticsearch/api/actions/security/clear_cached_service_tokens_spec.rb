@@ -31,7 +31,7 @@ describe 'client#security#clear_cached_service_tokens' do
   it 'performs the request' do
     expect(client_double.security.clear_cached_service_tokens(
              namespace: 'foo', service: 'bar', name: 'service_token')
-          ).to eq({})
+          ).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

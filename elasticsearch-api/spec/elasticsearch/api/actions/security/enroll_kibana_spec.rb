@@ -29,6 +29,6 @@ describe 'client#security#enroll_kibana' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.enroll_kibana).to eq({})
+    expect(client_double.security.enroll_kibana).to be_a Elasticsearch::API::Response
   end
 end

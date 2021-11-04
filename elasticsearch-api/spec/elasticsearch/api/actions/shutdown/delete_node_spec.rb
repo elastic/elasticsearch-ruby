@@ -29,7 +29,7 @@ describe 'client.shutdown#delete_node' do
   end
 
   it 'performs the request' do
-    expect(client_double.shutdown.delete_node(node_id: 'id')).to eq({})
+    expect(client_double.shutdown.delete_node(node_id: 'id')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

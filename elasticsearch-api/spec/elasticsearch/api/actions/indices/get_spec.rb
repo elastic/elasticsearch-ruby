@@ -38,7 +38,7 @@ describe 'client.indices#get' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get(index: 'foo')).to eq({})
+    expect(client_double.indices.get(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when parameters are specified' do
@@ -48,7 +48,7 @@ describe 'client.indices#get' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get(index: 'foo', ignore_unavailable: 1)).to eq({})
+      expect(client_double.indices.get(index: 'foo', ignore_unavailable: 1)).to be_a Elasticsearch::API::Response
     end
   end
 end

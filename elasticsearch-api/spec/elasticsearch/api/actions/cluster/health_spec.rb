@@ -30,7 +30,7 @@ describe 'client.cluster#health' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.health).to eq({})
+    expect(client_double.cluster.health).to be_a Elasticsearch::API::Response
   end
 
   context 'when a level is specified' do
@@ -46,7 +46,7 @@ describe 'client.cluster#health' do
     end
 
     it 'performs the request' do
-      expect(client_double.cluster.health(level: 'indices')).to eq({})
+      expect(client_double.cluster.health(level: 'indices')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -63,7 +63,7 @@ describe 'client.cluster#health' do
     end
 
     it 'performs the request' do
-      expect(client_double.cluster.health(index: 'foo')).to eq({})
+      expect(client_double.cluster.health(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

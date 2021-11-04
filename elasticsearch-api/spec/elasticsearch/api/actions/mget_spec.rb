@@ -41,7 +41,7 @@ describe 'client#mget' do
   end
 
   it 'performs the request' do
-    expect(client_double.mget(body: { :docs => [] })).to eq({})
+    expect(client_double.mget(body: { :docs => [] })).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -51,7 +51,7 @@ describe 'client#mget' do
     end
 
     it 'performs the request' do
-      expect(client_double.mget(index: 'foo', body: { :docs => [] })).to eq({})
+      expect(client_double.mget(index: 'foo', body: { :docs => [] })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -66,7 +66,7 @@ describe 'client#mget' do
     end
 
     it 'performs the request' do
-      expect(client_double.mget(body: {}, refresh: true)).to eq({})
+      expect(client_double.mget(body: {}, refresh: true)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -81,7 +81,7 @@ describe 'client#mget' do
     end
 
     it 'performs the request' do
-      expect(client_double.mget(index: 'foo^bar', body: { :ids => [ '1', '2'] })).to eq({})
+      expect(client_double.mget(index: 'foo^bar', body: { :ids => [ '1', '2'] })).to be_a Elasticsearch::API::Response
     end
   end
 end

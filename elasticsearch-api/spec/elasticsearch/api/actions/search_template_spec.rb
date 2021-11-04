@@ -29,6 +29,6 @@ describe 'client#search_template' do
   end
 
   it 'performs the request' do
-    expect(client_double.search_template(index: 'foo', body: { foo: 'bar' })).to eq({})
+    expect(client_double.search_template(index: 'foo', body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
   end
 end

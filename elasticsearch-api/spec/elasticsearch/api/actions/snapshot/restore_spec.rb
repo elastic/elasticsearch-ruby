@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client.snapshot#restore' do
-
   let(:expected_args) do
     [
-        'POST',
-        '_snapshot/foo/bar/_restore',
-        {},
-        nil,
-        {}
+      'POST',
+      '_snapshot/foo/bar/_restore',
+      {},
+      nil,
+      {}
     ]
   end
 
@@ -34,9 +33,7 @@ describe 'client.snapshot#restore' do
   end
 
   it 'requires the :snapshot argument' do
-    expect {
-      client.snapshot.restore(repository: 'foo')
-    }.to raise_exception(ArgumentError)
+    expect { client.snapshot.restore(repository: 'foo') }.to raise_exception(ArgumentError)
   end
 
   it 'requires the :repository argument' do
@@ -46,6 +43,6 @@ describe 'client.snapshot#restore' do
   end
 
   it 'performs the request' do
-    expect(client_double.snapshot.restore(repository: 'foo', snapshot: 'bar')).to eq({})
+    expect(client_double.snapshot.restore(repository: 'foo', snapshot: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

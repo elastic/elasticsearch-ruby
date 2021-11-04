@@ -29,6 +29,6 @@ describe 'client#migration.get_feature_upgrade_status' do
   end
 
   it 'performs the request' do
-    expect(client_double.migration.get_feature_upgrade_status).to eq({})
+    expect(client_double.migration.get_feature_upgrade_status).to be_a Elasticsearch::API::Response
   end
 end

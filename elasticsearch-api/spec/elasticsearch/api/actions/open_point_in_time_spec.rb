@@ -29,6 +29,6 @@ describe 'client#open_point_in_time' do
   end
 
   it 'performs the request' do
-    expect(client_double.open_point_in_time(index: 'foo')).to eq({})
+    expect(client_double.open_point_in_time(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

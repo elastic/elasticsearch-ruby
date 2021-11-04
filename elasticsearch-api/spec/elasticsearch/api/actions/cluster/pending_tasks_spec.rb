@@ -30,6 +30,6 @@ describe 'client.cluster#pending_tasks' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.pending_tasks).to eq({})
+    expect(client_double.cluster.pending_tasks).to be_a Elasticsearch::API::Response
   end
 end
