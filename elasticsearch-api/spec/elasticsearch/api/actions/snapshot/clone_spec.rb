@@ -62,6 +62,6 @@ describe 'client.snapshot#clone' do
              snapshot: 'bar',
              body: {},
              target_snapshot: 'snapshot'
-           )).to eq({})
+           )).to be_a Elasticsearch::API::Response
   end
 end

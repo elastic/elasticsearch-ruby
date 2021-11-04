@@ -30,6 +30,6 @@ describe 'client.cat#indices' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.indices).to eq({})
+    expect(client_double.cat.indices).to be_a Elasticsearch::API::Response
   end
 end

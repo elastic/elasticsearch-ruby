@@ -34,7 +34,7 @@ describe 'client#reload_secure_settings' do
   let(:body) { nil }
 
   it 'performs the request' do
-    expect(client_double.nodes.reload_secure_settings()).to eq({})
+    expect(client_double.nodes.reload_secure_settings()).to be_a Elasticsearch::API::Response
   end
 
   context 'when a node id is specified' do
@@ -44,7 +44,7 @@ describe 'client#reload_secure_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.reload_secure_settings(node_id: 'foo')).to eq({})
+      expect(client_double.nodes.reload_secure_settings(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -56,7 +56,7 @@ describe 'client#reload_secure_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.reload_secure_settings(node_id: 'foo,bar', body: { foo: 'bar' })).to eq({})
+      expect(client_double.nodes.reload_secure_settings(node_id: 'foo,bar', body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -67,7 +67,7 @@ describe 'client#reload_secure_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.reload_secure_settings(node_id: ['foo', 'bar'], body: { foo: 'bar' })).to eq({})
+      expect(client_double.nodes.reload_secure_settings(node_id: ['foo', 'bar'], body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -78,7 +78,7 @@ describe 'client#reload_secure_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.reload_secure_settings(timeout: '30s')).to eq({})
+      expect(client_double.nodes.reload_secure_settings(timeout: '30s')).to be_a Elasticsearch::API::Response
     end
   end
 end

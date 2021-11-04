@@ -29,7 +29,7 @@ describe 'client#set_upgrade_mode' do
   end
 
   it 'performs the request' do
-    expect(client_double.ml.set_upgrade_mode).to eq({})
+    expect(client_double.ml.set_upgrade_mode).to be_a Elasticsearch::API::Response
   end
 
   context 'when params are specified' do
@@ -45,7 +45,7 @@ describe 'client#set_upgrade_mode' do
     end
 
     it 'performs the request' do
-      expect(client_double.ml.set_upgrade_mode(enabled: true, timeout: '10m')).to eq({})
+      expect(client_double.ml.set_upgrade_mode(enabled: true, timeout: '10m')).to be_a Elasticsearch::API::Response
     end
   end
 end

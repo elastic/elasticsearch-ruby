@@ -61,7 +61,7 @@ describe 'client#rank_eval' do
     end
 
     it 'performs the request' do
-      expect(client.rank_eval(index: 'my_index', body: {})).to eq({})
+      expect(client.rank_eval(index: 'my_index', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -79,7 +79,7 @@ describe 'client#rank_eval' do
       expect(client_double.rank_eval(body: {},
                                      ignore_unavailable: true,
                                      allow_no_indices: false,
-                                     expand_wildcards: 'open')).to eq({})
+                                     expand_wildcards: 'open')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -121,7 +121,7 @@ describe 'client#rank_eval' do
                                                      "k": 20
                                                  }
                                              }
-                                         })).to eq({})
+                                         })).to be_a Elasticsearch::API::Response
     end
   end
 end

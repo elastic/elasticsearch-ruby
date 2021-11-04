@@ -42,7 +42,7 @@ describe 'client.cluster#put_template' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_template(name: 'foo', body: { template: 'bar' })).to eq({})
+    expect(client_double.indices.put_template(name: 'foo', body: { template: 'bar' })).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no name specified' do
@@ -86,7 +86,7 @@ describe 'client.cluster#put_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_template(name: 'foo', order: 3, body: {})).to eq({})
+      expect(client_double.indices.put_template(name: 'foo', order: 3, body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -101,7 +101,7 @@ describe 'client.cluster#put_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_template(name: 'foo^bar', body: {})).to eq({})
+      expect(client_double.indices.put_template(name: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

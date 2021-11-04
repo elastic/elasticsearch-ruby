@@ -32,7 +32,7 @@ describe 'client.shutdown#get_node' do
     let(:url) { '_nodes/id/shutdown' }
 
     it 'performs the request' do
-      expect(client_double.shutdown.get_node(node_id: 'id')).to eq({})
+      expect(client_double.shutdown.get_node(node_id: 'id')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -40,7 +40,7 @@ describe 'client.shutdown#get_node' do
     let(:url) { '_nodes/shutdown' }
 
     it 'performs the request' do
-      expect(client_double.shutdown.get_node).to eq({})
+      expect(client_double.shutdown.get_node).to be_a Elasticsearch::API::Response
     end
   end
 end

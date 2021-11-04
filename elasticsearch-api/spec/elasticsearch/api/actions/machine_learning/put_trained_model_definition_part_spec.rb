@@ -29,7 +29,7 @@ describe 'client#ml.put_trained_model_definition_part' do
   end
 
   it 'performs the request' do
-    expect(client_double.ml.put_trained_model_definition_part(model_id: 'foo', body: {}, part: 3)).to eq({})
+    expect(client_double.ml.put_trained_model_definition_part(model_id: 'foo', body: {}, part: 3)).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

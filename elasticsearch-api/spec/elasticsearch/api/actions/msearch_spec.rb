@@ -83,7 +83,7 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(body: %Q|{"foo":"bar"}\n{"moo":"lam"}|)).to eq({})
+      expect(client_double.msearch(body: %Q|{"foo":"bar"}\n{"moo":"lam"}|)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -128,7 +128,7 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(index: 'foo^bar', body: [])).to eq({})
+      expect(client_double.msearch(index: 'foo^bar', body: [])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -147,7 +147,7 @@ describe 'client#msearch' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch(body: [], search_type: 'scroll')).to eq({})
+      expect(client_double.msearch(body: [], search_type: 'scroll')).to be_a Elasticsearch::API::Response
     end
   end
 end

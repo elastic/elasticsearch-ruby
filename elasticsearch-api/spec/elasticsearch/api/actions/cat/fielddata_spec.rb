@@ -30,7 +30,7 @@ describe 'client.cat#fielddata' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.fielddata).to eq({})
+    expect(client_double.cat.fielddata).to be_a Elasticsearch::API::Response
   end
 
   context 'when field are specified' do
@@ -46,7 +46,7 @@ describe 'client.cat#fielddata' do
     end
 
     it 'performs the request' do
-      expect(client_double.cat.fielddata(fields: ['foo', 'bar'])).to eq({})
+      expect(client_double.cat.fielddata(fields: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 end

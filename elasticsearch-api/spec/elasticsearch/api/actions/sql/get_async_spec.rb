@@ -34,15 +34,13 @@ describe 'client.sql#get_async' do
     end
 
     it 'raises an exception' do
-      expect {
-        client.sql.get_async
-      }.to raise_exception(ArgumentError)
+      expect { client.sql.get_async }.to raise_exception(ArgumentError)
     end
   end
 
   context 'when an index is specified' do
     it 'performs the request' do
-      expect(client_double.sql.get_async(id: 'foo')).to eq({})
+      expect(client_double.sql.get_async(id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

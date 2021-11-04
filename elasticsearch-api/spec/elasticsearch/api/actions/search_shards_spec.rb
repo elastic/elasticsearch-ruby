@@ -30,6 +30,6 @@ describe 'client#search_shards' do
   end
 
   it 'performs the request' do
-    expect(client_double.search_shards).to eq({})
+    expect(client_double.search_shards).to be_a Elasticsearch::API::Response
   end
 end

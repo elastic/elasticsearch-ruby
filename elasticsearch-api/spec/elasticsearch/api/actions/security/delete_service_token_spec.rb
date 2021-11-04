@@ -33,7 +33,7 @@ describe 'client#security#delete_service_token' do
       client_double.security.delete_service_token(
         namespace: 'foo', service: 'bar', name: 'service_token'
       )
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

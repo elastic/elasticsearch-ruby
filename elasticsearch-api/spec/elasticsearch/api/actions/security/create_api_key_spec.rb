@@ -57,7 +57,7 @@ describe 'client#security#create_api_key' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.create_api_key(body: body)).to eq({})
+    expect(client_double.security.create_api_key(body: body)).to be_a Elasticsearch::API::Response
   end
 
   context 'when params are specified' do
@@ -73,7 +73,7 @@ describe 'client#security#create_api_key' do
     end
 
     it 'performs the request' do
-      expect(client_double.security.create_api_key(body: body, refresh: 'wait_for')).to eq({})
+      expect(client_double.security.create_api_key(body: body, refresh: 'wait_for')).to be_a Elasticsearch::API::Response
     end
   end
 end

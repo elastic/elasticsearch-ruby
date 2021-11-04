@@ -42,7 +42,7 @@ describe 'client.indices#data_streams_stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.data_streams_stats).to eq({})
+      expect(client_double.indices.data_streams_stats).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -52,7 +52,7 @@ describe 'client.indices#data_streams_stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.data_streams_stats(name: 'foo')).to eq({})
+      expect(client_double.indices.data_streams_stats(name: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

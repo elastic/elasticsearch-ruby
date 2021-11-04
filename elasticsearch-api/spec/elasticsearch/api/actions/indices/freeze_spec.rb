@@ -53,12 +53,11 @@ describe 'client.indices#freeze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.freeze(index: 'foo')).to eq({})
+      expect(client_double.indices.freeze(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when params are specified' do
-
     let(:params) do
       { timeout: '1s' }
     end
@@ -68,18 +67,17 @@ describe 'client.indices#freeze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.freeze(index: 'foo', timeout: '1s')).to eq({})
+      expect(client_double.indices.freeze(index: 'foo', timeout: '1s')).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when the path must be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_freeze'
     end
 
     it 'performs the request' do
-      expect(client_double.indices.freeze(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.freeze(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

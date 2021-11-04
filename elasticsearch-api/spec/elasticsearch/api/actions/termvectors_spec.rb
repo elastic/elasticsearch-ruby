@@ -51,7 +51,7 @@ describe 'client#termvectors' do
   end
 
   it 'performs the request' do
-    expect(client_double.termvectors(index: 'foo', id: '123', body: {})).to eq({})
+    expect(client_double.termvectors(index: 'foo', id: '123', body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when the older api name \'termvector\' is used' do
@@ -60,7 +60,7 @@ describe 'client#termvectors' do
     end
 
     it 'performs the request' do
-      expect(client_double.termvector(index: 'foo', id: '123', body: {})).to eq({})
+      expect(client_double.termvector(index: 'foo', id: '123', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

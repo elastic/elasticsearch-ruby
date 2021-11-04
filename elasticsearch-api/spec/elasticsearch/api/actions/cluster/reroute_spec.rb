@@ -30,7 +30,7 @@ describe 'client.cluster#reroute' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.reroute).to eq({})
+    expect(client_double.cluster.reroute).to be_a Elasticsearch::API::Response
   end
 
   context 'when a body is specified' do
@@ -46,7 +46,7 @@ describe 'client.cluster#reroute' do
     end
 
     it 'performs the request' do
-      expect(client_double.cluster.reroute(body: { commands: [ move: { index: 'myindex', shard: 0 }] })).to eq({})
+      expect(client_double.cluster.reroute(body: { commands: [ move: { index: 'myindex', shard: 0 }] })).to be_a Elasticsearch::API::Response
     end
   end
 end

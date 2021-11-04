@@ -34,7 +34,7 @@ describe 'client.cluster#get_field_mapping' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get_field_mapping(field: 'foo')).to eq({})
+    expect(client_double.indices.get_field_mapping(field: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -44,7 +44,7 @@ describe 'client.cluster#get_field_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_field_mapping(index: 'foo', field: 'bam')).to eq({})
+      expect(client_double.indices.get_field_mapping(index: 'foo', field: 'bam')).to be_a Elasticsearch::API::Response
     end
   end
 end

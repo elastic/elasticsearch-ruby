@@ -34,7 +34,7 @@ describe 'client.cat#segments' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.segments).to eq({})
+    expect(client_double.cat.segments).to be_a Elasticsearch::API::Response
   end
 
   context 'when index is specified' do
@@ -43,7 +43,7 @@ describe 'client.cat#segments' do
     end
 
     it 'performs the request' do
-      expect(client_double.cat.segments(index: 'foo')).to eq({})
+      expect(client_double.cat.segments(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

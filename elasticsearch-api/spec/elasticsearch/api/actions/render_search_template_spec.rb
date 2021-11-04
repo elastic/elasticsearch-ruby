@@ -30,7 +30,7 @@ describe 'client#render_search_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.render_search_template(body: { foo: 'bar' })).to eq({})
+      expect(client_double.render_search_template(body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -46,7 +46,7 @@ describe 'client#render_search_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.render_search_template(id: 'foo', body: { foo: 'bar' })).to eq({})
+      expect(client_double.render_search_template(id: 'foo', body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 end

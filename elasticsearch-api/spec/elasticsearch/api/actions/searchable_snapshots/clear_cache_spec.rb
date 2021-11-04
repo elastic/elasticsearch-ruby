@@ -31,14 +31,14 @@ describe 'client#searchable_snapshots.clear_cache' do
   let(:url){ '_searchable_snapshots/cache/clear' }
 
   it 'performs the request' do
-    expect(client_double.searchable_snapshots.clear_cache).to eq({})
+    expect(client_double.searchable_snapshots.clear_cache).to be_a Elasticsearch::API::Response
   end
 
   context 'when using index' do
     let(:url){ 'foo/_searchable_snapshots/cache/clear' }
 
     it 'performs the request' do
-      expect(client_double.searchable_snapshots.clear_cache(index: 'foo')).to eq({})
+      expect(client_double.searchable_snapshots.clear_cache(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -36,7 +36,7 @@ describe 'client#delete_by_query' do
   end
 
   it 'performs the request' do
-    expect(client_double.delete_by_query(index: 'foo', body: { term: {} })).to eq({})
+    expect(client_double.delete_by_query(index: 'foo', body: { term: {} })).to be_a Elasticsearch::API::Response
   end
 
   context 'when a query is provided' do
@@ -57,7 +57,7 @@ describe 'client#delete_by_query' do
           q: 'foo:bar',
           body: { query: 'query' }
         )
-      ).to eq({})
+      ).to be_a Elasticsearch::API::Response
     end
   end
 end

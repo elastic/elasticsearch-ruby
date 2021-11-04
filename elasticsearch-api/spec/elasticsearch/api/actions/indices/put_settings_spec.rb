@@ -42,7 +42,7 @@ describe 'client.cluster#put_settings' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_settings(body: {})).to eq({})
+    expect(client_double.indices.put_settings(body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no body specified' do
@@ -69,7 +69,7 @@ describe 'client.cluster#put_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_settings(index: 'foo', flat_settings: true, body: {})).to eq({})
+      expect(client_double.indices.put_settings(index: 'foo', flat_settings: true, body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -80,7 +80,7 @@ describe 'client.cluster#put_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_settings(index: 'foo', body: {})).to eq({})
+      expect(client_double.indices.put_settings(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -91,7 +91,7 @@ describe 'client.cluster#put_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_settings(index: ['foo','bar'], body: {})).to eq({})
+      expect(client_double.indices.put_settings(index: ['foo','bar'], body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -102,7 +102,7 @@ describe 'client.cluster#put_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_settings(index: 'foo^bar', body: {})).to eq({})
+      expect(client_double.indices.put_settings(index: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

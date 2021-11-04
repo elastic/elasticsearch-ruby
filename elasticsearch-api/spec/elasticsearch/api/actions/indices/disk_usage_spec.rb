@@ -31,7 +31,7 @@ describe 'client.indices#disk_usage' do
   let(:index) { 'foo' }
 
   it 'performs the request' do
-    expect(client_double.indices.disk_usage(index: index)).to eq({})
+    expect(client_double.indices.disk_usage(index: index)).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no index specified' do

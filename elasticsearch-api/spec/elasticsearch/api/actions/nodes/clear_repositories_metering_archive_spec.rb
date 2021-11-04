@@ -30,7 +30,7 @@ describe 'client.nodes#clear_repositories_metering_archive' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.clear_repositories_metering_archive(node_id: 'foo', max_archive_version: 'bar')).to eq({})
+    expect(client_double.nodes.clear_repositories_metering_archive(node_id: 'foo', max_archive_version: 'bar')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

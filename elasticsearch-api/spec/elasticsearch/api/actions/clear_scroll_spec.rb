@@ -30,7 +30,7 @@ describe 'client#clear_scroll' do
   end
 
   it 'performs the request' do
-    expect(client_double.clear_scroll(scroll_id: 'abc123')).to eq({})
+    expect(client_double.clear_scroll(scroll_id: 'abc123')).to be_a Elasticsearch::API::Response
   end
 
   context 'when a list of scroll ids is provided' do
@@ -46,7 +46,7 @@ describe 'client#clear_scroll' do
     end
 
     it 'performs the request' do
-      expect(client_double.clear_scroll(scroll_id: ['abc123', 'def456'])).to eq({})
+      expect(client_double.clear_scroll(scroll_id: ['abc123', 'def456'])).to be_a Elasticsearch::API::Response
     end
   end
 end

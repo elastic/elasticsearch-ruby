@@ -30,6 +30,6 @@ describe 'client#field_caps' do
   end
 
   it 'performs the request' do
-    expect(client_double.field_caps(index: 'foo', fields: 'bar')).to eq({})
+    expect(client_double.field_caps(index: 'foo', fields: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

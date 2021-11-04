@@ -30,6 +30,6 @@ describe 'client.cluster#shard_stores' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.shard_stores).to eq({})
+    expect(client_double.indices.shard_stores).to be_a Elasticsearch::API::Response
   end
 end
