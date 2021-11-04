@@ -33,7 +33,7 @@ describe 'client.cluster#get_mapping' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get_mapping).to eq({})
+    expect(client_double.indices.get_mapping).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -42,7 +42,7 @@ describe 'client.cluster#get_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: 'foo')).to eq({})
+      expect(client_double.indices.get_mapping(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -52,7 +52,7 @@ describe 'client.cluster#get_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: ['foo', 'bar'])).to eq({})
+      expect(client_double.indices.get_mapping(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -62,7 +62,7 @@ describe 'client.cluster#get_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_mapping(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.get_mapping(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -46,7 +46,7 @@ describe 'JSON builders' do
     end
 
     it 'properly builds the json' do
-      expect(client_double.search(body: json)).to eq({})
+      expect(client_double.search(body: json)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -78,7 +78,7 @@ describe 'JSON builders' do
     end
 
     it 'properly builds the json' do
-      expect(client_double.search(body: json)).to eq({})
+      expect(client_double.search(body: json)).to be_a Elasticsearch::API::Response
     end
   end
 end

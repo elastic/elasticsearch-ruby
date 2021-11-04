@@ -54,7 +54,7 @@ describe 'client#bulk' do
           { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
           { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } },
           { :index =>  { :_index => 'myindexD', :_type => 'mytype', :_id => '1', :data => { :data => 'MYDATA' } } },
-      ])).to eq({})
+      ])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -63,7 +63,7 @@ describe 'client#bulk' do
     let(:url) { 'myindex/_bulk' }
 
     it 'performs the request' do
-      expect(client_double.bulk(index: 'myindex', body: [])).to eq({})
+      expect(client_double.bulk(index: 'myindex', body: [])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -78,7 +78,7 @@ describe 'client#bulk' do
 
     it 'performs the request' do
       expect(client_double.bulk(body:[ { :update => { :_index => 'myindex', :_type => 'mytype', :_id => '1' } },
-                                       { :doc => { :data => { :title => 'Update' } } } ])).to eq({})
+                                       { :doc => { :data => { :title => 'Update' } } } ])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -89,7 +89,7 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(body: 'foo\nbar')).to eq({})
+      expect(client_double.bulk(body: 'foo\nbar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -100,7 +100,7 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(body: ['foo', 'bar'])).to eq({})
+      expect(client_double.bulk(body: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -111,7 +111,7 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(refresh: true, body: [])).to eq({})
+      expect(client_double.bulk(refresh: true, body: [])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -122,7 +122,7 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(index: 'foo^bar', body: [])).to eq({})
+      expect(client_double.bulk(index: 'foo^bar', body: [])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -133,7 +133,7 @@ describe 'client#bulk' do
     end
 
     it 'performs the request' do
-      expect(client_double.bulk(index: 'myindex', type: 'mytype', body: [])).to eq({})
+      expect(client_double.bulk(index: 'myindex', type: 'mytype', body: [])).to be_a Elasticsearch::API::Response
     end
   end
 end

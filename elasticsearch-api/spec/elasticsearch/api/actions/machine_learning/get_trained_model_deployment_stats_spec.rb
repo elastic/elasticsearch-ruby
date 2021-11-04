@@ -29,7 +29,7 @@ describe 'client#ml.get_trained_model_deployment_stats' do
   end
 
   it 'performs the request' do
-    expect(client_double.ml.get_trained_model_deployment_stats(model_id: 'foo')).to eq({})
+    expect(client_double.ml.get_trained_model_deployment_stats(model_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

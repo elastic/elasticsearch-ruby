@@ -33,7 +33,7 @@ describe 'client.snapshot#repository_analyze' do
   end
 
   it 'performs the request' do
-    expect(client_double.snapshot.repository_analyze(repository: 'foo')).to eq({})
+    expect(client_double.snapshot.repository_analyze(repository: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do
@@ -41,8 +41,6 @@ describe 'client.snapshot#repository_analyze' do
   end
 
   it 'requires the :repository argument' do
-    expect {
-      client.snapshot.repository_analyze
-    }.to raise_exception(ArgumentError)
+    expect { client.snapshot.repository_analyze }.to raise_exception(ArgumentError)
   end
 end

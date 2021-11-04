@@ -42,7 +42,7 @@ describe 'client.cluster#segments' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.segments).to eq({})
+    expect(client_double.indices.segments).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -52,7 +52,7 @@ describe 'client.cluster#segments' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.segments(index: 'foo')).to eq({})
+      expect(client_double.indices.segments(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -63,7 +63,7 @@ describe 'client.cluster#segments' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.segments(index: ['foo', 'bar'])).to eq({})
+      expect(client_double.indices.segments(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -74,7 +74,7 @@ describe 'client.cluster#segments' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.segments(index: 'foo,bar')).to eq({})
+      expect(client_double.indices.segments(index: 'foo,bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -85,7 +85,7 @@ describe 'client.cluster#segments' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.segments(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.segments(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

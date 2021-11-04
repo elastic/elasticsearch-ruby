@@ -30,6 +30,6 @@ describe 'client.cluster#allocation_explain' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.allocation_explain).to eq({})
+    expect(client_double.cluster.allocation_explain).to be_a Elasticsearch::API::Response
   end
 end

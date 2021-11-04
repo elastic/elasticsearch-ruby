@@ -42,7 +42,7 @@ describe 'client.indices#analyze' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.analyze).to eq({})
+    expect(client_double.indices.analyze).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -51,7 +51,7 @@ describe 'client.indices#analyze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.analyze(index: 'foo')).to eq({})
+      expect(client_double.indices.analyze(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -62,7 +62,7 @@ describe 'client.indices#analyze' do
     let(:method) { 'POST' }
 
     it 'performs the request' do
-      expect(client_double.indices.analyze(body: 'foo')).to eq({})
+      expect(client_double.indices.analyze(body: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

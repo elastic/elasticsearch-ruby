@@ -30,7 +30,7 @@ describe 'client#count' do
   end
 
   it 'performs the request' do
-    expect(client_double.count).to eq({})
+    expect(client_double.count).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index and type are specified' do
@@ -46,7 +46,7 @@ describe 'client#count' do
     end
 
     it 'performs the request' do
-      expect(client_double.count(index: ['foo','bar'])).to eq({})
+      expect(client_double.count(index: ['foo','bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -63,7 +63,7 @@ describe 'client#count' do
     end
 
     it 'performs the request' do
-      expect(client_double.count(body: { match: { foo: 'bar' } })).to eq({})
+      expect(client_double.count(body: { match: { foo: 'bar' } })).to be_a Elasticsearch::API::Response
     end
   end
 end

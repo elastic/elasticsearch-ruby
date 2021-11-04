@@ -42,7 +42,7 @@ describe 'client.cluster#validate_query' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.validate_query).to eq({})
+    expect(client_double.indices.validate_query).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -51,7 +51,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo')).to eq({})
+      expect(client_double.indices.validate_query(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -61,7 +61,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo', type: 'bar')).to eq({})
+      expect(client_double.indices.validate_query(index: 'foo', type: 'bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -71,7 +71,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: ['foo', 'bar'])).to eq({})
+      expect(client_double.indices.validate_query(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -81,7 +81,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo,bar')).to eq({})
+      expect(client_double.indices.validate_query(index: 'foo,bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -95,7 +95,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(explain: true, q: 'foo')).to eq({})
+      expect(client_double.indices.validate_query(explain: true, q: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -106,7 +106,7 @@ describe 'client.cluster#validate_query' do
     let(:method) { 'POST' }
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(body: { filtered: {} })).to eq({})
+      expect(client_double.indices.validate_query(body: { filtered: {} })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -116,7 +116,7 @@ describe 'client.cluster#validate_query' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.validate_query(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.validate_query(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

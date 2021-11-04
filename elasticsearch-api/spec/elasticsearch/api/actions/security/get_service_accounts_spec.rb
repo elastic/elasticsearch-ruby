@@ -33,7 +33,7 @@ describe 'client#security#get_service_accounts' do
   it 'performs the request' do
     expect(
       client_double.security.get_service_accounts
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   context 'when using namespace' do
@@ -42,7 +42,7 @@ describe 'client#security#get_service_accounts' do
     it 'performs the request' do
       expect(
         client_double.security.get_service_accounts(namespace: 'foo')
-      ).to eq({})
+      ).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -52,7 +52,7 @@ describe 'client#security#get_service_accounts' do
     it 'performs the request' do
       expect(
         client_double.security.get_service_accounts(namespace: 'foo', service: 'bar')
-      ).to eq({})
+      ).to be_a Elasticsearch::API::Response
     end
   end
 end

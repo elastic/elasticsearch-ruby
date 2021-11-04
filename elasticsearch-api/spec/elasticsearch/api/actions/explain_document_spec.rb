@@ -59,7 +59,7 @@ describe 'client#explain' do
   end
 
   it 'performs the request' do
-    expect(client_double.explain(index: 'foo', id: 1, body: {})).to eq({})
+    expect(client_double.explain(index: 'foo', id: 1, body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when a query is provided' do
@@ -73,7 +73,7 @@ describe 'client#explain' do
     end
 
     it 'passes the query' do
-      expect(client_double.explain(index: 'foo', id: '1', q: 'abc123')).to eq({})
+      expect(client_double.explain(index: 'foo', id: '1', q: 'abc123')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -83,7 +83,7 @@ describe 'client#explain' do
     end
 
     it 'passes the query definition' do
-      expect(client_double.explain(index: 'foo', id: '1', body: { query: { match: {} } })).to eq({})
+      expect(client_double.explain(index: 'foo', id: '1', body: { query: { match: {} } })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -93,7 +93,7 @@ describe 'client#explain' do
     end
 
     it 'URL-escapes the parts' do
-      expect(client_double.explain(index: 'foo^bar', id: '1', body: { })).to eq({})
+      expect(client_double.explain(index: 'foo^bar', id: '1', body: { })).to be_a Elasticsearch::API::Response
     end
   end
 end

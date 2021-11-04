@@ -30,7 +30,7 @@ describe 'client.cluster#state' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.state).to eq({})
+    expect(client_double.cluster.state).to be_a Elasticsearch::API::Response
   end
 
   context 'when a metric is specified' do
@@ -46,7 +46,7 @@ describe 'client.cluster#state' do
     end
 
     it 'performs the request' do
-      expect(client_double.cluster.state(metric: ['foo', 'bar'])).to eq({})
+      expect(client_double.cluster.state(metric: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
   end
 end

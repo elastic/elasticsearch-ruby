@@ -29,7 +29,7 @@ describe 'client.nodes#get_repositories_metering_info' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.get_repositories_metering_info(node_id: 'foo', max_archive_version: 'bar')).to eq({})
+    expect(client_double.nodes.get_repositories_metering_info(node_id: 'foo', max_archive_version: 'bar')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

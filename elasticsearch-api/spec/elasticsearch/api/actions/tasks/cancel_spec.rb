@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client.tasks#cancel' do
-
   let(:expected_args) do
     [
-        'POST',
-        url,
-        {},
-        nil,
-        {}
+      'POST',
+      url,
+      {},
+      nil,
+      {}
     ]
   end
 
@@ -34,7 +33,7 @@ describe 'client.tasks#cancel' do
   end
 
   it 'performs the request' do
-    expect(client_double.tasks.cancel).to eq({})
+    expect(client_double.tasks.cancel).to be_a Elasticsearch::API::Response
   end
 
   context 'when a task id is specified' do
@@ -44,7 +43,7 @@ describe 'client.tasks#cancel' do
     end
 
     it 'performs the request' do
-      expect(client_double.tasks.cancel(task_id: 'foo')).to eq({})
+      expect(client_double.tasks.cancel(task_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

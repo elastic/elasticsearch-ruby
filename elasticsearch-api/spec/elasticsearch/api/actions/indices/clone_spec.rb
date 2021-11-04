@@ -70,7 +70,7 @@ describe 'client.indices#clone' do
   context 'when an index and target are specified' do
 
     it 'performs the request' do
-      expect(client_double.indices.clone(index: 'my_source_index', target: 'my_target_index')).to eq({})
+      expect(client_double.indices.clone(index: 'my_source_index', target: 'my_target_index')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -89,7 +89,7 @@ describe 'client.indices#clone' do
                                          target: 'my_target_index',
                                          timeout: '1s',
                                          master_timeout: '10s',
-                                         wait_for_active_shards: 1)).to eq({})
+                                         wait_for_active_shards: 1)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -116,7 +116,7 @@ describe 'client.indices#clone' do
                                              aliases: {
                                                  my_search_indices: {}
                                              }
-                                         })).to eq({})
+                                         })).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -31,6 +31,6 @@ describe 'dangling_indices#list_dangling_index' do
   it 'performs the request' do
     expect(
       client_double.dangling_indices.list_dangling_indices
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 end

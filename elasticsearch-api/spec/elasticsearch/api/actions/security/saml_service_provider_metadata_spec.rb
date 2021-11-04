@@ -31,7 +31,7 @@ describe 'client.security#saml_service_provider_metadata' do
   let(:realm_name) { 'foo' }
 
   it 'performs the request' do
-    expect(client_double.security.saml_service_provider_metadata(realm_name: realm_name)).to eq({})
+    expect(client_double.security.saml_service_provider_metadata(realm_name: realm_name)).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

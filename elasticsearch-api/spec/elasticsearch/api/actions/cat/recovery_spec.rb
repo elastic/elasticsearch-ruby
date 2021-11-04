@@ -30,6 +30,6 @@ describe 'client.cat#recovery' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.recovery).to eq({})
+    expect(client_double.cat.recovery).to be_a Elasticsearch::API::Response
   end
 end

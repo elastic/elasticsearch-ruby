@@ -34,7 +34,7 @@ describe 'client.ingest#simulate' do
   end
 
   it 'performs the request' do
-    expect(client_double.ingest.simulate(body: {})).to eq({})
+    expect(client_double.ingest.simulate(body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when a pipeline id is provided' do
@@ -43,7 +43,7 @@ describe 'client.ingest#simulate' do
     end
 
     it 'performs the request' do
-      expect(client_double.ingest.simulate(id: 'foo', body: {})).to eq({})
+      expect(client_double.ingest.simulate(id: 'foo', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -31,7 +31,7 @@ describe 'dangling_indices#delete_dangling_index' do
   it 'performs the request' do
     expect(
       client_double.dangling_indices.delete_dangling_index(index_uuid: 'foo')
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   context 'when no index_uuid is specified' do

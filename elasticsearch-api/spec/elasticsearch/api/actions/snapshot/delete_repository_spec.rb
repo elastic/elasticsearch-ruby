@@ -34,7 +34,7 @@ describe 'client.snapshot#delete_repository' do
   end
 
   it 'performs the request' do
-    expect(client_double.snapshot.delete_repository(repository: 'foo')).to eq({})
+    expect(client_double.snapshot.delete_repository(repository: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when multiple indices are specified' do
@@ -44,7 +44,7 @@ describe 'client.snapshot#delete_repository' do
     end
 
     it 'performs the request' do
-      expect(client_double.snapshot.delete_repository(repository: ['foo','bar'])).to eq({})
+      expect(client_double.snapshot.delete_repository(repository: ['foo','bar'])).to be_a Elasticsearch::API::Response
     end
   end
 end

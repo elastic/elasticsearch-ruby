@@ -32,7 +32,7 @@ describe 'client#security#query_api_keys' do
   let(:method) { 'GET' }
 
   it 'performs the request' do
-    expect(client_double.security.query_api_keys).to eq({})
+    expect(client_double.security.query_api_keys).to be_a Elasticsearch::API::Response
   end
 
   context 'when body is specified' do
@@ -42,7 +42,7 @@ describe 'client#security#query_api_keys' do
     let(:method) { 'POST' }
 
     it 'performs the request' do
-      expect(client_double.security.query_api_keys(body: body)).to eq({})
+      expect(client_double.security.query_api_keys(body: body)).to be_a Elasticsearch::API::Response
     end
   end
 end

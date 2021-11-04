@@ -29,7 +29,7 @@ describe 'client#searchable_snapshots.mount' do
   end
 
   it 'performs the request' do
-    expect(client_double.searchable_snapshots.mount(body: {}, repository: 'foo', snapshot: 'bar')).to eq({})
+    expect(client_double.searchable_snapshots.mount(body: {}, repository: 'foo', snapshot: 'bar')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

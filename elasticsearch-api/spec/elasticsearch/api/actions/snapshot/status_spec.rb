@@ -34,17 +34,16 @@ describe 'client.snapshot#status' do
   end
 
   it 'performs the request' do
-    expect(client_double.snapshot.status).to eq({})
+    expect(client_double.snapshot.status).to be_a Elasticsearch::API::Response
   end
 
   context 'when a repository and snapshot are specified' do
-
     let(:url) do
       '_snapshot/foo/bar/_status'
     end
 
     it 'performs the request' do
-      expect(client_double.snapshot.status(repository: 'foo', snapshot: 'bar')).to eq({})
+      expect(client_double.snapshot.status(repository: 'foo', snapshot: 'bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

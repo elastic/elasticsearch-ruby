@@ -38,7 +38,7 @@ describe 'client.cluster#update_aliases' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.update_aliases(body: { actions: [] })).to eq({})
+    expect(client_double.indices.update_aliases(body: { actions: [] })).to be_a Elasticsearch::API::Response
   end
 
   context 'when a body is not specified' do
@@ -61,7 +61,7 @@ describe 'client.cluster#update_aliases' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.update_aliases(timeout: '1s', body: { actions: [] })).to eq({})
+      expect(client_double.indices.update_aliases(timeout: '1s', body: { actions: [] })).to be_a Elasticsearch::API::Response
     end
   end
 end

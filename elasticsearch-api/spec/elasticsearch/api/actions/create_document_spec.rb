@@ -30,7 +30,7 @@ describe 'client#create_document' do
   end
 
   it 'performs the request' do
-    expect(client_double.create(index: 'foo', id: '123', body: { foo: 'bar'})).to eq({})
+    expect(client_double.create(index: 'foo', id: '123', body: { foo: 'bar'})).to be_a Elasticsearch::API::Response
   end
 
   context 'when the request needs to be URL-escaped' do
@@ -46,7 +46,7 @@ describe 'client#create_document' do
     end
 
     it 'performs the request' do
-      expect(client_double.create(index: 'foo', id: '123', body: {})).to eq({})
+      expect(client_double.create(index: 'foo', id: '123', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -63,7 +63,7 @@ describe 'client#create_document' do
     end
 
     it 'updates the arguments with the `op_type`' do
-      expect(client_double.create(index: 'foo', id: 1, body: { foo: 'bar' })).to eq({})
+      expect(client_double.create(index: 'foo', id: 1, body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -80,7 +80,7 @@ describe 'client#create_document' do
     end
 
     it 'updates the arguments with the `op_type`' do
-      expect(client_double.create(index: 'foo', body: { foo: 'bar' })).to eq({})
+      expect(client_double.create(index: 'foo', body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
   end
 end

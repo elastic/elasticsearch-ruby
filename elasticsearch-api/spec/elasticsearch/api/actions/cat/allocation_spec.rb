@@ -30,6 +30,6 @@ describe 'client.cat#allocation' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.allocation).to eq({})
+    expect(client_double.cat.allocation).to be_a Elasticsearch::API::Response
   end
 end

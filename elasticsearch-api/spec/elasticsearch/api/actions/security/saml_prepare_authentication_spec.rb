@@ -29,7 +29,7 @@ describe 'client.security#saml_prepare_authentication' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.saml_logout(body: {})).to eq({})
+    expect(client_double.security.saml_logout(body: {})).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

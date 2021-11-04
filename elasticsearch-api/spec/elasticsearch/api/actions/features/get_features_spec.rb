@@ -33,6 +33,6 @@ describe 'client.features#get_features' do
   end
 
   it 'performs the request' do
-    expect(client_double.features.get_features).to eq({})
+    expect(client_double.features.get_features).to be_a Elasticsearch::API::Response
   end
 end

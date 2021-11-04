@@ -61,7 +61,7 @@ describe 'client#msearch_template' do
           { inline: { query: { match: { foo: '{{q}}' } } }, params: { q: 'foo' } },
           { index: 'bar' },
           { id: 'query_foo', params: { q: 'foo' } }
-      ])).to eq({})
+      ])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -72,7 +72,7 @@ describe 'client#msearch_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.msearch_template(body: %Q|{"foo":"bar"}\n{"moo":"lam"}|)).to eq({})
+      expect(client_double.msearch_template(body: %Q|{"foo":"bar"}\n{"moo":"lam"}|)).to be_a Elasticsearch::API::Response
     end
   end
 

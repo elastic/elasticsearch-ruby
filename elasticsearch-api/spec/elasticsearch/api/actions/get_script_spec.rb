@@ -44,7 +44,7 @@ describe 'client#get_script' do
     end
 
     it 'performs the request' do
-      expect(client_double.get_script(master_timeout: '1s', id: 'foo')).to eq({})
+      expect(client_double.get_script(master_timeout: '1s', id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

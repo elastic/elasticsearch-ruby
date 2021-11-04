@@ -35,7 +35,7 @@ describe 'client#search_mvt' do
     let(:body) { nil }
 
     it 'performs the request' do
-      expect(client_double.search_mvt(index: 'foo', field: 'field', zoom: 10, x: 57.2127, y: 6.2348)).to eq({})
+      expect(client_double.search_mvt(index: 'foo', field: 'field', zoom: 10, x: 57.2127, y: 6.2348)).to be_a Elasticsearch::API::Response
     end
   end
 
