@@ -1,0 +1,62 @@
+[[release_notes_80]]
+=== 8.0.0 Release notes
+
+[discrete]
+[[release_notes_800pre1]]
+=== 8.0.0.pre1 Release notes
+
+[discrete]
+==== Client
+
+The code for the dependency `elasticsearch-transport` has been promoted to https://github.com/elastic/elastic-transport-ruby/[its own repository] and the project and gem have been renamed to https://rubygems.org/gems/elastic-transport[`elastic-transport`]. This gem now powers https://rubygems.org/gems/elasticsearch[`elasticsearch`] and https://rubygems.org/gems/elastic-enterprise-search[`elastic-enterprise-search`]. The `elasticsearch-transport` gem won't be maintained after `7.16`, in favour of `elastic-transport`.
+
+[discrete]
+==== API
+
+[discrete]
+===== X-Pack Deprecation
+
+X-Pack has been deprecated. The `elasticsearch-xpack` gem will no longer be maintained after `7.16`. The "X-Pack" integration library codebase was merged into `elasticsearch-api`. All the functionality is available from `elasticsearch-api`. The `xpack` namespace was removed for accessing any APIs other than `_xpack` (`client.xpack.info`) and `_xpack/usage` (`client.xpack.usage`). But APIs which were previously available through the `xpack` namespace e.g.: `client.xpack.machine_learning` are now only available directly: `client.machine_learning`.
+
+[discrete]
+===== Parameter checking was removed
+
+The code in `elasticsearch-api` will no longer validate all the parameters sent. It will only validate the required parameters such as those needed to build the path for the request. But other API parameters are going to be validated by Elasticsearch. This provides better forwards and backwards compatibility in the client.
+
+[discrete]
+===== Response object
+
+In previous versions of the client, calling an API endpoint would return the JSON body of the response. With `8.0`, we are returning a new Response object `Elasticsearch::API::Response`. It still behaves like a Hash to maintain backwards compatibility, but adds the `status` and `headers` methods from the `Elastic::Transport:Transport::Response` object:
+
+[source,ruby]
+------------------------------------
+elastic_ruby(main)> response = client.info
+=> #<Elasticsearch::API::Response:0x000055752b0c50a8
+ @response=
+  #<Elastic::Transport::Transport::Response:0x000055752b0c50f8
+   @body=
+    {"name"=>"instance",
+     "cluster_name"=>"elasticsearch-8-0-0-SNAPSHOT-rest-test",
+     "cluster_uuid"=>"oIfRARuYRGuVYybjxQJ87w",
+     "version"=>
+      {"number"=>"8.0.0-SNAPSHOT",
+       "build_flavor"=>"default",
+       "build_type"=>"docker",
+       "build_hash"=>"7e23c54eb31cc101d1a4811b9ab9c4fd33ed6a8d",
+       "build_date"=>"2021-11-04T00:21:32.464485627Z",
+       "build_snapshot"=>true,
+       "lucene_version"=>"9.0.0",
+       "minimum_wire_compatibility_version"=>"7.16.0",
+       "minimum_index_compatibility_version"=>"7.0.0"},
+     "tagline"=>"You Know, for Search"},
+   @headers={"X-elastic-product"=>"Elasticsearch", "content-type"=>"application/json", "content-length"=>"567"},
+   @status=200>>
+elastic_ruby(main)> response.status
+=> 200
+elastic_ruby(main)> response.headers
+=> {"X-elastic-product"=>"Elasticsearch", "content-type"=>"application/json", "content-length"=>"567"}
+elastic_ruby(main)> response['name']
+=> "instance"
+elastic_ruby(main)> response['tagline']
+=> "You Know, for Search"
+------------------------------------
