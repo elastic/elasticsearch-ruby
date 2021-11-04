@@ -37,7 +37,7 @@ describe 'client.cluster#put_mapping' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_mapping(index: 'foo', body: {})).to eq({})
+    expect(client_double.indices.put_mapping(index: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no type specified' do
@@ -70,7 +70,7 @@ describe 'client.cluster#put_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_mapping(index: 'foo', body: { filter: 'foo' })).to eq({})
+      expect(client_double.indices.put_mapping(index: 'foo', body: { filter: 'foo' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -80,7 +80,7 @@ describe 'client.cluster#put_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_mapping(index: ['foo','bar'], body: {})).to eq({})
+      expect(client_double.indices.put_mapping(index: ['foo','bar'], body: {})).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -90,7 +90,7 @@ describe 'client.cluster#put_mapping' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_mapping(index: 'foo^bar', body: {})).to eq({})
+      expect(client_double.indices.put_mapping(index: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

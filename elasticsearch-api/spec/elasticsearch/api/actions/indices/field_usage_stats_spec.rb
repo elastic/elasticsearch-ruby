@@ -29,7 +29,7 @@ describe 'client.indices#field_usage_stats' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.field_usage_stats(index: 'foo')).to eq({})
+    expect(client_double.indices.field_usage_stats(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no index specified' do

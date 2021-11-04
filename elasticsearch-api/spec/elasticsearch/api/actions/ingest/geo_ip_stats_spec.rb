@@ -33,6 +33,6 @@ describe 'client.ingest#geo_ip_stats' do
   end
 
   it 'performs the request' do
-    expect(client_double.ingest.geo_ip_stats).to eq({})
+    expect(client_double.ingest.geo_ip_stats).to be_a Elasticsearch::API::Response
   end
 end

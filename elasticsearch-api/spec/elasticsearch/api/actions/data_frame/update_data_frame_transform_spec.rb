@@ -37,7 +37,7 @@ describe 'client#update_transform' do
     expect(
       client_double.transform
         .update_transform(transform_id: 'foo', body: {})
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   context 'when body is not provided' do
@@ -75,7 +75,7 @@ describe 'client#update_transform' do
       expect(
         client_double.transform
           .update_transform(transform_id: 'foo', body: {}, defer_validation: true)
-      ).to eq({})
+      ).to be_a Elasticsearch::API::Response
     end
   end
 end

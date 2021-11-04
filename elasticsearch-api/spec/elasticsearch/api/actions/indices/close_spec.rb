@@ -53,7 +53,7 @@ describe 'client.indices#close' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.close(index: 'foo')).to eq({})
+      expect(client_double.indices.close(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -68,7 +68,7 @@ describe 'client.indices#close' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.close(index: 'foo', timeout: '1s')).to eq({})
+      expect(client_double.indices.close(index: 'foo', timeout: '1s')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -79,7 +79,7 @@ describe 'client.indices#close' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.close(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.close(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

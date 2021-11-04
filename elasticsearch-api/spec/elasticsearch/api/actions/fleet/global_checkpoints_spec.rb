@@ -29,7 +29,7 @@ describe 'client#fleet.global_checkpoints' do
   end
 
   it 'performs the request' do
-    expect(client_double.fleet.global_checkpoints(index: 'foo')).to eq({})
+    expect(client_double.fleet.global_checkpoints(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

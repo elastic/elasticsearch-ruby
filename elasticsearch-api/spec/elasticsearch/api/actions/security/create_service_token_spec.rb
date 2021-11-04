@@ -33,7 +33,7 @@ describe 'client#security#create_service_token' do
       client_double.security.create_service_token(
         namespace: 'foo', service: 'bar'
       )
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

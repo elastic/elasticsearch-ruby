@@ -31,7 +31,7 @@ describe 'client#security#get_service_credentials' do
   it 'performs the request' do
     expect(
       client_double.security.get_service_credentials(namespace: 'foo', service: 'bar')
-    ).to eq({})
+    ).to be_a Elasticsearch::API::Response
   end
 
   let(:client) do

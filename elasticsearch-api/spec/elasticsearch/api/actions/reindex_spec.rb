@@ -30,6 +30,6 @@ describe 'client#reindex' do
   end
 
   it 'performs the request' do
-    expect(client_double.reindex(body: {})).to eq({})
+    expect(client_double.reindex(body: {})).to be_a Elasticsearch::API::Response
   end
 end

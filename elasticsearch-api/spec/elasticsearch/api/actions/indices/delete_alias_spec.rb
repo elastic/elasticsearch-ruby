@@ -66,7 +66,7 @@ describe 'client.indices#delete_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.delete_alias(index: 'foo', name: 'bar')).to eq({})
+      expect(client_double.indices.delete_alias(index: 'foo', name: 'bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -77,7 +77,7 @@ describe 'client.indices#delete_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.delete_alias(index: 'foo^bar', name: 'bar/bam')).to eq({})
+      expect(client_double.indices.delete_alias(index: 'foo^bar', name: 'bar/bam')).to be_a Elasticsearch::API::Response
     end
   end
 end

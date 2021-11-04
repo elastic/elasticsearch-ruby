@@ -46,6 +46,6 @@ describe 'client.snapshot#get' do
   end
 
   it 'performs the request' do
-    expect(client_double.snapshot.get(repository: 'foo', snapshot: 'bar')).to eq({})
+    expect(client_double.snapshot.get(repository: 'foo', snapshot: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

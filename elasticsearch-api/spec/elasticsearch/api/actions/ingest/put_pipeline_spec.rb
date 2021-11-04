@@ -44,7 +44,7 @@ describe 'client.ingest#put_pipeline' do
   end
 
   it 'performs the request' do
-    expect(client_double.ingest.put_pipeline(id: 'foo', body: {})).to eq({})
+    expect(client_double.ingest.put_pipeline(id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 
   context 'when the path must be URL-escaped' do
@@ -54,7 +54,7 @@ describe 'client.ingest#put_pipeline' do
     end
 
     it 'performs the request' do
-      expect(client_double.ingest.put_pipeline(id: 'foo^bar', body: {})).to eq({})
+      expect(client_double.ingest.put_pipeline(id: 'foo^bar', body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end

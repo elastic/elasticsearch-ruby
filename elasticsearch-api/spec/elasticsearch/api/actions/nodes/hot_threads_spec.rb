@@ -34,7 +34,7 @@ describe 'client.nodes#hot_threads' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.hot_threads).to eq({})
+    expect(client_double.nodes.hot_threads).to be_a Elasticsearch::API::Response
   end
 
   context 'when the node id is specified' do
@@ -44,7 +44,7 @@ describe 'client.nodes#hot_threads' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.hot_threads(node_id: 'foo')).to eq({})
+      expect(client_double.nodes.hot_threads(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -55,7 +55,7 @@ describe 'client.nodes#hot_threads' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.hot_threads(node_id: 'foo^bar')).to eq({})
+      expect(client_double.nodes.hot_threads(node_id: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

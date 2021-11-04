@@ -30,6 +30,6 @@ describe 'client.cluster#recovery' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.recovery(index: 'foo')).to eq({})
+    expect(client_double.indices.recovery(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

@@ -34,7 +34,7 @@ describe 'client.nodes#info' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.info).to eq({})
+    expect(client_double.nodes.info).to be_a Elasticsearch::API::Response
   end
 
   let(:params) do
@@ -48,7 +48,7 @@ describe 'client.nodes#info' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: 'foo')).to eq({})
+      expect(client_double.nodes.info(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -59,7 +59,7 @@ describe 'client.nodes#info' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: ['A', 'B', 'C'])).to eq({})
+      expect(client_double.nodes.info(node_id: ['A', 'B', 'C'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -70,7 +70,7 @@ describe 'client.nodes#info' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: 'A,B,C')).to eq({})
+      expect(client_double.nodes.info(node_id: 'A,B,C')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -85,7 +85,7 @@ describe 'client.nodes#info' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(format: 'yaml')).to eq({})
+      expect(client_double.nodes.info(format: 'yaml')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -96,7 +96,7 @@ describe 'client.nodes#info' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(metric: ['http', 'network'])).to eq({})
+      expect(client_double.nodes.info(metric: ['http', 'network'])).to be_a Elasticsearch::API::Response
     end
   end
 end

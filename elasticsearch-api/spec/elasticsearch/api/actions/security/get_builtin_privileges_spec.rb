@@ -30,6 +30,6 @@ describe 'client#security#get_builtin_privileges' do
   end
 
   it 'performs the request' do
-    expect(client_double.security.get_builtin_privileges).to eq({})
+    expect(client_double.security.get_builtin_privileges).to be_a Elasticsearch::API::Response
   end
 end
