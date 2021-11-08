@@ -67,7 +67,7 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.formatter = 'documentation'
-  config.color = true
+  config.color_mode = :on
   config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
 end
 
