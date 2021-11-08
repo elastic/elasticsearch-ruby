@@ -35,18 +35,38 @@ else
   TEST_HOST, TEST_PORT = 'localhost', '9200'
 end
 
+test_suite = ENV['TEST_SUITE'] || 'free'
+password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+user = ENV['ELASTIC_USER'] || 'elastic'
+
 if defined?(TEST_HOST) && defined?(TEST_PORT)
-  URL = "http://#{TEST_HOST}:#{TEST_PORT}"
+  URL = "http://#{TEST_HOST}:#{TEST_PORT}".freeze
 
   if STACK_VERSION.match?(/^8\./)
-    user = 'elastic'.freeze
-    password = 'changeme'.freeze
-    ADMIN_CLIENT = Elasticsearch::Client.new(
-      host: URL,
-      transport_options: TRANSPORT_OPTIONS,
-      user: user,
-      password: password
-    )
+    if ENV['TEST_SUITE'] == 'platinum'
+      raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
+      certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+      raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
+      key = OpenSSL::PKey::RSA.new(raw_key)
+      ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
+      host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
+      transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
+    else
+      host = "http://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
+      transport_options = {}
+    end
+
+    ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
+
+    DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
+                       Elasticsearch::Client.new(host: host, transport_options: transport_options)
+                     else
+                       Elasticsearch::Client.new(
+                         host: host,
+                         tracer: Logger.new($stdout),
+                         transport_options: transport_options
+                       )
+                     end
 
     if ENV['QUIET'] == 'true'
       DEFAULT_CLIENT = Elasticsearch::Client.new(
