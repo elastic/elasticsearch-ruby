@@ -60,6 +60,7 @@ module Elasticsearch
                  else
                    Elasticsearch::API::HTTP_GET
                  end
+
         path   = if _index && _type
                    "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_count"
                  elsif _index
