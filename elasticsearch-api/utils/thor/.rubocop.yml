@@ -1,2 +1,4 @@
 Layout/EndAlignment:
   AutoCorrect: true
+Metrics/LineLength:
+  Max: 160
