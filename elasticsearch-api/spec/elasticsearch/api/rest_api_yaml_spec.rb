@@ -50,13 +50,12 @@ describe 'Rest API YAML tests' do
 
             # Runs once before each test in a test file
             before(:all) do
-              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
               test_file.setup
             end
 
             after(:all) do
               test_file.teardown
-              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|

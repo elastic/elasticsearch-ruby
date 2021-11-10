@@ -41,7 +41,7 @@ describe 'XPack Rest API YAML tests' do
     context ctx do
       before(:all) do
         # Runs once before all tests in a test file
-        Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
+        Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
       end
 
       test_file.tests.each do |test|
