@@ -12,7 +12,7 @@ COPY . .
 
 RUN apt-get update
 RUN apt-get install zip
-RUN gem update --system
+RUN gem update --system --quiet --silent
 RUN bundle install --quiet
 RUN bundle exec rake bundle:clean
 RUN rake bundle:install
