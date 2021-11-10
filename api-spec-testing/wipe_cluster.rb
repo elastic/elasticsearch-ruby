@@ -15,6 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require_relative 'logging'
+include Elasticsearch::RestAPIYAMLTests::Logging
+
 module Elasticsearch
   module RestAPIYAMLTests
     module WipeCluster
@@ -81,7 +84,7 @@ module Elasticsearch
             results.each do |task|
               next if task.empty?
 
-              LOGGER.debug "Pending task: #{task}"
+              logger.debug "Pending task: #{task}"
               count += 1 if task.include?(filter)
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -97,7 +100,7 @@ module Elasticsearch
             results['tasks'].each do |task|
               next if task.empty?
 
-              LOGGER.debug "Pending cluster task: #{task}"
+              logger.debug "Pending cluster task: #{task}"
               count += 1
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
@@ -286,7 +289,7 @@ module Elasticsearch
           begin
             client.xpack.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           rescue StandardError => e
-            LOGGER.error "Caught exception attempting to delete data streams: #{e}"
+            logger.error "Caught exception attempting to delete data streams: #{e}"
             client.xpack.indices.delete_data_stream(name: '*')
           end
         end

@@ -69,7 +69,7 @@ describe 'XPack Rest API YAML tests' do
 
             after(:all) do
               test_file.teardown
-              Elasticsearch::RestAPIYAMLTests::TestFile.wipe_cluster(ADMIN_CLIENT)
+              Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
             end
 
             test.task_groups.each do |task_group|
