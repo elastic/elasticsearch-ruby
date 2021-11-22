@@ -37,8 +37,7 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_POST
             path   = "_sql"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments,
-                                                                             ParamsRegistry.get(__method__)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = arguments[:body]
             perform_request(method, path, params, body, headers).body

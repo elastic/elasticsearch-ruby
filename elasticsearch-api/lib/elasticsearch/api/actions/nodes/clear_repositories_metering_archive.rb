@@ -33,9 +33,7 @@ module Elasticsearch
         #
         def clear_repositories_metering_archive(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
-
-          raise ArgumentError,
-                "Required argument 'max_archive_version' missing" unless arguments[:max_archive_version]
+          raise ArgumentError, "Required argument 'max_archive_version' missing" unless arguments[:max_archive_version]
 
           headers = arguments.delete(:headers) || {}
 
