@@ -39,8 +39,7 @@ module Elasticsearch
 
             method = Elasticsearch::API::HTTP_POST
             path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_reset"
-            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments,
-                                                                             ParamsRegistry.get(__method__)
+            params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
             body = nil
             perform_request(method, path, params, body, headers).body
