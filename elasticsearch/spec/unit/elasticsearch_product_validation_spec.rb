@@ -96,6 +96,34 @@ describe 'Elasticsearch: Validation' do
     end
   end
 
+  context 'When Elasticsearch replies with status 413' do
+    let(:status) { 413 }
+    let(:body) { {}.to_json }
+
+    it 'Verifies the request but shows a warning' do
+      stderr      = $stderr
+      fake_stderr = StringIO.new
+      $stderr     = fake_stderr
+
+      verify_request_stub
+      count_request_stub
+
+      valid_requests_and_expectations
+
+      fake_stderr.rewind
+      expect(fake_stderr.string)
+        .to eq(
+          <<~MSG
+            The client is unable to verify that the server is \
+            Elasticsearch. Some functionality may not be compatible \
+            if the server is running an unsupported product.
+          MSG
+        )
+    ensure
+      $stderr = stderr
+    end
+  end
+
   context 'When the Elasticsearch version is >= 8.0.0' do
     context 'With a valid Elasticsearch response' do
       let(:body) { { 'version' => { 'number' => '8.0.0' } }.to_json }
