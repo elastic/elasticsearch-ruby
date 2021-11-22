@@ -84,6 +84,12 @@ module Elasticsearch
     def verify_elasticsearch
       begin
         response = elasticsearch_validation_request
+      rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge
+        @verified = true
+        warn(
+          SECURITY_PRIVILEGES_VALIDATION_WARNING.gsub(' due to security privileges on the server side', '')
+        )
+        return
       rescue Elastic::Transport::Transport::Errors::Unauthorized,
              Elastic::Transport::Transport::Errors::Forbidden
         @verified = true
