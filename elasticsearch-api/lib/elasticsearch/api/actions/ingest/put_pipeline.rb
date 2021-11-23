@@ -22,6 +22,7 @@ module Elasticsearch
         # Creates or updates a pipeline.
         #
         # @option arguments [String] :id Pipeline ID
+        # @option arguments [Integer] :if_version Required version for optimistic concurrency control for pipeline updates
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers

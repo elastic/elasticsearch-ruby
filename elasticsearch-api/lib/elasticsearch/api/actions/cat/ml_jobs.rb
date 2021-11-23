@@ -23,7 +23,6 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id The ID of the jobs stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-        # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) *Deprecated*
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [List] :h Comma-separated list of column names to display

@@ -22,6 +22,7 @@ module Elasticsearch
         # Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
         #
         # @option arguments [String] :model_id The ID of the trained model to delete
+        # @option arguments [Time] :timeout Controls the amount of time to wait for the model to be deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html
@@ -39,7 +40,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)

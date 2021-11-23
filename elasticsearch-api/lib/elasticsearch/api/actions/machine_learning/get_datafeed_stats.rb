@@ -23,7 +23,6 @@ module Elasticsearch
         #
         # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-        # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html

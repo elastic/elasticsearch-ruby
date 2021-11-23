@@ -21,7 +21,7 @@ module Elasticsearch
       module Actions
         # Returns an index template.
         #
-        # @option arguments [List] :name The comma separated names of the index templates
+        # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)

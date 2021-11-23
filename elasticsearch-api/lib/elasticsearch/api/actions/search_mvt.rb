@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Boolean] :exact_bounds If false, the meta layer's feature is the bounding box of the tile. If true, the meta layer's feature is a bounding box resulting from a `geo_bounds` aggregation.
       # @option arguments [Integer] :extent Size, in pixels, of a side of the vector tile.
       # @option arguments [Integer] :grid_precision Additional zoom levels available through the aggs layer. Accepts 0-8.
-      # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point)
+      # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point, centroid)
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       # @option arguments [Boolean|long] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
       # @option arguments [Hash] :headers Custom HTTP headers

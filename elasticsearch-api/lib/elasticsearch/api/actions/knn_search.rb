@@ -24,7 +24,7 @@ module Elasticsearch
       # to fix any issues, but experimental features are not subject to the
       # support SLA of official GA features.
       #
-      # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+      # @option arguments [List] :index A comma-separated list of index names to search; use `_all` to perform the operation on all indices
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition
