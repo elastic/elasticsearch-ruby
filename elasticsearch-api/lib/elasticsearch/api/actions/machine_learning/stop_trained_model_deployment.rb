@@ -26,7 +26,10 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no deployments. (This includes `_all` string or when no deployments have been specified)
+        # @option arguments [Boolean] :force True if the deployment should be forcefully stopped
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The stop deployment parameters
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/stop-trained-model-deployment.html
         #
@@ -35,7 +38,7 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           arguments = arguments.clone
 
@@ -43,7 +46,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_stop"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)

@@ -29,7 +29,6 @@ module Elasticsearch
         # @option arguments [String] :start Returns overall buckets with timestamps after this time
         # @option arguments [String] :end Returns overall buckets with timestamps earlier than this time
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
-        # @option arguments [Boolean] :allow_no_jobs Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified) *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Overall bucket selection details if not provided in URI
         #
