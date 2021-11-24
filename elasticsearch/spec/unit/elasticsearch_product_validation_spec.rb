@@ -65,7 +65,6 @@ describe 'Elasticsearch: Validation' do
 
       verify_request_stub
       count_request_stub
-
       valid_requests_and_expectations
 
       fake_stderr.rewind
@@ -86,7 +85,6 @@ describe 'Elasticsearch: Validation' do
 
       verify_request_stub
       count_request_stub
-
       valid_requests_and_expectations
 
       fake_stderr.rewind
@@ -100,15 +98,17 @@ describe 'Elasticsearch: Validation' do
     let(:status) { 413 }
     let(:body) { {}.to_json }
 
-    it 'Verifies the request but shows a warning' do
+    it 'Does not verify the request and shows a warning' do
       stderr      = $stderr
       fake_stderr = StringIO.new
       $stderr     = fake_stderr
 
+      expect(client.instance_variable_get('@verified')).to be false
+      assert_not_requested :get, host
       verify_request_stub
-      count_request_stub
-
-      valid_requests_and_expectations
+      expect { client.info }.to raise_error Elastic::Transport::Transport::Errors::RequestEntityTooLarge
+      assert_not_requested :post, "#{host}/_count"
+      expect(client.instance_variable_get('@verified')).to be false
 
       fake_stderr.rewind
       expect(fake_stderr.string)
@@ -123,6 +123,37 @@ describe 'Elasticsearch: Validation' do
       $stderr = stderr
     end
   end
+
+  context 'When Elasticsearch replies with status 503' do
+    let(:status) { 503 }
+    let(:body) { {}.to_json }
+
+    it 'Does not verify the request and shows a warning' do
+      stderr      = $stderr
+      fake_stderr = StringIO.new
+      $stderr     = fake_stderr
+
+      expect(client.instance_variable_get('@verified')).to be false
+      assert_not_requested :get, host
+      verify_request_stub
+      expect { client.info }.to raise_error Elastic::Transport::Transport::Errors::ServiceUnavailable
+      assert_not_requested :post, "#{host}/_count"
+      expect(client.instance_variable_get('@verified')).to be false
+
+      fake_stderr.rewind
+      expect(fake_stderr.string)
+        .to eq(
+              <<~MSG
+            The client is unable to verify that the server is \
+            Elasticsearch. Some functionality may not be compatible \
+            if the server is running an unsupported product.
+          MSG
+            )
+    ensure
+      $stderr = stderr
+    end
+  end
+
 
   context 'When the Elasticsearch version is >= 8.0.0' do
     context 'With a valid Elasticsearch response' do
