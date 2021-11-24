@@ -50,7 +50,6 @@ namespace :elasticsearch do
     end
   end
 
-
   def package_url(filename, build_hash)
     begin
       artifacts = JSON.parse(File.read(filename))
@@ -93,11 +92,13 @@ namespace :elasticsearch do
   task :download_artifacts do
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
-    # Get version number and build hash of running cluster:
-    version_number = cluster_info['number']
-    build_hash = cluster_info['build_hash']
+    unless (version_number = ENV['STACK_VERSION'])
+      # Get version number and build hash of running cluster:
+      version_number = cluster_info['number']
+      build_hash = cluster_info['build_hash']
+      puts "Build hash: #{build_hash}"
+    end
 
-    puts "Build hash: #{build_hash}"
     # Create ./tmp if it doesn't exist
     Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
 
