@@ -22,6 +22,7 @@ require 'elasticsearch/api'
 module Elasticsearch
   NOT_ELASTICSEARCH_WARNING = 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.'.freeze
   SECURITY_PRIVILEGES_VALIDATION_WARNING = 'The client is unable to verify that the server is Elasticsearch due to security privileges on the server side. Some functionality may not be compatible if the server is running an unsupported product.'.freeze
+  VALIDATION_WARNING = 'The client is unable to verify that the server is Elasticsearch. Some functionality may not be compatible if the server is running an unsupported product.'.freeze
 
   # This is the stateful Elasticsearch::Client, using an instance of elastic-transport.
   class Client
@@ -84,16 +85,13 @@ module Elasticsearch
     def verify_elasticsearch
       begin
         response = elasticsearch_validation_request
-      rescue Elastic::Transport::Transport::Errors::RequestEntityTooLarge
-        @verified = true
-        warn(
-          SECURITY_PRIVILEGES_VALIDATION_WARNING.gsub(' due to security privileges on the server side', '')
-        )
-        return
       rescue Elastic::Transport::Transport::Errors::Unauthorized,
              Elastic::Transport::Transport::Errors::Forbidden
         @verified = true
         warn(SECURITY_PRIVILEGES_VALIDATION_WARNING)
+        return
+      rescue Elastic::Transport::Transport::Error => e
+        warn(VALIDATION_WARNING)
         return
       end
 
@@ -105,6 +103,9 @@ module Elasticsearch
              end
       version = body.dig('version', 'number')
       verify_with_version_or_header(version, response.headers)
+    rescue StandardError => e
+      warn(VALIDATION_WARNING)
+      raise e
     end
 
     def verify_with_version_or_header(version, headers)
