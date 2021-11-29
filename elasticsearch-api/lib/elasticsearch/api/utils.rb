@@ -17,11 +17,9 @@
 
 module Elasticsearch
   module API
-
     # Generic utility methods
     #
     module Utils
-
       # URL-escape a string
       #
       # @example
@@ -280,6 +278,11 @@ module Elasticsearch
         else
           Kernel.warn message
         end
+      end
+
+      def ndjson_headers(headers)
+        headers.merge!('Content-Type' => 'application/x-ndjson') unless ['1', 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+        headers
       end
 
       extend self
