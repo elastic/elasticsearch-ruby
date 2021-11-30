@@ -7,7 +7,7 @@ This repository contains Ruby integrations for [Elasticsearch](https://www.elast
 The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch)
 library is a wrapper for two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport),
+* [`elasticsearch-transport`](https://github.com/elastic/elastic-transport-ruby),
   which provides a low-level Ruby client for connecting to an Elasticsearch cluster
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api),
   which provides a Ruby API for the Elasticsearch RESTful API
