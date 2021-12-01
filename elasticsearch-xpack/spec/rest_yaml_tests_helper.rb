@@ -18,6 +18,7 @@
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/test_file"
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/rspec_matchers"
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/wipe_cluster"
+require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/wipe_cluster_8"
 include Elasticsearch::RestAPIYAMLTests
 
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
