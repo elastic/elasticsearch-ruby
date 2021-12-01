@@ -33,7 +33,6 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_no_relocating_shards Whether to wait until there are no relocating shards in the cluster
         # @option arguments [Boolean] :wait_for_no_initializing_shards Whether to wait until there are no initializing shards in the cluster
         # @option arguments [String] :wait_for_status Wait until cluster is in a specific state (options: green, yellow, red)
-        # @option arguments [Boolean] :return_200_for_cluster_health_timeout Whether to return HTTP 200 instead of 408 in case of a cluster health timeout from the server side
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/cluster-health.html
@@ -71,8 +70,7 @@ module Elasticsearch
           :wait_for_events,
           :wait_for_no_relocating_shards,
           :wait_for_no_initializing_shards,
-          :wait_for_status,
-          :return_200_for_cluster_health_timeout
+          :wait_for_status
         ].freeze)
       end
     end
