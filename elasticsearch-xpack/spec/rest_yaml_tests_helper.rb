@@ -67,17 +67,18 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/#{STACK_VERSION.match?(/^8\./) ? 'compatTest' : 'test'}/platinum"
+tests_dir = [true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING']) ? 'compatTest' : 'test'
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/#{tests_dir}/platinum".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
                 path = File.expand_path(File.dirname('..'))
 
                 if test_target.match?(/\.yml$/)
-                  ["#{path}/../tmp/rest-api-spec/test/platinum/#{test_target}"]
+                  ["#{path}/../tmp/rest-api-spec/#{tests_dir}/platinum/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/tmp/rest-api-spec/test/platinum/#{test_target}/**/*.yml"]
+                    ["#{PROJECT_PATH}/tmp/rest-api-spec/#{tests_dir}/platinum/#{test_target}/**/*.yml"]
                   )
                 end
               end
