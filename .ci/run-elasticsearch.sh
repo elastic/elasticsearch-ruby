@@ -45,11 +45,19 @@ environment=($(cat <<-END
 END
 ))
 
-if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
+if [[ "$STACK_VERSION" == "8.0.0-SNAPSHOT" ]]; then
     environment+=($(cat <<-EOF
     --env ELASTIC_PASSWORD=$elastic_password
+    --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,ml,remote_cluster_client,transform
 EOF
 ))
+else
+    if [ "$TEST_SUITE" != "platinum" ]; then
+      environment+=($(cat <<-EOF
+      --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,remote_cluster_client
+EOF
+))
+    fi
 fi
 
 if [[ "$TEST_SUITE" == "platinum" ]]; then
@@ -78,7 +86,6 @@ END
 else
   environment+=($(cat <<-END
     --env xpack.security.enabled=false
-    --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,remote_cluster_client
 END
 ))
 fi
