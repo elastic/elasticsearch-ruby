@@ -65,9 +65,6 @@ describe 'XPack Rest API YAML tests' do
                 ADMIN_CLIENT.xpack.watcher.delete_watch(id: 'my_watch')
               rescue Elasticsearch::Transport::Transport::Errors::NotFound
               end
-              # todo: remove these two lines when Dimitris' PR is merged
-              ADMIN_CLIENT.cluster.put_settings(body: { transient: { 'xpack.ml.max_model_memory_limit' => nil } })
-              ADMIN_CLIENT.cluster.put_settings(body: { persistent: { 'xpack.ml.max_model_memory_limit' => nil } })
               test_file.setup
             end
 

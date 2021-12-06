@@ -1432,10 +1432,7 @@ describe Elasticsearch::Transport::Client do
         headers = client.transport.connections.first.connection.headers
 
         expect(headers['Content-Type']).to eq('application/vnd.elasticsearch+json; compatible-with=7')
-        expect(headers['Accept']).to eq('application/vnd.elasticsearch+json;compatible-with=7')
-
-        response = client.perform_request('GET', '/')
-        expect(response.headers['content-type']).to eq('application/json; charset=UTF-8')
+        expect(headers['Accept']).to eq('application/vnd.elasticsearch+json; compatible-with=7')
 
         ENV.delete('ELASTIC_CLIENT_APIVERSIONING')
       end

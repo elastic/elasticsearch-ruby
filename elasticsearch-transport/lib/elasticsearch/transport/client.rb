@@ -211,7 +211,7 @@ module Elasticsearch
 
         add_header(
           {
-            'Accept' => 'application/vnd.elasticsearch+json;compatible-with=7',
+            'Accept' => 'application/vnd.elasticsearch+json; compatible-with=7',
             'Content-Type' => 'application/vnd.elasticsearch+json; compatible-with=7'
           }
         )
