@@ -134,7 +134,7 @@ module Elasticsearch
         def wait_for_pending_rollup_tasks(client)
           filter = 'xpack/rollup/job'
           loop do
-            results = client.cat.tasks(detailed: true)
+            results = client.cat.tasks(detailed: true).split("\n")
             count = 0
 
             time = Time.now.to_i
