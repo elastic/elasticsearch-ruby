@@ -4,18 +4,18 @@ This repository contains Ruby integrations for [Elasticsearch](https://www.elast
 
 [![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
-The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch)
-library is a wrapper for two separate libraries:
+The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch) library is a wrapper for two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elastic/elastic-transport-ruby),
-  which provides a low-level Ruby client for connecting to an Elasticsearch cluster
-* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api),
-  which provides a Ruby API for the Elasticsearch RESTful API
+* [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby), which provides a low-level Ruby client for connecting to an Elasticsearch cluster
+* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api), which provides a Ruby API for the Elasticsearch RESTful API
+
+Both of these libraries are extensively documented.
+**Please read the [`elastic-transport`](https://rubydoc.info/github/elastic/elastic-transport-ruby/) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
 
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = Elasticsearch::Client.new(log: true)
 
 # if you specify Elasticsearch host
 # client = Elasticsearch::Client.new url: 'http://localhost:9200', log: true
@@ -24,15 +24,12 @@ client.transport.reload_connections!
 
 client.cluster.health
 
-client.search q: 'test'
+client.search(q: 'test')
 
 # etc.
 ```
 
-Both of these libraries are extensively documented.
-**Please read the [`elasticsearch-transport`](http://rubydoc.info/gems/elasticsearch-transport) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
-
-See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/README.md) for some practical examples.
+See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) for some practical examples.
 
 **For optimal performance, you should use a HTTP library which supports persistent
 ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
