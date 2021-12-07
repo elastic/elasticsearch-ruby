@@ -208,6 +208,7 @@ module Elasticsearch
 
       def set_compatibility_header
         return unless ['1', 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+        return if instance_variable_get('@options').dig(:transport_options, :headers, 'Accept')
 
         add_header(
           {

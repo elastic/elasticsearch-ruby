@@ -73,6 +73,8 @@ module Elasticsearch
             if headers[:Authorization] == 'Basic eF9wYWNrX3Jlc3RfdXNlcjp4LXBhY2stdGVzdC1wYXNzd29yZA=='
               headers.delete(:Authorization)
             end
+            # Stringify keys:
+            headers = headers.transform_keys(&:to_s)
             if ENV['QUIET'] == 'true'
               # todo: create a method on Elasticsearch::Client that can clone the client with new options
               Elasticsearch::Client.new(
