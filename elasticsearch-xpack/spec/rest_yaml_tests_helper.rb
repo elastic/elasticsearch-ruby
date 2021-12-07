@@ -23,7 +23,11 @@ include Elasticsearch::RestAPIYAMLTests
 
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
-TRANSPORT_OPTIONS = {}
+TRANSPORT_OPTIONS = if [true, 'true', 1].include? ENV['ELASTIC_CLIENT_APIVERSIONING']
+                      { headers: { 'Accept' => 'application/vnd.elasticsearch+json; compatible-with=7,text/plain' } }
+                    else
+                      {}
+                    end
 TEST_SUITE = ENV['TEST_SUITE'].freeze || 'platinum'
 STACK_VERSION = ENV['STACK_VERSION']
 
