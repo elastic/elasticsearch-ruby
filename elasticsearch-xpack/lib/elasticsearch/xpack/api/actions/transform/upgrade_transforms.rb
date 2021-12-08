@@ -23,6 +23,7 @@ module Elasticsearch
           # Upgrades all transforms.
           #
           # @option arguments [Boolean] :dry_run Whether to only check for updates but don't execute
+          # @option arguments [Time] :timeout Controls the time to wait for the upgrade
           # @option arguments [Hash] :headers Custom HTTP headers
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/upgrade-transforms.html
@@ -44,7 +45,8 @@ module Elasticsearch
           #
           # @since 6.2.0
           ParamsRegistry.register(:upgrade_transforms, [
-            :dry_run
+            :dry_run,
+            :timeout
           ].freeze)
         end
       end

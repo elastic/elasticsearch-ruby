@@ -24,6 +24,7 @@ module Elasticsearch
           #
           # @option arguments [String] :transform_id The id of the new transform.
           # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.
+          # @option arguments [Time] :timeout Controls the time to wait for the transform to start
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The transform definition (*Required*)
           #
@@ -51,7 +52,8 @@ module Elasticsearch
           #
           # @since 6.2.0
           ParamsRegistry.register(:put_transform, [
-            :defer_validation
+            :defer_validation,
+            :timeout
           ].freeze)
         end
       end
