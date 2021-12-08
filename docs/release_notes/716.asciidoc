@@ -5,7 +5,7 @@
 ==== Client
 
 - Adds the `delay_on_retry` parameter, a value in milliseconds to wait between each failed connection, thanks https://github.com/DinoPullerUqido[DinoPullerUqido]! https://github.com/elastic/elasticsearch-ruby/pull/1521[Pull Request] and https://github.com/elastic/elasticsearch-ruby/pull/1523[backport].
-- Adds *CA fingerprinting*. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `ca_fingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value:
+- Adds *CA fingerprinting*. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `ca_fingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. The verification will be run once per connection. Code example:
 
 [source,ruby]
 ------------------------------------
@@ -16,9 +16,9 @@ client = Elasticsearch::Client.new(
   ca_fingerprint: ca_fingerprint
 )
 ------------------------------------
-The verification will be run once per connection.
 
 - Fixes compression. When `compression` is set to `true`, the client will now gzip the request body properly and use the appropiate headers. Thanks https://github.com/johnnyshields[johnnyshields]! https://github.com/elastic/elasticsearch-ruby/pull/1478[Pull Request] and https://github.com/elastic/elasticsearch-ruby/pull/1526[backport].
+- Warnings emitted by Elasticsearch are now logged via `log_warn` through the Loggable interface in the client, instead of using `Kernel.warn`. https://github.com/elastic/elasticsearch-ruby/pull/1517[Pull Request].
 
 [discrete]
 ==== API
