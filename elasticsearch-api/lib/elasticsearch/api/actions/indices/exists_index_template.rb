@@ -43,10 +43,9 @@ module Elasticsearch
           params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
 
           body = nil
-          if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
-          else
-            perform_request(method, path, params, body, headers).body
+
+          Utils.__rescue_from_not_found do
+            perform_request(method, path, params, body, headers).status == 200 ? true : false
           end
         end
 

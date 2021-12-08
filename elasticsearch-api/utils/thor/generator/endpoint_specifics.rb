@@ -27,6 +27,7 @@ module Elasticsearch
         exists
         indices.exists
         indices.exists_alias
+        indices.exists_index_template
         indices.exists_template
         indices.exists_type
       ].freeze
@@ -39,7 +40,6 @@ module Elasticsearch
         indices.flush_synced
         indices.delete
         indices.delete_index_template
-        indices.exists_index_template
         indices.delete_template
         security.get_role
         security.get_user
