@@ -21,6 +21,10 @@ require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/wipe_clu
 require "#{File.expand_path(File.dirname('..'), '..')}/api-spec-testing/wipe_cluster_8"
 include Elasticsearch::RestAPIYAMLTests
 
+def testing_compatibility?
+  [1, true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+end
+
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..', '..')
 
 TRANSPORT_OPTIONS = if [true, 'true', 1].include? ENV['ELASTIC_CLIENT_APIVERSIONING']
@@ -72,7 +76,7 @@ if defined?(TEST_HOST) && defined?(TEST_PORT)
   end
 end
 
-tests_dir = [true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING']) ? 'compatTest' : 'test'
+tests_dir = testing_compatibility? ? 'compatTest' : 'test'
 YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/tmp/rest-api-spec/#{tests_dir}/platinum".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
@@ -91,6 +95,7 @@ SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
 # Skipped tests
 file = File.expand_path(__dir__ + '/skipped_tests.yml')
 skipped_tests = YAML.load_file(file)
+skipped_tests.concat YAML.load_file(File.expand_path(__dir__ + '/skipped_tests_8.yml')) if testing_compatibility?
 
 # The directory of rest api YAML files.
 REST_API_YAML_FILES = if ENV['RUN_SKIPPED_TESTS'] # only run the skipped tests if true

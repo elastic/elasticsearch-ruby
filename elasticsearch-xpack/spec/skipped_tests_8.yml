@@ -1,0 +1,86 @@
+# error: "no handler found for uri [/.ds-simple-data-stream1-%2A000001/_freeze] and method [POST]"
+-
+  :file:        'indices.freeze/10_basic.yml'
+  :description: 'Cannot freeze write index for data stream'
+
+# Expected Length (11) is 12
+-
+  :file:        'license/20_put_license.yml'
+  :description: 'Installing and getting license works'
+-
+  :file:        'license/20_put_license.yml'
+  :description: 'Should install a feature type license'
+
+# error: "The [accept_enterprise] parameters may not be false"
+-
+  :file:        'license/30_enterprise_license.yml'
+  :description: 'Installing enterprise license'
+
+# "estimated_heap_memory_usage_bytes" expected to be true, but field not present in response
+-
+  :file:        'ml/inference_crud.yml'
+  :description: 'Test put model'
+
+# error: "no handler found for uri [/foo/doc/1] and method [PUT]
+-
+  :file:        'roles/11_idx_arrays.yml'
+  :description: 'Test put role api using as array of index names'
+
+# error: "[date_histogram] unknown field [interval] did you mean [fixed_interval]?"
+-
+  :file:        'rollup/rollup_search.yml'
+  :description: 'Search error no matching indices'
+
+# Issues with response type
+-
+  :file: 'security/authz/14_cat_indices.yml'
+  :description: 'Test empty request while no-authorized index'
+-
+  :file: 'security/authz/14_cat_indices.yml'
+  :description: 'Test empty request while single authorized index'
+-
+  :file: 'security/authz/14_cat_indices.yml'
+  :description: 'Test explicit request while multiple authorized indices'
+-
+  :file: 'security/authz/14_cat_indices.yml'
+  :description: 'Test explicit request while multiple opened/closed authorized indices'
+-
+  :file: 'security/authz/14_cat_indices.yml'
+  :description: 'Test wildcard request with multiple authorized indices'
+
+# error: "Action/metadata line [1] contains an unknown parameter [_type]"
+-
+  :file: 'sql/sql.yml'
+  :description: 'Execute some SQL'
+-
+  :file: 'sql/sql.yml'
+  :description: 'Paging through results'
+-
+  :file: 'sql/sql.yml'
+  :description: 'Clean cursor'
+-
+  :file: 'sql/sql.yml'
+  :description: 'Getting textual representation'
+-
+  :file: 'sql/translate.yml'
+  :description: 'Translate SQL'
+
+# error: request [/test-index] contains unrecognized parameter: [include_type_name]
+-
+  :file: 'vectors/10_dense_vector_basic.yml'
+  :description: 'Dot Product'
+-
+  :file: 'vectors/10_dense_vector_basic.yml'
+  :description: 'Cosine Similarity'
+-
+  :file: 'vectors/20_dense_vector_special_cases.yml'
+  :description: "Indexing of Dense vectors should error when dims don't match defined in the mapping"
+-
+  :file: 'vectors/20_dense_vector_special_cases.yml'
+  :description: 'Vectors of mixed integers and floats'
+-
+  :file: 'vectors/20_dense_vector_special_cases.yml'
+  :description: 'Functions with query vectors with dims different from docs vectors should error'
+-
+  :file: 'vectors/20_dense_vector_special_cases.yml'
+  :description: 'Dense vectors should error with sparse vector functions'
