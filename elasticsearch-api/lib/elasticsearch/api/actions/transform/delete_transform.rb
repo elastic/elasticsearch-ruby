@@ -23,6 +23,7 @@ module Elasticsearch
         #
         # @option arguments [String] :transform_id The id of the transform to delete
         # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
+        # @option arguments [Time] :timeout Controls the time to wait for the transform deletion
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html

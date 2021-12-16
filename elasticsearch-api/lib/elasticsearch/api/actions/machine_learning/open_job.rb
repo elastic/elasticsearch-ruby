@@ -23,6 +23,7 @@ module Elasticsearch
         #
         # @option arguments [String] :job_id The ID of the job to open
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body Query parameters can be specified in the body
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
         #
@@ -31,7 +32,7 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           arguments = arguments.clone
 

@@ -26,6 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
         # @option arguments [String] :max_model_memory The max memory able to be used by the forecast. Default is 20mb.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body Query parameters can be specified in the body
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
         #
@@ -34,7 +35,7 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           arguments = arguments.clone
 
