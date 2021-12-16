@@ -24,7 +24,6 @@ module Elasticsearch
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document *Deprecated*
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
@@ -34,11 +33,6 @@ module Elasticsearch
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
-      #
-      # *Deprecation notice*:
-      # Specifying types in urls has been deprecated
-      # Deprecated since version 7.0.0
-      #
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html
       #
