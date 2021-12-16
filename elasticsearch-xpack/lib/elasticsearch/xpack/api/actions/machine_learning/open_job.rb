@@ -24,6 +24,7 @@ module Elasticsearch
           #
           # @option arguments [String] :job_id The ID of the job to open
           # @option arguments [Hash] :headers Custom HTTP headers
+          # @option arguments [Hash] :body Query parameters can be specified in the body
           #
           # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/ml-open-job.html
           #
@@ -40,7 +41,7 @@ module Elasticsearch
             path   = "_ml/anomaly_detectors/#{Elasticsearch::API::Utils.__listify(_job_id)}/_open"
             params = {}
 
-            body = nil
+            body = arguments[:body]
             perform_request(method, path, params, body, headers).body
           end
         end
