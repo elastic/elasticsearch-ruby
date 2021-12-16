@@ -41,9 +41,6 @@ module Elasticsearch
       # @option arguments [Time] :search_timeout Explicit timeout for each search request. Defaults to no timeout.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
-      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
-      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
-      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
