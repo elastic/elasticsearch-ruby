@@ -22,6 +22,7 @@ module Elasticsearch
         # Previews a transform.
         #
         # @option arguments [String] :transform_id The id of the transform to preview.
+        # @option arguments [Time] :timeout Controls the time to wait for the preview
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition for the transform to preview
         #
@@ -47,7 +48,7 @@ module Elasticsearch
                    else
                      "_transform/_preview"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)
