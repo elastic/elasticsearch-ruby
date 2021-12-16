@@ -22,7 +22,7 @@ describe 'client#delete' do
   let(:expected_args) do
     [
         'DELETE',
-        'foo/bar/1',
+        'foo/_doc/1',
         params,
         nil,
         {}
@@ -39,18 +39,18 @@ describe 'client#delete' do
 
   it 'requires the :index argument' do
     expect {
-      client.delete(type: 'bar', id: '1')
+      client.delete(id: '1')
     }.to raise_exception(ArgumentError)
   end
 
   it 'requires the :id argument' do
     expect {
-      client.delete(index: 'foo', type: 'bar')
+      client.delete(index: 'foo')
     }.to raise_exception(ArgumentError)
   end
 
   it 'performs the request' do
-    expect(client_double.delete(index: 'foo', type: 'bar', id: '1')).to be_a Elasticsearch::API::Response
+    expect(client_double.delete(index: 'foo', id: '1')).to be_a Elasticsearch::API::Response
   end
 
   context 'when url params are provided' do
@@ -59,7 +59,7 @@ describe 'client#delete' do
     end
 
     it 'performs the request' do
-      expect(client_double.delete(index: 'foo', type: 'bar', id: '1', routing: 'abc123')).to be_a Elasticsearch::API::Response
+      expect(client_double.delete(index: 'foo', id: '1', routing: 'abc123')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -67,7 +67,7 @@ describe 'client#delete' do
     let(:expected_args) do
       [
           'DELETE',
-          'foo%5Ebar/bar%2Fbam/1',
+          'foo%5Ebar/_doc/1',
           params,
           nil,
           {}
@@ -75,7 +75,7 @@ describe 'client#delete' do
     end
 
     it 'escapes the url params' do
-      expect(client_double.delete(index: 'foo^bar', type: 'bar/bam', id: 1)).to be_a Elasticsearch::API::Response
+      expect(client_double.delete(index: 'foo^bar', id: 1)).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -86,13 +86,13 @@ describe 'client#delete' do
 
     it 'raises the exception' do
       expect {
-        client.delete(index: 'foo', type: 'bar', id: 'XXX')
+        client.delete(index: 'foo', id: 'XXX')
       }.to raise_exception(NotFound)
     end
 
     context 'when the :ignore option is provided' do
       it 'does not raise the NotFound exception' do
-        expect(client.delete(index: 'foo', type: 'bar', id: 1, ignore: 404)).to eq(false)
+        expect(client.delete(index: 'foo', id: 1, ignore: 404)).to eq(false)
       end
     end
   end

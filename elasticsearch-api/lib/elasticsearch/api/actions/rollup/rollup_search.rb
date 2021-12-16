@@ -26,16 +26,10 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [List] :index The indices or index-pattern(s) (containing rollup or regular data) that should be searched
-        # @option arguments [String] :type The doc type inside the index *Deprecated*
         # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
         # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The search request body (*Required*)
-        #
-        # *Deprecation notice*:
-        # Specifying types in urls has been deprecated
-        # Deprecated since version 7.0.0
-        #
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/rollup-search.html
         #
@@ -51,14 +45,8 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          _type = arguments.delete(:type)
-
           method = Elasticsearch::API::HTTP_POST
-          path   = if _index && _type
-                     "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_rollup_search"
-                   else
-                     "#{Utils.__listify(_index)}/_rollup_search"
-                   end
+          path   = "#{Utils.__listify(_index)}/_rollup_search"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
