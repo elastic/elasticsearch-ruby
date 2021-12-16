@@ -22,7 +22,6 @@ module Elasticsearch
       #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document; deprecated and optional starting with 7.0 *Deprecated*
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [Boolean] :realtime Specify whether to perform the operation in realtime or search mode
       # @option arguments [Boolean] :refresh Refresh the shard containing the document before performing the operation
@@ -33,11 +32,6 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
-      #
-      # *Deprecation notice*:
-      # Specifying types in urls has been deprecated
-      # Deprecated since version 7.0.0
-      #
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html
       #
@@ -55,14 +49,8 @@ module Elasticsearch
 
         _index = arguments.delete(:index)
 
-        _type = arguments.delete(:type)
-
         method = Elasticsearch::API::HTTP_HEAD
-        path   = if _index && _type && _id
-                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_source"
-                 else
-                   "#{Utils.__listify(_index)}/_source/#{Utils.__listify(_id)}"
-                 end
+        path   = "#{Utils.__listify(_index)}/_source/#{Utils.__listify(_id)}"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

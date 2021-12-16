@@ -28,7 +28,6 @@ module Elasticsearch
         # @option arguments [List] :fields A comma-separated list of fields for `fielddata` and `completion` index metric (supports wildcards)
         # @option arguments [List] :groups A comma-separated list of search groups for `search` index metric
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
-        # @option arguments [List] :types A comma-separated list of document types for the `indexing` index metric
         # @option arguments [Boolean] :include_segment_file_sizes Whether to report the aggregated disk usage of each one of the Lucene index files (only applies if segment stats are requested)
         # @option arguments [Boolean] :include_unloaded_segments If set to true segment stats will include stats for segments that are not currently loaded into memory
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
