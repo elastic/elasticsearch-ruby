@@ -34,7 +34,7 @@ describe 'client.nodes#stats' do
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.stats).to eq({})
+    expect(client_double.nodes.stats).to be_a Elasticsearch::API::Response
   end
 
   let(:params) do
@@ -48,7 +48,7 @@ describe 'client.nodes#stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.stats(node_id: 'foo')).to eq({})
+      expect(client_double.nodes.stats(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -59,7 +59,7 @@ describe 'client.nodes#stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.stats(metric: [:http, :fs])).to eq({})
+      expect(client_double.nodes.stats(metric: [:http, :fs])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -70,7 +70,7 @@ describe 'client.nodes#stats' do
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.stats(metric: :indices, index_metric: :filter_cache)).to eq({})
+      expect(client_double.nodes.stats(metric: :indices, index_metric: :filter_cache)).to be_a Elasticsearch::API::Response
     end
   end
 end

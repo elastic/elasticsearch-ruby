@@ -28,7 +28,7 @@ module Elasticsearch
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [List] :routing A comma-separated list of specific routing values
       # @option arguments [Time] :scroll Specify how long a consistent view of the index should be maintained for scrolled search
-      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
+      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
       # @option arguments [Boolean] :profile Specify whether to profile the query execution
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
@@ -44,6 +44,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -54,30 +56,12 @@ module Elasticsearch
                  else
                    "_search/template"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:search_template, [
-        :ignore_unavailable,
-        :ignore_throttled,
-        :allow_no_indices,
-        :expand_wildcards,
-        :preference,
-        :routing,
-        :scroll,
-        :search_type,
-        :explain,
-        :profile,
-        :typed_keys,
-        :rest_total_hits_as_int,
-        :ccs_minimize_roundtrips
-      ].freeze)
     end
   end
 end

@@ -30,6 +30,6 @@ describe 'client.cat#nodeattrs' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.nodeattrs).to eq({})
+    expect(client_double.cat.nodeattrs).to be_a Elasticsearch::API::Response
   end
 end

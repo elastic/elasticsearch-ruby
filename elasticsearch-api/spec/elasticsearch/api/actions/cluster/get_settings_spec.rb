@@ -30,6 +30,6 @@ describe 'client.cluster#get_settings' do
   end
 
   it 'performs the request' do
-    expect(client_double.cluster.get_settings).to eq({})
+    expect(client_double.cluster.get_settings).to be_a Elasticsearch::API::Response
   end
 end

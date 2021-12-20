@@ -1,0 +1,32 @@
+# Response from Elasticsearch is just a String, so it's not possible to compare using headers.
+-
+  :file:        'cat.aliases/20_headers.yml'
+  :description: 'Simple alias with yaml body through Accept header'
+
+# Check version skip logic
+-
+  :file:        'create/15_without_id.yml'
+  :description: 'Create without ID'
+
+# Error message doesn't match
+-
+  :file:        'tasks.get/10_basic.yml'
+  :description: 'get task test'
+
+# Figure out how to match response when there is an error
+-
+  :file:        'cat.templates/10_basic.yml'
+  :description: '*'
+
+# https://github.com/elastic/elasticsearch-ruby/issues/1469
+-
+  :file:        'indices.get_alias/10_basic.yml'
+  :description: 'Get alias against closed indices'
+
+# https://github.com/elastic/elasticsearch-ruby/issues/1563
+-
+  :file:        'tsdb/80_index_resize.yml'
+  :description: 'shrink'
+-
+  :file:        'tsdb/80_index_resize.yml'
+  :description: 'clone'

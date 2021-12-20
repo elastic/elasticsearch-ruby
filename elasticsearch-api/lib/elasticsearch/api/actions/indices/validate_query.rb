@@ -22,7 +22,6 @@ module Elasticsearch
         # Allows a user to validate a potentially expensive query without executing it.
         #
         # @option arguments [List] :index A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [List] :type A comma-separated list of document types to restrict the operation; leave empty to perform the operation on all types *Deprecated*
         # @option arguments [Boolean] :explain Return detailed information about the error
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
@@ -38,58 +37,34 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query definition specified with the Query DSL
         #
-        # *Deprecation notice*:
-        # Specifying types in urls has been deprecated
-        # Deprecated since version 7.0.0
-        #
-        #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
         #
         def validate_query(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          _type = arguments.delete(:type)
-
-          method = if arguments[:body]
+          method = if body
                      Elasticsearch::API::HTTP_POST
                    else
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index && _type
-                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/_validate/query"
-                 elsif _index
-                   "#{Utils.__listify(_index)}/_validate/query"
-                 else
-                   "_validate/query"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_validate/query"
+                   else
+                     "_validate/query"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:validate_query, [
-          :explain,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards,
-          :q,
-          :analyzer,
-          :analyze_wildcard,
-          :default_operator,
-          :df,
-          :lenient,
-          :rewrite,
-          :all_shards
-        ].freeze)
       end
     end
   end

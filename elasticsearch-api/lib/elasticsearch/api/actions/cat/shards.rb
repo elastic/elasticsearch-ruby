@@ -24,7 +24,6 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
@@ -38,6 +37,8 @@ module Elasticsearch
         def shards(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -48,27 +49,13 @@ module Elasticsearch
                    else
                      "_cat/shards"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:shards, [
-          :format,
-          :bytes,
-          :local,
-          :master_timeout,
-          :h,
-          :help,
-          :s,
-          :time,
-          :v
-        ].freeze)
       end
     end
   end

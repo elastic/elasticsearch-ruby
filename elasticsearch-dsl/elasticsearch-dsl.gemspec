@@ -31,8 +31,8 @@ Gem::Specification.new do |s|
   s.license       = 'Apache-2.0'
   s.metadata = {
     'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html',
-    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl',
+    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/main/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-dsl',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
   s.files         = `git ls-files`.split($/)
@@ -49,7 +49,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 12.3'
 
   s.add_development_dependency 'elasticsearch'
-  s.add_development_dependency 'elasticsearch-extensions'
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'minitest', '~> 5'

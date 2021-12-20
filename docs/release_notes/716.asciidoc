@@ -1,0 +1,82 @@
+[[release_notes_716]]
+=== 7.16 Release notes
+
+[discrete]
+[[release_notes_7161]]
+=== 7.16.1 Release notes
+
+Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476[more information].
+
+==== Client
+
+The only changes in the client since 7.16.0 are a few minor updates for the https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-comp[Compatibility mode with 8.0]. We added the compatibility header in `7.13.0`,  but now we have integration tests and compatibility tests for version `7.x` of the client with Elasticsearch `8.0`.
+
+[discrete]
+[[release_notes_7160]]
+=== 7.16.0 Release notes
+
+[discrete]
+==== Client
+
+- Adds the `delay_on_retry` parameter, a value in milliseconds to wait between each failed connection, thanks https://github.com/DinoPullerUqido[DinoPullerUqido]! https://github.com/elastic/elasticsearch-ruby/pull/1521[Pull Request] and https://github.com/elastic/elasticsearch-ruby/pull/1523[backport].
+- Adds *CA fingerprinting*. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `ca_fingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. The verification will be run once per connection. Code example:
+
+[source,ruby]
+------------------------------------
+ca_fingerprint = '64F2593F...'
+client = Elasticsearch::Client.new(
+  host: 'https://elastic:changeme@localhost:9200',
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: ca_fingerprint
+)
+------------------------------------
+
+- Fixes compression. When `compression` is set to `true`, the client will now gzip the request body properly and use the appropiate headers. Thanks https://github.com/johnnyshields[johnnyshields]! https://github.com/elastic/elasticsearch-ruby/pull/1478[Pull Request] and https://github.com/elastic/elasticsearch-ruby/pull/1526[backport].
+- Warnings emitted by Elasticsearch are now logged via `log_warn` through the Loggable interface in the client, instead of using `Kernel.warn`. https://github.com/elastic/elasticsearch-ruby/pull/1517[Pull Request].
+
+[discrete]
+==== API
+
+- Cleaned up some deprecated code.
+- `count` - The API is documented as using `GET`, but it supports both GET and POST on the Elasticsearch side. So it was updated to only use `POST` when there's a body present, or else use `GET`. Elasticsearch would still accept a body with `GET`, but to be more semantically correct in the clients we use `POST` when there's a body.
+- `delete_index_template` was updated to support the `ignore_404` parameter to ignore 404 errors when attempting to delete a non-existing template.
+- `ingest.put_pipeline` adds new parameter `if_version`: Required version for optimistic concurrency control for pipeline updates.
+- `ml.put_trained_model`: adds new parameter `defer_definition_decompression`: If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
+- `nodes.hot_threads` adds new parameter `sort`: The sort order for 'cpu' type (default: total) (options: cpu, total).
+- `open_point_in_time`: `keep_alive` is now a required parameter.
+- `search_mvt`: adds new parameter `track_total_hits`: Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+- `transform.preview_transform`: adds new parameter `transform_id`. Body is now optional and the API will use `GET` or `POST` depending on the presence of a body.
+
+*APIs promoted from experimental to stable since last version:*
+
+- `fleet.global_checkpoints`
+- `get_script_context`
+- `get_script_language`
+- `indices.resolve_index`
+- `monitoring.bulk`
+- `rank_eval`
+- `searchable_snapshots.mount`
+- `searchable_snapshots.stats`
+- `security.clear_cached_service_tokens`
+- `security.create_service_token`
+- `security.delete_service_token`
+- `security.get_service_accounts`
+- `security.get_service_credentials`
+- `shutdown.delete_node`
+- `shutdown.get_node`
+- `shutdown.put_node`
+- `terms_enum`
+
+*New APIs*
+
+- `fleet.mseach`
+- `fleet.search`
+- `indices.modify_data_stream`
+- `ml.infer_trained_model_deployment`
+- `ml.start_trained_model_deployment`
+- `ml.stop_trained_model_deployment`
+- `migration.get_feature_upgrade_status`
+- `migration.post_feature_upgrade_status`
+- `security.enroll_kibana`
+- `security.enroll_node`
+- `transform.updgrade_transforms`

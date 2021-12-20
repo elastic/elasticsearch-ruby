@@ -30,7 +30,7 @@ describe 'client.cluster#shrink' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.shrink(index: 'foo', target: 'bar')).to eq({})
+    expect(client_double.indices.shrink(index: 'foo', target: 'bar')).to be_a Elasticsearch::API::Response
   end
 
   it 'does not mutate the arguments' do

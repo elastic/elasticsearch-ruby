@@ -20,12 +20,8 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns an index template.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
-        # @option arguments [List] :name The comma separated names of the index templates
+        # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
@@ -35,6 +31,8 @@ module Elasticsearch
         #
         def get_index_template(arguments = {})
           headers = arguments.delete(:headers) || {}
+
+          body = nil
 
           arguments = arguments.clone
 
@@ -46,20 +44,12 @@ module Elasticsearch
                    else
                      "_index_template"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get_index_template, [
-          :flat_settings,
-          :master_timeout,
-          :local
-        ].freeze)
       end
     end
   end

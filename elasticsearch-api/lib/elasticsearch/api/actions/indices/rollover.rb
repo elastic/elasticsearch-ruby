@@ -38,6 +38,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _alias = arguments.delete(:alias)
@@ -50,21 +52,12 @@ module Elasticsearch
                    else
                      "#{Utils.__listify(_alias)}/_rollover"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:rollover, [
-          :timeout,
-          :dry_run,
-          :master_timeout,
-          :wait_for_active_shards
-        ].freeze)
       end
     end
   end

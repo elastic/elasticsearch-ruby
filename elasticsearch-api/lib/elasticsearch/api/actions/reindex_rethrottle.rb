@@ -31,24 +31,20 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = nil
+
         arguments = arguments.clone
 
         _task_id = arguments.delete(:task_id)
 
         method = Elasticsearch::API::HTTP_POST
         path   = "_reindex/#{Utils.__listify(_task_id)}/_rethrottle"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = nil
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:reindex_rethrottle, [
-        :requests_per_second
-      ].freeze)
     end
   end
 end

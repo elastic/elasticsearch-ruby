@@ -30,8 +30,8 @@ Gem::Specification.new do |s|
   s.license       = 'Apache-2.0'
   s.metadata = {
     'homepage_uri' => 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html',
-    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-api',
+    'changelog_uri' => 'https://github.com/elastic/elasticsearch-ruby/blob/main/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
   s.files         = `git ls-files`.split($/)
@@ -49,8 +49,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
-  s.add_development_dependency 'elasticsearch-extensions'
-  s.add_development_dependency 'elasticsearch-transport'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
   s.add_development_dependency 'mocha'
@@ -62,14 +60,20 @@ Gem::Specification.new do |s|
   # Gems for testing integrations
   s.add_development_dependency 'jsonify'
   s.add_development_dependency 'hashie'
+  # Temporary support for Ruby 2.6, since it's EOL March 2022:
+  if RUBY_VERSION < '2.7.0'
+    s.add_development_dependency 'jbuilder', '< 7.0.0'
+  else
+    s.add_development_dependency 'activesupport'
+    s.add_development_dependency 'jbuilder'
+  end
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'escape_utils' unless defined? JRUBY_VERSION
-  s.add_development_dependency 'jbuilder'
+
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'simplecov-rcov'
 
   s.add_development_dependency 'test-unit', '~> 2'
 

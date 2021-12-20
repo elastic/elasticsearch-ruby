@@ -1,3 +1,36 @@
+# Contributing to Elasticsearch Ruby
+
+To work on the code, clone and bootstrap the project first:
+
+```
+git clone https://github.com/elasticsearch/elasticsearch-ruby.git
+cd elasticsearch-ruby/
+bundle exec rake bundle
+```
+
+This will run `bundle install` in all subprojects. 
+
+To run the tests, you need to start a testing cluster on port 9200. We suggest using Docker, there's a Rake task to start a testing cluster in a Docker container:
+
+```
+rake docker:start[version]
+```
+
+E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with Platinum, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`. 
+
+As mentioned, the tests will atempt to run against `http://localhost:9200` by default. We provide the Docker task for the test cluster and recommend using it. But you can provide a different test server of your own. If you're using a different host or port, set the `TEST_ES_SERVER` environment variable with the server information. E.g.:
+
+```
+$ TEST_ES_SERVER='http://localhost:9250' be rake test:client
+```
+
+To run all the tests in all the subprojects, use the Rake task:
+
+```
+time rake test:client
+```
+
+
 The process for contributing to any of the [Elasticsearch](https://github.com/elasticsearch) repositories is similar:
 
 1. It is best to do your work in a separate Git branch. This makes it easier to synchronise your changes with [`rebase`](http://mislav.uniqpath.com/2013/02/merge-vs-rebase/).

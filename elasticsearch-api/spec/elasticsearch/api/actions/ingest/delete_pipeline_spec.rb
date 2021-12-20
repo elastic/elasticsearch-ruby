@@ -44,7 +44,7 @@ describe 'client.ingest#delete_pipeline' do
   end
 
   it 'performs the request' do
-    expect(client_double.ingest.delete_pipeline(id: 'foo')).to eq({})
+    expect(client_double.ingest.delete_pipeline(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when the path must be URL-escaped' do
@@ -54,7 +54,7 @@ describe 'client.ingest#delete_pipeline' do
     end
 
     it 'performs the request' do
-      expect(client_double.ingest.delete_pipeline(id: 'foo^bar')).to eq({})
+      expect(client_double.ingest.delete_pipeline(id: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

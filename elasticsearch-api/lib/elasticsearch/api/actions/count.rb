@@ -43,41 +43,29 @@ module Elasticsearch
       def count(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
 
-        method = Elasticsearch::API::HTTP_POST
+        method = if body
+                   Elasticsearch::API::HTTP_POST
+                 else
+                   Elasticsearch::API::HTTP_GET
+                 end
+
         path   = if _index
                    "#{Utils.__listify(_index)}/_count"
                  else
                    "_count"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:count, [
-        :ignore_unavailable,
-        :ignore_throttled,
-        :allow_no_indices,
-        :expand_wildcards,
-        :min_score,
-        :preference,
-        :routing,
-        :q,
-        :analyzer,
-        :analyze_wildcard,
-        :default_operator,
-        :df,
-        :lenient,
-        :terminate_after
-      ].freeze)
     end
   end
 end

@@ -41,49 +41,33 @@ module Elasticsearch
       def mtermvectors(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = if (ids = arguments.delete(:ids))
+                 { :ids => ids }
+               else
+                 arguments.delete(:body)
+               end
+
         arguments = arguments.clone
-        ids = arguments.delete(:ids)
 
         _index = arguments.delete(:index)
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_mtermvectors"
-               else
-                 "_mtermvectors"
-               end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = if _index
+                   "#{Utils.__listify(_index)}/_mtermvectors"
+                 else
+                   "_mtermvectors"
+                 end
+        params = Utils.process_params(arguments)
 
-        if ids
-          body = { :ids => ids }
-        else
-          body = arguments[:body]
-        end
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:mtermvectors, [
-        :ids,
-        :term_statistics,
-        :field_statistics,
-        :fields,
-        :offsets,
-        :positions,
-        :payloads,
-        :preference,
-        :routing,
-        :realtime,
-        :version,
-        :version_type
-      ].freeze)
     end
   end
 end

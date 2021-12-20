@@ -18,14 +18,13 @@
 require 'spec_helper'
 
 describe 'client.tasks#list' do
-
   let(:expected_args) do
     [
-        'GET',
-        url,
-        {},
-        nil,
-        {}
+      'GET',
+      url,
+      {},
+      nil,
+      {}
     ]
   end
 
@@ -34,6 +33,6 @@ describe 'client.tasks#list' do
   end
 
   it 'performs the request' do
-    expect(client_double.tasks.list).to eq({})
+    expect(client_double.tasks.list).to be_a Elasticsearch::API::Response
   end
 end

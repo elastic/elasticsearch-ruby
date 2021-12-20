@@ -25,6 +25,8 @@ module Elasticsearch
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
+        # @option arguments [Boolean] :index_details Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
+        # @option arguments [Boolean] :include_repository Whether to include the repository name in the snapshot info. Defaults to true.
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         # @option arguments [Hash] :headers Custom HTTP headers
         #
@@ -36,6 +38,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
@@ -44,24 +48,20 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+            Utils.__rescue_from_not_found {
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers)
+              )
+            }
           else
-            perform_request(method, path, params, body, headers).body
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
           end
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get, [
-          :master_timeout,
-          :ignore_unavailable,
-          :verbose
-        ].freeze)
       end
     end
   end

@@ -34,6 +34,8 @@ module Elasticsearch
       def clear_scroll(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
@@ -46,8 +48,9 @@ module Elasticsearch
                  end
         params = {}
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
     end
   end

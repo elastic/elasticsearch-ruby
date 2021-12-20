@@ -32,19 +32,22 @@ module Elasticsearch
       def scripts_painless_execute(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "_scripts/painless/_execute"
+        path   = "_scripts/painless/_execute"
         params = {}
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
     end
   end

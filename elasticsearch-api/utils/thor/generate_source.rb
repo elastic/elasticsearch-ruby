@@ -40,7 +40,7 @@ module Elasticsearch
     # here.
     #
     class SourceGenerator < Thor
-      namespace 'api:code'
+      namespace 'code'
       include Thor::Actions
       include EndpointSpecifics
 
@@ -49,28 +49,21 @@ module Elasticsearch
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
-      method_option :api,     type: :array,   default: %w[oss xpack], desc: 'APIs to generate (oss, x-pack)'
 
       def generate
         self.class.source_root File.expand_path(__dir__)
-        @xpack = options[:api].include? 'xpack'
-        @oss   = options[:api].include? 'oss'
-
-        __generate_source(:xpack) if @xpack
-        __generate_source(:oss) if @oss
+        generate_source
         # -- Tree output
         print_tree if options[:verbose]
       end
 
       private
 
-      def __generate_source(api)
-        @current_api = api
-        @input = FilesHelper.input_dir(api)
-        @output = FilesHelper.output_dir(api)
+      def generate_source
+        @output = FilesHelper.output_dir
 
-        FilesHelper.files(api).each do |filepath|
-          @path = Pathname(@input.join(filepath))
+        FilesHelper.files.each do |filepath|
+          @path = Pathname(filepath)
           @json = MultiJson.load(File.read(@path))
           @spec = @json.values.first
           say_status 'json', @path, :yellow
@@ -92,7 +85,6 @@ module Elasticsearch
           @http_path        = __http_path
           @required_parts   = __required_parts
 
-          @module_namespace.shift if @module_namespace.first == 'xpack'
           @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
           dir = @output.join(@module_namespace.join('/'))
           empty_directory(dir, verbose: false)
@@ -107,23 +99,18 @@ module Elasticsearch
           puts
         end
 
-        run_rubocop(api)
+        run_rubocop
       end
 
       def __full_namespace
         names = @endpoint_name.split('.')
-        if @current_api == :xpack
-          names = (names.first == 'xpack' ? names : ['xpack', names].flatten)
-          # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
-          names.map do |name|
-            name
-              .gsub(/^ml$/, 'machine_learning')
-              .gsub(/^ilm$/, 'index_lifecycle_management')
-              .gsub(/^ccr/, 'cross_cluster_replication')
-              .gsub(/^slm/, 'snapshot_lifecycle_management')
-          end
-        else
-          names
+        # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
+        names.map do |name|
+          name
+            .gsub(/^ml$/, 'machine_learning')
+            .gsub(/^ilm$/, 'index_lifecycle_management')
+            .gsub(/^ccr/, 'cross_cluster_replication')
+            .gsub(/^slm/, 'snapshot_lifecycle_management')
         end
       end
 
@@ -149,6 +136,7 @@ module Elasticsearch
 
       def __http_method
         return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
+        return post_and_get if @endpoint_name == 'count'
 
         default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
         if @spec['body'] && default_method == 'GET'
@@ -156,17 +144,22 @@ module Elasticsearch
           if @spec['body']['required']
             'Elasticsearch::API::HTTP_POST'
           else
-            <<~SRC
-              if arguments[:body]
-                Elasticsearch::API::HTTP_POST
-              else
-                Elasticsearch::API::HTTP_GET
-              end
-            SRC
+            post_and_get
           end
         else
           "Elasticsearch::API::HTTP_#{default_method}"
         end
+      end
+
+      def post_and_get
+        # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
+        <<~SRC
+          if body
+            Elasticsearch::API::HTTP_POST
+          else
+            Elasticsearch::API::HTTP_GET
+          end
+        SRC
       end
 
       def __http_path
@@ -194,9 +187,9 @@ module Elasticsearch
 
       def __parse_path(path)
         path.gsub(/^\//, '')
-            .gsub(/\/$/, '')
-            .gsub('{', "\#{#{__utils}.__listify(_")
-            .gsub('}', ')}')
+          .gsub(/\/$/, '')
+          .gsub('{', "\#{Utils.__listify(_")
+          .gsub('}', ')}')
       end
 
       def __path_variables
@@ -226,6 +219,7 @@ module Elasticsearch
 
       def docs_helper(name, info)
         info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
+        info['type'] = 'Integer' if info['type'] == 'int' # Rename 'int' to 'Integer'
         tipo = info['type'] ? info['type'].capitalize : 'String'
         description = info['description'] ? info['description'].strip : '[TODO]'
         options = info['options'] ? "(options: #{info['options'].join(', ').strip})" : nil
@@ -289,12 +283,8 @@ module Elasticsearch
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
       end
 
-      def __utils
-        (@current_api == :xpack) ? 'Elasticsearch::API::Utils' : 'Utils'
-      end
-
-      def run_rubocop(api)
-        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir(api)}")
+      def run_rubocop
+        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir}")
       end
     end
   end

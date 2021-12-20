@@ -63,6 +63,7 @@ module Elasticsearch
       # @option arguments [Number] :max_concurrent_shard_requests The number of concurrent shard requests per node this search executes concurrently. This value should be used to limit the impact of the search on the cluster in order to limit the number of concurrent shard requests
       # @option arguments [Number] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method ie. if date filters are mandatory to match but the shard bounds and the query are disjoint.
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
+      # @option arguments [String] :min_compatible_shard_node The minimum compatible version that all shards involved in search should have for this request to be successful
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL
       #
@@ -71,75 +72,30 @@ module Elasticsearch
       def search(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
         arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
 
         _index = arguments.delete(:index)
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_search"
-               else
-                 "_search"
-               end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = if _index
+                   "#{Utils.__listify(_index)}/_search"
+                 else
+                   "_search"
+                 end
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:search, [
-        :analyzer,
-        :analyze_wildcard,
-        :ccs_minimize_roundtrips,
-        :default_operator,
-        :df,
-        :explain,
-        :stored_fields,
-        :docvalue_fields,
-        :from,
-        :ignore_unavailable,
-        :ignore_throttled,
-        :allow_no_indices,
-        :expand_wildcards,
-        :lenient,
-        :preference,
-        :q,
-        :routing,
-        :scroll,
-        :search_type,
-        :size,
-        :sort,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :terminate_after,
-        :stats,
-        :suggest_field,
-        :suggest_mode,
-        :suggest_size,
-        :suggest_text,
-        :timeout,
-        :track_scores,
-        :track_total_hits,
-        :allow_partial_search_results,
-        :typed_keys,
-        :version,
-        :seq_no_primary_term,
-        :request_cache,
-        :batched_reduce_size,
-        :max_concurrent_shard_requests,
-        :pre_filter_shard_size,
-        :rest_total_hits_as_int
-      ].freeze)
     end
   end
 end

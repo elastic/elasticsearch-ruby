@@ -20,10 +20,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Creates or updates an index template.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
@@ -40,26 +36,20 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_index_template/#{Utils.__listify(_name)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:put_index_template, [
-          :create,
-          :cause,
-          :master_timeout
-        ].freeze)
       end
     end
   end

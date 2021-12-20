@@ -31,24 +31,18 @@ module Elasticsearch
         def post_voting_config_exclusions(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_cluster/voting_config_exclusions"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:post_voting_config_exclusions, [
-          :node_ids,
-          :node_names,
-          :timeout
-        ].freeze)
       end
     end
   end

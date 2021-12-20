@@ -19,10 +19,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns all script contexts.
-      # This functionality is Experimental and may be changed or removed
-      # completely in a future release. Elastic will take a best effort approach
-      # to fix any issues, but experimental features are not subject to the
-      # support SLA of official GA features.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
@@ -31,14 +27,17 @@ module Elasticsearch
       def get_script_context(arguments = {})
         headers = arguments.delete(:headers) || {}
 
+        body = nil
+
         arguments = arguments.clone
 
         method = Elasticsearch::API::HTTP_GET
         path   = "_script_context"
         params = {}
 
-        body = nil
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
     end
   end

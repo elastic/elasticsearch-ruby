@@ -42,6 +42,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = nil
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
@@ -50,31 +52,20 @@ module Elasticsearch
 
         method = Elasticsearch::API::HTTP_GET
         path   = "#{Utils.__listify(_index)}/_doc/#{Utils.__listify(_id)}"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = nil
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+          Utils.__rescue_from_not_found {
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
+          }
         else
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:get, [
-        :stored_fields,
-        :preference,
-        :realtime,
-        :refresh,
-        :routing,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :version,
-        :version_type
-      ].freeze)
     end
   end
 end

@@ -19,7 +19,6 @@ module Elasticsearch
   module DSL
     module Search
       module Queries
-
         # A query which returns documents matching a specified expression in the Lucene Query String syntax
         #
         # @example
@@ -54,7 +53,7 @@ module Elasticsearch
           option_method :phrase_slop
           option_method :boost
           option_method :analyze_wildcard
-          option_method :auto_generate_phrase_queries
+          option_method :auto_generate_synonyms_phrase_query
           option_method :minimum_should_match
           option_method :lenient
           option_method :locale
@@ -62,7 +61,6 @@ module Elasticsearch
           option_method :tie_breaker
           option_method :time_zone
         end
-
       end
     end
   end

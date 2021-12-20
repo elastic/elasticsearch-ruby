@@ -1,4 +1,4 @@
-= Ruby and Rails Integrations
+= Elasticsearch Ruby Client
 
 :doctype:           book
 
@@ -10,10 +10,14 @@ include::installation.asciidoc[]
 
 include::connecting.asciidoc[]
 
-include::model.asciidoc[]
+include::config.asciidoc[]
 
-include::rails.asciidoc[]
+include::basic-config.asciidoc[]
 
-include::persistence.asciidoc[]
+include::advanced-config.asciidoc[]
+
+include::integrations.asciidoc[]
+
+include::examples.asciidoc[]
 
 include::release_notes/index.asciidoc[]

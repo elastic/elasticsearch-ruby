@@ -30,6 +30,6 @@ describe 'client.cluster#forcemerge' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.forcemerge).to eq({})
+    expect(client_double.indices.forcemerge).to be_a Elasticsearch::API::Response
   end
 end

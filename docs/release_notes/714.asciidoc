@@ -1,0 +1,93 @@
+[[release_notes_714]]
+=== 7.14 Release notes
+
+[discrete]
+[[release_notes_7141]]
+=== 7.14.1 Release notes
+
+[discrete]
+==== Client
+
+ - Fixes for Manticore Implementation: Addresses custom headers on initialization (https://github.com/elastic/elasticsearch-ruby/commit/3732dd4f6de75365460fa99c1cd89668b107ef1c[3732dd4]) and fixes tracing (https://github.com/elastic/elasticsearch-ruby/commit/3c48ebd9a783988d1f71bfb9940459832ccd63e4[3c48ebd]). Related to https://github.com/elastic/elasticsearch-ruby/issues/1426[#1426] and https://github.com/elastic/elasticsearch-ruby/issues/1428[#1428].
+
+[discrete]
+[[release_notes_7140]]
+=== 7.14.0 Release notes
+
+[discrete]
+==== Client
+
+Added check that client is connected to an Elasticsearch cluster. If the client isn't connected to a supported Elasticsearch cluster the `UnsupportedProductError` exception will be raised.
+
+This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+
+`Elasticsearch::Client` has an `attr_accessor` for the transport instance:
+
+[source,ruby]
+------------------------------------
+> client = Elasticsearch::Client.new
+> client.transport.class
+=> Elasticsearch::Transport::Client
+> client.transport.transport.class
+=> Elasticsearch::Transport::Transport::HTTP::Faraday
+------------------------------------
+
+The interaction with `elasticsearch-api` remains unchanged. You can use the API endpoints just like before:
+
+[source,ruby]
+------------------------------------
+> client.info
+=> {"name"=>"instance",
+ "cluster_name"=>"elasticsearch",
+ "cluster_uuid"=>"id",
+ "version"=>
+  {"number"=>"7.14.0",
+  ...
+},
+ "tagline"=>"You Know, for Search"}
+------------------------------------
+
+Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+
+[source,ruby]
+------------------------------------
+> client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=> #<Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=>"instance",
+   "cluster_name"=>"elasticsearch",
+   "cluster_uuid"=>"id",
+   "version"=>
+    {"number"=>"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=>"You Know, for Search"},
+ @headers=
+  {"content-type"=>"application/json; charset=UTF-8",
+   "content-length"=>"571",
+   ...
+   },
+ @status=200>
+------------------------------------
+
+If you have any problems, please report them in https://github.com/elastic/elasticsearch-ruby/issues/1344[this issue].
+
+[discrete]
+==== API
+
+Code is now generated from Elastic artifacts instead of checked out code of Elasticsearch. See https://github.com/elastic/elasticsearch-ruby/blob/7.14/elasticsearch-api/utils/README.md#generate[the Generator README] for more info.
+
+- Endpoints `msearch`, `msearch_template` and `search_template` remove `query_and_fetch` and `dfs_query_and_fetch` options from the `search_type` parameter.
+- New parameter `include_repository` in `snapshot.get`: (boolean) Whether to include the repository name in the snapshot info. Defaults to true.
+
+[discrete]
+==== X-Pack
+
+X-Pack is being deprecated. The first time using `xpack` on the client, a warning will be triggered. Please check https://github.com/elastic/elasticsearch-ruby/issues/1274[this issue] for more information.
+
+
+- New endpoints: `index_lifecycle_management.migrate_to_data_tiers`, `machine_learning.reset_job`, `security.saml_authenticate`, `security.saml_complete_logout`, `security.saml_invalidate`, `security.saml_logout`, `security.saml_prepare_authentication`, `security.saml_service_provider_metadata`, `sql.delete_async`, `sql.get_async`, `sql.get_async_status`, `terms_enum`.
+- New experimental endpoints: `machine_learning.infer_trained_model_deployment`, `machine_learning.start_trained_model_deployment`, `machine_learning.stop_trained_model_deployment`.
+- Deprecation: `indices.freeze` and `indices.unfreeze`: Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+

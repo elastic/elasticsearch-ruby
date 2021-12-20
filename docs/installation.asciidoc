@@ -38,19 +38,6 @@ gem 'elasticsearch', '~> 7.0'
 [discrete]
 === {es} and Ruby Version Compatibility
 
-The {es} client is compatible with Ruby 1.9 and higher.
+The {es} client is compatible with currently maintained Ruby versions. We follow Ruby’s own maintenance policy and officially support all currently maintained versions per https://www.ruby-lang.org/en/downloads/branches/[Ruby Maintenance Branches].
 
-The client's API is compatible with {es} API versions from 0.90 till current,
-just use a release matching major version of {es}.
-
-|===
-| Gem Version   |   | {es} Version
-
-| 0.90          | → | 0.90
-| 1.x           | → | 1.x
-| 2.x           | → | 2.x
-| 5.x           | → | 5.x
-| 6.x           | → | 6.x
-| 7.x           | → | 7.x
-| master        | → | master
-|===
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of {es}. Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.

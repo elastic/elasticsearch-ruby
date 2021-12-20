@@ -43,28 +43,31 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
 
         _id = arguments.delete(:id)
 
-        method = if arguments[:body]
+        method = if body
                    Elasticsearch::API::HTTP_POST
                  else
                    Elasticsearch::API::HTTP_GET
                  end
 
         endpoint = arguments.delete(:endpoint) || '_termvectors'
-        path = if _index && _id
-                 "#{Utils.__listify(_index)}/_termvectors/#{Utils.__listify(_id)}"
-               else
-                 "#{Utils.__listify(_index)}/_termvectors"
-               end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = if _index && _id
+                   "#{Utils.__listify(_index)}/_termvectors/#{Utils.__listify(_id)}"
+                 else
+                   "#{Utils.__listify(_index)}/_termvectors"
+                 end
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
 
       # Deprecated: Use the plural version, {#termvectors}
@@ -72,22 +75,6 @@ module Elasticsearch
       def termvector(arguments = {})
         termvectors(arguments.merge endpoint: '_termvector')
       end
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:termvectors, [
-        :term_statistics,
-        :field_statistics,
-        :fields,
-        :offsets,
-        :positions,
-        :payloads,
-        :preference,
-        :routing,
-        :realtime,
-        :version,
-        :version_type
-      ].freeze)
     end
   end
 end

@@ -38,7 +38,7 @@ describe 'client.cluster#put_alias' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.put_alias(index: 'foo', name: 'bar')).to eq({})
+    expect(client_double.indices.put_alias(index: 'foo', name: 'bar')).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is no name specified' do
@@ -61,7 +61,7 @@ describe 'client.cluster#put_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_alias(index: 'foo', name: 'bar', body: { filter: 'foo' })).to eq({})
+      expect(client_double.indices.put_alias(index: 'foo', name: 'bar', body: { filter: 'foo' })).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -72,7 +72,7 @@ describe 'client.cluster#put_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_alias(index: ['foo','bar'], name: 'bam')).to eq({})
+      expect(client_double.indices.put_alias(index: ['foo','bar'], name: 'bam')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -83,7 +83,7 @@ describe 'client.cluster#put_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.put_alias(index: 'foo^bar', name: 'bar/bam')).to eq({})
+      expect(client_double.indices.put_alias(index: 'foo^bar', name: 'bar/bam')).to be_a Elasticsearch::API::Response
     end
   end
 end

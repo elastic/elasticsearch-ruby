@@ -31,7 +31,6 @@ module Elasticsearch
       def ingest
         @ingest ||= IngestClient.new(self)
       end
-
     end
   end
 end

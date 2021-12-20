@@ -30,6 +30,6 @@ describe 'client.cat#plugins' do
   end
 
   it 'performs the request' do
-    expect(client_double.cat.plugins).to eq({})
+    expect(client_double.cat.plugins).to be_a Elasticsearch::API::Response
   end
 end

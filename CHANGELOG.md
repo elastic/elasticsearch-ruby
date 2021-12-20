@@ -1,3 +1,308 @@
+## 7.16.1
+
+Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, [more information](https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476).
+
+### Client
+
+The only changes in the client since 7.16.0 are a few minor updates for the [Compatibility mode with 8.0](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-comp). We added the compatibility header in `7.13.0`,  but now we have integration tests and compatibility tests for version `7.x` of the client with Elasticsearch `8.0`.
+
+## 7.16.0
+
+### Client
+- Adds the `delay_on_retry` parameter, a value in milliseconds to wait between each failed connection, thanks [DinoPullerUqido](https://github.com/DinoPullerUqido)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1521) and [backport](https://github.com/elastic/elasticsearch-ruby/pull/1523).
+- Adds *CA fingerprinting*. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `ca_fingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. The verification will be run once per connection. Code example:
+
+```ruby
+ca_fingerprint = '64F2593F...'
+client = Elasticsearch::Client.new(
+  host: 'https://elastic:changeme@localhost:9200',
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: ca_fingerprint
+)
+```
+The verification will be run once per connection.
+
+- Fixes compression. When `compression` is set to `true`, the client will now gzip the request body properly and use the appropiate headers. Thanks [johnnyshields](https://github.com/johnnyshields)! [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1478) and [backport](https://github.com/elastic/elasticsearch-ruby/pull/1526).
+- Warnings emitted by Elasticsearch are now logged via `log_warn` through the Loggable interface in the client, instead of using `Kernel.warn`. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1517).
+
+### API
+
+#### Updates
+
+- Cleaned up some deprecated code.
+- `count` - The API is documented as using `GET`, but it supports both GET and POST on the Elasticsearch side. So it was updated to only use `POST` when there's a body present, or else use `GET`. Elasticsearch would still accept a body with `GET`, but to be more semantically correct in the clients we use `POST` when there's a body.
+- `delete_index_template` was updated to support the `ignore_404` parameter to ignore 404 errors when attempting to delete a non-existing template.
+- `ingest.put_pipeline` adds new parameter `if_version`: Required version for optimistic concurrency control for pipeline updates.
+- `ml.put_trained_model`: adds new parameter `defer_definition_decompression`: If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
+- `nodes.hot_threads` adds new parameter `sort`: The sort order for 'cpu' type (default: total) (options: cpu, total).
+- `open_point_in_time`: `keep_alive` is now a required parameter.
+- `search_mvt`: adds new parameter `track_total_hits`: Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+- `transform.preview_transform`: adds new parameter `transform_id`. Body is now optional and the API will use `GET` or `POST` depending on the presence of a body.
+
+##### APIs promoted from experimental to stable since last version:
+
+- `fleet.global_checkpoints`
+- `get_script_context`
+- `get_script_language`
+- `indices.resolve_index`
+- `monitoring.bulk`
+- `rank_eval`
+- `searchable_snapshots.mount`
+- `searchable_snapshots.stats`
+- `security.clear_cached_service_tokens`
+- `security.create_service_token`
+- `security.delete_service_token`
+- `security.get_service_accounts`
+- `security.get_service_credentials`
+- `shutdown.delete_node`
+- `shutdown.get_node`
+- `shutdown.put_node`
+- `terms_enum`
+
+#### New APIs
+
+- `fleet.mseach`
+- `fleet.search`
+- `indices.modify_data_stream`
+- `ml.infer_trained_model_deployment`
+- `ml.start_trained_model_deployment`
+- `ml.stop_trained_model_deployment`
+- `migration.get_feature_upgrade_status`
+- `migration.post_feature_upgrade_status`
+- `security.enroll_kibana`
+- `security.enroll_node`
+- `transform.updgrade_transforms`
+
+## 7.15.0
+
+### Client
+
+We've tested and added documentation on best practices for leveraging the client in a Function-as-a-Service (FaaS) environment to the [official docs](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-faas).
+
+### API
+
+- New experimental endpoints: `indices.disk_usage`. `indices.field_usage_stats`, `nodes.clear_repositories_metering_archive`, `get_repositories_metering_info`, [`search_mvt`](https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html)
+- The `index` parameter is now required for `open_point_in_time`.
+- The `index_metric` parameter in `nodes.stats` adds the `shards` option.
+
+### X-Pack
+
+- New parameters for `ml.put_job`: `ignore_unavailable`, `allow_no_indices`, `ignore_throttled`, `expand_wildcards`.
+- New endpoint: `security.query_api_keys`. [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/7.15/security-api-query-api-key.html)
+
+
+## 7.14.1
+
+### Client
+
+ - Fixes for Manticore Implementation: Addresses custom headers on initialization (https://github.com/elastic/elasticsearch-ruby/commit/3732dd4f6de75365460fa99c1cd89668b107ef1c) and fixes tracing (https://github.com/elastic/elasticsearch-ruby/commit/3c48ebd9a783988d1f71bfb9940459832ccd63e4). Related to #1426 and #1428.
+
+## 7.14.0
+
+### Client
+
+Added check that client is connected to an Elasticsearch cluster. If the client isn't connected to a supported Elasticsearch cluster the `UnsupportedProductError` exception will be raised.
+
+This release changes the way in which the transport layer and the client interact. Previously, when using `elasticsearch-transport`, `Elasticsearch::Transport::Client` had a convenient wrapper, so it could be used as `Elasticsearch::Client`. Now, we are decoupling the transport layer from the Elasticsearch client. If you're using the `elasticsearch` gem, not much will change. It will instantiate a new `Elasticsearch::Transport::Client` when you instantiate `Elasticsearch::Client` and the endpoints from `elasticsearch-api` will be available.
+
+`Elasticsearch::Client` has an `attr_accessor` for the transport instance:
+
+```ruby
+> client = Elasticsearch::Client.new
+> client.transport.class
+=> Elasticsearch::Transport::Client
+> client.transport.transport.class
+=> Elasticsearch::Transport::Transport::HTTP::Faraday
+```
+
+The interaction with `elasticsearch-api` remains unchanged. You can use the API endpoints just like before:
+
+```ruby
+> client.info
+=> {"name"=>"instance",
+ "cluster_name"=>"elasticsearch",
+ "cluster_uuid"=>"id",
+ "version"=>
+  {"number"=>"7.14.0",
+  ...
+},
+ "tagline"=>"You Know, for Search"}
+```
+
+Or perform request directly from the client which will return an `Elasticsearch::Transport::Response` object:
+
+```ruby
+> client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=> #<Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=>"instance",
+   "cluster_name"=>"elasticsearch",
+   "cluster_uuid"=>"id",
+   "version"=>
+    {"number"=>"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=>"You Know, for Search"},
+ @headers=
+  {"content-type"=>"application/json; charset=UTF-8",
+   "content-length"=>"571",
+   ...
+   },
+ @status=200>
+```
+
+If you have any problems, please report them in [this issue](https://github.com/elastic/elasticsearch-ruby/issues/1344).
+
+### API
+
+Code is now generated from Elastic artifacts instead of checked out code of Elasticsearch. See [the Generator README](https://github.com/elastic/elasticsearch-ruby/blob/7.14/elasticsearch-api/utils/README.md#generate) for more info.
+
+- Endpoints `msearch`, `msearch_template` and `search_template` remove `query_and_fetch` and `dfs_query_and_fetch` options from the `search_type` parameter.
+- New parameter `include_repository` in `snapshot.get`: (boolean) Whether to include the repository name in the snapshot info. Defaults to true.
+
+### X-Pack
+
+X-Pack is being deprecated. The first time using `xpack` on the client, a warning will be triggered. Please check [this issue](https://github.com/elastic/elasticsearch-ruby/issues/1274) for more information.
+
+
+- New endpoints: `index_lifecycle_management.migrate_to_data_tiers`, `machine_learning.reset_job`, `security.saml_authenticate`, `security.saml_complete_logout`, `security.saml_invalidate`, `security.saml_logout`, `security.saml_prepare_authentication`, `security.saml_service_provider_metadata`, `sql.delete_async`, `sql.get_async`, `sql.get_async_status`, `terms_enum`.
+- New experimental endpoints: `machine_learning.infer_trained_model_deployment`, `machine_learning.start_trained_model_deployment`, `machine_learning.stop_trained_model_deployment`.
+- Deprecation: `indices.freeze` and `indices.unfreeze`: Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+
+## 7.13.3
+
+- API Support for Elasticsearch version 7.13.3
+
+## 7.13.2
+
+- Mute release, yanked from RubyGems.
+
+### DSL 0.1.10
+- Adds auto_generate_synonyms_phrase_query (@andreasklinger) (3587ebe4dcecedd1f5e09adce4ddcf6cb163e9fa)
+- Adds minimum_should_match option to bool filters (@MothOnMars) (c127661f368970ad9158706b6c6134462524af56)
+- Adds support for calendar_interval to DateHistogram (@tmaier) (a3214c57ee876432a165f3e75f95a947a28d1484)
+- Removes auto_generate_phrase_queries deprecated parameter (850eabaff268eacbce6179e76fb9d34f271bc586)
+- Removes deprecated interval parameter (6b2e3bac39cf520d52adc17aee696fb7fa1de77a)
+- Use pry-byebug for MRI and pry-nav for JRuby
+- Improves running tests (default value for cluster set to 'http://localhost:9200')
+
+### DSL 0.1.9
+- Adds track_total_hits option (@andreasklinger)
+
+## 7.13.1
+
+### Client
+- Fixes thread safety issue in `get_connection` - [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1325).
+
+## 7.13.0
+
+### Client
+
+- Support for Elasticsearch version 7.13.0
+- Adds support for compatibility header for Elasticsearch. If the environment variable 'ELASTIC_CLIENT_APIVERSIONING' is set to `true` or `1`, the client will send the headers `Accept` and `Content-Type` with the following value: `application/vnd.elasticsearch+json;compatible-with=7`.
+- Better detection of Elasticsearch and Enterprise Search clients in the meta header used by cloud.
+
+### API
+
+- The REST API tests now use an artifact downloaded from the Elastic servers instead of depending of cloning `elasticsearch` locally. Check the README for more information.
+- New parameter `include_unloaded_segments` in `cat.nodes`, `nodes.stats`: If set to true segment stats will include stats for segments that are not currently loaded into memory
+- New parameter `summary` in `ingest.get_pipeline`: Return pipelines without their definitions (default: false)
+- New parameter `index_details` in `snapshot.get`: Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
+- New endpoint `features.reset_features`, `ingest/geo_ip_stats`
+- New experimental endpoints: `shutdown.delete_node`, `shutdown.get_node`, `shutdown.put_node`.
+
+### X-Pack
+
+- Refactored test tasks, made it easier to run the tests by default.
+- New experimental endpoints: `fleet.global_checkpoints`, `searchable_snapshots.cache_stats`.
+- New beta endpoints: `security.clear_cached_service_tokens`, `security.create_service_token`, `security.delete_service_token`, `security.get_service_accounts`, `security.get_service_credentials`
+- New endpoints: `machine_learning.delete_trained_model_alias`, `machine_learning.preview_data_frame_analytics`, `machine_learning.put_trained_model_alias`.
+- APIs migrated from experimental or beta to stable: `machine_learning.delete_data_frame_analytics`, `machine_learning.delete_trained_model`, `machine_learning.estimate_model_memory`, `machine_learning.explain_data_frame_analytics`, `machine_learning.get_data_frame_analytics`, `machine_learning.get_data_frame_analytics_stats`, `machine_learning.get_trained_models`, `machine_learning.get_trained_models_stats`, `machine_learning.put_data_frame_analytics`, `machine_learning.put_trained_model`, `machine_learning.start_data_frame_analytics`, `machine_learning.stop_data_frame_analytics`, `machine_learning.update_data_frame_analytics`
+- New parameter `body` in `machine_learning.preview_datafeed`: The datafeed config and job config with which to execute the preview.
+
+## 7.12.0
+
+### Client
+
+- Support for Elasticsearch version 7.12.0
+- Ruby 3 is now tested, it was added to the entire test suite.
+- New official documentation pages for configuration: [Basic Configuration](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/basic-config.html) and [Advanced Configuration](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/advanced-config.html).
+- Integration tests runner refactored to keep skipped tests in a yaml file.
+
+### API
+
+- New API namespace: `features` and endpoints `features.get_features` and `snapshot.get_features`.
+- `cat.plugins` adds parameter `include_bootstrap`: Include bootstrap plugins in the response.
+- Update in `indices.close` parameter `wait_for_active_shards`: Sets the number of active shards to wait for before the operation returns. Set to `index-setting` to wait according to the index setting `index.write.wait_for_active_shards`, or `all` to wait for all shards, or an integer. Defaults to `0`.
+- `actions.search` adds parameter `min_compatible_shard_node`: The minimum compatible version that all shards involved in search should have for this request to be successful.
+
+### X-Pack
+
+- New API namespace: `text_structure` and endpoints `text_structure.find_structure`.
+- New API namespace: `logstash` and endpoints `logstash.delete_pipeline`, `logstash.get_pipeline`, `logstash.put_pipeline`.
+- New API: `eql.get_status`.
+- APIs migrated from experimental to stable: `autoscaling.delete_autoscaling_policy`, `autoscaling.get_autoscaling_capacity`, `autoscaling.get_autoscaling_policy`, `autoscaling.put_autoscaling_policy`.
+- `searchable_snapshots.mount` adds parameter `storage`: Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`.
+- `searchable_snapshots.stats` adds parameter `level`: Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards).
+
+## 7.11.2
+
+### Client
+
+* Bug fix in meta header, fixes fail when http adapter library hasn't been loaded yet: [Issue](https://github.com/elastic/elasticsearch-ruby/issues/1224).
+
+
+## 7.11.1
+
+### Client
+
+* Bug fix in meta header, adds support for unknown Faraday adapters. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1204).
+
+## 7.11.0
+
+### Client
+
+- Fixes a bug with headers in our default Faraday class. [Commit](https://github.com/elastic/elasticsearch-ruby/commit/9c4afc452467cc6344359b54b98bbe5af1469219).
+- Adds the `X-Elastic-Client-Meta` HTTP header which is used by Elastic Cloud and can be disabled with the `enable_meta_header` parameter set to `false`.
+
+### API
+
+#### API Changes
+
+- `cat.tasks` - Parameter `node_id` changes name to `nodes`, a comma-separated list of node IDS or names. Parameter `parent_task` changes name to `parent_task_id`.
+- APIs that are no longer experimental: `cluster.delete_component_template`, `cluster.exists_component_template`, `cluster.get_component_template`, `cluster.put_component_template`, `indices.delete_index_template`, `indices.exists_index_template`, `indices.get_index_template`, `indices.put_index_template`, `indices.simulate_index_template`, `indices.simulate_template`.
+- Deprecation notice: The _upgrade API is no longer useful and will be removed. Instead, see `_reindex API`. Deprecated since version 8.0.0. Endpoints: `indices.get_upgrade`, `indices.upgrade`
+
+#### X-Pack
+
+- New endpoints:`async_search.status`, `autoscaling.get_autoscaling_capacity` (experimental), `indices.migrate_to_data_stream`, `indices.promote_data_stream`, `machine_learning.upgrade_job_snapshot`, `rollup.rollup`, `watcher.query_watches`.
+- APIs that are no longer experimental: `eql.delete`, `eql.get`, `eql.search`,
+- APIs promoted from experimental to beta: `machine_learning.delete_data_frame_analytics`, `ml.delete_trained_model`, `machine_learning.evaluate_data_frame`, `machine_learning.explain_data_frame_analytics`, `machine_learning.get_data_frame_analytics`, `machine_learning.get_datafeed_stats`, `machine_learning.get_trained_models`, `machine_learning.get_trained_models_stats`, `machine_learning.put_data_frame_analytics`, `machine_learning.put_trained_model`, `machine_learning.start_data_frame_analytics`, `machine_learning.stop_data_frame_analytics`, `machine_learning.update_data_frame_analytics`
+- `indices.delete_data_stream`, `indices.get_data_stream` add parameter `expand_wildcards`, wether wildcard expressions should get expanded to open or closed indices (default: open). Options: open, closed, hidden, none, all.
+- `machine_learning.get_data_frame_analytics`, `machine_learning.get_datafeeds`, `machine_learning.get_jobs`, `machine_learning.get_trained_models`, `transform.get_transform` add parameter `exclude_generated` - omits fields that are illegal to set on PUT.
+- `data_frame_transform_deprecated.get_transform` (_data_frame/transforms/ is deprecated, use _transform/ in the future) adds parameter `exclude_generated` - omits generated files.
+
+## 7.10.1
+
+- Use 443 for default cloud port, 9200 as the default port for http
+
+## EXT:0.0.33
+
+New release of [`elasticsearch-extensions`](elasticsearch-extensions):
+
+- Fixes a bug where clusters failed to start with `"unknown setting [xpack.security.enabled]"` when running `elasticsearch-oss`. More details on the [issue](https://github.com/elastic/elasticsearch-ruby/issues/1130) ([commit](https://github.com/elastic/elasticsearch-ruby/commit/23a1302db43ad45f6ce5d1ac4fcfcc1d824609f3)).
+
+## EXT:0.0.32
+
+New release of [`elasticsearch-extensions`](elasticsearch-extensions):
+
+- Fixes parsing Elasticsearch version when a major, minor or patch have more than 1 digit (e.g. 7.10.0) ([commit](https://github.com/elastic/elasticsearch-ruby/commit/1d7a4b58e2605e946206f8e1720b1ddde710aef0)).
+- Changes the key of the parameter of Reindex from `target` to `dest` by @tetsuya-ogawa ([commit](https://github.com/elastic/elasticsearch-ruby/commit/25a983f7d848fc8bf0345ff3fe6011ef90c8c4c3#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Fixes test cluster clear_cluster option by @Lajcisvk ([commit](https://github.com/elastic/elasticsearch-ruby/commit/f55b56ed2a54299c5f5ed52a6513d186acd411db#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Sanitizes filename in the backup extension ([commit](https://github.com/elastic/elasticsearch-ruby/commit/6c055690782baf87f3b09e713b53b3d508af5197#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+- Adds 8.0.0 to cluster tasks ([commit](https://github.com/elastic/elasticsearch-ruby/commit/c3189328291b1a83f2c857e504ad9b75e20a7f93#diff-6ec4953cb34b5a3a20740404a942fce4e4de749f2162d9c88cc72e2b3a483474)).
+
 ## 7.10.0
 
 ### Client
@@ -45,7 +350,7 @@ Deprecation notice: `searchable_snapshots.repository_stats` is deprecated and is
 ### Client
 
 - Support for Elasticsearch version `7.9.0`.
-- Transport/Connection: Considers attributes values for equality - https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af[Commit].
+- Transport/Connection: Considers attributes values for equality - [Commit](https://github.com/elastic/elasticsearch-ruby/commit/06ffd03bf51f5f33a0d87e9914e66b39357d40af).
 - When an API endpoint accepts both `GET` and `POST`, the client will always use `POST` when a request body is present.
 
 ### API

@@ -20,44 +20,45 @@ require_relative '../../../lib/elasticsearch/api/version.rb'
 
 module Elasticsearch
   module API
+    # Helper with file related methods for code generation
     module FilesHelper
-      OSS_SRC_PATH   = '../../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/api/'.freeze
-      OSS_OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
+      PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
+      SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/rest-api-spec/api/')
+      OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
+      TESTS_DIRECTORY = "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/free".freeze
 
-      XPACK_SRC_PATH   = '../../../../../tmp/elasticsearch/x-pack/plugin/src/test/resources/rest-api-spec/api'.freeze
-      XPACK_OUTPUT_DIR = '../../elasticsearch-xpack/lib/elasticsearch/xpack/api/actions'.freeze
+      # Only get JSON files and remove hidden files
+      def self.files
+        json_files = Dir.entries(SRC_PATH)
 
-      # Path to directory with JSON API specs
-      def self.input_dir(api)
-        input_dir = if api == :xpack
-                      File.expand_path(XPACK_SRC_PATH, __FILE__)
-                    else
-                      File.expand_path(OSS_SRC_PATH, __FILE__)
-                    end
-        Pathname(input_dir)
+        json_files.reject do |file|
+          File.extname(file) != '.json' ||
+            File.basename(file) == '_common.json'
+        end.map { |file| "#{SRC_PATH}#{file}" }
       end
 
       # Path to directory to copy generated files
-      def self.output_dir(api)
-        api == :xpack ? Pathname(XPACK_OUTPUT_DIR) : Pathname(OSS_OUTPUT_DIR)
-      end
-
-      # Only get JSON files and remove hidden files
-      def self.files(api)
-        Dir.entries(input_dir(api).to_s).reject do |f|
-          f.start_with?('.') ||
-            f.start_with?('_') ||
-            File.extname(f) != '.json'
-        end
+      def self.output_dir
+        Pathname(OUTPUT_DIR)
       end
 
       def self.documentation_url(documentation_url)
         branch = `git rev-parse --abbrev-ref HEAD`
-        return documentation_url if branch == "master\n"
+        return documentation_url if branch == "main\n"
 
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         version = Elasticsearch::API::VERSION.match(regex)[0]
-        documentation_url.gsub(/\/(current|master)\//, "/#{version}/")
+        # TODO - How do we fix this so it doesn't depend on which branch we're running from
+        if version == '8.0'
+          documentation_url
+        else
+          documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
+        end
+      end
+
+      def cleanup_output_dir!
+        FileUtils.remove_dir(OUTPUT_DIR)
+        Dir.mkdir(OUTPUT_DIR)
       end
     end
   end

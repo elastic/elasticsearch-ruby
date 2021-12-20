@@ -25,7 +25,7 @@ describe 'client.indices#unfreeze' do
         url,
         params,
         nil,
-        nil
+        {}
     ]
   end
 
@@ -53,7 +53,7 @@ describe 'client.indices#unfreeze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.unfreeze(index: 'foo')).to eq({})
+      expect(client_double.indices.unfreeze(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -68,7 +68,7 @@ describe 'client.indices#unfreeze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.unfreeze(index: 'foo', timeout: '1s')).to eq({})
+      expect(client_double.indices.unfreeze(index: 'foo', timeout: '1s')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -79,7 +79,7 @@ describe 'client.indices#unfreeze' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.unfreeze(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.unfreeze(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

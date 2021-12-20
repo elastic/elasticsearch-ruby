@@ -34,7 +34,7 @@ describe 'client.cluster#get_settings' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get_settings).to eq({})
+    expect(client_double.indices.get_settings).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -44,7 +44,7 @@ describe 'client.cluster#get_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_settings(index: 'foo')).to eq({})
+      expect(client_double.indices.get_settings(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -55,7 +55,7 @@ describe 'client.cluster#get_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_settings(index: 'foo', name: 'foo.bar')).to eq({})
+      expect(client_double.indices.get_settings(index: 'foo', name: 'foo.bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -66,7 +66,7 @@ describe 'client.cluster#get_settings' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_settings(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.get_settings(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

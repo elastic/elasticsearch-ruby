@@ -8,7 +8,8 @@ This page contains the information you need to connect and use the Client with
 
 * <<client-auth, Authentication options>>
 * <<client-usage, Using the client>>
-
+* <<client-faas, Using the Client in a Function-as-a-Service Environment>>
+* <<client-comp, Enabling the Compatibility Mode>>
 
 [discrete]
 [[client-auth]]
@@ -54,7 +55,7 @@ client = Elasticsearch::Client.new(
 ==== API Key authentication
 
 You can also use the 
-https://www.elastic.co/guide/en/elasticsearch/reference/7.x/security-api-create-api-key.html[ApiKey] 
+https://www.elastic.co/guide/en/elasticsearch/reference/7.16/security-api-create-api-key.html[ApiKey] 
 authentication.
 
 NOTE: If you provide both basic authentication credentials and the ApiKey 
@@ -123,6 +124,23 @@ Elasticsearch::Client.new(
 )
 ------------------------------------
 
+[discrete]
+[[ca-fingerprint]]
+==== CA fingerprint
+
+You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a `ca_fingerprint` option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value:
+
+[source,ruby]
+------------------------------------
+ca_fingerprint = '64F2593F...'
+client = Elasticsearch::Client.new(
+  host: 'https://elastic:changeme@localhost:9200',
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: ca_fingerprint
+)
+------------------------------------
+
+The verification will be run once per connection.
 
 [discrete]
 [[client-usage]]
@@ -138,9 +156,92 @@ client = Elasticsearch::Client.new log: true
 
 client.cluster.health
 
-client.index(index: 'my-index', type: 'my-document', id: 1, body: { title: 'Test' })
+client.index(index: 'my-index', id: 1, body: { title: 'Test' })
 
 client.indices.refresh(index: 'my-index')
 
 client.search(index: 'my-index', body: { query: { match: { title: 'test' } } })
 ------------------------------------
+
+
+[discrete]
+[[client-faas]]
+=== Using the Client in a Function-as-a-Service Environment
+
+This section illustrates the best practices for leveraging the {es} client in a Function-as-a-Service (FaaS) environment. The most influential optimization is to initialize the client outside of the function, the global scope. This practice does not only improve performance but also enables background functionality as – for example – sniffing. The following examples provide a skeleton for the best practices.
+
+[discrete]
+==== GCP Cloud Functions
+
+[source,ruby]
+------------------------------------
+require 'functions_framework'
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new(
+  cloud_id: "elasic-cloud-id",
+  user: "elastic",
+  password: "password",
+  log: true
+)
+
+FunctionsFramework.http "hello_world" do |request|
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
+------------------------------------
+
+[discrete]
+==== AWS Lambda
+
+[source,ruby]
+------------------------------------
+require 'elasticsearch'
+
+def client
+  @client ||= Elasticsearch::Client.new(
+    cloud_id: "elastic-cloud-id",
+    user: "elastic",
+    password: "password",
+    log: true
+  )
+end
+
+def lambda_handler(event:, context:)
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
+------------------------------------
+
+Resources used to assess these recommendations:
+
+* https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations[GCP Cloud Functions: Tips & Tricks]
+* https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html[Best practices for working with AWS Lambda functions]
+
+[discrete]
+[[client-comp]]
+=== Enabling the Compatibility Mode
+
+The Elasticsearch server version 8.0 is introducing a new compatibility mode that allows you a smoother upgrade experience from 7 to 8. In a nutshell, you can use the latest 7.x Elasticsearch client with an 8.x Elasticsearch server, giving more room to coordinate the upgrade of your codebase to the next major version.
+
+If you want to leverage this functionality, please make sure that you are using the latest 7.x client and set the environment variable `ELASTIC_CLIENT_APIVERSIONING` to `true`. The client is handling the rest internally. For every 8.0 and beyond client, you're all set! The compatibility mode is enabled by default.

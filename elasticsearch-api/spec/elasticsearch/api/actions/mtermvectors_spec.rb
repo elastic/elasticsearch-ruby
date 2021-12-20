@@ -20,27 +20,25 @@ require 'spec_helper'
 describe 'client#mtermvectors' do
   let(:expected_args) do
     [
-      method,
+      'POST',
       'my-index/_mtermvectors',
       {},
       body,
       {}
     ]
   end
-  let(:method) { 'POST' }
 
   let(:body) do
     { ids: [1, 2, 3] }
   end
 
   it 'performs the request' do
-    expect(client_double.mtermvectors(index: 'my-index', body: { ids: [1, 2, 3] })).to eq({})
+    expect(client_double.mtermvectors(index: 'my-index', body: { ids: [1, 2, 3] })).to be_a Elasticsearch::API::Response
   end
 
   context 'when a list of ids is passed instead of a body' do
-    let(:method) { 'GET' }
     it 'performs the request' do
-      expect(client_double.mtermvectors(index: 'my-index', ids: [1, 2, 3])).to eq({})
+      expect(client_double.mtermvectors(index: 'my-index', ids: [1, 2, 3])).to be_a Elasticsearch::API::Response
     end
   end
 end

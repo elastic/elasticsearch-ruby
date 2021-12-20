@@ -18,10 +18,9 @@
 require 'spec_helper'
 
 describe 'client#count' do
-
   let(:expected_args) do
     [
-      'POST',
+      'GET',
       '_count',
       {},
       nil,
@@ -30,14 +29,13 @@ describe 'client#count' do
   end
 
   it 'performs the request' do
-    expect(client_double.count).to eq({})
+    expect(client_double.count).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index and type are specified' do
-
     let(:expected_args) do
       [
-        'POST',
+        'GET',
         'foo,bar/_count',
         {},
         nil,
@@ -46,12 +44,11 @@ describe 'client#count' do
     end
 
     it 'performs the request' do
-      expect(client_double.count(index: ['foo','bar'])).to eq({})
+      expect(client_double.count(index: ['foo','bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when there is a query provided' do
-
     let(:expected_args) do
       [
         'POST',
@@ -63,7 +60,7 @@ describe 'client#count' do
     end
 
     it 'performs the request' do
-      expect(client_double.count(body: { match: { foo: 'bar' } })).to eq({})
+      expect(client_double.count(body: { match: { foo: 'bar' } })).to be_a Elasticsearch::API::Response
     end
   end
 end

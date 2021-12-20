@@ -27,18 +27,14 @@ namespace :docker do
     E.g.:
       rake docker:start[7.x-SNAPSHOT]
 
-    To start the container with X-Pack, pass it in as a parameter:
-      rake docker:start[7.x-SNAPSHOT,xpack]
+    To start the container with Platinum, pass it in as a parameter:
+      rake docker:start[7.x-SNAPSHOT,platinum]
   DOC
-  task :start, [:version,:suite] do |_, params|
+  task :start, [:version, :suite] do |_, params|
     abort 'Docker not installed' unless find_executable 'docker'
     abort 'You need to set a version, e.g. rake docker:start[7.x-SNAPSHOT]' unless params[:version]
 
-    elasticsearch_suite = if ['xpack', 'x-pack'].include? :suite
-                            'elasticsearch'
-                          else
-                            'elasticsearch-oss'
-                          end
-    system("ELASTICSEARCH_VERSION=#{elasticsearch_suite}:#{params[:version]} ./.ci/run-elasticsearch.sh")
+    test_suite = params[:suite] || 'free'
+    system("STACK_VERSION=#{params[:version]} TEST_SUITE=#{test_suite} ./.ci/run-elasticsearch.sh")
   end
 end

@@ -38,7 +38,7 @@ describe 'client.indices#flush' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.flush).to eq({})
+    expect(client_double.indices.flush).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
@@ -48,7 +48,7 @@ describe 'client.indices#flush' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.flush(index: 'foo')).to eq({})
+      expect(client_double.indices.flush(index: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -59,7 +59,7 @@ describe 'client.indices#flush' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.flush(index: ['foo','bar'])).to eq({})
+      expect(client_double.indices.flush(index: ['foo','bar'])).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -70,7 +70,7 @@ describe 'client.indices#flush' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.flush(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.flush(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -85,7 +85,7 @@ describe 'client.indices#flush' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.flush(index: 'foo', ignore_unavailable: true)).to eq({})
+      expect(client_double.indices.flush(index: 'foo', ignore_unavailable: true)).to be_a Elasticsearch::API::Response
     end
   end
 end

@@ -26,9 +26,9 @@ module Elasticsearch
         #
         #     search do
         #       aggregation :daily do
-        #         field    'published_at'
-        #         interval 'day'
-        #         format   'yyyy-MM-dd'
+        #         field             'published_at'
+        #         calendar_interval 'day'
+        #         format            'yyyy-MM-dd'
         #       end
         #     end
         #
@@ -38,7 +38,8 @@ module Elasticsearch
           include BaseAggregationComponent
 
           option_method :field
-          option_method :interval
+          option_method :fixed_interval
+          option_method :calendar_interval
           option_method :pre_zone
           option_method :post_zone
           option_method :time_zone

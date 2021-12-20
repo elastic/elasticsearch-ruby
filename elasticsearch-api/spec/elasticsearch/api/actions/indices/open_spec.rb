@@ -38,7 +38,7 @@ describe 'client.indices#open' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.open(index: 'foo')).to eq({})
+    expect(client_double.indices.open(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when parameters are specified' do
@@ -48,7 +48,7 @@ describe 'client.indices#open' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.open(index: 'foo', timeout: '1s')).to eq({})
+      expect(client_double.indices.open(index: 'foo', timeout: '1s')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -59,7 +59,7 @@ describe 'client.indices#open' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.open(index: 'foo^bar')).to eq({})
+      expect(client_double.indices.open(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 end

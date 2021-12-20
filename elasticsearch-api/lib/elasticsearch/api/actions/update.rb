@@ -22,7 +22,6 @@ module Elasticsearch
       #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index
-      # @option arguments [String] :type The type of the document *Deprecated*
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the update operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
       # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
       # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
@@ -38,11 +37,6 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
-      # *Deprecation notice*:
-      # Specifying types in urls has been deprecated
-      # Deprecated since version 7.0.0
-      #
-      #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
       #
       def update(arguments = {})
@@ -52,47 +46,30 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _id = arguments.delete(:id)
 
         _index = arguments.delete(:index)
 
-        _type = arguments.delete(:type)
-
         method = Elasticsearch::API::HTTP_POST
-        path   = if _index && _type && _id
-                   "#{Utils.__listify(_index)}/#{Utils.__listify(_type)}/#{Utils.__listify(_id)}/_update"
-                 else
-                   "#{Utils.__listify(_index)}/_update/#{Utils.__listify(_id)}"
-                 end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        path   = "#{Utils.__listify(_index)}/_update/#{Utils.__listify(_id)}"
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+          Utils.__rescue_from_not_found {
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
+          }
         else
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:update, [
-        :wait_for_active_shards,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :lang,
-        :refresh,
-        :retry_on_conflict,
-        :routing,
-        :timeout,
-        :if_seq_no,
-        :if_primary_term,
-        :require_alias
-      ].freeze)
     end
   end
 end

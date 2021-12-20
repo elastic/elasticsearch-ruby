@@ -61,7 +61,6 @@ describe 'client#search' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_search'
     end
@@ -72,7 +71,6 @@ describe 'client#search' do
   end
 
   context 'when multiple indices are specified' do
-
     let(:url) do
       'foo,bar/_search'
     end
@@ -93,19 +91,6 @@ describe 'client#search' do
 
     it 'performs the request' do
       expect(client_double.search(search_type: 'count'))
-    end
-  end
-
-  context 'when there are invalid URL params' do
-
-    let(:client) do
-      Class.new { include Elasticsearch::API }.new
-    end
-
-    it 'raises an ArgumentError' do
-      expect{
-        client.search(search_type: 'count', qwertypoiuy: 'asdflkjhg')
-      }.to raise_exception(ArgumentError)
     end
   end
 end

@@ -41,9 +41,6 @@ module Elasticsearch
       # @option arguments [Time] :search_timeout Explicit timeout for each search request. Defaults to no timeout.
       # @option arguments [Number] :max_docs Maximum number of documents to process (default: all documents)
       # @option arguments [List] :sort A comma-separated list of <field>:<direction> pairs
-      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
-      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
-      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
       # @option arguments [Number] :terminate_after The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
       # @option arguments [List] :stats Specific 'tag' of the request for logging and statistical purposes
       # @option arguments [Boolean] :version Specify whether to return document version as part of a hit
@@ -66,57 +63,20 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
 
         method = Elasticsearch::API::HTTP_POST
         path   = "#{Utils.__listify(_index)}/_update_by_query"
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
-        perform_request(method, path, params, body, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:update_by_query, [
-        :analyzer,
-        :analyze_wildcard,
-        :default_operator,
-        :df,
-        :from,
-        :ignore_unavailable,
-        :allow_no_indices,
-        :conflicts,
-        :expand_wildcards,
-        :lenient,
-        :pipeline,
-        :preference,
-        :q,
-        :routing,
-        :scroll,
-        :search_type,
-        :search_timeout,
-        :max_docs,
-        :sort,
-        :_source,
-        :_source_excludes,
-        :_source_includes,
-        :terminate_after,
-        :stats,
-        :version,
-        :version_type,
-        :request_cache,
-        :refresh,
-        :timeout,
-        :wait_for_active_shards,
-        :scroll_size,
-        :wait_for_completion,
-        :requests_per_second,
-        :slices
-      ].freeze)
     end
   end
 end

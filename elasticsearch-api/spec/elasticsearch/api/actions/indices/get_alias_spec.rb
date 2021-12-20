@@ -34,7 +34,7 @@ describe 'client.cluster#get_alias' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get_alias(name: 'foo')).to eq({})
+    expect(client_double.indices.get_alias(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when multiple indices are specified' do
@@ -44,7 +44,7 @@ describe 'client.cluster#get_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_alias(index: ['foo','bar'], name: 'bam')).to eq({})
+      expect(client_double.indices.get_alias(index: ['foo','bar'], name: 'bam')).to be_a Elasticsearch::API::Response
     end
   end
 
@@ -55,7 +55,7 @@ describe 'client.cluster#get_alias' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_alias(index: 'foo^bar', name: 'bar/bam')).to eq({})
+      expect(client_double.indices.get_alias(index: 'foo^bar', name: 'bar/bam')).to be_a Elasticsearch::API::Response
     end
   end
 end

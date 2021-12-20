@@ -20,10 +20,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Returns information about whether a particular component template exist
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
@@ -37,26 +33,22 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_HEAD
           path   = "_component_template/#{Utils.__listify(_name)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
 
         alias_method :exists_component_template?, :exists_component_template
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:exists_component_template, [
-          :master_timeout,
-          :local
-        ].freeze)
       end
     end
   end

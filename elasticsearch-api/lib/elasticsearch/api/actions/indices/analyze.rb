@@ -30,33 +30,29 @@ module Elasticsearch
         def analyze(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body)
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
-          method = if arguments[:body]
+          method = if body
                      Elasticsearch::API::HTTP_POST
                    else
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index
-                   "#{Utils.__listify(_index)}/_analyze"
-                 else
-                   "_analyze"
-                 end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          path   = if _index
+                     "#{Utils.__listify(_index)}/_analyze"
+                   else
+                     "_analyze"
+                   end
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body]
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:analyze, [
-          :index
-        ].freeze)
       end
     end
   end

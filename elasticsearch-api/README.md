@@ -9,22 +9,11 @@ The `elasticsearch-api` library provides a Ruby implementation of
 the [Elasticsearch](http://elasticsearch.com) REST API.
 
 It does not provide an Elasticsearch client; see the
-[`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport) library.
+[`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport) library.
 
-The library is compatible with Ruby 1.9 and higher.
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
-It is compatible with Elasticsearch's API versions from 0.90 till current,
-just use a release matching major version of Elasticsearch.
-
-| Ruby          |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
+Language clients are forward compatible; meaning that clients support communicating with greater minor versions of Elasticsearch. Elastic language clients are also backwards compatible with lesser supported minor Elasticsearch versions.
 
 ## Installation
 
@@ -56,12 +45,12 @@ the library modules have been already included**, so you just call the API metho
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = Elasticsearch::Client.new(log: true)
 
-client.index  index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' }
+client.index(index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' })
 # => {"_index"=>"myindex", ... "created"=>true}
 
-client.search index: 'myindex', body: { query: { match: { title: 'test' } } }
+client.search(index: 'myindex', body: { query: { match: { title: 'test' } } })
 # => {"took"=>2, ..., "hits"=>{"total":5, ...}}
 ```
 
@@ -190,19 +179,18 @@ Elasticsearch::API.serializer.dump({foo: 'bar'})
 
 ## Development
 
-To work on the code, clone and bootstrap the main repository first --
-please see instructions in the main [README](../README.md#development).
+To work on the code, clone and bootstrap the main repository first -- please see instructions in the main [README](../README.md#development).
 
-To run tests, launch a testing cluster -- again, see instructions
-in the main [README](../README.md#development) -- and use the Rake tasks:
+To run tests, launch a testing cluster -- again, see instructions in the main [README](../README.md#development) -- and use the Rake tasks:
 
 ```
 time rake test:unit
 time rake test:integration
 ```
 
-Unit tests have to use Ruby 1.8 compatible syntax, integration tests
-can use Ruby 2.x syntax and features.
+We run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/main/api-spec-testing#rest-api-yaml-test-runner).
+
+The `rest_api` needs the test files from Elasticsearch. You can run the rake task to download the test artifacts in the root folder of the project. This task needs a running cluster to determine which version and build hash of Elasticsearch to use and test against. `TEST_ES_SERVER=http://localhost:9200 rake elasticsearch:download_artifacts`. This will download the necessary files used for the integration tests to `./tmp`.
 
 ## License
 

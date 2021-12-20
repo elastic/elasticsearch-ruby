@@ -38,7 +38,7 @@ describe 'client.indices#delete_template' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.delete_template(name: 'foo')).to eq({})
+    expect(client_double.indices.delete_template(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when the path needs to be URL-escaped' do
@@ -48,7 +48,7 @@ describe 'client.indices#delete_template' do
     end
 
     it 'performs the request' do
-      expect(client_double.indices.delete_template(name: 'foo^bar')).to eq({})
+      expect(client_double.indices.delete_template(name: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
   end
 

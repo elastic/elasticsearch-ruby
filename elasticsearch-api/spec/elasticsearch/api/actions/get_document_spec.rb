@@ -54,38 +54,26 @@ describe 'client#get' do
   end
 
   context 'when URL parameters are provided' do
-
     let(:params) do
       { routing: 'abc123' }
     end
 
     it 'Passes the URL params' do
-      expect(client_double.get(index: 'foo', id: '1', routing: 'abc123')).to eq({})
-    end
-  end
-
-  context 'when invalid URL parameters are provided' do
-
-    it 'Passes the URL params' do
-      expect {
-        client.get(index: 'foo', id: '1', qwert: 'abc123')
-      }.to raise_exception(ArgumentError)
+      expect(client_double.get(index: 'foo', id: '1', routing: 'abc123')).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when the request needs to be URL-escaped' do
-
     let(:url) do
       'foo%5Ebar/_doc/1'
     end
 
     it 'URL-escapes the parts' do
-      expect(client_double.get(index: 'foo^bar', id: '1')).to eq({})
+      expect(client_double.get(index: 'foo^bar', id: '1')).to be_a Elasticsearch::API::Response
     end
   end
 
   context 'when the request raises a NotFound error' do
-
     before do
       expect(client).to receive(:perform_request).and_raise(NotFound)
     end
@@ -97,9 +85,7 @@ describe 'client#get' do
     end
 
     context 'when the ignore option is provided' do
-
       context 'when the response is 404' do
-
         let(:params) do
           { ignore: 404 }
         end

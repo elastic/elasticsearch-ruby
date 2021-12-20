@@ -20,6 +20,10 @@ module Elasticsearch
     module Tasks
       module Actions
         # Cancels a task, if it can be cancelled through an API.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :task_id Cancel the task with specified task id (node_id:task_number)
         # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
@@ -33,6 +37,8 @@ module Elasticsearch
         def cancel(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _task_id = arguments.delete(:task_id)
@@ -43,21 +49,12 @@ module Elasticsearch
                    else
                      "_tasks/_cancel"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:cancel, [
-          :nodes,
-          :actions,
-          :parent_task_id,
-          :wait_for_completion
-        ].freeze)
       end
     end
   end

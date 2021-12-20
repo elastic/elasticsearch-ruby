@@ -1,21 +1,40 @@
 # Elasticsearch
 
-This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch).
+This repository contains the official [Elasticsearch](https://www.elastic.co/products/elasticsearch) Ruby client.
 
-[![master](https://github.com/elastic/elasticsearch-ruby/workflows/master/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.16](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.16)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.16.yml) [![7.17](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml/badge.svg?branch=7.17)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml) [![8.0](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml/badge.svg?branch=8.0)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml)
 
-The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
-library is a wrapper for two separate libraries:
+The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch) gem is a complete Elasticsearch client which uses two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-transport),
-  which provides a low-level Ruby client for connecting to an Elasticsearch cluster
-* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch-api),
-  which provides a Ruby API for the Elasticsearch RESTful API
+* [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby) - provides the low-level code for connecting to an Elasticsearch cluster.
+* [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api) - provides a Ruby API for the Elasticsearch RESTful API.
+
+## Documentation
+
+Please refer to [the full documentation on elastic.co](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html) for comprehensive information.
+
+Both `elastic-transport` and `elasticsearch-api` are also documented. You can check the [`elastic-transport`](https://rubydoc.info/github/elastic/elastic-transport-ruby/) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation at RubyDocs.
+
+## Installation
+
+Install the `elasticsearch` gem from [Rubygems](https://rubygems.org/gems/elasticsearch):
+
+```
+$ gem install elasticsearch
+```
+
+Or add it to your project's Gemfile:
+
+```ruby
+gem 'elasticsearch', 'VERSION'
+```
+
+## Usage example
 
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = Elasticsearch::Client.new(log: true)
 
 # if you specify Elasticsearch host
 # client = Elasticsearch::Client.new url: 'http://localhost:9200', log: true
@@ -24,149 +43,35 @@ client.transport.reload_connections!
 
 client.cluster.health
 
-client.search q: 'test'
+client.search(q: 'test')
 
 # etc.
 ```
 
-Both of these libraries are extensively documented.
-**Please read the [`elasticsearch-transport`](http://rubydoc.info/gems/elasticsearch-transport) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation carefully.**
+See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) for some practical examples.
 
-See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/master/docs/examples/README.md) for some practical examples.
-
-**For optimal performance, you should use a HTTP library which supports persistent
-("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
+**For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
 
 This repository contains these additional Ruby libraries:
 
-* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-extensions),
-   which provides a set of extensions to the base library,
-* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl),
+* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-extensions), *deprecated*.
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-dsl),
   which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
-* [`elasticsearch-xpack`](https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-xpack),
-  which provides a Ruby API for X-Pack APIs. This API is going to be merged into `elasticsearch-api` on v8.0.
 
 Please see their respective READMEs for information and documentation.
 
-For integration with Ruby models and Rails applications,
-see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-rails)** project.
+For integration with Ruby models and Rails applications, see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-rails)** project.
 
 ## Compatibility
 
-The Elasticsearch client is compatible with currently maintained Ruby versions. See [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/). We don't provide support to versions which have reached their end of life.
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
-The gem's version numbers follow Elasticsearch's major versions. The `master` branch is compatible with the Elasticsearch `master` branch, which is the next major version.
-
-| Gem Version   |   | Elasticsearch |
-|:-------------:|:-:| :-----------: |
-| 0.90          | → | 0.90          |
-| 1.x           | → | 1.x           |
-| 2.x           | → | 2.x           |
-| 5.x           | → | 5.x           |
-| 6.x           | → | 6.x           |
-| 7.x           | → | 7.x           |
-| master        | → | master        |
-
-Use a release that matches the major version of Elasticsearch in your stack. Each client version is
-backwards compatible with all minor versions of the same major version. The client's API is
-compatible with Elasticsearch's API versions from 0.90 till current.
-
-Check out [Elastic product end of life dates](https://www.elastic.co/support/eol)
-to learn which releases are still actively supported and tested.
-
-## Installation
-
-Install the `elasticsearch` package from [Rubygems](https://rubygems.org/gems/elasticsearch):
-
-    gem install elasticsearch
-
-To use an unreleased version, either add it to your `Gemfile` for [Bundler](http://gembundler.com):
-
-    gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
-
-or install it from a source code checkout:
-
-    git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-    cd elasticsearch-ruby/elasticsearch
-    bundle install
-    rake install
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch. Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
 
 ## Development
 
-To work on the code, clone and bootstrap the project first:
-
-```
-git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-cd elasticsearch-ruby/
-bundle exec rake setup
-bundle exec rake bundle
-```
-
-This will clone the Elasticsearch repository into the project, and run `bundle install` in all subprojects. There are a few tasks to work with Elasticsearch. Use `rake -T` and look for the tasks in the `elasticsearch` namespace. You can build elasticsearch with `rake elasticsearch:build` after having ran setup.
-
-To run tests, you need to start a testing cluster on port 9250, or provide a different one in the `TEST_CLUSTER_PORT` environment variable.
-
-There's a Rake task to start the testing cluster. By default this is going to try and use the `elasticsearch` command on your system:
-
-```
-rake test:cluster:start
-```
-
-You can also configure where the elasticsearch startup script is found with the `TEST_CLUSTER_COMMAND` environment variable, e.g.:
-```
-TEST_CLUSTER_COMMAND=~/elasticsearch/bin/elasticsearch rake test:cluster:stop
-```
-
-You also can configure the port, number of nodes, and other settings with environment variables:
-
-```
-TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
-TEST_CLUSTER_PORT=9250 \
-TEST_CLUSTER_NODES=2 \
-TEST_CLUSTER_NAME=my_cluster \
-ES_JAVA_OPTS='-Xms500m -Xmx500m' \
-TEST_CLUSTER_TIMEOUT=120 \
-rake test:cluster:start
-```
-
-You can stop the cluster with a rake task, passing in the `TEST_CLUSTER_COMMAND` variable:
-
-```
-TEST_CLUSTER_COMMAND=./tmp/builds/elasticsearch-7.10.0-SNAPSHOT/bin/elasticsearch \
-rake test:cluster:stop
-```
-
-There's also a rake task for starting up Elasticsearch in a Docker container:
-`rake docker:start[version]` - E.g.: `rake docker:start[7.x-SNAPSHOT]`. To start the container with X-Pack, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,xpack]`.
-
-To run tests against unreleased Elasticsearch versions, you can use the `rake elasticsearch:build` Rake task to build Elasticsearch from the cloned source (use `rake elasticsearch:update` to update the repository):
-
-**Note:** If you have gems from the `elasticsearch` family installed system-wide, and want to use development ones, prepend the command with `bundle exec`.
-
-```
-rake elasticsearch:build
-```
-
-This is going to create the build in `./tmp/builds/`.
-
-You can pass a branch name (tag, commit, ...) as the Rake task variable:
-
-```
-rake elasticsearch:build[origin/1.x]
-```
-
-To run all the tests in all the subprojects, use the Rake task:
-
-```
-time rake test:client
-```
-
-By default, tests will atempt to use `http://localhost:9200` as a test server. If you're using a different host/port, set the `TEST_ES_SERVER` environment variable, e.g.:
-
-```
-$ TEST_ES_SERVER='http://localhost:9250' be rake test:client
-```
+See [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
 
 ## License
 
-This software is licensed under the [Apache 2 license](./LICENSE).
+This software is licensed under the [Apache 2 license](./LICENSE). See [NOTICE](./NOTICE).

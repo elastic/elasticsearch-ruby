@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Licensed to Elasticsearch B.V. under one or more contributor
 # license agreements. See the NOTICE file distributed with
 # this work for additional information regarding copyright
@@ -15,74 +13,81 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
+# under the License.
+
+require 'fileutils'
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :unified_release do
-  desc 'Build snapshot gem files'
-  task :assemble_snapshot, [:version_qualifier, :output_dir] do |_, args|
-    version_qualifier = if args[:version_qualifier].nil? || args[:version_qualifier].empty?
-                          Time.now.strftime('%Y%m%d%H%M%S')
-                        else
-                          args[:version_qualifier]
-                        end
-
-    @version = if Elasticsearch::VERSION.include?('SNAPSHOT')
-                 # eg 8.0.0-SNAPSHOT
-                 Elasticsearch::VERSION.gsub('-SNAPSHOT', "#{version_qualifier}-SNAPSHOT")
+  desc 'Build gem releases and snapshots'
+  task :assemble, [:version, :output_dir] do |_, args|
+    @zip_filename = "elasticsearch-ruby-#{args[:version]}"
+    @version = if args[:version].match? '-SNAPSHOT'
+                 args[:version].gsub('-SNAPSHOT', ".#{Time.now.strftime('%Y%m%d%H%M%S')}-SNAPSHOT")
                else
-                 Elasticsearch::VERSION + "-#{version_qualifier}"
+                 args[:version]
                end
 
-    Rake::Task['update_version'].invoke(Elasticsearch::VERSION, @version)
+    Rake::Task['unified_release:bump'].invoke(@version) unless @version == Elasticsearch::VERSION
 
     build_gems(args[:output_dir])
-  end
-
-  desc 'Build release gem files'
-  task :assemble_release, [:output_dir] do |_, args|
-    raise ArgumentError, 'You must specify an output dir: rake build[output_dir]' unless args[:output_dir]
-
-    @version = Elasticsearch::VERSION
-    build_gems(args[:output_dir])
+    create_zip_file(args[:output_dir])
   end
 
   def build_gems(output_dir)
+    raise ArgumentError, 'You must specify an output dir' unless output_dir
+
+    # Create dir if it doesn't exist
+    dir = CURRENT_PATH.join(output_dir).to_s
+    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
       puts "Building #{gem} v#{@version} to #{output_dir}"
-      sh "cd #{CURRENT_PATH.join(gem)} && gem build --silent && mv *.gem #{CURRENT_PATH.join(output_dir)}"
+      sh "cd #{CURRENT_PATH.join(gem)} " \
+         "&& gem build --silent -o #{gem}-#{@version}.gem && " \
+         "mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
   end
 
-  desc 'Publish gems to Rubygems'
-  task :publish do
-    setup_credentials
-
-    RELEASE_TOGETHER.each do |gem|
-      puts '-' * 80
-      puts "Releasing #{gem} v#{Elasticsearch::VERSION}"
-      sh "cd #{CURRENT_PATH.join(gem)} && bundle exec rake release"
-    end
+  def create_zip_file(output_dir)
+    sh "cd #{CURRENT_PATH.join(output_dir)} && " \
+       "zip -r #{@zip_filename}.zip * " \
   end
 
-  def setup_credentials
-    raise ArgumentError, 'You need to set the env value for GITHUB_TOKEN' unless ENV['GITHUB_TOKEN']
-    raise ArgumentError, 'You need to set the env value for RUBYGEMS_API_KEY' unless ENV['RUBYGEMS_API_KEY']
+  desc <<-DESC
+  Update Rubygems versions in version.rb and *.gemspec files
 
-    sh 'git config --global user.email ${GIT_EMAIL} && ' \
-       'git config --global user.name ${GIT_NAME}'
+  Example:
 
-    file_name = File.expand_path('~/.gem/credentials')
-    text = <<~CREDENTIALS
-      ---
-      :github: Bearer #{ENV['GITHUB_TOKEN']}
-      :rubygems_api_key: #{ENV['RUBYGEMS_API_KEY']}
-    CREDENTIALS
-    File.open(file_name, 'w') do |file|
-      file.write(text)
+      $ rake unified_release:bump[42.0.0]
+  DESC
+  task :bump, :version do |_, args|
+    abort('[!] Required argument [version] missing') unless args[:version]
+
+    files = ['elasticsearch/elasticsearch.gemspec']
+    RELEASE_TOGETHER.each do |gem|
+      files << Dir["./#{gem}/**/**/version.rb"]
     end
 
-    FileUtils.chmod 0o600, file_name
+    version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
+    gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9.]+)'/)
+
+    files.flatten.each do |file|
+      content = File.read(file)
+      if file.match?('gemspec')
+        match = content.match(gemspec_regexp)
+        content.gsub!(match[0], "'elasticsearch-api', '#{args[:version]}'")
+      else
+        match = content.match(version_regexp)
+        old_version = match[1]
+        content.gsub!(old_version, "'#{args[:version]}'")
+      end
+      puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
+      File.open(file, 'w') { |f| f.puts content }
+    end
+  rescue StandardError => e
+    abort "[!!!] #{e.class} : #{e.message}"
   end
 end

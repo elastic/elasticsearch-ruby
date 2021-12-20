@@ -6,21 +6,18 @@ This directory hosts The Generator, a tool that generates the classes for each A
 
 ### Generate
 
-To generate the code, you need to run (from this folder):
+To generate the code, you need to have the Elasticsearch REST API spec files in `tmp/rest-api-spec` in the root of the project. You can run a rake task from the root of the project to download the specs corresponding to the current running cluster:
 ```bash
-$ thor api:code:generate
+$ rake elasticsearch:download_artifacts
 ```
 
-- The oss Ruby code will be generated in `elasticsearch-api/lib/elasticsearch/api/actions`.  
-- The xpack Ruby code will be generated in `elasticsearch-xpack/lib/elasticsearch/xpack/api/actions`.
+Once the JSON files have been downloaded, you need to run (from this folder):
+```bash
+$ thor code:generate
+```
+
+- The Ruby code will be generated in `elasticsearch-api/lib/elasticsearch/api/actions`.
 - The generator runs Rubocop to autolint and clean up the generated files.
-
-Alternatively, you can pass in `oss` or `xpack` as parameters to generate only one of the 2 sets of endpoints:
-
-```bash
-$ thor api:code:generate --api=xpack
-$ thor api:code:generate --api=oss
-```
 
 ### Development
 

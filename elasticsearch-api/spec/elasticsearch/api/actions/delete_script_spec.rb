@@ -31,7 +31,7 @@ describe 'client#delete_script' do
     end
 
     it 'performs the request' do
-      expect(client_double.delete_script(id: 'foo')).to eq({})
+      expect(client_double.delete_script(id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end

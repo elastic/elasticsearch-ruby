@@ -38,6 +38,8 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
@@ -46,22 +48,12 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "#{Utils.__listify(_index)}/_block/#{Utils.__listify(_block)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:add_block, [
-          :timeout,
-          :master_timeout,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards
-        ].freeze)
       end
     end
   end

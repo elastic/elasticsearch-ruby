@@ -20,6 +20,10 @@ module Elasticsearch
     module Tasks
       module Actions
         # Returns information about a task.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :task_id Return the task with specified id (node_id:task_number)
         # @option arguments [Boolean] :wait_for_completion Wait for the matching tasks to complete (default: false)
@@ -31,25 +35,20 @@ module Elasticsearch
         def get(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _task_id = arguments.delete(:task_id)
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_tasks/#{Utils.__listify(_task_id)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:get, [
-          :wait_for_completion,
-          :timeout
-        ].freeze)
       end
     end
   end

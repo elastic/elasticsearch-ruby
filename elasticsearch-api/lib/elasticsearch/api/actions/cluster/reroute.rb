@@ -35,27 +35,18 @@ module Elasticsearch
         def reroute(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = arguments.delete(:body) || {}
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_cluster/reroute"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = arguments[:body] || {}
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:reroute, [
-          :dry_run,
-          :explain,
-          :retry_failed,
-          :metric,
-          :master_timeout,
-          :timeout
-        ].freeze)
       end
     end
   end

@@ -130,54 +130,9 @@ module Elasticsearch
         payload = payload.join("\n")
       end
 
-      # Validates the argument Hash against common and valid API parameters
-      #
-      # @param arguments    [Hash]          Hash of arguments to verify and extract, **with symbolized keys**
-      # @param valid_params [Array<Symbol>] An array of symbols with valid keys
-      #
-      # @return [Hash]         Return whitelisted Hash
-      # @raise [ArgumentError] If the arguments Hash contains invalid keys
-      #
-      # @example Extract parameters
-      #   __validate_and_extract_params( { :foo => 'qux' }, [:foo, :bar] )
-      #   # => { :foo => 'qux' }
-      #
-      # @example Raise an exception for invalid parameters
-      #   __validate_and_extract_params( { :foo => 'qux', :bam => 'mux' }, [:foo, :bar] )
-      #   # ArgumentError: "URL parameter 'bam' is not supported"
-      #
-      # @example Skip validating parameters
-      #   __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar], { skip_parameter_validation: true } )
-      #   # => { :foo => "q", :bam => "m" }
-      #
-      # @example Skip validating parameters when the module setting is set
-      #   Elasticsearch::API.settings[:skip_parameter_validation] = true
-      #   __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar] )
-      #   # => { :foo => "q", :bam => "m" }
-      #
-      # @api private
-      #
-      def __validate_and_extract_params(arguments, params=[], options={})
-        if options[:skip_parameter_validation] || Elasticsearch::API.settings[:skip_parameter_validation]
-          arguments
-        else
-          __validate_params(arguments, params)
-          __extract_params(arguments, params, options.merge(:escape => false))
-        end
-      end
-
-      def __validate_params(arguments, valid_params=[])
-        arguments.each do |k,v|
-          raise ArgumentError, "URL parameter '#{k}' is not supported" \
-            unless COMMON_PARAMS.include?(k) || COMMON_QUERY_PARAMS.include?(k) || valid_params.include?(k)
-        end
-      end
-
-      def __extract_params(arguments, params=[], options={})
-        result = arguments.select { |k,v| COMMON_QUERY_PARAMS.include?(k) || params.include?(k) }
-        result = Hash[result] unless result.is_a?(Hash) # Normalize Ruby 1.8 and Ruby 1.9 Hash#select behaviour
-        result = Hash[result.map { |k,v| v.is_a?(Array) ? [k, __listify(v, options)] : [k,v]  }] # Listify Arrays
-        result
+      def process_params(arguments)
+        arguments = Hash[arguments] unless arguments.is_a?(Hash)
+        Hash[arguments.map { |k, v| v.is_a?(Array) ? [k, __listify(v, { escape: false })] : [k, v] }] # Listify Arrays
       end
 
       # Extracts the valid parts of the URL from the arguments
@@ -197,11 +152,7 @@ module Elasticsearch
       # @api private
       #
       def __extract_parts(arguments, valid_parts=[])
-        parts = Hash[arguments.select { |k,v| valid_parts.include?(k) }]
-        parts = parts.reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v  }
-
-        arguments.delete_if { |k,v| valid_parts.include? k }
-        return parts
+        Hash[arguments].reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v  }
       end
 
       # Calls the given block, rescuing from `StandardError`.

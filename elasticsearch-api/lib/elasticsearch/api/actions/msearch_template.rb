@@ -21,7 +21,7 @@ module Elasticsearch
       # Allows to execute several search template operations in one request.
       #
       # @option arguments [List] :index A comma-separated list of index names to use as default
-      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, query_and_fetch, dfs_query_then_fetch, dfs_query_and_fetch)
+      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
       # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
@@ -36,6 +36,8 @@ module Elasticsearch
 
         headers = arguments.delete(:headers) || {}
 
+        body = arguments.delete(:body)
+
         arguments = arguments.clone
 
         _index = arguments.delete(:index)
@@ -46,9 +48,8 @@ module Elasticsearch
                  else
                    "_msearch/template"
                  end
-        params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+        params = Utils.process_params(arguments)
 
-        body = arguments[:body]
         case
         when body.is_a?(Array)
           payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
@@ -60,19 +61,10 @@ module Elasticsearch
         end
 
         headers.merge!("Content-Type" => "application/x-ndjson")
-        perform_request(method, path, params, payload, headers).body
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, payload, headers)
+        )
       end
-
-      # Register this action with its valid params when the module is loaded.
-      #
-      # @since 6.2.0
-      ParamsRegistry.register(:msearch_template, [
-        :search_type,
-        :typed_keys,
-        :max_concurrent_searches,
-        :rest_total_hits_as_int,
-        :ccs_minimize_roundtrips
-      ].freeze)
     end
   end
 end

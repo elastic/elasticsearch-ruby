@@ -14,6 +14,10 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+if ENV['COVERAGE'] && ENV['CI'].nil?
+  require 'simplecov'
+  SimpleCov.start { add_filter %r{^/test|spec/} }
+end
 
 if defined?(JRUBY_VERSION)
   require 'pry-nav'
@@ -21,24 +25,16 @@ else
   require 'pry-byebug'
 end
 require 'yaml'
+require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
 require 'jbuilder'
 require 'jsonify'
 require 'elasticsearch'
-require 'elasticsearch-transport'
 require 'elasticsearch-api'
+require 'openssl'
+require 'logger'
 
-require 'ansi'
 tracer = ::Logger.new(STDERR)
-tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n }.ansi(:faint)}\n" }
-
-unless defined?(ELASTICSEARCH_URL)
-  ELASTICSEARCH_URL = ENV['ELASTICSEARCH_URL'] ||
-                        ENV['TEST_ES_SERVER'] ||
-                        "localhost:#{(ENV['TEST_CLUSTER_PORT'] || 9200)}"
-end
-
-DEFAULT_CLIENT = Elasticsearch::Client.new(host: ELASTICSEARCH_URL,
-                                           tracer: (tracer unless ENV['QUIET']))
+tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }
 
 module HelperModule
   def self.included(context)
@@ -63,7 +59,11 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.add_formatter('documentation')
-  config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
+  if ENV['TEST_SUITE'] == 'platinum'
+    config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-platinum-junit.xml')
+  else
+    config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
+  end
   config.color_mode = :on
 end
 

@@ -37,6 +37,8 @@ module Elasticsearch
         def allocation(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
@@ -47,26 +49,13 @@ module Elasticsearch
                    else
                      "_cat/allocation"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:allocation, [
-          :format,
-          :bytes,
-          :local,
-          :master_timeout,
-          :h,
-          :help,
-          :s,
-          :v
-        ].freeze)
       end
     end
   end

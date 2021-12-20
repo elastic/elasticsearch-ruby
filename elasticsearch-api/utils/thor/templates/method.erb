@@ -16,9 +16,6 @@
 # under the License.
 
 module Elasticsearch
-<%- if @current_api == :xpack -%>
-  <%= '  '*(@namespace_depth) %>module XPack
-<%- end %>
 <%= '  '*(@namespace_depth) %>module API
 <%- @module_namespace.each_with_index do |name, i| -%>
   <%= '  '*i %>module <%= module_name_helper(name) %>
@@ -44,6 +41,8 @@ module Elasticsearch
     <%- end -%>
     <%- end -%>
     headers = arguments.delete(:headers) || {}
+    <%- #Body %>
+    <%= ERB.new(File.new("./thor/templates/_body.erb").read, trim_mode: '-').result(binding) %>
     <%- # Method setup -%>
     <%= ERB.new(File.new("./thor/templates/_method_setup.erb").read, trim_mode: '-').result(binding) %>
     <%- # Perform request -%>
@@ -59,10 +58,6 @@ module Elasticsearch
   def termvector(arguments={})
     termvectors(arguments.merge endpoint: '_termvector')
   end
-<%- end -%>
-<%# Params Registry Template -%>
-<%- unless @endpoint_name == 'create' -%>
-  <%= ERB.new(File.new("./thor/templates/_params_registry.erb").read, trim_mode: '-').result(binding) %>
 <%- end -%>
 
 <%- @namespace_depth.downto(1) do |i| -%>

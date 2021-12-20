@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
         # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
+        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open, closed, or hidden indices (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
@@ -36,32 +36,28 @@ module Elasticsearch
 
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "#{Utils.__listify(_index)}"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+            Utils.__rescue_from_not_found {
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers)
+              )
+            }
           else
-            perform_request(method, path, params, body, headers).body
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
           end
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:delete, [
-          :timeout,
-          :master_timeout,
-          :ignore_unavailable,
-          :allow_no_indices,
-          :expand_wildcards
-        ].freeze)
       end
     end
   end

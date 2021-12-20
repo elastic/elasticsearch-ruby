@@ -21,33 +21,14 @@ require "multi_json"
 require "elasticsearch/api/version"
 require "elasticsearch/api/namespace/common"
 require "elasticsearch/api/utils"
-require "elasticsearch/api/actions/params_registry"
+require 'elasticsearch/api/response'
 
-Dir[ File.expand_path('../api/actions/**/params_registry.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
 Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require f }
 
 module Elasticsearch
   module API
     DEFAULT_SERIALIZER = MultiJson
-
-    COMMON_PARAMS = [
-      :ignore,                        # Client specific parameters
-      :index, :type, :id,             # :index/:type/:id
-      :body,                          # Request body
-      :node_id,                       # Cluster
-      :name,                          # Alias, template, settings, warmer, ...
-      :field                          # Get field mapping
-    ]
-
-    COMMON_QUERY_PARAMS = [
-      :ignore,                        # Client specific parameters
-      :format,                        # Search, Cat, ...
-      :pretty,                        # Pretty-print the response
-      :human,                         # Return numeric values in human readable format
-      :filter_path,                   # Filter the JSON response
-      :opaque_id                      # Use X-Opaque-Id
-    ]
 
     HTTP_GET          = 'GET'.freeze
     HTTP_HEAD         = 'HEAD'.freeze
@@ -72,7 +53,33 @@ module Elasticsearch
                 Elasticsearch::API::Tasks,
                 Elasticsearch::API::Cat,
                 Elasticsearch::API::Remote,
-                Elasticsearch::API::DanglingIndices
+                Elasticsearch::API::DanglingIndices,
+                Elasticsearch::API::Features,
+                Elasticsearch::API::Shutdown,
+                Elasticsearch::API::AsyncSearch,
+                Elasticsearch::API::Autoscaling,
+                Elasticsearch::API::CrossClusterReplication,
+                Elasticsearch::API::DataFrameTransformDeprecated,
+                Elasticsearch::API::Enrich,
+                Elasticsearch::API::Eql,
+                Elasticsearch::API::Fleet,
+                Elasticsearch::API::Graph,
+                Elasticsearch::API::IndexLifecycleManagement,
+                Elasticsearch::API::License,
+                Elasticsearch::API::Logstash,
+                Elasticsearch::API::Migration,
+                Elasticsearch::API::MachineLearning,
+                Elasticsearch::API::Monitoring,
+                Elasticsearch::API::Rollup,
+                Elasticsearch::API::SearchableSnapshots,
+                Elasticsearch::API::Security,
+                Elasticsearch::API::SnapshotLifecycleManagement,
+                Elasticsearch::API::SQL,
+                Elasticsearch::API::SSL,
+                Elasticsearch::API::TextStructure,
+                Elasticsearch::API::Transform,
+                Elasticsearch::API::Watcher,
+                Elasticsearch::API::XPack
     end
 
     # The serializer class

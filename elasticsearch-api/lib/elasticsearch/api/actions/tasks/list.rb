@@ -20,6 +20,10 @@ module Elasticsearch
     module Tasks
       module Actions
         # Returns a list of tasks.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [List] :actions A comma-separated list of actions that should be returned. Leave empty to return all.
@@ -35,28 +39,18 @@ module Elasticsearch
         def list(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_tasks"
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:list, [
-          :nodes,
-          :actions,
-          :detailed,
-          :parent_task_id,
-          :wait_for_completion,
-          :group_by,
-          :timeout
-        ].freeze)
       end
     end
   end

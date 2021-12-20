@@ -1,0 +1,53 @@
+[[release_notes_713]]
+=== 7.13 Release notes
+
+[discrete]
+[[release_notes_7133]]
+=== 7.13.3 Release notes
+
+- API Support for Elasticsearch version 7.13.3
+
+[discrete]
+[[release_notes_7132]]
+=== 7.13.2 Release notes
+
+- Mute release, yanked from RubyGems.
+
+[discrete]
+[[release_notes_7131]]
+=== 7.13.1 Release notes
+
+[discrete]
+==== Client
+- Fixes thread safety issue in `get_connection` - https://github.com/elastic/elasticsearch-ruby/pull/1325[Pull Request].
+
+[discrete]
+[[release_notes_7130]]
+=== 7.13.0 Release notes
+
+[discrete]
+==== Client
+
+- Support for Elasticsearch version 7.13.0
+- Adds support for compatibility header for Elasticsearch. If the environment variable 'ELASTIC_CLIENT_APIVERSIONING' is set to `true` or `1`, the client will send the headers `Accept` and `Content-Type` with the following value: `application/vnd.elasticsearch+json;compatible-with=7`.
+- Better detection of Elasticsearch and Enterprise Search clients in the meta header used by cloud.
+
+[discrete]
+==== API
+
+- The REST API tests now use an artifact downloaded from the Elastic servers instead of depending of cloning `elasticsearch` locally. Check the README for more information.
+- New parameter `include_unloaded_segments` in `cat.nodes`, `nodes.stats`: If set to true segment stats will include stats for segments that are not currently loaded into memory
+- New parameter `summary` in `ingest.get_pipeline`: Return pipelines without their definitions (default: false)
+- New parameter `index_details` in `snapshot.get`: Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
+- New endpoint `features.reset_features`, `ingest/geo_ip_stats`
+- New experimental endpoints: `shutdown.delete_node`, `shutdown.get_node`, `shutdown.put_node`.
+
+[discrete]
+==== X-Pack
+
+- Refactored test tasks, made it easier to run the tests by default.
+- New experimental endpoints: `fleet.global_checkpoints`, `searchable_snapshots.cache_stats`.
+- New beta endpoints: `security.clear_cached_service_tokens`, `security.create_service_token`, `security.delete_service_token`, `security.get_service_accounts`, `security.get_service_credentials`
+- New endpoints: `machine_learning.delete_trained_model_alias`, `machine_learning.preview_data_frame_analytics`, `machine_learning.put_trained_model_alias`.
+- APIs migrated from experimental or beta to stable: `machine_learning.delete_data_frame_analytics`, `machine_learning.delete_trained_model`, `machine_learning.estimate_model_memory`, `machine_learning.explain_data_frame_analytics`, `machine_learning.get_data_frame_analytics`, `machine_learning.get_data_frame_analytics_stats`, `machine_learning.get_trained_models`, `machine_learning.get_trained_models_stats`, `machine_learning.put_data_frame_analytics`, `machine_learning.put_trained_model`, `machine_learning.start_data_frame_analytics`, `machine_learning.stop_data_frame_analytics`, `machine_learning.update_data_frame_analytics`
+- New parameter `body` in `machine_learning.preview_datafeed`: The datafeed config and job config with which to execute the preview.

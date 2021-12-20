@@ -19,36 +19,42 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # In order to keep indices available and queryable for a longer period but at the same time reduce their
-        #   hardware requirements they can be transitioned into a frozen state. Once an index is frozen, all of its
-        #   transient shard memory (aside from mappings and analyzers) is moved to persistent storage.
+        # Unfreezes an index. When a frozen index is unfrozen, the index goes through the normal recovery process and becomes writeable again.
         #
-        # @option arguments [List] :index A comma separated list of indices to unfreeze. (*Required*)
+        # @option arguments [String] :index The name of the index to unfreeze
+        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
+        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+        # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
+        # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @note This feature is available in the Platinum distribution of Elasticsearch.
+        # *Deprecation notice*:
+        # Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+        # Deprecated since version 7.14.0
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/frozen-indices.html
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/unfreeze-index-api.html
         #
         def unfreeze(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
-          valid_params = [
-            :timeout,
-            :master_timeout,
-            :ignore_unavailable,
-            :allow_no_indices,
-            :expand_wildcards,
-            :wait_for_active_shards
-          ]
+          headers = arguments.delete(:headers) || {}
+
+          body = nil
 
           arguments = arguments.clone
-          index = arguments.delete(:index)
+
+          _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path = Elasticsearch::API::Utils.__pathify Elasticsearch::API::Utils.__listify(index), '_unfreeze'
-          params = Elasticsearch::API::Utils.__validate_and_extract_params arguments, valid_params
+          path   = "#{Utils.__listify(_index)}/_unfreeze"
+          params = Utils.process_params(arguments)
 
-          perform_request(method, path, params).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
       end
     end

@@ -78,7 +78,7 @@ module Elasticsearch
       def module_name_helper(name)
         return name.upcase if %w[sql ssl].include? name
 
-        name.split('_').map(&:capitalize).join
+        name.split('_').map(&:capitalize).map{ |n| n == 'Xpack' ? 'XPack' : n }.join
       end
 
       def ping_perform_request
@@ -92,18 +92,6 @@ module Elasticsearch
               raise e
             end
           end
-        SRC
-      end
-
-      def indices_stats_params_registry
-        <<~SRC
-          ParamsRegistry.register(:stats_params, [
-            #{@spec['params'].keys.map { |k| ":#{k}" }.join(",\n")}
-          ].freeze)
-
-          ParamsRegistry.register(:stats_parts, [
-            #{@parts['metric']['options'].push('metric').map { |k| ":#{k}" }.join(",\n")}
-          ].freeze)
         SRC
       end
 
@@ -154,6 +142,10 @@ module Elasticsearch
             payload = body
           end
         SRC
+      end
+
+      def find_structure_body_helper
+        bulk_body_helper
       end
 
       def bulk_doc_helper(info)

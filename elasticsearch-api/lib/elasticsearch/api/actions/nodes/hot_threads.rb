@@ -26,7 +26,8 @@ module Elasticsearch
         # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)
         # @option arguments [Number] :threads Specify the number of threads to provide information for (default: 3)
         # @option arguments [Boolean] :ignore_idle_threads Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
-        # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block)
+        # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block, mem)
+        # @option arguments [String] :sort The sort order for 'cpu' type (default: total) (options: cpu, total)
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
@@ -34,6 +35,8 @@ module Elasticsearch
         #
         def hot_threads(arguments = {})
           headers = arguments.delete(:headers) || {}
+
+          body = nil
 
           arguments = arguments.clone
 
@@ -45,23 +48,12 @@ module Elasticsearch
                    else
                      "_nodes/hot_threads"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
-          perform_request(method, path, params, body, headers).body
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:hot_threads, [
-          :interval,
-          :snapshots,
-          :threads,
-          :ignore_idle_threads,
-          :type,
-          :timeout
-        ].freeze)
       end
     end
   end

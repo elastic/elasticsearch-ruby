@@ -1,0 +1,59 @@
+# Response from Elasticsearch includes the ca.crt, so length doesn't match.
+-
+  :file:        'ssl/10_basic.yml'
+  :description: 'Test get SSL certificates'
+
+# TODO: Failing due to processing of regexp in test
+-
+  :file: 'ml/explain_data_frame_analytics.yml'
+  :description: 'Test non-empty data frame given body'
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/852
+-
+  :file: 'analytics/usage.yml'
+  :description: 'Usage stats on analytics indices'
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/1269
+-
+  :file: 'searchable_snapshots/10_usage.yml'
+  :description: 'Tests searchable snapshots usage stats with full_copy and shared_cache indices'
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/1291
+-
+  :file: 'service_accounts/10_basic.yml'
+  :description: 'Test service account tokens'
+
+# TODO https://github.com/elastic/elasticsearch-ruby/issues/1340
+-
+  :file: 'transform/transforms_start_stop.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_cat_apis.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_crud.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_force_delete.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_stats.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_stats_continuous.yml'
+  :description: '*'
+-
+  :file: 'transform/transforms_update.yml'
+  :description: '*'
+-
+  :file: 'transform/preview_transforms.yml'
+  :description: 'Test preview transform by id'
+
+-
+  :file: 'transform/transforms_upgrade.yml'
+  :description: 'Test upgrade transform'
+
+# TODO: https://github.com/elastic/elasticsearch-ruby/issues/1539
+-
+  :file: 'ml/categorization_agg.yml'
+  :description: 'Test categorization aggregation with poor settings'

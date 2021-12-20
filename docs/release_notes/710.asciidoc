@@ -2,6 +2,18 @@
 === 7.10 Release notes
 
 [discrete]
+[[release_notes_7101]]
+=== 7.10.1 Release notes
+[discrete]
+==== Client
+
+- Updates for connecting with Cloud.
+
+[discrete]
+[[release_notes_7100]]
+=== 7.10 Release notes
+
+[discrete]
 ==== Client
 
 - Support for Elasticsearch version `7.10.0`.

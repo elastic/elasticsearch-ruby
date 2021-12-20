@@ -15,6 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 
+# Admin client is used by tests and other rake tasks to communicate with a running cluster.
+def admin_client
+  $admin_client ||= begin
+                      transport_options = {}
+                      test_suite = ENV['TEST_SUITE'].freeze || 'free'
+                      password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+                      user     = ENV['ELASTIC_USER'] || 'elastic'
+
+                      if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'] || 'https://localhost:9200')
+                        split_hosts = hosts.split(',').map do |host|
+                          /(http\:\/\/)?\S+/.match(host)
+                        end
+                        uri = URI.parse(split_hosts.first[0])
+                      end
+
+                      if test_suite == 'platinum'
+                        transport_options.merge!(
+                          ssl: {
+                            verify: false,
+                            ca_path: CERT_DIR
+                          }
+                        )
+
+                        url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                      else
+                        url      = "http://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                      end
+                      puts "Elasticsearch Client url: #{url}"
+                      Elasticsearch::Client.new(host: url, transport_options: transport_options)
+                    end
+end
+
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'rake_tasks/doc_generator.rake'
@@ -26,18 +58,13 @@ require 'pathname'
 CURRENT_PATH = Pathname(File.expand_path(__dir__))
 SUBPROJECTS = [
   'elasticsearch',
-  'elasticsearch-transport',
   'elasticsearch-dsl',
-  'elasticsearch-api',
-  'elasticsearch-extensions',
-  'elasticsearch-xpack'
+  'elasticsearch-api'
 ].freeze
 
 RELEASE_TOGETHER = [
   'elasticsearch',
-  'elasticsearch-transport',
-  'elasticsearch-api',
-  'elasticsearch-xpack'
+  'elasticsearch-api'
 ].freeze
 
 CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
@@ -45,42 +72,16 @@ CERT_DIR = ENV['CERT_DIR'] || '.ci/certs'
 # Import build task after setting constants:
 import 'rake_tasks/unified_release_tasks.rake'
 
-def admin_client
-  $admin_client ||= begin
-    transport_options = {}
-    test_suite = ENV['TEST_SUITE'].freeze
-
-    if (hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOSTS'])
-      split_hosts = hosts.split(',').map do |host|
-        /(http\:\/\/)?\S+/.match(host)
-      end
-      uri = URI.parse(split_hosts.first[0])
-    end
-
-    if test_suite == 'xpack'
-      transport_options.merge!(
-        ssl: {
-          verify: false,
-          ca_path: CERT_DIR
-        }
-      )
-
-      password = ENV['ELASTIC_PASSWORD']
-      user     = ENV['ELASTIC_USER'] || 'elastic'
-      url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
-    else
-      url = "http://#{uri&.host || 'localhost'}:#{uri&.port || 9200}"
-    end
-    puts "Elasticsearch Client url: #{url}"
-    Elasticsearch::Client.new(host: url, transport_options: transport_options)
-  end
-end
-
 # TODO: Figure out "bundle exec or not"
 # subprojects.each { |project| $LOAD_PATH.unshift CURRENT_PATH.join(project, "lib").to_s }
 
 task :default do
   system 'rake --tasks'
+end
+
+desc 'Run Ruby console with the Elasticsearch client libraries loaded'
+task :console do
+  system './elasticsearch/bin/elastic_ruby_console'
 end
 
 desc 'Display information about subprojects'
@@ -126,9 +127,7 @@ end
 desc 'Release all subprojects to Rubygems'
 task :release do
   RELEASE_TOGETHER.each do |project|
-    next if project == 'elasticsearch-extensions'
-
-    sh "cd #{CURRENT_PATH.join(project)} && rake release"
+    sh "cd #{CURRENT_PATH.join(project)} && bundle exec rake release"
     puts '-' * 80
   end
 end

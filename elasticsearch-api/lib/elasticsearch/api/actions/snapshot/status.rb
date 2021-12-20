@@ -32,6 +32,8 @@ module Elasticsearch
         def status(arguments = {})
           headers = arguments.delete(:headers) || {}
 
+          body = nil
+
           arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
@@ -46,23 +48,20 @@ module Elasticsearch
                    else
                      "_snapshot/_status"
                    end
-          params = Utils.__validate_and_extract_params arguments, ParamsRegistry.get(__method__)
+          params = Utils.process_params(arguments)
 
-          body = nil
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found { perform_request(method, path, params, body, headers).body }
+            Utils.__rescue_from_not_found {
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers)
+              )
+            }
           else
-            perform_request(method, path, params, body, headers).body
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
           end
         end
-
-        # Register this action with its valid params when the module is loaded.
-        #
-        # @since 6.2.0
-        ParamsRegistry.register(:status, [
-          :master_timeout,
-          :ignore_unavailable
-        ].freeze)
       end
     end
   end
