@@ -84,3 +84,6 @@
 -
   :file: 'vectors/20_dense_vector_special_cases.yml'
   :description: 'Dense vectors should error with sparse vector functions'
+-
+  :file: 'vectors/20_dense_vector_special_cases.yml'
+  :description: 'Documents missing a vector field'  
