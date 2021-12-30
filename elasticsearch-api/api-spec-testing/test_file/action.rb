@@ -67,6 +67,17 @@ module Elasticsearch
 
           _method = chain[-1]
           case _method
+          when 'bulk'
+            arguments = prepare_arguments(args, test)
+            arguments[:body].map! do |item|
+              if item.is_a?(Hash)
+                item
+              elsif item.is_a?(String)
+                symbolize_keys(JSON.parse(item))
+              end
+            end if arguments[:body].is_a? Array
+            @response = client.send(_method, arguments)
+            client
           when 'headers'
             headers = prepare_arguments(args, test)
             # TODO: Remove Authorization headers while x_pack_rest_user is fixed
