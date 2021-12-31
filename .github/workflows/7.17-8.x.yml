@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ 3.0 ]
+        ruby: [ '3.1' ]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
