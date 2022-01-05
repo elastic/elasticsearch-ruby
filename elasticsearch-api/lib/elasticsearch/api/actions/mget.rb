@@ -38,7 +38,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/docs-multi-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/docs-multi-get.html
       #
       def mget(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

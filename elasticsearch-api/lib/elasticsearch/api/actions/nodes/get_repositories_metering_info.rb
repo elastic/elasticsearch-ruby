@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/get-repositories-metering-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/get-repositories-metering-api.html
         #
         def get_repositories_metering_info(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
