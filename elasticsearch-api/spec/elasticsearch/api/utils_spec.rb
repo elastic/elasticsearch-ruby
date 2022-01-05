@@ -28,25 +28,13 @@ describe Elasticsearch::API::Utils do
     end
 
     it 'encodes special characters' do
-      expect(utils.__escape('foo bar')).to eq('foo+bar')
+      expect(utils.__escape('foo bar')).to eq('foo%20bar')
       expect(utils.__escape('foo/bar')).to eq('foo%2Fbar')
       expect(utils.__escape('foo^bar')).to eq('foo%5Ebar')
     end
 
     it 'does not encode asterisks' do
       expect(utils.__escape('*')).to eq('*')
-    end
-
-    it 'users CGI.escape by default' do
-      expect(CGI).to receive(:escape).and_call_original
-      expect(utils.__escape('foo bar')).to eq('foo+bar')
-    end
-
-    it 'uses the escape_utils gem when available', unless: defined?(JRUBY_VERSION) do
-      require 'escape_utils'
-      expect(CGI).not_to receive(:escape)
-      expect(EscapeUtils).to receive(:escape_url).and_call_original
-      expect(utils.__escape('foo bar')).to eq('foo+bar')
     end
   end
 
@@ -73,7 +61,7 @@ describe Elasticsearch::API::Utils do
 
     context 'when the escape option is set to false' do
       it 'does not escape the characters' do
-        expect(utils.__listify(['foo', 'bar^bam'], :escape => false)).to eq('foo,bar^bam')
+        expect(utils.__listify(['foo', 'bar^bam'], escape: false)).to eq('foo,bar^bam')
       end
     end
   end
@@ -100,19 +88,19 @@ describe Elasticsearch::API::Utils do
     context 'when the input is an array of hashes' do
       let(:result) do
         utils.__bulkify [
-          { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
-          { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } },
-          { :delete => { :_index => 'myindexC', :_type => 'mytypeC', :_id => '3' } }
+          { index: { _index: 'myindexA', _id: '1', data: { title: 'Test' } } },
+          { update: { _index: 'myindexB', _id: '2', data: { doc: { title: 'Update' } } } },
+          { delete: { _index: 'myindexC', _id: '3' } }
         ]
       end
 
       let(:expected_string) do
         <<-PAYLOAD.gsub(/^\s+/, '')
-                {"index":{"_index":"myindexA","_type":"mytype","_id":"1"}}
+                {"index":{"_index":"myindexA","_id":"1"}}
                 {"title":"Test"}
-                {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
+                {"update":{"_index":"myindexB","_id":"2"}}
                 {"doc":{"title":"Update"}}
-                {"delete":{"_index":"myindexC","_type":"mytypeC","_id":"3"}}
+                {"delete":{"_index":"myindexC","_id":"3"}}
         PAYLOAD
       end
 
@@ -316,7 +304,7 @@ describe Elasticsearch::API::Utils do
       end
 
       let(:unsupported_params) do
-        [ { :foo => { :explanation => 'NOT_SUPPORTED'} }, :moo ]
+        [ { foo: { explanation: 'NOT_SUPPORTED'} }, :moo ]
       end
 
 
