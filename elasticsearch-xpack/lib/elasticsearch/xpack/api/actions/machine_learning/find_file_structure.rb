@@ -48,7 +48,7 @@ module Elasticsearch
           # Deprecated since version 7.12.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/find-structure.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/find-structure.html
           #
           def find_file_structure(arguments = {})
             raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/delete-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/delete-pipeline-api.html
         #
         def delete_pipeline(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

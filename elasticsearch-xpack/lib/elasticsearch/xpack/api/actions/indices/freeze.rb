@@ -36,7 +36,7 @@ module Elasticsearch
           # Deprecated since version 7.14.0
           #
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/freeze-index-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/freeze-index-api.html
           #
           def freeze(arguments = {})
             raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

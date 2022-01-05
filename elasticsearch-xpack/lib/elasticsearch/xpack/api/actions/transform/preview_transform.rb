@@ -27,7 +27,7 @@ module Elasticsearch
           # @option arguments [Hash] :headers Custom HTTP headers
           # @option arguments [Hash] :body The definition for the transform to preview
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/preview-transform.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/preview-transform.html
           #
           def preview_transform(arguments = {})
             headers = arguments.delete(:headers) || {}

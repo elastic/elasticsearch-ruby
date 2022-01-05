@@ -24,7 +24,7 @@ module Elasticsearch
           #
           # @option arguments [Hash] :headers Custom HTTP headers
           #
-          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.16/enrich-stats-api.html
+          # @see https://www.elastic.co/guide/en/elasticsearch/reference/7.17/enrich-stats-api.html
           #
           def stats(arguments = {})
             headers = arguments.delete(:headers) || {}
