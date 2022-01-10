@@ -40,8 +40,7 @@ See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/mai
 This repository contains these additional Ruby libraries:
 
 * [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-extensions), *deprecated*.
-* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-dsl),
-  which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-dsl-ruby) which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
 
 Please see their respective READMEs for information and documentation.
 
