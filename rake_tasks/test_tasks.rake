@@ -17,7 +17,6 @@
 
 UNIT_TESTED_PROJECTS = [
   'elasticsearch',
-  'elasticsearch-dsl',
   'elasticsearch-api'
 ].freeze
 

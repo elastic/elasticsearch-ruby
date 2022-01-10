@@ -1,27 +1,12 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
-$LOAD_PATH.unshift(File.expand_path('../../elasticsearch-dsl/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
 
 require 'elasticsearch'
 require 'elasticsearch-api'
-require 'elasticsearch-dsl'
-
-gems_not_loaded = ['elasticsearch-dsl'].reject do |gem|
-  begin
-    (require gem) || true
-  rescue LoadError
-    false
-  end
-end
-
-unless gems_not_loaded.empty?
-  warn "The following gems were not loaded: [#{gems_not_loaded.join(', ')}]. Please install and require them explicitly."
-end
 
 include Elasticsearch
-include Elasticsearch::DSL if defined?(Elasticsearch::DSL)
 
 begin
   require 'pry'
