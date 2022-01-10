@@ -52,14 +52,13 @@ See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/mai
 
 **For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
 
-This repository contains these additional Ruby libraries:
+Check out these other official Ruby libraries for working with Elasticsearch:
 
-* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-extensions), *deprecated*.
-* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-dsl-ruby) which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html),
+* [`elasticsearch-rails`](https://github.com/elasticsearch/elasticsearch-rails) - integration with Ruby models and Rails applications.
+* [`elasticsearch-extensions`](https://github.com/elastic/elasticsearch-ruby/tree/7.17/elasticsearch-extensions), *deprecated*.
+* [`elasticsearch-dsl`](https://github.com/elastic/elasticsearch-dsl-ruby) which provides a Ruby API for the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
 
 Please see their respective READMEs for information and documentation.
-
-For integration with Ruby models and Rails applications, see the **[elasticsearch-rails](https://github.com/elasticsearch/elasticsearch-rails)** project.
 
 ## Compatibility
 
