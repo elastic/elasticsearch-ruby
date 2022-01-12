@@ -40,7 +40,7 @@ tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n }.ans
 unless defined?(ELASTICSEARCH_URL)
   ELASTICSEARCH_URL = ENV['ELASTICSEARCH_URL'] ||
                         ENV['TEST_ES_SERVER'] ||
-                        "localhost:#{(ENV['TEST_CLUSTER_PORT'] || 9200)}"
+                        "http://localhost:#{(ENV['TEST_CLUSTER_PORT'] || 9200)}"
 end
 
 DEFAULT_CLIENT = Elasticsearch::Client.new(host: ELASTICSEARCH_URL,
