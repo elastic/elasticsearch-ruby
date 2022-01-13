@@ -1,3 +1,21 @@
+## 7.16.3
+
+### API
+
+Bugfix for [#1475](https://github.com/elastic/elasticsearch-ruby/issues/1475), an issue where if you indexed a document with an id such as `an id`, it would get escaped to `an+id` instead of `an%20id` when using `index` or `create`. This would result in the document id being `an+id` instead of the intended value `an id`.
+
+## 7.16.2
+
+No release.
+
+## 7.16.1
+
+Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, [more information](https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476).
+
+### Client
+
+The only changes in the client since 7.16.0 are a few minor updates for the [Compatibility mode with 8.0](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-comp). We added the compatibility header in `7.13.0`,  but now we have integration tests and compatibility tests for version `7.x` of the client with Elasticsearch `8.0`.
+
 ## 7.16.0
 
 ### Client
