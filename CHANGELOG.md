@@ -1,3 +1,13 @@
+## 7.16.3
+
+### API
+
+Bugfix for [#1475](https://github.com/elastic/elasticsearch-ruby/issues/1475), an issue where if you indexed a document with an id such as `an id`, it would get escaped to `an+id` instead of `an%20id` when using `index` or `create`. This would result in the document id being `an+id` instead of the intended value `an id`.
+
+## 7.16.2
+
+No release.
+
 ## 7.16.1
 
 Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, [more information](https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476).

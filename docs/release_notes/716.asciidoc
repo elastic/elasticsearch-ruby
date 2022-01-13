@@ -2,6 +2,20 @@
 === 7.16 Release notes
 
 [discrete]
+[[release_notes_7163]]
+=== 7.16.3 Release notes
+
+==== API
+
+Bugfix for https://github.com/elastic/elasticsearch-ruby/issues/1475[#1475], an issue where if you indexed a document with an id such as `an id`, it would get escaped to `an+id` instead of `an%20id` when using `index` or `create`. This would result in the document id being `an+id` instead of the intended value `an id`.
+
+[discrete]
+[[release_notes_7162]]
+=== 7.16.2 Release notes
+
+No release.
+
+[discrete]
 [[release_notes_7161]]
 === 7.16.1 Release notes
 
