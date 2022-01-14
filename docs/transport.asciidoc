@@ -11,9 +11,6 @@ data serialization and transport.
 
 It does not handle calling the {es} API.
 
-The library is compatible with Ruby 1.9 or higher and with all versions of {es} 
-since 0.90.
-
 For optimal performance, use a HTTP library which supports persistent 
 ("keep-alive") connections, such as https://github.com/toland/patron[patron] or 
 https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library 
@@ -58,7 +55,7 @@ any configuration:
 require 'elasticsearch/transport'
 
 client = Elasticsearch::Client.new
-response = client.perform_request 'GET', '_cluster/health'
+response = client.perform_request('GET', '_cluster/health')
 # => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
 ```
 
