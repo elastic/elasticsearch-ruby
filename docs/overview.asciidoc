@@ -24,13 +24,16 @@ More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Gi
 [[transport-api]]
 === Transport and API
 
-The `elasticsearch` gem combines two separate Rubygems:
+The `elasticsearch` gem combines three separate Rubygems:
 
-* https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-transport[`elasticsearch-transport`]
+* https://github.com/elastic/elasticsearch-ruby/tree/7.16/elasticsearch-transport[`elasticsearch-transport`]
 provides an HTTP Ruby client for connecting to the {es} cluster,
 
-* https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-api[`elasticsearch-api`]
+* https://github.com/elastic/elasticsearch-ruby/tree/7.16/elasticsearch-api[`elasticsearch-api`]
 provides a Ruby API for the {es} RESTful API.
+
+* https://github.com/elastic/elasticsearch-ruby/tree/7.16/elasticsearch-xpack/[`elasticsearch-xpack`]
+provides a Ruby API for the {es} RESTful API for X-Pack endpoints. Notice that the API endpoints living in `elasticsearch-xpack` will be moved into `elasticsearch-api` in version 8.0.0 and forward. You should be able to keep using `elasticsearch-xpack` and the `xpack` namespace in `7.x` versions. We're running the same tests in `elasticsearch-xpack`, but if you encounter any problems, please let us know https://github.com/elastic/elasticsearch-ruby/issues/1274[in this issue].
 
 Please consult their respective documentation for configuration options and 
 technical details.
