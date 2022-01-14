@@ -15,14 +15,15 @@ A Ruby integration for the [X-Pack extension](https://www.elastic.co/guide/en/x-
 
 Install the package from [Rubygems](https://rubygems.org):
 
-    gem install elasticsearch-api
+    gem install elasticsearch-xpack
 
 ## Usage
 
-If you use the official [Ruby client for Elasticsearch](https://github.com/elastic/elasticsearch-ruby), all the methods will be automatically available:
+If you use the official [Ruby client for Elasticsearch](https://github.com/elastic/elasticsearch-ruby), require the library in your code, and all the methods will be automatically available in the `xpack` namespace:
 
 ```ruby
 require 'elasticsearch'
+require 'elasticsearch/xpack
 
 client = Elasticsearch::Client.new(url: 'http://elastic:changeme@localhost:9200')
 
