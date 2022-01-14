@@ -8,6 +8,7 @@ the Ruby client.
 * <<activemodel_activerecord>>
 * <<ruby_on_rails>>
 * <<persistence>>
+* <<dsl>>
 
 include::transport.asciidoc[]
 
@@ -16,3 +17,5 @@ include::model.asciidoc[]
 include::rails.asciidoc[]
 
 include::persistence.asciidoc[]
+
+include::dsl.asciidoc[]
