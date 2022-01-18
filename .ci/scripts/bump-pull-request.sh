@@ -27,12 +27,10 @@ version=$2
 echo "Branch: $1 - Version: $2"
 
 token=${CLIENTS_GITHUB_TOKEN-}
-github_user=${CLIENTS_GITHUB_USER-"clients-team"}
 if [[ -f ~/.elastic/github.token ]]; then
     token=$(cat ~/.elastic/github.token)
 fi
 if [ -z "$token" ]; then echo "No github token available"; exit 1; fi
-if [ -z "$github_user" ]; then echo "No github user available"; exit 1; fi
 #
 # END SETUP
 #
