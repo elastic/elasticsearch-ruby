@@ -26,7 +26,8 @@ version=$2
 
 echo "Branch: $1 - Version: $2"
 
-token=${CLIENTS_GITHUB_TOKEN-}
+token=${CLIENTS_GITHUB_TOKEN}
+# For local development:
 if [[ -f ~/.elastic/github.token ]]; then
     token=$(cat ~/.elastic/github.token)
 fi
