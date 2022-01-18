@@ -26,10 +26,12 @@ version=$2
 
 echo "Branch: $1 - Version: $2"
 
-token=${CLIENTS_GITHUB_TOKEN}
-# For local development:
+
 if [[ -f ~/.elastic/github.token ]]; then
+    # For local development:
     token=$(cat ~/.elastic/github.token)
+else
+    token=${CLIENTS_GITHUB_TOKEN}
 fi
 if [ -z "$token" ]; then echo "No github token available"; exit 1; fi
 #
@@ -37,10 +39,10 @@ if [ -z "$token" ]; then echo "No github token available"; exit 1; fi
 #
 
 # Download gh cli
-wget -q https://github.com/cli/cli/releases/download/v1.14.0/gh_1.14.0_linux_amd64.tar.gz
-tar -zxf gh_1.14.0_linux_amd64.tar.gz
-mv gh_1.14.0_linux_amd64/bin/gh /usr/local/bin/
-rm gh_1.14.0_linux_amd64 -rf
+# wget -q https://github.com/cli/cli/releases/download/v1.14.0/gh_1.14.0_linux_amd64.tar.gz
+# tar -zxf gh_1.14.0_linux_amd64.tar.gz
+# mv gh_1.14.0_linux_amd64/bin/gh /usr/local/bin/
+# rm gh_1.14.0_linux_amd64 -rf
 
 gh auth login --with-token <<< $token
 git config --global user.email "elasticmachine@users.noreply.github.com"
