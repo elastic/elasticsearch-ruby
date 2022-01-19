@@ -26,9 +26,11 @@ version=$2
 
 echo "Branch: $1 - Version: $2"
 
-token=${CLIENTS_GITHUB_TOKEN-}
+
 if [[ -f ~/.elastic/github.token ]]; then
     token=$(cat ~/.elastic/github.token)
+else
+    token=${CLIENTS_GITHUB_TOKEN-}
 fi
 if [ -z "$token" ]; then echo "No github token available"; exit 1; fi
 #
@@ -50,5 +52,10 @@ git checkout -b $branch_name
 git add .
 git commit -m "Bumps to version ${version}"
 
+git remote set-url origin https://${token}@github.com/elastic/${repo}.git
 git push --set-upstream origin $branch_name
-gh pr create --title "Bumps ${branch} to ${version}" --base ${branch} --body "As titled"
+gh pr create \
+   --title "Bumps ${branch} to ${version}" \
+   --base ${branch} \
+   --body "As titled" \
+   --repo https://${token}@github.com/elastic/${repo}.git
