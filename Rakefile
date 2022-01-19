@@ -62,9 +62,7 @@ CURRENT_PATH = Pathname(File.expand_path(__dir__))
 SUBPROJECTS = [
   'elasticsearch',
   'elasticsearch-transport',
-  'elasticsearch-dsl',
   'elasticsearch-api',
-  'elasticsearch-extensions',
   'elasticsearch-xpack'
 ].freeze
 
