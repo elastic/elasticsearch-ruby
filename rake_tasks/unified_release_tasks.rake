@@ -99,7 +99,7 @@ namespace :unified_release do
                version.match(/(^[0-9]+\.[0-9]{1,2})\.?/)[1]
              end
 
-    command = "#{File.expand_path('./.ci/scripts/bump-pull-request.sh')} #{branch} #{version}"
-    system(command)
+    # command = "#{File.expand_path('./.ci/scripts/bump-pull-request.sh')} #{branch} #{version}"
+    # system(command)
   end
 end
