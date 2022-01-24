@@ -16,5 +16,5 @@
 # under the License.
 
 module Elasticsearch
-  VERSION = '7.16.4'.freeze
+  VERSION = 'bump_ghaction_7x'.freeze
 end
