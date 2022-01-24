@@ -63,7 +63,7 @@ namespace :unified_release do
 
       $ rake unified_release:bump[42.0.0]
   DESC
-  task :bump, :version, :branch do |_, args|
+  task :bump, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
 
     files = ['elasticsearch/elasticsearch.gemspec']
@@ -89,17 +89,5 @@ namespace :unified_release do
     rescue StandardError => e
       abort "[!!!] #{e.class} : #{e.message}"
     end
-    current_branch = `git branch --show-current`.gsub("\n", '')
-
-    branch = if args[:branch]
-               args[:branch]
-             elsif current_branch.match(/([0-9]+(\.[0-9]{1,2}|x))\.?/)&.[](1)
-               current_branch
-             else
-               version.match(/(^[0-9]+\.[0-9]{1,2})\.?/)[1]
-             end
-
-    # command = "#{File.expand_path('./.ci/scripts/bump-pull-request.sh')} #{branch} #{version}"
-    # system(command)
   end
 end
