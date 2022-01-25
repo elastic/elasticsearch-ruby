@@ -98,7 +98,7 @@ describe 'Elasticsearch: Validation' do
     let(:status) { 413 }
     let(:body) { {}.to_json }
 
-    it 'Does not verify the request and shows a warning' do
+    it 'Verifies the request and shows a warning' do
       stderr      = $stderr
       fake_stderr = StringIO.new
       $stderr     = fake_stderr
@@ -107,18 +107,11 @@ describe 'Elasticsearch: Validation' do
       assert_not_requested :get, host
       verify_request_stub
       expect { client.info }.to raise_error Elastic::Transport::Transport::Errors::RequestEntityTooLarge
-      assert_not_requested :post, "#{host}/_count"
-      expect(client.instance_variable_get('@verified')).to be false
+      expect(client.instance_variable_get('@verified')).to be true
 
       fake_stderr.rewind
-      expect(fake_stderr.string)
-        .to eq(
-          <<~MSG
-            The client is unable to verify that the server is \
-            Elasticsearch. Some functionality may not be compatible \
-            if the server is running an unsupported product.
-          MSG
-        )
+      expect(fake_stderr.string.delete("\n"))
+        .to eq(Elasticsearch::SECURITY_PRIVILEGES_VALIDATION_WARNING)
     ensure
       $stderr = stderr
     end
