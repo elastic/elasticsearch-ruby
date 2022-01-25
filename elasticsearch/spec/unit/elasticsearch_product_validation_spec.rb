@@ -96,6 +96,27 @@ describe 'Elasticsearch: Validation' do
     end
   end
 
+  context 'When Elasticsearch replies with status 403' do
+    let(:status) { 413 }
+    let(:body) { {}.to_json }
+
+    it 'Verifies the request but shows a warning' do
+      stderr      = $stderr
+      fake_stderr = StringIO.new
+      $stderr     = fake_stderr
+
+      verify_request_stub
+      count_request_stub
+
+      valid_requests_and_expectations
+
+      fake_stderr.rewind
+      expect(fake_stderr.string).to eq("#{Elasticsearch::SECURITY_PRIVILEGES_VALIDATION_WARNING}\n")
+    ensure
+      $stderr = stderr
+    end
+  end
+
   context 'When the Elasticsearch version is >= 7.14' do
     context 'With a valid Elasticsearch response' do
       let(:body) { { 'version' => { 'number' => '7.14.0' } }.to_json }

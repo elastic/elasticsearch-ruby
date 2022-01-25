@@ -50,7 +50,8 @@ module Elasticsearch
       begin
         response = elasticsearch_validation_request
       rescue Elasticsearch::Transport::Transport::Errors::Unauthorized,
-             Elasticsearch::Transport::Transport::Errors::Forbidden
+             Elasticsearch::Transport::Transport::Errors::Forbidden,
+             Elasticsearch::Transport::Transport::Errors::RequestEntityTooLarge
         @verified = true
         warn(SECURITY_PRIVILEGES_VALIDATION_WARNING)
         return
