@@ -25,7 +25,8 @@ module Elasticsearch
         'ilm-history-ilm-policy', 'slm-history-ilm-policy', 'watch-history-ilm-policy',
         'ml-size-based-ilm-policy', 'logs', 'metrics', 'synthetics', '7-days-default',
         '30-days-default', '90-days-default', '180-days-default', '365-days-default',
-        '.fleet-actions-results-ilm-policy', '.deprecation-indexing-ilm-policy'
+        '.fleet-actions-results-ilm-policy', '.deprecation-indexing-ilm-policy',
+        'watch-history-ilm-policy-16', '.monitoring-8-ilm-policy'
       ].freeze
 
       PLATINUM_TEMPLATES = [
