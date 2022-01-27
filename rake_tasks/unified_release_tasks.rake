@@ -65,19 +65,18 @@ namespace :unified_release do
   DESC
   task :bump, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
-
-    files = ['elasticsearch/elasticsearch.gemspec']
-    RELEASE_TOGETHER.each do |gem|
-      files << Dir["./#{gem}/**/**/version.rb"]
-    end
-
+    files = ['elasticsearch/elasticsearch.gemspec'] + RELEASE_TOGETHER.map { |gem| Dir["./#{gem}/**/**/version.rb"] }
     version_regexp = Regexp.new(/VERSION = ("|'([0-9.]+(-SNAPSHOT)?)'|")/)
     gemspec_regexp = Regexp.new(/'elasticsearch-api',\s+'([0-9x.]+)'/)
 
     files.flatten.each do |file|
       content = File.read(file)
       is_gemspec_file = file.match?('gemspec')
-      regexp = is_gemspec_file ? gemspec_regexp : version_regexp
+      regexp = if is_gemspec_file
+                 gemspec_regexp
+               else
+                 version_regexp
+               end
 
       if (match = content.match(regexp))
         old_version = match[1]
@@ -89,12 +88,36 @@ namespace :unified_release do
       else
         match = content.match(version_regexp)
         old_version = match[1]
-        content.gsub!(old_version, "'#{args[:version]}'")
+        content.gsub!(old_version, "'#{version}'")
       end
-      puts "[#{old_version}] -> [#{args[:version]}] in #{file.gsub('./','')}"
+      puts "[#{old_version}] -> [#{version}] in #{file.gsub('./', '')}"
       File.open(file, 'w') { |f| f.puts content }
     end
   rescue StandardError => e
-    abort "[!!!] #{e.class} : #{e.message}"
+    raise "[!!!] #{e.class} : #{e.message}"
+  end
+
+  desc <<-DESC
+  Bump the version in test matrixes:
+  - .ci/test-matrix.yml
+  - .github/workflows
+
+  Example:
+
+      $ rake unified_release:bump_matrix[42.0.0]
+  DESC
+  task :bump_matrix, :version do |_, args|
+    abort('[!] Required argument [version] missing') unless (version = args[:version])
+
+    files = ['.ci/test-matrix.yml', '.github/workflows/main.yml', '.github/workflows/unified-release.yml']
+    regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
+    files.each do |file|
+      content = File.read(file)
+      match = content.match(regexp)
+      old_version = match[1]
+      content.gsub!(old_version, args[:version])
+      puts "[#{old_version}] -> [#{version}] in #{file.gsub('./', '')}"
+      File.open(file, 'w') { |f| f.puts content }
+    end
   end
 end
