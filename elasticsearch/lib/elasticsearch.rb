@@ -67,10 +67,8 @@ module Elasticsearch
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
           args[4] = headers.merge('X-Opaque-Id' => opaque_id)
         end
-        if name == :perform_request
-          verify_elasticsearch unless @verified
-          @transport.perform_request(*args, &block)
-        end
+        verify_elasticsearch unless @verified
+        @transport.perform_request(*args, &block)
       else
         @transport.send(name, *args, &block)
       end
