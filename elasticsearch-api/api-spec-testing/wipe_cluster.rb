@@ -71,8 +71,8 @@ module Elasticsearch
           end
           wipe_cluster_settings(client)
           if platinum?
-            clear_ml_jobs(client)
             clear_datafeeds(client)
+            clear_ml_jobs(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
@@ -332,16 +332,16 @@ module Elasticsearch
         end
 
         def clear_ml_jobs(client)
-          client.ml.close_job(job_id: '_all', force: true)
           client.ml.get_jobs['jobs'].each do |d|
-            client.ml.delete_job(job_id: d['job_id'])
+            client.ml.close_job(job_id: d['job_id'], force: true, ignore: 404)
+            client.ml.delete_job(job_id: d['job_id'], ignore: 404)
           end
         end
 
         def clear_datafeeds(client)
           client.ml.stop_datafeed(datafeed_id: '_all', force: true)
           client.ml.get_datafeeds['datafeeds'].each do |d|
-            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'])
+            client.ml.delete_datafeed(datafeed_id: d['datafeed_id'], ignore: 404)
           end
         end
 
