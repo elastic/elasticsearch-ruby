@@ -1,3 +1,8 @@
+## 7.17.0
+
+- Drops Ruby 2.5 from the test matrix. Support for Ruby 2.5 was dropped March 2021.
+- Updates the product verification when the response is a `413` error.
+
 ## 7.16.3
 
 ### API
