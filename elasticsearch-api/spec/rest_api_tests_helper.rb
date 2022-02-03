@@ -85,7 +85,7 @@ REST_API_YAML_FILES = if ENV['RUN_SKIPPED_TESTS'] # only run the skipped tests i
                         # the tests
                         SKIPPED_TESTS = skipped_tests
                         SINGLE_TEST || Dir.glob("#{YAML_FILES_DIRECTORY}/**/*.yml")
-                      end
+                      end.sort
 
 # The features to skip
 REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
