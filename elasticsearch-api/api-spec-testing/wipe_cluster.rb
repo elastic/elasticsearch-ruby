@@ -79,10 +79,18 @@ module Elasticsearch
           # clear_ml_filters(client)
           # clear_tasks(client)
           # clear_transforms(client)
+          wipe_calendars(client)
         end
 
         def ensure_no_initializing_shards(client)
           client.cluster.health(wait_for_no_initializing_shards: true, timeout: '70s', level: 'shards')
+        end
+
+        def wipe_calendars(client)
+          calendars = client.ml.get_calendars(calendar_id: '_all').body['calendars']
+          calendars.each do |calendar|
+            client.ml.delete_calendar(calendar_id: calendar['calendar_id'])
+          end
         end
 
         def check_for_unexpectedly_recreated_objects(client)
