@@ -5,15 +5,13 @@
 require 'spec_helper'
 
 describe 'JSON builders' do
-
   context 'JBuilder' do
-
     let(:expected_args) do
       [
-          'GET',
-          '_search',
-          {},
-          body
+        'GET',
+        '_search',
+        {},
+        body
       ]
     end
 
@@ -36,16 +34,15 @@ describe 'JSON builders' do
     it 'properly builds the json' do
       expect(client_double.search(body: json)).to eq({})
     end
-  end
+  end unless RUBY_VERSION > '2.7'
 
   context 'Jsonify' do
-
     let(:expected_args) do
       [
-          'GET',
-          '_search',
-          {},
-          body
+        'GET',
+        '_search',
+        {},
+        body
       ]
     end
 
