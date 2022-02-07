@@ -11,7 +11,7 @@ ELASTICSEARCH_HOSTS = if hosts = ENV['TEST_ES_SERVER'] || ENV['ELASTICSEARCH_HOS
                         end
                       end.freeze
 
-if RUBY_1_8 and not ENV['BUNDLE_GEMFILE']
+if RUBY_1_8 && !ENV['BUNDLE_GEMFILE']
   require 'rubygems'
   gem 'test-unit'
 end
@@ -30,12 +30,6 @@ if ENV['CI'] && !RUBY_1_8
   SimpleCov.start { add_filter "/test|test_" }
 end
 
-# Register `at_exit` handler for integration tests shutdown.
-# MUST be called before requiring `test/unit`.
-if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
-end
-
 require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
@@ -47,8 +41,6 @@ require 'elasticsearch-transport'
 require 'logger'
 
 require 'hashie'
-
-RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
 
 if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
   require 'elasticsearch/extensions/test/cluster'
@@ -84,3 +76,11 @@ module Elasticsearch
     end unless RUBY_1_8 || JRUBY
   end
 end
+
+# Register `at_exit` handler for integration tests shutdown.
+# MUST be called before requiring `test/unit`.
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
+end
+
+RequireProf.print_timing_infos if ENV["REQUIRE_PROF"]
