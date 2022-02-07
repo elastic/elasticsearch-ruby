@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
   s.add_development_dependency 'simplecov-rcov'
-  s.add_development_dependency 'test-unit', '~> 2'
+  s.add_development_dependency 'test-unit'
   s.add_development_dependency 'turn'
   s.add_development_dependency 'yard'
 
