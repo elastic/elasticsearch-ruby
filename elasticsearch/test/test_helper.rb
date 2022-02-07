@@ -31,12 +31,6 @@ if ENV['CI'] && !RUBY_1_8
   SimpleCov.start { add_filter "/test|test_" }
 end
 
-# Register `at_exit` handler for integration tests shutdown.
-# MUST be called before requiring `test/unit`.
-if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-  at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
-end
-
 require 'test/unit'
 require 'shoulda-context'
 require 'mocha/setup'
@@ -71,4 +65,10 @@ module Elasticsearch
       context "IntegrationTest" do; should "noop on Ruby 1.8" do; end; end if RUBY_1_8
     end unless RUBY_1_8 || JRUBY
   end
+end
+
+# Register `at_exit` handler for integration tests shutdown.
+# MUST be called before requiring `test/unit`.
+if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
+  at_exit { Elasticsearch::Test::IntegrationTestCase.__run_at_exit_hooks }
 end
