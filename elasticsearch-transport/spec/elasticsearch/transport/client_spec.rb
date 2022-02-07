@@ -94,13 +94,16 @@ describe Elasticsearch::Transport::Client do
 
   describe 'adapter' do
     context 'when no adapter is specified' do
-      let(:adapter) do
-        client.transport.connections.all.first.connection.builder.adapter
-      end
+      fork do
+        let(:client) { described_class.new }
+        let(:adapter) do
+          client.transport.connections.all.first.connection.builder.adapter
+        end
 
-      it 'uses Faraday NetHttp' do
-        expect(adapter).to eq Faraday::Adapter::NetHttp
-      end
+        it 'uses Faraday NetHttp' do
+          expect(adapter).to eq Faraday::Adapter::NetHttp
+        end
+      end unless jruby?
     end
 
     context 'when the adapter is patron' do
