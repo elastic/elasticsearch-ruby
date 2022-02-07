@@ -43,11 +43,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'hashie'
   s.add_development_dependency 'httpclient'
   s.add_development_dependency 'manticore', '~> 0.5.2' if defined? JRUBY_VERSION
-  s.add_development_dependency 'minitest', '~> 4.0'
+  s.add_development_dependency 'minitest'
   s.add_development_dependency 'net-http-persistent'
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
   s.add_development_dependency 'simplecov-rcov'
-  s.add_development_dependency 'test-unit', '~> 2'
+  s.add_development_dependency 'test-unit'
   s.add_development_dependency 'typhoeus', '~> 1.4'
   unless defined?(JRUBY_VERSION) || defined?(Rubinius)
     s.add_development_dependency 'curb'

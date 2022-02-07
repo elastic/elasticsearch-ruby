@@ -48,7 +48,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'jsonify'
   s.add_development_dependency 'simplecov', '~> 0.17', '< 0.18'
   s.add_development_dependency 'simplecov-rcov'
-  s.add_development_dependency 'test-unit', '~> 2'
+  s.add_development_dependency 'test-unit'
   unless defined?(JRUBY_VERSION) || defined?(Rubinius)
     s.add_development_dependency 'require-prof'
     s.add_development_dependency 'ruby-prof'
