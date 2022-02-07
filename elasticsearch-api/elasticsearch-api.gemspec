@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'elasticsearch'
   s.add_development_dependency 'elasticsearch-extensions'
   s.add_development_dependency 'elasticsearch-transport'
-  s.add_development_dependency 'minitest', '~> 4.0'
+  s.add_development_dependency 'minitest'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake', '~> 13'
