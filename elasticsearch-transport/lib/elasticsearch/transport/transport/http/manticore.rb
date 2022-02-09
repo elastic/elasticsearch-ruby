@@ -62,8 +62,14 @@ module Elasticsearch
         class Manticore
           include Base
 
-          def initialize(arguments={}, &block)
-            @request_options = { headers: (arguments.dig(:transport_options, :headers) || {}) }
+          def initialize(arguments = {}, &block)
+            @request_options = {
+              headers: (
+                arguments.dig(:transport_options, :headers) ||
+                arguments.dig(:options, :transport_options, :headers) ||
+                {}
+              )
+            }
             @manticore = build_client(arguments[:options] || {})
             super(arguments, &block)
           end
@@ -113,8 +119,7 @@ module Elasticsearch
           # @return [Connections::Collection]
           #
           def __build_connections
-            apply_headers(@request_options, options[:transport_options])
-            apply_headers(@request_options, options)
+            apply_headers(options)
 
             Connections::Collection.new \
               :connections => hosts.map { |host|
@@ -157,12 +162,12 @@ module Elasticsearch
 
           private
 
-          def apply_headers(request_options, options)
-            headers = options&.[](:headers) || {}
+          def apply_headers(options)
+            headers = options.dig(:headers) || options.dig(:transport_options, :headers) || {}
             headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
-            headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || user_agent_header
+            headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || find_value(@request_options[:headers], USER_AGENT_REGEX) || user_agent_header
             headers[ACCEPT_ENCODING] = GZIP if use_compression?
-            request_options[:headers].merge!(headers)
+            @request_options[:headers].merge!(headers)
           end
 
           def user_agent_header
