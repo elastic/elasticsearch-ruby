@@ -206,29 +206,8 @@ if JRUBY
                 }
 
                 ::Manticore::Client.expects(:new).with(options)
-                transport = Manticore.new hosts: [{ host: 'foobar', port: 1234 }], options: options
-              end
-
-              should 'allow custom headers' do
-                transport_options = { headers: { 'Authorization' => 'Basic token' } }
-                transport = Manticore.new(
-                  hosts: [{ host: 'foobar', port: 1234 }],
-                  transport_options: transport_options
-                )
-
-                assert_equal(
-                  transport.instance_variable_get(:@request_options)[:headers]['Authorization'],
-                  'Basic token'
-                )
-                transport.connections.first.connection
-                  .expects(:get)
-                  .with do |_host, _options|
-                  assert_equal('Basic token', _options[:headers]['Authorization'])
-                  true
-                end
-                  .returns(stub_everything)
-
-                transport.perform_request('GET', '/', {})
+                transport = Manticore.new(hosts: [{ host: 'foobar', port: 1234 }], options: options)
+                assert_equal(transport.options[:ssl][:truststore_password], 'test')
               end
 
               should 'pass :transport_options to Manticore::Client' do
@@ -238,6 +217,45 @@ if JRUBY
 
                 ::Manticore::Client.expects(:new).with(potatoes: 1, ssl: {})
                 transport = Manticore.new(hosts: [{ host: 'foobar', port: 1234 }], options: options)
+                assert_equal(transport.options[:transport_options][:potatoes], 1)
+              end
+
+              context 'custom headers' do
+                should 'allow authorization headers' do
+                  transport_options = { headers: { 'Authorization' => 'Basic token' } }
+                  transport = Manticore.new(
+                    hosts: [{ host: 'foobar', port: 1234 }],
+                    transport_options: transport_options
+                  )
+
+                  assert_equal(
+                    transport.instance_variable_get(:@request_options)[:headers]['Authorization'],
+                    'Basic token'
+                  )
+                  transport.connections.first.connection.expects(:get).with do |_host, options|
+                    assert_equal('Basic token', options[:headers]['Authorization'])
+                    true
+                  end.returns(stub_everything)
+                  transport.perform_request('GET', '/', {})
+                end
+
+                should 'allow user agent headers' do
+                  transport_options = { headers: { 'User-Agent' => 'Custom UA' } }
+                  transport = Manticore.new(
+                    hosts: [{ host: 'localhost' }],
+                    transport_options: transport_options
+                  )
+                  transport.connections.first.connection.expects(:get).with do |_host, options|
+                    assert_equal('Custom UA', options[:headers]['User-Agent'])
+                    true
+                  end.returns(stub_everything)
+                  transport.perform_request('GET', '/', {})
+
+                  assert_equal(
+                    transport.instance_variable_get('@request_options')[:headers]['User-Agent'],
+                    'Custom UA'
+                  )
+                end
               end
             end
           end
