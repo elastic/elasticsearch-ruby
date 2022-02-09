@@ -18,7 +18,6 @@
 module Elasticsearch
   module Transport
     module Transport
-
       # @abstract Module with common functionality for transport implementations.
       #
       module Base
@@ -431,7 +430,7 @@ module Elasticsearch
         end
 
         def find_value(hash, regex)
-          key_value = hash.find { |k,v| k.to_s.downcase =~ regex }
+          key_value = hash.find { |k, _| k.to_s.downcase =~ regex }
           if key_value
             hash.delete(key_value[0])
             key_value[1]
