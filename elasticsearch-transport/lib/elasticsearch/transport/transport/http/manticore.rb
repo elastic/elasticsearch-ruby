@@ -75,7 +75,7 @@ module Elasticsearch
           end
 
           # Should just be run once at startup
-          def build_client(options={})
+          def build_client(options = {})
             client_options = options[:transport_options] || {}
             client_options[:ssl] = options[:ssl] || {}
 
@@ -94,22 +94,22 @@ module Elasticsearch
 
               params[:body] = body if body
               params[:headers] = headers if headers
-              params = params.merge @request_options
+              params = params.merge(@request_options)
               case method
-              when "GET"
+              when 'GET'
                 resp = connection.connection.get(url, params)
-              when "HEAD"
+              when 'HEAD'
                 resp = connection.connection.head(url, params)
-              when "PUT"
+              when 'PUT'
                 resp = connection.connection.put(url, params)
-              when "POST"
+              when 'POST'
                 resp = connection.connection.post(url, params)
-              when "DELETE"
+              when 'DELETE'
                 resp = connection.connection.delete(url, params)
               else
                 raise ArgumentError.new "Method #{method} not supported"
               end
-              Response.new resp.code, resp.read_body, resp.headers
+              Response.new(resp.code, resp.read_body, resp.headers)
             end
           end
 
@@ -121,20 +121,19 @@ module Elasticsearch
           def __build_connections
             apply_headers(options)
 
-            Connections::Collection.new \
-              :connections => hosts.map { |host|
-                host[:protocol]   = host[:scheme] || DEFAULT_PROTOCOL
-                host[:port]     ||= DEFAULT_PORT
+            Connections::Collection.new(
+              connections: hosts.map do |host|
+                host[:protocol] = host[:scheme] || DEFAULT_PROTOCOL
+                host[:port] ||= DEFAULT_PORT
 
                 host.delete(:user)     # auth is not supported here.
                 host.delete(:password) # use the headers
 
-                Connections::Connection.new \
-                  :host => host,
-                  :connection => @manticore
-              },
-              :selector_class => options[:selector_class],
-              :selector => options[:selector]
+                Connections::Connection.new(host: host, connection: @manticore)
+              end,
+              selector_class: options[:selector_class],
+              selector: options[:selector]
+            )
           end
 
           # Closes all connections by marking them as dead
@@ -163,7 +162,7 @@ module Elasticsearch
           private
 
           def apply_headers(options)
-            headers = options.dig(:headers) || options.dig(:transport_options, :headers) || {}
+            headers = options[:headers] || options.dig(:transport_options, :headers) || {}
             headers[CONTENT_TYPE_STR] = find_value(headers, CONTENT_TYPE_REGEX) || DEFAULT_CONTENT_TYPE
             headers[USER_AGENT_STR] = find_value(headers, USER_AGENT_REGEX) || find_value(@request_options[:headers], USER_AGENT_REGEX) || user_agent_header
             headers[ACCEPT_ENCODING] = GZIP if use_compression?
@@ -171,7 +170,7 @@ module Elasticsearch
           end
 
           def user_agent_header
-            @user_agent ||= begin
+            @user_agent_header ||= begin
               meta = ["RUBY_VERSION: #{JRUBY_VERSION}"]
               if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
                 meta << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
