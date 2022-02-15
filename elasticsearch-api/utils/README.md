@@ -18,6 +18,11 @@ $ thor code:generate
 
 - The Ruby code will be generated in `elasticsearch-api/lib/elasticsearch/api/actions`.
 - The generator runs Rubocop to autolint and clean up the generated files.
+- You can use the environment variable `IGNORE_VERSION` to ignore the current version of the client when generating the source code documentation urls. This is currently used when generating code from `main`:
+
+```bash
+$ IGNORE_VERSION=true thor code:generate
+```
 
 ### Development
 
