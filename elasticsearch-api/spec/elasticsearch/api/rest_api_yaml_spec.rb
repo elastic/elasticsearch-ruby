@@ -69,7 +69,12 @@ describe 'Rest API YAML tests' do
               if task_group.has_match_clauses?
                 task_group.match_clauses.each do |match|
                   it 'contains the expected error in the request response' do
-                    expect(task_group.exception.message).to match(Regexp.new(Regexp.escape(match['match'].values.first.to_s)))
+                    regexp = if (val = match['match'].values.first.to_s).include?('\\s')
+                               Regexp.new(val.gsub('\\\\', '\\').gsub('/', ''))
+                             else
+                               Regexp.new(Regexp.escape(val))
+                             end
+                    expect(task_group.exception.message).to match(regexp)
                   end
                 end
               end
