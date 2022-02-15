@@ -49,6 +49,12 @@ module Elasticsearch
         @client = client
         begin
           documents = YAML.load_stream(File.new(file_name))
+        rescue Psych::SyntaxError => e
+          raise e unless e.message.include?('found unexpected \':\'')
+
+          message = "Exception found when parsing YAML in #{file_name}: #{e.message}"
+          logger.error message
+          raise SkipTestsException, message
         rescue StandardError => e
           logger.error e
           logger.error "Filename : #{@name}"
@@ -64,7 +70,7 @@ module Elasticsearch
         @skip = @setup['setup']&.select { |a| a['skip'] }
         return false if @skip.empty?
 
-        raise SkipTestsException if skip_version?(@client, @skip.first['skip'])
+        raise SkipTestsException, "Skipping #{file} due to 'skip all'." if skip_version?(@client, @skip.first['skip'])
       end
 
       def skip_version?(client, skip_definition)
