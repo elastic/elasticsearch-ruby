@@ -74,6 +74,10 @@ module Elasticsearch
           @full_namespace   = __full_namespace
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
+
+          # Don't generate code for internal APIs:
+          next if @module_namespace.flatten.first == '_internal'
+
           @method_name      = @full_namespace.last
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
