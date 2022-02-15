@@ -30,10 +30,10 @@ describe 'Rest API YAML tests' do
   REST_API_YAML_FILES.each do |file|
     begin
       test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
-    rescue SkipTestsException => _e
+    rescue SkipTestsException => e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
-      LOGGER.info "Skipping #{file} due to 'skip all'."
+      LOGGER.info e.message
       next
     end
 
