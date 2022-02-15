@@ -49,7 +49,7 @@ module Elasticsearch
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         version = Elasticsearch::API::VERSION.match(regex)[0]
         # TODO - How do we fix this so it doesn't depend on which branch we're running from
-        if version == '8.0'
+        if ENV['IGNORE_VERSION']
           documentation_url
         else
           documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
