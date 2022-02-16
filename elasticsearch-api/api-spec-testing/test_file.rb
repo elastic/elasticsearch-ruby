@@ -61,16 +61,16 @@ module Elasticsearch
         end
         @test_definitions = documents.reject { |doc| doc['setup'] || doc['teardown'] }
         @setup = documents.find { |doc| doc['setup'] }
-        skip_entire_test_file? if @setup
+        skip_entire_test_file?(file_name) if @setup
         @teardown = documents.find { |doc| doc['teardown'] }
         @features_to_skip = REST_API_YAML_SKIP_FEATURES + features_to_skip
       end
 
-      def skip_entire_test_file?
+      def skip_entire_test_file?(file_name)
         @skip = @setup['setup']&.select { |a| a['skip'] }
         return false if @skip.empty?
 
-        raise SkipTestsException, "Skipping #{file} due to 'skip all'." if skip_version?(@client, @skip.first['skip'])
+        raise SkipTestsException, "Skipping #{file_name} due to 'skip all'." if skip_version?(@client, @skip.first['skip'])
       end
 
       def skip_version?(client, skip_definition)
