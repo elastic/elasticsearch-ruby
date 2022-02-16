@@ -160,7 +160,7 @@ module Elasticsearch
           path = '_internal/_health'
           body = args.delete('body')
         end
-        @response = client.perform_request(http, path, args, body)
+        @response = Elasticsearch::API::Response.new(client.perform_request(http, path, args, body))
         client
       end
 
