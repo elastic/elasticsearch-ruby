@@ -137,12 +137,10 @@ module Elasticsearch
         case method
         when '_internal.update_desired_nodes'
           http = 'PUT'
-
           if (history_id = args.delete('history_id')).match?(/\s+/)
             require 'erb'
             history_id = ERB::Util.url_encode(history_id)
           end
-
           path = "/_internal/desired_nodes/#{history_id}/#{args.delete('version')}"
           body = args.delete('body')
           # Replace $es_version with actual value:
@@ -157,6 +155,10 @@ module Elasticsearch
           http = 'GET'
           path = '/_internal/desired_nodes/_latest'
           body = nil
+        when '_internal.health'
+          http = 'GET'
+          path = '_internal/_health'
+          body = args.delete('body')
         end
         @response = client.perform_request(http, path, args, body)
         client
