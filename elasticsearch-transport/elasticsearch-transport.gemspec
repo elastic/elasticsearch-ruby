@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'multi_json'
   s.add_dependency 'faraday', '~> 1'
+  s.add_dependency 'typhoeus', '~> 1.4'
 
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
