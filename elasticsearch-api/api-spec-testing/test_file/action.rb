@@ -112,9 +112,17 @@ module Elasticsearch
               begin
                 @response = client.send(_method, prepare_arguments(args, test))
               rescue Elastic::Transport::Transport::Errors::BadRequest => e
-                raise e unless e.message.match 'resource_already_exists_exception'
-
-                client.delete(index: args['index'])
+                case e.message
+                when /resource_already_exists_exception/
+                  client.delete(index: args['index'])
+                when /failed to parse date field/
+                  body = args['body']
+                  time_series = body['settings']['index']['time_series']
+                  time_series.each { |k, v| time_series[k] = v.strftime("%FT%TZ") }
+                  args['body'] = body
+                else
+                  raise e
+                end
                 @response = client.send(_method, prepare_arguments(args, test))
               end
               client
