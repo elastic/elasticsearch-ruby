@@ -1,4 +1,4 @@
-name: test
+name: 8.1
 on:
   push:
     branches:
