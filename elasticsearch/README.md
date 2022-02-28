@@ -6,7 +6,7 @@ The `elasticsearch` library provides a Ruby client and API for [Elasticsearch](h
 
 This gem is a wrapper for two separate libraries:
 
-* [`elasticsearch-transport`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-transport), which provides a low-level Ruby client for connecting to [Elastic](http://elasticsearch.com) services.
+* [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby/), which provides a low-level Ruby client for connecting to [Elastic](http://elasticsearch.com) services.
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api), which provides a Ruby API for the Elasticsearch RESTful API.
 
 Install the `elasticsearch` package and use the API directly:
@@ -117,17 +117,12 @@ Elasticsearch::Client.new(
 Please refer to the specific library documentation for details:
 
 * **Transport**:
-   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/main/elasticsearch-transport/README.md)
-   [[Documentation]](http://rubydoc.info/gems/elasticsearch-transport/file/README.markdown)
+   [[README]](https://github.com/elastic/elastic-transport-ruby#elastic-transport)
+   [[Documentation]](https://rubydoc.info/github/elastic/elastic-transport-ruby/)
 
 * **API**:
-   [[README]](https://github.com/elasticsearch/elasticsearch-ruby/blob/main/elasticsearch-api/README.md)
-   [[Documentation]](http://rubydoc.info/gems/elasticsearch-api/file/README.markdown)
-
-
-## Development
-
-You can run `rake -T` to check the test tasks. Use `COVERAGE=true` before running a test task to check the coverage with Simplecov.
+   [[README]](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api#elasticsearchapi)
+   [[Documentation]](https://rubydoc.info/gems/elasticsearch-api)
 
 ## License
 
