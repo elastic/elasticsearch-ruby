@@ -1,3 +1,8 @@
+## 7.17.1
+
+- Improves handling of YAML parsing, uses `safe_load` instead of `load` when doing the product verification (should only affect Ruby < 3.0).
+- Updates headers setup when using the Manticore adapter. This fixes an issue where the user-agent header was being foverridden even when it was being set on initialization via the transport options. [Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1685), [issue](https://github.com/elastic/elasticsearch-ruby/issues/1684).
+
 ## 7.17.0
 
 - Drops Ruby 2.5 from the test matrix. Support for Ruby 2.5 was dropped March 2021.
