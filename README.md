@@ -1,10 +1,7 @@
 # Elasticsearch
+[![7.17](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml/badge.svg?branch=7.17)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml) [![8.0](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml/badge.svg?branch=8.0)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml) [![8.1](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.1.yml/badge.svg?branch=8.1)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.1.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml)
 
-This repository contains the official [Elasticsearch](https://www.elastic.co/products/elasticsearch) Ruby client.
-
-[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.16](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml/badge.svg?branch=7.16)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.16.yml) [![7.17](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml/badge.svg?branch=7.17)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml) [![8.0](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml/badge.svg?branch=8.0)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.0.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml)
-
-The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch) gem is a complete Elasticsearch client which uses two separate libraries:
+This repository contains the official [Elasticsearch](https://www.elastic.co/products/elasticsearch) Ruby client. The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch) gem is a complete Elasticsearch client which uses two separate libraries:
 
 * [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby) - provides the low-level code for connecting to an Elasticsearch cluster.
 * [`elasticsearch-api`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch-api) - provides a Ruby API for the Elasticsearch RESTful API.
