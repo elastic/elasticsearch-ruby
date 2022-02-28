@@ -45,7 +45,7 @@ client.search(q: 'test')
 # etc.
 ```
 
-See also [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) for some practical examples.
+See also [the official documentation](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html) for examples of how to use the most frequently called APIs and [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) for some practical examples.
 
 **For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
 
