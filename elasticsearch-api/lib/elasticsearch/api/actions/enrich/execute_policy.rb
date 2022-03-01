@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request should block until the execution is complete.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-policy-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/execute-enrich-policy-api.html
         #
         def execute_policy(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

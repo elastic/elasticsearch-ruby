@@ -38,7 +38,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A query to restrict the results specified with the Query DSL (optional)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/search-count.html
       #
       def count(arguments = {})
         headers = arguments.delete(:headers) || {}
