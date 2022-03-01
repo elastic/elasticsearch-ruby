@@ -37,7 +37,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/docs-update.html
       #
       def update(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

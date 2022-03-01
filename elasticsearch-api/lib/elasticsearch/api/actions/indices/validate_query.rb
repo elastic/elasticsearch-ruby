@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query definition specified with the Query DSL
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/search-validate.html
         #
         def validate_query(arguments = {})
           headers = arguments.delete(:headers) || {}

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open, closed, or hidden indices (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-delete-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/indices-delete-index.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

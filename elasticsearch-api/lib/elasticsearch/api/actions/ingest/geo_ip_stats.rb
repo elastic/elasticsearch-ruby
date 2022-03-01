@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/geoip-stats-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/geoip-stats-api.html
         #
         def geo_ip_stats(arguments = {})
           headers = arguments.delete(:headers) || {}
