@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Number] :max_num_segments The number of segments the index should be merged into (default: dynamic)
         # @option arguments [Boolean] :only_expunge_deletes Specify whether the operation should only expunge deleted documents
+        # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-forcemerge.html

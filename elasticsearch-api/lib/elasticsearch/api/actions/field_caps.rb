@@ -26,6 +26,8 @@ module Elasticsearch
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [Boolean] :include_unmapped Indicates whether unmapped fields should be included in the response.
+      # @option arguments [List] :filters An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent
+      # @option arguments [List] :types Only return results for fields that have one of the types in the list
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body An index filter specified with the Query DSL
       #
