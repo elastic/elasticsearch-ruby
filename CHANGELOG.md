@@ -1,5 +1,38 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.1.0
+
+- Tested versions of Ruby for 8.1.0: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
+
+### API
+
+Updated for compatibility with Elasticsearch 8.1's API.
+
+#### New parameters:
+- `indices.forcemerge` - `wait_for_completion` Should the request wait until the force merge is completed.
+- `indices.get` - `features` Return only information on specified index features (options: aliases, mappings, settings).
+- `ingest.put_pipeline` `if_version` (Integer), required version for optimistic concurrency control for pipeline updates.
+- `ml.delete_trained_model` - `timeout` controls the amount of time to wait for the model to be deleted. `force` (Boolean) true if the model should be forcefully deleted.
+- `ml.stop_trained_model_deployment` -  `allow_no_match` whether to ignore if a wildcard expression matches no deployments. (This includes `_all` string or when no deployments have been specified). `force` true if the deployment should be forcefully stopped. Adds `body` parameter, the stop deployment parameters.
+- `nodes.hot_threads` - `sort` the sort order for 'cpu' type (default: total) (options: cpu, total)
+
+#### Updated parameters:
+- `indices.get_index_template` - `name` is now a String, a pattern that returned template names must match.
+- `knn_search` - `index` removes option to use empty string to perform the operation on all indices.
+- `ml.close_job`, `ml.get_job_stats`, `ml.get_jobs`, `ml.get_overall_buckets` - Remove `allow_no_jobs` parameter.
+- `ml.get_datafeed_stats`, `ml.get_datafeeds` - Remove `allow_no_datafeeds` parameter.
+- `nodes.hot_threads` - `type` parameter adds `mem` option.
+- `nodes.info` - `metric` updated to use `_all` to retrieve all metrics and `_none` to retrieve the node identity without any additional metrics. (options: settings, os, process, jvm, thread_pool, transport, http, plugins, ingest, indices, aggregations, _all, _none). `index_metric` option `shards` changes to `shard_stats`.
+- `open_point_in_time` - `keep_alive` is now a required parameter.
+- `search_mvt` - `grid_type` parameter adds `centroid` option in addition to `grid` and `point`.
+
+- New experimental APIs, designed for internal use by the fleet server project: `fleet.search`, `fleet.msearch`.
+
+#### New APIs
+- OpenID Connect Authentication: `security.oidc_authenticate`, `security.oidc_logout`, `security.oidc_prepare_authentication`.
+- `transform.reset_transform`.
+
+
 ## 8.0.0
 
 First release for the `8.x` branch with a few major changes.
