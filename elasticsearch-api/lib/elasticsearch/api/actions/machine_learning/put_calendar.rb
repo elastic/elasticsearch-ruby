@@ -30,11 +30,10 @@ module Elasticsearch
         def put_calendar(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
 

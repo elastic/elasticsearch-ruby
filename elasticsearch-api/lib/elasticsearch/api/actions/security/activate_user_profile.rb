@@ -33,11 +33,10 @@ module Elasticsearch
         def activate_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_security/profile/_activate"

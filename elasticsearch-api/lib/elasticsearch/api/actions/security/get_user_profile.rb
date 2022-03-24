@@ -34,11 +34,10 @@ module Elasticsearch
         def get_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'uid' missing" unless arguments[:uid]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _uid = arguments.delete(:uid)
 

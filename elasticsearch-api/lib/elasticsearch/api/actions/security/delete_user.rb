@@ -30,11 +30,10 @@ module Elasticsearch
         def delete_user(arguments = {})
           raise ArgumentError, "Required argument 'username' missing" unless arguments[:username]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _username = arguments.delete(:username)
 

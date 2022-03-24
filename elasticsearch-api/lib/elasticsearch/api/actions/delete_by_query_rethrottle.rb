@@ -29,11 +29,10 @@ module Elasticsearch
       def delete_by_query_rethrottle(arguments = {})
         raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
 
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = nil
-
-        arguments = arguments.clone
 
         _task_id = arguments.delete(:task_id)
 

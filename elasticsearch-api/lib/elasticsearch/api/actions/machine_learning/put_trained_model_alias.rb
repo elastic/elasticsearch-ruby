@@ -32,11 +32,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
           raise ArgumentError, "Required argument 'model_alias' missing" unless arguments[:model_alias]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _model_alias = arguments.delete(:model_alias)
 

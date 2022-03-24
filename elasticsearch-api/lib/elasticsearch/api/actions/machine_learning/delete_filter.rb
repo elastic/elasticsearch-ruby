@@ -29,11 +29,10 @@ module Elasticsearch
         def delete_filter(arguments = {})
           raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _filter_id = arguments.delete(:filter_id)
 

@@ -33,11 +33,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
           raise ArgumentError, "Required argument 'snapshot_id' missing" unless arguments[:snapshot_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
 

@@ -29,11 +29,10 @@ module Elasticsearch
         def execute_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'policy_id' missing" unless arguments[:policy_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _policy_id = arguments.delete(:policy_id)
 

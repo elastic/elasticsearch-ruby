@@ -31,11 +31,10 @@ module Elasticsearch
         def reset_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _transform_id = arguments.delete(:transform_id)
 
