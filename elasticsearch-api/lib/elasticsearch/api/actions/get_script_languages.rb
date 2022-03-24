@@ -25,11 +25,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html
       #
       def get_script_languages(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = nil
-
-        arguments = arguments.clone
+        body   = nil
 
         method = Elasticsearch::API::HTTP_GET
         path   = "_script_language"

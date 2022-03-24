@@ -29,11 +29,10 @@ module Elasticsearch
         def delete_calendar(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
 

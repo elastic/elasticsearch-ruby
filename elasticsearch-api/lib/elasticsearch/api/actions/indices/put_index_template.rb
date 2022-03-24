@@ -34,11 +34,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _name = arguments.delete(:name)
 

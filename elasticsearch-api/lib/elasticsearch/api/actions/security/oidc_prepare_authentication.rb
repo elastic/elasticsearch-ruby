@@ -29,11 +29,10 @@ module Elasticsearch
         def oidc_prepare_authentication(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_security/oidc/prepare"

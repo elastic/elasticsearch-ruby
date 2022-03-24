@@ -36,11 +36,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'block' missing" unless arguments[:block]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _index = arguments.delete(:index)
 

@@ -32,11 +32,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
       #
       def clear_scroll(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = arguments.delete(:body)
-
-        arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
 

@@ -37,11 +37,11 @@ module Elasticsearch
         def search(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          arguments = arguments.clone
           arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
 
           _index = arguments.delete(:index)

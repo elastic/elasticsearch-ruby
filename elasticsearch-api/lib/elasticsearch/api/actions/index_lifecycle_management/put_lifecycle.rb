@@ -30,11 +30,10 @@ module Elasticsearch
         def put_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _policy = arguments.delete(:policy)
 

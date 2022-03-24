@@ -30,11 +30,10 @@ module Elasticsearch
         def clear_cached_realms(arguments = {})
           raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _realms = arguments.delete(:realms)
 

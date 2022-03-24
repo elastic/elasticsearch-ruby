@@ -34,11 +34,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html
       #
       def field_caps(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
-
-        arguments = arguments.clone
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 

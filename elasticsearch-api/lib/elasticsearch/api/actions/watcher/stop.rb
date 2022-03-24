@@ -26,11 +26,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
         #
         def stop(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_watcher/_stop"

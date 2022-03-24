@@ -32,11 +32,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _application = arguments.delete(:application)
 

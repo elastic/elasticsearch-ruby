@@ -29,11 +29,10 @@ module Elasticsearch
         def saml_service_provider_metadata(arguments = {})
           raise ArgumentError, "Required argument 'realm_name' missing" unless arguments[:realm_name]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _realm_name = arguments.delete(:realm_name)
 

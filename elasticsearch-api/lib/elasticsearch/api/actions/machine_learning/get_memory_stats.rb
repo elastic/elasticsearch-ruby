@@ -29,11 +29,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-memory.html
         #
         def get_memory_stats(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 
