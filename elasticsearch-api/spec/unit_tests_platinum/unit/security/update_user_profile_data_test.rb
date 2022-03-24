@@ -25,8 +25,8 @@ module Elasticsearch
 
         should 'perform correct request' do
           subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal('POST', method)
-            assert_equal('_security/profile/_data/1', url)
+            assert_equal('PUT', method)
+            assert_equal('_security/profile/1/_data', url)
             assert_equal({}, params)
             assert_equal(body, {})
             true

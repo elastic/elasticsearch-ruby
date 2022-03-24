@@ -45,8 +45,8 @@ module Elasticsearch
 
           _uid = arguments.delete(:uid)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = "_security/profile/_data/#{Utils.__listify(_uid)}"
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_security/profile/#{Utils.__listify(_uid)}/_data"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
