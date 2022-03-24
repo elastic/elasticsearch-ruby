@@ -33,12 +33,14 @@ module Elasticsearch
   <%= '  '*(@namespace_depth+2) %>end
 <%- else -%>
   <%- if @method_name == 'get_field_mapping' %>
+    arguments = arguments.clone
     _fields = arguments.delete(:field) || arguments.delete(:fields)
     raise ArgumentError, "Required argument 'field' missing" unless _fields
   <%- else -%>
     <%- @required_parts.each do |required| %><%# Arguments -%>
       <%= '  '*(@namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
     <%- end -%>
+    arguments = arguments.clone
     <%- end -%>
     headers = arguments.delete(:headers) || {}
     <%- #Body %>
