@@ -16,7 +16,6 @@
 # specific language governing permissions and limitations
 # under the License.
 %>
-<%= '  '*(@namespace_depth+4) %>arguments = arguments.clone
 <%- if @method_name == 'search' -%>
   arguments[:index] = UNDERSCORE_ALL if ! arguments[:index] && arguments[:type]
 <%- end -%>
