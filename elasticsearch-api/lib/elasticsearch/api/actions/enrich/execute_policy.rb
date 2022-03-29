@@ -30,11 +30,10 @@ module Elasticsearch
         def execute_policy(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _name = arguments.delete(:name)
 

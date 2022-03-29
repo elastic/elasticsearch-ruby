@@ -29,11 +29,10 @@ module Elasticsearch
         def delete_trained_model(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
 

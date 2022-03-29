@@ -29,11 +29,10 @@ module Elasticsearch
         def activate_watch(arguments = {})
           raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _watch_id = arguments.delete(:watch_id)
 

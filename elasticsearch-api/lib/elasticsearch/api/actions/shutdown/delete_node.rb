@@ -29,11 +29,10 @@ module Elasticsearch
         def delete_node(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 

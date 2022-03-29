@@ -30,11 +30,10 @@ module Elasticsearch
       def delete_script(arguments = {})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = nil
-
-        arguments = arguments.clone
 
         _id = arguments.delete(:id)
 

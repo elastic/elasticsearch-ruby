@@ -35,11 +35,10 @@ module Elasticsearch
         def open(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _index = arguments.delete(:index)
 

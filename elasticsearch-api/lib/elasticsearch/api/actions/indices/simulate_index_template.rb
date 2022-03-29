@@ -33,11 +33,10 @@ module Elasticsearch
         def simulate_index_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _name = arguments.delete(:name)
 

@@ -33,17 +33,16 @@ module Elasticsearch
         def stop_trained_model_deployment(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body = arguments.delete(:body)
 
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_stop"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)

@@ -37,11 +37,10 @@ module Elasticsearch
           raise ArgumentError,
                 "Required argument 'max_archive_version' missing" unless arguments[:max_archive_version]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 
