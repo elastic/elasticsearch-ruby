@@ -40,11 +40,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-validate.html
         #
         def validate_query(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 

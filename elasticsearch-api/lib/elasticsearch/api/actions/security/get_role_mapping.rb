@@ -27,11 +27,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
         #
         def get_role_mapping(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _name = arguments.delete(:name)
 

@@ -29,11 +29,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
         #
         def get_job_stats(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
 

@@ -31,11 +31,10 @@ module Elasticsearch
         def change_password(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _username = arguments.delete(:username)
 

@@ -31,11 +31,10 @@ module Elasticsearch
         def delete_job(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
 

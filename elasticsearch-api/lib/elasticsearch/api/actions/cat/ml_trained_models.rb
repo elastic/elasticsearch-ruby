@@ -37,11 +37,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
         #
         def ml_trained_models(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _model_id = arguments.delete(:model_id)
 

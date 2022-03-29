@@ -28,11 +28,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/data-streams.html
         #
         def get_data_stream(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _name = arguments.delete(:name)
 

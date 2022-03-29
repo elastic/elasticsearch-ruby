@@ -29,11 +29,10 @@ module Elasticsearch
         def clear_cached_privileges(arguments = {})
           raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _application = arguments.delete(:application)
 

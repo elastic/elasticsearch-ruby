@@ -28,11 +28,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
         #
         def explain_data_frame_analytics(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _id = arguments.delete(:id)
 

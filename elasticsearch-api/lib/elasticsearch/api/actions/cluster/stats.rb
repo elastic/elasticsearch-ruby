@@ -29,11 +29,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-stats.html
         #
         def stats(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _node_id = arguments.delete(:node_id)
 

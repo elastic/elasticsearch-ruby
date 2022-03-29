@@ -33,14 +33,13 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
+          arguments = arguments.clone
           _fields = arguments.delete(:field) || arguments.delete(:fields)
           raise ArgumentError, "Required argument 'field' missing" unless _fields
 
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _index = arguments.delete(:index)
 

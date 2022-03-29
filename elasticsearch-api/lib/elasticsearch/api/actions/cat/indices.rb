@@ -39,11 +39,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-indices.html
         #
         def indices(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _index = arguments.delete(:index)
 

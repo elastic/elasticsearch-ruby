@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-repositories.html
         #
         def repositories(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_cat/repositories"
