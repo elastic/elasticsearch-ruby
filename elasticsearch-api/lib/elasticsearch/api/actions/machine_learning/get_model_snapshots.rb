@@ -37,11 +37,10 @@ module Elasticsearch
         def get_model_snapshots(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
 

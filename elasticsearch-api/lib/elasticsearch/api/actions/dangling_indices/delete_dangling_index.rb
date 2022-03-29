@@ -32,11 +32,10 @@ module Elasticsearch
         def delete_dangling_index(arguments = {})
           raise ArgumentError, "Required argument 'index_uuid' missing" unless arguments[:index_uuid]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _index_uuid = arguments.delete(:index_uuid)
 

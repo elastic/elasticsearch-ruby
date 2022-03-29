@@ -25,11 +25,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.1/painless-contexts.html
       #
       def get_script_context(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = nil
-
-        arguments = arguments.clone
+        body   = nil
 
         method = Elasticsearch::API::HTTP_GET
         path   = "_script_context"

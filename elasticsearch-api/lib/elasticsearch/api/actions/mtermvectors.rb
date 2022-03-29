@@ -39,6 +39,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = if (ids = arguments.delete(:ids))
@@ -46,8 +47,6 @@ module Elasticsearch
                else
                  arguments.delete(:body)
                end
-
-        arguments = arguments.clone
 
         _index = arguments.delete(:index)
 

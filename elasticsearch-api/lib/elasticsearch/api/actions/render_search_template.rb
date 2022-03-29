@@ -27,11 +27,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/render-search-template-api.html
       #
       def render_search_template(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = arguments.delete(:body)
-
-        arguments = arguments.clone
 
         _id = arguments.delete(:id)
 

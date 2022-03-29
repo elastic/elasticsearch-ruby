@@ -30,11 +30,10 @@ module Elasticsearch
         def delete_datafeed(arguments = {})
           raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _datafeed_id = arguments.delete(:datafeed_id)
 

@@ -28,11 +28,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.1/preview-dfanalytics.html
         #
         def preview_data_frame_analytics(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _id = arguments.delete(:id)
 
