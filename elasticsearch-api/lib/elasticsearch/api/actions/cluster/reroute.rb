@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-reroute.html
         #
         def reroute(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body) || {}
-
-          arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_cluster/reroute"

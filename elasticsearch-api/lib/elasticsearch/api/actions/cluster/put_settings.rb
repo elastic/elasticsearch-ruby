@@ -32,11 +32,10 @@ module Elasticsearch
         def put_settings(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body) || {}
-
-          arguments = arguments.clone
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_cluster/settings"

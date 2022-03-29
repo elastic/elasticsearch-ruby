@@ -31,11 +31,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
           raise ArgumentError, "Required argument 'service' missing" unless arguments[:service]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _namespace = arguments.delete(:namespace)
 

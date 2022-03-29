@@ -36,11 +36,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-anomaly-detectors.html
         #
         def ml_jobs(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _job_id = arguments.delete(:job_id)
 

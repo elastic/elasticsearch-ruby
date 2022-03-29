@@ -33,11 +33,10 @@ module Elasticsearch
       def rank_eval(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
-
-        arguments = arguments.clone
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 

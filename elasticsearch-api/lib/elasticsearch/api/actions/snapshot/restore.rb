@@ -34,11 +34,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
           raise ArgumentError, "Required argument 'snapshot' missing" unless arguments[:snapshot]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
 

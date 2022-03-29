@@ -31,11 +31,10 @@ module Elasticsearch
         def verify_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _repository = arguments.delete(:repository)
 

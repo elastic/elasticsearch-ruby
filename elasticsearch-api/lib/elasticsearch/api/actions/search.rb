@@ -70,11 +70,11 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html
       #
       def search(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = arguments.delete(:body)
 
-        arguments = arguments.clone
         arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
 
         _index = arguments.delete(:index)
