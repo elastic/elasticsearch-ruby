@@ -29,11 +29,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/get-pipeline-api.html
         #
         def get_pipeline(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _id = arguments.delete(:id)
 

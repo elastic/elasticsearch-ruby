@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/ml-get-calendar.html
         #
         def get_calendars(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
 

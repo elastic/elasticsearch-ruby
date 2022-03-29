@@ -34,11 +34,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
         body = arguments.delete(:body)
-
-        arguments = arguments.clone
 
         _scroll_id = arguments.delete(:scroll_id)
 

@@ -28,11 +28,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/indices-analyze.html
         #
         def analyze(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 

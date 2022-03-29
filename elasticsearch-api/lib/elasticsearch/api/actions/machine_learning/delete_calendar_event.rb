@@ -31,11 +31,10 @@ module Elasticsearch
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
           raise ArgumentError, "Required argument 'event_id' missing" unless arguments[:event_id]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _calendar_id = arguments.delete(:calendar_id)
 

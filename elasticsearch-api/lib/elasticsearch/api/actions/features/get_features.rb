@@ -27,11 +27,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/get-features-api.html
         #
         def get_features(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_features"

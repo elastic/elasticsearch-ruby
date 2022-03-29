@@ -28,11 +28,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/watcher-api-stats.html
         #
         def stats(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _metric = arguments.delete(:metric)
 

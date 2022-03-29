@@ -29,11 +29,10 @@ module Elasticsearch
         def clear_api_key_cache(arguments = {})
           raise ArgumentError, "Required argument 'ids' missing" unless arguments[:ids]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           _ids = arguments.delete(:ids)
 

@@ -38,11 +38,10 @@ module Elasticsearch
       def reindex(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
-
-        arguments = arguments.clone
+        body   = arguments.delete(:body)
 
         method = Elasticsearch::API::HTTP_POST
         path   = "_reindex"

@@ -30,11 +30,10 @@ module Elasticsearch
         def has_privileges(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
-
-          arguments = arguments.clone
 
           _user = arguments.delete(:user)
 

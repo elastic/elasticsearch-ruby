@@ -47,11 +47,10 @@ module Elasticsearch
         raise ArgumentError, "Required argument 'x' missing" unless arguments[:x]
         raise ArgumentError, "Required argument 'y' missing" unless arguments[:y]
 
+        arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
-
-        arguments = arguments.clone
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 

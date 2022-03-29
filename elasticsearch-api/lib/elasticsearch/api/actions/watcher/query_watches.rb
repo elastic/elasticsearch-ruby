@@ -27,11 +27,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/watcher-api-query-watches.html
         #
         def query_watches(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           method = if body
                      Elasticsearch::API::HTTP_POST

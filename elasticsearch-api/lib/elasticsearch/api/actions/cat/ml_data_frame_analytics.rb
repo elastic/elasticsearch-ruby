@@ -35,11 +35,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.1/cat-dfanalytics.html
         #
         def ml_data_frame_analytics(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _id = arguments.delete(:id)
 

@@ -34,11 +34,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.1/cat-datafeeds.html
         #
         def ml_datafeeds(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _datafeed_id = arguments.delete(:datafeed_id)
 

@@ -27,11 +27,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/ilm-get-lifecycle.html
         #
         def get_lifecycle(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
-
-          arguments = arguments.clone
 
           _policy = arguments.delete(:policy)
 

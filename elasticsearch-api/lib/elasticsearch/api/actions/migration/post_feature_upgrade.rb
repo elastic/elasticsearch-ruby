@@ -26,11 +26,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/migration-api-feature-upgrade.html
         #
         def post_feature_upgrade(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_migration/system_features"

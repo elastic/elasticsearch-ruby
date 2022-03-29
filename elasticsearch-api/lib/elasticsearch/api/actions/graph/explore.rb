@@ -32,11 +32,10 @@ module Elasticsearch
         def explore(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
-
-          arguments = arguments.clone
+          body   = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 

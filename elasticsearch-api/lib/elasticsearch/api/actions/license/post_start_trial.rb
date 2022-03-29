@@ -28,11 +28,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.1/start-trial.html
         #
         def post_start_trial(arguments = {})
+          arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          arguments = arguments.clone
+          body   = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_license/start_trial"
