@@ -1,5 +1,15 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.1.2
+
+### API
+
+- Fixes an issue with the generated API code. When updating the code generator for 8.x, the order of `arguments.clone` in the generated code was changed. This would make it so that we would modify the parameters passed in before cloning them, which is undesired. Issue: [#1727](https://github.com/elastic/elasticsearch-ruby/issues/1727).
+
+## 8.1.1
+
+No release, no changes on the client.
+
 ## 8.1.0
 
 - Tested versions of Ruby for 8.1.0: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
