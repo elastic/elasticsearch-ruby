@@ -1,6 +1,7 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
-## 8.1.2
+
+## 8.1.2, 8.0.1
 
 ### API
 

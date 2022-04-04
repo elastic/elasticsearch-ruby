@@ -1,6 +1,16 @@
 [[release_notes_80]]
 === 8.0 Release notes
 
+[discrete]
+[[release_notes_801]]
+=== 8.0.1 Release notes
+
+- Fixes an issue with the generated API code. When updating the code generator for 8.x, the order of `arguments.clone` in the generated code was changed. This would make it so that we would modify the parameters passed in before cloning them, which is undesired. Issue: https://github.com/elastic/elasticsearch-ruby/issues/1727[#1727].
+
+[discrete]
+[[release_notes_800]]
+=== 8.0.0 Release notes
+
 First release for the 8.x branch with a few major changes.
 
 - Tested versions of Ruby for 8.0.0: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
