@@ -21,7 +21,7 @@ describe 'client#security#search_user_profiles' do
   let(:expected_args) do
     [
       method,
-      '_security/profile/_search',
+      '_security/profile/_suggest',
       {},
       body,
       {}
@@ -31,7 +31,7 @@ describe 'client#security#search_user_profiles' do
   let(:body) { nil }
 
   it 'performs the request' do
-    expect(client_double.security.search_user_profiles).to be_a Elasticsearch::API::Response
+    expect(client_double.security.suggest_user_profiles).to be_a Elasticsearch::API::Response
   end
 
   context 'when there is a body parameter' do
@@ -39,7 +39,7 @@ describe 'client#security#search_user_profiles' do
     let(:body) { {} }
 
     it 'performs the request' do
-      expect(client_double.security.search_user_profiles(body: {})).to be_a Elasticsearch::API::Response
+      expect(client_double.security.suggest_user_profiles(body: {})).to be_a Elasticsearch::API::Response
     end
   end
 end
