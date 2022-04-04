@@ -19,7 +19,7 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Searches for user profiles that match specified criteria.
+        # Get suggestions for user profiles that match specified search criteria.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -27,11 +27,11 @@ module Elasticsearch
         #
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The search definition for user profiles
+        # @option arguments [Hash] :body The suggestion definition for user profiles
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-search-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/security-api-suggest-user-profile.html
         #
-        def search_user_profiles(arguments = {})
+        def suggest_user_profiles(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -43,7 +43,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_security/profile/_search"
+          path   = "_security/profile/_suggest"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
