@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The docs to apply inference on (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model-deployment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/infer-trained-model-deployment.html
         #
         def infer_trained_model_deployment(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

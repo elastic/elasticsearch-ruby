@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/watcher-api-stats.html
         #
         def stats(arguments = {})
           arguments = arguments.clone

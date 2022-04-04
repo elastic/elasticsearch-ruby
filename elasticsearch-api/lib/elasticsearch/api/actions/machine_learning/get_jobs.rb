@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on job PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/ml-get-job.html
         #
         def get_jobs(arguments = {})
           arguments = arguments.clone

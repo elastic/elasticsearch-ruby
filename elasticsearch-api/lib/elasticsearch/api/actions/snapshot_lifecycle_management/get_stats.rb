@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/slm-api-get-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/slm-api-get-stats.html
         #
         def get_stats(arguments = {})
           arguments = arguments.clone

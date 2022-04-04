@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cluster-get-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/cluster-get-settings.html
         #
         def get_settings(arguments = {})
           arguments = arguments.clone

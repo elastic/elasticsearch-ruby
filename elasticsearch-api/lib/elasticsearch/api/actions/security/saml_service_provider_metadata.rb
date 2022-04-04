@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [String] :realm_name The name of the SAML realm to get the metadata for
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-sp-metadata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/security-api-saml-sp-metadata.html
         #
         def saml_service_provider_metadata(arguments = {})
           raise ArgumentError, "Required argument 'realm_name' missing" unless arguments[:realm_name]

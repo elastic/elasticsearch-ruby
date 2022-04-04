@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The start data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/start-dfanalytics.html
         #
         def start_data_frame_analytics(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

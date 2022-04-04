@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.2/cat.html
         #
         def help(arguments = {})
           arguments = arguments.clone
