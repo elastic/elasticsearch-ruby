@@ -61,6 +61,7 @@ module Elasticsearch
 
       def generate_source
         @output = FilesHelper.output_dir
+        cleanup_directory!
 
         FilesHelper.files.each do |filepath|
           @path = Pathname(filepath)
@@ -91,6 +92,7 @@ module Elasticsearch
 
           @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
           dir = @output.join(@module_namespace.join('/'))
+
           empty_directory(dir, verbose: false)
 
           # Write the file with the ERB template:
@@ -285,6 +287,13 @@ module Elasticsearch
 
         lines = `tree #{@output}`.split("\n")
         say_status('tree', lines.first + "\n" + lines[1, lines.size].map { |l| ' ' * 14 + l }.join("\n"))
+      end
+
+      def cleanup_directory!
+        Dir["#{@output}/**/*.rb"].each do |file|
+          # file = File.join(@output, f)
+          File.delete(file) unless (['.', '..'].include? file) || Pathname(file).directory?
+        end
       end
 
       def run_rubocop
