@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
 # ------------------------------------------------------- #
 #
-# Skeleton for common build entry script for all elastic
-# clients. Needs to be adapted to individual client usage.
+# Build entry script for elasticsearch-ruby
 #
 # Must be called: ./.ci/make.sh <target> <params>
 #
@@ -23,10 +21,8 @@
 # ------------------------------------------------------- #
 # Bootstrap
 # ------------------------------------------------------- #
-
 script_path=$(dirname "$(realpath -s "$0")")
 repo=$(realpath "$script_path/../")
-
 
 # shellcheck disable=SC1090
 CMD=$1
@@ -41,13 +37,13 @@ output_folder=".ci/output"
 codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
 REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
+RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
-
-RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
+echo -e "\033[34;1mINFO:\033[0m RUBY_TEST_VERSION ${RUBY_TEST_VERSION}\033[0m"
 
 case $CMD in
     clean)
@@ -112,9 +108,6 @@ case $CMD in
         exit 1
 esac
 
-echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m RUBY_TEST_VERSION ${RUBY_TEST_VERSION}\033[0m"
-
 echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>>>>>>>>>>>>>>>\033[0m"
 
 # ------------------------------------------------------- #
@@ -122,7 +115,6 @@ echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>
 # ------------------------------------------------------- #
 
 echo -e "\033[34;1mINFO: building $product container\033[0m"
-
 docker build --file .ci/Dockerfile --tag ${product} .
 
 # ------------------------------------------------------- #
@@ -140,11 +132,11 @@ args_string="${args_string// /,}"
 docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
        --name test-runner \
-       --volume $REPO_BINDING \
-       --volume $repo:/usr/src/app \
+       --volume "${REPO_BINDING}" \
+       --volume "${repo}:/usr/src/app" \
        --rm \
-       $product \
-       bundle exec rake unified_release:"$TASK"["$args_string"]
+       "${product}" \
+       bundle exec rake unified_release:${TASK}["${args_string}"]
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
