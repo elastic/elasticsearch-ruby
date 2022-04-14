@@ -129,19 +129,14 @@ mkdir -p "$OUTPUT_DIR"
 args_string="${TASK_ARGS[*]}"
 args_string="${args_string// /,}"
 
-# DEBUG
-echo -e ${REPO_BINDING}
-echo -e ${repo}
-echo -e ${product}
-
 docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
        --name test-runner \
-       --volume ${REPO_BINDING} \
-       --volume ${repo}:/usr/src/app \
+       --volume "${REPO_BINDING}" \
+       --volume "${repo}:/usr/src/app" \
        --rm \
-       ${product} \
-       bundle exec rake unified_release:${TASK}[${args_string}]
+       "${product}" \
+       bundle exec rake unified_release:${TASK}["${args_string}"]
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
