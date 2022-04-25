@@ -1,5 +1,32 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.2.0
+
+- Tested versions of Ruby for 8.2.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
+
+### API
+
+Updated for compatibility with Elasticsearch 8.2's API.
+
+#### New parameters:
+
+* `field_caps`
+  - `filters` An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent
+  - `types` Only return results for fields that have one of the types in the list
+
+#### New APIs:
+
+- `cat.component_templates` - Returns information about existing component_templates templates.
+- `ml.get_memory_stats` - Returns information on how ML is using memory.
+
+#### New Experimental APIs:
+
+- `security.activate_user_profile` - Creates or updates the user profile on behalf of another user.
+- `security.disable_user_profile` -  Disables a user profile so it's not visible in user profile searches.
+- `security.enable_user_profile` -  Enables a user profile so it's visible in user profile searches.
+- `security.get_user_profile` -  Retrieves a user profile for the given unique ID.
+- `security.suggest_user_profiles` - Get suggestions for user profiles that match specified search criteria.
+- `security.update_user_profile_data` - Update application specific data for the user profile of the given unique ID.
 
 ## 8.1.2, 8.0.1
 
