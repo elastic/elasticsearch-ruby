@@ -38,6 +38,7 @@ codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
 REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
 RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
+WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
