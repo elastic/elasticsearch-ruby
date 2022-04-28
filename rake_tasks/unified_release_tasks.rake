@@ -21,13 +21,12 @@ require_relative '../elasticsearch/lib/elasticsearch/version'
 namespace :unified_release do
   desc 'Build gem releases and snapshots'
   task :assemble, [:version, :output_dir] do |_, args|
-    @zip_filename = "elasticsearch-ruby-#{args[:version]}"
-    @version = if args[:version].match? '-SNAPSHOT'
-                 args[:version].gsub('-SNAPSHOT', ".#{Time.now.strftime('%Y%m%d%H%M%S')}-SNAPSHOT")
+    @version = if ENV['WORKFLOW'] == 'snapshot'
+                 "#{args[:version]}.#{Time.now.strftime('%Y%m%d%H%M%S')}-SNAPSHOT"
                else
                  args[:version]
                end
-
+    @zip_filename = "elasticsearch-ruby-#{@version}"
     Rake::Task['unified_release:bump'].invoke(@version) unless @version == Elasticsearch::VERSION
 
     build_gems(args[:output_dir])
