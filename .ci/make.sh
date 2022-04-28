@@ -131,6 +131,7 @@ args_string="${args_string// /,}"
 
 docker run \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
+       --env "WORKFLOW=${WORKFLOW}" \
        --name test-runner \
        --volume "${REPO_BINDING}" \
        --volume "${repo}:/usr/src/app" \
