@@ -43,6 +43,7 @@ repo=`pwd`
 # run the client tests
 if [[ $TEST_SUITE != "platinum" ]]; then
     docker run \
+           -u "$(id -u)" \
            --network="${network_name}" \
            --env "TEST_ES_SERVER=${elasticsearch_url}" \
            --env "TEST_SUITE=${TEST_SUITE}" \
@@ -53,6 +54,7 @@ if [[ $TEST_SUITE != "platinum" ]]; then
            bundle exec rake elasticsearch:download_artifacts test:rest_api
 else
     docker run \
+           -u "$(id -u)" \
            --network="${network_name}" \
            --env "TEST_ES_SERVER=${elasticsearch_url}" \
            --env "ELASTIC_PASSWORD=${elastic_password}" \
