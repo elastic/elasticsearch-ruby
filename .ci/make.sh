@@ -116,7 +116,7 @@ echo -e "\033[1m>>>>> Build [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>
 # ------------------------------------------------------- #
 
 echo -e "\033[34;1mINFO: building $product container\033[0m"
-docker build --file .ci/Dockerfile --tag ${product} .
+docker build --build-arg BUILDER_UID="$(id -u)" --file .ci/Dockerfile --tag ${product} .
 
 # ------------------------------------------------------- #
 # Run the Container
@@ -131,6 +131,7 @@ args_string="${TASK_ARGS[*]}"
 args_string="${args_string// /,}"
 
 docker run \
+       -u "$(id -u)" \
        --env "RUBY_TEST_VERSION=${RUBY_TEST_VERSION}" \
        --env "WORKFLOW=${WORKFLOW}" \
        --name test-runner \
