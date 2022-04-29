@@ -33,8 +33,6 @@ namespace :unified_release do
 
     build_gems(args[:output_dir])
     create_zip_file(args[:output_dir])
-    sh "chmod 666 #{CURRENT_PATH.join(args[:output_dir])}/* && " \
-       "chmod 666 #{CURRENT_PATH.join(args[:output_dir])}"
   end
 
   def build_gems(output_dir)
