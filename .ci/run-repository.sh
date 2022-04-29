@@ -52,7 +52,8 @@ fi
 
 # run the client tests
 if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
-  docker run \
+    docker run \
+         -u "$(id -u)" \
          --network="${network_name}" \
          --env "ELASTIC_CLIENT_APIVERSIONING=true" \
          --env "ELASTIC_PASSWORD=${elastic_password}" \
@@ -69,6 +70,7 @@ if [[ $STACK_VERSION == "8.0.0-SNAPSHOT" ]]; then
          bundle exec rake elasticsearch:download_artifacts test:rest_api
 elif [[ $TEST_SUITE != "platinum" ]]; then
   docker run \
+         -u "$(id -u)" \
          --network="${network_name}" \
          --env "TEST_ES_SERVER=${elasticsearch_url}" \
          --env "TEST_SUITE=${TEST_SUITE}" \
@@ -80,18 +82,19 @@ elif [[ $TEST_SUITE != "platinum" ]]; then
          elastic/elasticsearch-ruby \
          bundle exec rake elasticsearch:download_artifacts test:rest_api
 else
-    docker run \
-           --network="${network_name}" \
-           --env "TEST_ES_SERVER=${elasticsearch_url}" \
-           --env "ELASTIC_PASSWORD=${elastic_password}" \
-           --env "TEST_SUITE=${TEST_SUITE}" \
-           --env "ELASTIC_USER=elastic" \
-           --env "SINGLE_TEST=${SINGLE_TEST}" \
-           --env "STACK_VERSION=${STACK_VERSION}" \
-           --env "ELASTIC_CLIENT_APIVERSIONING=${ELASTIC_API_VERSIONING:-false}" \
-           --volume $repo:/usr/src/app \
-           --name elasticsearch-ruby \
-           --rm \
-           elastic/elasticsearch-ruby \
-           bundle exec rake elasticsearch:download_artifacts test:security
+  docker run \
+         -u "$(id -u)" \
+         --network="${network_name}" \
+         --env "TEST_ES_SERVER=${elasticsearch_url}" \
+         --env "ELASTIC_PASSWORD=${elastic_password}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
+         --env "ELASTIC_USER=elastic" \
+         --env "SINGLE_TEST=${SINGLE_TEST}" \
+         --env "STACK_VERSION=${STACK_VERSION}" \
+         --env "ELASTIC_CLIENT_APIVERSIONING=${ELASTIC_API_VERSIONING:-false}" \
+         --volume $repo:/usr/src/app \
+         --name elasticsearch-ruby \
+         --rm \
+         elastic/elasticsearch-ruby \
+         bundle exec rake elasticsearch:download_artifacts test:security
 fi
