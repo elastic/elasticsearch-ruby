@@ -33,6 +33,8 @@ namespace :unified_release do
 
     build_gems(args[:output_dir])
     create_zip_file(args[:output_dir])
+    sh "chmod a+r #{CURRENT_PATH.join(args[:output_dir])}/* && " \
+       "chmod a+w #{CURRENT_PATH.join(args[:output_dir])}"
   end
 
   def build_gems(output_dir)
@@ -47,9 +49,7 @@ namespace :unified_release do
       puts "Building #{gem} v#{@version} to #{output_dir}"
       sh "cd #{CURRENT_PATH.join(gem)} " \
          "&& gem build --silent -o #{gem}-#{@version}.gem && " \
-         "mv *.gem #{CURRENT_PATH.join(output_dir)} && " \
-         "chmod a+r #{CURRENT_PATH.join(output_dir)}/* && " \
-         "chmod a+w #{CURRENT_PATH.join(output_dir)}"
+         "mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
   end
