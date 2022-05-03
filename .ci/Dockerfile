@@ -1,4 +1,4 @@
-ARG RUBY_TEST_VERSION=2.6
+ARG RUBY_TEST_VERSION=2.7
 FROM ruby:${RUBY_TEST_VERSION}
 
 # Default UID/GID to 1000
@@ -30,6 +30,7 @@ WORKDIR /usr/src/app
 
 USER ${BUILDER_USER}:${BUILDER_GROUP}
 
+RUN gem update --quiet --silent
 RUN bundle install \
     && bundle exec rake bundle:clean \
     && rake bundle:install
