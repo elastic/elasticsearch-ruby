@@ -28,11 +28,16 @@ module Elasticsearch
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Time] :timeout Controls the amount of time to wait for inference results.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The docs to apply inference on (*Required*)
+        # @option arguments [Hash] :body The docs to apply inference on and inference configuration overrides (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model-deployment.html
+        # *Deprecation notice*:
+        # /_ml/trained_models/{model_id}/deployment/_infer is deprecated. Use /_ml/trained_models/{model_id}/_infer instead
+        # Deprecated since version 8.3.0
         #
-        def infer_trained_model_deployment(arguments = {})
+        #
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html
+        #
+        def infer_trained_model(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
@@ -44,7 +49,9 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_infer"
+          path   = if _model_id
+                     "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_infer"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

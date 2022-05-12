@@ -24,6 +24,7 @@ module Elasticsearch
         # @option arguments [String] :node_ids A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_names.
         # @option arguments [String] :node_names A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_ids.
         # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Timeout for submitting request to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html
