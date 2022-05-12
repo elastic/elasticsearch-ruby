@@ -130,3 +130,8 @@ task :release do
     puts '-' * 80
   end
 end
+
+desc 'Generate API code'
+task :generate do
+  sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} && bundle exec thor code:generate"
+end
