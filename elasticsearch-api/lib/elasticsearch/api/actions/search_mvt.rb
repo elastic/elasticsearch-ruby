@@ -35,6 +35,7 @@ module Elasticsearch
       # @option arguments [String] :grid_type Determines the geometry type for features in the aggs layer. (options: grid, point, centroid)
       # @option arguments [Integer] :size Maximum number of features to return in the hits layer. Accepts 0-10000.
       # @option arguments [Boolean|long] :track_total_hits Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+      # @option arguments [Boolean] :with_labels If true, the hits and aggs layers will contain additional point features with suggested label positions for the original features.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Search request body.
       #

@@ -22,6 +22,8 @@ module Elasticsearch
         # Previews a datafeed.
         #
         # @option arguments [String] :datafeed_id The ID of the datafeed to preview
+        # @option arguments [String] :start The start time from where the datafeed preview should begin
+        # @option arguments [String] :end The end time when the datafeed preview should stop
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
         #
@@ -46,7 +48,7 @@ module Elasticsearch
                    else
                      "_ml/datafeeds/_preview"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)
