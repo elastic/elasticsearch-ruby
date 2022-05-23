@@ -27,6 +27,7 @@ jobs:
     - uses: elastic/elastic-github-actions/elasticsearch@master
       with:
         stack-version: 8.1-SNAPSHOT
+        security-enabled: false
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
