@@ -1,6 +1,24 @@
 [[release_notes_82]]
 === 8.2 Release notes
 
+[discrete]
+[[release_notes_822]]
+=== 8.2.2 Release notes
+
+- Updates dependency on `elastic-transport` to `~> 8.0`
+
+
+[discrete]
+[[release_notes_821]]
+=== 8.2.1 Release notes
+
+No release, no changes on the client.
+
+[discrete]
+[[release_notes_820]]
+=== 8.2.0 Release notes
+
+
 - Tested versions of Ruby for 8.2.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
 
 [discrete]
