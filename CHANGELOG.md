@@ -1,5 +1,13 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.2.2 Release notes
+
+- Updates dependency on `elastic-transport` to `~> 8.0`
+
+## 8.2.1 Release notes
+
+No release, no changes on the client.
+
 ## 8.2.0
 
 - Tested versions of Ruby for 8.2.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
