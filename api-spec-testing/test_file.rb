@@ -69,18 +69,28 @@ module Elasticsearch
 
       def skip_version?(client, skip_definition)
         return true if skip_definition['version'] == 'all'
-
-        range_partition = /\s*-\s*/
         return unless (versions = skip_definition['version'])
 
-        low, high = __parse_versions(versions.partition(range_partition))
-        range = low..high
         begin
           server_version = client.info['version']['number']
         rescue
           warn('Could not determine Elasticsearch version when checking if test should be skipped.')
         end
-        range.cover?(Gem::Version.new(server_version))
+
+        range_partition = /\s*-\s*/
+
+        if versions.include?(',')
+          # == " - 7.17.3, 8.0.0 - 8.2.99"
+          versions.split(',').each do |version_range|
+            low, high = __parse_versions(version_range.partition(range_partition))
+            range = low..high
+            return true if range.cover?(Gem::Version.new(server_version))
+          end
+        else
+          low, high = __parse_versions(versions.partition(range_partition))
+          range = low..high
+          range.cover?(Gem::Version.new(server_version))
+        end
       end
 
       def __parse_versions(versions)
