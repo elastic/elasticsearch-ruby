@@ -47,6 +47,7 @@ def admin_client
                     end
 end
 
+import 'rake_tasks/automations.rake'
 import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'rake_tasks/doc_generator.rake'
