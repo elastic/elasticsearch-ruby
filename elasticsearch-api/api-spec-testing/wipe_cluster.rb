@@ -187,7 +187,7 @@ module Elasticsearch
             break if repositories.empty?
 
             repositories.each_key do |repository|
-              if repositories[repository]['type'] == 'fs'
+              if ['fs', 'source'].include? repositories[repository]['type']
                 response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
                 response['snapshots'].each do |snapshot|
                   if snapshot['state'] != 'SUCCESS'
