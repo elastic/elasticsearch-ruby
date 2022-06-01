@@ -25,3 +25,11 @@
 -
   :file:        'tsdb/80_index_resize.yml'
   :description: 'clone'
+
+-
+  :file: 'cluster.desired_nodes/10_basic.yml'
+  :description: 'Test update desired nodes is idempotent'
+-
+  :file: 'cluster.desired_nodes/10_basic.yml'
+  :description: 'Test update desired nodes is idempotent with different order'
+  
