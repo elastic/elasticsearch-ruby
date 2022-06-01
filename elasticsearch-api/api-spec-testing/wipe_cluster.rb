@@ -74,12 +74,12 @@ module Elasticsearch
             clear_ml_jobs(client)
             clear_datafeeds(client)
             delete_data_frame_analytics(client)
-            delete_filters(client)
+            clear_ml_filters(client)
+            delete_trained_models(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
-          # clear_ml_filters(client)
           # clear_tasks(client)
           # clear_transforms(client)
 
@@ -383,7 +383,7 @@ module Elasticsearch
 
         def delete_all_node_shutdown_metadata(client)
           nodes = client.shutdown.get_node
-          return unless nodes
+          return unless nodes['nodes']
 
           nodes['nodes'].each do |node|
             client.shutdown.delete_node(node['node_id'])
@@ -392,16 +392,20 @@ module Elasticsearch
 
         def delete_data_frame_analytics(client)
           dfs = client.ml.get_data_frame_analytics
+          return unless dfs['data_frame_analytics']
 
           dfs['data_frame_analytics'].each do |df|
             client.ml.delete_data_frame_analytics(id: df['id'], force: true)
           end
         end
 
-        def delete_filters(client)
-          filters = client.ml.get_filters
-          filters['filters'].each do |filter|
-            client.ml.delete_filter(filter_id: filter['filter_id'])
+        def delete_trained_models(client)
+          models = client.ml.get_trained_models
+          return unless models['trained_model_configs']
+
+          models['trained_model_configs'].each do |model|
+            response = client.ml.delete_trained_model(model_id: model['model_id'], ignore: 400)
+            puts response
           end
         end
       end
