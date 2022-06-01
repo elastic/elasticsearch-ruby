@@ -73,6 +73,7 @@ module Elasticsearch
           if platinum?
             clear_ml_jobs(client)
             clear_datafeeds(client)
+            delete_data_frame_analytics(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
@@ -385,6 +386,14 @@ module Elasticsearch
 
           nodes['nodes'].each do |node|
             client.shutdown.delete_node(node['node_id'])
+          end
+        end
+
+        def delete_data_frame_analytics(client)
+          dfs = client.ml.get_data_frame_analytics
+
+          dfs['data_frame_analytics'].each do |df|
+            client.ml.delete_data_frame_analytics(id: df['id'], force: true)
           end
         end
       end
