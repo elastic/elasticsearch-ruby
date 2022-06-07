@@ -59,7 +59,8 @@ require 'pathname'
 CURRENT_PATH = Pathname(File.expand_path(__dir__))
 SUBPROJECTS = [
   'elasticsearch',
-  'elasticsearch-api'
+  'elasticsearch-api',
+  'elasticsearch-api/utils'
 ].freeze
 
 RELEASE_TOGETHER = [
