@@ -17,12 +17,10 @@
 
 source 'https://rubygems.org'
 
-gem 'activesupport'
 gem 'byebug'
 gem 'coderay'
 gem 'json'
 gem 'multi_json'
 gem 'pry'
-gem 'rest-client'
 gem 'rubocop'
 gem 'thor'
