@@ -38,20 +38,9 @@ echo -e "\033[1m>>>>> Run [elastic/elasticsearch-ruby container] >>>>>>>>>>>>>>>
 
 repo=`pwd`
 
-if [[ $STACK_VERSION =~ "^8\." ]]; then
-    environment=($(cat <<-EOF
-    --env ELASTIC_CLIENT_APIVERSIONING=true
-    --env ELASTIC_PASSWORD=${elastic_password}
-    --env ELASTIC_USER=elastic
-    --env QUIET=false
-    --env STACK_VERSION=${STACK_VERSION}
-EOF
-))
-
-fi
-
 # run the client tests
 if [[ $STACK_VERSION =~ (^8\.) ]]; then
+    echo -e "\033[1m RUNNING COMPATIBILITY MODE \033[0m"
     docker run \
          -u "$(id -u)" \
          --network="${network_name}" \
