@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-allocation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-allocation.html
         #
         def allocation(arguments = {})
           arguments = arguments.clone

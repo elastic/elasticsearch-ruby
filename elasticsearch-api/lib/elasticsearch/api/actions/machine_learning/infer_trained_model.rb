@@ -35,7 +35,7 @@ module Elasticsearch
         # Deprecated since version 8.3.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/infer-trained-model.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/infer-trained-model.html
         #
         def infer_trained_model(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]

@@ -26,7 +26,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of filters to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/ml-get-filter.html
         #
         def get_filters(arguments = {})
           arguments = arguments.clone

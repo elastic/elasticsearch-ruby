@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [List] :application A comma-separated list of application names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-privilege-cache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/security-api-clear-privilege-cache.html
         #
         def clear_cached_privileges(arguments = {})
           raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]

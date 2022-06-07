@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-thread-pool.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
           arguments = arguments.clone

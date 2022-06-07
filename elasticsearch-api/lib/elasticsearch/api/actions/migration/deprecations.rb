@@ -24,7 +24,7 @@ module Elasticsearch
         # @option arguments [String] :index Index pattern
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/migration-api-deprecation.html
         #
         def deprecations(arguments = {})
           arguments = arguments.clone

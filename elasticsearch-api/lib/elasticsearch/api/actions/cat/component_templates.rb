@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/cat-compoentn-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/cat-compoentn-templates.html
         #
         def component_templates(arguments = {})
           arguments = arguments.clone
