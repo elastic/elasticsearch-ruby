@@ -45,7 +45,7 @@ environment=($(cat <<-END
 END
 ))
 
-if [[ "$STACK_VERSION" == "8.0.0-SNAPSHOT" ]]; then
+if [[ $STACK_VERSION =~ (^8\.) ]]; then
     environment+=($(cat <<-EOF
     --env ELASTIC_PASSWORD=$elastic_password
     --env node.roles=data,data_cold,data_content,data_frozen,data_hot,data_warm,ingest,master,ml,remote_cluster_client,transform
