@@ -57,6 +57,15 @@ namespace :unified_release do
        "zip -r #{@zip_filename}.zip * " \
   end
 
+  desc 'Generate API code'
+  task :codegen do
+    version = YAML.load_file(File.expand_path(__dir__ + '/../.ci/test-matrix.yml'))['STACK_VERSION'].first
+    Rake::Task['elasticsearch:download_artifacts'].invoke(version)
+    sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} \
+          && BUNDLE_GEMFILE=`pwd`/Gemfile \
+          && bundle exec thor code:generate"
+  end
+
   desc <<-DESC
   Update Rubygems versions in version.rb and *.gemspec files
 

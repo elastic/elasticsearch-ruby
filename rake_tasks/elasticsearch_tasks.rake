@@ -82,10 +82,10 @@ namespace :elasticsearch do
   end
 
   desc 'Download artifacts (tests and REST spec) for currently running cluster'
-  task :download_artifacts do
+  task :download_artifacts, :version do |_, args|
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
-    unless (version_number = ENV['STACK_VERSION'])
+    unless (version_number = args[:version] || ENV['STACK_VERSION'])
       # Get version number and build hash of running cluster:
       version_number = cluster_info['number']
       build_hash = cluster_info['build_hash']
