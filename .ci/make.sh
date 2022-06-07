@@ -37,7 +37,7 @@ output_folder=".ci/output"
 codegen_folder=".ci/output"
 OUTPUT_DIR="$repo/${output_folder}"
 REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
-RUBY_TEST_VERSION=${RUBY_TEST_VERSION-2.7}
+RUBY_TEST_VERSION=${RUBY_TEST_VERSION-3.1}
 WORKFLOW=${WORKFLOW-staging}
 mkdir -p "$OUTPUT_DIR"
 
