@@ -19,8 +19,6 @@
 
 require 'thor'
 require 'pathname'
-require 'active_support/core_ext/hash/deep_merge'
-require 'active_support/inflector'
 require 'multi_json'
 require 'coderay'
 require 'pry'
