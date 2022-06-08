@@ -76,6 +76,7 @@ module Elasticsearch
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
+          wipe_calendars(client)
         end
 
         def ensure_no_initializing_shards(client)
@@ -378,6 +379,13 @@ module Elasticsearch
 
           nodes['nodes'].each do |node|
             client.shutdown.delete_node(node['node_id'])
+          end
+        end
+
+        def wipe_calendars(client)
+          calendars = client.ml.get_calendars(calendar_id: '_all')['calendars']
+          calendars.each do |calendar|
+            client.ml.delete_calendar(calendar_id: calendar['calendar_id'])
           end
         end
       end
