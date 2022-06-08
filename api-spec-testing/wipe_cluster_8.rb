@@ -74,6 +74,7 @@ module Elasticsearch
             clear_datafeeds(client)
             delete_data_frame_analytics(client)
             delete_filters(client)
+            clear_transforms(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
@@ -364,7 +365,7 @@ module Elasticsearch
 
         def clear_transforms(client)
           client.transform.get_transform(transform_id: '*')['transforms'].each do |transform|
-            client.transform.delete_transform(transform_id: transform[:id])
+            client.transform.delete_transform(transform_id: transform['id'])
           end
         end
 
@@ -377,7 +378,7 @@ module Elasticsearch
 
         def delete_all_node_shutdown_metadata(client)
           nodes = client.shutdown.get_node
-          return unless nodes
+          return unless nodes['nodes']
 
           nodes['nodes'].each do |node|
             client.shutdown.delete_node(node['node_id'])
@@ -393,6 +394,7 @@ module Elasticsearch
 
         def delete_data_frame_analytics(client)
           dfs = client.ml.get_data_frame_analytics
+          return unless dfs['data_frame_analytics']
 
           dfs['data_frame_analytics'].each do |df|
             client.ml.delete_data_frame_analytics(id: df['id'], force: true)
