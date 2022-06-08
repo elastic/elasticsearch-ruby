@@ -17,7 +17,7 @@
 
 source 'https://rubygems.org'
 
-gem 'byebug'
+gem 'byebug' unless defined?(JRUBY_VERSION)
 gem 'coderay'
 gem 'json'
 gem 'multi_json'
