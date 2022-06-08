@@ -19,14 +19,18 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Consumes a SAML LogoutRequest
+        # Determines whether the users associated with the specified profile IDs have all the requested privileges.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The LogoutRequest message (*Required*)
+        # @option arguments [Hash] :body The privileges to check and the list of profile IDs (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/security-api-saml-invalidate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/security-api-has-privileges-user-profile.html
         #
-        def saml_invalidate(arguments = {})
+        def has_privileges_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
@@ -35,7 +39,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/saml/invalidate"
+          path   = "_security/profile/_has_privileges"
           params = {}
 
           Elasticsearch::API::Response.new(
