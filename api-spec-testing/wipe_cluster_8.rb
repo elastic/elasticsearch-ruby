@@ -73,6 +73,7 @@ module Elasticsearch
             clear_ml_jobs(client)
             clear_datafeeds(client)
             delete_data_frame_analytics(client)
+            delete_filters(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
@@ -395,6 +396,13 @@ module Elasticsearch
 
           dfs['data_frame_analytics'].each do |df|
             client.ml.delete_data_frame_analytics(id: df['id'], force: true)
+          end
+        end
+
+        def delete_filters(client)
+          filters = client.ml.get_filters
+          filters['filters'].each do |filter|
+            client.ml.delete_filter(filter_id: filter['filter_id'])
           end
         end
       end
