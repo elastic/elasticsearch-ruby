@@ -72,6 +72,7 @@ module Elasticsearch
           if platinum?
             clear_ml_jobs(client)
             clear_datafeeds(client)
+            delete_data_frame_analytics(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
@@ -386,6 +387,14 @@ module Elasticsearch
           calendars = client.ml.get_calendars(calendar_id: '_all')['calendars']
           calendars.each do |calendar|
             client.ml.delete_calendar(calendar_id: calendar['calendar_id'])
+          end
+        end
+
+        def delete_data_frame_analytics(client)
+          dfs = client.ml.get_data_frame_analytics
+
+          dfs['data_frame_analytics'].each do |df|
+            client.ml.delete_data_frame_analytics(id: df['id'], force: true)
           end
         end
       end
