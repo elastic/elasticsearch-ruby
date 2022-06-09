@@ -25,7 +25,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to preview
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/preview-dfanalytics.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.3/preview-dfanalytics.html
         #
         def preview_data_frame_analytics(arguments = {})
           arguments = arguments.clone
