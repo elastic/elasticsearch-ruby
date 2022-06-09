@@ -31,7 +31,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
         arguments = arguments.clone

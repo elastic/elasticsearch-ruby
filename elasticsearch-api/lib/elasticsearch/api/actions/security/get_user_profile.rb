@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/security-api-get-user-profile.html
         #
         def get_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'uid' missing" unless arguments[:uid]

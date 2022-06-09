@@ -23,7 +23,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/watcher-api-stop.html
         #
         def stop(arguments = {})
           arguments = arguments.clone

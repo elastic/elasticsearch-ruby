@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-transforms.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.3/cat-transforms.html
         #
         def transforms(arguments = {})
           arguments = arguments.clone
