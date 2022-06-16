@@ -404,8 +404,7 @@ module Elasticsearch
           return unless models['trained_model_configs']
 
           models['trained_model_configs'].each do |model|
-            response = client.ml.delete_trained_model(model_id: model['model_id'], ignore: 400)
-            puts response
+            client.ml.delete_trained_model(model_id: model['model_id'], ignore: 400)
           end
         end
       end
