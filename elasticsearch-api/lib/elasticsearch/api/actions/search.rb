@@ -14,7 +14,10 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
+#
+# Auto generated from build hash 312ddd6b6b41ce0dd516b7b3a197792ea3c77cf9
+# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+#
 module Elasticsearch
   module API
     module Actions
@@ -30,6 +33,7 @@ module Elasticsearch
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return as part of a hit
       # @option arguments [List] :docvalue_fields A comma-separated list of fields to return as the docvalue representation of a field for each hit
       # @option arguments [Number] :from Starting offset (default: 0)
+      # @option arguments [Boolean] :force_synthetic_source Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled
       # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
