@@ -76,6 +76,7 @@ module Elasticsearch
             delete_data_frame_analytics(client)
             clear_ml_filters(client)
             delete_trained_models(client)
+            clear_machine_learning_indices(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
