@@ -47,6 +47,7 @@ module Elasticsearch
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
 
       def generate
+        @build_hash = File.read(File.expand_path('../../../tmp/rest-api-spec/build_hash',__dir__))
         self.class.source_root File.expand_path(__dir__)
         generate_source
         # -- Tree output
