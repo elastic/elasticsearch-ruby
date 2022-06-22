@@ -14,7 +14,10 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
+#
+# Auto generated from build hash 312ddd6b6b41ce0dd516b7b3a197792ea3c77cf9
+# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+#
 module Elasticsearch
   module API
     module Security
