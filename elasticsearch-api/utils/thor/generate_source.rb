@@ -42,8 +42,6 @@ module Elasticsearch
       include Thor::Actions
       include EndpointSpecifics
 
-      __root = Pathname(File.expand_path('../../..', __FILE__))
-
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
