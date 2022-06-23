@@ -132,7 +132,7 @@ automatically captures client requests if you are using the agent on your code.
 If you're using `elastic-apm` v3.8.0 or up, you can set 
 `capture_elasticsearch_queries` to `true` in `config/elastic_apm.yml` to also 
 capture the body from requests in {es}. Refer to 
-https://github.com/elastic/elasticsearch-ruby/tree/master/docs/examples/apm[this example].
+https://github.com/elastic/elasticsearch-ruby/tree/main/docs/examples/apm[this example].
 
 
 [discrete]
@@ -363,7 +363,7 @@ implementing the required contract, and passing it to the client as the
 ==== Exception Handling
 
 The library defines a 
-https://github.com/elastic/elasticsearch-ruby/blob/master/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb[number of exception classes] 
+https://github.com/elastic/elasticsearch-ruby/blob/main/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb[number of exception classes] 
 for various client and server errors, as well as unsuccessful HTTP responses, 
 making it possible to rescue specific exceptions with desired granularity.
 
