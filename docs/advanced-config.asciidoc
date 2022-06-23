@@ -319,18 +319,14 @@ Elasticsearch::Client.new(
 [[connection-selector]]
 ==== Connection Selector
 
-By default, the client rotates the connections in a round-robin fashion, using 
-the `Elasticsearch::Transport::Transport::Connections::Selector::RoundRobin` 
-strategy.
+By default, the client rotates the connections in a round-robin fashion, using the `Elastic::Transport::Transport::Connections::Selector::RoundRobin` strategy.
 
-You can implement your own strategy to customize the behaviour. For example, 
-let's have a "rack aware" strategy, which prefers the nodes with a specific 
-attribute. The strategy uses the other nodes, only when these are unavailable:
+You can implement your own strategy to customize the behaviour. For example, let's have a "rack aware" strategy, which prefers the nodes with a specific attribute. The strategy uses the other nodes, only when these are unavailable:
 
 [source,ruby]
 ------------------------------------
 class RackIdSelector
-  include Elasticsearch::Transport::Transport::Connections::Selector::Base
+  include Elastic::Transport::Transport::Connections::Selector::Base
 
   def select(options={})
     connections.select do |c|
@@ -348,14 +344,9 @@ Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_cl
 [[serializer-implementations]]
 ==== Serializer Implementations
 
-By default, the https://rubygems.org/gems/multi_json[MultiJSON] library is used 
-as the serializer implementation, and it picks up the "right" adapter based on 
-gems available.
+By default, the https://rubygems.org/gems/multi_json[MultiJSON] library is used as the serializer implementation, and it picks up the "right" adapter based on gems available.
 
-The serialization component is pluggable, though, so you can write your own by 
-including the `Elasticsearch::Transport::Transport::Serializer::Base` module, 
-implementing the required contract, and passing it to the client as the 
-`serializer_class` or `serializer` parameter.
+The serialization component is pluggable, though, so you can write your own by including the `Elastic::Transport::Transport::Serializer::Base` module, implementing the required contract, and passing it to the client as the `serializer_class` or `serializer` parameter.
 
 
 [discrete]
