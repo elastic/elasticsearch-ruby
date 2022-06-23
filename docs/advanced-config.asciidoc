@@ -362,19 +362,13 @@ implementing the required contract, and passing it to the client as the
 [[exception-handling]]
 ==== Exception Handling
 
-The library defines a 
-https://github.com/elastic/elasticsearch-ruby/blob/main/elasticsearch-transport/lib/elasticsearch/transport/transport/errors.rb[number of exception classes] 
-for various client and server errors, as well as unsuccessful HTTP responses, 
-making it possible to rescue specific exceptions with desired granularity.
+The library defines a
+https://github.com/elastic/elastic-transport-ruby/blob/main/lib/elastic/transport/transport/errors.rb[number of exception classes] for various client and server errors, as well as unsuccessful HTTP responses, making it possible to rescue specific exceptions with desired granularity.
 
-The highest-level exception is `Elasticsearch::Transport::Transport::Error` and 
-is raised for any generic client or server errors.
+The highest-level exception is `Elastic::Transport::Transport::Error` and is raised for any generic client or server errors.
 
-`Elasticsearch::Transport::Transport::ServerError` is raised for server errors 
-only.
+`Elastic::Transport::Transport::ServerError` is raised for server errors only.
 
-As an example for response-specific errors, a 404 response status raises an 
-`Elasticsearch::Transport::Transport::Errors::NotFound` exception.
+As an example for response-specific errors, a 404 response status raises an `Elastic::Transport::Transport::Errors::NotFound` exception.
 
-Finally, `Elasticsearch::Transport::Transport::SnifferTimeoutError` is raised 
-when connection reloading ("sniffing") times out.
+Finally, `Elastic::Transport::Transport::SnifferTimeoutError` is raised when connection reloading ("sniffing") times out.
