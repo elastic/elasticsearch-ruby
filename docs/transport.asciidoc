@@ -1,24 +1,13 @@
 [[transport]]
 === Transport
 
-The `elasticsearch-transport` library provides a low-level Ruby client for 
-connecting to an {es} cluster.
+The `elastic-transport` library provides a low-level Ruby client for connecting to an {es} cluster. It currently powers the https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html[Elasticsearch Ruby] and the https://www.elastic.co/guide/en/enterprise-search-clients/ruby/current/index.html[Enterprise Search Ruby] clients.
 
-It handles connecting to multiple nodes in the cluster, rotating across 
-connections, logging and tracing requests and responses, maintaining failed 
-connections, discovering nodes in the cluster, and provides an abstraction for 
-data serialization and transport.
+When available, it handles connecting to multiple nodes in the cluster, rotating across connections, logging and tracing requests and responses, maintaining failed connections, discovering nodes in the cluster, and provides an abstraction for data serialization and transport.
 
-It does not handle calling the {es} API.
+It does not handle calling the {es} or Enterprise Search APIs.
 
-The library is compatible with Ruby 1.9 or higher and with all versions of {es} 
-since 0.90.
-
-For optimal performance, use a HTTP library which supports persistent 
-("keep-alive") connections, such as https://github.com/toland/patron[patron] or 
-https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library 
-(require 'patron') in your code, and it will be automatically used.
-
+For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections, such as https://github.com/toland/patron[patron] or https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library (require 'patron') in your code, and it will be automatically used.
 
 [discrete]
 [[transport-install]]
@@ -27,21 +16,21 @@ https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library
 Install the package from https://rubygems.org/[Rubygems]:
 
 ```
-gem install elasticsearch-transport
+gem install elastic-transport
 ```
 
 To use an unreleased version, either add it to your `Gemfile` for 
 http://gembundler.com/[Bundler]:
 
 ```
-gem 'elasticsearch-transport', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
+gem 'elastic-transport', git: 'git@github.com:elastic/elastic-transport-ruby.git'
 ```
 
 or install it from a source code checkout:
 
 ```
-git clone https://github.com/elasticsearch/elasticsearch-ruby.git
-cd elasticsearch-ruby/elasticsearch-transport
+git clone https://github.com/elastic/elastic-transport-ruby.git
+cd elastic-transport
 bundle install
 rake install
 ```
@@ -51,32 +40,28 @@ rake install
 [[transport-example-usage]]
 ==== Example usage
 
-In the simplest form, connect to {es} running on http://localhost:9200 without 
-any configuration:
+In the simplest form, connect to {es} running on http://localhost:9200 without any configuration:
 
-```ruby
-require 'elasticsearch/transport'
+[source,rb]
+----------------------------
+require 'elastic/transport'
 
-client = Elasticsearch::Client.new
-response = client.perform_request 'GET', '_cluster/health'
-# => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
-```
+client = Elastic::Transport::Client.new
+response = client.perform_request('GET', '_cluster/health')
+# => #<Elastic::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
+----------------------------
 
-Full documentation is available at 
-http://rubydoc.info/gems/elasticsearch-transport.
+Full documentation is available at http://rubydoc.info/gems/elastic-transport.
 
 [discrete]
 [[transport-implementations]]
 ==== Transport implementations
 
-By default, the client uses the https://rubygems.org/gems/faraday[Faraday] HTTP 
-library as a transport implementation.
+By default, the client uses the https://rubygems.org/gems/faraday[Faraday] HTTP library as a transport implementation.
 
-It auto-detects and uses an adapter for Faraday based on gems loaded in your 
-code, preferring HTTP clients with support for persistent connections.
+It auto-detects and uses an adapter for Faraday based on gems loaded in your code, preferring HTTP clients with support for persistent connections.
 
-To use the https://github.com/toland/patron[Patron] HTTP, for example, require 
-it:
+To use the https://github.com/toland/patron[Patron] HTTP, for example, require it:
 
 ```
 require 'patron'
@@ -85,7 +70,7 @@ require 'patron'
 Then, create a new client, and the Patron gem will be used as the "driver":
 
 ```ruby
-client = Elasticsearch::Client.new
+client = Elastic::Transport::Client.new
 
 client.transport.connections.first.connection.builder.adapter
 # => Faraday::Adapter::Patron
@@ -105,23 +90,25 @@ end
 To use a specific adapter for Faraday, pass it as the `adapter` argument:
 
 ```ruby
-client = Elasticsearch::Client.new adapter: :net_http_persistent
+client = Elastic::Client.new(adapter: :net_http_persistent)
 
 client.transport.connections.first.connection.builder.handlers
 # => [Faraday::Adapter::NetHttpPersistent]
 ```
 
-To pass options to the 
-https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb[`Faraday::Connection`] 
-constructor, use the `transport_options` key:
+When using the Elasticsearch or Enterprise Search clients, you can pass the `adapter` parameter when initializing the clients.
+
+To pass options to the https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb[`Faraday::Connection`] constructor, use the `transport_options` key:
 
 ```ruby
-client = Elasticsearch::Client.new transport_options: {
-  request: { open_timeout: 1 },
-  headers: { user_agent:   'MyApp' },
-  params:  { :format => 'yaml' },
-  ssl:     { verify: false }
-}
+client = Elastic::Client.new(
+  transport_options: {
+    request: { open_timeout: 1 },
+    headers: { user_agent:   'MyApp' },
+    params:  { :format => 'yaml' },
+    ssl:     { verify: false }
+  }
+)
 ```
 
 To configure the Faraday instance directly, use a block:
@@ -129,17 +116,15 @@ To configure the Faraday instance directly, use a block:
 ```ruby
 require 'patron'
 
-client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
+client = Elastic::Client.new(host: 'localhost', port: '9200') do |f|
   f.response :logger
   f.adapter  :patron
 end
 ```
 
-You can use any standard Faraday middleware and plugins in the configuration 
-block.
+You can use any standard Faraday middleware and plugins in the configuration block.
 
-You can also initialize the transport class yourself, and pass it to the client 
-constructor as the `transport` argument:
+You can also initialize the transport class yourself, and pass it to the client constructor as the `transport` argument. The Elasticsearch and Enterprise Search clients accept `:transport` as parameter when initializing a client. So you can pass in a transport you've initialized with the following options:
 
 ```ruby
 require 'patron'
@@ -149,17 +134,17 @@ transport_configuration = lambda do |f|
   f.adapter  :patron
 end
 
-transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+transport = Elastic::Transport::Transport::HTTP::Faraday.new(
   hosts: [ { host: 'localhost', port: '9200' } ],
   &transport_configuration
+)
 
 # Pass the transport to the client
 #
-client = Elasticsearch::Client.new transport: transport
+client = Elastic::Client.new(transport: transport)
 ```
 
-Instead of passing the transport to the constructor, you can inject it at run 
-time:
+Instead of passing the transport to the constructor, you can inject it at run time:
 
 ```ruby
 # Set up the transport
@@ -169,85 +154,69 @@ faraday_configuration = lambda do |f|
   f.adapter :excon
 end
 
-faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
-  hosts: [ { host: 'my-protected-host',
-             port: '443',
-             user: 'USERNAME',
-             password: 'PASSWORD',
-             scheme: 'https'
-          }],
+faraday_client = Elastic::Transport::Transport::HTTP::Faraday.new(
+  hosts: [
+    {
+      host: 'my-protected-host',
+      port: '443',
+      user: 'USERNAME',
+      password: 'PASSWORD',
+      scheme: 'https'
+    }
+  ],
   &faraday_configuration
+)
 
 # Create a default client
 #
-client = Elasticsearch::Client.new
+client = Elastic::Client.new
 
 # Inject the transport to the client
 #
 client.transport = faraday_client
 ```
 
-You can also use a bundled https://rubygems.org/gems/curb[Curb] based transport 
-implementation:
+You can also use a bundled https://rubygems.org/gems/curb[Curb] based transport implementation:
 
 ```ruby
 require 'curb'
-require 'elasticsearch/transport/transport/http/curb'
+require 'elastic/transport/transport/http/curb'
 
-client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+client = Elastic::Client.new(transport_class: Elastic::Transport::Transport::HTTP::Curb)
 
 client.transport.connections.first.connection
 # => #<Curl::Easy http://localhost:9200/>
 ```
 
-It's possible to customize the Curb instance by passing a block to the 
-constructor as well (in this case, as an inline block):
+It's possible to customize the Curb instance by passing a block to the constructor as well (in this case, as an inline block):
 
 ```ruby
-transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+transport = Elastic::Transport::Transport::HTTP::Curb.new(
   hosts: [ { host: 'localhost', port: '9200' } ],
   & lambda { |c| c.verbose = true }
+)
 
-client = Elasticsearch::Client.new transport: transport
+client = Elastic::Client.new(transport: transport)
 ```
 
-You can write your own transport implementation by including the 
-{Elasticsearch::Transport::Transport::Base} module, implementing the required 
-contract, and passing it to the client as the `transport_class` parameter – or 
-by injecting it directly.
+You can write your own transport implementation by including the {Elastic::Transport::Transport::Base} module, implementing the required contract, and passing it to the client as the `transport_class` parameter – or by injecting it directly.
 
 [discrete]
 [[transport-architecture]]
 ==== Transport architecture
 
-* `Elasticsearch::Transport::Client` is composed of 
-  `Elasticsearch::Transport::Transport`.
+* `Elastic::Transport::Client` is composed of `Elastic::Transport::Transport`.
 
-* `Elasticsearch::Transport::Transport` is composed of 
-  `Elasticsearch::Transport::Transport::Connections`, and an instance of logger, 
-  tracer, serializer and sniffer.
+* `Elastic::Transport::Transport` is composed of `Elastic::Transport::Transport::Connections`, and an instance of logger, tracer, serializer and sniffer.
 
-* Logger and tracer can be any object conforming to Ruby logging interface, for 
-  example, an instance of 
-  https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html[`Logger`], 
-  https://rubygems.org/gems/log4r[log4r], 
-  https://github.com/TwP/logging/[logging], and so on.
+* Logger and tracer can be any object conforming to Ruby logging interface, for example, an instance of https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html[`Logger`], https://rubygems.org/gems/log4r[log4r], https://github.com/TwP/logging/[logging], and so on.
 
-* The `Elasticsearch::Transport::Transport::Serializer::Base` implementations 
-  handle converting data for {es} (for example, to JSON). You can implement your 
-  own serializer.
+* The `Elastic::Transport::Transport::Serializer::Base` implementations handle converting data for {es} (for example, to JSON). You can implement your own serializer.
 
-* `Elasticsearch::Transport::Transport::Sniffer` allows to discover nodes in the 
-  cluster and use them as connections.
+* `Elastic::Transport::Transport::Sniffer` allows to discover nodes in the cluster and use them as connections.
 
-* `Elasticsearch::Transport::Transport::Connections::Collection` is composed of 
-  `Elasticsearch::Transport::Transport::Connections::Connection` instances and a 
-  selector instance.
+* `Elastic::Transport::Transport::Connections::Collection` is composed of `Elastic::Transport::Transport::Connections::Connection` instances and a selector instance.
 
-* `Elasticsearch::Transport::Transport::Connections::Connection` contains the 
-  connection attributes such as hostname and port, as well as the concrete 
-  persistent "session" connected to a specific node.
+* `Elastic::Transport::Transport::Connections::Connection` contains the connection attributes such as hostname and port, as well as the concrete persistent "session" connected to a specific node.
 
-* The `Elasticsearch::Transport::Transport::Connections::Selector::Base` 
-  implementations allow to choose connections from the pool, for example, in a 
-  round-robin or random fashion. You can implement your own selector strategy.
+* The `Elastic::Transport::Transport::Connections::Selector::Base` implementations allow to choose connections from the pool, for example, in a round-robin or random fashion. You can implement your own selector strategy.
