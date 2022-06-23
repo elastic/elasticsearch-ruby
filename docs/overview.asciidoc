@@ -1,9 +1,7 @@
 [[ruby_client]]
 == Overview
 
-The `elasticsearch` http://rubygems.org/gems/elasticsearch[Rubygem] provides a 
-low-level client for communicating with an {es} cluster, fully compatible with 
-other official clients.
+The `elasticsearch` http://rubygems.org/gems/elasticsearch[Rubygem] provides a low-level client for communicating with an {es} cluster, fully compatible with other official clients.
 
 More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Github] and http://rubydoc.info/gems/elasticsearch[RubyDoc].
 
@@ -26,18 +24,14 @@ More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Gi
 
 The `elasticsearch` gem combines two separate Rubygems:
 
-* https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-transport[`elasticsearch-transport`]
-provides an HTTP Ruby client for connecting to the {es} cluster,
+* https://github.com/elastic/elastic-transport-ruby/[`elastic-transport`]
+provides an HTTP Ruby client for connecting to the {es} cluster.
 
 * https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api[`elasticsearch-api`]
 provides a Ruby API for the {es} RESTful API.
 
-Please consult their respective documentation for configuration options and 
-technical details.
+Please consult their respective documentation for configuration options and technical details.
 
-Notably, the documentation and comprehensive examples for all the API methods 
-are contained in the source, and available online at 
-http://rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions[Rubydoc].
+Notably, the documentation and comprehensive examples for all the API methods are contained in the source, and available online at http://rubydoc.info/gems/elasticsearch-api/Elasticsearch/API/Actions[Rubydoc].
 
-Keep in mind, that for optimal performance, you should use an HTTP library which 
-supports persistent ("keep-alive") HTTP connections.
+Keep in mind, that for optimal performance, you should use an HTTP library which supports persistent ("keep-alive") HTTP connections.
