@@ -24,7 +24,7 @@ can use.
 | `resurrect_after`    | Integer         | Specifies after how many seconds a dead connection should be tried again.
 | `retry_on_failure`   | Boolean, Number | Whether to retry X times when request fails before raising and exception. Defaults to `false`.
 | `retry_on_status`    | Array, Number   | Specifies which status code needs to be returned to retry.
-| `selector`           | Constant        | An instance of selector strategy implemented with {Elasticsearch::Transport::Transport::Connections::Selector::Base}.
+| `selector`           | Constant        | An instance of selector strategy implemented with {Elastic::Transport::Transport::Connections::Selector::Base}.
 | `send_get_body_as`   | String          | Specifies the HTTP method to use for GET requests with a body. Defaults to `GET`.
 | `serializer_class`   | Constant        | Specifies a serializer class to use. It is initialized by the transport and passed the transport instance.
 | `sniffer_timeout`    | Integer         | Specifieds the timeout for reloading connections in seconds. Defaults to `1`.
