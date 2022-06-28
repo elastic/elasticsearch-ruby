@@ -1,5 +1,31 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.3.0 Release Notes
+
+- Tested versions of Ruby for 8.3.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
+
+### API
+
+- Added build hash to auto generated code. The code generator obtains the git hash from the Elasticsearch specification and adds it as a comment in the code. This allows us to track the version for each generated class.
+- Updated for compatibility with Elasticsearch 8.3's API.
+
+#### API Changes
+
+* `cluster.delete_voting_config_exclusions`, `cluster.post_voting_config_exclusions` - Add new parameter `master_timeout` (Time) Timeout for submitting request to master.
+* `machine_learning.infer_trained_model_deployment` is renamed to `machine_learning.infer_trained_model`. The url `/_ml/trained_models/{model_id}/deployment/_infer` is deprecated since 8.3, use `/_ml/trained_models/{model_id}/_infer` instead.
+* `machine_learning.preview_datafeed` - Adds new parameters:
+  * `start` (String) The start time from where the datafeed preview should begin
+  * `end` (String) The end time when the datafeed preview should stop
+* `machine_learning.start_trained_model_deployment` - Adds new parameters:
+  * `number_of_allocations` (Integer) The number of model allocations on each node where the model is deployed.
+  * `threads_per_allocation` (Integer) The number of threads used by each model allocation during inference.
+  * `queue_capacity` (Integer) Controls how many inference requests are allowed in the queue at a time.
+* `search_mvt` - Adds new parameter: `with_labels` (Boolean) If true, the hits and aggs layers will contain additional point features with suggested label positions for the original features
+* `snapshot.get` - Adds new parameter: `index_names` (Boolean) Whether to include the name of each index in the snapshot. Defaults to true.
+
+#### New Experimental APIs
+* `security.has_privileges_user_profile` Determines whether the users associated with the specified profile IDs have all the requested privileges
+
 ## 8.2.2 Release notes
 
 - Updates dependency on `elastic-transport` to `~> 8.0`
