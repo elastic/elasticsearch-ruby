@@ -103,6 +103,44 @@ module Elasticsearch
         end
 
         run_rubocop
+        add_hash if there_is_a_change
+      end
+
+      # Check for lines on the git diff that don't match the build hash comment
+      # We don't want to generate a new commit if the only change is the build hash
+      # because that means there are no relevant changes
+      def there_is_a_change
+        # This regular expression matches the following string:
+        # Auto generated from build hash build_hash
+        # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+        regexp = /^(\+||-)#(\sAuto\sgenerated\sfrom\sbuild\shash\s[0-9a-f]+$|\s@see.+$|$)/
+        # The git/grep commands print only +/- diff lines with no context and excludes lines with ---/+++
+        # awk/wc count the lines that don't match the regexp to see lines that have changed
+        # but are note the build hash comment:
+        changes = `git diff -U0 #{FilesHelper.output_dir} | grep '^[+-]' | \
+                  grep -Ev '^(--- a/|\+\+\+ b/)' | \
+                  awk '!/^(\+||-)#(\sAuto\sgenerated\sfrom\sbuild\shash\s[0-9a-f]+$|\s@see.+$|$)/' | \
+                  wc -l`.strip
+        changes.to_i.positive?
+      end
+
+      def add_hash
+        Dir.glob("#{FilesHelper.output_dir}/**/*.rb").each do |file|
+          content = File.read(file)
+          new_content = content.gsub(/(^#\sunder\sthe\sLicense.\n#)/) do |_|
+            match = Regexp.last_match
+            "#{match[1]}\n#{build_hash_comment}"
+          end
+          File.open(file, 'w') { |f| f.puts new_content }
+        end
+      end
+
+      def build_hash_comment
+        [
+          "Auto generated from build hash #{@build_hash}",
+          '@see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec',
+          ''
+        ].map { |b| "# #{b}" }.join("\n").strip
       end
 
       def __full_namespace
