@@ -81,13 +81,7 @@ Elasticsearch::Client.new(log: true)
 You can also use https://github.com/elastic/ecs-logging-ruby[`ecs-logging`] 
 which is a set of libraries that enables you to transform your application logs 
 to structured logs that comply with the 
-https://www.elastic.co/guide/en/ecs/current/ecs-reference.html[Elastic Common Schema (ECS)]:
-
-[source,ruby]
-------------------------------------
-logger = EcsLogging::Logger.new($stdout)
-Elasticsearch::Client.new(logger: logger)
-------------------------------------
+https://www.elastic.co/guide/en/ecs/current/ecs-reference.html[Elastic Common Schema]. See <<ecs>>.
 
 To trace requests and responses in the Curl format, set the `trace` argument:
 
