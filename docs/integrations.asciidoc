@@ -5,12 +5,15 @@ The Rubygems listed on this page make it easier to operate with {es} by using
 the Ruby client.
 
 * <<transport>>
+* <<ecs>>
 * <<activemodel_activerecord>>
 * <<ruby_on_rails>>
 * <<persistence>>
 * <<dsl>>
 
 include::transport.asciidoc[]
+
+include::ecs.asciidoc[]
 
 include::model.asciidoc[]
 
