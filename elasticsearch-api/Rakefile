@@ -58,7 +58,8 @@ namespace :test do
 
   desc 'Run Rest API Spec tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
-    t.pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
+    test_dir = Rake.application.original_dir
+    t.pattern = "#{test_dir}/spec/elasticsearch/api/rest_api_yaml_spec.rb"
   end
 
   desc 'Run integration tests'
