@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for submitting request to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/voting-config-exclusions.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
         #
         def post_voting_config_exclusions(arguments = {})
           arguments = arguments.clone
