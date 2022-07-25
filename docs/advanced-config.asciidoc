@@ -159,7 +159,7 @@ client.search(index: 'myindex', q: 'title:test', headers: {user_agent: "My App"}
 
 The X-Opaque-Id header allows to track certain calls, or associate certain tasks 
 with the client that started them (refer to 
-https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html#_identifying_running_tasks[the documentation]). 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#_identifying_running_tasks[the documentation]).
 To use this feature, you need to set an id for `opaque_id` on the client on each 
 request. Example:
 

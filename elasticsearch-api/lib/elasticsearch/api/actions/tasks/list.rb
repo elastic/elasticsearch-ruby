@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def list(arguments = {})
           arguments = arguments.clone

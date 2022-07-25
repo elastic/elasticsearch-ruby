@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def get_template(arguments = {})
           arguments = arguments.clone
