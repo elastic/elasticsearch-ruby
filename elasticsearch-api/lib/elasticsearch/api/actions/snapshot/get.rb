@@ -31,6 +31,13 @@ module Elasticsearch
         # @option arguments [Boolean] :index_names Whether to include the name of each index in the snapshot. Defaults to true.
         # @option arguments [Boolean] :index_details Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
         # @option arguments [Boolean] :include_repository Whether to include the repository name in the snapshot info. Defaults to true.
+        # @option arguments [String] :sort Allows setting a sort order for the result. Defaults to start_time (options: start_time, duration, name, repository, index_count, shard_count, failed_shard_count)
+        # @option arguments [Integer] :size Maximum number of snapshots to return. Defaults to 0 which means return all that match without limit.
+        # @option arguments [String] :order Sort order (options: asc, desc)
+        # @option arguments [String] :from_sort_value Value of the current sort column at which to start retrieval.
+        # @option arguments [String] :after Offset identifier to start pagination from as returned by the 'next' field in the response body.
+        # @option arguments [Integer] :offset Numeric offset to start pagination based on the snapshots matching the request. Defaults to 0
+        # @option arguments [String] :slm_policy_filter Filter snapshots by a comma-separated list of SLM policy names that snapshots belong to. Accepts wildcards. Use the special pattern '_none' to match snapshots without an SLM policy
         # @option arguments [Boolean] :verbose Whether to show verbose snapshot info or only show the basic info found in the repository index blob
         # @option arguments [Hash] :headers Custom HTTP headers
         #
