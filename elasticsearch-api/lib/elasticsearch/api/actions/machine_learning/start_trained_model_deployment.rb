@@ -29,6 +29,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [String] :cache_size A byte-size value for configuring the inference cache size. For example, 20mb.
         # @option arguments [Integer] :number_of_allocations The number of model allocations on each node where the model is deployed.
         # @option arguments [Integer] :threads_per_allocation The number of threads used by each model allocation during inference.
         # @option arguments [Integer] :queue_capacity Controls how many inference requests are allowed in the queue at a time.
