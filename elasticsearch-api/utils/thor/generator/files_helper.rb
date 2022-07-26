@@ -44,13 +44,13 @@ module Elasticsearch
 
       def self.documentation_url(documentation_url)
         branch = `git rev-parse --abbrev-ref HEAD`
-        return documentation_url if branch == "main\n"
+        return documentation_url.gsub(/\/(master|main)\//, "/current/") if branch == "main\n"
 
         regex = /([0-9]{1,2}\.[0-9x]{1,2})/
         version = Elasticsearch::API::VERSION.match(regex)[0]
         # TODO - How do we fix this so it doesn't depend on which branch we're running from
         if ENV['IGNORE_VERSION']
-          documentation_url
+          documentation_url.gsub(/\/(master|main)\//, "/current/")
         else
           documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
         end
