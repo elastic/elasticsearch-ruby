@@ -24,6 +24,11 @@ $ thor code:generate
 $ IGNORE_VERSION=true thor code:generate
 ```
 
+- You can use the environment variable `BUILD_HASH` to update the build hash for the generated code from the `tmp/rest-api-spec/build_hash` file. This file is updated every time you use the `elasticsearch:download_artifacts` Rake task is used in the root of the project to download the latest Elasticsearch specs and tests:
+```bash
+$ IGNORE_VERSION=true thor code:generate
+```
+
 ### Development
 
 The main entry point is `generate_source.rb`, which contains a class that implements a Thor task: `generate`:

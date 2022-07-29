@@ -47,7 +47,12 @@ module Elasticsearch
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
 
       def generate
-        @build_hash = File.read(File.expand_path('../../../tmp/rest-api-spec/build_hash',__dir__))
+        @build_hash = if ENV['BUILD_HASH']
+                        File.read(File.expand_path('../../../tmp/rest-api-spec/build_hash',__dir__))
+                      else
+                        original_build_hash
+                      end
+
         self.class.source_root File.expand_path(__dir__)
         generate_source
         # -- Tree output
@@ -103,25 +108,7 @@ module Elasticsearch
         end
 
         run_rubocop
-        add_hash if there_is_a_change
-      end
-
-      # Check for lines on the git diff that don't match the build hash comment
-      # We don't want to generate a new commit if the only change is the build hash
-      # because that means there are no relevant changes
-      def there_is_a_change
-        # This regular expression matches the following string:
-        # Auto generated from build hash build_hash
-        # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
-        regexp = /^(\+||-)#(\sAuto\sgenerated\sfrom\sbuild\shash\s[0-9a-f]+$|\s@see.+$|$)/
-        # The git/grep commands print only +/- diff lines with no context and excludes lines with ---/+++
-        # awk/wc count the lines that don't match the regexp to see lines that have changed
-        # but are note the build hash comment:
-        changes = `git diff -U0 #{FilesHelper.output_dir} | grep '^[+-]' | \
-                  grep -Ev '^(--- a/|\+\+\+ b/)' | \
-                  awk '!/^(\+||-)#(\sAuto\sgenerated\sfrom\sbuild\shash\s[0-9a-f]+$|\s@see.+$|$)/' | \
-                  wc -l`.strip
-        changes.to_i.positive?
+        add_hash
       end
 
       def add_hash
@@ -141,6 +128,13 @@ module Elasticsearch
           '@see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec',
           ''
         ].map { |b| "# #{b}" }.join("\n").strip
+      end
+
+      def original_build_hash
+        content = File.read("#{FilesHelper.output_dir}/info.rb")
+        return unless (match = content.match(/Auto generated from build hash ([a-f0-9]+)/))
+
+        match[1]
       end
 
       def __full_namespace
