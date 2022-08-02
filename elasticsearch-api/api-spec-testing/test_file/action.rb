@@ -164,12 +164,8 @@ module Elasticsearch
           path = '/_internal/desired_nodes/_latest'
           body = nil
         when '_internal.health'
-          path = if args['component']
-                   if args['feature']
-                     "_internal/_health/#{args.delete('component')}/#{args.delete('feature')}"
-                   else
-                     "_internal/_health/#{args.delete('component')}/"
-                   end
+          path = if args['feature']
+                   "_internal/_health/#{args.delete('feature')}/"
                  else
                    '_internal/_health'
                  end
