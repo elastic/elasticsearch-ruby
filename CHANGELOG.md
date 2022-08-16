@@ -1,5 +1,30 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.4.0 Release Notes
+
+- Tested versions of Ruby for 8.4.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
+
+### API
+
+#### New APIs
+
+* `security.update_api_key` - Updates attributes of an existing API key. [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/8.4/security-api-update-api-key.html).
+
+#### API Changes
+
+* `get` - Adds new parameter `force_synthetic_source` (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+* `machine_learning.start_trained_model_deployment` - Adds new parameter `cache_size` (String) A byte-size value for configuring the inference cache size. For example, 20mb.
+* `mget` - Adds new parameter `force_synthetic_source` (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+* `search` - Adds new parameter `force_synthetic_source` (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+* `snapshot.get` - Adds new parameters:
+  * `sort` (String) Allows setting a sort order for the result. Defaults to start_time (options: start_time, duration, name, repository, index_count, shard_count, failed_shard_count).
+  * `size` (Integer) Maximum number of snapshots to return. Defaults to 0 which means return all that match without limit.
+  * `order` (String) Sort order (options: asc, desc).
+  * `from_sort_value` (String) Value of the current sort column at which to start retrieval.
+  * `after` (String) Offset identifier to start pagination from as returned by the 'next' field in the response body.
+  * `offset` (Integer) Numeric offset to start pagination based on the snapshots matching the request. Defaults to 0.
+  * `slm_policy_filter` (String) Filter snapshots by a comma-separated list of SLM policy names that snapshots belong to. Accepts wildcards. Use the special pattern '_none' to match snapshots without an SLM policy.
+
 ## 8.3.0 Release Notes
 
 - Tested versions of Ruby for 8.3.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
