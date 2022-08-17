@@ -10,6 +10,7 @@ the Ruby client.
 * <<ex-delete>>
 * <<ex-bulk>>
 * <<ex-search>>
+* <<ex-multisearch>>
 * <<ex-scroll>>
 * <<ex-reindex>>
 
@@ -174,6 +175,14 @@ You can do the same by using body request parameters:
 client.search(index: 'books', q: 'dune', body: { fields: [{ field: 'name' }] })
 response = client.search(index: 'books', body: { size: 15 })
 response['hits']['hits'].count # => 15
+```
+
+[discrete]
+[[ex-multisearch]]
+=== Multi search 
+The following example shows how to perform a multisearch API call on `books` index:
+```ruby
+client.msearch(index:'books', body: [{}{"query": {"range": {"page_count": {"gte": 100}}}}{}{"query": {"range": {"page_count": {"lte": 100}}}}])
 ```
 
 
