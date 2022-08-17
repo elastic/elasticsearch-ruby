@@ -22,13 +22,13 @@ module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves user profile for the given unique ID.
+        # Retrieves user profiles for the given unique ID(s).
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :uid An unique identifier of the user profile
+        # @option arguments [List] :uid A comma-separated list of unique identifier for user profiles
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

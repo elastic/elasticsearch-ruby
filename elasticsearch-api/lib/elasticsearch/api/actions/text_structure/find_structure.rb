@@ -35,6 +35,7 @@ module Elasticsearch
         # @option arguments [String] :quote Optional parameter to specify the quote character for a delimited file - must be a single character
         # @option arguments [Boolean] :should_trim_fields Optional parameter to specify whether the values between delimiters in a delimited file should have whitespace trimmed from them
         # @option arguments [String] :grok_pattern Optional parameter to specify the Grok pattern that should be used to extract fields from messages in a semi-structured text file
+        # @option arguments [String] :ecs_compatibility Optional parameter to specify the compatibility mode with ECS Grok patterns - may be either 'v1' or 'disabled'
         # @option arguments [String] :timestamp_field Optional parameter to specify the timestamp field in the file
         # @option arguments [String] :timestamp_format Optional parameter to specify the timestamp format in the file - may be either a Joda or Java time format
         # @option arguments [Boolean] :explain Whether to include a commentary on how the structure was derived
