@@ -177,6 +177,7 @@ response = client.search(index: 'books', body: { size: 15 })
 response['hits']['hits'].count # => 15
 ```
 
+
 [discrete]
 [[ex-multisearch]]
 === Multi search 
