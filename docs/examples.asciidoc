@@ -183,10 +183,13 @@ response['hits']['hits'].count # => 15
 === Multi search 
 The following example shows how to perform a multisearch API call on `books` index:
 ```ruby
-client.msearch(index:'books', body: [{}{"query": {"range": {"page_count": {"gte": 100}}}}{}{"query": {"range": {"page_count": {"lte": 100}}}}])
-```
-
-
+body = [
+  {},
+  {query: {range: {page_count: {gte: 100}}}},
+  {},
+  {query: {range: {page_count: {lte: 100}}}}
+]
+client.msearch(index:'books', body: body)
 [discrete]
 [[ex-scroll]]
 === Scrolling
