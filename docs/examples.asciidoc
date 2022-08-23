@@ -190,6 +190,9 @@ body = [
   {query: {range: {page_count: {lte: 100}}}}
 ]
 client.msearch(index:'books', body: body)
+```
+
+
 [discrete]
 [[ex-scroll]]
 === Scrolling
