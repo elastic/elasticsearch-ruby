@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Retrieves information for API keys using a subset of query DSL
         #
+        # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
@@ -42,7 +43,7 @@ module Elasticsearch
                    end
 
           path   = "_security/_query/api_key"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)
