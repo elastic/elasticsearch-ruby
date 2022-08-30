@@ -182,6 +182,7 @@ module Elasticsearch
             key =~ /^\$/ ? @cached_values.fetch(key.gsub(/[\$\{\}]/, ''), key) : key
           when Hash
             key.inject({}) do |hash, (k, v)|
+              k = k.to_s if k.is_a?(Float)
               if v.is_a?(String)
                 hash.merge(@cached_values.fetch(k.gsub(/[\$\{\}]/, ''), k) => @cached_values.fetch(v.gsub(/[\$\{\}]/, ''), v))
               else
