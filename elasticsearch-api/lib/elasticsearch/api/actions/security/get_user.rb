@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves information about users in the native realm and built-in users.
         #
         # @option arguments [List] :username A comma-separated list of usernames
+        # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
@@ -43,7 +44,7 @@ module Elasticsearch
                    else
                      "_security/user"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
