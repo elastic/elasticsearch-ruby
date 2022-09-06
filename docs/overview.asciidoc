@@ -24,11 +24,9 @@ More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Gi
 
 The `elasticsearch` gem combines two separate Rubygems:
 
-* https://github.com/elastic/elastic-transport-ruby/[`elastic-transport`]
-provides an HTTP Ruby client for connecting to the {es} cluster.
+* https://github.com/elastic/elastic-transport-ruby/[`elastic-transport`] - provides an HTTP Ruby client for connecting to the {es} cluster. Refer to the documentation: <<transport>>
 
-* https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api[`elasticsearch-api`]
-provides a Ruby API for the {es} RESTful API.
+* https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api[`elasticsearch-api`] - provides a Ruby API for the {es} RESTful API.
 
 Please consult their respective documentation for configuration options and technical details.
 
