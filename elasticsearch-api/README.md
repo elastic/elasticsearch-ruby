@@ -13,7 +13,7 @@ Language clients are forward compatible; meaning that clients support communicat
 
 ## Development
 
-See [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
+Refer to [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
 
 We run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/main/api-spec-testing#rest-api-yaml-test-runner).
 
