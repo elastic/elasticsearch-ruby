@@ -210,7 +210,7 @@ mash.hits.hits.first._source.title
 [discrete]
 =====  Using a Custom JSON Serializer
 
-The library uses the https://rubygems.org/gems/multi_json/[MultiJson] gem by default, but allows you to set a custom JSON library, provided it uses the standard `load/dump` interface:
+The library uses the https://rubygems.org/gems/multi_json/[MultiJson] gem by default but allows you to set a custom JSON library, provided it uses the standard `load/dump` interface:
 
 [source,rb]
 ----------------------------
