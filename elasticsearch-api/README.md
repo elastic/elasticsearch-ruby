@@ -2,7 +2,7 @@
 
 *This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package; please refer to it, unless you want to use this library standalone.*
 
-**See the [official documentation on Elasticsearch API](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/api.html).**
+**Refer to the [official documentation on Elasticsearch API](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/api.html).**
 
 The `elasticsearch-api` library provides a Ruby implementation of the [Elasticsearch](http://elasticsearch.com) REST API. It does not provide an Elasticsearch client; see the [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby/) library.
 
