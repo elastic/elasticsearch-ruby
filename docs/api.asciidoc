@@ -98,7 +98,7 @@ Full documentation and examples are included as RDoc annotations in the source c
 [discrete]
 ===== Usage with a custom client
 
-When you want to mix the library into your own client, it must conform to a following _contract_:
+When you want to mix the library with your own client, it must conform to the following _contract_:
 
 * It responds to a `perform_request(method, path, params, body, headers)` method,
 * the method returns an object with `status`, `body` and `headers` methods.
