@@ -22,6 +22,7 @@ gem 'elasticsearch-api', git: 'git://github.com/elasticsearch/elasticsearch-ruby
 ----------------------------
 
 or install it from a source code checkout:
+
 [source,bash] 
 ----------------------------
 git clone https://github.com/elasticsearch/elasticsearch-ruby.git
