@@ -20,25 +20,25 @@
 #
 module Elasticsearch
   module API
-    module Rollup
+    module Indices
       module Actions
-        # Rollup an index
+        # Downsample an index
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :index The index to roll up (*Required*)
-        # @option arguments [String] :rollup_index The name of the rollup index to create (*Required*)
+        # @option arguments [String] :index The index to downsample (*Required*)
+        # @option arguments [String] :target_index The name of the target index to store downsampled data (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The rollup configuration (*Required*)
+        # @option arguments [Hash] :body The downsampling configuration (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-rollup.html
         #
-        def rollup(arguments = {})
+        def downsample(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
-          raise ArgumentError, "Required argument 'rollup_index' missing" unless arguments[:rollup_index]
+          raise ArgumentError, "Required argument 'target_index' missing" unless arguments[:target_index]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -47,10 +47,10 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          _rollup_index = arguments.delete(:rollup_index)
+          _target_index = arguments.delete(:target_index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_rollup/#{Utils.__listify(_rollup_index)}"
+          path   = "#{Utils.__listify(_index)}/_downsample/#{Utils.__listify(_target_index)}"
           params = {}
 
           Elasticsearch::API::Response.new(
