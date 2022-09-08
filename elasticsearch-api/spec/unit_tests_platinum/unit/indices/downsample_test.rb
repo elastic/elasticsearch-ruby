@@ -19,37 +19,37 @@ require 'test_helper'
 
 module Elasticsearch
   module Test
-    class XPackRollupTest < Minitest::Test
-      context "XPack Rollup: rollup an index" do
+    class IndicesDownsampleTest < Minitest::Test
+      context "Indices Downsample: Downsample an index" do
         subject { FakeClient.new }
 
         should "perform correct request" do
           subject.expects(:perform_request).with do |method, url, params, body|
             assert_equal('POST', method)
-            assert_equal('foo/_rollup/bar', url)
+            assert_equal('foo/_downsample/bar', url)
             assert_equal({}, params)
             assert_equal(body, {})
             true
           end.returns(FakeResponse.new)
 
-          subject.rollup.rollup(body: {}, index: 'foo', rollup_index: 'bar')
+          subject.indices.downsample(body: {}, index: 'foo', target_index: 'bar')
         end
 
         should 'raise argument error without body' do
           assert_raises ArgumentError do
-            subject.rollup.rollup(index: 'foo', rollup_index: 'bar')
+            subject.indices.downsample(index: 'foo', target_index: 'bar')
           end
         end
 
         should 'raise argument error without index' do
           assert_raises ArgumentError do
-            subject.rollup.rollup(body: {}, rollup_index: 'bar')
+            subject.indices.downsample(body: {}, target_index: 'bar')
           end
         end
 
         should 'raise argument error without rollup_index' do
           assert_raises ArgumentError do
-            subject.rollup.rollup(body: {}, index: 'foo')
+            subject.indices.downsample(body: {}, index: 'foo')
           end
         end
       end
