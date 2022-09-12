@@ -219,7 +219,10 @@ client = Elasticsearch::Client.new(
 
 Or use the common URL format:
 
+[source,ruby]
+------------------------------------
 client = Elasticsearch::Client.new(url: 'https://username:password@localhost:9200')
+------------------------------------
 
 To pass a custom certificate for SSL peer verification to Faraday-based clients,
 use the `transport_options` option:
