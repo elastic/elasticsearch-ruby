@@ -207,7 +207,7 @@ module Elasticsearch
                 end
               end
             elsif args.is_a?(String)
-              if cached_value = test.cached_values.find { |k, v| args =~ /\$\{?#{k}\}?/ }
+              if (cached_value = test.cached_values.find { |k, _v| args =~ /\$\{?#{k}\}?/ })
                 return cached_value[1]
               end
             end
