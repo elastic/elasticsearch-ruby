@@ -42,7 +42,7 @@ namespace :test do
 
   namespace :platinum do
     desc 'Run Platinum Rest API Spec tests'
-    RSpec::Core::RakeTask.new(:api) do |t|
+    RSpec::Core::RakeTask.new(:api) do
       ENV['TEST_SUITE'] = 'platinum'
       Rake::Task['test:rest_api'].invoke
     end
