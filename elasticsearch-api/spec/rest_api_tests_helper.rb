@@ -58,6 +58,8 @@ unless ADMIN_CLIENT.ping
   exit
 end
 
+Elasticsearch::RestAPIYAMLTests::WipeCluster.create_xpack_rest_user(ADMIN_CLIENT) if test_suite == 'platinum'
+
 YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?

@@ -83,10 +83,6 @@ module Elasticsearch
               client
             when 'headers'
               headers = prepare_arguments(args, test)
-              # TODO: Remove Authorization headers while x_pack_rest_user is fixed
-              if headers[:Authorization] == 'Basic eF9wYWNrX3Jlc3RfdXNlcjp4LXBhY2stdGVzdC1wYXNzd29yZA=='
-                headers.delete(:Authorization)
-              end
               host = client.transport.instance_variable_get('@hosts')
               transport_options = client.transport.instance_variable_get('@options')&.dig(:transport_options) || {}
               if ENV['QUIET'] == 'true'
