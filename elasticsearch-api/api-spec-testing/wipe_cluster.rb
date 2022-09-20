@@ -50,6 +50,13 @@ module Elasticsearch
         check_for_unexpectedly_recreated_objects(client)
       end
 
+      def self.create_xpack_rest_user(client)
+        client.security.put_user(
+          username: 'x_pack_rest_user',
+          body: { password: 'x-pack-test-password', roles: ['superuser'] }
+        )
+      end
+
       class << self
         private
 
@@ -306,13 +313,6 @@ module Elasticsearch
           patterns['patterns'].each do |pattern|
             client.cross_cluster_replication.delete_auto_follow_pattern(name: pattern)
           end
-        end
-
-        def create_xpack_rest_user(client)
-          client.security.put_user(
-            username: 'x_pack_rest_user',
-            body: { password: 'x-pack-test-password', roles: ['superuser'] }
-          )
         end
 
         def clear_roles(client)
