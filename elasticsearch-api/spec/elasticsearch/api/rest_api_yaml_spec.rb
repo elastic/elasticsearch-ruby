@@ -50,9 +50,7 @@ describe 'Rest API YAML tests' do
             next
           end
 
-          before(:all) do
-            test_file.setup
-          end
+          before(:all) { test_file.setup }
 
           after(:all) do
             test_file.teardown
