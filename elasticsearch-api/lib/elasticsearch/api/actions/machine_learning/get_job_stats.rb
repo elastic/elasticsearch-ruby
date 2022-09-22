@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-get-job-stats.html
         #
         def get_job_stats(arguments = {})
           arguments = arguments.clone

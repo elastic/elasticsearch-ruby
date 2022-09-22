@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ilm-delete-lifecycle.html
         #
         def delete_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]

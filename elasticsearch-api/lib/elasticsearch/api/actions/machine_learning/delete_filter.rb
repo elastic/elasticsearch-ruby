@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :filter_id The ID of the filter to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/ml-delete-filter.html
         #
         def delete_filter(arguments = {})
           raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]

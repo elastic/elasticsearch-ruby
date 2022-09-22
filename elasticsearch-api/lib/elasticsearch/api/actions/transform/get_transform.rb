@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on transform PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-transform.html
         #
         def get_transform(arguments = {})
           arguments = arguments.clone

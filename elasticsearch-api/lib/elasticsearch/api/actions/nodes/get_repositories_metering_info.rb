@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-repositories-metering-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/get-repositories-metering-api.html
         #
         def get_repositories_metering_info(arguments = {})
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
