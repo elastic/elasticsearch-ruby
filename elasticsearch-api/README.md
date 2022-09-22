@@ -27,6 +27,10 @@ Or it can get the version from a running cluster to determine which version and 
 
 This will download the necessary files used for the integration tests to `./tmp`.
 
+### Code generation
+
+The code for most of this library is automatically generated. See [./utils/README.md](utils/README.md) for more information.
+
 ## License
 
 This software is licensed under the [Apache 2 license](./LICENSE).
