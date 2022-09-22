@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-blocks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/index-modules-blocks.html
         #
         def add_block(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

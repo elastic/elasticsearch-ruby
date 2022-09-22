@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/security-api-get-user.html
         #
         def get_user(arguments = {})
           arguments = arguments.clone

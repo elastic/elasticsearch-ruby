@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_checkpoint Whether to wait for the transform to reach a checkpoint before stopping. Default to false
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/stop-transform.html
         #
         def stop_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]

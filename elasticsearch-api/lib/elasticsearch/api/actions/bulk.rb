@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash c462e504756a92dcafba3fbf944152babda8999f
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
@@ -38,7 +38,7 @@ module Elasticsearch
       # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
       # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.5/docs-bulk.html
       #
       def bulk(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
