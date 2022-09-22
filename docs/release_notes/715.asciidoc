@@ -9,7 +9,7 @@
 
 [discrete]
 ==== API
-- New experimental endpoints: `indices.disk_usage`. `indices.field_usage_stats`, `nodes.clear_repositories_metering_archive`, `get_repositories_metering_info`, https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html[`search_mvt`]
+- New experimental endpoints: `indices.disk_usage`. `indices.field_usage_stats`, `nodes.clear_repositories_metering_archive`, `get_repositories_metering_info`, https://www.elastic.co/guide/en/elasticsearch/reference/7.15/search-vector-tile-api.html[`search_mvt`]
 - The `index` parameter is now required for `open_point_in_time`.
 - The `index_metric` parameter in `nodes.stats` adds the `shards` option.
 
