@@ -2,10 +2,10 @@ name: 7.x with 8.x
 on:
   push:
     branches:
-      - 7.x
+      - 7.17
   pull_request:
     branches:
-      - 7.x
+      - 7.17
 jobs:
   test-ruby:
     env:
@@ -26,7 +26,8 @@ jobs:
         sudo sysctl -w vm.max_map_count=262144
     - uses: elastic/elastic-github-actions/elasticsearch@master
       with:
-        stack-version: 8.0-SNAPSHOT
+        stack-version: 8.5-SNAPSHOT
+        security-enabled: false
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
