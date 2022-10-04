@@ -23,10 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Creates or updates the user profile on behalf of another user.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The grant type and user's credential (*Required*)

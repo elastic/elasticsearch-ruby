@@ -23,10 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Determines whether the users associated with the specified profile IDs have all the requested privileges.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The privileges to check and the list of profile IDs (*Required*)
