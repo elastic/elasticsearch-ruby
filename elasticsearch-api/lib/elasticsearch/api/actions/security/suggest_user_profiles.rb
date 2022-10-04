@@ -23,10 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Get suggestions for user profiles that match specified search criteria.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
