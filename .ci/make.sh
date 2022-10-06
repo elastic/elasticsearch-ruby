@@ -9,12 +9,13 @@
 #
 # Targets:
 # ---------------------------
-# assemble <VERSION> : build client artefacts with version
-# bump     <VERSION> : bump client internals to version
-# codegen  <VERSION> : generate endpoints
-# docsgen  <VERSION> : generate documentation
-# examplegen         : generate the doc examples
-# clean              : clean workspace
+# assemble   <VERSION> : build client artefacts with version
+# bump       <VERSION> : bump client internals to version
+# bumpmatrix <VERSION> : bump stack version in test matrix to version
+# codegen              : generate endpoints
+# docsgen    <VERSION> : generate documentation
+# examplegen           : generate the doc examples
+# clean                : clean workspace
 #
 # ------------------------------------------------------- #
 
@@ -92,6 +93,15 @@ case $CMD in
         # VERSION is BRANCH here for now
         TASK_ARGS=("$VERSION")
         ;;
+    bumpmatrix)
+      if [ -v $VERSION ]; then
+        echo -e "\033[31;1mTARGET: bumpmatrix -> missing version parameter\033[0m"
+        exit 1
+      fi
+      echo -e "\033[36;1mTARGET: bump stack in test matrix to version $VERSION\033[0m"
+      TASK=bumpmatrix
+      TASK_ARGS=("$VERSION")
+      ;;
     *)
         echo -e "\nUsage:"
         echo -e "\t Clean workspace:"
