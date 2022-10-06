@@ -71,7 +71,7 @@ client = Elasticsearch::Client.new
    @status=200>>
 
 > response['result']
-=> "created"
+=> "updated"
 
 client.search(index: 'myindex', body: { query: { match: { title: 'test' } } })
 # => => #<Elasticsearch::API::Response:0x00007fc95674a550
