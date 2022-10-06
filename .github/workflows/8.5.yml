@@ -1,13 +1,13 @@
-name: main
+name: 8.5
 on:
   push:
     branches:
-      - main
+      - 8.5
   pull_request:
     branches:
-      - main
+      - 8.5
 jobs:
-  test-main:
+  test:
     env:
       TEST_ES_SERVER: http://localhost:9250
       PORT: 9250
