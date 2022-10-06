@@ -116,7 +116,7 @@ namespace :unified_release do
 
       $ rake unified_release:bump_matrix[42.0.0]
   DESC
-  task :bump_matrix, :version do |_, args|
+  task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
 
     files = ['.ci/test-matrix.yml', '.github/workflows/main.yml', '.github/workflows/unified-release.yml']
