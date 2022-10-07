@@ -52,7 +52,7 @@ client.get(index: 'books', id: id)
 
 Assume you have the following document:
 
-```
+```ruby
 book = {"name": "Foundation", "author": "Isaac Asimov", "release_date": "1951-06-01", "page_count": 224}
 ```
 
@@ -166,7 +166,7 @@ The `field` parameter is a common parameter, so it can be passed in directly in
 the following way:
 
 ```ruby
-client.search(index: 'books', q: 'dune', field: 'name')
+client.search(index: 'books', q: 'dune')
 ```
 
 You can do the same by using body request parameters:
