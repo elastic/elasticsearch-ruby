@@ -23,14 +23,14 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Start a trained model deployment.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [String] :cache_size A byte-size value for configuring the inference cache size. For example, 20mb.
-        # @option arguments [Integer] :number_of_allocations The number of model allocations on each node where the model is deployed.
+        # @option arguments [Integer] :number_of_allocations The total number of allocations this model is assigned across machine learning nodes.
         # @option arguments [Integer] :threads_per_allocation The number of threads used by each model allocation during inference.
         # @option arguments [Integer] :queue_capacity Controls how many inference requests are allowed in the queue at a time.
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to deploy.
