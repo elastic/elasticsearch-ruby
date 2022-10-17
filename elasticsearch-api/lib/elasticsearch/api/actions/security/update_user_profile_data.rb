@@ -23,10 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Update application specific data for the user profile of the given unique ID.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :uid An unique identifier of the user profile
         # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
