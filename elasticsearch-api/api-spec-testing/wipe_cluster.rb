@@ -156,7 +156,7 @@ module Elasticsearch
 
             time = Time.now.to_i
             results.each do |task|
-              next if task.empty?
+              next if task.empty? || skippable_task?(task)
 
               logger.debug("Pending task: #{task}")
               count += 1 if task.include?(filter)
@@ -277,13 +277,23 @@ module Elasticsearch
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
-              names = ['health-node', 'cluster:monitor/tasks/lists', 'create-index-template-v2']
-              next if task.empty? || names.select { |n| task['source'].match? n }.any?
+
+              next if task.empty? || skippable_task?(task)
 
               logger.debug "Pending cluster task: #{task}"
               count += 1
             end
             break unless count.positive? && Time.now.to_i < (time + 30)
+          end
+        end
+
+        def skippable_task?(task)
+          names = ['health-node', 'cluster:monitor/tasks/lists', 'create-index-template-v2',
+                   'remove-component-template']
+          if task.is_a?(String)
+            names.select { |n| task.match? n }.any?
+          elsif task.is_a?(Hash)
+            names.select { |n| task['source'].match? n }.any?
           end
         end
 
