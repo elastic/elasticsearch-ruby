@@ -264,7 +264,7 @@ module Elasticsearch
         end
 
         def platinum_template?(template)
-          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
+          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'deprecation', 'data-streams-mappings'].freeze
           platinum_prefixes.map { |a| return true if a.include? template }
 
           PLATINUM_TEMPLATES.include? template
