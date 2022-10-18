@@ -277,7 +277,7 @@ module Elasticsearch
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
-              names = ['health-node', 'cluster:monitor/tasks/lists']
+              names = ['health-node', 'cluster:monitor/tasks/lists', 'create-index-template-v2']
               next if task.empty? || names.select { |n| task['source'].match? n }.any?
 
               logger.debug "Pending cluster task: #{task}"
