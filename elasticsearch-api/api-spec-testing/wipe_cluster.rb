@@ -277,7 +277,8 @@ module Elasticsearch
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
-              next if task.empty?
+              names = ['health-node', 'cluster:monitor/tasks/lists']
+              next if task.empty? || names.select { |n| task['source'].match? n }.any?
 
               logger.debug "Pending cluster task: #{task}"
               count += 1
