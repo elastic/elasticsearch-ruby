@@ -61,7 +61,7 @@ module Elasticsearch
             key.split(/(?<!\\)\./).reject(&:empty?).map do |key_part|
               case key_part
               when /^\.\$/ # For keys in the form of .$key
-                 key_part.gsub(/^\./, '')
+                key_part.gsub(/^\./, '')
               when /\A[-+]?[0-9]+\z/
                 key_part.to_i
               else
