@@ -77,17 +77,16 @@ end
 RSpec::Matchers.define :match_gte_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-
       split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
         test.get_cached_value(k)
       end
-      actual_value = split_key.inject(response) do |_response, key|
 
+      actual_value = split_key.inject(response) do |_response, key|
         # If the key is an index, indicating element of a list
         if _response.empty? && key == '$body'
           _response
         else
-          _response[key] || _response[key]
+          _response[key] || _response[key.to_s]
         end
       end
       actual_value >= test.get_cached_value(expected_value)
