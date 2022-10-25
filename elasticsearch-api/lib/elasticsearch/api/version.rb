@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module API
-    VERSION = '7.17.7'.freeze
+    VERSION = '7.17.8'.freeze
   end
 end
