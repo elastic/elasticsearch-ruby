@@ -1,3 +1,12 @@
+## 7.17.7
+
+- Compatibility with Elasticsearch v7.17.7 APIs.
+- Tested versions of Ruby for 7.17.7: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
+
+## 7.17.2, 7.17.3, 7.17.4, 7.17.5, 7.17.6
+
+No release.
+
 ## 7.17.1
 
 - Improves handling of YAML parsing, uses `safe_load` instead of `load` when doing the product verification (should only affect Ruby < 3.0).
