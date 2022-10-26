@@ -16,6 +16,7 @@
 # under the License.
 
 require 'spec_helper'
+require 'elastic/transport'
 
 describe Elasticsearch::API::Response do
   let(:response_body) do
