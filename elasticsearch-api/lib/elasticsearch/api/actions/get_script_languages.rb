@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/modules-scripting.html
       #
       def get_script_languages(arguments = {})
         arguments = arguments.clone

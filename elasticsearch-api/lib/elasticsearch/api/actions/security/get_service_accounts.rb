@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-accounts.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/security-api-get-service-accounts.html
         #
         def get_service_accounts(arguments = {})
           arguments = arguments.clone

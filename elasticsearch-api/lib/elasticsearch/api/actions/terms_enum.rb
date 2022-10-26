@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/search-terms-enum.html
       #
       def terms_enum(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

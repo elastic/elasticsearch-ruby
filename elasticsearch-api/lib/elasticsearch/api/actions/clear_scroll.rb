@@ -32,7 +32,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/clear-scroll-api.html
       #
       def clear_scroll(arguments = {})
         arguments = arguments.clone

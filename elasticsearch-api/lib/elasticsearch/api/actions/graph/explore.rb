@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Graph Query DSL
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.4/graph-explore-api.html
         #
         def explore(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
