@@ -144,9 +144,8 @@ module Elasticsearch
       if (headers = arguments.dig(:transport_options, :headers))
         headers.merge!(authorization)
       else
-        arguments[:transport_options] = {
-          headers: authorization
-        }
+        arguments[:transport_options] ||= {}
+        arguments[:transport_options].merge!({ headers: authorization })
       end
     end
 

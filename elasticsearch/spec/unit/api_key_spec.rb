@@ -57,7 +57,7 @@ describe Elasticsearch::Client do
       end
     end
 
-    context 'when other headers where specified' do
+    context 'when other headers were specified' do
       let(:client) do
         described_class.new(
           api_key: 'elasticsearch_api_key',
@@ -69,6 +69,42 @@ describe Elasticsearch::Client do
         header = client.transport.connections.first.connection.headers
         expect(header['Authorization']).to eq('ApiKey elasticsearch_api_key')
         expect(header['X-Test-Header']).to eq('test')
+      end
+    end
+
+    context 'when sending transport_options but no headers were specified' do
+      let(:client) do
+        described_class.new(
+          api_key: 'elasticsearch_api_key',
+          transport_options: { ssl: { verify: false } }
+        )
+      end
+
+      it 'Adds the ApiKey header to the connection and keeps the options' do
+        header = client.transport.connections.first.connection.headers
+        expect(header['Authorization']).to eq('ApiKey elasticsearch_api_key')
+        expect(client.transport.options[:transport_options]).to include({ ssl: { verify: false } })
+        expect(client.transport.options[:transport_options][:headers]).to include('Authorization' => 'ApiKey elasticsearch_api_key')
+      end
+    end
+
+    context 'when other headers and options were specified' do
+      let(:client) do
+        described_class.new(
+          api_key: 'elasticsearch_api_key',
+          transport_options: {
+            headers: { 'x-test-header' => 'test' },
+            ssl: { verify: false }
+          }
+        )
+      end
+
+      it 'Adds the ApiKey header to the connection and keeps the header' do
+        header = client.transport.connections.first.connection.headers
+        expect(header['X-Test-Header']).to eq('test')
+        expect(header['Authorization']).to eq('ApiKey elasticsearch_api_key')
+        expect(client.transport.options[:transport_options]).to include({ ssl: { verify: false } })
+        expect(client.transport.options[:transport_options][:headers]).to include('Authorization' => 'ApiKey elasticsearch_api_key')
       end
     end
 
