@@ -1,4 +1,12 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
+
+## 8.5.1 Release notes
+
+### Bugfix
+
+Fixes bug when instantiating client with `api_key`: When passing in `api_key` and `transport_options` that don't include headers to the client, the `api_key` code would overwrite the arguments passed in for `transport_options`. This was fixed in [this Pull Request](https://github.com/elastic/elasticsearch-ruby/pull/1941/files).
+Thanks [svdasein](https://github.com/svdasein) for reporting in [#1940](https://github.com/elastic/elasticsearch-ruby/issues/1940).
+
 ## 8.5.0 Release notes
 
 - Tested versions of Ruby for 8.5.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
