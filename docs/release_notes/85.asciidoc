@@ -2,6 +2,16 @@
 === 8.5 Release notes
 
 [discrete]
+[[release_notes_851]]
+=== 8.5.1 Release notes
+
+[discrete]
+==== Bugfixes
+
+Fixes bug when instantiating client with `api_key`: When passing in `api_key` and `transport_options` that don't include headers to the client, the `api_key` code would overwrite the arguments passed in for `transport_options`. This was fixed in https://github.com/elastic/elasticsearch-ruby/pull/1941/files[this Pull Request].
+Thanks @svdasein for reporting in https://github.com/elastic/elasticsearch-ruby/issues/1940[#1940].
+
+[discrete]
 [[release_notes_850]]
 === 8.5.0 Release notes
 
