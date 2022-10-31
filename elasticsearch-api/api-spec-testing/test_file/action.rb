@@ -122,6 +122,12 @@ module Elasticsearch
                 @response = client.send(_method, prepare_arguments(args, test))
               end
               client
+            when 'update_user_profile_data', 'get_user_profile', 'enable_user_profile', 'disable_user_profile'
+              args.each do |key, value|
+                args[key] = value.gsub(value, test.cached_values[value.gsub('$', '')]) if value.match?(/^\$/)
+              end
+              @response = client.send(_method, prepare_arguments(args, test))
+              client
             else
               @response = client.send(_method, prepare_arguments(args, test))
               client
