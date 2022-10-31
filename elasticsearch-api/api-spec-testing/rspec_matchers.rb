@@ -42,6 +42,14 @@ end
 # Validate that a field is `true`.
 RSpec::Matchers.define :match_true_field do |field, test|
   match do |response|
+    # TODO: Refactor! split_key for is_true
+    if (match = field.match(/(^\$[a-z]+)/))
+      keys = field.split('.')
+      keys.delete(match[1])
+      dynamic_key = test.cached_values[match[1].gsub('$', '')]
+      return !!dynamic_key.dig(*keys)
+    end
+
     # Handle is_true: ''
     return !!response if field == ''
 
