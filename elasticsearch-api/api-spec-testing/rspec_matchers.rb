@@ -189,10 +189,24 @@ RSpec::Matchers.define :match_response do |pairs, test|
 
   def compare_hash(expected_pairs, actual_hash, test)
     expected_pairs.each do |expected_key, expected_value|
-      # Find the value to compare in the response
-      split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
-        # Sometimes the expected *key* is a cached value from a previous request.
-        test.get_cached_value(k)
+      # TODO: Refactor! split_key
+      if (match = expected_key.match(/(^\$[a-z]+)/))
+        keys = expected_key.split('.')
+        keys.delete(match[1])
+        dynamic_key = test.cached_values[match[1].gsub('$', '')]
+        value = dynamic_key.dig(*keys)
+
+        if expected_pairs.values.first.is_a?(String) && expected_pairs.values.first.match?(/^\$/)
+          return test.cached_values[expected_pairs.values.first.gsub('$','')] == value
+        else
+          return expected_pairs.values.first == value
+        end
+
+      else
+        split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
+          # Sometimes the expected *key* is a cached value from a previous request.
+          test.get_cached_value(k)
+        end
       end
       # We now accept 'nested.keys' so let's try the previous implementation and if that doesn't
       # work, try with the nested key, otherwise, raise exception.
