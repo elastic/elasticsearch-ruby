@@ -59,6 +59,16 @@ to connect to your Elastic Cloud instance, as follows:
 ------------------------------------
 client = Elasticsearch::Client.new(
   cloud_id: '<CloudID>',
+  api_key: '<ApiKey>'
+)
+------------------------------------
+
+If you create the API Key through the dev console or the REST API, you may get instead a pair of `id` and `APIKey` values. The client also accepts a Hash for the `api_key` parameter, so you can pass in these values and it will encode the API Key internally:
+
+[source,ruby]
+------------------------------------
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
   api_key: {id: '<Id>', api_key: '<APIKey>'}
 )
 ------------------------------------
