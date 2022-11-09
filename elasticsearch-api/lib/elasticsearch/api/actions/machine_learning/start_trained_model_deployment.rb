@@ -32,6 +32,7 @@ module Elasticsearch
         # @option arguments [String] :cache_size A byte-size value for configuring the inference cache size. For example, 20mb.
         # @option arguments [Integer] :number_of_allocations The total number of allocations this model is assigned across machine learning nodes.
         # @option arguments [Integer] :threads_per_allocation The number of threads used by each model allocation during inference.
+        # @option arguments [String] :priority The deployment priority.
         # @option arguments [Integer] :queue_capacity Controls how many inference requests are allowed in the queue at a time.
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to deploy.
         # @option arguments [String] :wait_for The allocation status for which to wait (options: starting, started, fully_allocated)
