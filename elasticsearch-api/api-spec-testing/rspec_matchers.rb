@@ -323,6 +323,8 @@ RSpec::Matchers.define :match_error do |expected_error|
     when /error parsing field/
       message =~ /\[400\]/ ||
         actual_error.is_a?(Elastic::Transport::Transport::Errors::BadRequest)
+    when /NullPointerException/
+      message =~ /\[400\]/
     else
       message =~ /#{expected_error}/
     end
