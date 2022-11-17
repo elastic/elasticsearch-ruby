@@ -47,13 +47,12 @@ module Elasticsearch
 
           _name = arguments.delete(:name)
 
-          if _namespace && _service && _name
-            method = Elasticsearch::API::HTTP_PUT
-            path = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token/#{Utils.__listify(_name)}"
-          else
-            method = Elasticsearch::API::HTTP_POST
-            path = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token"
-          end
+          method = _name ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST
+          path   = if _namespace && _service && _name
+                     "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token/#{Utils.__listify(_name)}"
+                   else
+                     "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
