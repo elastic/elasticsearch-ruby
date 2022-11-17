@@ -171,6 +171,7 @@ module Elasticsearch
 
       def __http_method
         return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
+        return '_name ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @method_name == 'create_service_token'
         return post_and_get if @endpoint_name == 'count'
 
         default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
