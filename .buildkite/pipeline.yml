@@ -1,0 +1,3 @@
+steps:
+  - label: ":ruby: Greetings :ruby:"
+    command: "echo 'First pipeline for Elasticsearch Ruby!'"
