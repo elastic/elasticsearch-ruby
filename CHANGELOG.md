@@ -1,5 +1,12 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.5.2 Release notes
+
+### API Bugfix
+
+Fixes `security.create_service_token` API, uses `POST` when token name isn't present.
+Thanks [@carlosdelest](https://github.com/carlosdelest) for reporting in [#1961](https://github.com/elastic/elasticsearch-ruby/pull/1961).
+
 ## 8.5.1 Release notes
 
 ### Bugfix

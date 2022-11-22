@@ -2,6 +2,16 @@
 === 8.5 Release notes
 
 [discrete]
+[[release_notes_852]]
+=== 8.5.2 Release notes
+
+[discrete]
+==== API Bugfix
+
+Fixes `security.create_service_token` API, uses `POST` when token name isn't present.
+Thanks https://github.com/carlosdelest[@carlosdelest] for reporting in https://github.com/elastic/elasticsearch-ruby/pull/1961[#1961].
+
+[discrete]
 [[release_notes_851]]
 === 8.5.1 Release notes
 
