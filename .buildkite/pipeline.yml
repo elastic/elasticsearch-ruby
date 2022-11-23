@@ -1,3 +1,9 @@
 steps:
-  - label: ":ruby: Greetings :ruby:"
+  - label: ":ruby: Elasticsearch Ruby :ruby:"
     command: "echo 'First pipeline for Elasticsearch Ruby!'"
+  - label: ":elasticsearch: Run Elasticsearch"
+    agents:
+      provider: "gcp"
+    env:
+      DETACH: true
+    command: ./.buildkite/run-elasticsearch.sh
