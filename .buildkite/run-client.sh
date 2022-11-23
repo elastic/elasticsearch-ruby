@@ -6,6 +6,8 @@ script_path=$(dirname $(realpath -s $0))
 set -euo pipefail
 repo=`pwd`
 
+export RUBY_VERSION=${RUBY_VERSION:-3.1}
+
 docker build \
        --file $script_path/Dockerfile \
        --tag elastic/elasticsearch-ruby \
