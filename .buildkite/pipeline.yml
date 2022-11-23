@@ -11,5 +11,8 @@ steps:
     agents:
       provider: "gcp"
     env:
-      RUBY_VERSION: "3.1" # Needs to be a matrix
+      RUBY_VERSION: "{{ matrix }}"
+    matrix:
+      - "3.1"
+      - "2.7"
     command: ./.buildkite/run-client.sh

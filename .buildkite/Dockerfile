@@ -1,5 +1,5 @@
-ARG VERSION=${RUBY_VERSION}
-FROM ruby:${VERSION}
+ARG RUBY_VERSION=${RUBY_VERSION}
+FROM ruby:${RUBY_VERSION}
 
 # Default UID/GID to 1000
 # it can be overridden at build time
@@ -31,5 +31,6 @@ WORKDIR /usr/src/app
 USER ${BUILDER_USER}:${BUILDER_GROUP}
 
 RUN bundle install \
+    && echo "RUBY VERSION:$RUBY_VERSION" \
     && bundle exec rake bundle:clean \
     && rake bundle:install
