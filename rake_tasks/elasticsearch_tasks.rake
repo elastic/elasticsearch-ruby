@@ -117,4 +117,12 @@ namespace :elasticsearch do
     puts "Artifacts downloaded in ./tmp, build hash #{@build_hash}"
     File.write(CURRENT_PATH.join('tmp/rest-api-spec/build_hash'), @build_hash)
   end
+
+  desc 'Check Elasticsearch health'
+  task :health do
+    require 'elasticsearch'
+
+    client = Elasticsearch::Client.new
+    puts client.cluster.health
+  end
 end
