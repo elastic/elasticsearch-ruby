@@ -1,9 +1,15 @@
 steps:
-  - label: ":ruby: Elasticsearch Ruby :ruby:"
-    command: "echo 'First pipeline for Elasticsearch Ruby!'"
   - label: ":elasticsearch: Run Elasticsearch"
     agents:
       provider: "gcp"
     env:
       DETACH: true
     command: ./.buildkite/run-elasticsearch.sh
+    key: 'elasticsearch'
+  - label: ":ruby: Elasticsearch Ruby :ruby:"
+    depends_on: 'elasticsearch'
+    agents:
+      provider: "gcp"
+    env:
+      RUBY_VERSION: "3.1" # Needs to be a matrix
+    command: ./.buildkite/run-client.sh
