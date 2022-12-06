@@ -161,9 +161,14 @@ module Elasticsearch
           http = 'DELETE'
           path = '/_internal/desired_nodes/'
           body = args.delete('body')
-        when '_internal.get_desired_nodes'
+        when /_internal\.get_([a-z_]+)/
           http = 'GET'
-          path = '/_internal/desired_nodes/_latest'
+          path = case Regexp.last_match(1)
+                 when 'desired_nodes'
+                   '/_internal/desired_nodes/_latest'
+                 when 'desired_balance'
+                   '/_internal/desired_balance'
+                 end
           body = nil
         when '_internal.health'
           path = if args['feature']
