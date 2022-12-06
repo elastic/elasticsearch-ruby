@@ -55,8 +55,7 @@ module Elasticsearch
       def execute(client, test = nil)
         @definition.each.inject(client) do |client, (method_chain, args)|
           if method_chain.match?('_internal')
-            es_version = test.cached_values['es_version'] unless test.nil?
-            perform_internal(method_chain, args, client, es_version)
+            perform_internal(method_chain, args, client, test)
           else
             chain = method_chain.split('.')
             # If we have a method nested in a namespace, client becomes the
@@ -143,7 +142,8 @@ module Elasticsearch
       private
 
       # Executes operations not implemented by elasticsearch-api, such as _internal
-      def perform_internal(method, args, client, es_version)
+      def perform_internal(method, args, client, test)
+        es_version = test.cached_values['es_version'] unless test.nil?
         case method
         when '_internal.update_desired_nodes'
           http = 'PUT'
@@ -178,7 +178,12 @@ module Elasticsearch
                  end
           http = 'GET'
           body = args.delete('body')
+        when '_internal.prevalidate_node_removal'
+          path = '/_internal/prevalidate_node_removal'
+          http = 'POST'
+          body = args.delete('body')
         end
+        args = prepare_arguments(args, test)
         @response = Elasticsearch::API::Response.new(client.perform_request(http, path, args, body))
         client
       end
