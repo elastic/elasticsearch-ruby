@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/semantic-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.6/semantic-search.html
       #
       def semantic_search(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
