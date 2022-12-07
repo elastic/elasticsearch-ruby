@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-remote-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.6/cluster-remote-info.html
         #
         def remote_info(arguments = {})
           arguments = arguments.clone

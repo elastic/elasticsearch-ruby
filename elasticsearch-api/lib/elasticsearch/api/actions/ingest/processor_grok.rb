@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html#grok-processor-rest-get
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.6/grok-processor.html#grok-processor-rest-get
         #
         def processor_grok(arguments = {})
           arguments = arguments.clone
