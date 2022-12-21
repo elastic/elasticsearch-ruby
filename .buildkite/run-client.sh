@@ -15,13 +15,19 @@ docker build \
        --build-arg RUBY_VERSION=$RUBY_VERSION \
        .
 
-echo "--- :ruby: Running container"
+mkdir -p elasticsearch-api/tmp
+repo=`pwd`
+
+echo "--- :ruby: Running $TEST_SUITE tests"
 docker run \
        -u "$(id -u)" \
+       --network="${network_name}" \
+       --env "TEST_ES_SERVER=${elasticsearch_url}" \
+       --env "ELASTIC_PASSWORD=${elastic_password}" \
+       --env "TEST_SUITE=${TEST_SUITE}" \
+       --env "ELASTIC_USER=elastic" \
        --volume $repo:/usr/src/app \
-       --network=$network_name \
        --name elasticsearch-ruby \
-       --env ELASTICSEARCH_HOST=$elasticsearch_url \
        --rm \
        elastic/elasticsearch-ruby \
-       bundle exec rake elasticsearch:health
+       bundle exec rake elasticsearch:download_artifacts test:rest_api
