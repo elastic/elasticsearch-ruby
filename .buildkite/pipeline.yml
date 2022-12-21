@@ -3,8 +3,15 @@ steps:
     agents:
       provider: "gcp"
     env:
-      RUBY_VERSION: "{{ matrix }}"
+      RUBY_VERSION: "{{ matrix.ruby }}"
+      TEST_SUITE: "{{ matrix.suite }}"
+      STACK_VERSION: 8.5.3
     matrix:
-      - "3.1"
-      - "2.7"
+      setup:
+        suite:
+          - "free"
+          - "platinum"
+        ruby:
+          - "3.1"
+          - "2.7"
     command: ./.buildkite/run-tests.sh
