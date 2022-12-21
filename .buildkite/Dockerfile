@@ -14,5 +14,4 @@ USER ${BUILDER_USER}:${BUILDER_GROUP}
 RUN bundle install \
     && echo "RUBY VERSION:$RUBY_VERSION" \
     && bundle exec rake bundle:clean \
-    && rake bundle:install \
-    && curl http://127.0.0.1:9200
+    && rake bundle:install

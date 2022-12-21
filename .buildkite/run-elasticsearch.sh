@@ -9,6 +9,7 @@ script_path=$(dirname $(realpath -s $0))
 source $script_path/wait-for-container.sh
 export TEST_SUITE=${TEST_SUITE-free}
 export ES_NODE_NAME=es01
+export DETACH=true
 export elastic_password=changeme
 export elasticsearch_image=elasticsearch
 export elasticsearch_scheme="https"
@@ -26,6 +27,12 @@ export network_name='elastic'
 export ssl_cert="${script_path}/certs/testnode.crt"
 export ssl_key="${script_path}/certs/testnode.key"
 export ssl_ca="${script_path}/certs/ca.crt"
+
+echo "--- :elasticsearch: Environment setup"
+echo "TEST SUITE: $TEST_SUITE"
+echo "Elasticsearch URL: $elasticsearch_url"
+echo "External Elasticsearch URL: $external_elasticsearch_url"
+echo "Cluster name: $cluster_name"
 
 declare -a volumes
 environment=($(cat <<-END
@@ -78,7 +85,7 @@ if [[ "$TEST_SUITE" == "platinum" ]]; then
   cert_validation_flags="--insecure --cacert /usr/share/elasticsearch/config/certs/ca.crt --resolve ${es_node_name}:443:127.0.0.1"
 fi
 
-
+echo "--- :elasticsearch: Pull the container"
 # Pull the container, retry on failures up to 5 times with
 # short delays between each attempt. Fixes most transient network errors.
 docker_pull_attempts=0
@@ -90,6 +97,7 @@ do
   sleep 10
 done
 
+echo "--- :elasticsearch: Run Elasticsearch"
 docker run --name $ES_NODE_NAME \
        -u "$(id -u)" \
        --network elastic \
