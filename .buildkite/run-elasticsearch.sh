@@ -8,11 +8,9 @@
 script_path=$(dirname $(realpath -s $0))
 source $script_path/STACK_VERSION
 source $script_path/wait-for-container.sh
-
 ES_NODE_NAME=es01
 
 docker pull docker.elastic.co/elasticsearch/elasticsearch:$STACK_VERSION
-docker network create elastic
 docker run --name $ES_NODE_NAME \
        --net elastic \
        -p 9200:9200 \

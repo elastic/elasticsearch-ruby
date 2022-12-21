@@ -7,8 +7,13 @@
 script_path=$(dirname $(realpath -s $0))
 set -euo pipefail
 
-# Run Elasticsearch Docker Container
+echo "--- Create the elastic network"
+
+docker network create elastic
+
+echo "+++ :elasticsearch: Run Elasticsearch"
+
 DETACH=true bash $script_path/run-elasticsearch.sh
 
-# Run Client Docker Container
+echo "+++ :ruby: Run Client"
 bash $script_path/run-client.sh
