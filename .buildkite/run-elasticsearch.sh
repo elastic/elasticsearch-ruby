@@ -17,7 +17,7 @@ docker run --name $ES_NODE_NAME \
        --net elastic \
        -p 9200:9200 \
        --detach=$DETACH \
-       --health-cmd="curl --fail http://es1/_cluster/health || exit 1" \
+       --health-cmd="curl --fail http://$ES_NODE_NAME/_cluster/health || exit 1" \
        --health-interval=2s \
        --health-retries=20 \
        --health-timeout=2s \
