@@ -122,7 +122,9 @@ namespace :elasticsearch do
   task :health do
     require 'elasticsearch'
 
-    client = Elasticsearch::Client.new
+    puts "ELASTICSEARCH_HOST: #{ENV['ELASTICSEARCH_HOST]}"
+
+    client = Elasticsearch::Client.new(host: ELASTICSEARCH_HOST)
     puts client.cluster.health
   end
 end

@@ -21,6 +21,7 @@ docker run \
        --volume $repo:/usr/src/app \
        --network="elastic" \
        --name elasticsearch-ruby \
+       --env ELASTICSEARCH_HOST=$external_elasticsearch_url \
        --rm \
        elastic/elasticsearch-ruby \
        bundle exec rake elasticsearch:health
