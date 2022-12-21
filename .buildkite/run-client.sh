@@ -19,9 +19,9 @@ echo "--- :ruby: Running container"
 docker run \
        -u "$(id -u)" \
        --volume $repo:/usr/src/app \
-       --network="elastic" \
+       --network=$network_name \
        --name elasticsearch-ruby \
-       --env ELASTICSEARCH_HOST=$external_elasticsearch_url \
+       --env ELASTICSEARCH_HOST=$elasticsearch_url \
        --rm \
        elastic/elasticsearch-ruby \
        bundle exec rake elasticsearch:health
