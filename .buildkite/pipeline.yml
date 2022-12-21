@@ -1,5 +1,5 @@
 steps:
-  - label: ":elasticsearch: :ruby: Elasticsearch Ruby"
+  - label: ":elasticsearch: :ruby: ES Ruby ({{ matrix.ruby }}) Test Suite: {{ matrix.suite }}"
     agents:
       provider: "gcp"
     env:
