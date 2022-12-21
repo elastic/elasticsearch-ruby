@@ -124,7 +124,7 @@ namespace :elasticsearch do
 
     puts "ELASTICSEARCH_HOST: #{ENV['ELASTICSEARCH_HOST']}"
 
-    client = Elasticsearch::Client.new(host: ELASTICSEARCH_HOST)
+    client = Elasticsearch::Client.new(hosts: [ENV['ELASTICSEARCH_HOST']])
     puts client.cluster.health
   end
 end
