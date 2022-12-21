@@ -32,6 +32,8 @@ describe 'Rest API YAML tests' do
   REST_API_YAML_FILES.each do |file|
     begin
       test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
+      context_name = file.gsub("#{YAML_FILES_DIRECTORY}/", '')
+      puts "--- #{context_name}"
     rescue SkipTestsException => e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
@@ -39,7 +41,7 @@ describe 'Rest API YAML tests' do
       next
     end
 
-    context file.gsub("#{YAML_FILES_DIRECTORY}/", '') do
+    context context_name do
       let(:client) { DEFAULT_CLIENT }
 
       test_file.tests.each do |test|
@@ -49,7 +51,10 @@ describe 'Rest API YAML tests' do
             next
           end
 
-          before(:all) { test_file.setup }
+          before(:all) do
+            test_file.setup
+          end
+
           after(:all) do
             test_file.teardown
             Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
