@@ -1,13 +1,5 @@
 steps:
-  - label: ":elasticsearch: Run Elasticsearch"
-    agents:
-      provider: "gcp"
-    env:
-      DETACH: true
-    command: ./.buildkite/run-elasticsearch.sh
-    key: 'elasticsearch'
-  - label: ":ruby: Elasticsearch Ruby :ruby:"
-    depends_on: 'elasticsearch'
+  - label: ":elasticsearch: :ruby: Elasticsearch Ruby"
     agents:
       provider: "gcp"
     env:
@@ -15,4 +7,4 @@ steps:
     matrix:
       - "3.1"
       - "2.7"
-    command: ./.buildkite/run-client.sh
+    command: ./.buildkite/run-tests.sh

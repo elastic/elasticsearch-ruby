@@ -22,4 +22,3 @@ docker run \
        --rm \
        elastic/elasticsearch-ruby \
        bundle exec rake elasticsearch:health
-
