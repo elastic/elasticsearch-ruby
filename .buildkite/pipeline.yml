@@ -1,0 +1,41 @@
+steps:
+  - label: ":elasticsearch: :ruby: ES Ruby ({{ matrix.ruby }}) Test Suite: {{ matrix.suite }}"
+    agents:
+      provider: "gcp"
+    env:
+      RUBY_VERSION: "{{ matrix.ruby }}"
+      TEST_SUITE: "{{ matrix.suite }}"
+      STACK_VERSION: 8.6-SNAPSHOT
+    matrix:
+      setup:
+        suite:
+          - "free"
+          - "platinum"
+        ruby:
+          - "3.2"
+          - "3.1"
+          - "3.0"
+          - "2.7"
+      # Only run platinum once for the latest Ruby. You can use lots of combinations, check the
+      # documentation on https://buildkite.com/docs/pipelines/build-matrix for more information.
+      adjustments:
+        - with:
+            suite: "platinum"
+            ruby: "3.1"
+          skip: true
+        - with:
+            suite: "platinum"
+            ruby: "3.0"
+          skip: true
+        - with:
+            suite: "platinum"
+            ruby: "2.7"
+          skip: true
+    command: ./.buildkite/run-tests.sh
+    # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
+    # available in the Artifacts tab of a build in Buildkite.
+    artifact_paths: "elasticsearch-api/tmp/*"
+  - wait: ~
+    continue_on_failure: true
+  - label: "Log Results"
+    command: ./.buildkite/log-results.sh
