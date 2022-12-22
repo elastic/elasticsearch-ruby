@@ -25,3 +25,4 @@ steps:
             ruby: "2.7"
           skip: true
     command: ./.buildkite/run-tests.sh
+    artifact_paths: "elasticsearch-api/tmp/*"

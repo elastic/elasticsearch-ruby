@@ -61,8 +61,10 @@ RSpec.configure do |config|
   config.add_formatter('documentation')
   if ENV['TEST_SUITE'] == 'platinum'
     config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-platinum-junit.xml')
+    config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', 'tmp/elasticsearch-platinum.html')
   else
     config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
+    config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', 'tmp/elasticsearch.html')
   end
   config.color_mode = :on
 end
