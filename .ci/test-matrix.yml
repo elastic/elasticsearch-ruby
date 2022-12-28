@@ -1,8 +1,9 @@
 ---
 STACK_VERSION:
-  - 8.6.0-SNAPSHOT
+  - 8.6-SNAPSHOT
 
 RUBY_TEST_VERSION:
+- 3.2
 - 3.1
 - 3.0
 - 2.7
