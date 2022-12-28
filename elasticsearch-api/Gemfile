@@ -27,6 +27,7 @@ end
 group :development do
   gem 'rspec'
   gem 'rspec_junit_formatter'
+  gem 'rspec_html_reporter'
   if defined?(JRUBY_VERSION)
     gem 'pry-nav'
   else
