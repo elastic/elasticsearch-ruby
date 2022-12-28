@@ -23,7 +23,6 @@ steps:
             suite: "platinum"
             ruby: "3.1"
           skip: true
-      adjustments:
         - with:
             suite: "platinum"
             ruby: "3.0"
