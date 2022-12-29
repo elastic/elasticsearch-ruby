@@ -35,3 +35,6 @@ steps:
     # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
     # available in the Artifacts tab of a build in Buildkite.
     artifact_paths: "elasticsearch-api/tmp/*"
+  - wait
+  - label: "Log Results"
+    command: ./.buildkite/log-results.sh
