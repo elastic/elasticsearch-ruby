@@ -71,8 +71,12 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.formatter = 'documentation'
-  config.color_mode = :on
   config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
+  config.add_formatter(
+    'RSpec::Core::Formatters::HtmlFormatter',
+    "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html"
+  )
+  config.color_mode = :on
 end
 
 class NotFound < StandardError; end
