@@ -164,7 +164,7 @@ namespace :benchmark do
     task :download_dataset do
       current_path = File.expand_path(File.dirname(__FILE__))
       data_path = [current_path, 'data'].join('/')
-      unless File.exists?([data_path, 'stackoverflow.json'].join('/'))
+      unless File.exist?([data_path, 'stackoverflow.json'].join('/'))
         `gsutil cp gs://clients-team-files/stackoverflow.json "#{data_path}/"`
       end
     end
