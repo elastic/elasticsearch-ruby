@@ -1,0 +1,8 @@
+FROM node:18
+WORKDIR /usr/src/app
+COPY ./ /usr/src/app
+RUN npm install -g xunit-viewer
+RUN xunit-viewer --help
+RUN for f in '/usr/src/app/*.xml'; do \
+         report_name=`echo $f | awk '{ gsub("xml", "html"); print $0 }'` \
+         xunit-viewer -r $f -o $report_name; done
