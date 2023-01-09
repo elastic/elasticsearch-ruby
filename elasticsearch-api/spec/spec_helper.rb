@@ -74,7 +74,7 @@ RSpec.configure do |config|
   config.add_formatter('RspecJunitFormatter', 'tmp/elasticsearch-api-junit.xml')
   config.add_formatter(
     'RSpec::Core::Formatters::HtmlFormatter',
-    "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html"
+    "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-#{ENV['STACK_VERSION']}.html"
   )
   config.color_mode = :on
 end
