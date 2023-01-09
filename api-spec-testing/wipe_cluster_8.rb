@@ -45,7 +45,7 @@ module Elasticsearch
       def self.run(client)
         ensure_no_initializing_shards(client)
         wipe_cluster(client)
-        wait_for_cluster_tasks(client)
+        # wait_for_cluster_tasks(client)
         check_for_unexpectedly_recreated_objects(client)
       end
 
