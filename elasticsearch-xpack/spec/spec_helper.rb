@@ -53,6 +53,6 @@ RSpec.configure do |config|
   config.add_formatter('RspecJunitFormatter', '../elasticsearch-api/tmp/elasticsearch-xpack-junit.xml')
   config.add_formatter(
     'RSpec::Core::Formatters::HtmlFormatter',
-    "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html"
+    "../elasticsearch-api/tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-#{ENV['STACK_VERSION']}.html"
   )
 end

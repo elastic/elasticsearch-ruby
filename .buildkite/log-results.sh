@@ -7,9 +7,10 @@ buildkite-agent artifact download "elasticsearch-api/tmp/*.html" .
 files="elasticsearch-api/tmp/*.html"
 for f in $files; do
   TEST_SUITE=`echo $f | grep -o "\(free\|platinum\)"`
-  RUBY_VERSION=`echo $f | grep -Po "(\d+\.)+\d+"`
+  RUBY_VERSION=`echo $f | grep -Po "(\d+\.)+\d+" | head -1`
+  STACK_VERSION=`echo $f | grep -Po "([0-9.]+(-SNAPSHOT))"`
   EXAMPLES=`cat $f | grep -o "[0-9]\+ examples" | tail -1`
   FAILURES=`cat $f | grep -o "[0-9]\+ failures" | tail -1`
   PENDING=`cat $f | grep -o "[0-9]\+ pending" | tail -1`
-  echo "--- :ruby: $RUBY_VERSION :test_tube: $TEST_SUITE :rspec: $EXAMPLES - :x: $FAILURES - :pinched_fingers: $PENDING"
+  echo "--- :elasticsearch: $STACK_VERSION :ruby: $RUBY_VERSION :test_tube: $TEST_SUITE :rspec: $EXAMPLES - :x: $FAILURES - :pinched_fingers: $PENDING"
 done
