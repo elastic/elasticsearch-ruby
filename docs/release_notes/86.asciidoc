@@ -1,0 +1,23 @@
+[[release_notes_86]]
+=== 8.6 Release notes
+
+[discrete]
+[[release_notes_860]]
+=== 8.6.0 Release notes
+
+- Tested versions of Ruby for 8.6.0: Ruby (MRI) 2.7, 3.0, 3.1 and **3.2**. JRuby 9.3 and **JRuby 9.4**.
+
+[discrete]
+==== API
+
+[discrete]
+===== New APIs
+
+- `update_trained_model_deployment` - Updates certain properties of trained model deployment (This functionality is in Beta and is subject to change).
+
+[discrete]
+===== API Changes
+
+- `cluster.reroute` - `:metric` parameter adds `none` as an option.
+- `ml.start_trained_model_deployment` - New parameter `:priority` (String), the deployment priority
+
