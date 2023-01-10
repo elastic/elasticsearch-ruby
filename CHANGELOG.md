@@ -1,5 +1,19 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.6.0 Release notes
+
+- Tested versions of Ruby for 8.6.0: Ruby (MRI) 2.7, 3.0, 3.1 and **3.2**. JRuby 9.3 and **JRuby 9.4**.
+
+### New APIs
+
+- `update_trained_model_deployment` - Updates certain properties of trained model deployment (This functionality is in Beta and is subject to change).
+
+### API Changes
+
+- `cluster.reroute` - `:metric` parameter adds `none` as an option.
+- `ml.start_trained_model_deployment` - New parameter `:priority` (String), the deployment priority
+
+
 ## 8.5.2 Release notes
 
 ### API Bugfix
