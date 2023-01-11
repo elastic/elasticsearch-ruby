@@ -53,11 +53,13 @@ describe 'Rest API YAML tests' do
 
           before(:all) do
             test_file.setup
+            Elasticsearch::RestAPIYAMLTests::WipeCluster.create_xpack_rest_user(ADMIN_CLIENT) if ENV['TEST_SUITE'] == 'platinum'
           end
 
           after(:all) do
             test_file.teardown
             Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
+            Elasticsearch::RestAPIYAMLTests::WipeCluster.delete_xpack_rest_user(ADMIN_CLIENT) if ENV['TEST_SUITE'] == 'platinum'
           end
 
           test.task_groups.each do |task_group|

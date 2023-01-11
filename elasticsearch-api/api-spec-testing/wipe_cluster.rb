@@ -57,6 +57,13 @@ module Elasticsearch
         )
       end
 
+      def self.delete_xpack_rest_user(client)
+        client.security.delete_user(
+          username: 'x_pack_rest_user',
+          ignore: 404
+        )
+      end
+
       class << self
         private
 
