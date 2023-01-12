@@ -47,6 +47,7 @@ environment=($(cat <<-END
   --env action.destructive_requires_name=false
   --env ingest.geoip.downloader.enabled=false
   --env cluster.deprecation_indexing.enabled=false
+  --env indices.write_ack_delay_interval=1s
 END
 ))
 if [[ "$TEST_SUITE" == "platinum" ]]; then
