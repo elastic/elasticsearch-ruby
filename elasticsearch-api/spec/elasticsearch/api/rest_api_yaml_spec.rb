@@ -53,8 +53,8 @@ describe 'Rest API YAML tests' do
 
           before(:all) do
             test_file.setup
-            body = { index: { refresh_interval: '5s' } }
-            ADMIN_CLIENT.indices.put_settings(body: body, ignore: 404)
+            # body = { index: { refresh_interval: '5s' } }
+            # ADMIN_CLIENT.indices.put_settings(body: body, ignore: 404)
           end
 
           after(:all) do
