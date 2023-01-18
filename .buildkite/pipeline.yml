@@ -64,6 +64,4 @@ steps:
     agents:
       provider: "gcp"
     command: ./.buildkite/junit-report.sh
-    artifact_paths:
-      - "**/**/*.html"
-      - "elasticsearch-api/tmp/*"
+    artifact_paths: "/usr/src/app/elasticsearch-api/tmp/*"
