@@ -16,7 +16,6 @@ docker build \
        .
 
 mkdir -p elasticsearch-api/tmp
-repo=`pwd`
 
 echo "--- :ruby: Running $TEST_SUITE tests"
 docker run \
