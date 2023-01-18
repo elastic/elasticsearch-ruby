@@ -5,4 +5,5 @@ RUN npm install -g xunit-viewer
 RUN xunit-viewer --help
 RUN for f in '/usr/src/app/elasticsearch-api/tmp/*.xml'; do \
          report_name=`echo $f | awk '{ gsub("xml", "html"); print $0 }'` \
+         echo $report_name \
          xunit-viewer -r $f -o $report_name; done
