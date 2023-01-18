@@ -3,8 +3,6 @@ WORKDIR /usr/src/app
 COPY ./ /usr/src/app
 RUN npm install -g xunit-viewer
 RUN xunit-viewer --help
-RUN echo "PWD `pwd`"
-RUN ls
-RUN for f in '/usr/src/app/*.xml'; do \
+RUN for f in '/usr/src/app/elasticsearch-api/tmp/*.xml'; do \
          report_name=`echo $f | awk '{ gsub("xml", "html"); print $0 }'` \
          xunit-viewer -r $f -o $report_name; done
