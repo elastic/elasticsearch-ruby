@@ -14,3 +14,6 @@ docker run \
        --volume $repo:/usr/src/app \
        --rm \
        junit-report
+
+echo "PWD: `pwd`"
+ls elasticsearch-api/tmp
