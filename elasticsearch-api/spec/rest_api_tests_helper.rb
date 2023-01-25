@@ -14,6 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
+require 'faraday/net_http_persistent'
 
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/test_file"
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/rspec_matchers"

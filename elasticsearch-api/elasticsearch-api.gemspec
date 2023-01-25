@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
+  s.add_development_dependency 'faraday-net_http_persistent'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
   s.add_development_dependency 'mocha'
