@@ -11,5 +11,5 @@ for f in $files; do
   EXAMPLES=`cat $f | grep -o "[0-9]\+ examples" | tail -1`
   FAILURES=`cat $f | grep -o "[0-9]\+ failures" | tail -1`
   PENDING=`cat $f | grep -o "[0-9]\+ pending" | tail -1`
-  echo "--- :ruby: $RUBY_VERSION :test_tube: $TEST_SUITE :rspec: $EXAMPLES - :x: $FAILURES - :pinched_fingers: $PENDING"
+  echo "+++ :ruby: $RUBY_VERSION :test_tube: $TEST_SUITE :rspec: $EXAMPLES - :x: $FAILURES - :pinched_fingers: $PENDING"
 done
