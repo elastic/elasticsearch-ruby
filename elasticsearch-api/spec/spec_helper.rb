@@ -32,6 +32,7 @@ require 'elasticsearch'
 require 'elasticsearch-api'
 require 'openssl'
 require 'logger'
+require_relative "./rspec_formatter.rb"
 
 tracer = ::Logger.new(STDERR)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }
@@ -61,6 +62,7 @@ RSpec.configure do |config|
   config.add_formatter('documentation')
   config.add_formatter('RspecJunitFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-junit.xml")
   config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
+  config.add_formatter('RSpecCustomFormatter')
   config.color_mode = :on
 end
 
