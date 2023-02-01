@@ -25,7 +25,6 @@ module Elasticsearch
         # Starts one or more transforms.
         #
         # @option arguments [String] :transform_id The id of the transform to start
-        # @option arguments [String] :from Restricts the set of transformed entities to those changed after this time
         # @option arguments [Time] :timeout Controls the time to wait for the transform to start
         # @option arguments [Hash] :headers Custom HTTP headers
         #
