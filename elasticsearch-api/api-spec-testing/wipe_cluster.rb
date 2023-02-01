@@ -150,11 +150,11 @@ module Elasticsearch
 
         def wait_for_pending_rollup_tasks(client)
           filter = 'xpack/rollup/job'
+          time = Time.now.to_i
           loop do
             results = client.cat.tasks(detailed: true).split("\n")
             count = 0
 
-            time = Time.now.to_i
             results.each do |task|
               next if task.empty? || skippable_task?(task)
 
@@ -257,9 +257,9 @@ module Elasticsearch
           client.indices.delete_template(name: '*')
           begin
             client.indices.delete_index_template(name: '*')
-            client.cluster.delete_component_template(name: '*')
+            client.cluster.delete_component_template(name: '*', ignore: 400)
           rescue StandardError => e
-            logger.info('Using a version of ES that doesn\'t support index templates v2 yet, so it\'s safe to ignore')
+            logger.info(e)
           end
         end
 
@@ -273,7 +273,6 @@ module Elasticsearch
         def wait_for_cluster_tasks(client)
           time = Time.now.to_i
           count = 0
-
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
