@@ -150,19 +150,19 @@ module Elasticsearch
 
         def wait_for_pending_rollup_tasks(client)
           filter = 'xpack/rollup/job'
-          time = Time.now.to_i
+          start_time = Time.now.to_i
+          count = 0
           loop do
             results = client.cat.tasks(detailed: true).split("\n")
-            count = 0
 
             results.each do |task|
               next if task.empty? || skippable_task?(task)
 
-              logger.debug("Pending task: #{task}")
               count += 1 if task.include?(filter)
             end
-            break unless count.positive? && Time.now.to_i < (time + 30)
+            break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
+          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.")
         end
 
         def delete_all_slm_policies(client)
@@ -271,7 +271,7 @@ module Elasticsearch
         end
 
         def wait_for_cluster_tasks(client)
-          time = Time.now.to_i
+          start_time = Time.now.to_i
           count = 0
           loop do
             results = client.cluster.pending_tasks
@@ -279,11 +279,11 @@ module Elasticsearch
 
               next if task.empty? || skippable_task?(task)
 
-              logger.debug "Pending cluster task: #{task}"
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (time + 30)
+            break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
+          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.")
         end
 
         def skippable_task?(task)
