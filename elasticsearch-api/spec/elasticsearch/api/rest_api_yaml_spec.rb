@@ -33,7 +33,6 @@ describe 'Rest API YAML tests' do
     begin
       test_file = Elasticsearch::RestAPIYAMLTests::TestFile.new(file, ADMIN_CLIENT, REST_API_YAML_SKIP_FEATURES)
       context_name = file.gsub("#{YAML_FILES_DIRECTORY}/", '')
-      puts "--- #{context_name}"
     rescue SkipTestsException => e
       # If the test file has a `skip` at the top level that applies to this
       # version of Elasticsearch, continue with the next text.
