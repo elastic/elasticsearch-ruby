@@ -71,11 +71,7 @@ module Elasticsearch
           wipe_snapshots(client)
           wipe_datastreams(client)
           wipe_all_indices(client)
-          if platinum?
-            wipe_templates_for_xpack(client)
-          else
-            wipe_all_templates(client)
-          end
+          wipe_all_templates(client)
           wipe_cluster_settings(client)
           if platinum?
             clear_ml_jobs(client)
@@ -221,7 +217,7 @@ module Elasticsearch
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         end
 
-        def wipe_templates_for_xpack(client)
+        def wipe_all_templates(client)
           templates = client.indices.get_index_template
 
           templates['index_templates'].each do |template|
@@ -250,16 +246,6 @@ module Elasticsearch
             rescue StandardError => e
               logger.info("Unable to remove index template #{name}")
             end
-          end
-        end
-
-        def wipe_all_templates(client)
-          client.indices.delete_template(name: '*')
-          begin
-            client.indices.delete_index_template(name: '*')
-            client.cluster.delete_component_template(name: '*', ignore: 400)
-          rescue StandardError => e
-            logger.info(e)
           end
         end
 
