@@ -156,13 +156,13 @@ module Elasticsearch
             results = client.cat.tasks(detailed: true).split("\n")
 
             results.each do |task|
-              next if task.empty? || skippable_task?(task)
+              next if task.empty? || skippable_task?(task) || task.include?(filter)
 
-              count += 1 if task.include?(filter)
+              count += 1
             end
             break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
-          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.") if count.positive?
+          logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def delete_all_slm_policies(client)
@@ -283,7 +283,7 @@ module Elasticsearch
             end
             break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
-          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.") if count.positive?
+          logger.debug("Waited for #{count} pending cluster tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def skippable_task?(task)
