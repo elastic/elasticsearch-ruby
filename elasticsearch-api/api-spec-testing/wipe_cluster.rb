@@ -160,7 +160,7 @@ module Elasticsearch
 
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (start_time + 30)
+            break unless count.positive? && Time.now.to_i < (start_time + 5)
           end
           logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
@@ -281,7 +281,7 @@ module Elasticsearch
 
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (start_time + 30)
+            break unless count.positive? && Time.now.to_i < (start_time + 5)
           end
           logger.debug("Waited for #{count} pending cluster tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
