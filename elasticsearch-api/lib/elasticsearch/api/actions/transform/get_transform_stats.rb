@@ -27,7 +27,6 @@ module Elasticsearch
         # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
         # @option arguments [Number] :from skips a number of transform stats, defaults to 0
         # @option arguments [Number] :size specifies a max number of transform stats to get, defaults to 100
-        # @option arguments [Time] :timeout Controls the time to wait for the stats
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no transforms. (This includes `_all` string or when no transforms have been specified)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
