@@ -111,12 +111,12 @@ module Elasticsearch
           templates = client.indices.get_index_template
           unexpected_templates = templates['index_templates'].reject do |t|
             # reject platinum templates
-            PLATINUM_TEMPLATES.include? t['name']
+            platinum_template?(t['name'])
           end.map { |t| t['name'] } # only keep the names
           legacy_templates = client.indices.get_template
-          unexpected_templates << legacy_templates.keys.reject { |t| PLATINUM_TEMPLATES.include? t }
+          unexpected_templates << legacy_templates.keys.reject { |t| platinum_template?(t) }
 
-          unless unexpected_templates.empty?
+          unless unexpected_templates.reject(&:empty?).empty?
             logger.info(
               "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
             )
@@ -162,7 +162,7 @@ module Elasticsearch
             end
             break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
-          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.")
+          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def delete_all_slm_policies(client)
@@ -243,7 +243,7 @@ module Elasticsearch
           # Always check for legacy templates
           templates = client.indices.get_template
           templates.each do |name, _|
-            next if platinum_template? name
+            next if platinum_template?(name)
 
             begin
               client.indices.delete_template(name: name)
@@ -264,8 +264,8 @@ module Elasticsearch
         end
 
         def platinum_template?(template)
-          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'deprecation', 'data-streams-mappings'].freeze
-          platinum_prefixes.map { |a| return true if a.include? template }
+          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', '.deprecation', 'data-streams-mappings', '.fleet'].freeze
+          return true if template.start_with?(*platinum_prefixes)
 
           PLATINUM_TEMPLATES.include? template
         end
@@ -283,7 +283,7 @@ module Elasticsearch
             end
             break unless count.positive? && Time.now.to_i < (start_time + 30)
           end
-          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.")
+          logger.debug("Waited for #{count} pending tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def skippable_task?(task)
