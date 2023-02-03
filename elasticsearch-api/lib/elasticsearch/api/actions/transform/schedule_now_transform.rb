@@ -20,34 +20,29 @@
 #
 module Elasticsearch
   module API
-    module MachineLearning
+    module Transform
       module Actions
-        # Updates certain properties of trained model deployment.
-        # This functionality is in Beta and is subject to change. The design and
-        # code is less mature than official GA features and is being provided
-        # as-is with no warranties. Beta features are not subject to the support
-        # SLA of official GA features.
+        # Schedules now a transform.
         #
-        # @option arguments [String] :model_id The unique identifier of the trained model.
+        # @option arguments [String] :transform_id The id of the transform. (*Required*)
+        # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The updated trained model deployment settings (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-trained-model-deployment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/schedule-now-transform.html
         #
-        def update_trained_model_deployment(arguments = {})
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
+        def schedule_now_transform(arguments = {})
+          raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
-          _model_id = arguments.delete(:model_id)
+          _transform_id = arguments.delete(:transform_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_update"
-          params = {}
+          path   = "_transform/#{Utils.__listify(_transform_id)}/_schedule_now"
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)
