@@ -35,7 +35,7 @@ namespace :docker do
     abort 'You need to set a version, e.g. rake docker:start[7.x-SNAPSHOT]' unless params[:version]
 
     test_suite = params[:suite] || 'free'
-    system("STACK_VERSION=#{params[:version]} TEST_SUITE=#{test_suite} ./.ci/run-elasticsearch.sh")
+    system("STACK_VERSION=#{params[:version]} TEST_SUITE=#{test_suite} ./.buildkite/run-elasticsearch.sh")
   end
 end
 
