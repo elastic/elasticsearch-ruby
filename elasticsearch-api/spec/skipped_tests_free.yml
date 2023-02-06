@@ -32,3 +32,6 @@
 -
   :file: 'cluster.desired_nodes/10_basic.yml'
   :description: 'Test update desired nodes is idempotent with different order'
+-
+  :file: 'cluster.desired_balance/10_basic.yml'
+  :description: 'Test cluster_balance_stats'
