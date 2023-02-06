@@ -25,6 +25,7 @@ docker run \
        --env "ELASTIC_PASSWORD=${elastic_password}" \
        --env "TEST_SUITE=${TEST_SUITE}" \
        --env "ELASTIC_USER=elastic" \
+       --env "BUILDKITE=true" \
        --volume $repo:/usr/src/app \
        --name elasticsearch-ruby \
        --rm \
