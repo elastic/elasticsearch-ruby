@@ -29,11 +29,11 @@ password = ENV['ELASTIC_PASSWORD'] || 'changeme'
 uri = URI.parse(host)
 
 if test_suite == 'platinum'
-  raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
+  raw_certificate = File.read(File.join(PROJECT_PATH, '../.buildkite/certs/testnode.crt'))
   certificate = OpenSSL::X509::Certificate.new(raw_certificate)
-  raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
+  raw_key = File.read(File.join(PROJECT_PATH, '../.buildkite/certs/testnode.key'))
   key = OpenSSL::PKey::RSA.new(raw_key)
-  ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
+  ca_file = File.expand_path(File.join(PROJECT_PATH, '/.buildkite/certs/ca.crt'))
   host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
   transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
 else
