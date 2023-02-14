@@ -59,8 +59,8 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.add_formatter('documentation')
-  config.add_formatter('RspecJunitFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-junit.xml")
   config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
+  require_relative '../api-spec-testing/html_printer.rb'
   if ENV['BUILDKITE']
     require_relative "./rspec_formatter.rb"
     config.add_formatter('RSpecCustomFormatter')
