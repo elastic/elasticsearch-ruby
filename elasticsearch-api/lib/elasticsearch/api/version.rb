@@ -17,6 +17,6 @@
 
 module Elasticsearch
   module API
-    VERSION = '8.6.2'.freeze
+    VERSION = '8.6.3'.freeze
   end
 end
