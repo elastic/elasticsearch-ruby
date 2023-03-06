@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
   s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters'
+  s.add_development_dependency 'minitest-reporters', '>= 1.6'
   s.add_development_dependency 'mocha'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
