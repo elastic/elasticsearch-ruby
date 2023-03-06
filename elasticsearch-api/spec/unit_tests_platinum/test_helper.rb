@@ -26,7 +26,7 @@ require 'ansi'
 require 'elasticsearch'
 require 'elasticsearch/api'
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new(print_failure_summary: true)
 
 module Minitest
   class Test
