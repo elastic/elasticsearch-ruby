@@ -32,6 +32,9 @@ cleanup_node $es_node_name
 master_node_name=${es_node_name}
 cluster_name=${moniker}${suffix}
 
+# Set vm.max_map_count kernel setting to 262144
+sudo sysctl -w vm.max_map_count=262144
+
 declare -a volumes
 environment=($(cat <<-END
   --env ELASTIC_PASSWORD=$elastic_password
@@ -146,5 +149,4 @@ END
   if wait_for_container "$es_node_name" "$network_name"; then
     echo -e "\033[32;1mSUCCESS:\033[0m Running on: $node_url\033[0m"
   fi
-
 done
