@@ -8,9 +8,6 @@ script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
 set -euo pipefail
 
-echo "--- Create the elastic network"
-docker network create elastic
-
 echo "--- :elasticsearch: Starting Elasticsearch"
 DETACH=true bash $script_path/run-elasticsearch.sh
 
