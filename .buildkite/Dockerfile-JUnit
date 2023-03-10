@@ -5,6 +5,6 @@ RUN npm install -g xunit-viewer
 RUN xunit-viewer --help
 RUN ls ./elasticsearch-api/tmp
 RUN for f in '/usr/src/app/elasticsearch-api/tmp/*.xml'; do \
-        xunit-viewer -r $f -o $f; done
+        xunit-viewer -r $f -o $f.html; done
 RUN find -name "*.html"
 RUN echo "ls inside container"; ls ./elasticsearch-api/tmp

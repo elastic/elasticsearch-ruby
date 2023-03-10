@@ -12,7 +12,7 @@ docker build --file $script_path/Dockerfile-JUnit -t junit-report .
 
 docker run \
        --volume $repo:/usr/src/app \
-       --mount type=bind,source=$repo/elasticsearch-api/tmp,target=/usr/src/app/elasticsearch-api/tmp,bind-propagation=shared \
+       --volume $repo/elasticsearch-api/tmp:/usr/src/app/elasticsearch-api/tmp \
        --rm \
        junit-report
 
