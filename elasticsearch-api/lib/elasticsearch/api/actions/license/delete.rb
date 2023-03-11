@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-license.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/delete-license.html
         #
         def delete(arguments = {})
           arguments = arguments.clone

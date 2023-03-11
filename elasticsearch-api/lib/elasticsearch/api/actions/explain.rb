@@ -40,7 +40,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The query definition using the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/search-explain.html
       #
       def explain(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

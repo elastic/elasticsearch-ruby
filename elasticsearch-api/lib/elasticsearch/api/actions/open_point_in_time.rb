@@ -31,7 +31,7 @@ module Elasticsearch
       # @option arguments [String] :keep_alive Specific the time to live for the point in time (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/point-in-time-api.html
       #
       def open_point_in_time(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

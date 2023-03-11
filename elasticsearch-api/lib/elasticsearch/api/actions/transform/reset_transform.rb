@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the transform to reset
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/reset-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/reset-transform.html
         #
         def reset_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
