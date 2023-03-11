@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of service token names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-service-token-caches.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/security-api-clear-service-token-caches.html
         #
         def clear_cached_service_tokens(arguments = {})
           raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]

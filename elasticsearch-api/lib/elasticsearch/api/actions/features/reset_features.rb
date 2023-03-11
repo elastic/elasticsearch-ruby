@@ -30,7 +30,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/modules-snapshots.html
         #
         def reset_features(arguments = {})
           arguments = arguments.clone

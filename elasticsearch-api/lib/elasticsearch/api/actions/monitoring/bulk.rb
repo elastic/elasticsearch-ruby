@@ -37,7 +37,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/monitor-elasticsearch-cluster.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.7/monitor-elasticsearch-cluster.html
         #
         def bulk(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
