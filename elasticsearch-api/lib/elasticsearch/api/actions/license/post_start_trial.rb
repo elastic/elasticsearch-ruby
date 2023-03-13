@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from build hash cf0d0c8ed43ab23b6d73c430a66aca4e771fce20
 # @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
 #
 module Elasticsearch
