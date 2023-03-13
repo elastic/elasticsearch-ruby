@@ -18,7 +18,7 @@
 class RSpecCustomFormatter < RSpec::Core::Formatters::JsonFormatter
   RSpec::Core::Formatters.register self
 
-  LOGFILE = File.new('tmp/rspec_log.log', 'w')
+  LOGFILE = File.new("tmp/rspec-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.log", 'w')
 
   def close(_notification)
     @output_hash[:examples].map do |example|
