@@ -18,9 +18,6 @@ for f in $files; do
 "
 done
 
-# Get file names for failing tests
-# FAILED_TESTS=`awk 'BEGIN { FS = " | "}; /\| failed \|/{ print $1 }' 'elasticsearch-api/tmp/rspec_log.log' | uniq`
-
 files="elasticsearch-api/tmp/*.log"
 for f in $files; do
   FAILED_TESTS=`awk 'BEGIN { FS = " | "}; /\| failed \|/{ print $1 }' $f | uniq`
