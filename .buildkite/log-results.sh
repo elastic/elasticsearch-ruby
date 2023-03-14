@@ -25,11 +25,12 @@ for f in $files; do
     buildkite-agent annotate --append "
 #### Failures in $f
 "
-    for f in "${FAILED_TESTS[@]}"
+    FAILURES_ARRAY=($(echo $FAILED_TESTS | tr ' ' "\n"))
+    for f in "${FAILURES_ARRAY[@]}"
     do
       buildkite-agent annotate --append "
-$f
-      "
+- $f
+"
     done
   fi
 done
