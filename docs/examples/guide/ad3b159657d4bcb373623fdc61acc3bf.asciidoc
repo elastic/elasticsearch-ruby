@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.count(
+  index: 'my-index-000001',
+  q: 'user:kimchy'
+)
+puts response
+----

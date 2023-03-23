@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match: {
+        "user.id": 'elkbee'
+      }
+    }
+  }
+)
+puts response
+----

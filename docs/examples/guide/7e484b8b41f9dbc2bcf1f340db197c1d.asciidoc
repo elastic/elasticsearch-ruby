@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'my-index-000001'
+    },
+    dest: {
+      index: 'my-new-index-000001'
+    }
+  }
+)
+puts response
+----

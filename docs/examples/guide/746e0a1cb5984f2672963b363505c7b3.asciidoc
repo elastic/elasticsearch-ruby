@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        date: {
+          type: 'date',
+          format: 'strict_date_optional_time||epoch_second'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  id: 'example',
+  refresh: true,
+  body: {
+    date: 1_618_321_898
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    fields: [
+      {
+        field: 'date'
+      }
+    ],
+    _source: false
+  }
+)
+puts response
+----

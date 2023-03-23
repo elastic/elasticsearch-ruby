@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.clear_scroll(
-  scroll_id: '_all'
-)
-puts response
-----

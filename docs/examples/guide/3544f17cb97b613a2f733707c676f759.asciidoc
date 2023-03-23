@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      f: {
+        filters: {
+          filters: {
+            hats: {
+              term: {
+                type: 'hat'
+              }
+            },
+            t_shirts: {
+              term: {
+                type: 't-shirt'
+              }
+            }
+          }
+        },
+        aggregations: {
+          avg_price: {
+            avg: {
+              field: 'price'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

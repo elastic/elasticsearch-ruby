@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        kwd: {
+          type: 'keyword',
+          store: true
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'idx',
+  id: 1,
+  body: {
+    kwd: [
+      'foo',
+      'foo',
+      'bar',
+      'baz'
+    ]
+  }
+)
+puts response
+----

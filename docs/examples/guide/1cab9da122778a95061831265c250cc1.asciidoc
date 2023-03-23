@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      tags: {
+        type: 'keyword',
+        script: "\n        emit(doc['type'].value);\n        if (doc['promoted'].value) {\n          emit('hot');\n        }\n      "
+      }
+    },
+    aggregations: {
+      tags_count: {
+        value_count: {
+          field: 'tags'
+        }
+      }
+    }
+  }
+)
+puts response
+----

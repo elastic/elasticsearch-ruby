@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        long: {
+          type: 'long'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'idx',
+  id: 1,
+  body: {
+    long: [
+      0,
+      0,
+      -123_466,
+      87_612
+    ]
+  }
+)
+puts response
+----

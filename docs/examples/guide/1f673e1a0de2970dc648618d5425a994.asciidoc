@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.refresh
+puts response
+
+response = client.indices.refresh(
+  index: 'my-new-index-000001',
+  size: 0,
+  filter_path: 'hits.total'
+)
+puts response
+----

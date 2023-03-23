@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.count(
-  index: 'twitter',
-  q: 'user:kimchy'
-)
-puts response
-----
