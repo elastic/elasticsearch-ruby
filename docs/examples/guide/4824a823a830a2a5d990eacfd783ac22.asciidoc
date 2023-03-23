@@ -1,0 +1,38 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'my-index-000001',
+  body: {
+    slice: {
+      id: 0,
+      max: 2
+    },
+    query: {
+      range: {
+        "http.response.bytes": {
+          lt: 2_000_000
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.delete_by_query(
+  index: 'my-index-000001',
+  body: {
+    slice: {
+      id: 1,
+      max: 2
+    },
+    query: {
+      range: {
+        "http.response.bytes": {
+          lt: 2_000_000
+        }
+      }
+    }
+  }
+)
+puts response
+----

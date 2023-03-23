@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'my-index-000001,my-index-000002',
+  body: {
+    query: {
+      match_all: {}
+    }
+  }
+)
+puts response
+----

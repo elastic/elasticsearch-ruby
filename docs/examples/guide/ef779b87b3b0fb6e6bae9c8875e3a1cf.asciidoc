@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    runtime_mappings: {
+      "date.promoted_is_tomorrow": {
+        type: 'date',
+        script: "\n        long date = doc['date'].value.toInstant().toEpochMilli();\n        if (doc['promoted'].value) {\n          date += 86400;\n        }\n        emit(date);\n      "
+      }
+    },
+    aggregations: {
+      sales_over_time: {
+        date_histogram: {
+          field: 'date.promoted_is_tomorrow',
+          calendar_interval: '1M'
+        }
+      }
+    }
+  }
+)
+puts response
+----

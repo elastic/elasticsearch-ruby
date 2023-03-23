@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        date: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'idx',
+  id: 1,
+  body: {
+    date: [
+      '2015-01-01T12:10:30Z',
+      '2014-01-01T12:10:30Z'
+    ]
+  }
+)
+puts response
+----

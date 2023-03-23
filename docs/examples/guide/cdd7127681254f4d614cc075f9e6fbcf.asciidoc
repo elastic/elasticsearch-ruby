@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      term: {
+        "user.id": 'kimchy'
+      }
+    },
+    max_docs: 1
+  }
+)
+puts response
+----

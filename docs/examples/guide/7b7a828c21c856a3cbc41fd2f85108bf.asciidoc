@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.refresh
+puts response
+
+response = client.indices.refresh(
+  index: 'my-index-000001',
+  size: 0,
+  filter_path: 'hits.total',
+  body: {
+    query: {
+      range: {
+        "http.response.bytes": {
+          lt: 2_000_000
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    "user.id": 'kimchy'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  q: 'user:kimchy'
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      term: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.delete(
-  index: 'twitter'
-)
-puts response
-----

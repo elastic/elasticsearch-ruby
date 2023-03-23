@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-index-000001',
+  body: {
+    properties: {
+      email: {
+        type: 'keyword'
+      }
+    }
+  }
+)
+puts response
+----
