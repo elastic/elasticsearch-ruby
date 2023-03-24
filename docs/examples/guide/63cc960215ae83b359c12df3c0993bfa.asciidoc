@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      index: {
+        number_of_shards: 3,
+        number_of_replicas: 2
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001'
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000002'
+)
+puts response
+
+response = client.indices.create(
+  index: 'my-index-000001,my-index-000002',
+  body: {
+    properties: {
+      user: {
+        properties: {
+          name: {
+            type: 'keyword'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

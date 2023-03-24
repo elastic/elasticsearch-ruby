@@ -46,9 +46,11 @@ namespace :docs do
 
   def generate_docs(entry)
     file_name = "#{entry['digest']}.asciidoc"
-    api = entry['parsed_source'].first['api']
-    code = build_client_query(api, entry)
-    write_file(code, file_name)
+    unless entry['parsed_source'].empty?
+      api = entry['parsed_source'].first['api']
+      code = build_client_query(api, entry)
+      write_file(code, file_name)
+    end
   end
 
   def self.build_client_query(api, entry)

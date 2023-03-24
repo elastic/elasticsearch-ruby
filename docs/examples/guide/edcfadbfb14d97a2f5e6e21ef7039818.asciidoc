@@ -5,8 +5,7 @@ response = client.search(
     query: {
       function_score: {
         query: {
-          match_all: {
-          }
+          match_all: {}
         },
         boost: '5',
         functions: [
@@ -16,8 +15,7 @@ response = client.search(
                 test: 'bar'
               }
             },
-            random_score: {
-            },
+            random_score: {},
             weight: 23
           },
           {

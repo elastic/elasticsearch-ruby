@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      ip_addresses: {
+        terms: {
+          field: 'destination_ip',
+          missing: '0.0.0.0',
+          value_type: 'ip'
+        }
+      }
+    }
+  }
+)
+puts response
+----

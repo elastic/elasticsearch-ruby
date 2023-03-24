@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'my-index-000001',
+  scroll_size: 100
+)
+puts response
+----

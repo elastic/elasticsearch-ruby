@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'my-index-000001',
+      query: {
+        term: {
+          "user.id": 'kimchy'
+        }
+      }
+    },
+    dest: {
+      index: 'my-new-index-000001'
+    }
+  }
+)
+puts response
+----

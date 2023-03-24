@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    runtime_mappings: {
+      "date.day_of_week": {
+        type: 'keyword',
+        script: "emit(doc['date'].value.dayOfWeekEnum.getDisplayName(TextStyle.FULL, Locale.ROOT))"
+      }
+    },
+    aggregations: {
+      day_of_week: {
+        terms: {
+          field: 'date.day_of_week'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.get(
+  index: 'my-index-000001',
+  id: 0
+)
+puts response
+----

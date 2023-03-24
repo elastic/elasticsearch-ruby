@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'logs',
+  body: {
+    aliases: {
+      "<logs_{now/M}>": {}
+    }
+  }
+)
+puts response
+----

@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.search(
-  index: 'twitter',
-  size: 'surprise_me'
-)
-puts response
-----
