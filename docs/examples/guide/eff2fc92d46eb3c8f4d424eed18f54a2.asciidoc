@@ -5,12 +5,10 @@ response = client.search(
     query: {
       function_score: {
         query: {
-          match_all: {
-          }
+          match_all: {}
         },
         boost: '5',
-        random_score: {
-        },
+        random_score: {},
         boost_mode: 'multiply'
       }
     }

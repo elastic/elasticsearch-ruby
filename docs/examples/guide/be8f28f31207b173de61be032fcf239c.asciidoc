@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.get(
-  index: 'twitter'
-)
-puts response
-----

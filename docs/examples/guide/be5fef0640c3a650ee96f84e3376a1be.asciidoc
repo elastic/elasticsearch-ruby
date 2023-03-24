@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.update(
+  index: 'test',
+  id: 1,
+  body: {
+    scripted_upsert: true,
+    script: {
+      source: "\n      if ( ctx.op == 'create' ) {\n        ctx._source.counter = params.count\n      } else {\n        ctx._source.counter += params.count\n      }\n    ",
+      params: {
+        count: 4
+      }
+    },
+    upsert: {}
+  }
+)
+puts response
+----

@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index',
+  body: {
+    query: {
+      bool: {
+        must_not: [
+          {
+            nested: {
+              path: 'comments',
+              query: {
+                term: {
+                  "comments.author": 'nik9000'
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+)
+puts response
+----

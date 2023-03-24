@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cluster.health(
+  index: 'my-index-000001',
+  level: 'shards'
+)
+puts response
+----

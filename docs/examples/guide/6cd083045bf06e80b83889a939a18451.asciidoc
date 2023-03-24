@@ -86,8 +86,7 @@ response = client.indices.create(
         inner_hits: {
           highlight: {
             fields: {
-              "user.first": {
-              }
+              "user.first": {}
             }
           }
         }

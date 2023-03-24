@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.delete(
+  index: 'my-index-000001',
+  id: 1,
+  timeout: '5m'
+)
+puts response
+----

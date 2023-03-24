@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.get(
-  index: 'customer',
-  id: 1
-)
-puts response
-----

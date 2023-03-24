@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.indices.close(
+  index: 'my-index-000001'
+)
+puts response
+
+response = client.indices.close(
+  index: 'my-index-000001',
+  body: {
+    analysis: {
+      analyzer: {
+        content: {
+          type: 'custom',
+          tokenizer: 'whitespace'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.close(
+  index: 'my-index-000001'
+)
+puts response
+----
