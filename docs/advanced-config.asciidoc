@@ -212,7 +212,7 @@ You can also use the `transport_options` argument documented below.
 
 If you pass multiple hosts to the client, it rotates across them in a 
 round-robin fashion by default. When the same client would be running in 
-multiple processes (for exaample, in a Ruby web server such as Thin), it might 
+multiple processes (for example, in a Ruby web server such as Thin), it might 
 keep connecting to the same nodes "at once". To prevent this, you can randomize 
 the hosts collection on initialization and reloading:
 
