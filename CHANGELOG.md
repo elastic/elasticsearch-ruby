@@ -1,5 +1,21 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.7.0 Release notes
+
+- Tested versions of Ruby for 8.6.0: Ruby (MRI) 2.7, 3.0, 3.1 and **3.2**. JRuby 9.3 and JRuby 9.4. Ruby 2.7's end of life is coming in a few days, so this'll probably be the last release to test for Ruby 2.7.
+
+### New APIs
+
+- `health_report` - Returns the health of the cluster.
+- `transform.schedule_now_transform` - Schedules now a transform.
+
+### API Changes
+
+- `transform.get_transform_stats` - Adds `timeout` (Time) parameter. Controls the time to wait for the stats.
+- `transform.start_transform` - Adds `from` (String) parameter. Restricts the set of transformed entities to those changed after this time.
+- `ml.delete_job`, `ml.reset_job` - Add `delete_user_annotations` (Boolean) parameter. Should annotations added by the user be deleted.
+- `ml.clear_trained_model_deployment_cache`, `ml.infer_trained_model`, `ml.put_trained_model_definition_part`, `ml.put_trained_model_vocabulary`, `ml.start_trained_model_deployment`, `ml.stop_trained_model_deployment` - These APIs are no longer in Beta.
+
 ## 8.6.0 Release notes
 
 - Tested versions of Ruby for 8.6.0: Ruby (MRI) 2.7, 3.0, 3.1 and **3.2**. JRuby 9.3 and **JRuby 9.4**.
