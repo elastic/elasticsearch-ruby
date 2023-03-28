@@ -17,6 +17,7 @@
 
 require 'json'
 require 'fileutils'
+require 'logger'
 
 namespace :docs do
   SRC_FILE          = "#{__dir__}/docs/parsed_alternative_report.json".freeze
@@ -29,13 +30,11 @@ namespace :docs do
     FileUtils.remove_dir(TARGET_DIR)
     Dir.mkdir(TARGET_DIR)
 
-    # Only select the files in the EXAMPLES_TO_PARSE array and that are not
-    # console result examples
-    entries = json_data.select do |d|
-      EXAMPLES_TO_PARSE.include? d['source_location']['file']
-    end.select { |d| d['lang'] == 'console' }
-
-    entries.each do |entry|
+    entries = json_data.select { |d| d['lang'] == 'console' }
+    entries.each_with_index do |entry, index|
+      percentage = index * 100 / entries.length
+      print "\r" + ("\e[A\e[K") if index > 0
+      puts "Generating file #{index + 1} of #{entries.length} - #{percentage}% complete"
       generate_docs(entry)
     end
   end
@@ -45,11 +44,12 @@ namespace :docs do
   end
 
   def generate_docs(entry)
-    file_name = "#{entry['digest']}.asciidoc"
+    filename = "#{entry['digest']}.asciidoc"
     unless entry['parsed_source'].empty?
       api = entry['parsed_source'].first['api']
       code = build_client_query(api, entry)
-      write_file(code, file_name)
+      TestDocs::perform(code, filename)
+      write_file(code, filename)
     end
   end
 
@@ -63,7 +63,8 @@ namespace :docs do
       request_body << show_parameters(params) if params
       body = entry&.[]('body')
       request_body << show_body(body) if body
-      request_body = request_body.compact.join(",\n")
+      request_body = request_body.compact.join(",\n").gsub('null', 'nil')
+
       code = "response = client.#{api}(\n#{request_body}\n)\nputs response"
       client_query << format_code(code)
     end
@@ -76,7 +77,7 @@ namespace :docs do
       f.puts code
     end
     # Format code:
-    system("rubocop --config #{__dir__}/docs_rubocop_config.yml --format autogenconf -a ./temp.rb")
+    system("rubocop --config #{__dir__}/docs_rubocop_config.yml -o /dev/null -a ./temp.rb")
     # Read it back
     template = File.read('./temp.rb')
     File.delete('./temp.rb')
@@ -120,5 +121,30 @@ namespace :docs do
         ----
       SRC
     end
+  end
+end
+
+#
+# Test module to run the generated code
+#
+module TestDocs
+  require 'elasticsearch'
+  @formatter = -> (_, d, _, msg) { "#{d}: #{msg}" }
+
+  def self.perform(code, filename)
+    # Eval the example code, but remove printing out the response
+    eval(code.gsub('puts response', ''))
+  rescue Elastic::Transport::Transport::Error => e
+    logger = Logger.new('log/docs-generation-elasticsearch.log')
+    logger.formatter = @formatter
+    logger.info("Located in #{filename}: #{e.message}\n")
+  rescue ArgumentError => e
+    logger = Logger.new('log/docs-generation-client.log')
+    logger.formatter = @formatter
+    logger.info("Located in #{filename}: #{e.message}\n")
+  end
+
+  def self.client
+    @client ||= Elasticsearch::Client.new(trace: false, log: false)
   end
 end
