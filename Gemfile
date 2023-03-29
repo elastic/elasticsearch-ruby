@@ -17,8 +17,8 @@
 
 source 'https://rubygems.org'
 
-gem 'elasticsearch-api',        path: File.expand_path('../elasticsearch-api', __FILE__),        require: false
-gem 'elasticsearch',            path: File.expand_path('../elasticsearch', __FILE__),            require: false
+gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __FILE__), require: false
+gem 'elasticsearch',     path: File.expand_path('../elasticsearch', __FILE__), require: false
 
 gem 'ansi'
 gem 'cane'

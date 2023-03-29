@@ -48,6 +48,8 @@ namespace :docs do
   end
 
   def generate_docs(entry)
+    require 'elasticsearch'
+
     filename = "#{entry['digest']}.asciidoc"
     unless entry['parsed_source'].empty?
       api = entry['parsed_source'].first['api']
@@ -132,7 +134,6 @@ end
 # Test module to run the generated code
 #
 module TestDocs
-  require 'elasticsearch'
   @formatter = -> (_, d, _, msg) { "#{d}: #{msg}" }
 
   def self.perform(code, filename)
