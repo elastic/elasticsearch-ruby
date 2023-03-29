@@ -31,12 +31,16 @@ namespace :docs do
     Dir.mkdir(TARGET_DIR)
 
     entries = json_data.select { |d| d['lang'] == 'console' }
+    start_time = Time.now.to_i
     entries.each_with_index do |entry, index|
       percentage = index * 100 / entries.length
-      print "\r" + ("\e[A\e[K") if index > 0
-      puts "Generating file #{index + 1} of #{entries.length} - #{percentage}% complete"
+      hourglass = index.even? ? '⌛ ' : '⏳ '
+      print "\r" + ("\e[A\e[K" * 4) if index > 0
+      puts "📝 Generating file #{index + 1} of #{entries.length} - #{percentage}% complete"
+      puts hourglass + '▩' * (percentage / 2) + '⬚' * (50 - percentage / 2) + ' ' + hourglass
       generate_docs(entry)
     end
+    puts "Finished generating #{entries.length} files in #{Time.now.to_i - start_time} seconds"
   end
 
   def json_data
@@ -138,7 +142,7 @@ module TestDocs
     logger = Logger.new('log/docs-generation-elasticsearch.log')
     logger.formatter = @formatter
     logger.info("Located in #{filename}: #{e.message}\n")
-  rescue ArgumentError => e
+  rescue ArgumentError, NoMethodError => e
     logger = Logger.new('log/docs-generation-client.log')
     logger.formatter = @formatter
     logger.info("Located in #{filename}: #{e.message}\n")
