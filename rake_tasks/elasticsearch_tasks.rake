@@ -15,8 +15,6 @@
 # specific language governing permissions and limitations
 # under the License.
 
-ELASTICSEARCH_PATH = "#{CURRENT_PATH}/tmp/elasticsearch".freeze
-
 namespace :elasticsearch do
   desc 'Wait for elasticsearch cluster to be in green state'
   task :wait_for_green do
