@@ -141,7 +141,7 @@ end
 # Test module to run the generated code
 #
 module TestDocs
-  @formatter = -> (_, d, _, msg) { "#{d}: #{msg}" }
+  @formatter = -> (_, d, _, msg) { "[#{d}] : #{msg}" }
 
   def self.perform(code, filename)
     # Eval the example code, but remove printing out the response
