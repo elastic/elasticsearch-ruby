@@ -35,7 +35,7 @@ namespace :docs do
     entries.each_with_index do |entry, index|
       percentage = index * 100 / entries.length
       hourglass = index.even? ? '⌛ ' : '⏳ '
-      print "\r" + ("\e[A\e[K" * 4) if index > 0
+      print "\r" + ("\e[A\e[K" * 2) if index > 0
       puts "📝 Generating file #{index + 1} of #{entries.length} - #{percentage}% complete"
       puts hourglass + '▩' * (percentage / 2) + '⬚' * (50 - percentage / 2) + ' ' + hourglass
       generate_docs(entry)
@@ -70,8 +70,11 @@ namespace :docs do
       body = entry&.[]('body')
       request_body << show_body(body) if body
       request_body = request_body.compact.join(",\n").gsub('null', 'nil')
-
-      code = "response = client.#{api}(\n#{request_body}\n)\nputs response"
+      code = if api.include? '_internal'
+               "response = client.perform_request('#{entry['method']}', '#{api}', #{request_body})"
+             else
+               "response = client.#{api}(\n#{request_body}\n)\nputs response"
+             end
       client_query << format_code(code)
     end
     client_query.join("\n\n")
@@ -147,7 +150,7 @@ module TestDocs
     logger = Logger.new('log/docs-generation-elasticsearch.log')
     logger.formatter = @formatter
     logger.info("Located in #{filename}: #{e.message}\n")
-  rescue ArgumentError, NoMethodError => e
+  rescue ArgumentError, NoMethodError, TypeError => e
     logger = Logger.new('log/docs-generation-client.log')
     logger.formatter = @formatter
     logger.info("Located in #{filename}: #{e.message}\n")
