@@ -30,8 +30,6 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.6/logstash-api-get-pipeline.html
         #
         def get_pipeline(arguments = {})
-          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
-
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -40,7 +38,11 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_logstash/pipeline/#{Utils.__listify(_id)}"
+          path   = if _id
+                     "_logstash/pipeline/#{Utils.__listify(_id)}"
+                   else
+                     "_logstash/pipeline"
+                   end
           params = {}
 
           Elasticsearch::API::Response.new(
