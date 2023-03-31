@@ -82,8 +82,12 @@ namespace :docs do
     File.open('temp.rb', 'w') do |f|
       f.puts code
     end
-    # Format code:
-    system("rubocop --config #{__dir__}/docs_rubocop_config.yml -o /dev/null -a ./temp.rb")
+    # Format code with Rubocop
+    require 'rubocop'
+    options = "--config #{__dir__}/docs_rubocop_config.yml -o /dev/null -a ./temp.rb".split
+    cli = RuboCop::CLI.new
+    cli.run(options)
+
     # Read it back
     template = File.read('./temp.rb')
     File.delete('./temp.rb')
