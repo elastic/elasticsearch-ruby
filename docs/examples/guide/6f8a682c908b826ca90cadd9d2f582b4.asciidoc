@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    stored_fields: [
+      'user',
+      'postDate'
+    ],
+    query: {
+      term: {
+        user: 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

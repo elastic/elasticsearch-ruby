@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'music',
+  body: {
+    mappings: {
+      properties: {
+        suggest: {
+          type: 'completion'
+        }
+      }
+    }
+  }
+)
+puts response
+----

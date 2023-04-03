@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match: {
+        "manager.name": 'Alice White'
+      }
+    },
+    aggregations: {
+      "Employees": {
+        nested: {
+          path: 'employees'
+        },
+        aggregations: {
+          "Employee Ages": {
+            histogram: {
+              field: 'employees.age',
+              interval: 5
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

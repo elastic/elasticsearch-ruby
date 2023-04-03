@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      _meta: {
+        description: 'used for nginx log',
+        project: {
+          name: 'myProject',
+          department: 'myDepartment'
+        }
+      },
+      phases: {
+        warm: {
+          min_age: '10d',
+          actions: {
+            forcemerge: {
+              max_num_segments: 1
+            }
+          }
+        },
+        delete: {
+          min_age: '30d',
+          actions: {
+            delete: {}
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

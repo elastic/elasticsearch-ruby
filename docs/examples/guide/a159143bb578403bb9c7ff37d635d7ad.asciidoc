@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      {
+        type: 'predicate_token_filter',
+        script: {
+          source: "\n          token.term.length() > 3\n        "
+        }
+      }
+    ],
+    text: 'the fox jumps the lazy dog'
+  }
+)
+puts response
+----

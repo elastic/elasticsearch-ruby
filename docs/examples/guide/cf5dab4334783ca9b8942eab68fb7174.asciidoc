@@ -1,0 +1,44 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'products',
+  size: 0,
+  body: {
+    query: {
+      match: {
+        name: 'led tv'
+      }
+    },
+    aggregations: {
+      resellers: {
+        nested: {
+          path: 'resellers'
+        },
+        aggregations: {
+          filter_reseller: {
+            filter: {
+              bool: {
+                filter: [
+                  {
+                    term: {
+                      "resellers.reseller": 'companyB'
+                    }
+                  }
+                ]
+              }
+            },
+            aggregations: {
+              min_price: {
+                min: {
+                  field: 'resellers.price'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

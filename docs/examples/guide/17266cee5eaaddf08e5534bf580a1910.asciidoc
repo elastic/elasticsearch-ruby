@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.watcher.stats
+puts response
+----

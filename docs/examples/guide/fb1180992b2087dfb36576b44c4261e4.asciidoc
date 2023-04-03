@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-data-stream',
+  write_index_only: true,
+  body: {
+    properties: {
+      host: {
+        properties: {
+          ip: {
+            type: 'ip',
+            ignore_malformed: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

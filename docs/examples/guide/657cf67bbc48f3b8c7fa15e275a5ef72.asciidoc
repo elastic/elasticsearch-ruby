@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'logs-foo_component1',
+  body: {
+    template: {
+      mappings: {
+        properties: {
+          "host.name": {
+            type: 'keyword'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.render_search_template(
+  body: {
+    source: '{ "query": { "terms": { "tags": {{#toJson}}tags{{/toJson}} }}}',
+    params: {
+      tags: [
+        'prod',
+        'es01'
+      ]
+    }
+  }
+)
+puts response
+----

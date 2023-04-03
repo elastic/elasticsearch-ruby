@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_test_scores_2',
+  body: {
+    query: {
+      term: {
+        grad_year: '2099'
+      }
+    },
+    sort: [
+      {
+        total_score: {
+          order: 'desc'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

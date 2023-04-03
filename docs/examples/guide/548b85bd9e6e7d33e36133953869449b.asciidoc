@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "xpack.monitoring.collection.enabled": false
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    foo: [
+      {
+        bar: 1
+      },
+      {
+        baz: 2
+      }
+    ]
+  }
+)
+puts response
+----

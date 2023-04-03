@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.validate_query(
+  index: 'my-index-000001',
+  rewrite: true,
+  all_shards: true,
+  body: {
+    query: {
+      match: {
+        "user.id": {
+          query: 'kimchy',
+          fuzziness: 'auto'
+        }
+      }
+    }
+  }
+)
+puts response
+----

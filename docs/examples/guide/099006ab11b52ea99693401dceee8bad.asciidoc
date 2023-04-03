@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.put_script(
+  id: 'calculate-score',
+  body: {
+    script: {
+      lang: 'painless',
+      source: "Math.log(_score * 2) + params['my_modifier']"
+    }
+  }
+)
+puts response
+----

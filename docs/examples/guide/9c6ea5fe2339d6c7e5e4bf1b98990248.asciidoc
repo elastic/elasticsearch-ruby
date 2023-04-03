@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'image-index',
+  body: {
+    knn: {
+      field: 'image-vector',
+      query_vector: [
+        -5,
+        9,
+        -12
+      ],
+      k: 10,
+      num_candidates: 100
+    },
+    fields: [
+      'title',
+      'file-type'
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      term: {
+        "query.extraction_result": 'failed'
+      }
+    }
+  }
+)
+puts response
+----

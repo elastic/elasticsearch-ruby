@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      wrapper: {
+        query: 'eyJ0ZXJtIiA6IHsgInVzZXIuaWQiIDogImtpbWNoeSIgfX0='
+      }
+    }
+  }
+)
+puts response
+----

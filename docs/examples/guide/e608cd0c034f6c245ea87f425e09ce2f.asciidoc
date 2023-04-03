@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      span_term: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.delete_expired_data(
+  timeout: '1h'
+)
+puts response
+----

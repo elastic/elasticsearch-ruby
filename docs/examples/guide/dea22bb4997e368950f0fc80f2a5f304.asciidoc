@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.get_field_mapping(
+  index: 'my-index-000001',
+  fields: 'employee-id'
+)
+puts response
+----

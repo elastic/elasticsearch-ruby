@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.watcher.stats(
+  metric: 'queued_watches'
+)
+puts response
+----

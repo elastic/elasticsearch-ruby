@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      multi_match: {
+        query: 'brown f',
+        type: 'bool_prefix',
+        fields: [
+          'my_field',
+          'my_field._2gram',
+          'my_field._3gram'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

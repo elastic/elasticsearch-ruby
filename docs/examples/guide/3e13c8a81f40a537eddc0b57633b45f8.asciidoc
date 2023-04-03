@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  index: 'test_index',
+  body: {
+    analyzer: 'my_analyzer',
+    text: 'missing bicycles'
+  }
+)
+puts response
+----

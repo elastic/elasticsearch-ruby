@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.field_caps(
+  index: 'my-index-*',
+  fields: 'rating',
+  body: {
+    index_filter: {
+      range: {
+        "@timestamp": {
+          gte: '2018'
+        }
+      }
+    }
+  }
+)
+puts response
+----

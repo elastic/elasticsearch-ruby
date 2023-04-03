@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    analyzer: 'standard',
+    text: "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+)
+puts response
+----

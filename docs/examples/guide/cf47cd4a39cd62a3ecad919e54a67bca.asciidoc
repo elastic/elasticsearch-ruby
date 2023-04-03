@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      term: {
+        _ignored: '@timestamp'
+      }
+    }
+  }
+)
+puts response
+----

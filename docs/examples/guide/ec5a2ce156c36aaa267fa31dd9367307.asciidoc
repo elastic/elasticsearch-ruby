@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'set_ingest_time',
+  body: {
+    description: 'Set ingest timestamp.',
+    processors: [
+      {
+        set: {
+          field: 'event.ingested',
+          value: '{{{_ingest.timestamp}}}'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

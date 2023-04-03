@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'customer',
+  body: {
+    query: {
+      match: {
+        firstname: 'Jennifer'
+      }
+    }
+  }
+)
+puts response
+----

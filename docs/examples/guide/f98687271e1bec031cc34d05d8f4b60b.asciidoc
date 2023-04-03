@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      span_multi: {
+        match: {
+          prefix: {
+            "user.id": {
+              value: 'ki'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

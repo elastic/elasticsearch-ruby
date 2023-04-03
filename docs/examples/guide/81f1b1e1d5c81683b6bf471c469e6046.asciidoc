@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'shirts',
+  body: {
+    query: {
+      bool: {
+        filter: [
+          {
+            term: {
+              color: 'red'
+            }
+          },
+          {
+            term: {
+              brand: 'gucci'
+            }
+          }
+        ]
+      }
+    },
+    aggregations: {
+      models: {
+        terms: {
+          field: 'model'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.field_caps(
+  fields: 'rating,title',
+  include_unmapped: true
+)
+puts response
+----

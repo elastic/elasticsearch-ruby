@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    analyzer: 'fingerprint',
+    text: 'Yes yes, Gödel said this sentence is consistent and.'
+  }
+)
+puts response
+----

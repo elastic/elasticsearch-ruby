@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "cluster.routing.allocation.exclude._ip": '10.0.0.1'
+    }
+  }
+)
+puts response
+----

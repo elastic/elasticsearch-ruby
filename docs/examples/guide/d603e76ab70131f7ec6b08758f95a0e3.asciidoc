@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.recovery(
+  v: true,
+  h: 'i,s,t,ty,st,rep,snap,f,fp,b,bp'
+)
+puts response
+----

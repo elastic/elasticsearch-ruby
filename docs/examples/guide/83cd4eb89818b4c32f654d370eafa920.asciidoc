@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      {
+        type: 'keep_types',
+        types: [
+          '<NUM>'
+        ]
+      }
+    ],
+    text: '1 quick fox 2 lazy dogs'
+  }
+)
+puts response
+----

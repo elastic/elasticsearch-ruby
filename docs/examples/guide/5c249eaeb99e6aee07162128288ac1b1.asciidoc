@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_date_histo: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: '1M'
+        },
+        aggregations: {
+          the_percentile: {
+            percentiles: {
+              field: 'price',
+              percents: [
+                1,
+                99
+              ]
+            }
+          },
+          the_movperc: {
+            moving_percentiles: {
+              buckets_path: 'the_percentile',
+              window: 10
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

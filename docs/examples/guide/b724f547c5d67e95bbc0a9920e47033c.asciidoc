@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'file-path-test',
+  body: {
+    query: {
+      term: {
+        "file_path.tree": '/User/alice/photos/2017/05/16'
+      }
+    }
+  }
+)
+puts response
+----

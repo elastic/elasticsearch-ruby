@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_date_histo: {
+        date_histogram: {
+          field: 'timestamp',
+          calendar_interval: 'day'
+        },
+        aggregations: {
+          the_sum: {
+            sum: {
+              field: 'lemmings'
+            }
+          },
+          thirtieth_difference: {
+            serial_diff: {
+              buckets_path: 'the_sum',
+              lag: 30
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

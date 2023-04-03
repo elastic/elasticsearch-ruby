@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.plugins(
+  v: true,
+  s: 'component',
+  h: 'name,component,version,description'
+)
+puts response
+----

@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'keyword_repeat',
+      'stemmer',
+      'remove_duplicates'
+    ],
+    text: 'jumping dog'
+  }
+)
+puts response
+----

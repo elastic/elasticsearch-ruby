@@ -4,7 +4,7 @@ response = client.indices.put_settings(
   index: 'my-index-000001',
   body: {
     index: {
-      refresh_interval: null
+      refresh_interval: nil
     }
   }
 )

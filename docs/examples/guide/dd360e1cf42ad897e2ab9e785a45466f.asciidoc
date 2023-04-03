@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'my-weather-sensor-index-template',
+  body: {
+    index_patterns: [
+      'metrics-weather_sensors-*'
+    ],
+    data_stream: {},
+    template: {
+      settings: {
+        "index.mode": 'time_series',
+        "index.routing_path": [
+          'sensor_id',
+          'location'
+        ]
+      }
+    },
+    composed_of: [
+      'my-weather-sensor-mappings',
+      'my-weather-sensor-settings'
+    ],
+    priority: 500,
+    _meta: {
+      description: 'Template for my weather sensor data'
+    }
+  }
+)
+puts response
+----

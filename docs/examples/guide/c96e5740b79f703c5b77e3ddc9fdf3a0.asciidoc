@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'my-index-template',
+  body: {
+    index_patterns: [
+      'my-data-stream*'
+    ],
+    data_stream: {},
+    composed_of: [
+      'my-mappings',
+      'my-settings'
+    ],
+    priority: 500,
+    _meta: {
+      description: 'Template for my time series data',
+      "my-custom-meta-field": 'More arbitrary metadata'
+    }
+  }
+)
+puts response
+----

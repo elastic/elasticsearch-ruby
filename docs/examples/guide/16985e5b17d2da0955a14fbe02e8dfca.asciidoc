@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.termvectors(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    fields: [
+      'text'
+    ],
+    offsets: true,
+    payloads: true,
+    positions: true,
+    term_statistics: true,
+    field_statistics: true
+  }
+)
+puts response
+----

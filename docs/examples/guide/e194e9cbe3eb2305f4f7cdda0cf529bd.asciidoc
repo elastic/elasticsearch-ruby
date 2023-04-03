@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  typed_keys: true,
+  body: {
+    suggest: {
+      text: 'some test mssage',
+      "my-first-suggester": {
+        term: {
+          field: 'message'
+        }
+      },
+      "my-second-suggester": {
+        phrase: {
+          field: 'message'
+        }
+      }
+    }
+  }
+)
+puts response
+----

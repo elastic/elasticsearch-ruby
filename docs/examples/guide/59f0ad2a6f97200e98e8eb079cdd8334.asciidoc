@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.mget(
+  index: 'my-index-000001',
+  body: {
+    ids: [
+      '1',
+      '2'
+    ]
+  }
+)
+puts response
+----

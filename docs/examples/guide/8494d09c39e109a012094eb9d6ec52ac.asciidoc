@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'pipelineA',
+  body: {
+    description: 'inner pipeline',
+    processors: [
+      {
+        set: {
+          field: 'inner_pipeline_set',
+          value: 'inner'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'music',
+  id: 1,
+  refresh: true,
+  body: {
+    suggest: [
+      {
+        input: 'Nevermind',
+        weight: 10
+      },
+      {
+        input: 'Nirvana',
+        weight: 3
+      }
+    ]
+  }
+)
+puts response
+----

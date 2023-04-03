@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      tags: {
+        significant_terms: {
+          field: 'tags',
+          execution_hint: 'map'
+        }
+      }
+    }
+  }
+)
+puts response
+----

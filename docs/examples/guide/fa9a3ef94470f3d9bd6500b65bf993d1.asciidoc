@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  index: 'multiplexer_example',
+  body: {
+    analyzer: 'my_analyzer',
+    text: 'Going HOME'
+  }
+)
+puts response
+----

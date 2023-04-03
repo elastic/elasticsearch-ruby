@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      sales_per_month: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          sale_type: {
+            terms: {
+              field: 'type'
+            },
+            aggregations: {
+              sales: {
+                sum: {
+                  field: 'price'
+                }
+              }
+            }
+          },
+          hat_vs_bag_ratio: {
+            bucket_script: {
+              buckets_path: {
+                hats: "sale_type['hat']>sales",
+                bags: "sale_type['bag']>sales"
+              },
+              script: 'params.hats / params.bags'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

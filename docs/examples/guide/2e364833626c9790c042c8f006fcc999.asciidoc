@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'multiplexer_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'standard',
+            filter: [
+              'my_multiplexer'
+            ]
+          }
+        },
+        filter: {
+          my_multiplexer: {
+            type: 'multiplexer',
+            filters: [
+              'lowercase',
+              'lowercase, porter_stem'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

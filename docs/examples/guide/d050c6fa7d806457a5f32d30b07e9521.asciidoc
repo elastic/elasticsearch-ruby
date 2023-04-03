@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    processors: [
+      {
+        dot_expander: {
+          description: "Expand 'my-object-field.my-property'",
+          field: 'my-object-field.my-property'
+        }
+      },
+      {
+        set: {
+          description: "Set 'my-object-field.my-property' to 10",
+          field: 'my-object-field.my-property',
+          value: 10
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,64 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'irish_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          irish_hyphenation: {
+            type: 'stop',
+            stopwords: [
+              'h',
+              'n',
+              't'
+            ],
+            ignore_case: true
+          },
+          irish_elision: {
+            type: 'elision',
+            articles: [
+              'd',
+              'm',
+              'b'
+            ],
+            articles_case: true
+          },
+          irish_stop: {
+            type: 'stop',
+            stopwords: '_irish_'
+          },
+          irish_lowercase: {
+            type: 'lowercase',
+            language: 'irish'
+          },
+          irish_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'sampla'
+            ]
+          },
+          irish_stemmer: {
+            type: 'stemmer',
+            language: 'irish'
+          }
+        },
+        analyzer: {
+          rebuilt_irish: {
+            tokenizer: 'standard',
+            filter: [
+              'irish_hyphenation',
+              'irish_elision',
+              'irish_lowercase',
+              'irish_stop',
+              'irish_keywords',
+              'irish_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'thai',
+    text: 'การที่ได้ต้องแสดงว่างานดี'
+  }
+)
+puts response
+----

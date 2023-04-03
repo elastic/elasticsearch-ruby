@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.open_point_in_time(
+  index: 'my-index-000001',
+  keep_alive: '1m'
+)
+puts response
+----

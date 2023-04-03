@@ -1,0 +1,75 @@
+[source, ruby]
+----
+response = client.nodes.info
+puts response
+
+response = client.nodes.info(
+  node_id: '_all'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '_local'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '_master'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'node_name_goes_here'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'node_name_goes_*'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '10.0.0.3,10.0.0.4'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '10.0.0.*'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '_all,master:false'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'data:true,ingest:true'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'coordinating_only:true'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'master:true,voting_only:false'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'rack:2'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'ra*:2'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'ra*:2*'
+)
+puts response
+----

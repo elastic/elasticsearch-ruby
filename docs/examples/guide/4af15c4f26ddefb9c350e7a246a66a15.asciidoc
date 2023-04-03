@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'node',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      ip: {
+        terms: {
+          field: 'ip',
+          order: {
+            "tm.m": 'desc'
+          }
+        },
+        aggregations: {
+          tm: {
+            top_metrics: {
+              metrics: {
+                field: 'm'
+              },
+              sort: {
+                date: 'desc'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

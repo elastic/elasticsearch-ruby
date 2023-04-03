@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'parent_example',
+  body: {
+    mappings: {
+      properties: {
+        join: {
+          type: 'join',
+          relations: {
+            question: 'answer'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

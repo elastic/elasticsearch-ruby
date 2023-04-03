@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'attachment',
+  body: {
+    description: 'Extract attachment information',
+    processors: [
+      {
+        attachment: {
+          field: 'data',
+          properties: [
+            'content',
+            'title'
+          ],
+          remove_binary: false
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'my-index-000001',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      user: {
+        id: 'kimchy'
+      },
+      "@timestamp": '2099-11-15T14:12:12',
+      message: 'trying out Elasticsearch'
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      user: {
+        id: 'kimchi'
+      },
+      "@timestamp": '2099-11-15T14:12:13',
+      message: 'My user ID is similar to kimchy!'
+    }
+  ]
+)
+puts response
+----

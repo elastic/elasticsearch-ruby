@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  typed_keys: true,
+  body: {
+    aggregations: {
+      "my-agg-name": {
+        histogram: {
+          field: 'my-field',
+          interval: 1000
+        }
+      }
+    }
+  }
+)
+puts response
+----

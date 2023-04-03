@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.mget(
+  routing: 'key1',
+  body: {
+    docs: [
+      {
+        _index: 'test',
+        _id: '1',
+        routing: 'key2'
+      },
+      {
+        _index: 'test',
+        _id: '2'
+      }
+    ]
+  }
+)
+puts response
+----

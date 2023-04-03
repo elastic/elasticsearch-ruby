@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.migration.deprecations(
+  index: 'logstash-*'
+)
+puts response
+----

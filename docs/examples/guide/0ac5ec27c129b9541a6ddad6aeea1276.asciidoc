@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      fuzzy: {
+        "user.id": {
+          value: 'ki',
+          fuzziness: 'AUTO',
+          max_expansions: 50,
+          prefix_length: 0,
+          transpositions: true,
+          rewrite: 'constant_score'
+        }
+      }
+    }
+  }
+)
+puts response
+----

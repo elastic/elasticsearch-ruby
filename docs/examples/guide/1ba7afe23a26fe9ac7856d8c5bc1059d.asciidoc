@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'romanian_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          romanian_stop: {
+            type: 'stop',
+            stopwords: '_romanian_'
+          },
+          romanian_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'exemplu'
+            ]
+          },
+          romanian_stemmer: {
+            type: 'stemmer',
+            language: 'romanian'
+          }
+        },
+        analyzer: {
+          rebuilt_romanian: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'romanian_stop',
+              'romanian_keywords',
+              'romanian_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

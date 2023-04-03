@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.async_search.submit(
+  index: 'sales*',
+  size: 0,
+  body: {
+    sort: [
+      {
+        date: {
+          order: 'asc'
+        }
+      }
+    ],
+    aggregations: {
+      sale_date: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: '1d'
+        }
+      }
+    }
+  }
+)
+puts response
+----

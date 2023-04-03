@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.delete_component_template(
+  name: 'template_1'
+)
+puts response
+----

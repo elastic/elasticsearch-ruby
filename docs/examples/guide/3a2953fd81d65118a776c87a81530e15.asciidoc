@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      match: {
+        "user.id": 'kimchy'
+      }
+    },
+    highlight: {
+      order: 'score',
+      fields: {
+        comment: {
+          fragment_size: 150,
+          number_of_fragments: 3
+        }
+      }
+    }
+  }
+)
+puts response
+----

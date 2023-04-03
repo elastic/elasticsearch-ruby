@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.enrich.put_policy(
+  name: 'postal_policy',
+  body: {
+    geo_match: {
+      indices: 'postal_codes',
+      match_field: 'location',
+      enrich_fields: [
+        'location',
+        'postal_code'
+      ]
+    }
+  }
+)
+puts response
+----

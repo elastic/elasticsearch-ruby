@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.get_settings(
+  index: 'log_2099_-*',
+  name: 'index.number_*'
+)
+puts response
+----

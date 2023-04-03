@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'template_1',
+  body: {
+    index_patterns: [
+      'foo',
+      'bar'
+    ],
+    template: {
+      settings: {
+        number_of_shards: 3
+      }
+    },
+    _meta: {
+      description: 'set number of shards to three',
+      serialization: {
+        class: 'MyIndexTemplate',
+        id: 17
+      }
+    }
+  }
+)
+puts response
+----

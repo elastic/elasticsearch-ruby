@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'delimited_payload',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          whitespace_delimited_payload: {
+            tokenizer: 'whitespace',
+            filter: [
+              'delimited_payload'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

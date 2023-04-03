@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.get_component_template(
+  name: 'temp*'
+)
+puts response
+----

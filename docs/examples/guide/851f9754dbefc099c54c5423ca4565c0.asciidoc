@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'network-traffic',
+  body: {
+    size: 0,
+    aggregations: {
+      "ipv6-subnets": {
+        ip_prefix: {
+          field: 'ipv6',
+          prefix_length: 64,
+          "is_ipv6": true
+        }
+      }
+    }
+  }
+)
+puts response
+----

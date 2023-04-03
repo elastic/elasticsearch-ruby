@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.resolve_index(
+  name: 'new-data-stream*'
+)
+puts response
+----

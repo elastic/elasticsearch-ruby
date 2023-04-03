@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      phases: {
+        delete: {
+          actions: {
+            delete: {}
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

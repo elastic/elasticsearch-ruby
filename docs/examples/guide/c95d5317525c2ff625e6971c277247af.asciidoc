@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'keyword',
+    filter: [
+      'lowercase'
+    ],
+    text: 'john.SMITH@example.COM'
+  }
+)
+puts response
+----

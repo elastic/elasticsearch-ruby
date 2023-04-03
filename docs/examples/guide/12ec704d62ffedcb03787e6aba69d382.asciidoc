@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      {
+        type: 'stop',
+        stopwords: [
+          'a'
+        ]
+      },
+      {
+        type: 'shingle',
+        filler_token: '+'
+      }
+    ],
+    text: 'fox jumps a lazy dog'
+  }
+)
+puts response
+----

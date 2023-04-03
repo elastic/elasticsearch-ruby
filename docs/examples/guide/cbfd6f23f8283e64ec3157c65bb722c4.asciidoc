@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.templates(
+  v: true,
+  s: 'order:desc,index_patterns'
+)
+puts response
+----

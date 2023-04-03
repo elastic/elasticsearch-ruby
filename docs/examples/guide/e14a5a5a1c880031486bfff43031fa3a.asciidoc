@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  metric: 'breaker'
+)
+puts response
+----

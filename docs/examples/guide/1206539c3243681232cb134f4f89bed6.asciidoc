@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sample-01*',
+  body: {
+    size: 0,
+    aggregations: {
+      tsid: {
+        terms: {
+          field: '_tsid'
+        },
+        aggregations: {
+          over_time: {
+            date_histogram: {
+              field: '@timestamp',
+              fixed_interval: '1d'
+            },
+            aggregations: {
+              min: {
+                min: {
+                  field: 'kubernetes.container.memory.usage.bytes'
+                }
+              },
+              max: {
+                max: {
+                  field: 'kubernetes.container.memory.usage.bytes'
+                }
+              },
+              avg: {
+                avg: {
+                  field: 'kubernetes.container.memory.usage.bytes'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

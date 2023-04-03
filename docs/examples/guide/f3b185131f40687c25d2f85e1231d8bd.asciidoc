@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.validate_query(
+  index: 'my-index-000001',
+  q: 'user.id:kimchy'
+)
+puts response
+----

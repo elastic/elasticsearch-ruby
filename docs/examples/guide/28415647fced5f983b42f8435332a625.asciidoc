@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      processors: [
+        {
+          lowercase: {
+            field: 'my-keyword-field'
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _source: {
+          "my-keyword-field": 'FOO'
+        }
+      },
+      {
+        _source: {
+          "my-keyword-field": 'BAR'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

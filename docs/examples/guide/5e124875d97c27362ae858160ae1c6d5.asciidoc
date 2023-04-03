@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.ccr.get_auto_follow_pattern
+puts response
+----

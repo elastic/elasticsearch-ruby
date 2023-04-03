@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.license.get_basic_status
+puts response
+----

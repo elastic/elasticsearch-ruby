@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.termvectors(
+  index: 'text_payloads',
+  id: 1,
+  body: {
+    fields: [
+      'text'
+    ],
+    payloads: true
+  }
+)
+puts response
+----

@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'portuguese_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          portuguese_stop: {
+            type: 'stop',
+            stopwords: '_portuguese_'
+          },
+          portuguese_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'exemplo'
+            ]
+          },
+          portuguese_stemmer: {
+            type: 'stemmer',
+            language: 'light_portuguese'
+          }
+        },
+        analyzer: {
+          rebuilt_portuguese: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'portuguese_stop',
+              'portuguese_keywords',
+              'portuguese_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----
