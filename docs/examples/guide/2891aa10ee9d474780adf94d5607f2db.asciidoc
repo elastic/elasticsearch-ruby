@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'index_long,index_double',
+  body: {
+    sort: [
+      {
+        field: {
+          numeric_type: 'double'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

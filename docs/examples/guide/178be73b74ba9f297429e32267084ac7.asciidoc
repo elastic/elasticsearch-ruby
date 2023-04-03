@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      span_or: {
+        clauses: [
+          {
+            span_term: {
+              field: 'value1'
+            }
+          },
+          {
+            span_term: {
+              field: 'value2'
+            }
+          },
+          {
+            span_term: {
+              field: 'value3'
+            }
+          }
+        ]
+      }
+    }
+  }
+)
+puts response
+----

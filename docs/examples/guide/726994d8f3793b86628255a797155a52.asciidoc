@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.nodes.info(
+  node_id: 'ingest',
+  filter_path: 'nodes.*.ingest.processors'
+)
+puts response
+----

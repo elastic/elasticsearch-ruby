@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.downsample(
+  index: 'sample-01',
+  target_index: 'sample-01-downsample',
+  body: {
+    fixed_interval: '1h'
+  }
+)
+puts response
+----

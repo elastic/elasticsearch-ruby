@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "cluster.routing.allocation.total_shards_per_node": 400
+    }
+  }
+)
+puts response
+----

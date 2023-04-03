@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index',
+  body: {
+    query: {
+      match: {
+        "http.clientip": '40.135.0.0'
+      }
+    },
+    fields: [
+      'http.clientip'
+    ]
+  }
+)
+puts response
+----

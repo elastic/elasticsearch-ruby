@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    timeout: '2s',
+    query: {
+      match: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

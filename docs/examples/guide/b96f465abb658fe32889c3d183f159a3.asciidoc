@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'limit_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          standard_one_token_limit: {
+            tokenizer: 'standard',
+            filter: [
+              'limit'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

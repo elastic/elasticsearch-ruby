@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.rank_eval(
+  index: 'my-index-000001',
+  body: {
+    requests: [
+      {
+        id: 'JFK query',
+        request: {
+          query: {
+            match_all: {}
+          }
+        },
+        ratings: []
+      }
+    ],
+    metric: {
+      precision: {
+        k: 20,
+        relevant_rating_threshold: 1,
+        ignore_unlabeled: false
+      }
+    }
+  }
+)
+puts response
+----

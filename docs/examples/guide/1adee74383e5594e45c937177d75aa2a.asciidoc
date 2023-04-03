@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_index',
+  body: {
+    query: {
+      match_all: {}
+    },
+    sort: {
+      my_counter: 'desc'
+    }
+  }
+)
+puts response
+----

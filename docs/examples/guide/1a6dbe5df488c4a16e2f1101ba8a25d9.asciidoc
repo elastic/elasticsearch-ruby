@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'pattern',
+    text: "The foo_bar_size's default is 5."
+  }
+)
+puts response
+----

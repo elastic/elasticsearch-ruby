@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.termvectors(
+  index: 'my-index-000001',
+  body: {
+    doc: {
+      fullname: 'John Doe',
+      text: 'test test test'
+    }
+  }
+)
+puts response
+----

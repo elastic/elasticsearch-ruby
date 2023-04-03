@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_date_histo: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: '1M'
+        },
+        aggregations: {
+          the_sum: {
+            sum: {
+              field: 'price'
+            }
+          },
+          the_moving_sum: {
+            moving_fn: {
+              buckets_path: 'the_sum',
+              window: 10,
+              script: 'MovingFunctions.stdDev(values, MovingFunctions.unweightedAvg(values))'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

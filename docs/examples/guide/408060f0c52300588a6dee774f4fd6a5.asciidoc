@@ -1,0 +1,530 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'datastream',
+  refresh: true,
+  body: [
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:49:00Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 91_153,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 463_314_616
+            },
+            usage: {
+              bytes: 307_007_078,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 585_236
+            },
+            rss: {
+              bytes: 102_728
+            },
+            pagefaults: 120_901,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:45:50Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 124_501,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 982_546_514
+            },
+            usage: {
+              bytes: 360_035_574,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 1_339_884
+            },
+            rss: {
+              bytes: 381_174
+            },
+            pagefaults: 178_473,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:44:50Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 38_907,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 862_723_768
+            },
+            usage: {
+              bytes: 379_572_388,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 431_227
+            },
+            rss: {
+              bytes: 386_580
+            },
+            pagefaults: 233_166,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:44:40Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 86_706,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 567_160_996
+            },
+            usage: {
+              bytes: 103_266_017,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 1_724_908
+            },
+            rss: {
+              bytes: 105_431
+            },
+            pagefaults: 233_166,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:44:00Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 150_069,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 639_054_643
+            },
+            usage: {
+              bytes: 265_142_477,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 1_786_511
+            },
+            rss: {
+              bytes: 189_235
+            },
+            pagefaults: 138_172,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:42:40Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 82_260,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 854_735_585
+            },
+            usage: {
+              bytes: 309_798_052,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 924_058
+            },
+            rss: {
+              bytes: 110_838
+            },
+            pagefaults: 259_073,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:42:10Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 153_404,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 279_586_406
+            },
+            usage: {
+              bytes: 214_904_955,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 1_047_265
+            },
+            rss: {
+              bytes: 91_914
+            },
+            pagefaults: 302_252,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:40:20Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 125_613,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 822_782_853
+            },
+            usage: {
+              bytes: 100_475_044,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 2_109_932
+            },
+            rss: {
+              bytes: 278_446
+            },
+            pagefaults: 74_843,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:40:10Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 100_046,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 567_160_996
+            },
+            usage: {
+              bytes: 362_826_547,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 1_986_724
+            },
+            rss: {
+              bytes: 402_801
+            },
+            pagefaults: 296_495,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2022-06-21T15:38:30Z',
+      kubernetes: {
+        host: 'gke-apps-0',
+        node: 'gke-apps-0-0',
+        pod: 'gke-apps-0-0-0',
+        container: {
+          cpu: {
+            usage: {
+              nanocores: 40_018,
+              core: {
+                ns: 12_828_317_850
+              },
+              node: {
+                pct: 2.77905e-05
+              },
+              limit: {
+                pct: 2.77905e-05
+              }
+            }
+          },
+          memory: {
+            available: {
+              bytes: 1_062_428_344
+            },
+            usage: {
+              bytes: 265_142_477,
+              node: {
+                pct: 0.01770037710617187
+              },
+              limit: {
+                pct: 9.923134671484496e-05
+              }
+            },
+            workingset: {
+              bytes: 2_294_743
+            },
+            rss: {
+              bytes: 340_623
+            },
+            pagefaults: 224_530,
+            majorpagefaults: 0
+          },
+          start_time: '2021-03-30T07:59:06Z',
+          name: 'container-name-44'
+        },
+        namespace: 'namespace26'
+      }
+    }
+  ]
+)
+puts response
+----

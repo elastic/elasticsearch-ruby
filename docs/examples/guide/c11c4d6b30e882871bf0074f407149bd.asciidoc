@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    text: 'This is a parent document.',
+    "my-join-field": 'my-parent'
+  }
+)
+puts response
+----

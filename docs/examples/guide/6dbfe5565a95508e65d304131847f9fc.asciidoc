@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      {
+        type: 'edge_ngram',
+        min_gram: 1,
+        max_gram: 2
+      }
+    ],
+    text: 'the quick brown fox jumps'
+  }
+)
+puts response
+----

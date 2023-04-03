@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      sales_per_month: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          sales: {
+            sum: {
+              field: 'price'
+            }
+          }
+        }
+      },
+      percentiles_monthly_sales: {
+        percentiles_bucket: {
+          buckets_path: 'sales_per_month>sales',
+          percents: [
+            25,
+            50,
+            75
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

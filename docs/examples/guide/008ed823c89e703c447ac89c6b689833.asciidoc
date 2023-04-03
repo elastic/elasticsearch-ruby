@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.migration.post_feature_upgrade
+puts response
+----

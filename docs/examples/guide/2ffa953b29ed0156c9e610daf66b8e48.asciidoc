@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ilm.explain_lifecycle(
+  index: 'timeseries-*'
+)
+puts response
+----

@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'image-index',
+  body: {
+    query: {
+      match: {
+        title: {
+          query: 'mountain lake',
+          boost: 0.9
+        }
+      }
+    },
+    knn: {
+      field: 'image-vector',
+      query_vector: [
+        54,
+        10,
+        -2
+      ],
+      k: 5,
+      num_candidates: 50,
+      boost: 0.1
+    },
+    size: 10
+  }
+)
+puts response
+----

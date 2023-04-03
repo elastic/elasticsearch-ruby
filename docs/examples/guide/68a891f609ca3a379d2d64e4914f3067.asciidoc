@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      'kstem'
+    ],
+    text: 'the foxes jumping quickly'
+  }
+)
+puts response
+----

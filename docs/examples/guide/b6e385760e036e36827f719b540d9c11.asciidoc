@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-dfs-index',
+  search_type: 'dfs_query_then_fetch',
+  pretty: true,
+  size: 0,
+  body: {
+    profile: true,
+    query: {
+      term: {
+        "my-keyword": {
+          value: 'a'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'imdb',
+  body: {
+    mappings: {
+      properties: {
+        title: {
+          type: 'text',
+          term_vector: 'yes'
+        },
+        description: {
+          type: 'text'
+        },
+        tags: {
+          type: 'text',
+          fields: {
+            raw: {
+              type: 'text',
+              analyzer: 'keyword',
+              term_vector: 'yes'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

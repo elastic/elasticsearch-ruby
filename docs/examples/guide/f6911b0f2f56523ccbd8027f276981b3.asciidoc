@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      combined_fields: {
+        query: 'database systems',
+        fields: [
+          'title',
+          'abstract',
+          'body'
+        ],
+        operator: 'and'
+      }
+    }
+  }
+)
+puts response
+----

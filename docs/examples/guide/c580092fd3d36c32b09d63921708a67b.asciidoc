@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      dis_max: {
+        queries: [
+          {
+            term: {
+              title: 'Quick pets'
+            }
+          },
+          {
+            term: {
+              body: 'Quick pets'
+            }
+          }
+        ],
+        tie_breaker: 0.7
+      }
+    }
+  }
+)
+puts response
+----

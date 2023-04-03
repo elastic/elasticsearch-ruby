@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    track_total_hits: true,
+    query: {
+      match: {
+        "user.id": 'elkbee'
+      }
+    }
+  }
+)
+puts response
+----

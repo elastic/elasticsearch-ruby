@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'decimal_digit'
+    ],
+    text: '१-one two-२ ३'
+  }
+)
+puts response
+----

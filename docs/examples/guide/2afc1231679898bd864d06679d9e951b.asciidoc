@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      histo: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'day'
+        },
+        aggregations: {
+          categories: {
+            terms: {
+              field: 'category'
+            }
+          },
+          min_bucket_selector: {
+            bucket_selector: {
+              buckets_path: {
+                count: 'categories._bucket_count'
+              },
+              script: {
+                source: 'params.count != 0'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

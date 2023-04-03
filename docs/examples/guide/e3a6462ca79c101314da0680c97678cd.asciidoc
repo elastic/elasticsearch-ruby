@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      match_all: {}
+    },
+    script_fields: {
+      "test1": {
+        script: {
+          lang: 'painless',
+          source: "doc['price'].value * 2"
+        }
+      },
+      "test2": {
+        script: {
+          lang: 'painless',
+          source: "doc['price'].value * params.factor",
+          params: {
+            factor: 2
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

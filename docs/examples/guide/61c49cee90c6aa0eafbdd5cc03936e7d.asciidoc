@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'data',
+  id: 1,
+  body: {
+    count: 5
+  }
+)
+puts response
+----

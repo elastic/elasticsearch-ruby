@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'component_template1',
+  body: {
+    template: {
+      mappings: {
+        properties: {
+          "@timestamp": {
+            type: 'date'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.cluster.put_component_template(
+  name: 'runtime_component_template',
+  body: {
+    template: {
+      mappings: {
+        runtime: {
+          day_of_week: {
+            type: 'keyword',
+            script: {
+              source: "emit(doc['@timestamp'].value.dayOfWeekEnum.getDisplayName(TextStyle.FULL, Locale.ROOT))"
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

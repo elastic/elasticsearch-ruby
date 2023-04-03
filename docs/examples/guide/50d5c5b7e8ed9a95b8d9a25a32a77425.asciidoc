@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'unique'
+    ],
+    text: 'the quick fox jumps the lazy fox'
+  }
+)
+puts response
+----

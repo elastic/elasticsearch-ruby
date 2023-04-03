@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "cluster.routing.allocation.enable": 'all'
+    }
+  }
+)
+puts response
+----

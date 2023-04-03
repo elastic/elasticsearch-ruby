@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      index: {
+        number_of_routing_shards: 30
+      }
+    }
+  }
+)
+puts response
+----

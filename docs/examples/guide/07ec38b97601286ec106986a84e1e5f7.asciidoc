@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'job-candidates',
+  body: {
+    mappings: {
+      properties: {
+        name: {
+          type: 'keyword'
+        },
+        programming_languages: {
+          type: 'keyword'
+        },
+        required_matches: {
+          type: 'long'
+        }
+      }
+    }
+  }
+)
+puts response
+----

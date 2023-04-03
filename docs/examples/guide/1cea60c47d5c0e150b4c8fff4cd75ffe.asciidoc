@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      processors: [
+        {
+          script: {
+            description: 'Set index based on `lang` field and `dataset` param',
+            lang: 'painless',
+            source: "\n            ctx['_index'] = ctx['lang'] + '-' + params['dataset'];\n          ",
+            params: {
+              dataset: 'catalog'
+            }
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _index: 'generic-index',
+        _source: {
+          lang: 'fr'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

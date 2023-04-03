@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.set_upgrade_mode(
+  enabled: false
+)
+puts response
+----

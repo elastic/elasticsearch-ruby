@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  routing: 'user1,user2',
+  body: {
+    query: {
+      match: {
+        title: 'document'
+      }
+    }
+  }
+)
+puts response
+----

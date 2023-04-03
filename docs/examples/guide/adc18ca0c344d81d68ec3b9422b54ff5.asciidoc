@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.msearch(
+  index: 'my-index-000001',
+  body: [
+    {},
+    {
+      query: {
+        match_all: {}
+      },
+      from: 0,
+      size: 10
+    },
+    {},
+    {
+      query: {
+        match_all: {}
+      }
+    },
+    {
+      index: 'my-index-000002'
+    },
+    {
+      query: {
+        match_all: {}
+      }
+    }
+  ]
+)
+puts response
+----

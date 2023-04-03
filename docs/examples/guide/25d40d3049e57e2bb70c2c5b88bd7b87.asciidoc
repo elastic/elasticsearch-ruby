@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: '_all',
+  body: {
+    settings: {
+      "index.unassigned.node_left.delayed_timeout": '0'
+    }
+  }
+)
+puts response
+----

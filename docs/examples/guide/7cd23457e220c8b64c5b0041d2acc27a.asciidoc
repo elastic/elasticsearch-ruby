@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.nodes.info(
+  node_id: '_all',
+  metric: 'jvm'
+)
+puts response
+----

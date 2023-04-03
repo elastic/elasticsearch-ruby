@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    query: {
+      term: {
+        tags: 'car'
+      }
+    },
+    aggregations: {
+      by_sale: {
+        nested: {
+          path: 'comments'
+        },
+        aggregations: {
+          by_user: {
+            terms: {
+              field: 'comments.username',
+              size: 1
+            },
+            aggregations: {
+              by_nested: {
+                top_hits: {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  groups: '_all'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'indices',
+  groups: 'foo,bar'
+)
+puts response
+----

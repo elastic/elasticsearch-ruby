@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'new-data-stream-template',
+  body: {
+    index_patterns: [
+      'new-data-stream*'
+    ],
+    data_stream: {},
+    priority: 500,
+    template: {
+      mappings: {
+        properties: {
+          "@timestamp": {
+            type: 'date_nanos'
+          }
+        }
+      },
+      settings: {
+        "sort.field": [
+          '@timestamp'
+        ],
+        "sort.order": [
+          'desc'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

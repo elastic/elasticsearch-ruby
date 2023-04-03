@@ -1,0 +1,50 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'dutch_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          dutch_stop: {
+            type: 'stop',
+            stopwords: '_dutch_'
+          },
+          dutch_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'voorbeeld'
+            ]
+          },
+          dutch_stemmer: {
+            type: 'stemmer',
+            language: 'dutch'
+          },
+          dutch_override: {
+            type: 'stemmer_override',
+            rules: [
+              'fiets=>fiets',
+              'bromfiets=>bromfiets',
+              'ei=>eier',
+              'kind=>kinder'
+            ]
+          }
+        },
+        analyzer: {
+          rebuilt_dutch: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'dutch_stop',
+              'dutch_keywords',
+              'dutch_override',
+              'dutch_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  scroll: '1m',
+  body: {
+    slice: {
+      field: '@timestamp',
+      id: 0,
+      max: 10
+    },
+    query: {
+      match: {
+        message: 'foo'
+      }
+    }
+  }
+)
+puts response
+----

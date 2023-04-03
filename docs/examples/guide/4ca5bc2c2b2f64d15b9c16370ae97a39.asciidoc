@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'museums',
+  size: 0,
+  body: {
+    aggregations: {
+      "tiles-in-bounds": {
+        geohash_grid: {
+          field: 'location',
+          precision: 8,
+          bounds: {
+            top_left: 'POINT (4.21875 53.4375)',
+            bottom_right: 'POINT (5.625 52.03125)'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

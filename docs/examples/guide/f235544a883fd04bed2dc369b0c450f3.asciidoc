@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'txt',
+  body: {
+    query: 'SELECT * FROM library',
+    filter: {
+      terms: {
+        _routing: [
+          'abc'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

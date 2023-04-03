@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.enrich.get_policy
+puts response
+----

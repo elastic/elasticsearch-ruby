@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.nodeattrs(
+  v: true,
+  h: 'name,pid,attr,value'
+)
+puts response
+----

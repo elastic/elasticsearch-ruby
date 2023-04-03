@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'example',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_shape'
+        }
+      }
+    }
+  }
+)
+puts response
+----

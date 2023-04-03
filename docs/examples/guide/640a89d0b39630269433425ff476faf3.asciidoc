@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "archived.*": nil
+    }
+  }
+)
+puts response
+----

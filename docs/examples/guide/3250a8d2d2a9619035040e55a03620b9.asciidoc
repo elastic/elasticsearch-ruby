@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "logger.org.elasticsearch.http.HttpTracer": 'TRACE',
+      "logger.org.elasticsearch.http.HttpBodyTracer": 'TRACE'
+    }
+  }
+)
+puts response
+----

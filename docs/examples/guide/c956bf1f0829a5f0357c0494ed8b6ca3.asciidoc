@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search_template(
+  index: 'my-index',
+  body: {
+    id: 'my-search-template',
+    params: {
+      query_string: 'hello world',
+      from: 0,
+      size: 10
+    }
+  }
+)
+puts response
+----

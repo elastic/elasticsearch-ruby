@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.ilm.migrate_to_data_tiers
+puts response
+----

@@ -1,0 +1,64 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'my-index-000001',
+  refresh: true,
+  body: [
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_729_294_000,
+      temperature: 200,
+      voltage: 5.2,
+      node: 'a'
+    },
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_642_894_000,
+      temperature: 201,
+      voltage: 5.8,
+      node: 'b'
+    },
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_556_494_000,
+      temperature: 202,
+      voltage: 5.1,
+      node: 'a'
+    },
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_470_094_000,
+      temperature: 198,
+      voltage: 5.6,
+      node: 'b'
+    },
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_383_694_000,
+      temperature: 200,
+      voltage: 4.2,
+      node: 'c'
+    },
+    {
+      index: {}
+    },
+    {
+      timestamp: 1_516_297_294_000,
+      temperature: 202,
+      voltage: 4,
+      node: 'c'
+    }
+  ]
+)
+puts response
+----

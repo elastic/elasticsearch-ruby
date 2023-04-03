@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.health(
+  filter_path: 'status,*_shards'
+)
+puts response
+----

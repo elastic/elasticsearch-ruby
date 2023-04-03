@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      {
+        type: 'synonym_graph',
+        synonyms: [
+          'dns, domain name system'
+        ]
+      },
+      'flatten_graph'
+    ],
+    text: 'domain name system is fragile'
+  }
+)
+puts response
+----

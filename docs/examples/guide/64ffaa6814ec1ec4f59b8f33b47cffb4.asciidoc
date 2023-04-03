@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my-index',
+  body: {
+    "archived.*": nil
+  }
+)
+puts response
+----

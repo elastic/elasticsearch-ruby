@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my-index-000001',
+  body: {
+    "index.merge.policy.max_merge_at_once_explicit": nil
+  }
+)
+puts response
+----

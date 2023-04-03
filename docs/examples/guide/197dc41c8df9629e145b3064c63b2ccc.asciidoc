@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'customer',
+  body: [
+    {
+      create: {}
+    },
+    {
+      firstname: 'Monica',
+      lastname: 'Rambeau'
+    },
+    {
+      create: {}
+    },
+    {
+      firstname: 'Carol',
+      lastname: 'Danvers'
+    },
+    {
+      create: {}
+    },
+    {
+      firstname: 'Wanda',
+      lastname: 'Maximoff'
+    },
+    {
+      create: {}
+    },
+    {
+      firstname: 'Jennifer',
+      lastname: 'Takeda'
+    }
+  ]
+)
+puts response
+----

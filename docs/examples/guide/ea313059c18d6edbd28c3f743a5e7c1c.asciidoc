@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      match: {
+        city: 'madrid'
+      }
+    },
+    aggregations: {
+      tags: {
+        significant_terms: {
+          field: 'tag',
+          background_filter: {
+            term: {
+              text: 'spain'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.snapshot.repository_analyze(
+  repository: 'my_repository',
+  blob_count: 10,
+  max_blob_size: '1mb',
+  timeout: '120s'
+)
+puts response
+----

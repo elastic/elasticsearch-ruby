@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'cjk_bigram_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          standard_cjk_bigram: {
+            tokenizer: 'standard',
+            filter: [
+              'cjk_bigram'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          sources: [
+            {
+              histo: {
+                histogram: {
+                  field: 'price',
+                  interval: 5
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

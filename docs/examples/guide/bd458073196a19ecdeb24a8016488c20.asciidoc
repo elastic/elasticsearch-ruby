@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.delete_index_template(
+  name: 'my-index-template'
+)
+puts response
+----

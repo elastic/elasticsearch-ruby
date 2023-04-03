@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index_long',
+  body: {
+    mappings: {
+      properties: {
+        field: {
+          type: 'long'
+        }
+      }
+    }
+  }
+)
+puts response
+----

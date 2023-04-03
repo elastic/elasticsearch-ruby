@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'range_index',
+  size: 0,
+  body: {
+    aggregations: {
+      range_histo: {
+        histogram: {
+          field: 'expected_attendees',
+          interval: 5
+        }
+      }
+    }
+  }
+)
+puts response
+----

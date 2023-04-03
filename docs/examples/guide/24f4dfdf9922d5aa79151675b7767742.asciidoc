@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  scroll: '1m',
+  body: {
+    size: 100,
+    query: {
+      match: {
+        message: 'foo'
+      }
+    }
+  }
+)
+puts response
+----

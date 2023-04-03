@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_locations',
+  body: {
+    query: {
+      geo_bounding_box: {
+        "pin.location": {
+          top_left: 'dr',
+          bottom_right: 'dr'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.reroute(
+  metric: 'none'
+)
+puts response
+----

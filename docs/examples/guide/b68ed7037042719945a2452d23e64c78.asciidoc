@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 3,
+  refresh: true,
+  body: {
+    query: {
+      match: {
+        message: 'brown fox'
+      }
+    }
+  }
+)
+puts response
+----

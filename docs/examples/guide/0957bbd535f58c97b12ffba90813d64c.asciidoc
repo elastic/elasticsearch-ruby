@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'analyze_sample',
+  body: {
+    settings: {
+      "index.analyze.max_token_count": 20_000
+    }
+  }
+)
+puts response
+----

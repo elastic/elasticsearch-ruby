@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      cluster: {
+        remote: {
+          leader: {
+            seeds: [
+              '127.0.0.1:9300'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.ml_data_frame_analytics(
+  v: true
+)
+puts response
+----

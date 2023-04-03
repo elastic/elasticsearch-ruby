@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    aggregations: {
+      "my-agg-name": {
+        terms: {
+          field: 'my-field'
+        },
+        meta: {
+          "my-metadata-field": 'foo'
+        }
+      }
+    }
+  }
+)
+puts response
+----

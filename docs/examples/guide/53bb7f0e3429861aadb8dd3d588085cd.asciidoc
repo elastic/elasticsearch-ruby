@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-data-stream',
+  body: {
+    seq_no_primary_term: true,
+    query: {
+      match: {
+        "user.id": 'yWIumJd7'
+      }
+    }
+  }
+)
+puts response
+----

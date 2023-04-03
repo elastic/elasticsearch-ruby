@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.tasks.list(
+  filter_path: 'nodes.*.tasks'
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      my_date_histo: {
+        date_histogram: {
+          field: 'timestamp',
+          calendar_interval: 'day'
+        },
+        aggregations: {
+          the_deriv: {
+            derivative: {
+              buckets_path: '_count'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

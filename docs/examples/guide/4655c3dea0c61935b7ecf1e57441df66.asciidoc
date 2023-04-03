@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.thread_pool(
+  v: true,
+  h: 'id,name,active,rejected,completed'
+)
+puts response
+----

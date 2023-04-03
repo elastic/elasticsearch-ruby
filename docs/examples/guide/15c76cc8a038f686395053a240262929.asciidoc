@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'classic_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          classic_analyzer: {
+            tokenizer: 'classic',
+            filter: [
+              'classic'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

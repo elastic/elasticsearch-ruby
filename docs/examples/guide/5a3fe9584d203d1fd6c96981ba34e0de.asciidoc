@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'postal_codes',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_shape'
+        },
+        postal_code: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+----

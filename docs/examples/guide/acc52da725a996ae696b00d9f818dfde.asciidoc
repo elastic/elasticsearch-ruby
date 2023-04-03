@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  index: 'file-path-test',
+  body: {
+    analyzer: 'custom_path_tree',
+    text: '/User/alice/photos/2017/05/16/my_photo1.jpg'
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'file-path-test',
+  body: {
+    analyzer: 'custom_path_tree_reversed',
+    text: '/User/alice/photos/2017/05/16/my_photo1.jpg'
+  }
+)
+puts response
+----

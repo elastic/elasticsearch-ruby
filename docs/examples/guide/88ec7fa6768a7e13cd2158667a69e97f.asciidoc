@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    runtime_mappings: {
+      day_of_week: {
+        type: 'keyword',
+        script: "\n        emit(doc['timestamp'].value.dayOfWeekEnum\n          .getDisplayName(TextStyle.FULL, Locale.ROOT))\n      "
+      }
+    },
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          sources: [
+            {
+              dow: {
+                terms: {
+                  field: 'day_of_week'
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

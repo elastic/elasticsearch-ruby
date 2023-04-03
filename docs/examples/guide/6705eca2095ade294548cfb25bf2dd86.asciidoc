@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.shards(
+  v: true,
+  h: 'index,shard,prirep,state,node,unassigned.reason',
+  s: 'state'
+)
+puts response
+----

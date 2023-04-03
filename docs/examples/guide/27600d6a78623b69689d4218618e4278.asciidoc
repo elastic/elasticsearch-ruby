@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_index',
+  body: {
+    query: {
+      term: {
+        my_counter: 18_446_744_073_709_552_000
+      }
+    }
+  }
+)
+puts response
+----

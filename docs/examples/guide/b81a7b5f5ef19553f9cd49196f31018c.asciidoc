@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'items',
+  body: {
+    mappings: {
+      properties: {
+        name: {
+          type: 'keyword'
+        },
+        production_date: {
+          type: 'date'
+        },
+        location: {
+          type: 'geo_point'
+        }
+      }
+    }
+  }
+)
+puts response
+----

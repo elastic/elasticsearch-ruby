@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'keyword',
+    filter: [
+      'lowercase'
+    ],
+    char_filter: [
+      'html_strip'
+    ],
+    text: 'this is a test</b>'
+  }
+)
+puts response
+----

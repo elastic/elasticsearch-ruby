@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.snapshot.get(
+  repository: 'my_repository',
+  snapshot: 'snapshot_*',
+  sort: 'start_time',
+  from_sort_value: 1_577_833_200_000
+)
+puts response
+----

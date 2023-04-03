@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'norwegian_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          norwegian_stop: {
+            type: 'stop',
+            stopwords: '_norwegian_'
+          },
+          norwegian_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'eksempel'
+            ]
+          },
+          norwegian_stemmer: {
+            type: 'stemmer',
+            language: 'norwegian'
+          }
+        },
+        analyzer: {
+          rebuilt_norwegian: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'norwegian_stop',
+              'norwegian_keywords',
+              'norwegian_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

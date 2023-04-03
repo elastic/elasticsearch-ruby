@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_ip_locations',
+  body: {
+    mappings: {
+      properties: {
+        geoip: {
+          properties: {
+            location: {
+              type: 'geo_point'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

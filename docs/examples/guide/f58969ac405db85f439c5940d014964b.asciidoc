@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_locations',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          geo_bounding_box: {
+            "pin.location": {
+              wkt: 'BBOX (-74.1, -71.12, 40.73, 40.01)'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

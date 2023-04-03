@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    sort: [
+      {
+        price: {
+          missing: '_last'
+        }
+      }
+    ],
+    query: {
+      term: {
+        product: 'chocolate'
+      }
+    }
+  }
+)
+puts response
+----

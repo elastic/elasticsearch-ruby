@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.shutdown.get_node(
+  node_id: 'USpTGYaBSIKbgSUJR2Z9lg'
+)
+puts response
+----

@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'items',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match: {
+            name: 'chocolate'
+          }
+        },
+        should: {
+          distance_feature: {
+            field: 'location',
+            pivot: '1000m',
+            origin: [
+              -71.3,
+              41.15
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

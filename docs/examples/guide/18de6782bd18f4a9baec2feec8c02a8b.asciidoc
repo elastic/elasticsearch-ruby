@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000002',
+  body: {
+    mappings: {
+      properties: {
+        datetime: {
+          type: 'date',
+          format: 'uuuu/MM/dd HH:mm:ss||uuuu/MM/dd||epoch_millis'
+        }
+      }
+    }
+  }
+)
+puts response
+----

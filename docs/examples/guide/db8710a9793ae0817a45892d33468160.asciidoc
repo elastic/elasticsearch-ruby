@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.disk_usage(
+  index: 'my-index-000001',
+  run_expensive_tasks: true
+)
+puts response
+----
