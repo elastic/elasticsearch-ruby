@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.health
+puts response
+
+response = client.cat.health
+puts response
+----

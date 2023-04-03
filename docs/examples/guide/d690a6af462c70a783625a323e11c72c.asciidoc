@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test-index',
+  body: {
+    settings: {
+      number_of_shards: 1,
+      number_of_replicas: 1,
+      "index.lifecycle.name": 'my_policy'
+    }
+  }
+)
+puts response
+----

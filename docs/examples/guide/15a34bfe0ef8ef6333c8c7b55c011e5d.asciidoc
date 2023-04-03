@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    filter: [
+      'lowercase'
+    ],
+    text: 'BaR'
+  }
+)
+puts response
+----

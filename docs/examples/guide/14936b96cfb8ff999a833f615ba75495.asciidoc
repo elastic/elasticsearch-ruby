@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'bicycles,other_cycles',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match: {
+            description: 'dutch'
+          }
+        },
+        filter: {
+          term: {
+            cycle_type: 'bicycle'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.tasks.list(
+  parent_task_id: 'oTUltX4IQMOUUVeiohTt8A:123'
+)
+puts response
+----

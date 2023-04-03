@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.health_report
+puts response
+----

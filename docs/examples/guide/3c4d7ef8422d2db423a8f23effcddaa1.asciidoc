@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.nodes.info(
+  node_id: 'process'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: '_all',
+  metric: 'process'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'nodeId1,nodeId2',
+  metric: 'jvm,process'
+)
+puts response
+
+response = client.nodes.info(
+  node_id: 'nodeId1,nodeId2',
+  metric: '_all'
+)
+puts response
+----

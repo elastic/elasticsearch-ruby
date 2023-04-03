@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      processors: [
+        {
+          registered_domain: {
+            field: 'fqdn',
+            target_field: 'url'
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _source: {
+          fqdn: 'www.example.ac.uk'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

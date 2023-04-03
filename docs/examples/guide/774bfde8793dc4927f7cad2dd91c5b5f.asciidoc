@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.msearch_template(
+  index: 'my-index',
+  body: [
+    {},
+    {
+      id: 'my-search-template',
+      params: {
+        query_string: 'hello world',
+        from: 0,
+        size: 10
+      }
+    },
+    {},
+    {
+      id: 'my-other-search-template',
+      params: {
+        query_type: 'match_all'
+      }
+    }
+  ]
+)
+puts response
+----

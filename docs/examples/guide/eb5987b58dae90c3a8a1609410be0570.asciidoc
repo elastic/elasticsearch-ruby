@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'indonesian_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          indonesian_stop: {
+            type: 'stop',
+            stopwords: '_indonesian_'
+          },
+          indonesian_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'contoh'
+            ]
+          },
+          indonesian_stemmer: {
+            type: 'stemmer',
+            language: 'indonesian'
+          }
+        },
+        analyzer: {
+          rebuilt_indonesian: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'indonesian_stop',
+              'indonesian_keywords',
+              'indonesian_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

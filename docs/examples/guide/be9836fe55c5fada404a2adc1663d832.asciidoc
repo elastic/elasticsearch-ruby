@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-index-000001',
+  body: {
+    runtime: {
+      http: {
+        type: 'composite',
+        script: 'emit(grok("%<COMMONAPACHELOG>s").extract(doc["message"].value))',
+        fields: {
+          clientip: {
+            type: 'ip'
+          },
+          verb: {
+            type: 'keyword'
+          },
+          response: {
+            type: 'long'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

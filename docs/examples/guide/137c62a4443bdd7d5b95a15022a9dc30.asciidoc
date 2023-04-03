@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'arabic_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          arabic_stop: {
+            type: 'stop',
+            stopwords: '_arabic_'
+          },
+          arabic_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'مثال'
+            ]
+          },
+          arabic_stemmer: {
+            type: 'stemmer',
+            language: 'arabic'
+          }
+        },
+        analyzer: {
+          rebuilt_arabic: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'decimal_digit',
+              'arabic_stop',
+              'arabic_normalization',
+              'arabic_keywords',
+              'arabic_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

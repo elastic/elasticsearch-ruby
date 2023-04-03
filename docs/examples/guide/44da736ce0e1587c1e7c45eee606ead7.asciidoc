@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'my-index-000001',
+  body: {
+    script: {
+      source: 'ctx._source.count++',
+      lang: 'painless'
+    },
+    query: {
+      term: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

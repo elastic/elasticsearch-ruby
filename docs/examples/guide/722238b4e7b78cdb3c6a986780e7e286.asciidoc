@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'range_index',
+  size: 0,
+  body: {
+    query: {
+      range: {
+        time_frame: {
+          gte: '2019-11-01',
+          format: 'yyyy-MM-dd'
+        }
+      }
+    },
+    aggregations: {
+      november_data: {
+        date_histogram: {
+          field: 'time_frame',
+          calendar_interval: 'day',
+          format: 'yyyy-MM-dd'
+        }
+      }
+    }
+  }
+)
+puts response
+----

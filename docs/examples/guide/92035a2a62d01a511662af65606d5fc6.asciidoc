@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      sales_per_month: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          bucket_truncate: {
+            bucket_sort: {
+              from: 1,
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

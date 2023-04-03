@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.slm.get_lifecycle
+puts response
+----

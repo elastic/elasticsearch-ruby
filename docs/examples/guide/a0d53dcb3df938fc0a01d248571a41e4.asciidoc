@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    runtime_mappings: {
+      "price.discounted": {
+        type: 'double',
+        script: "\n        double price = doc['price'].value;\n        if (doc['product'].value == 'mad max') {\n          price *= 0.8;\n        }\n        emit(price);\n      "
+      }
+    },
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          sources: [
+            {
+              price: {
+                histogram: {
+                  interval: 5,
+                  field: 'price.discounted'
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

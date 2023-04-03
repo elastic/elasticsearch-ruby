@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.cluster.health(
-  index: 'twitter',
-  level: 'shards'
-)
-puts response
-----

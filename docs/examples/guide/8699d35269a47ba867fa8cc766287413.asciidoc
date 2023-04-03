@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.license.post_start_basic
+puts response
+----

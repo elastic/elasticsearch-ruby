@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'template_1',
+  body: {
+    template: {
+      settings: {
+        number_of_shards: 1
+      }
+    },
+    _meta: {
+      description: 'set number of shards to one',
+      serialization: {
+        class: 'MyComponentTemplate',
+        id: 10
+      }
+    }
+  }
+)
+puts response
+----

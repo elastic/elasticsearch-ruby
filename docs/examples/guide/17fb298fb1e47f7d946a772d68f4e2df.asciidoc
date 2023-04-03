@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.delete_by_query(
+  index: 'my-data-stream',
+  body: {
+    query: {
+      match: {
+        "user.id": 'vlb44hny'
+      }
+    }
+  }
+)
+puts response
+----

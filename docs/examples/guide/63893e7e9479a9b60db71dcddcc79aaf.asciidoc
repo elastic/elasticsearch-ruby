@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.delete_calendar(
+  calendar_id: 'planned-outages'
+)
+puts response
+----

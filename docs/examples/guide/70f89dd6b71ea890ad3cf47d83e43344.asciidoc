@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    description: 'My optional pipeline description',
+    processors: [
+      {
+        set: {
+          description: 'My optional processor description',
+          field: 'my-long-field',
+          value: 10
+        }
+      },
+      {
+        set: {
+          description: "Set 'my-boolean-field' to true",
+          field: 'my-boolean-field',
+          value: true
+        }
+      },
+      {
+        lowercase: {
+          field: 'my-keyword-field'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

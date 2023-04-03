@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.shard_stores(
+  status: 'green'
+)
+puts response
+----

@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'items',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match: {
+            name: 'chocolate'
+          }
+        },
+        should: {
+          distance_feature: {
+            field: 'production_date',
+            pivot: '7d',
+            origin: 'now'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

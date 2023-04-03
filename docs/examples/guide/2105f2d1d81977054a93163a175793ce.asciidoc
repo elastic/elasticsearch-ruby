@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.snapshot.status
+puts response
+----

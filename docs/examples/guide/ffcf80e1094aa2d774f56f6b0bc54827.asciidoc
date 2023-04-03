@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'keyword',
+    filter: [
+      'word_delimiter_graph'
+    ],
+    text: "Neil's-Super-Duper-XL500--42+AutoCoder"
+  }
+)
+puts response
+----

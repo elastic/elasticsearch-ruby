@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.render_search_template(
+  body: {
+    source: {
+      query: {
+        term: {
+          "url.full": '{{#url}}{{host}}/{{page}}{{/url}}'
+        }
+      }
+    },
+    params: {
+      host: 'http://example.com',
+      page: 'hello-world'
+    }
+  }
+)
+puts response
+----

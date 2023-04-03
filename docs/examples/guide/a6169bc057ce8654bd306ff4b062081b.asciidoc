@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'music',
+  pretty: true,
+  body: {
+    suggest: {
+      "song-suggest": {
+        prefix: 'nor',
+        completion: {
+          field: 'suggest',
+          skip_duplicates: true
+        }
+      }
+    }
+  }
+)
+puts response
+----

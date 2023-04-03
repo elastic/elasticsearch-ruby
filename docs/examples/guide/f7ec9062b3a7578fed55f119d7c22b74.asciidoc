@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      'lowercase',
+      'asciifolding'
+    ],
+    text: 'Is this déja vu?'
+  }
+)
+puts response
+----

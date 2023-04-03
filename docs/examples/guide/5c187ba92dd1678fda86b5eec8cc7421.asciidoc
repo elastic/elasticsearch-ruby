@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      bool: {
+        filter: {
+          script: {
+            script: "\n            double amount = doc['amount'].value;\n            if (doc['type'].value == 'expense') {\n              amount *= -1;\n            }\n            return amount < 10;\n          "
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

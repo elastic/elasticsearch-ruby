@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'file-path-test',
+  body: {
+    query: {
+      match: {
+        file_path: '/User/bob/photos/2017/05'
+      }
+    }
+  }
+)
+puts response
+----

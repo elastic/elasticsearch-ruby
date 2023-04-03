@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'json',
+  body: {
+    keep_alive: '2d',
+    wait_for_completion_timeout: '2s',
+    query: 'SELECT * FROM library ORDER BY page_count DESC',
+    fetch_size: 5
+  }
+)
+puts response
+----

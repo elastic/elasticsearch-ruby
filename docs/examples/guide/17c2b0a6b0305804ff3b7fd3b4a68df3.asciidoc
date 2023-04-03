@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      description: '_description',
+      processors: [
+        {
+          set: {
+            field: 'field2',
+            value: '_value'
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _index: 'index',
+        _id: 'id',
+        _source: {
+          foo: 'bar'
+        }
+      },
+      {
+        _index: 'index',
+        _id: 'id',
+        _source: {
+          foo: 'rab'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      description: 'Hide my IP',
+      processors: [
+        {
+          redact: {
+            field: 'message',
+            patterns: [
+              '%{IP:client}'
+            ]
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _source: {
+          message: '55.3.244.1 GET /index.html 15824 0.043'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

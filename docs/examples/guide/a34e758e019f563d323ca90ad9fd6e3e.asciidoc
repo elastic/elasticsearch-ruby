@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.get_alias(
+  index: 'my-data-stream'
+)
+puts response
+----

@@ -1,0 +1,48 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      sales_per_month: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          total_sales: {
+            sum: {
+              field: 'price'
+            }
+          },
+          "t-shirts": {
+            filter: {
+              term: {
+                type: 't-shirt'
+              }
+            },
+            aggregations: {
+              sales: {
+                sum: {
+                  field: 'price'
+                }
+              }
+            }
+          },
+          "t-shirt-percentage": {
+            bucket_script: {
+              buckets_path: {
+                "tShirtSales": 't-shirts>sales',
+                "totalSales": 'total_sales'
+              },
+              script: 'params.tShirtSales / params.totalSales * 100'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

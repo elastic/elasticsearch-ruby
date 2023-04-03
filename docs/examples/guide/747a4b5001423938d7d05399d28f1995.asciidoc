@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "indices.lifecycle.poll_interval": '1m'
+    }
+  }
+)
+puts response
+----

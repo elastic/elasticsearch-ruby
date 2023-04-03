@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      span_first: {
+        match: {
+          span_term: {
+            "user.id": 'kimchy'
+          }
+        },
+        end: 3
+      }
+    }
+  }
+)
+puts response
+----

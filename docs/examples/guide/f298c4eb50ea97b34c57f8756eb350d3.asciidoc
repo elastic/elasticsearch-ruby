@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.pending_tasks(
+  v: true
+)
+puts response
+----

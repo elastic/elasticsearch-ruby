@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'my-index-000001',
+  conflicts: 'proceed',
+  body: {
+    query: {
+      term: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

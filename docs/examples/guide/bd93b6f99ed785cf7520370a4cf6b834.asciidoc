@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'cluster_one:my-index-000001',
+  body: {
+    query: {
+      match: {
+        "user.id": 'kimchy'
+      }
+    },
+    _source: [
+      'user.id',
+      'message',
+      'http.response.status_code'
+    ]
+  }
+)
+puts response
+----

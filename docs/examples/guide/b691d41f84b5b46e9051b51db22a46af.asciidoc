@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      genres: {
+        rare_terms: {
+          field: 'genre',
+          include: [
+            'swing',
+            'rock'
+          ],
+          exclude: [
+            'jazz'
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

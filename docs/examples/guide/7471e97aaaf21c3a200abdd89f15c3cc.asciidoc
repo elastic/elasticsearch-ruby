@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      intervals: {
+        my_text: {
+          match: {
+            query: 'hot porridge',
+            max_gaps: 10,
+            filter: {
+              not_containing: {
+                match: {
+                  query: 'salty'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

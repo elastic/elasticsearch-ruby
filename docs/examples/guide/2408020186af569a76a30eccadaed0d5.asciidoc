@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      processors: [
+        {
+          script: {
+            description: "Extract 'tags' from 'env' field",
+            lang: 'painless',
+            source: "\n            String[] envSplit = ctx['env'].splitOnToken(params['delimiter']);\n            ArrayList tags = new ArrayList();\n            tags.add(envSplit[params['position']].trim());\n            ctx['tags'] = tags;\n          ",
+            params: {
+              delimiter: '-',
+              position: 1
+            }
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _source: {
+          env: 'es01-prod'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

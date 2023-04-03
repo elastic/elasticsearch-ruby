@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    processors: [
+      {
+        set: {
+          description: "If 'url.scheme' is 'http', set 'url.insecure' to true",
+          if: 'ctx.url?.scheme =~ /^http[^s]/',
+          field: 'url.insecure',
+          value: true
+        }
+      }
+    ]
+  }
+)
+puts response
+----

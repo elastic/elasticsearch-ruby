@@ -1,0 +1,43 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'hindi_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          hindi_stop: {
+            type: 'stop',
+            stopwords: '_hindi_'
+          },
+          hindi_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'उदाहरण'
+            ]
+          },
+          hindi_stemmer: {
+            type: 'stemmer',
+            language: 'hindi'
+          }
+        },
+        analyzer: {
+          rebuilt_hindi: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'decimal_digit',
+              'hindi_keywords',
+              'indic_normalization',
+              'hindi_normalization',
+              'hindi_stop',
+              'hindi_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

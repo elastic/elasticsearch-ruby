@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      histogram_titles: {
+        terms: {
+          field: 'my_text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

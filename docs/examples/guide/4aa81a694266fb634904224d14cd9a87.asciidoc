@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_queries2',
+  body: {
+    query: {
+      percolate: {
+        field: 'query',
+        document: {
+          my_field: 'wxyz'
+        }
+      }
+    }
+  }
+)
+puts response
+----

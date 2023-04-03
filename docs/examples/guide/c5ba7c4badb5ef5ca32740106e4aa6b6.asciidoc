@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.termvectors(
+  index: 'my-index-000001',
+  id: 1,
+  fields: 'message'
+)
+puts response
+----

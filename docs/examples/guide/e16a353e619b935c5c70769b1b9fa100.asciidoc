@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          sources: [
+            {
+              tile: {
+                geotile_grid: {
+                  field: 'location',
+                  precision: 8
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

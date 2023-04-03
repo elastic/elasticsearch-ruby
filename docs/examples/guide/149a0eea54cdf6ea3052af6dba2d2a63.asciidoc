@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      phases: {
+        warm: {
+          actions: {
+            set_priority: {
+              priority: 50
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    highlight: {
+      fields: [
+        {
+          title: {}
+        },
+        {
+          text: {}
+        }
+      ]
+    }
+  }
+)
+puts response
+----

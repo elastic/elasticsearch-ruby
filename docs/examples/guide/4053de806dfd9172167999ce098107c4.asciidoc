@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      constant_score: {
+        filter: {
+          term: {
+            "user.id": 'kimchy'
+          }
+        },
+        boost: 1.2
+      }
+    }
+  }
+)
+puts response
+----

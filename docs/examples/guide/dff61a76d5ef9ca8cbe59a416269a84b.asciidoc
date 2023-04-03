@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ingest.delete_pipeline(
+  id: 'my-pipeline-id'
+)
+puts response
+----

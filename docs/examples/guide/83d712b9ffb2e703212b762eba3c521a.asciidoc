@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-alias',
+  ignore_unavailable: true
+)
+puts response
+----

@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'events',
+  body: {
+    size: 10,
+    sort: [
+      {
+        timestamp: 'desc'
+      }
+    ]
+  }
+)
+puts response
+----

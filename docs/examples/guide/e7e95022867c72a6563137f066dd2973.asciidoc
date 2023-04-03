@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      hotspots: {
+        geohash_grid: {
+          field: 'location',
+          precision: 5
+        },
+        aggregations: {
+          significant_crime_types: {
+            significant_terms: {
+              field: 'crime_type'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

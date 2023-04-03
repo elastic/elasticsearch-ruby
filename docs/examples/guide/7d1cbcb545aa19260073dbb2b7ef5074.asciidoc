@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          size: 2,
+          sources: [
+            {
+              date: {
+                date_histogram: {
+                  field: 'timestamp',
+                  calendar_interval: '1d'
+                }
+              }
+            },
+            {
+              product: {
+                terms: {
+                  field: 'product'
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

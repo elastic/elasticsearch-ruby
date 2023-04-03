@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      query_string: {
+        query: 'comment.plain:running scissors',
+        fields: [
+          'comment'
+        ]
+      }
+    },
+    highlight: {
+      order: 'score',
+      fields: {
+        comment: {
+          matched_fields: [
+            'comment',
+            'comment.plain'
+          ],
+          type: 'fvh'
+        }
+      }
+    }
+  }
+)
+puts response
+----

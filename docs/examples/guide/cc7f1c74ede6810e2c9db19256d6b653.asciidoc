@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index',
+  body: {
+    query: {
+      match: {
+        "http.response": '304'
+      }
+    },
+    fields: [
+      'http.response'
+    ]
+  }
+)
+puts response
+----

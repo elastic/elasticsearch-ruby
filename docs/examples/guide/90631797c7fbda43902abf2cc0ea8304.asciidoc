@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'request_cache',
+  human: true
+)
+puts response
+----

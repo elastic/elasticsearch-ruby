@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'whitespace_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          rebuilt_whitespace: {
+            tokenizer: 'whitespace',
+            filter: []
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

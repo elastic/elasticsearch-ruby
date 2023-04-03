@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      combined_fields: {
+        query: 'distributed consensus',
+        fields: [
+          'title^2',
+          'body'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

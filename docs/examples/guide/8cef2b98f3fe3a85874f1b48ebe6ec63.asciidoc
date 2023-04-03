@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'elision_case_insensitive_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          default: {
+            tokenizer: 'whitespace',
+            filter: [
+              'elision_case_insensitive'
+            ]
+          }
+        },
+        filter: {
+          elision_case_insensitive: {
+            type: 'elision',
+            articles: [
+              'l',
+              'm',
+              't',
+              'qu',
+              'n',
+              's',
+              'j'
+            ],
+            articles_case: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

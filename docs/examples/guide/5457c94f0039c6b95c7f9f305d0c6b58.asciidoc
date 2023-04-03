@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  metric: 'indices'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'os,process'
+)
+puts response
+
+response = client.nodes.stats(
+  node_id: '10.0.0.1',
+  metric: 'process'
+)
+puts response
+----

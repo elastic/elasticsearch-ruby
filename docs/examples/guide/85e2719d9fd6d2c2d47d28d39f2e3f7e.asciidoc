@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.migration.get_feature_upgrade_status
+puts response
+----

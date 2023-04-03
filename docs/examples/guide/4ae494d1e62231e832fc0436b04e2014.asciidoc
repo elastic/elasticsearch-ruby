@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.validate_query(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      bool: {
+        must: {
+          query_string: {
+            query: '*:*'
+          }
+        },
+        filter: {
+          term: {
+            "user.id": 'kimchy'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

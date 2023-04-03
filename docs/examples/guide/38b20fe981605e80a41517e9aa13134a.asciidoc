@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      sales_per_month: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          total_sales: {
+            sum: {
+              field: 'price'
+            }
+          },
+          sales_bucket_filter: {
+            bucket_selector: {
+              buckets_path: {
+                "totalSales": 'total_sales'
+              },
+              script: 'params.totalSales > 200'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'logs-debug',
+  body: {
+    mappings: {
+      properties: {
+        "@timestamp": {
+          type: 'date'
+        },
+        message: {
+          type: 'text'
+        },
+        level: {
+          type: 'constant_keyword',
+          value: 'debug'
+        }
+      }
+    }
+  }
+)
+puts response
+----

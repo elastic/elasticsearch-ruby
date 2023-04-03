@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.ml.put_filter(
+  filter_id: 'safe_domains',
+  body: {
+    description: 'A list of safe domains',
+    items: [
+      '*.google.com',
+      'wikipedia.org'
+    ]
+  }
+)
+puts response
+----

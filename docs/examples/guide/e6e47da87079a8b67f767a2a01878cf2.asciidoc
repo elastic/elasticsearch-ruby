@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    processors: [
+      {
+        set: {
+          description: 'Use geo_point dynamic template for address field',
+          field: '_dynamic_templates',
+          value: {
+            address: 'geo_point'
+          }
+        }
+      }
+    ]
+  }
+)
+puts response
+----

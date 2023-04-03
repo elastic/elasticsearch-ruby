@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'shrink-index',
+  body: {
+    policy: {
+      phases: {
+        warm: {
+          min_age: '5d',
+          actions: {
+            shrink: {
+              number_of_shards: 4
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

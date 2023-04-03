@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.ml.get_overall_buckets(
+  job_id: 'job-*',
+  body: {
+    top_n: 2,
+    overall_score: 50,
+    start: '1403532000000'
+  }
+)
+puts response
+----

@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'cbor-attachment',
+  body: {
+    description: 'Extract attachment information',
+    processors: [
+      {
+        attachment: {
+          field: 'data',
+          remove_binary: false
+        }
+      }
+    ]
+  }
+)
+puts response
+----

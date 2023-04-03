@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      phases: {
+        warm: {
+          actions: {
+            shrink: {
+              max_primary_shard_size: '50gb'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

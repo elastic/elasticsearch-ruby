@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.delete_filter(
+  filter_id: 'safe_domains'
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.stats(
+  node_id: 'node1,node*,master:false'
+)
+puts response
+----

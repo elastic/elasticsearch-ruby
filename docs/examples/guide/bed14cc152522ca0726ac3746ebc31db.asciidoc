@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'my_index',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      my_counter: 0
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      my_counter: 9_223_372_036_854_776_000
+    },
+    {
+      index: {
+        _id: 3
+      }
+    },
+    {
+      my_counter: 18_446_744_073_709_552_000
+    },
+    {
+      index: {
+        _id: 4
+      }
+    },
+    {
+      my_counter: 18_446_744_073_709_552_000
+    }
+  ]
+)
+puts response
+----

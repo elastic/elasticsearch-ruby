@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'bicycles',
+  body: {
+    mappings: {
+      properties: {
+        cycle_type: {
+          type: 'constant_keyword',
+          value: 'bicycle'
+        },
+        name: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'other_cycles',
+  body: {
+    mappings: {
+      properties: {
+        cycle_type: {
+          type: 'keyword'
+        },
+        name: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

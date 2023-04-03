@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.search_shards(
+  index: 'my-index-000001',
+  routing: 'foo,bar'
+)
+puts response
+----

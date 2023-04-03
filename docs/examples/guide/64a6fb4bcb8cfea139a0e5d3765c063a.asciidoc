@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.sql.translate(
+  body: {
+    query: 'SELECT * FROM library ORDER BY page_count DESC',
+    fetch_size: 10
+  }
+)
+puts response
+----

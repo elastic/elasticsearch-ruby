@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.health_report(
+  feature: 'shards_availability'
+)
+puts response
+----

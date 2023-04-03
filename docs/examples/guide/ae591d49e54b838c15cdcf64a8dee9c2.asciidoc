@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      phases: {
+        hot: {
+          actions: {
+            rollover: {
+              max_primary_shard_docs: 10_000_000
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

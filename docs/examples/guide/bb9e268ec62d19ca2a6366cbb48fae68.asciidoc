@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.count(
+  v: true
+)
+puts response
+----

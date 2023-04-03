@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline-id',
+  body: {
+    description: 'My optional pipeline description',
+    processors: [
+      {
+        set: {
+          description: 'My optional processor description',
+          field: 'my-keyword-field',
+          value: 'foo'
+        }
+      }
+    ],
+    _meta: {
+      reason: 'set my-keyword-field to foo',
+      serialization: {
+        class: 'MyPipeline',
+        id: 10
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      {
+        type: 'limit',
+        max_token_count: 2
+      }
+    ],
+    text: 'quick fox jumps over lazy dog'
+  }
+)
+puts response
+----

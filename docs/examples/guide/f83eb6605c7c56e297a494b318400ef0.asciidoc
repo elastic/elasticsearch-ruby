@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'shirts',
+  body: {
+    query: {
+      bool: {
+        filter: [
+          {
+            term: {
+              color: 'red'
+            }
+          },
+          {
+            term: {
+              brand: 'gucci'
+            }
+          }
+        ]
+      }
+    }
+  }
+)
+puts response
+----

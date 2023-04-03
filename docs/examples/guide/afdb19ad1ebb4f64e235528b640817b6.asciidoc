@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    processors: [
+      {
+        drop: {
+          description: "Drop documents with 'network.name' of 'Guest'",
+          if: "ctx?.network?.name == 'Guest'"
+        }
+      }
+    ]
+  }
+)
+puts response
+----

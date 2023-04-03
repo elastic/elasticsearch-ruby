@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      cluster: {
+        remote: {
+          cluster_two: {
+            mode: nil,
+            seeds: nil,
+            skip_unavailable: nil,
+            "transport.compress": nil
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

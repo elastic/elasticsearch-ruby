@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_date_histo: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: '1M'
+        },
+        aggregations: {
+          the_sum: {
+            sum: {
+              field: 'price'
+            }
+          },
+          the_movavg: {
+            moving_fn: {
+              buckets_path: 'the_sum',
+              window: 10,
+              script: 'if (values.length > 5*2) {MovingFunctions.holtWinters(values, 0.3, 0.1, 0.1, 5, false)}'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

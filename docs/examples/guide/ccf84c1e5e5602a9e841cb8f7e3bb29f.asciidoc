@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'standard_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          rebuilt_standard: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

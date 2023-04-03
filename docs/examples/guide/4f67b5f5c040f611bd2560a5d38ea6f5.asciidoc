@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      genres: {
+        rare_terms: {
+          field: 'genre',
+          missing: 'N/A'
+        }
+      }
+    }
+  }
+)
+puts response
+----

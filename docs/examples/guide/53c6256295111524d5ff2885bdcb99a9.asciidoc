@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.indices.get(
+  index: '_transform',
+  from: 5,
+  size: 10
+)
+puts response
+----

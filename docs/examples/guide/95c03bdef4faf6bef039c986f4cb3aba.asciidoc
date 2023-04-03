@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: '.watcher-history*',
+  pretty: true,
+  body: {
+    query: {
+      match: {
+        "result.condition.met": true
+      }
+    }
+  }
+)
+puts response
+----

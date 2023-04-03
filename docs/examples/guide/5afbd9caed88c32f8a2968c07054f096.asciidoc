@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.logstash.delete_pipeline(
+  id: 'my_pipeline'
+)
+puts response
+----

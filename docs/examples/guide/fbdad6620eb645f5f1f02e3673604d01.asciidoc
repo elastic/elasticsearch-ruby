@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_locations',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          geo_distance: {
+            distance: '12km',
+            "pin.location": 'drm3btev3e86'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

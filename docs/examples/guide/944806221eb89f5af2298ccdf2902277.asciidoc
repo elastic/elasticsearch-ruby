@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.rollup.get_rollup_caps(
+  id: '_all'
+)
+puts response
+----

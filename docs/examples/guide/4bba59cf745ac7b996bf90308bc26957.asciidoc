@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'file-path-test',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match: {
+            file_path: '16'
+          }
+        },
+        filter: {
+          term: {
+            "file_path.tree": '/User/alice'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

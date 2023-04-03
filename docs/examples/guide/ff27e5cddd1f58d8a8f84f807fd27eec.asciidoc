@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.ingest.simulate(
+  body: {
+    pipeline: {
+      processors: [
+        {
+          redact: {
+            field: 'message',
+            patterns: [
+              '%{GITHUB_NAME:GITHUB_NAME}'
+            ],
+            pattern_definitions: {
+              "GITHUB_NAME": '@%<USERNAME>s'
+            }
+          }
+        }
+      ]
+    },
+    docs: [
+      {
+        _source: {
+          message: '@elastic-data-management the PR is ready for review'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

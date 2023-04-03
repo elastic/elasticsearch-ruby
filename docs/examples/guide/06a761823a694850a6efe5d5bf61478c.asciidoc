@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.enrich.put_policy(
+  name: 'users-policy',
+  body: {
+    match: {
+      indices: 'users',
+      match_field: 'email',
+      enrich_fields: [
+        'first_name',
+        'last_name',
+        'city',
+        'zip',
+        'state'
+      ]
+    }
+  }
+)
+puts response
+----

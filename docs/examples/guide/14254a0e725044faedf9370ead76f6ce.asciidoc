@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.search(
+  q: 'user.id:elkbee',
+  size: 0,
+  terminate_after: 1
+)
+puts response
+----

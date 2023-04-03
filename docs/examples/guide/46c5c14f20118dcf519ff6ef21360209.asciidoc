@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'datastream_policy',
+  body: {
+    policy: {
+      phases: {
+        hot: {
+          actions: {
+            rollover: {
+              max_docs: 1
+            },
+            downsample: {
+              fixed_interval: '1h'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

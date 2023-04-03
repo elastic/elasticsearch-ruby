@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'letter_unique_pos_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          letter_unique_pos: {
+            tokenizer: 'letter',
+            filter: [
+              'unique_pos'
+            ]
+          }
+        },
+        filter: {
+          unique_pos: {
+            type: 'unique',
+            only_on_same_position: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

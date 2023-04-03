@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'range_index',
+  body: {
+    query: {
+      range: {
+        time_frame: {
+          gte: '2015-10-31',
+          lte: '2015-11-01',
+          relation: 'within'
+        }
+      }
+    }
+  }
+)
+puts response
+----

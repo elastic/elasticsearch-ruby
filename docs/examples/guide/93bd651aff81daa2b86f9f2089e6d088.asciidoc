@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    my_id: '1',
+    text: 'This is a question',
+    my_join_field: {
+      name: 'question'
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  refresh: true,
+  body: {
+    my_id: '2',
+    text: 'This is another question',
+    my_join_field: {
+      name: 'question'
+    }
+  }
+)
+puts response
+----

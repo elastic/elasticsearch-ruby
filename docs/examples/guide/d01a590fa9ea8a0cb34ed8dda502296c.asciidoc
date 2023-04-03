@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cluster.get_settings(
+  flat_settings: true,
+  filter_path: 'transient'
+)
+puts response
+----

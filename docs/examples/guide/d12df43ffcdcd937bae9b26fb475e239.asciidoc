@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'uax_url_email',
+    text: 'Email me at john.smith@global-international.com'
+  }
+)
+puts response
+----

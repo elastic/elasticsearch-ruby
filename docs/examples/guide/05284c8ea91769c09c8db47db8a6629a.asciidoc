@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.repositories(
+  v: true
+)
+puts response
+----
