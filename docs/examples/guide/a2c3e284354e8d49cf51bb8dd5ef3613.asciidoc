@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.transform.upgrade_transforms
+puts response
+----

@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my-data-stream',
+  body: {
+    index: {
+      refresh_interval: '30s'
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  size: 0,
+  body: {
+    aggregations: {
+      by_day: {
+        auto_date_histogram: {
+          field: 'date',
+          buckets: 3,
+          time_zone: '-01:00'
+        }
+      }
+    }
+  }
+)
+puts response
+----

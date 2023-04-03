@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.enrich.put_policy(
+  name: 'networks-policy',
+  body: {
+    range: {
+      indices: 'networks',
+      match_field: 'range',
+      enrich_fields: [
+        'name',
+        'department'
+      ]
+    }
+  }
+)
+puts response
+----

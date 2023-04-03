@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.shards(
+  v: true
+)
+puts response
+----

@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.put_script(
+  id: 'my-search-template',
+  body: {
+    script: {
+      lang: 'mustache',
+      source: {
+        query: {
+          match: {
+            message: '{{query_string}}'
+          }
+        },
+        from: '{{from}}',
+        size: '{{size}}'
+      },
+      params: {
+        query_string: 'My query string'
+      }
+    }
+  }
+)
+puts response
+----

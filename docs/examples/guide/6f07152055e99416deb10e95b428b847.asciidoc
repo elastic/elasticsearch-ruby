@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'edge_ngram_custom_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          default: {
+            tokenizer: 'whitespace',
+            filter: [
+              '3_5_edgegrams'
+            ]
+          }
+        },
+        filter: {
+          "3_5_edgegrams": {
+            type: 'edge_ngram',
+            min_gram: 3,
+            max_gram: 5
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.ilm.put_lifecycle(
+  policy: 'my_policy',
+  body: {
+    policy: {
+      phases: {
+        cold: {
+          actions: {
+            allocate: {
+              require: {
+                box_type: 'cold',
+                storage: 'high'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

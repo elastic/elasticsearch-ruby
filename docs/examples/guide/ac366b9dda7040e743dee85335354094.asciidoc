@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      {
+        type: 'shingle',
+        min_shingle_size: 2,
+        max_shingle_size: 3
+      }
+    ],
+    text: 'quick brown fox jumps'
+  }
+)
+puts response
+----

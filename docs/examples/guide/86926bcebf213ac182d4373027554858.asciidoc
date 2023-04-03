@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_index',
+  body: {
+    mappings: {
+      properties: {
+        my_counter: {
+          type: 'unsigned_long'
+        }
+      }
+    }
+  }
+)
+puts response
+----

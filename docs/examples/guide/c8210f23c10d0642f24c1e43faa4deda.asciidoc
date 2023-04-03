@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'my-mappings',
+  body: {
+    template: {
+      mappings: {
+        properties: {
+          "@timestamp": {
+            type: 'date',
+            format: 'date_optional_time||epoch_millis'
+          },
+          message: {
+            type: 'wildcard'
+          }
+        }
+      }
+    },
+    _meta: {
+      description: 'Mappings for @timestamp and message fields',
+      "my-custom-meta-field": 'More arbitrary metadata'
+    }
+  }
+)
+puts response
+
+response = client.cluster.put_component_template(
+  name: 'my-settings',
+  body: {
+    template: {
+      settings: {
+        "index.lifecycle.name": 'my-lifecycle-policy'
+      }
+    },
+    _meta: {
+      description: 'Settings for ILM',
+      "my-custom-meta-field": 'More arbitrary metadata'
+    }
+  }
+)
+puts response
+----

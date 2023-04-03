@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'index',
+  body: {
+    query: {
+      constant_score: {
+        filter: {
+          range: {
+            my_date: {
+              gte: 'now-1h/m',
+              lte: 'now/m'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

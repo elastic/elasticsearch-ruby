@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      ids: {
+        values: [
+          '1',
+          '4',
+          '100'
+        ]
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'truncate'
+    ],
+    text: 'the quinquennial extravaganza carried on'
+  }
+)
+puts response
+----

@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.clear_cache(
+  index: 'my-index-000001',
+  fielddata: true
+)
+puts response
+
+response = client.indices.clear_cache(
+  index: 'my-index-000001',
+  query: true
+)
+puts response
+
+response = client.indices.clear_cache(
+  index: 'my-index-000001',
+  request: true
+)
+puts response
+----

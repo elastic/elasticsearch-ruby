@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'monthlyindex',
+  body: {
+    description: 'monthly date-time index naming',
+    processors: [
+      {
+        date_index_name: {
+          field: 'date1',
+          index_name_prefix: 'my-index-',
+          date_rounding: 'M'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

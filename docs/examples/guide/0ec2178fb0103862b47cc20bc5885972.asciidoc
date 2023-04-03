@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.snapshot.create_repository(
+  repository: 'my_fs_backup',
+  body: {
+    type: 'fs',
+    settings: {
+      location: 'my_fs_backup_location',
+      readonly: true
+    }
+  }
+)
+puts response
+----

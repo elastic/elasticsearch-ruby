@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'test*',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      tm: {
+        top_metrics: {
+          metrics: {
+            field: 'm'
+          },
+          sort: {
+            s: {
+              order: 'asc',
+              numeric_type: 'double'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

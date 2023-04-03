@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'test',
+  body: {
+    top_metrics_max_size: 100
+  }
+)
+puts response
+----

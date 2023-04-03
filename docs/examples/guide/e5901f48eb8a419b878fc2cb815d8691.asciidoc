@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      "indices.recovery.max_bytes_per_sec": '50mb'
+    }
+  }
+)
+puts response
+----

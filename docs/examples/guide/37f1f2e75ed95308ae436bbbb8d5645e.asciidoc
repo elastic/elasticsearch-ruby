@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.license.post_start_trial(
+  acknowledge: true
+)
+puts response
+----

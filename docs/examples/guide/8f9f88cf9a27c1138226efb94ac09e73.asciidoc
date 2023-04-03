@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      term: {
+        ip_addr: '192.168.0.0/16'
+      }
+    }
+  }
+)
+puts response
+----

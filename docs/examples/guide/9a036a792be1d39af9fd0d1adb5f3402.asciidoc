@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      {
+        type: 'keep',
+        keep_words: [
+          'dog',
+          'elephant',
+          'fox'
+        ]
+      }
+    ],
+    text: 'the quick fox jumps over the lazy dog'
+  }
+)
+puts response
+----

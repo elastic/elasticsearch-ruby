@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.master(
+  v: true
+)
+puts response
+----

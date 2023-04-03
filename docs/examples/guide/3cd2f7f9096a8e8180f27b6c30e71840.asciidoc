@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'logs',
+  body: {
+    size: 0,
+    aggregations: {
+      messages: {
+        filters: {
+          filters: [
+            {
+              match: {
+                body: 'error'
+              }
+            },
+            {
+              match: {
+                body: 'warning'
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

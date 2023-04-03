@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      terms: {
+        force: [
+          'British Transport Police'
+        ]
+      }
+    },
+    aggregations: {
+      significant_crime_types: {
+        significant_terms: {
+          field: 'crime_type'
+        }
+      }
+    }
+  }
+)
+puts response
+----

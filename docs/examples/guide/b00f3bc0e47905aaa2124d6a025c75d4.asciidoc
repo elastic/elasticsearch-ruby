@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'txt',
+  body: {
+    query: 'SELECT * FROM library ORDER BY page_count DESC LIMIT 5'
+  }
+)
+puts response
+----

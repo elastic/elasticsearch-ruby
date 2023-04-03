@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'template_1',
+  body: {
+    template: {
+      settings: {
+        number_of_shards: 1
+      }
+    },
+    version: 123
+  }
+)
+puts response
+----

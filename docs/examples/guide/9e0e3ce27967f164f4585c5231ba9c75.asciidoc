@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    my_field: 'quick brown fox jump lazy dog'
+  }
+)
+puts response
+----

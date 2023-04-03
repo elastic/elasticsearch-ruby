@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.indices(
+  v: true,
+  health: 'red',
+  h: 'index,status,health'
+)
+puts response
+----

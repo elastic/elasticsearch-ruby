@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'fingerprint_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          rebuilt_fingerprint: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'asciifolding',
+              'fingerprint'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

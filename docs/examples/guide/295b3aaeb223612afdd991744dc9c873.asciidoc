@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my_test_scores_pipeline',
+  body: {
+    description: 'Calculates the total test score',
+    processors: [
+      {
+        script: {
+          source: 'ctx.total_score = (ctx.math_score + ctx.verbal_score)'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

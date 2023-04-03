@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'index',
+  body: {
+    query: {
+      simple_query_string: {
+        fields: [
+          'body.exact'
+        ],
+        query: 'ski'
+      }
+    }
+  }
+)
+puts response
+----

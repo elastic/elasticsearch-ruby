@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'index',
+  body: {
+    properties: {
+      title: {
+        type: 'text',
+        similarity: 'my_similarity'
+      }
+    }
+  }
+)
+puts response
+----

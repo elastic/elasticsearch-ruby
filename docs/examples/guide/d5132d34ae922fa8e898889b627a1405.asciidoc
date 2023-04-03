@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'child_example',
+  size: 0,
+  body: {
+    aggregations: {
+      "top-tags": {
+        terms: {
+          field: 'tags.keyword',
+          size: 10
+        },
+        aggregations: {
+          "to-answers": {
+            children: {
+              type: 'answer'
+            },
+            aggregations: {
+              "top-names": {
+                terms: {
+                  field: 'owner.display_name.keyword',
+                  size: 10
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      {
+        type: 'pattern_replace',
+        pattern: '(dog)',
+        replacement: 'watch$1'
+      }
+    ],
+    text: 'foxes jump lazy dogs'
+  }
+)
+puts response
+----

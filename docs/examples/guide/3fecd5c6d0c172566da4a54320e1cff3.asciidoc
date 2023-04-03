@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'standard',
+    filter: [
+      {
+        type: 'dictionary_decompounder',
+        word_list: [
+          'Donau',
+          'dampf',
+          'meer',
+          'schiff'
+        ]
+      }
+    ],
+    text: 'Donaudampfschiff'
+  }
+)
+puts response
+----

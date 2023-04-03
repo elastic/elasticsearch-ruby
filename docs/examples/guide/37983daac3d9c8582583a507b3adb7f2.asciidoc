@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.shutdown.put_node(
+  node_id: 'USpTGYaBSIKbgSUJR2Z9lg',
+  body: {
+    type: 'restart',
+    reason: 'Demonstrating how the node shutdown API works'
+  }
+)
+puts response
+----

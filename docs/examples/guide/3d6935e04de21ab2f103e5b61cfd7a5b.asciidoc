@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-pipeline',
+  body: {
+    processors: [
+      {
+        rename: {
+          description: "Rename 'provider' to 'cloud.provider'",
+          field: 'provider',
+          target_field: 'cloud.provider',
+          ignore_failure: true
+        }
+      }
+    ]
+  }
+)
+puts response
+----

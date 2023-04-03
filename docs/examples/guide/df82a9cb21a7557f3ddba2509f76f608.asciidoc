@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'fingerprint'
+    ],
+    text: 'zebra jumps over resting resting dog'
+  }
+)
+puts response
+----

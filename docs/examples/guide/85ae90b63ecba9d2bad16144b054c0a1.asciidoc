@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'txt',
+  body: {
+    runtime_mappings: {
+      release_day_of_week: {
+        type: 'keyword',
+        script: "\n        emit(doc['release_date'].value.dayOfWeekEnum.toString())\n      "
+      }
+    },
+    query: "\n    SELECT * FROM library WHERE page_count > 300 AND author = 'Frank Herbert'\n  "
+  }
+)
+puts response
+----

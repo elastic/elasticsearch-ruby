@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.simulate_template(
+  body: {
+    index_patterns: [
+      'my-index-*'
+    ],
+    composed_of: [
+      'ct2'
+    ],
+    priority: 10,
+    template: {
+      settings: {
+        "index.number_of_replicas": 1
+      }
+    }
+  }
+)
+puts response
+----

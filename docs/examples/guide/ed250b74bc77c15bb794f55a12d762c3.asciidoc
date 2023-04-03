@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.nodes.info(
+  filter_path: '**.mlockall'
+)
+puts response
+----

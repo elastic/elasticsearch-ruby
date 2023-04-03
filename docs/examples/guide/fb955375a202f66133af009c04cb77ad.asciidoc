@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'networks',
+  body: {
+    mappings: {
+      properties: {
+        range: {
+          type: 'ip_range'
+        },
+        name: {
+          type: 'keyword'
+        },
+        department: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+----

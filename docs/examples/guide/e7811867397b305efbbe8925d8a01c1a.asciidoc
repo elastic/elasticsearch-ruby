@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      intervals: {
+        my_text: {
+          any_of: {
+            intervals: [
+              {
+                match: {
+                  query: 'the big bad wolf',
+                  ordered: true,
+                  max_gaps: 0
+                }
+              },
+              {
+                match: {
+                  query: 'the big wolf',
+                  ordered: true,
+                  max_gaps: 0
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

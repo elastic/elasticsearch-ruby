@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'product-index',
+  body: {
+    query: {
+      script_score: {
+        query: {
+          bool: {
+            filter: {
+              range: {
+                price: {
+                  gte: 1000
+                }
+              }
+            }
+          }
+        },
+        script: {
+          source: "cosineSimilarity(params.queryVector, 'product-vector') + 1.0",
+          params: {
+            "queryVector": [
+              -0.5,
+              90,
+              -10,
+              14.8,
+              -156
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

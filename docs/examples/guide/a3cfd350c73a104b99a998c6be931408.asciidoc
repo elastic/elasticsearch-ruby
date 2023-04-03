@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.state(
+  metric: 'blocks'
+)
+puts response
+----

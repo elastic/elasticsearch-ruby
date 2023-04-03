@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.tasks.list
+puts response
+
+response = client.tasks.list(
+  nodes: 'nodeId1,nodeId2'
+)
+puts response
+
+response = client.tasks.list(
+  nodes: 'nodeId1,nodeId2',
+  actions: 'cluster:*'
+)
+puts response
+----

@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'template_1',
+  body: {
+    index_patterns: [
+      'logs-*'
+    ],
+    data_stream: {}
+  }
+)
+puts response
+----

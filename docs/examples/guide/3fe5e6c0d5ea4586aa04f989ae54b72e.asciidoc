@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.snapshot.verify_repository(
+  repository: 'my_repository'
+)
+puts response
+----

@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'museums',
+  size: 0,
+  body: {
+    aggregations: {
+      rings: {
+        geo_distance: {
+          field: 'location',
+          origin: 'POINT (4.894 52.3760)',
+          unit: 'km',
+          ranges: [
+            {
+              to: 100
+            },
+            {
+              from: 100,
+              to: 300
+            },
+            {
+              from: 300
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

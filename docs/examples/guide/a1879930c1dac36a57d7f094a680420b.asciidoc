@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'museums',
+  size: 0,
+  body: {
+    aggregations: {
+      "zoomed-in": {
+        filter: {
+          geo_bounding_box: {
+            location: {
+              top_left: 'u17',
+              bottom_right: 'u17'
+            }
+          }
+        },
+        aggregations: {
+          "zoom1": {
+            geohash_grid: {
+              field: 'location',
+              precision: 8
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

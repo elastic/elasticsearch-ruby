@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cat.ml_datafeeds(
+  v: true
+)
+puts response
+----

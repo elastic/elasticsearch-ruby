@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'txt',
+  body: {
+    query: 'SELECT YEAR(release_date) AS year FROM library WHERE page_count > ? AND author = ? GROUP BY year HAVING COUNT(*) > ?',
+    params: [
+      300,
+      'Frank Herbert',
+      0
+    ]
+  }
+)
+puts response
+----

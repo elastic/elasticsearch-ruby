@@ -1,0 +1,38 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'issues',
+  body: {
+    query: {
+      match_all: {}
+    },
+    aggregations: {
+      comments: {
+        nested: {
+          path: 'comments'
+        },
+        aggregations: {
+          top_usernames: {
+            terms: {
+              field: 'comments.username'
+            },
+            aggregations: {
+              comment_to_issue: {
+                reverse_nested: {},
+                aggregations: {
+                  top_tags_per_comment: {
+                    terms: {
+                      field: 'tags'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    size: 0,
+    aggregations: {
+      my_buckets: {
+        composite: {
+          sources: [
+            {
+              product: {
+                terms: {
+                  field: 'product'
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

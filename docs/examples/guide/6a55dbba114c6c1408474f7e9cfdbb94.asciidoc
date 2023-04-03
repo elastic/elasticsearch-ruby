@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.snapshot.create_repository(
+  repository: 'my_unverified_backup',
+  verify: false,
+  body: {
+    type: 'fs',
+    settings: {
+      location: 'my_unverified_backup_location'
+    }
+  }
+)
+puts response
+----

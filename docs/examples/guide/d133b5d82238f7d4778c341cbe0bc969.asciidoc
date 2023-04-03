@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.mtermvectors(
+  body: {
+    docs: [
+      {
+        _index: 'my-index-000001',
+        doc: {
+          message: 'test test test'
+        }
+      },
+      {
+        _index: 'my-index-000001',
+        doc: {
+          message: 'Another test ...'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

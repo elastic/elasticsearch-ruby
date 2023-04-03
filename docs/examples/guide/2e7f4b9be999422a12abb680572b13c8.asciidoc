@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ilm.get_lifecycle(
+  policy: 'my_policy'
+)
+puts response
+----

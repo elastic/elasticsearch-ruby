@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'product-index',
+  body: {
+    mappings: {
+      properties: {
+        "product-vector": {
+          type: 'dense_vector',
+          dims: 5,
+          index: false
+        },
+        price: {
+          type: 'long'
+        }
+      }
+    }
+  }
+)
+puts response
+----

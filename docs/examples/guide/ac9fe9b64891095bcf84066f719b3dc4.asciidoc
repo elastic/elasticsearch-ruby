@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.snapshot.create_repository(
+  repository: 'my_src_only_repository',
+  body: {
+    type: 'source',
+    settings: {
+      delegate_type: 'fs',
+      location: 'my_backup_repository'
+    }
+  }
+)
+puts response
+----

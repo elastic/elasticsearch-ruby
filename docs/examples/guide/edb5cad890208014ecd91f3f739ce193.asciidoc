@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.rollover(
+  alias: 'metrics-weather_sensors-dev'
+)
+puts response
+----

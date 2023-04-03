@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'ngram',
+    text: 'Quick Fox'
+  }
+)
+puts response
+----

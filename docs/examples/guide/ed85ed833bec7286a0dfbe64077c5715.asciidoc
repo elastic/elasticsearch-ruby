@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'danish_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          danish_stop: {
+            type: 'stop',
+            stopwords: '_danish_'
+          },
+          danish_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'eksempel'
+            ]
+          },
+          danish_stemmer: {
+            type: 'stemmer',
+            language: 'danish'
+          }
+        },
+        analyzer: {
+          rebuilt_danish: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'danish_stop',
+              'danish_keywords',
+              'danish_stemmer'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

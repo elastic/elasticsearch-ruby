@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      statistics: {
+        matrix_stats: {
+          fields: [
+            'poverty',
+            'income'
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

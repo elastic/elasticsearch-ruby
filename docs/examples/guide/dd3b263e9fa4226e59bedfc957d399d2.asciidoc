@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.sql.query(
+  format: 'txt',
+  body: {
+    query: "SELECT * FROM library WHERE release_date < '2000-01-01'"
+  }
+)
+puts response
+----

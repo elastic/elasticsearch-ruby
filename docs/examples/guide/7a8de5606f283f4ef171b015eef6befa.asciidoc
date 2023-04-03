@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.stats(
+  metric: 'search',
+  groups: 'group1,group2'
+)
+puts response
+----

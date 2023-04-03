@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.get(
+  index: 'my-index-000001',
+  id: 2,
+  routing: 'user1',
+  stored_fields: 'tags,counter'
+)
+puts response
+----

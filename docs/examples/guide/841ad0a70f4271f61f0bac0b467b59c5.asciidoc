@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.mtermvectors(
+  index: 'my-index-000001',
+  body: {
+    docs: [
+      {
+        _id: '2',
+        fields: [
+          'message'
+        ],
+        term_statistics: true
+      },
+      {
+        _id: '1'
+      }
+    ]
+  }
+)
+puts response
+----

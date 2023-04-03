@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'fielddata',
+  fields: 'field1,field2'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'fielddata',
+  level: 'indices',
+  fields: 'field1,field2'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'fielddata',
+  level: 'shards',
+  fields: 'field1,field2'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'fielddata',
+  fields: 'field*'
+)
+puts response
+----

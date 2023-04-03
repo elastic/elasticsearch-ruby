@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ingest.processor_grok(
+  ecs_compatibility: 'v1'
+)
+puts response
+----

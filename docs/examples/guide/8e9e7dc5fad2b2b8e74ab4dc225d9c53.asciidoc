@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.ml.set_upgrade_mode(
+  enabled: false,
+  timeout: '10m'
+)
+puts response
+----

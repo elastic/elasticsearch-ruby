@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  body: {
+    tokenizer: 'whitespace',
+    filter: [
+      'keyword_repeat',
+      'stemmer'
+    ],
+    text: 'fox running and jumping',
+    explain: true,
+    attributes: 'keyword'
+  }
+)
+puts response
+----
