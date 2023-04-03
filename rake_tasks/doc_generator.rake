@@ -145,7 +145,12 @@ module TestDocs
 
   def self.perform(code, filename)
     # Eval the example code, but remove printing out the response
-    eval(code.gsub('puts response', ''))
+    response = eval(code.gsub('puts response', ''))
+    if response.status == 200
+      logger = Logger.new('log/200-ok.log')
+      logger.formatter = -> (_, _, _, msg) { "#{msg} " }
+      logger.info(filename)
+    end
   rescue Elastic::Transport::Transport::Error => e
     logger = Logger.new('log/docs-generation-elasticsearch.log')
     logger.formatter = @formatter
