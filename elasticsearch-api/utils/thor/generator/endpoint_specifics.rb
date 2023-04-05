@@ -76,7 +76,7 @@ module Elasticsearch
       end
 
       def module_name_helper(name)
-        return name.upcase if %w[sql ssl].include? name
+        return name.upcase if %w[sql ssl dlm].include? name
 
         name.split('_').map(&:capitalize).map{ |n| n == 'Xpack' ? 'XPack' : n }.join
       end
