@@ -74,7 +74,7 @@ module Elasticsearch
       end
 
       def skip_version?(client, skip_definition)
-        return true if skip_definition['version'] == 'all'
+        return true if skip_definition.fetch('version', '').include? 'all'
 
         range_partition = /\s*-\s*/
         return unless (versions = skip_definition['version'])
