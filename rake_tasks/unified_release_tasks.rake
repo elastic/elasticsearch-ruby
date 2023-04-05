@@ -111,6 +111,7 @@ namespace :unified_release do
   Bump the version in test matrixes:
   - .ci/test-matrix.yml
   - .github/workflows
+  - .buildkite/pipeline.yml
 
   Example:
 
@@ -119,7 +120,12 @@ namespace :unified_release do
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
 
-    files = ['.ci/test-matrix.yml', '.github/workflows/main.yml', '.github/workflows/unified-release.yml']
+    files = [
+      '.ci/test-matrix.yml',
+      '.github/workflows/main.yml',
+      '.github/workflows/unified-release.yml',
+      '.buildkite/pipeline.yml'
+    ]
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
       content = File.read(file)
