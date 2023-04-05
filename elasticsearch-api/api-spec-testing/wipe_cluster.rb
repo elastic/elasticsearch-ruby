@@ -27,7 +27,8 @@ module Elasticsearch
         'watch-history-ilm-policy-16', 'ml-size-based-ilm-policy', 'logs', 'metrics', 'synthetics',
         '7-days-default', '30-days-default', '90-days-default', '180-days-default',
         '365-days-default', '.fleet-actions-results-ilm-policy', '.fleet-file-data-ilm-policy',
-        '.fleet-files-ilm-policy', '.deprecation-indexing-ilm-policy', '.monitoring-8-ilm-policy'
+        '.fleet-files-ilm-policy', '.deprecation-indexing-ilm-policy', '.monitoring-8-ilm-policy',
+        'behavioral_analytics-events-default_policy'
       ].freeze
 
       PLATINUM_TEMPLATES = [
@@ -250,7 +251,11 @@ module Elasticsearch
         end
 
         def platinum_template?(template)
-          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', '.deprecation', 'data-streams-mappings', '.fleet'].freeze
+          platinum_prefixes = [
+            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-',
+            '.transform', '.deprecation', 'data-streams-mappings', '.fleet',
+            'behavioral_analytics-'
+          ].freeze
           return true if template.start_with?(*platinum_prefixes)
 
           PLATINUM_TEMPLATES.include? template
