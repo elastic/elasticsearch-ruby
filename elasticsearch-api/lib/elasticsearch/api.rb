@@ -79,7 +79,8 @@ module Elasticsearch
                 Elasticsearch::API::TextStructure,
                 Elasticsearch::API::Transform,
                 Elasticsearch::API::Watcher,
-                Elasticsearch::API::XPack
+                Elasticsearch::API::XPack,
+                Elasticsearch::API::BehavioralAnalytics
     end
 
     # The serializer class
