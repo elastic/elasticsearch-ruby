@@ -80,7 +80,8 @@ module Elasticsearch
                 Elasticsearch::API::Transform,
                 Elasticsearch::API::Watcher,
                 Elasticsearch::API::XPack,
-                Elasticsearch::API::BehavioralAnalytics
+                Elasticsearch::API::BehavioralAnalytics,
+                Elasticsearch::API::DLM
     end
 
     # The serializer class
