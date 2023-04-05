@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
         # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for this index template simulation (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body New index template definition, which will be included in the simulation, as if it already exists in the system
         #
