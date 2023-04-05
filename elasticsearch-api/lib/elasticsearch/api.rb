@@ -81,7 +81,8 @@ module Elasticsearch
                 Elasticsearch::API::Watcher,
                 Elasticsearch::API::XPack,
                 Elasticsearch::API::BehavioralAnalytics,
-                Elasticsearch::API::DLM
+                Elasticsearch::API::DLM,
+                Elasticsearch::API::SearchApplication
     end
 
     # The serializer class
