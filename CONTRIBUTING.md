@@ -34,6 +34,8 @@ rake docker:start[VERSION]
 E.g.: `rake docker:start[8.0-SNAPSHOT]`.
 To start the container with Platinum, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,platinum]`.
 
+There's another rake task that will read the STACK_VERSION value from `.buildkite/pipeline.yml` and run that version of Elasticsearch: `rake es:up`.
+
 If you get this error when running the script:
 ```
 max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]
