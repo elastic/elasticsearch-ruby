@@ -23,17 +23,17 @@ module Elasticsearch
     module SearchApplication
       module Actions
         # Creates or updates a search application.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [String] :name The name of the search application to be created or updated
         # @option arguments [Boolean] :create If true, requires that a search application with the specified resource_id does not already exist. (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The search application configuration, including `indices` (*Required*)
         #
-        # @see http://todo.com/tbd
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-search-application.html
         #
         def put(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
