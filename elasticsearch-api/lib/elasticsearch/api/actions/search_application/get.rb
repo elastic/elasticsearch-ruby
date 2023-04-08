@@ -23,15 +23,15 @@ module Elasticsearch
     module SearchApplication
       module Actions
         # Returns the details about a search application.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [String] :name The name of the search application
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://todo.com/tbd
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-search-application.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
