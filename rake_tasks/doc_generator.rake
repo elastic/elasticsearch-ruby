@@ -29,6 +29,7 @@ namespace :docs do
     # Remove existing documents to avoid having outdated files
     FileUtils.remove_dir(TARGET_DIR)
     Dir.mkdir(TARGET_DIR)
+    Dir['log/*.log'].each { |f| File.delete(f) }
 
     entries = json_data.select { |d| d['lang'] == 'console' }
     start_time = Time.now.to_i
@@ -50,7 +51,7 @@ namespace :docs do
   def generate_docs(entry)
     require 'elasticsearch'
 
-    filename = "#{entry['digest']}.asciidoc"
+    filename = File.expand_path("#{TARGET_DIR}/#{entry['digest']}.asciidoc")
     unless entry['parsed_source'].empty?
       api = entry['parsed_source'].first['api']
       code = build_client_query(api, entry)
@@ -125,8 +126,8 @@ namespace :docs do
                                value.is_a?(FalseClass)
   end
 
-  def write_file(code, file)
-    File.open("#{TARGET_DIR}/#{file}", 'w') do |f|
+  def write_file(code, filename)
+    File.open(filename, 'w') do |f|
       f.puts <<~SRC
         [source, ruby]
         ----
@@ -146,11 +147,9 @@ module TestDocs
   def self.perform(code, filename)
     # Eval the example code, but remove printing out the response
     response = eval(code.gsub('puts response', ''))
-    if response.status == 200
-      logger = Logger.new('log/200-ok.log')
-      logger.formatter = -> (_, _, _, msg) { "#{msg} " }
-      logger.info(filename)
-    end
+    log_successful_code(filename) if response.status == 200
+  rescue Elastic::Transport::Transport::Errors::NotFound => e
+    log_successful_code(filename)
   rescue Elastic::Transport::Transport::Error => e
     logger = Logger.new('log/docs-generation-elasticsearch.log')
     logger.formatter = @formatter
@@ -163,5 +162,11 @@ module TestDocs
 
   def self.client
     @client ||= Elasticsearch::Client.new(trace: false, log: false)
+  end
+
+  def self.log_successful_code(filename)
+    logger = Logger.new('log/200-ok.log')
+    logger.formatter = -> (_, _, _, msg) { "#{msg} " }
+    logger.info(filename)
   end
 end
