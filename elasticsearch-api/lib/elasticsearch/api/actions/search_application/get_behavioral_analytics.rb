@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module BehavioralAnalytics
+    module SearchApplication
       module Actions
         # Returns the existing behavioral analytics collections.
         # This functionality is in Beta and is subject to change. The design and
@@ -33,7 +33,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-analytics-collection.html
         #
-        def list(arguments = {})
+        def get_behavioral_analytics(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 

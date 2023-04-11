@@ -17,18 +17,18 @@
 
 require 'spec_helper'
 
-describe 'client.behavioral_analytics#put' do
+describe 'client.search_application#get_behavioral_analytics' do
   let(:expected_args) do
     [
-        'PUT',
-        '_application/analytics/foo',
-        {},
-        nil,
-        {}
+      'GET',
+      '_application/analytics',
+      {},
+      nil,
+      {}
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.behavioral_analytics.put(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.search_application.get_behavioral_analytics).to be_a Elasticsearch::API::Response
   end
 end

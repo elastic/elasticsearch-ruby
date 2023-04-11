@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module BehavioralAnalytics
+    module SearchApplication
       module Actions
         # Creates a behavioral analytics collection.
         # This functionality is in Beta and is subject to change. The design and
@@ -33,7 +33,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-analytics-collection.html
         #
-        def put(arguments = {})
+        def put_behavioral_analytics(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           arguments = arguments.clone
