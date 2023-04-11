@@ -15,22 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module BehavioralAnalytics
-      module Actions; end
+require 'spec_helper'
 
-      # Client for the "behavioral_analytics" namespace (includes the {BehavioralAnalytics::Actions} methods)
-      #
-      class BehavioralAnalyticsClient
-        include Common::Client, Common::Client::Base, BehavioralAnalytics::Actions
-      end
+describe 'client.search_application#put_behavioral_analytics' do
+  let(:expected_args) do
+    [
+      'PUT',
+      '_application/analytics/foo',
+      {},
+      nil,
+      {}
+    ]
+  end
 
-      # Proxy method for {CatClient}, available in the receiving object
-      #
-      def behavioral_analytics
-        @behavioral_analytics ||= BehavioralAnalyticsClient.new(self)
-      end
-    end
+  it 'performs the request' do
+    expect(client_double.search_application.put_behavioral_analytics(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

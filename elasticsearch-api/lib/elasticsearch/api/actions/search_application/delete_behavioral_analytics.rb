@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module BehavioralAnalytics
+    module SearchApplication
       module Actions
         # Delete a behavioral analytics collection.
         # This functionality is in Beta and is subject to change. The design and
@@ -33,7 +33,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-analytics-collection.html
         #
-        def delete(arguments = {})
+        def delete_behavioral_analytics(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           arguments = arguments.clone

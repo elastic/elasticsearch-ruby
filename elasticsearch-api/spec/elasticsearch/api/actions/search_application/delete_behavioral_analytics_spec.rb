@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client.behavioral_analytics#list' do
+describe 'client.search_application#delete_behavioral_analytics' do
   let(:expected_args) do
     [
-        'GET',
-        '_application/analytics',
+        'DELETE',
+        '_application/analytics/foo',
         {},
         nil,
         {}
@@ -29,6 +29,6 @@ describe 'client.behavioral_analytics#list' do
   end
 
   it 'performs the request' do
-    expect(client_double.behavioral_analytics.list).to be_a Elasticsearch::API::Response
+    expect(client_double.search_application.delete_behavioral_analytics(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
