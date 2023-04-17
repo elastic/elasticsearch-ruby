@@ -80,7 +80,6 @@ module Elasticsearch
                 Elasticsearch::API::Transform,
                 Elasticsearch::API::Watcher,
                 Elasticsearch::API::XPack,
-                Elasticsearch::API::DLM,
                 Elasticsearch::API::SearchApplication
     end
 
