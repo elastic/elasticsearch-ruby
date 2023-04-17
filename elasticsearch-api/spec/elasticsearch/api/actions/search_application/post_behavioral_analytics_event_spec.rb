@@ -17,18 +17,22 @@
 
 require 'spec_helper'
 
-describe 'client.search_application#delete_behavioral_analytics' do
+describe 'client.search_application#delete_behavioral_analytics_event' do
   let(:expected_args) do
     [
-      'DELETE',
-      '_application/analytics/foo',
+      'POST',
+      '_application/analytics/foo/event/search',
       {},
-      nil,
+      {},
       {}
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.search_application.delete_behavioral_analytics(name: 'foo')).to be_a Elasticsearch::API::Response
+    expect(
+      client_double.search_application.post_behavioral_analytics_event(
+        body: {}, collection_name: 'foo', event_type: 'search'
+      )
+    ).to be_a Elasticsearch::API::Response
   end
 end
