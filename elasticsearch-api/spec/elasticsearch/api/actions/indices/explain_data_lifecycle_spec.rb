@@ -15,22 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module DLM
-      module Actions; end
+require 'spec_helper'
 
-      # Client for the "dlm" namespace (includes the {DLM::Actions} methods)
-      #
-      class DLMClient
-        include Common::Client, Common::Client::Base, DLM::Actions
-      end
+describe 'client.indices#explain_data_lifecycle' do
+  let(:expected_args) do
+    [
+        'POST',
+        'foo/_lifecycle/explain',
+        {},
+        nil,
+        {}
+    ]
+  end
 
-      # Proxy method for {DLMClient}, available in the receiving object
-      #
-      def dlm
-        @dlm ||= DLMClient.new(self)
-      end
-    end
+  it 'performs the request' do
+    expect(client_double.indices.explain_data_lifecycle(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

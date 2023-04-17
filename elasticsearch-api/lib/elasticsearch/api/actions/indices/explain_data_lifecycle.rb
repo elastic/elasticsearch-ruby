@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module DLM
+    module Indices
       module Actions
         # Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
         # This functionality is Experimental and may be changed or removed
@@ -34,7 +34,7 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-explain-lifecycle.html
         #
-        def explain_lifecycle(arguments = {})
+        def explain_data_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone
