@@ -44,6 +44,26 @@ namespace :docs do
     puts "Finished generating #{entries.length} files in #{Time.now.to_i - start_time} seconds"
   end
 
+  desc 'Update report'
+  task :update do
+    require 'elastic-transport'
+    github_token = File.read(File.expand_path("~/.elastic/github.token"))
+    transport_options = {
+      headers: {
+        Accept: 'application/vnd.github.v3.raw',
+        Authorization: "token #{github_token}"
+      }
+    }
+    client = Elastic::Transport::Client.new(
+      host: 'https://api.github.com/',
+      transport_options:transport_options
+    )
+    path = '/repos/elastic/clients-flight-recorder/contents/recordings/docs/parsed-alternative-report.json'
+    params = {}
+    response = client.perform_request('GET', path, params)
+    File.write(File.expand_path('./docs/parsed_alternative_report.json', __dir__), response.body)
+  end
+
   def json_data
     JSON.parse(File.read(SRC_FILE))
   end
