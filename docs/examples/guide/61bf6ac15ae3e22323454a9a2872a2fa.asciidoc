@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      type_count: {
+        cardinality: {
+          field: 'type'
+        }
+      }
+    }
+  }
+)
+puts response
+----

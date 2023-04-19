@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.snapshot.create(
+  repository: 'my_repository',
+  snapshot: 'my_snapshot',
+  wait_for_completion: true
+)
+puts response
+----

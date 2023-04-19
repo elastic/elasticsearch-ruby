@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    query: {
+      constant_score: {
+        filter: {
+          match: {
+            type: 'hat'
+          }
+        }
+      }
+    },
+    aggregations: {
+      hat_prices: {
+        sum: {
+          field: 'price'
+        }
+      }
+    }
+  }
+)
+puts response
+----

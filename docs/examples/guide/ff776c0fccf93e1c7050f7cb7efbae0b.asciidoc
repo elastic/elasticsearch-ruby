@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.ml.infer_trained_model(
+  model_id: 'model2',
+  body: {
+    docs: [
+      {
+        text_field: 'Hi my name is Josh and I live in Berlin'
+      }
+    ]
+  }
+)
+puts response
+----

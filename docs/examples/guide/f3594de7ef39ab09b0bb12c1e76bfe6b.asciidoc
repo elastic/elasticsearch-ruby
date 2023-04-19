@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.shrink(
+  index: 'my_source_index',
+  target: 'my_target_index',
+  body: {
+    settings: {
+      "index.routing.allocation.require._name": nil,
+      "index.blocks.write": nil
+    }
+  }
+)
+puts response
+----

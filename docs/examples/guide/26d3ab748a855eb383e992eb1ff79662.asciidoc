@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.eql.delete(
+  id: 'FkpMRkJGS1gzVDRlM3g4ZzMyRGlLbkEaTXlJZHdNT09TU2VTZVBoNDM3cFZMUToxMDM='
+)
+puts response
+----

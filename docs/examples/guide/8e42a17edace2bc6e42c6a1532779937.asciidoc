@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      max_price: {
+        max: {
+          field: 'price'
+        }
+      }
+    }
+  }
+)
+puts response
+----

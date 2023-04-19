@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'ip_addresses',
+  body: {
+    size: 10,
+    aggregations: {
+      ip_ranges: {
+        ip_range: {
+          field: 'ip',
+          ranges: [
+            {
+              to: '10.0.0.5'
+            },
+            {
+              from: '10.0.0.5'
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

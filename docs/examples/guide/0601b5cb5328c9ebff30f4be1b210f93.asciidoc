@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.snapshot.status(
+  repository: 'my_repository',
+  snapshot: 'snapshot_2'
+)
+puts response
+----

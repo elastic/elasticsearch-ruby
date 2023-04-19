@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    runtime_mappings: {
+      "price.weighted": {
+        type: 'double',
+        script: "\n        double price = doc['price'].value;\n        if (doc['promoted'].value) {\n          price *= 0.8;\n        }\n        emit(price);\n      "
+      }
+    },
+    query: {
+      constant_score: {
+        filter: {
+          match: {
+            type: 'hat'
+          }
+        }
+      }
+    },
+    aggregations: {
+      hat_prices: {
+        sum: {
+          field: 'price.weighted'
+        }
+      }
+    }
+  }
+)
+puts response
+----

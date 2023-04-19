@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.terms_enum(
+  index: 'stackoverflow',
+  body: {
+    field: 'tags',
+    string: 'kiba'
+  }
+)
+puts response
+----

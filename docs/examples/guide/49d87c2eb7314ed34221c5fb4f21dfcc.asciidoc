@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.analyze(
+  index: 'analyze_sample',
+  body: {
+    normalizer: 'my_normalizer',
+    text: 'BaR'
+  }
+)
+puts response
+----

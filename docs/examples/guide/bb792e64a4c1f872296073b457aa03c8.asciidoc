@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.snapshot.delete(
+  repository: 'my_repository',
+  snapshot: 'my_snapshot_2099.05.06'
+)
+puts response
+----

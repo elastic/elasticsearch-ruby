@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.ccr.forget_follower(
+  index: 'leader_index',
+  body: {
+    follower_cluster: 'follower_cluster',
+    follower_index: 'follower_index',
+    follower_index_uuid: 'vYpnaWPRQB6mNspmoCeYyA',
+    leader_remote_cluster: 'leader_cluster'
+  }
+)
+puts response
+----

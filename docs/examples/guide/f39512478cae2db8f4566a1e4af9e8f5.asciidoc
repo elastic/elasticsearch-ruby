@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.rollup.rollup_search(
+  index: 'sensor_rollup',
+  body: {
+    size: 0,
+    aggregations: {
+      timeline: {
+        date_histogram: {
+          field: 'timestamp',
+          fixed_interval: '7d'
+        },
+        aggregations: {
+          nodes: {
+            terms: {
+              field: 'node'
+            },
+            aggregations: {
+              max_temperature: {
+                max: {
+                  field: 'temperature'
+                }
+              },
+              avg_voltage: {
+                avg: {
+                  field: 'voltage'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

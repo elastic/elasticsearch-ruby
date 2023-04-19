@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.ml.get_categories(
+  job_id: 'esxi_log',
+  body: {
+    page: {
+      size: 1
+    }
+  }
+)
+puts response
+----

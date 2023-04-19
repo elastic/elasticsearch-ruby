@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'archive'
+    },
+    dest: {
+      index: 'my-data-stream',
+      op_type: 'create'
+    }
+  }
+)
+puts response
+----

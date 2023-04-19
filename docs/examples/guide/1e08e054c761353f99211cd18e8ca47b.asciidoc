@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.ml.delete_model_snapshot(
+  job_id: 'farequote',
+  snapshot_id: 1_491_948_163
+)
+puts response
+----

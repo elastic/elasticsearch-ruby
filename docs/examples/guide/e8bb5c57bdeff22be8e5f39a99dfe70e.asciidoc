@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'stackoverflow',
+  size: 0,
+  body: {
+    query: {
+      query_string: {
+        query: 'tags:kibana OR tags:javascript'
+      }
+    },
+    aggregations: {
+      sample: {
+        sampler: {
+          shard_size: 200
+        },
+        aggregations: {
+          keywords: {
+            significant_terms: {
+              field: 'tags',
+              exclude: [
+                'kibana',
+                'javascript'
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

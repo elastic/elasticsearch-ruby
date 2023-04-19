@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  filter_path: 'aggregations',
+  body: {
+    size: 0,
+    aggregations: {
+      top_values: {
+        terms: {
+          field: 'my-field',
+          size: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

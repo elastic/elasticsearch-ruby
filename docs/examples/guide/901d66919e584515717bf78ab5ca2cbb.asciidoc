@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      range: {
+        date_range: {
+          field: 'date',
+          time_zone: 'CET',
+          ranges: [
+            {
+              to: '2016/02/01'
+            },
+            {
+              from: '2016/02/01',
+              to: 'now/d'
+            },
+            {
+              from: 'now/d'
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.shrink(
+  index: 'my-index-000001',
+  target: 'shrunk-my-index-000001'
+)
+puts response
+----

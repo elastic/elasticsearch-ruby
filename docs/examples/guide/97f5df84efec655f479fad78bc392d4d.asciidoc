@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    profile: true,
+    query: {
+      term: {
+        "user.id": {
+          value: 'elkbee'
+        }
+      }
+    },
+    aggregations: {
+      my_scoped_agg: {
+        terms: {
+          field: 'http.response.status_code'
+        }
+      },
+      my_global_agg: {
+        global: {},
+        aggregations: {
+          my_level_agg: {
+            terms: {
+              field: 'http.response.status_code'
+            }
+          }
+        }
+      }
+    },
+    post_filter: {
+      match: {
+        message: 'search'
+      }
+    }
+  }
+)
+puts response
+----

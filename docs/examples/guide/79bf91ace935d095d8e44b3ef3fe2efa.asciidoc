@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.get_settings(
+  index: 'my-index-000001',
+  flat_settings: true,
+  include_defaults: true
+)
+puts response
+
+response = client.indices.get_settings(
+  flat_settings: true,
+  include_defaults: true
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ccr.follow_info(
+  index: 'follower_index'
+)
+puts response
+----

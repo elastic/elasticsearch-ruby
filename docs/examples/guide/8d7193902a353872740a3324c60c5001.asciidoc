@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'events',
+  body: {
+    settings: {
+      index: {
+        "sort.field": 'timestamp',
+        "sort.order": 'desc'
+      }
+    },
+    mappings: {
+      properties: {
+        timestamp: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+----

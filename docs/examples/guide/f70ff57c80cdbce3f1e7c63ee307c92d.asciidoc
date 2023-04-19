@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'my_test_scores'
+    },
+    dest: {
+      index: 'my_test_scores_2',
+      pipeline: 'my_test_scores_pipeline'
+    }
+  }
+)
+puts response
+----

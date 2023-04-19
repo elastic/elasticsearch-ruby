@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ccr.unfollow(
+  index: 'follower_index'
+)
+puts response
+----

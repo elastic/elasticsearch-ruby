@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "price.adjusted": {
+        type: 'double',
+        script: {
+          source: "emit(doc['price'].value * params.adjustment)",
+          params: {
+            adjustment: 0.9
+          }
+        }
+      }
+    },
+    aggregations: {
+      by_date: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          avg_price: {
+            rate: {
+              field: 'price.adjusted'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

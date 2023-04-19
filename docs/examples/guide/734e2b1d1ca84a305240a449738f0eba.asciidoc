@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.cat.indices(
+  v: true,
+  index: '.ds-my-data-stream-2022.06.17-000001,kibana_sample_data_flightsh=index,status,health'
+)
+puts response
+----

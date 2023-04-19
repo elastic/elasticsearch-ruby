@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'mylogs-pre-ilm*',
+  body: {
+    index: {
+      lifecycle: {
+        name: 'mylogs_policy_existing'
+      }
+    }
+  }
+)
+puts response
+----

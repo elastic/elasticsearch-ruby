@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sample_weblogs_by_clientip'
+)
+puts response
+----

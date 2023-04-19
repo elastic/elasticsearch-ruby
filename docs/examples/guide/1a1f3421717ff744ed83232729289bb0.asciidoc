@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.slm.delete_lifecycle(
+  policy_id: 'daily-snapshots'
+)
+puts response
+----

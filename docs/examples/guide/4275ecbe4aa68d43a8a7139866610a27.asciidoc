@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'exams',
+  body: {
+    size: 0,
+    aggregations: {
+      weighted_grade: {
+        weighted_avg: {
+          value: {
+            field: 'grade'
+          },
+          weight: {
+            field: 'weight'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

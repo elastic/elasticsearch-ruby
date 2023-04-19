@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.resolve_index(
+  name: 'f*,remoteCluster1:bar*',
+  expand_wildcards: 'all'
+)
+puts response
+----

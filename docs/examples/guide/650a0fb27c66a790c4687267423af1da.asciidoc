@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.update_aliases(
+  body: {
+    actions: [
+      {
+        remove: {
+          index: 'logs-nginx.access-prod',
+          alias: 'logs'
+        }
+      },
+      {
+        add: {
+          index: 'logs-my_app-default',
+          alias: 'logs'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

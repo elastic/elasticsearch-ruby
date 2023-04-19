@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.ml.update_datafeed(
+  datafeed_id: 'datafeed-test-job',
+  body: {
+    query: {
+      term: {
+        "geo.src": 'US'
+      }
+    }
+  }
+)
+puts response
+----

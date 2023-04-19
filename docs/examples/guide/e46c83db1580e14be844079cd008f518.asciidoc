@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my-index-000001',
+  body: {
+    index: {
+      "routing.allocation.enable": 'all'
+    }
+  }
+)
+puts response
+----

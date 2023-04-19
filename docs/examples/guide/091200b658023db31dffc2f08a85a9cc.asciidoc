@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my-index-000001',
+  body: {
+    index: {
+      "routing.allocation.total_shards_per_node": -1
+    }
+  }
+)
+puts response
+----

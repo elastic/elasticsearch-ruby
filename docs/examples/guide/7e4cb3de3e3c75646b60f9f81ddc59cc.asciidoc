@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.clear_trained_model_deployment_cache(
+  model_id: 'elastic__distilbert-base-uncased-finetuned-conll03-english'
+)
+puts response
+----

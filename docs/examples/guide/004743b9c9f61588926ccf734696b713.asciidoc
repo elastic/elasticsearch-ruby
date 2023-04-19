@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.forcemerge(
+  index: '.ds-my-data-stream-2099.03.07-000001',
+  max_num_segments: 1
+)
+puts response
+----

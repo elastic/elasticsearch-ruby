@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.rollup.get_rollup_index_caps(
+  index: 'sensor_rollup'
+)
+puts response
+----

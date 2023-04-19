@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'latency',
+  body: {
+    size: 0,
+    aggregations: {
+      grade_percentiles: {
+        percentiles: {
+          field: 'grade',
+          missing: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

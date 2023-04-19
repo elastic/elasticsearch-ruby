@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'last-log-from-clientip'
+)
+puts response
+----

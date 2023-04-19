@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      sales_over_time: {
+        auto_date_histogram: {
+          field: 'date',
+          buckets: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.eql.search(
+  index: 'my-data-stream',
+  body: {
+    query: "\n    process where (process.name == \"cmd.exe\" and process.pid != 2013)\n  "
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'exams',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "grade.weighted": {
+        type: 'double',
+        script: "\n        emit(doc['grade'].value * doc['weight'].value)\n      "
+      }
+    },
+    aggregations: {
+      grades_stats: {
+        stats: {
+          field: 'grade.weighted'
+        }
+      }
+    }
+  }
+)
+puts response
+----

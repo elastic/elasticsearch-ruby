@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.indices.delete(
+  index: 'my-index'
+)
+puts response
+
+response = client.indices.delete(
+  body: {
+    source: {
+      index: 'restored-my-index'
+    },
+    dest: {
+      index: 'my-index'
+    }
+  }
+)
+puts response
+
+response = client.indices.delete(
+  name: 'logs-my_app-default'
+)
+puts response
+
+response = client.indices.delete(
+  body: {
+    source: {
+      index: 'restored-logs-my_app-default'
+    },
+    dest: {
+      index: 'logs-my_app-default',
+      op_type: 'create'
+    }
+  }
+)
+puts response
+----

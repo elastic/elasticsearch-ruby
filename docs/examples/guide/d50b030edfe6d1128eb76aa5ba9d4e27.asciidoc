@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.ml.put_trained_model_alias(
+  model_id: 'flight-delay-prediction-1580004349800',
+  model_alias: 'flight_delay_model',
+  reassign: true
+)
+puts response
+----

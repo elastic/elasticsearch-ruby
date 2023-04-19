@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my_test_scores',
+  body: {
+    properties: {
+      total_score: {
+        type: 'long'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.tasks.get(
+  task_id: 'oTUltX4IQMOUUVeiohTt8A:12345',
+  wait_for_completion: true,
+  timeout: '10s'
+)
+puts response
+----

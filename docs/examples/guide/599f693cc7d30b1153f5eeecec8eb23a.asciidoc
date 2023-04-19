@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.delete_template(
+  name: 'my-legacy-index-template'
+)
+puts response
+----

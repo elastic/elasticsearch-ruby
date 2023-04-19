@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.snapshot.clone(
+  repository: 'my_repository',
+  snapshot: 'source_snapshot',
+  target_snapshot: 'target_snapshot',
+  body: {
+    indices: 'index_a,index_b'
+  }
+)
+puts response
+----

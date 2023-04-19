@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.snapshot.restore(
+  repository: 'my_repository',
+  snapshot: 'snapshot_2',
+  wait_for_completion: true,
+  body: {
+    indices: 'index_1,index_2',
+    ignore_unavailable: true,
+    include_global_state: false,
+    rename_pattern: 'index_(.+)',
+    rename_replacement: 'restored_index_$1',
+    include_aliases: false
+  }
+)
+puts response
+----

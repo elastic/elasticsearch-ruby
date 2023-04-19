@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.clone(
+  index: 'my_source_index',
+  target: 'my_target_index',
+  body: {
+    settings: {
+      "index.number_of_shards": 5
+    },
+    aliases: {
+      my_search_indices: {}
+    }
+  }
+)
+puts response
+----

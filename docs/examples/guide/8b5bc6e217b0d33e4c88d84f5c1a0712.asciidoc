@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      products_without_a_price: {
+        missing: {
+          field: 'price'
+        }
+      }
+    }
+  }
+)
+puts response
+----

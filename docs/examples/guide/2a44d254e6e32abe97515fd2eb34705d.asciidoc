@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.sql.get_async(
+  id: 'FnR0TDhyWUVmUmVtWXRWZER4MXZiNFEad2F5UDk2ZVdTVHV1S0xDUy00SklUdzozMTU=',
+  wait_for_completion_timeout: '2s',
+  format: 'json'
+)
+puts response
+----

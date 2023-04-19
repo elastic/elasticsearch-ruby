@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.get_script(
+  id: 'my-stored-script'
+)
+puts response
+----

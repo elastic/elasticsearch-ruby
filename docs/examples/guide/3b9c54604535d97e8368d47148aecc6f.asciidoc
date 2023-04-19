@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.ml.update_model_snapshot(
+  job_id: 'it_ops_new_logs',
+  snapshot_id: 1_491_852_978,
+  body: {
+    description: 'Snapshot 1',
+    retain: true
+  }
+)
+puts response
+----

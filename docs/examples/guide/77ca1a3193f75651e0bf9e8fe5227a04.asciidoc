@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.ml.get_model_snapshot_upgrade_stats(
+  job_id: 'low_request_rate',
+  snapshot_id: '_all'
+)
+puts response
+----

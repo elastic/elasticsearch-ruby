@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.searchable_snapshots.clear_cache(
+  index: 'my-index'
+)
+puts response
+----

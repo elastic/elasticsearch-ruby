@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    aggregations: {
+      by_date: {
+        date_histogram: {
+          field: 'date',
+          calendar_interval: 'month'
+        },
+        aggregations: {
+          my_rate: {
+            rate: {
+              unit: 'year'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

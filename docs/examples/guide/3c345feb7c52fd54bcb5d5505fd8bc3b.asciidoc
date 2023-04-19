@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.ml.infer_trained_model(
+  model_id: 'model2',
+  body: {
+    docs: [
+      {
+        text_field: '<long text to extract answer>'
+      }
+    ],
+    inference_config: {
+      question_answering: {
+        question: '<question to be answered>'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    runtime_mappings: {
+      "price.euros": {
+        type: 'double',
+        script: {
+          source: "\n          emit(doc['price'].value * params.conversion_rate)\n        ",
+          params: {
+            conversion_rate: 0.835526591
+          }
+        }
+      }
+    },
+    aggregations: {
+      price_ranges: {
+        range: {
+          field: 'price.euros',
+          ranges: [
+            {
+              to: 100
+            },
+            {
+              from: 100,
+              to: 200
+            },
+            {
+              from: 200
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

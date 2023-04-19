@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.cluster.allocation_explain(
+  filter_path: 'index,node_allocation_decisions.node_name,node_allocation_decisions.deciders.*',
+  body: {
+    index: 'my-index',
+    shard: 0,
+    primary: false,
+    current_node: 'my-node'
+  }
+)
+puts response
+----

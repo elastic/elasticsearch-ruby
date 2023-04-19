@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.close_point_in_time(
+  body: {
+    id: '46ToAwMDaWR5BXV1aWQyKwZub2RlXzMAAAAAAAAAACoBYwADaWR4BXV1aWQxAgZub2RlXzEAAAAAAAAAAAEBYQADaWR5BXV1aWQyKgZub2RlXzIAAAAAAAAAAAwBYgACBXV1aWQyAAAFdXVpZDEAAQltYXRjaF9hbGw_gAAAAA=='
+  }
+)
+puts response
+----

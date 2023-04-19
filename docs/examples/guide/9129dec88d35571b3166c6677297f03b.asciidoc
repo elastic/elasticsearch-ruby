@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.transform.get_transform(
+  transform_id: 'ecommerce_transform1'
+)
+puts response
+----

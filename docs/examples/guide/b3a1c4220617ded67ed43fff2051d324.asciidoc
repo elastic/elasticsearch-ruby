@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-index-000001',
+  body: {
+    properties: {
+      tags: {
+        type: 'keyword',
+        eager_global_ordinals: true
+      }
+    }
+  }
+)
+puts response
+----

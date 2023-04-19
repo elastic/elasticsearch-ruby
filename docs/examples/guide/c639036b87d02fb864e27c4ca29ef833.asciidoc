@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'stackoverflow',
+  size: 0,
+  body: {
+    query: {
+      query_string: {
+        query: 'tags:kibana'
+      }
+    },
+    runtime_mappings: {
+      "tags.hash": {
+        type: 'long',
+        script: "emit(doc['tags'].hashCode())"
+      }
+    },
+    aggregations: {
+      my_unbiased_sample: {
+        diversified_sampler: {
+          shard_size: 200,
+          max_docs_per_value: 3,
+          field: 'tags.hash'
+        },
+        aggregations: {
+          keywords: {
+            significant_terms: {
+              field: 'tags',
+              exclude: [
+                'kibana'
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----
