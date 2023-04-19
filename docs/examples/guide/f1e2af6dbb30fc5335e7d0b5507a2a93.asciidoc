@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.reset_job(
+  job_id: 'total-requests'
+)
+puts response
+----

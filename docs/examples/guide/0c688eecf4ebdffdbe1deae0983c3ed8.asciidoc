@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'user_hits',
+  body: {
+    size: 0,
+    aggregations: {
+      users_per_day: {
+        date_histogram: {
+          field: 'timestamp',
+          calendar_interval: 'day'
+        },
+        aggregations: {
+          distinct_users: {
+            cardinality: {
+              field: 'user_id'
+            }
+          },
+          total_new_users: {
+            cumulative_cardinality: {
+              buckets_path: 'distinct_users'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

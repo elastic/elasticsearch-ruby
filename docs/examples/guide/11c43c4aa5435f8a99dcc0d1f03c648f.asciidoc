@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    aggregations: {
+      grade_max: {
+        max: {
+          field: 'grade',
+          missing: 10
+        }
+      }
+    }
+  }
+)
+puts response
+----

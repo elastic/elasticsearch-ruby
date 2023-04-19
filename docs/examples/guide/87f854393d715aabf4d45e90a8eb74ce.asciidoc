@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'reviews',
+  body: {
+    size: 0,
+    aggregations: {
+      review_variability: {
+        median_absolute_deviation: {
+          field: 'rating',
+          missing: 5
+        }
+      }
+    }
+  }
+)
+puts response
+----

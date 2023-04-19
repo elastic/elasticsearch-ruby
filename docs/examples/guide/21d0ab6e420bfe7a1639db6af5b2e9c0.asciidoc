@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'reviews',
+  filter_path: 'aggregations',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "rating.out_of_ten": {
+        type: 'long',
+        script: {
+          source: "emit(doc['rating'].value * params.scaleFactor)",
+          params: {
+            "scaleFactor": 2
+          }
+        }
+      }
+    },
+    aggregations: {
+      review_average: {
+        avg: {
+          field: 'rating.out_of_ten'
+        }
+      },
+      review_variability: {
+        median_absolute_deviation: {
+          field: 'rating.out_of_ten'
+        }
+      }
+    }
+  }
+)
+puts response
+----

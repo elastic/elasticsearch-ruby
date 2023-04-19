@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.cluster.allocation_explain(
+  body: {
+    index: 'my-index',
+    shard: 0,
+    primary: false,
+    current_node: 'my-node'
+  }
+)
+puts response
+----

@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.indices.get(
+  index: 'kibana_sample_data_flights,.ds-my-data-stream-2022.06.17-000001',
+  features: 'settings',
+  flat_settings: true
+)
+puts response
+----

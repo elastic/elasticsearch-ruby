@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.ml.update_filter(
+  filter_id: 'safe_domains',
+  body: {
+    description: 'Updated list of domains',
+    add_items: [
+      '*.myorg.com'
+    ],
+    remove_items: [
+      'wikipedia.org'
+    ]
+  }
+)
+puts response
+----

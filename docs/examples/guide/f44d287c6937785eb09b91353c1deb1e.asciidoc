@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.get_datafeed_stats(
+  datafeed_id: 'datafeed-high_sum_total_sales'
+)
+puts response
+----

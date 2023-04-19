@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'logs-my_app-default',
+  body: {
+    index: {
+      lifecycle: {
+        name: 'new-lifecycle-policy'
+      }
+    }
+  }
+)
+puts response
+----

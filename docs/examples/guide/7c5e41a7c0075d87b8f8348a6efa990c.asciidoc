@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.ccr.pause_follow(
+  index: 'follower_index'
+)
+puts response
+
+response = client.ccr.pause_follow(
+  index: 'follower_index'
+)
+puts response
+
+response = client.ccr.pause_follow(
+  index: 'follower_index',
+  wait_for_active_shards: 1,
+  body: {
+    remote_cluster: 'remote_cluster',
+    leader_index: 'leader_index'
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.get_data_frame_analytics_stats(
+  id: 'weblog-outliers'
+)
+puts response
+----

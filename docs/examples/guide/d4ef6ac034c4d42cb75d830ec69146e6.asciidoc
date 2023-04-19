@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ccr.delete_auto_follow_pattern(
+  name: 'my_auto_follow_pattern'
+)
+puts response
+----

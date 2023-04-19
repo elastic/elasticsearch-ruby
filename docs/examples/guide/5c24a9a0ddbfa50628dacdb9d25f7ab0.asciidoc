@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'exams',
+  body: {
+    size: 0,
+    aggregations: {
+      grades_stats: {
+        extended_stats: {
+          field: 'grade',
+          missing: 0
+        }
+      }
+    }
+  }
+)
+puts response
+----

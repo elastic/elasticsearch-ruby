@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      range: {
+        "@timestamp": {
+          gte: 'now-1d/d',
+          lt: 'now/d'
+        }
+      }
+    },
+    aggregations: {
+      "my-agg-name": {
+        terms: {
+          field: 'my-field'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "price.adjusted": {
+        type: 'double',
+        script: "\n        double price = doc['price'].value;\n        if (doc['promoted'].value) {\n          price *= 0.8;\n        }\n        emit(price);\n      "
+      }
+    },
+    aggregations: {
+      max_price: {
+        max: {
+          field: 'price.adjusted'
+        }
+      }
+    }
+  }
+)
+puts response
+----

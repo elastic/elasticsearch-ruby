@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.eql.get(
+  id: 'FjlmbndxNmJjU0RPdExBTGg0elNOOEEaQk9xSjJBQzBRMldZa1VVQ2pPa01YUToxMDY='
+)
+puts response
+----

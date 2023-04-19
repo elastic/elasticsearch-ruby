@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'kibana_sample_data_ecommerce',
+  size: 0,
+  track_total_hits: false,
+  body: {
+    aggregations: {
+      sampling: {
+        random_sampler: {
+          probability: 0.1
+        },
+        aggregations: {
+          price_percentiles: {
+            percentiles: {
+              field: 'taxful_total_price'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

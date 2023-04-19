@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.explain(
+  index: 'my-index-000001',
+  id: 0,
+  q: 'message:search'
+)
+puts response
+----

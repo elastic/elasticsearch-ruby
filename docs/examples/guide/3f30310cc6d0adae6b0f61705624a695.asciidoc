@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.snapshot.create(
+  repository: 'my_repository',
+  snapshot: 'snapshot_2',
+  wait_for_completion: true,
+  body: {
+    indices: 'index_1,index_2',
+    ignore_unavailable: true,
+    include_global_state: false,
+    metadata: {
+      taken_by: 'user123',
+      taken_because: 'backup before upgrading'
+    }
+  }
+)
+puts response
+----

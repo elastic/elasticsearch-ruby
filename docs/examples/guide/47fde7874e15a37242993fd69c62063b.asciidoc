@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'latency',
+  body: {
+    size: 0,
+    aggregations: {
+      load_time_ranks: {
+        percentile_ranks: {
+          field: 'load_time',
+          values: [
+            500,
+            600
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

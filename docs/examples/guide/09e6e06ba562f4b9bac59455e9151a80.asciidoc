@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.ml.evaluate_data_frame(
+  body: {
+    index: 'animal_classification',
+    evaluation: {
+      classification: {
+        actual_field: 'animal_class',
+        metrics: {
+          auc_roc: {
+            class_name: 'dog'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

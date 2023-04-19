@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: '<my-index-{now/d}-000001>',
+  body: {
+    aliases: {
+      "my-alias": {
+        is_write_index: true
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.stats(
+  index: 'index1,index2'
+)
+puts response
+----

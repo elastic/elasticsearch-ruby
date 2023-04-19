@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.ml.get_model_snapshots(
+  job_id: 'high_sum_total_sales',
+  body: {
+    start: '1575402236000'
+  }
+)
+puts response
+----

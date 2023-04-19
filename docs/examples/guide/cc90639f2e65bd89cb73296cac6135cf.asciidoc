@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.delete_trained_model(
+  model_id: 'regression-job-one-1574775307356'
+)
+puts response
+----

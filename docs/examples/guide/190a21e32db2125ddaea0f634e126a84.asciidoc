@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.clone(
+  index: 'my_source_index',
+  target: 'my_target_index'
+)
+puts response
+----

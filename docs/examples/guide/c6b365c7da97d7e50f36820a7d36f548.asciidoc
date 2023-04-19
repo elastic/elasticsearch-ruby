@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'my_index,my_other_index',
+  body: {
+    "index.number_of_replicas": 1
+  }
+)
+puts response
+----

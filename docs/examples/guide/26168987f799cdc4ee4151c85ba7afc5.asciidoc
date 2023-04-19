@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      "my-num-field-stats": {
+        stats: {
+          field: 'my-num-field'
+        }
+      }
+    }
+  }
+)
+puts response
+----

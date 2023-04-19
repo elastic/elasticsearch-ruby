@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index_1'
+)
+puts response
+
+response = client.indices.create(
+  index: 'index_2'
+)
+puts response
+
+response = client.indices.create(
+  index: 'index_3',
+  body: {
+    settings: {
+      "index.priority": 10
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'index_4',
+  body: {
+    settings: {
+      "index.priority": 5
+    }
+  }
+)
+puts response
+----

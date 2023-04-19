@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.ml.delete_trained_model_alias(
+  model_id: 'flight-delay-prediction-1574775339910',
+  model_alias: 'flight_delay_model'
+)
+puts response
+----

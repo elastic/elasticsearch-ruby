@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.watcher.delete_watch(
+  id: 'my_watch'
+)
+puts response
+----

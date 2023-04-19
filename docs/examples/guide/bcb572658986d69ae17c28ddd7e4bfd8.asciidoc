@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.field_usage_stats(
+  index: 'my-index-000001'
+)
+puts response
+----

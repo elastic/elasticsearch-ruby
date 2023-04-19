@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    query: {
+      match: {
+        body: 'elections'
+      }
+    },
+    aggregations: {
+      top_sites: {
+        terms: {
+          field: 'domain',
+          order: {
+            top_hit: 'desc'
+          }
+        },
+        aggregations: {
+          top_tags_hits: {
+            top_hits: {}
+          },
+          top_hit: {
+            max: {
+              script: {
+                source: '_score'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

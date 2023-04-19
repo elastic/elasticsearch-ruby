@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.delete_datafeed(
+  datafeed_id: 'datafeed-total-requests'
+)
+puts response
+----

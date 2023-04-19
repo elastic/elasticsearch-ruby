@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'stats-index',
+  body: {
+    mappings: {
+      properties: {
+        agg_metric: {
+          type: 'aggregate_metric_double',
+          metrics: [
+            'min',
+            'max',
+            'sum',
+            'value_count'
+          ],
+          default_metric: 'max'
+        }
+      }
+    }
+  }
+)
+puts response
+----

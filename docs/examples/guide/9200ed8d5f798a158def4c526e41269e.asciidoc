@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.field_caps(
+  index: 'my-index-000001',
+  fields: 'rating'
+)
+puts response
+----

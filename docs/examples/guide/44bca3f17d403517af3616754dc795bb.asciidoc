@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.explain(
+  index: 'my-index-000001',
+  id: 0,
+  body: {
+    query: {
+      script_score: {
+        query: {
+          match: {
+            message: 'elasticsearch'
+          }
+        },
+        script: {
+          source: "\n          long count = doc['count'].value;\n          double normalizedCount = count / 10;\n          if (explanation != nil) {\n            explanation.set('normalized count = count / 10 = ' + count + ' / 10 = ' + normalizedCount);\n          }\n          return normalizedCount;\n        "
+        }
+      }
+    }
+  }
+)
+puts response
+----

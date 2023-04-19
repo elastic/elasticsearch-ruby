@@ -1,0 +1,38 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      top_tags: {
+        terms: {
+          field: 'type',
+          size: 3
+        },
+        aggregations: {
+          top_sales_hits: {
+            top_hits: {
+              sort: [
+                {
+                  date: {
+                    order: 'desc'
+                  }
+                }
+              ],
+              _source: {
+                includes: [
+                  'date',
+                  'price'
+                ]
+              },
+              size: 1
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.count(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      exists: {
+        field: 'my-field'
+      }
+    }
+  }
+)
+puts response
+----

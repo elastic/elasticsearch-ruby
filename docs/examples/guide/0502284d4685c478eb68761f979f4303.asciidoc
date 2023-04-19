@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.ml.evaluate_data_frame(
+  body: {
+    index: 'house_price_predictions',
+    query: {
+      bool: {
+        filter: [
+          {
+            term: {
+              "ml.is_training": false
+            }
+          }
+        ]
+      }
+    },
+    evaluation: {
+      regression: {
+        actual_field: 'price',
+        predicted_field: 'ml.price_prediction',
+        metrics: {
+          r_squared: {},
+          mse: {},
+          msle: {
+            offset: 10
+          },
+          huber: {
+            delta: 1.5
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

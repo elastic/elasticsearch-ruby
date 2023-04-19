@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'news',
+  body: {
+    query: {
+      match: {
+        content: 'elasticsearch'
+      }
+    },
+    aggregations: {
+      sample: {
+        sampler: {
+          shard_size: 100
+        },
+        aggregations: {
+          keywords: {
+            significant_text: {
+              field: 'content',
+              filter_duplicate_text: true
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

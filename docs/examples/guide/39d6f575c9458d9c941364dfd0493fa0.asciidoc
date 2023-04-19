@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.get_calendar_events(
+  calendar_id: 'planned-outages'
+)
+puts response
+----

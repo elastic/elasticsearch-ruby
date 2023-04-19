@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.eql.search(
+  index: 'my-data-stream',
+  body: {
+    query: "\n    process where process.name == \"regsvr32.exe\"\n  "
+  }
+)
+puts response
+----

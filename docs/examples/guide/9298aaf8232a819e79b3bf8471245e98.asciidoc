@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.get_job_stats(
+  job_id: 'low_request_rate'
+)
+puts response
+----

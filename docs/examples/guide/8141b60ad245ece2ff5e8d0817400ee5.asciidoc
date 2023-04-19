@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.eql.search(
+  index: 'my-data-stream',
+  body: {
+    query: "\n    sequence by process.pid\n      [ file where file.name == \"cmd.exe\" and process.pid != 2013 ]\n      [ process where stringContains(process.executable, \"regsvr32\") ]\n  "
+  }
+)
+puts response
+----

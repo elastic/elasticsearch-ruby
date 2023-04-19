@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.snapshot.restore(
+  repository: 'my_repository',
+  snapshot: 'my_snapshot_2099.05.06',
+  body: {
+    feature_states: [
+      'geoip'
+    ],
+    include_global_state: false,
+    indices: '-*'
+  }
+)
+puts response
+----

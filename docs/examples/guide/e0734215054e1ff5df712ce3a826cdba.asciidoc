@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.indices.delete(
+  index: 'my-index'
+)
+puts response
+
+response = client.indices.delete(
+  name: 'logs-my_app-default'
+)
+puts response
+----

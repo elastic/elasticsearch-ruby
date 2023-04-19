@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.get_filters(
+  filter_id: 'safe_domains'
+)
+puts response
+----

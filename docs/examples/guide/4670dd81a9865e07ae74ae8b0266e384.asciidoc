@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'node_upgrade',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "startup_time_before.adjusted": {
+        type: 'long',
+        script: {
+          source: "emit(doc['startup_time_before'].value - params.adjustment)",
+          params: {
+            adjustment: 10
+          }
+        }
+      }
+    },
+    aggregations: {
+      startup_time_ttest: {
+        t_test: {
+          a: {
+            field: 'startup_time_before.adjusted'
+          },
+          b: {
+            field: 'startup_time_after'
+          },
+          type: 'paired'
+        }
+      }
+    }
+  }
+)
+puts response
+----

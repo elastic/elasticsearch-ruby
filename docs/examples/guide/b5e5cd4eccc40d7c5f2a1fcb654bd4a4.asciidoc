@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'stackoverflow',
+  size: 0,
+  body: {
+    query: {
+      query_string: {
+        query: 'tags:elasticsearch'
+      }
+    },
+    aggregations: {
+      my_unbiased_sample: {
+        diversified_sampler: {
+          shard_size: 200,
+          field: 'author'
+        },
+        aggregations: {
+          keywords: {
+            significant_terms: {
+              field: 'tags',
+              exclude: [
+                'elasticsearch'
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

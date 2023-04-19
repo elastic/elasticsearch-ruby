@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.rollup.rollup_search(
+  index: 'sensor_rollup',
+  body: {
+    size: 0,
+    aggregations: {
+      max_temperature: {
+        max: {
+          field: 'temperature'
+        }
+      }
+    }
+  }
+)
+puts response
+----

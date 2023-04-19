@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  sort: '@timestamp:desc',
+  size: 1
+)
+puts response
+----

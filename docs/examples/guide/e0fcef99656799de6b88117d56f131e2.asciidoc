@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.explain(
+  index: 'my-index-000001',
+  id: 0,
+  body: {
+    query: {
+      match: {
+        message: 'elasticsearch'
+      }
+    }
+  }
+)
+puts response
+----

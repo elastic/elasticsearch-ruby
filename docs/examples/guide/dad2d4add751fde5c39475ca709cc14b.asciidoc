@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_settings(
+  index: 'test',
+  body: {
+    "index.routing.allocation.include.size": 'big,medium'
+  }
+)
+puts response
+----

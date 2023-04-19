@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    query: {
+      constant_score: {
+        filter: {
+          range: {
+            price: {
+              to: '500'
+            }
+          }
+        }
+      }
+    },
+    aggregations: {
+      prices: {
+        histogram: {
+          field: 'price',
+          interval: 50,
+          extended_bounds: {
+            min: 0,
+            max: 500
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  body: {
+    aggregations: {
+      price_ranges: {
+        range: {
+          field: 'price',
+          keyed: true,
+          ranges: [
+            {
+              key: 'cheap',
+              to: 100
+            },
+            {
+              key: 'average',
+              from: 100,
+              to: 200
+            },
+            {
+              key: 'expensive',
+              from: 200
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

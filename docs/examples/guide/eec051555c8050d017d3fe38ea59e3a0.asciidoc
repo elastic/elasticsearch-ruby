@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index-000001',
+  from: 40,
+  size: 20,
+  body: {
+    query: {
+      term: {
+        "user.id": 'kimchy'
+      }
+    }
+  }
+)
+puts response
+----

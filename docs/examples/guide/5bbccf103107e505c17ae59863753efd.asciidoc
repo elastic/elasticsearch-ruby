@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.ml.get_influencers(
+  job_id: 'high_sum_total_sales',
+  body: {
+    sort: 'influencer_score',
+    desc: true
+  }
+)
+puts response
+----

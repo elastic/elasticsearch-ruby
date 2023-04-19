@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.tasks.get(
+  task_id: 'oTUltX4IQMOUUVeiohTt8A:124'
+)
+puts response
+----

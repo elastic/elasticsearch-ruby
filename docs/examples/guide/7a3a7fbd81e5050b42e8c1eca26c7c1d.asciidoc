@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.async_search.delete(
+  id: 'FmRldE8zREVEUzA2ZVpUeGs2ejJFUFEaMkZ5QTVrSTZSaVN3WlNFVmtlWHJsdzoxMDc='
+)
+puts response
+----

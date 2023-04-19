@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'latency',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "load_time.seconds": {
+        type: 'long',
+        script: {
+          source: "emit(doc['load_time'].value / params.timeUnit)",
+          params: {
+            "timeUnit": 1000
+          }
+        }
+      }
+    },
+    aggregations: {
+      load_time_ranks: {
+        percentile_ranks: {
+          values: [
+            500,
+            600
+          ],
+          field: 'load_time.seconds'
+        }
+      }
+    }
+  }
+)
+puts response
+----

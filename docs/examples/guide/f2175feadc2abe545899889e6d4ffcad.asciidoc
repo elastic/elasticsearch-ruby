@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.slm.get_lifecycle(
+  policy_id: 'daily-snapshots',
+  human: true
+)
+puts response
+----

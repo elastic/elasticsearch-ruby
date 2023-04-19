@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.downsample(
+  index: 'my-time-series-index',
+  target_index: 'my-downsampled-time-series-index',
+  body: {
+    fixed_interval: '1d'
+  }
+)
+puts response
+----

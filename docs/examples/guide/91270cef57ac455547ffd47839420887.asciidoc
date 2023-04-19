@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  filter_path: 'aggregations',
+  size: 0,
+  body: {
+    aggregations: {
+      buckets: {
+        composite: {
+          sources: [
+            {
+              month: {
+                date_histogram: {
+                  field: 'date',
+                  calendar_interval: 'month'
+                }
+              }
+            },
+            {
+              type: {
+                terms: {
+                  field: 'type'
+                }
+              }
+            }
+          ]
+        },
+        aggregations: {
+          avg_price: {
+            rate: {
+              field: 'price',
+              unit: 'day'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

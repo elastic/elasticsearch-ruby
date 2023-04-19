@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'sales',
+  size: 0,
+  body: {
+    aggregations: {
+      quantity: {
+        histogram: {
+          field: 'quantity',
+          interval: 10,
+          missing: 0
+        }
+      }
+    }
+  }
+)
+puts response
+----

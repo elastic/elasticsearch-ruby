@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ingest.get_pipeline(
+  id: 'my-pipeline-id'
+)
+puts response
+----

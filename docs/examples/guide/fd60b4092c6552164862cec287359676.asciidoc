@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.ml.stop_datafeed(
+  datafeed_id: 'datafeed-low_request_rate',
+  body: {
+    timeout: '30s'
+  }
+)
+puts response
+----

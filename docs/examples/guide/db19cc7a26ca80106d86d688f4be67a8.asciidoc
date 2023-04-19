@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.stop_data_frame_analytics(
+  id: 'loganalytics'
+)
+puts response
+----

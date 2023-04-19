@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'index',
+  body: {
+    size: 0,
+    aggregations: {
+      foo_terms: {
+        terms: {
+          field: 'foo'
+        }
+      }
+    }
+  }
+)
+puts response
+----

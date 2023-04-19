@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.data_streams_stats(
+  name: 'my-data-stream'
+)
+puts response
+----

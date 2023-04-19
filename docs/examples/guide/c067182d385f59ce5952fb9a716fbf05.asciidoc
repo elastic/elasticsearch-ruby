@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.ml.post_calendar_events(
+  calendar_id: 'planned-outages',
+  body: {
+    events: [
+      {
+        description: 'event 1',
+        start_time: 1_513_641_600_000,
+        end_time: 1_513_728_000_000
+      },
+      {
+        description: 'event 2',
+        start_time: 1_513_814_400_000,
+        end_time: 1_513_900_800_000
+      },
+      {
+        description: 'event 3',
+        start_time: 1_514_160_000_000,
+        end_time: 1_514_246_400_000
+      }
+    ]
+  }
+)
+puts response
+----

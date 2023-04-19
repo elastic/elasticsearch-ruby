@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my_geoshapes',
+  body: {
+    query: {
+      bool: {
+        must: {
+          match_all: {}
+        },
+        filter: {
+          geo_distance: {
+            distance: '200km',
+            "pin.location": {
+              lat: 40,
+              lon: -70
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.ml.get_records(
+  job_id: 'low_request_rate',
+  body: {
+    sort: 'record_score',
+    desc: true,
+    start: '1454944100000'
+  }
+)
+puts response
+----

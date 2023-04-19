@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'news',
+  body: {
+    query: {
+      match: {
+        custom_all: 'elasticsearch'
+      }
+    },
+    aggregations: {
+      tags: {
+        significant_text: {
+          field: 'custom_all',
+          source_fields: [
+            'content',
+            'title'
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

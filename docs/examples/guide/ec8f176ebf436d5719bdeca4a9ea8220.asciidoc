@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'products',
+  body: {
+    runtime_mappings: {
+      "genre.length": {
+        type: 'long',
+        script: "emit(doc['genre'].value.length())"
+      }
+    },
+    aggregations: {
+      genres_and_products: {
+        multi_terms: {
+          terms: [
+            {
+              field: 'genre.length'
+            },
+            {
+              field: 'product'
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

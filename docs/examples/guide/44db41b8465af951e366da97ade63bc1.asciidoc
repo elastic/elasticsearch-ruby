@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.reload_search_analyzers(
+  index: 'my-index-000001'
+)
+puts response
+----

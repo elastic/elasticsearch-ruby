@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.ml.revert_model_snapshot(
+  job_id: 'low_request_rate',
+  snapshot_id: 1_637_092_688,
+  body: {
+    delete_intervening_results: true
+  }
+)
+puts response
+----

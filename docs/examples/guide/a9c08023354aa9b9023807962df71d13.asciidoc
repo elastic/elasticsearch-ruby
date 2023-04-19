@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.forcemerge(
+  index: 'my-index-000001,my-index-000002'
+)
+puts response
+----

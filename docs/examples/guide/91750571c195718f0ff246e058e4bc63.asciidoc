@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'twitter',
+  body: {
+    query: {
+      match: {
+        title: 'elasticsearch'
+      }
+    },
+    sort: [
+      {
+        date: 'asc'
+      },
+      {
+        tie_breaker_id: 'asc'
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'reviews',
+  body: {
+    size: 0,
+    aggregations: {
+      review_average: {
+        avg: {
+          field: 'rating'
+        }
+      },
+      review_variability: {
+        median_absolute_deviation: {
+          field: 'rating'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'news',
+  body: {
+    query: {
+      simple_query_string: {
+        query: '+elasticsearch  +pozmantier'
+      }
+    },
+    _source: [
+      'title',
+      'source'
+    ],
+    highlight: {
+      fields: {
+        content: {}
+      }
+    }
+  }
+)
+puts response
+----
