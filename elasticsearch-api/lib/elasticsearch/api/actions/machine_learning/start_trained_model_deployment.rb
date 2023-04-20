@@ -26,6 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [String] :cache_size A byte-size value for configuring the inference cache size. For example, 20mb.
+        # @option arguments [String] :deployment_id The Id of the new deployment. Defaults to the model_id if not set.
         # @option arguments [Integer] :number_of_allocations The total number of allocations this model is assigned across machine learning nodes.
         # @option arguments [Integer] :threads_per_allocation The number of threads used by each model allocation during inference.
         # @option arguments [String] :priority The deployment priority.

@@ -26,6 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :model_id The ID of the trained models to store
         # @option arguments [Boolean] :defer_definition_decompression If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
+        # @option arguments [Boolean] :wait_for_completion Whether to wait for all child operations(e.g. model download) to complete, before returning or not. Default to false
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The trained model configuration (*Required*)
         #
