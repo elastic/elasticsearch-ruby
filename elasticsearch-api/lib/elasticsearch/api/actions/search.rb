@@ -78,9 +78,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = arguments.delete(:body)
-
-        arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 

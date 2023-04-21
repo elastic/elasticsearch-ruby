@@ -42,8 +42,6 @@ module Elasticsearch
 
           body = arguments.delete(:body)
 
-          arguments[:index] = UNDERSCORE_ALL if !arguments[:index] && arguments[:type]
-
           _name = arguments.delete(:name)
 
           method = if body
