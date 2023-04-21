@@ -28,7 +28,6 @@ module Elasticsearch
         indices.exists
         indices.exists_alias
         indices.exists_template
-        indices.exists_type
       ].freeze
 
       # Endpoints that need Utils.__rescue_from_not_found if the ignore
