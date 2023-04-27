@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ml-get-datafeed-stats.html
         #
         def get_datafeed_stats(arguments = {})
           arguments = arguments.clone

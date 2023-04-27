@@ -34,7 +34,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body An index filter specified with the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-field-caps.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/search-field-caps.html
       #
       def field_caps(arguments = {})
         arguments = arguments.clone

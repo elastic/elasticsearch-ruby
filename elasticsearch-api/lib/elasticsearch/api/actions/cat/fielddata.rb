@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/cat-fielddata.html
         #
         def fielddata(arguments = {})
           arguments = arguments.clone

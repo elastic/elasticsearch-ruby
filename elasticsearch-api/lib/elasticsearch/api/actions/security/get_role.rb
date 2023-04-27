@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of role names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/security-api-get-role.html
         #
         def get_role(arguments = {})
           arguments = arguments.clone

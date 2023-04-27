@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/ccr-post-resume-follow.html
         #
         def resume_follow(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

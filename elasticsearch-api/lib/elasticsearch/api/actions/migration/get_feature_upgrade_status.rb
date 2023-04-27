@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/migration-api-feature-upgrade.html
         #
         def get_feature_upgrade_status(arguments = {})
           arguments = arguments.clone

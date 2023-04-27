@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-explain-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/dlm-explain-lifecycle.html
         #
         def explain_data_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]

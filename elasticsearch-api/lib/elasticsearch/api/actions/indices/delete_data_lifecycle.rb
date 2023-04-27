@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-delete-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/dlm-delete-lifecycle.html
         #
         def delete_data_lifecycle(arguments = {})
           arguments = arguments.clone

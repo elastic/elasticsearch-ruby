@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The search request body (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/rollup-search.html
         #
         def rollup_search(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
