@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        bool: {
+          type: 'boolean'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    bool: [
+      true,
+      false,
+      true,
+      false
+    ]
+  }
+)
+puts response
+----

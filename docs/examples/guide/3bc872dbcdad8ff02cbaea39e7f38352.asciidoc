@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index_double',
+  body: {
+    mappings: {
+      properties: {
+        field: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+----

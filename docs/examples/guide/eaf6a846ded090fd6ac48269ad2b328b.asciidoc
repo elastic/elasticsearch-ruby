@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      "index.lifecycle.name": 'my_policy',
+      "index.lifecycle.rollover_alias": 'my_data'
+    },
+    aliases: {
+      my_data: {
+        is_write_index: true
+      }
+    }
+  }
+)
+puts response
+----

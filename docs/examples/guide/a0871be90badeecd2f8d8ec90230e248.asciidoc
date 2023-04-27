@@ -1,0 +1,48 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'standard',
+            char_filter: [
+              'my_char_filter'
+            ],
+            filter: [
+              'lowercase'
+            ]
+          }
+        },
+        char_filter: {
+          my_char_filter: {
+            type: 'pattern_replace',
+            pattern: '(?<=\\p{Lower})(?=\\p{Upper})',
+            replacement: ' '
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        text: {
+          type: 'text',
+          analyzer: 'my_analyzer'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_analyzer',
+    text: 'The fooBarBaz method'
+  }
+)
+puts response
+----

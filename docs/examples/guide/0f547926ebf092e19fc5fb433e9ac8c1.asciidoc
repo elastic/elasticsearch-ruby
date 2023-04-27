@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'whitespace',
+            filter: [
+              'lowercase',
+              'porter_stem'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

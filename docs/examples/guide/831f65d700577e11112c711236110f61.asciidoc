@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_email_analyzer: {
+            type: 'pattern',
+            pattern: '\\W|_',
+            lowercase: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_email_analyzer',
+    text: 'John_Smith@foo-bar.com'
+  }
+)
+puts response
+----

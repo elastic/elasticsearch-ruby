@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'asciifold_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          standard_asciifolding: {
+            tokenizer: 'standard',
+            filter: [
+              'my_ascii_folding'
+            ]
+          }
+        },
+        filter: {
+          my_ascii_folding: {
+            type: 'asciifolding',
+            preserve_original: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

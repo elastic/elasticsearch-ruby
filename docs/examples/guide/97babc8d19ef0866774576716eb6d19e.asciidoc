@@ -7,7 +7,7 @@ response = client.update_by_query(
 )
 puts response
 
-response = client.update_by_query(
+response = client.search(
   index: 'test',
   filter_path: 'hits.total',
   body: {

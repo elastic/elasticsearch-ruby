@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'set_bar',
+  body: {
+    description: 'sets the value of bar from the field foo',
+    processors: [
+      {
+        set: {
+          field: 'bar',
+          copy_from: 'foo'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.ingest.simulate(
+  id: 'set_bar',
+  body: {
+    docs: [
+      {
+        _source: {
+          foo: [
+            'foo1',
+            'foo2'
+          ]
+        }
+      }
+    ]
+  }
+)
+puts response
+----

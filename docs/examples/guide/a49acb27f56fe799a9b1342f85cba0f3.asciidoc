@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'keyword',
+            filter: [
+              'word_delimiter_graph'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

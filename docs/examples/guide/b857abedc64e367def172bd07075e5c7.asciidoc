@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_fingerprint_analyzer: {
+            type: 'fingerprint',
+            stopwords: '_english_'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_fingerprint_analyzer',
+    text: 'Yes yes, Gödel said this sentence is consistent and.'
+  }
+)
+puts response
+----

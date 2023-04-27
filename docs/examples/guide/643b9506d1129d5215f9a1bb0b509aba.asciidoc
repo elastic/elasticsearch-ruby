@@ -1,0 +1,36 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      dynamic_templates: [
+        {
+          full_name: {
+            path_match: 'name.*',
+            path_unmatch: '*.middle',
+            mapping: {
+              type: 'text',
+              copy_to: 'full_name'
+            }
+          }
+        }
+      ]
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    name: {
+      first: 'John',
+      middle: 'Winston',
+      last: 'Lennon'
+    }
+  }
+)
+puts response
+----

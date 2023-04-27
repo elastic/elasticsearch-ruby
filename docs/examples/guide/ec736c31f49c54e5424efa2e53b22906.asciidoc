@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'user_agent',
+  body: {
+    description: 'Add user agent information',
+    processors: [
+      {
+        user_agent: {
+          field: 'agent'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'my_id',
+  pipeline: 'user_agent',
+  body: {
+    agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+  }
+)
+puts response
+
+response = client.get(
+  index: 'my-index-000001',
+  id: 'my_id'
+)
+puts response
+----

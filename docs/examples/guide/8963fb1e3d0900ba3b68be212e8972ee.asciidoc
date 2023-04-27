@@ -1,0 +1,41 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        names: {
+          type: 'text',
+          position_increment_gap: 0
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    names: [
+      'John Abraham',
+      'Lincoln Smith'
+    ]
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match_phrase: {
+        names: 'Abraham Lincoln'
+      }
+    }
+  }
+)
+puts response
+----

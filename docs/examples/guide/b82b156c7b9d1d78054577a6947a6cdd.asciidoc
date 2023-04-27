@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'geocells',
+  id: 1,
+  pipeline: 'geotile2shape',
+  body: {
+    geocell: '4/8/5'
+  }
+)
+puts response
+
+response = client.get(
+  index: 'geocells',
+  id: 1
+)
+puts response
+----

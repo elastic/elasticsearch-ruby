@@ -1,0 +1,46 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        metrics: {
+          type: 'object',
+          subobjects: false
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'metric_1',
+  body: {
+    "metrics.time": 100,
+    "metrics.time.min": 10,
+    "metrics.time.max": 900
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'metric_2',
+  body: {
+    metrics: {
+      time: 100,
+      "time.min": 10,
+      "time.max": 900
+    }
+  }
+)
+puts response
+
+response = client.indices.get_mapping(
+  index: 'my-index-000001'
+)
+puts response
+----

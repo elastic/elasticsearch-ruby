@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'range_index',
+  body: {
+    properties: {
+      ip_allowlist: {
+        type: 'ip_range'
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'range_index',
+  id: 2,
+  body: {
+    ip_allowlist: '192.168.0.0/16'
+  }
+)
+puts response
+----

@@ -1,0 +1,53 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'logs',
+  body: {
+    mappings: {
+      _source: {
+        includes: [
+          '*.count',
+          'meta.*'
+        ],
+        excludes: [
+          'meta.description',
+          'meta.other.*'
+        ]
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'logs',
+  id: 1,
+  body: {
+    requests: {
+      count: 10,
+      foo: 'bar'
+    },
+    meta: {
+      name: 'Some metric',
+      description: 'Some metric description',
+      other: {
+        foo: 'one',
+        baz: 'two'
+      }
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'logs',
+  body: {
+    query: {
+      match: {
+        "meta.other.foo": 'one'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,83 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'places',
+  body: {
+    mappings: {
+      properties: {
+        geometry: {
+          type: 'shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'places',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      name: 'NEMO Science Museum',
+      geometry: 'POINT(491.2350 5237.4081)'
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      name: 'Sportpark De Weeren',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [
+              496.5305328369141,
+              5239.347642069457
+            ],
+            [
+              496.6979026794433,
+              5239.172175893484
+            ],
+            [
+              496.9425201416015,
+              5239.238958618537
+            ],
+            [
+              496.7944622039794,
+              5239.420969150824
+            ],
+            [
+              496.5305328369141,
+              5239.347642069457
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'places',
+  size: 0,
+  body: {
+    aggregations: {
+      viewport: {
+        cartesian_bounds: {
+          field: 'geometry'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      "index.mapping.ignore_malformed": true
+    },
+    mappings: {
+      properties: {
+        number_one: {
+          type: 'byte'
+        },
+        number_two: {
+          type: 'integer',
+          ignore_malformed: false
+        }
+      }
+    }
+  }
+)
+puts response
+----

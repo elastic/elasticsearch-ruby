@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        flattened: {
+          type: 'flattened'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    flattened: {
+      field: [
+        'apple',
+        'apple',
+        'banana',
+        'avocado',
+        '10',
+        '200',
+        'AVOCADO',
+        'Banana',
+        'Tangerine'
+      ]
+    }
+  }
+)
+puts response
+----

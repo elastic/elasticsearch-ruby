@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'example',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'example',
+  refresh: true,
+  body: {
+    name: 'Wind & Wetter, Berlin, Germany',
+    location: {
+      type: 'point',
+      coordinates: [
+        13.400544,
+        52.530286
+      ]
+    }
+  }
+)
+puts response
+----

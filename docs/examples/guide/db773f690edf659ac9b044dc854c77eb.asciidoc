@@ -1,0 +1,77 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'museums',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_point'
+        },
+        name: {
+          type: 'keyword'
+        },
+        price: {
+          type: 'long'
+        },
+        included: {
+          type: 'boolean'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'museums',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: '1'
+      }
+    },
+    {
+      location: 'POINT (4.912350 52.374081)',
+      name: 'NEMO Science Museum',
+      price: 1750,
+      included: true
+    },
+    {
+      index: {
+        _id: '2'
+      }
+    },
+    {
+      location: 'POINT (4.901618 52.369219)',
+      name: 'Museum Het Rembrandthuis',
+      price: 1500,
+      included: false
+    },
+    {
+      index: {
+        _id: '3'
+      }
+    },
+    {
+      location: 'POINT (4.914722 52.371667)',
+      name: 'Nederlands Scheepvaartmuseum',
+      price: 1650,
+      included: true
+    },
+    {
+      index: {
+        _id: '4'
+      }
+    },
+    {
+      location: 'POINT (4.914722 52.371667)',
+      name: 'Amsterdam Centre for Architecture',
+      price: 0,
+      included: true
+    }
+  ]
+)
+puts response
+----

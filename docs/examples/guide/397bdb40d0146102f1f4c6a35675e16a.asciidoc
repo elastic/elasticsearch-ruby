@@ -1,0 +1,58 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          english_exact: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase'
+            ]
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        body: {
+          type: 'text',
+          analyzer: 'english',
+          fields: {
+            exact: {
+              type: 'text',
+              analyzer: 'english_exact'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'index',
+  id: 1,
+  body: {
+    body: 'Ski resort'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'index',
+  id: 2,
+  body: {
+    body: 'A pair of skis'
+  }
+)
+puts response
+
+response = client.indices.refresh(
+  index: 'index'
+)
+puts response
+----

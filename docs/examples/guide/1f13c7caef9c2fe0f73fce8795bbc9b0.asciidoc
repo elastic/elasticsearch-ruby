@@ -1,0 +1,49 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          std_folded: {
+            type: 'custom',
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'asciifolding'
+            ]
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        my_text: {
+          type: 'text',
+          analyzer: 'std_folded'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'std_folded',
+    text: 'Is this déjà vu?'
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    field: 'my_text',
+    text: 'Is this déjà vu?'
+  }
+)
+puts response
+----

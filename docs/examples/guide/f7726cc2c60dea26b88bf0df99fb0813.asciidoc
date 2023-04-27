@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      runtime: {
+        day_of_week: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+----

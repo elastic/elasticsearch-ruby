@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'circles',
+  id: 2,
+  pipeline: 'polygonize_circles',
+  body: {
+    circle: {
+      type: 'circle',
+      radius: '40m',
+      coordinates: [
+        30,
+        10
+      ]
+    }
+  }
+)
+puts response
+
+response = client.get(
+  index: 'circles',
+  id: 2
+)
+puts response
+----

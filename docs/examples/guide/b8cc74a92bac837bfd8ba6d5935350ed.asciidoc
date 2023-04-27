@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      enabled: false
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    user_id: 'kimchy',
+    session_data: {
+      object: {
+        some_field: 'some_value'
+      }
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    fields: [
+      'user_id',
+      {
+        field: 'session_data.object.*',
+        include_unmapped: true
+      }
+    ],
+    _source: false
+  }
+)
+puts response
+----

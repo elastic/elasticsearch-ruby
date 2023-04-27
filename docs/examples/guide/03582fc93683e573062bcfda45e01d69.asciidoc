@@ -1,0 +1,35 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_custom_analyzer: {
+            type: 'custom',
+            tokenizer: 'standard',
+            char_filter: [
+              'html_strip'
+            ],
+            filter: [
+              'lowercase',
+              'asciifolding'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_custom_analyzer',
+    text: 'Is this déjà vu</b>?'
+  }
+)
+puts response
+----

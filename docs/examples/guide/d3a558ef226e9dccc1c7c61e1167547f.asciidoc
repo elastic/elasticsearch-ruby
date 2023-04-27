@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'geoip',
+  body: {
+    description: 'Add geoip info',
+    processors: [
+      {
+        geoip: {
+          field: 'ip'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'my_id',
+  pipeline: 'geoip',
+  body: {
+    ip: '80.231.5.0'
+  }
+)
+puts response
+
+response = client.get(
+  index: 'my-index-000001',
+  id: 'my_id'
+)
+puts response
+----

@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        text: {
+          type: 'text',
+          fields: {
+            raw: {
+              type: 'keyword'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    text: [
+      'the quick brown fox',
+      'the quick brown fox',
+      'jumped over the lazy dog'
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          default: {
+            type: 'simple'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

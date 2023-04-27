@@ -1,0 +1,37 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'attachment',
+  body: {
+    description: 'Extract attachment information',
+    processors: [
+      {
+        attachment: {
+          field: 'data',
+          indexed_chars: 11,
+          indexed_chars_field: 'max_size',
+          remove_binary: false
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'my_id_2',
+  pipeline: 'attachment',
+  body: {
+    data: 'e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=',
+    max_size: 5
+  }
+)
+puts response
+
+response = client.get(
+  index: 'my-index-000001',
+  id: 'my_id_2'
+)
+puts response
+----

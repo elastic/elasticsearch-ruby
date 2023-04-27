@@ -1,0 +1,26 @@
+[source, ruby]
+----
+response = client.indices.close(
+  index: 'index'
+)
+puts response
+
+response = client.indices.put_settings(
+  index: 'index',
+  body: {
+    index: {
+      similarity: {
+        default: {
+          type: 'boolean'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.open(
+  index: 'index'
+)
+puts response
+----

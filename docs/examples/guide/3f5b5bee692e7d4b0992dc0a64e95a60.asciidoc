@@ -1,0 +1,63 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test',
+  body: {
+    mappings: {
+      properties: {
+        my_join_field: {
+          type: 'join',
+          relations: {
+            my_parent: 'my_child'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'test',
+  id: 1,
+  refresh: true,
+  body: {
+    number: 1,
+    my_join_field: 'my_parent'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'test',
+  id: 2,
+  routing: 1,
+  refresh: true,
+  body: {
+    number: 1,
+    my_join_field: {
+      name: 'my_child',
+      parent: '1'
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'test',
+  body: {
+    query: {
+      has_child: {
+        type: 'my_child',
+        query: {
+          match: {
+            number: 1
+          }
+        },
+        inner_hits: {}
+      }
+    }
+  }
+)
+puts response
+----

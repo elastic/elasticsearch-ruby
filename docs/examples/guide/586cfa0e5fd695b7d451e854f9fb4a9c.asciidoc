@@ -1,0 +1,52 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_locations',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_point'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_locations',
+  id: 1,
+  refresh: true,
+  body: {
+    location: 'POINT(4.912350 52.374081)',
+    city: 'Amsterdam',
+    name: 'NEMO Science Museum'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_locations',
+  id: 2,
+  refresh: true,
+  body: {
+    location: 'POINT(4.405200 51.222900)',
+    city: 'Antwerp',
+    name: 'Letterenhuis'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_locations',
+  id: 3,
+  refresh: true,
+  body: {
+    location: 'POINT(2.336389 48.861111)',
+    city: 'Paris',
+    name: 'Musée du Louvre'
+  }
+)
+puts response
+----

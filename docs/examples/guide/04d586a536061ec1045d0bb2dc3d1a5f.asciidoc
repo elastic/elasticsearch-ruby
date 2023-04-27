@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'set_os',
+  body: {
+    description: 'sets the value of host.os.name from the field os',
+    processors: [
+      {
+        set: {
+          field: 'host.os.name',
+          value: '{{{os}}}'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.ingest.simulate(
+  id: 'set_os',
+  body: {
+    docs: [
+      {
+        _source: {
+          os: 'Ubuntu'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

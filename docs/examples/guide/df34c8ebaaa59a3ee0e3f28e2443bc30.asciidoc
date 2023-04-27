@@ -14,7 +14,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'my-index',
   id: 1,
   refresh: true,
@@ -28,7 +28,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'my-index',
   id: 2,
   refresh: true,
@@ -45,7 +45,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'my-index',
   id: 3,
   refresh: true,
@@ -59,7 +59,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.search(
   index: 'my-index',
   body: {
     query: {

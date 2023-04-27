@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_data_lifecycle(
+  name: 'my-data-stream',
+  body: {
+    data_retention: '7d'
+  }
+)
+puts response
+----

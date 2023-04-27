@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'my_tokenizer'
+          }
+        },
+        tokenizer: {
+          my_tokenizer: {
+            type: 'classic',
+            max_token_length: 5
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_analyzer',
+    text: "The 2 QUICK Brown-Foxes jumped over the lazy dog's bone."
+  }
+)
+puts response
+----

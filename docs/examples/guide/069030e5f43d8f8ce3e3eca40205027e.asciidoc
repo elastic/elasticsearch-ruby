@@ -1,0 +1,57 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        manager: {
+          properties: {
+            age: {
+              type: 'integer'
+            },
+            name: {
+              type: 'text'
+            }
+          }
+        },
+        employees: {
+          type: 'nested',
+          properties: {
+            age: {
+              type: 'integer'
+            },
+            name: {
+              type: 'text'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    region: 'US',
+    manager: {
+      name: 'Alice White',
+      age: 30
+    },
+    employees: [
+      {
+        name: 'John Smith',
+        age: 34
+      },
+      {
+        name: 'Peter Brown',
+        age: 26
+      }
+    ]
+  }
+)
+puts response
+----

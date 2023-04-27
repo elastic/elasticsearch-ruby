@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'postal_codes',
+  id: 1,
+  refresh: 'wait_for',
+  body: {
+    location: {
+      type: 'envelope',
+      coordinates: [
+        [
+          13,
+          53
+        ],
+        [
+          14,
+          52
+        ]
+      ]
+    },
+    postal_code: '96598'
+  }
+)
+puts response
+----

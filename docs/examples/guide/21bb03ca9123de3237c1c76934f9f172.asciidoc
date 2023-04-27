@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'logs',
+  id: 4,
+  refresh: true,
+  body: {
+    body: 'info: user Bob logged out'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'logs',
+  body: {
+    size: 0,
+    aggregations: {
+      messages: {
+        filters: {
+          other_bucket_key: 'other_messages',
+          filters: {
+            errors: {
+              match: {
+                body: 'error'
+              }
+            },
+            warnings: {
+              match: {
+                body: 'warning'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

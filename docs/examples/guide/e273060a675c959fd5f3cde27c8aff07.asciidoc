@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index',
+  body: {
+    mappings: {
+      properties: {
+        foo: {
+          type: 'integer',
+          index: false
+        }
+      }
+    }
+  }
+)
+puts response
+----

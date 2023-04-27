@@ -1,0 +1,73 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        date: {
+          type: 'date_nanos'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'my-index-000001',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: '1'
+      }
+    },
+    {
+      date: '2015-01-01'
+    },
+    {
+      index: {
+        _id: '2'
+      }
+    },
+    {
+      date: '2015-01-01T12:10:30.123456789Z'
+    },
+    {
+      index: {
+        _id: '3'
+      }
+    },
+    {
+      date: 1_420_070_400_000
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    sort: {
+      date: 'asc'
+    },
+    runtime_mappings: {
+      date_has_nanos: {
+        type: 'boolean',
+        script: "emit(doc['date'].value.nano != 0)"
+      }
+    },
+    fields: [
+      {
+        field: 'date',
+        format: 'strict_date_optional_time_nanos'
+      },
+      {
+        field: 'date_has_nanos'
+      }
+    ]
+  }
+)
+puts response
+----

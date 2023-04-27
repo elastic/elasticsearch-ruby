@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'my_stemmer'
+            ]
+          }
+        },
+        filter: {
+          my_stemmer: {
+            type: 'stemmer',
+            language: 'light_german'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

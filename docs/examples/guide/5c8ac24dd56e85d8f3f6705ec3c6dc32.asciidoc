@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'circles',
+  body: {
+    mappings: {
+      properties: {
+        circle: {
+          type: 'geo_shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.ingest.put_pipeline(
+  id: 'polygonize_circles',
+  body: {
+    description: 'translate circle to polygon',
+    processors: [
+      {
+        circle: {
+          field: 'circle',
+          error_distance: 28,
+          shape_type: 'geo_shape'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

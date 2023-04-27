@@ -3,6 +3,6 @@
 response = client.cat.health
 puts response
 
-response = client.cat.health
+response = client.cat.nodes
 puts response
 ----

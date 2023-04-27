@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'bug_reports',
+  body: {
+    mappings: {
+      properties: {
+        title: {
+          type: 'text'
+        },
+        labels: {
+          type: 'flattened'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'bug_reports',
+  id: 1,
+  body: {
+    title: 'Results are not sorted correctly.',
+    labels: {
+      priority: 'urgent',
+      release: [
+        'v1.2.5',
+        'v1.3.0'
+      ],
+      timestamp: {
+        created: 1_541_458_026,
+        closed: 1_541_457_010
+      }
+    }
+  }
+)
+puts response
+----

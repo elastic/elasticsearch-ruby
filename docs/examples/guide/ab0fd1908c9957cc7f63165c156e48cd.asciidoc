@@ -1,0 +1,55 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        user_id: {
+          type: 'keyword'
+        },
+        last_updated: {
+          type: 'date'
+        },
+        session_data: {
+          type: 'object',
+          enabled: false
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'session_1',
+  body: {
+    user_id: 'kimchy',
+    session_data: {
+      arbitrary_object: {
+        some_array: [
+          'foo',
+          'bar',
+          {
+            baz: 2
+          }
+        ]
+      }
+    },
+    last_updated: '2015-12-06T18:20:22'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 'session_2',
+  body: {
+    user_id: 'jpountz',
+    session_data: 'none',
+    last_updated: '2015-12-06T18:22:13'
+  }
+)
+puts response
+----

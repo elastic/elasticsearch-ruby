@@ -1,0 +1,53 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        my_dense_vector: {
+          type: 'dense_vector',
+          dims: 3
+        },
+        status: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    my_dense_vector: [
+      0.5,
+      10,
+      6
+    ],
+    status: 'published'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    my_dense_vector: [
+      -0.5,
+      10,
+      10
+    ],
+    status: 'published'
+  }
+)
+puts response
+
+response = client.indices.refresh(
+  index: 'my-index-000001'
+)
+puts response
+----

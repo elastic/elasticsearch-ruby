@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'logs',
+  body: {
+    mappings: {
+      properties: {
+        "@timestamp": {
+          type: 'date'
+        },
+        message: {
+          type: 'match_only_text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

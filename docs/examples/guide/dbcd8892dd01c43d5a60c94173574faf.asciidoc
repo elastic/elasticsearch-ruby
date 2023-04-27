@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'range_index',
+  body: {
+    settings: {
+      number_of_shards: 2
+    },
+    mappings: {
+      properties: {
+        expected_attendees: {
+          type: 'integer_range'
+        },
+        time_frame: {
+          type: 'date_range',
+          format: 'yyyy-MM-dd||epoch_millis'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'range_index',
+  id: 1,
+  refresh: true,
+  body: {
+    expected_attendees: {
+      gte: 10,
+      lte: 20
+    },
+    time_frame: {
+      gte: '2019-10-28',
+      lte: '2019-11-04'
+    }
+  }
+)
+puts response
+----

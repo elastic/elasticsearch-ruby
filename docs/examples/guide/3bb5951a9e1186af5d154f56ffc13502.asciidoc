@@ -1,0 +1,49 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        message: {
+          type: 'keyword',
+          ignore_above: 20
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    message: 'Syntax error'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    message: 'Syntax error with some long stacktrace'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    aggregations: {
+      messages: {
+        terms: {
+          field: 'message'
+        }
+      }
+    }
+  }
+)
+puts response
+----

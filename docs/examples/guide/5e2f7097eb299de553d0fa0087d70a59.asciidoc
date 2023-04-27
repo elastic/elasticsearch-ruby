@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      index: {
+        "sort.field": [
+          'username',
+          'timestamp'
+        ],
+        "sort.order": [
+          'asc',
+          'desc'
+        ]
+      }
+    },
+    mappings: {
+      properties: {
+        username: {
+          type: 'keyword',
+          doc_values: true
+        },
+        timestamp: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+----

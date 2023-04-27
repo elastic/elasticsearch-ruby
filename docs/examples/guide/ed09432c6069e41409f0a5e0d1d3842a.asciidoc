@@ -1,0 +1,13 @@
+[source, ruby]
+----
+response = client.indices.reload_search_analyzers(
+  index: 'my-index-000001'
+)
+puts response
+
+response = client.indices.clear_cache(
+  index: 'my-index-000001',
+  request: true
+)
+puts response
+----

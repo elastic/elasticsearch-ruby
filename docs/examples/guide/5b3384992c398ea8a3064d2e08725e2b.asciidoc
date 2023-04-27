@@ -1,0 +1,78 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'node',
+  body: {
+    mappings: {
+      properties: {
+        ip: {
+          type: 'ip'
+        },
+        date: {
+          type: 'date'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'node',
+  refresh: true,
+  body: [
+    {
+      index: {}
+    },
+    {
+      ip: '192.168.0.1',
+      date: '2020-01-01T01:01:01',
+      m: 1
+    },
+    {
+      index: {}
+    },
+    {
+      ip: '192.168.0.1',
+      date: '2020-01-01T02:01:01',
+      m: 2
+    },
+    {
+      index: {}
+    },
+    {
+      ip: '192.168.0.2',
+      date: '2020-01-01T02:01:01',
+      m: 3
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'node',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      ip: {
+        terms: {
+          field: 'ip'
+        },
+        aggregations: {
+          tm: {
+            top_metrics: {
+              metrics: {
+                field: 'm'
+              },
+              sort: {
+                date: 'desc'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

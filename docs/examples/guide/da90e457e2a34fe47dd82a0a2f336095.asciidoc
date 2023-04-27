@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'networks',
+  id: 1,
+  refresh: 'wait_for',
+  body: {
+    range: '10.100.0.0/16',
+    name: 'production',
+    department: 'OPS'
+  }
+)
+puts response
+----

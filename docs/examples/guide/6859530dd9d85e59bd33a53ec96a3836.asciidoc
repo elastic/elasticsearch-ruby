@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'users',
+  id: 1,
+  refresh: 'wait_for',
+  body: {
+    email: 'mardy.brown@asciidocsmith.com',
+    first_name: 'Mardy',
+    last_name: 'Brown',
+    city: 'New Orleans',
+    county: 'Orleans',
+    state: 'LA',
+    zip: 70_116,
+    web: 'mardy.asciidocsmith.com'
+  }
+)
+puts response
+----

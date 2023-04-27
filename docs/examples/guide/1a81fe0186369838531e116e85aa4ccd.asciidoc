@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'shirts',
+  body: {
+    mappings: {
+      properties: {
+        brand: {
+          type: 'keyword'
+        },
+        color: {
+          type: 'keyword'
+        },
+        model: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'shirts',
+  id: 1,
+  refresh: true,
+  body: {
+    brand: 'gucci',
+    color: 'red',
+    model: 'slim'
+  }
+)
+puts response
+----

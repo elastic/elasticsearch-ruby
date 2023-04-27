@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index',
+  id: 1,
+  pipeline: 'monthlyindex',
+  body: {
+    "date1": '2016-04-25T12:02:01.789Z'
+  }
+)
+puts response
+----

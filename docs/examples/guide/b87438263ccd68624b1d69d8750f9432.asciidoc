@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        status_code: {
+          type: 'long'
+        },
+        session_id: {
+          type: 'long',
+          index: false
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.ccr.pause_follow(
+  index: 'kibana_sample_data_ecommerce2'
+)
+puts response
+
+response = client.indices.close(
+  index: 'kibana_sample_data_ecommerce2'
+)
+puts response
+
+response = client.ccr.unfollow(
+  index: 'kibana_sample_data_ecommerce2'
+)
+puts response
+
+response = client.indices.open(
+  index: 'kibana_sample_data_ecommerce2'
+)
+puts response
+----

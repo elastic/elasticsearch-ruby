@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      "index.store.preload": [
+        'nvd',
+        'dvd'
+      ]
+    }
+  }
+)
+puts response
+----

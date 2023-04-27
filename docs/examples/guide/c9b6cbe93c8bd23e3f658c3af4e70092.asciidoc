@@ -1,0 +1,72 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          autocomplete: {
+            tokenizer: 'autocomplete',
+            filter: [
+              'lowercase'
+            ]
+          },
+          autocomplete_search: {
+            tokenizer: 'lowercase'
+          }
+        },
+        tokenizer: {
+          autocomplete: {
+            type: 'edge_ngram',
+            min_gram: 2,
+            max_gram: 10,
+            token_chars: [
+              'letter'
+            ]
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        title: {
+          type: 'text',
+          analyzer: 'autocomplete',
+          search_analyzer: 'autocomplete_search'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    title: 'Quick Foxes'
+  }
+)
+puts response
+
+response = client.indices.refresh(
+  index: 'my-index-000001'
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match: {
+        title: {
+          query: 'Quick Fo',
+          operator: 'and'
+        }
+      }
+    }
+  }
+)
+puts response
+----

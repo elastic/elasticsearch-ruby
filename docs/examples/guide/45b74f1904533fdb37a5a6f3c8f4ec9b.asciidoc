@@ -1,0 +1,38 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'my_tokenizer'
+          }
+        },
+        tokenizer: {
+          my_tokenizer: {
+            type: 'edge_ngram',
+            min_gram: 2,
+            max_gram: 10,
+            token_chars: [
+              'letter',
+              'digit'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.analyze(
+  index: 'my-index-000001',
+  body: {
+    analyzer: 'my_analyzer',
+    text: '2 Quick Foxes.'
+  }
+)
+puts response
+----

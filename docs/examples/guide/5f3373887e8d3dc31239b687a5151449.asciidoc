@@ -1,0 +1,38 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        number_one: {
+          type: 'integer'
+        },
+        number_two: {
+          type: 'integer',
+          coerce: false
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    number_one: '10'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    number_two: '10'
+  }
+)
+puts response
+----
