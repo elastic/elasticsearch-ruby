@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data lifecycle configuration that consist of the data retention
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-put-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/dlm-put-lifecycle.html
         #
         def put_data_lifecycle(arguments = {})
           arguments = arguments.clone

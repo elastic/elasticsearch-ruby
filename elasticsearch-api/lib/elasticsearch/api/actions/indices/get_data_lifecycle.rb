@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-get-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.8/dlm-get-lifecycle.html
         #
         def get_data_lifecycle(arguments = {})
           arguments = arguments.clone
