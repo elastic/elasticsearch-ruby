@@ -74,16 +74,16 @@ namespace :docs do
 
     filename = File.expand_path("#{TARGET_DIR}/#{entry['digest']}.asciidoc")
     unless entry['parsed_source'].empty?
-      api = entry['parsed_source'].first['api']
-      code = build_client_query(api, entry)
+      code = build_client_query(entry)
       TestDocs::perform(code, filename)
       write_file(code, filename)
     end
   end
 
-  def self.build_client_query(api, entry)
+  def self.build_client_query(entry)
     client_query = []
     entry['parsed_source'].each do |entry|
+      api = entry['api']
       request_body = []
       query = entry&.[]('query')
       params = entry&.[]('params')
