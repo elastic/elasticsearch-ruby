@@ -30,6 +30,7 @@ module Elasticsearch
         #
         # @option arguments [String] :collection_name The name of behavioral analytics collection
         # @option arguments [String] :event_type Behavioral analytics event type. Available: page_view, search, search_click
+        # @option arguments [Boolean] :debug If true, returns event information that will be stored
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The event definition (*Required*)
         #
@@ -51,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_application/analytics/#{Utils.__listify(_collection_name)}/event/#{Utils.__listify(_event_type)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers)
