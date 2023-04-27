@@ -36,7 +36,8 @@ namespace :docs do
     entries.each_with_index do |entry, index|
       percentage = index * 100 / entries.length
       hourglass = index.even? ? '⌛ ' : '⏳ '
-      print "\r" + ("\e[A\e[K" * 2) if index > 0
+      # print "\r" + ("\e[A\e[K" * 2) if index > 0
+      puts "\e[H\e[2J"
       puts "📝 Generating file #{index + 1} of #{entries.length} - #{percentage}% complete"
       puts hourglass + '▩' * (percentage / 2) + '⬚' * (50 - percentage / 2) + ' ' + hourglass
       generate_docs(entry)
