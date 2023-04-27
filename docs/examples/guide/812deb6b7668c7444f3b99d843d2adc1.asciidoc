@@ -1,0 +1,55 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'shapes',
+  body: {
+    mappings: {
+      properties: {
+        geometry: {
+          type: 'shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'shapes',
+  id: 'footprint',
+  body: {
+    geometry: {
+      type: 'envelope',
+      coordinates: [
+        [
+          1355,
+          5355
+        ],
+        [
+          1400,
+          5200
+        ]
+      ]
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'example',
+  body: {
+    query: {
+      shape: {
+        geometry: {
+          indexed_shape: {
+            index: 'shapes',
+            id: 'footprint',
+            path: 'geometry'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

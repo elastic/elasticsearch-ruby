@@ -50,7 +50,7 @@ response = client.index(
 )
 puts response
 
-response = client.index(
+response = client.search(
   index: 'metrics_index',
   size: 0,
   body: {

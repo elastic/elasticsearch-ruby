@@ -1,0 +1,49 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'geocells',
+  body: {
+    mappings: {
+      properties: {
+        geocell: {
+          type: 'geo_shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.ingest.put_pipeline(
+  id: 'geotile2shape',
+  body: {
+    description: 'translate rectangular z/x/y geotile to bounding box',
+    processors: [
+      {
+        geo_grid: {
+          field: 'geocell',
+          tile_type: 'geotile'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.ingest.put_pipeline(
+  id: 'geohex2shape',
+  body: {
+    description: 'translate H3 cell to polygon',
+    processors: [
+      {
+        geo_grid: {
+          field: 'geocell',
+          tile_type: 'geohex',
+          target_format: 'wkt'
+        }
+      }
+    ]
+  }
+)
+puts response
+----

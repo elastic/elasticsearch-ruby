@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  routing: 'user1',
+  refresh: true,
+  body: {
+    title: 'This is a document'
+  }
+)
+puts response
+
+response = client.get(
+  index: 'my-index-000001',
+  id: 1,
+  routing: 'user1'
+)
+puts response
+----

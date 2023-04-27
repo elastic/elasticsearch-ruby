@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        ip: {
+          type: 'ip'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    ip: [
+      '192.168.0.1',
+      '192.168.0.1',
+      '10.10.12.123',
+      '2001:db8::1:0:0:1',
+      '::afff:4567:890a'
+    ]
+  }
+)
+puts response
+----

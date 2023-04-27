@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'logs*',
+  size: 0
+)
+puts response
+----

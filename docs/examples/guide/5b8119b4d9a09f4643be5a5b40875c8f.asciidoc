@@ -1,0 +1,50 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    is_published: true
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  refresh: true,
+  body: {
+    is_published: false
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    aggregations: {
+      publish_state: {
+        terms: {
+          field: 'is_published'
+        }
+      }
+    },
+    sort: [
+      'is_published'
+    ],
+    fields: [
+      {
+        field: 'weight'
+      }
+    ],
+    runtime_mappings: {
+      weight: {
+        type: 'long',
+        script: "emit(doc['is_published'].value ? 10 : 0)"
+      }
+    }
+  }
+)
+puts response
+----

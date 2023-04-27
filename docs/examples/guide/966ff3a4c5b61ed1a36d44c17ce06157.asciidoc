@@ -1,0 +1,42 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index',
+  body: {
+    settings: {
+      analysis: {
+        char_filter: {
+          quote: {
+            type: 'mapping',
+            mappings: [
+              '« => "',
+              '» => "'
+            ]
+          }
+        },
+        normalizer: {
+          my_normalizer: {
+            type: 'custom',
+            char_filter: [
+              'quote'
+            ],
+            filter: [
+              'lowercase',
+              'asciifolding'
+            ]
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        foo: {
+          type: 'keyword',
+          normalizer: 'my_normalizer'
+        }
+      }
+    }
+  }
+)
+puts response
+----

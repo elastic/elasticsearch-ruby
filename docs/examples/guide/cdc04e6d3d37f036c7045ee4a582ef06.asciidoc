@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      dynamic_templates: [
+        {
+          strings_as_keywords: {
+            match_mapping_type: 'string',
+            mapping: {
+              type: 'text',
+              norms: false,
+              fields: {
+                keyword: {
+                  type: 'keyword',
+                  ignore_above: 256
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+)
+puts response
+----

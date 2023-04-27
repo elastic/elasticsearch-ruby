@@ -1,0 +1,44 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-dfs-index',
+  body: {
+    settings: {
+      number_of_shards: 2,
+      number_of_replicas: 1
+    },
+    mappings: {
+      properties: {
+        "my-keyword": {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'my-dfs-index',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: '1'
+      }
+    },
+    {
+      "my-keyword": 'a'
+    },
+    {
+      index: {
+        _id: '2'
+      }
+    },
+    {
+      "my-keyword": 'b'
+    }
+  ]
+)
+puts response
+----

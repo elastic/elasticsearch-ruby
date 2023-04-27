@@ -1,0 +1,28 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          en: {
+            tokenizer: 'standard',
+            filter: [
+              'my_en_US_dict_stemmer'
+            ]
+          }
+        },
+        filter: {
+          "my_en_US_dict_stemmer": {
+            type: 'hunspell',
+            locale: 'en_US',
+            dedup: false
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

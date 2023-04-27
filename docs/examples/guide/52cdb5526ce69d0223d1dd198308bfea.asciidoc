@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      dynamic: false,
+      properties: {
+        user: {
+          properties: {
+            name: {
+              type: 'text'
+            },
+            social_networks: {
+              dynamic: true,
+              properties: {}
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        my_wildcard: {
+          type: 'wildcard'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    my_wildcard: 'This string can be quite lengthy'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      wildcard: {
+        my_wildcard: {
+          value: '*quite*lengthy'
+        }
+      }
+    }
+  }
+)
+puts response
+----

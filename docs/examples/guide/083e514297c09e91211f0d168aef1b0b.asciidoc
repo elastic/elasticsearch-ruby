@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'logs-generic-default',
+  body: {
+    query: {
+      match: {
+        "event.sequence": '97'
+      }
+    },
+    script: {
+      source: 'ctx._source.event.original = params.new_event',
+      lang: 'painless',
+      params: {
+        new_event: 'FOOBAR'
+      }
+    }
+  }
+)
+puts response
+----

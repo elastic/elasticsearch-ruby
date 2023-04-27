@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: 'keyword',
+            filter: [
+              'my_pattern_replace_filter'
+            ]
+          }
+        },
+        filter: {
+          my_pattern_replace_filter: {
+            type: 'pattern_replace',
+            pattern: '[£|€]',
+            replacement: '',
+            all: false
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

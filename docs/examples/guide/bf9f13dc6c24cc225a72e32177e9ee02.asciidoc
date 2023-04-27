@@ -1,0 +1,89 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my_locations',
+  body: {
+    mappings: {
+      properties: {
+        pin: {
+          properties: {
+            location: {
+              type: 'geo_point'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_locations',
+  id: 1,
+  body: {
+    pin: {
+      location: {
+        lat: 40.12,
+        lon: -71.34
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'my_geoshapes',
+  body: {
+    mappings: {
+      properties: {
+        pin: {
+          properties: {
+            location: {
+              type: 'geo_shape'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my_geoshapes',
+  id: 1,
+  body: {
+    pin: {
+      location: {
+        type: 'polygon',
+        coordinates: [
+          [
+            [
+              13,
+              51.5
+            ],
+            [
+              15,
+              51.5
+            ],
+            [
+              15,
+              54
+            ],
+            [
+              13,
+              54
+            ],
+            [
+              13,
+              51.5
+            ]
+          ]
+        ]
+      }
+    }
+  }
+)
+puts response
+----

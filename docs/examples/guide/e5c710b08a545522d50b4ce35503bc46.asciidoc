@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-data-stream',
+  pipeline: 'my-pipeline',
+  body: {
+    "@timestamp": '2099-03-07T11:04:05.000Z',
+    "my-keyword-field": 'foo'
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'my-data-stream',
+  pipeline: 'my-pipeline',
+  body: [
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2099-03-07T11:04:06.000Z',
+      "my-keyword-field": 'foo'
+    },
+    {
+      create: {}
+    },
+    {
+      "@timestamp": '2099-03-07T11:04:07.000Z',
+      "my-keyword-field": 'bar'
+    }
+  ]
+)
+puts response
+----

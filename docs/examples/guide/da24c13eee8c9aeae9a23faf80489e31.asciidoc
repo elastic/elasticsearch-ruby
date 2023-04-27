@@ -5,7 +5,7 @@ response = client.indices.delete(
 )
 puts response
 
-response = client.indices.delete(
+response = client.reindex(
   body: {
     source: {
       index: 'restored-my-index'
@@ -17,12 +17,12 @@ response = client.indices.delete(
 )
 puts response
 
-response = client.indices.delete(
+response = client.indices.delete_data_stream(
   name: 'logs-my_app-default'
 )
 puts response
 
-response = client.indices.delete(
+response = client.reindex(
   body: {
     source: {
       index: 'restored-logs-my_app-default'

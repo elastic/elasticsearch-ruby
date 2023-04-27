@@ -1,0 +1,47 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        status_code: {
+          type: 'keyword',
+          nil_value: 'NULL'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  body: {
+    status_code: nil
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  body: {
+    status_code: []
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      term: {
+        status_code: 'NULL'
+      }
+    }
+  }
+)
+puts response
+----

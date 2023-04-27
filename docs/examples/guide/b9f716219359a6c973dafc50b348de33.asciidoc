@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      _source: {
+        enabled: false
+      }
+    }
+  }
+)
+puts response
+----

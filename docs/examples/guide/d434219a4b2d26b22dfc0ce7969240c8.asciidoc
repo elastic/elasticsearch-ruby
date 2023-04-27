@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test_index',
+  body: {
+    settings: {
+      index: {
+        analysis: {
+          analyzer: {
+            search_synonyms: {
+              tokenizer: 'whitespace',
+              filter: [
+                'graph_synonyms'
+              ]
+            }
+          },
+          filter: {
+            graph_synonyms: {
+              type: 'synonym_graph',
+              synonyms_path: 'analysis/synonym.txt'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'cjk_bigram_example',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          han_bigrams: {
+            tokenizer: 'standard',
+            filter: [
+              'han_bigrams_filter'
+            ]
+          }
+        },
+        filter: {
+          han_bigrams_filter: {
+            type: 'cjk_bigram',
+            ignored_scripts: [
+              'hangul',
+              'hiragana',
+              'katakana'
+            ],
+            output_unigrams: true
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

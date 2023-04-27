@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'text_payloads',
+  id: 1,
+  body: {
+    text: 'the|0 brown|3 fox|4 is|0 quick|10'
+  }
+)
+puts response
+----

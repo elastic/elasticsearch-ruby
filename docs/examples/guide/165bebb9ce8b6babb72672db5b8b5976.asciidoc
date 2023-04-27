@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test_index',
+  body: {
+    settings: {
+      index: {
+        analysis: {
+          filter: {
+            synonym: {
+              type: 'synonym',
+              synonyms: [
+                'i-pod, i pod => ipod',
+                'universe, cosmos'
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

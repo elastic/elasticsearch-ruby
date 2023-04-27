@@ -1,0 +1,39 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    settings: {
+      index: {
+        analysis: {
+          analyzer: {
+            my_synonyms: {
+              tokenizer: 'whitespace',
+              filter: [
+                'synonym'
+              ]
+            }
+          },
+          filter: {
+            synonym: {
+              type: 'synonym_graph',
+              synonyms_path: 'analysis/synonym.txt',
+              updateable: true
+            }
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        text: {
+          type: 'text',
+          analyzer: 'standard',
+          search_analyzer: 'my_synonyms'
+        }
+      }
+    }
+  }
+)
+puts response
+----

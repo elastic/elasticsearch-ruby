@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      properties: {
+        message: {
+          type: 'wildcard'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,70 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'test',
+  body: {
+    mappings: {
+      properties: {
+        comments: {
+          type: 'nested',
+          properties: {
+            votes: {
+              type: 'nested'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'test',
+  id: 1,
+  refresh: true,
+  body: {
+    title: 'Test title',
+    comments: [
+      {
+        author: 'kimchy',
+        text: 'comment text',
+        votes: []
+      },
+      {
+        author: 'nik9000',
+        text: 'words words words',
+        votes: [
+          {
+            value: 1,
+            voter: 'kimchy'
+          },
+          {
+            value: -1,
+            voter: 'other'
+          }
+        ]
+      }
+    ]
+  }
+)
+puts response
+
+response = client.search(
+  index: 'test',
+  body: {
+    query: {
+      nested: {
+        path: 'comments.votes',
+        query: {
+          match: {
+            "comments.votes.voter": 'kimchy'
+          }
+        },
+        inner_hits: {}
+      }
+    }
+  }
+)
+puts response
+----

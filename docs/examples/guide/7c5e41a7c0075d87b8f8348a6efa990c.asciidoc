@@ -5,12 +5,12 @@ response = client.ccr.pause_follow(
 )
 puts response
 
-response = client.ccr.pause_follow(
+response = client.indices.close(
   index: 'follower_index'
 )
 puts response
 
-response = client.ccr.pause_follow(
+response = client.ccr.follow(
   index: 'follower_index',
   wait_for_active_shards: 1,
   body: {

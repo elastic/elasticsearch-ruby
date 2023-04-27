@@ -1,0 +1,31 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      dynamic_templates: [
+        {
+          unindexed_longs: {
+            match_mapping_type: 'long',
+            mapping: {
+              type: 'long',
+              index: false
+            }
+          }
+        },
+        {
+          unindexed_doubles: {
+            match_mapping_type: 'double',
+            mapping: {
+              type: 'float',
+              index: false
+            }
+          }
+        }
+      ]
+    }
+  }
+)
+puts response
+----

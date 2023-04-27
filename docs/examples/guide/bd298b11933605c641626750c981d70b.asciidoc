@@ -1,0 +1,51 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'ct1',
+  body: {
+    template: {
+      settings: {
+        "index.number_of_shards": 2
+      }
+    }
+  }
+)
+puts response
+
+response = client.cluster.put_component_template(
+  name: 'ct2',
+  body: {
+    template: {
+      settings: {
+        "index.number_of_replicas": 0
+      },
+      mappings: {
+        properties: {
+          "@timestamp": {
+            type: 'date'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.simulate_template(
+  body: {
+    index_patterns: [
+      'my*'
+    ],
+    template: {
+      settings: {
+        "index.number_of_shards": 3
+      }
+    },
+    composed_of: [
+      'ct1',
+      'ct2'
+    ]
+  }
+)
+puts response
+----

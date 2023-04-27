@@ -17,7 +17,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'idx',
   id: 1,
   body: {

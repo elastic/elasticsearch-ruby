@@ -1,0 +1,51 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'test',
+  refresh: true,
+  body: [
+    {
+      index: {}
+    },
+    {
+      s: 1,
+      m: 3.1415
+    },
+    {
+      index: {}
+    },
+    {
+      s: 2,
+      m: 1
+    },
+    {
+      index: {}
+    },
+    {
+      s: 3,
+      m: 2.71828
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'test',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      tm: {
+        top_metrics: {
+          metrics: {
+            field: 'm'
+          },
+          sort: {
+            s: 'desc'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

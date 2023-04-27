@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        message: {
+          type: 'text'
+        },
+        query: {
+          type: 'percolator'
+        }
+      }
+    }
+  }
+)
+puts response
+----

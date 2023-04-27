@@ -7,7 +7,7 @@ response = client.indices.get_settings(
 )
 puts response
 
-response = client.indices.get_settings(
+response = client.cluster.get_settings(
   flat_settings: true,
   include_defaults: true
 )

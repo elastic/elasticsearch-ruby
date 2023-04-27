@@ -1,0 +1,60 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'logs',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      body: 'warning: page could not be rendered'
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      body: 'authentication error'
+    },
+    {
+      index: {
+        _id: 3
+      }
+    },
+    {
+      body: 'warning: connection timed out'
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'logs',
+  body: {
+    size: 0,
+    aggregations: {
+      messages: {
+        filters: {
+          filters: {
+            errors: {
+              match: {
+                body: 'error'
+              }
+            },
+            warnings: {
+              match: {
+                body: 'warning'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,106 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'museums',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_point'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'museums',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      location: 'POINT (4.912350 52.374081)',
+      name: 'NEMO Science Museum'
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      location: 'POINT (4.901618 52.369219)',
+      name: 'Museum Het Rembrandthuis'
+    },
+    {
+      index: {
+        _id: 3
+      }
+    },
+    {
+      location: 'POINT (4.914722 52.371667)',
+      name: 'Nederlands Scheepvaartmuseum'
+    },
+    {
+      index: {
+        _id: 4
+      }
+    },
+    {
+      location: 'POINT (4.405200 51.222900)',
+      name: 'Letterenhuis'
+    },
+    {
+      index: {
+        _id: 5
+      }
+    },
+    {
+      location: 'POINT (2.336389 48.861111)',
+      name: 'Musée du Louvre'
+    },
+    {
+      index: {
+        _id: 6
+      }
+    },
+    {
+      location: 'POINT (2.327000 48.860000)',
+      name: "Musée d'Orsay"
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'museums',
+  size: 0,
+  body: {
+    aggregations: {
+      rings_around_amsterdam: {
+        geo_distance: {
+          field: 'location',
+          origin: 'POINT (4.894 52.3760)',
+          ranges: [
+            {
+              to: 100_000
+            },
+            {
+              from: 100_000,
+              to: 300_000
+            },
+            {
+              from: 300_000
+            }
+          ]
+        }
+      }
+    }
+  }
+)
+puts response
+----

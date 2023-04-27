@@ -1,0 +1,83 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'emails',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: 1
+      }
+    },
+    {
+      accounts: [
+        'hillary',
+        'sidney'
+      ]
+    },
+    {
+      index: {
+        _id: 2
+      }
+    },
+    {
+      accounts: [
+        'hillary',
+        'donald'
+      ]
+    },
+    {
+      index: {
+        _id: 3
+      }
+    },
+    {
+      accounts: [
+        'vladimir',
+        'donald'
+      ]
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'emails',
+  body: {
+    size: 0,
+    aggregations: {
+      interactions: {
+        adjacency_matrix: {
+          filters: {
+            "grpA": {
+              terms: {
+                accounts: [
+                  'hillary',
+                  'sidney'
+                ]
+              }
+            },
+            "grpB": {
+              terms: {
+                accounts: [
+                  'donald',
+                  'mitt'
+                ]
+              }
+            },
+            "grpC": {
+              terms: {
+                accounts: [
+                  'vladimir',
+                  'nigel'
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

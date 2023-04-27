@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'logs-generic-default*',
+  filter_path: 'hits.hits._index',
+  body: {
+    query: {
+      match: {
+        "event.sequence": '97'
+      }
+    }
+  }
+)
+puts response
+----

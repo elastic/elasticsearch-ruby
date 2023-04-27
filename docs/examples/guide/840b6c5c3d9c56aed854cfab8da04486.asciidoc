@@ -1,0 +1,94 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'file-path-test',
+  body: {
+    settings: {
+      analysis: {
+        analyzer: {
+          custom_path_tree: {
+            tokenizer: 'custom_hierarchy'
+          },
+          custom_path_tree_reversed: {
+            tokenizer: 'custom_hierarchy_reversed'
+          }
+        },
+        tokenizer: {
+          custom_hierarchy: {
+            type: 'path_hierarchy',
+            delimiter: '/'
+          },
+          custom_hierarchy_reversed: {
+            type: 'path_hierarchy',
+            delimiter: '/',
+            reverse: 'true'
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        file_path: {
+          type: 'text',
+          fields: {
+            tree: {
+              type: 'text',
+              analyzer: 'custom_path_tree'
+            },
+            tree_reversed: {
+              type: 'text',
+              analyzer: 'custom_path_tree_reversed'
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'file-path-test',
+  id: 1,
+  body: {
+    file_path: '/User/alice/photos/2017/05/16/my_photo1.jpg'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'file-path-test',
+  id: 2,
+  body: {
+    file_path: '/User/alice/photos/2017/05/16/my_photo2.jpg'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'file-path-test',
+  id: 3,
+  body: {
+    file_path: '/User/alice/photos/2017/05/16/my_photo3.jpg'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'file-path-test',
+  id: 4,
+  body: {
+    file_path: '/User/alice/photos/2017/05/15/my_photo1.jpg'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'file-path-test',
+  id: 5,
+  body: {
+    file_path: '/User/bob/photos/2017/05/16/my_photo1.jpg'
+  }
+)
+puts response
+----

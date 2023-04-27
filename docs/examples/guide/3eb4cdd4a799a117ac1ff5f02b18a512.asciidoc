@@ -1,0 +1,47 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'index',
+  body: {
+    mappings: {
+      properties: {
+        query: {
+          type: 'percolator'
+        },
+        body: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.update_aliases(
+  body: {
+    actions: [
+      {
+        add: {
+          index: 'index',
+          alias: 'queries'
+        }
+      }
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'queries',
+  id: 1,
+  refresh: true,
+  body: {
+    query: {
+      match: {
+        body: 'quick brown fox'
+      }
+    }
+  }
+)
+puts response
+----

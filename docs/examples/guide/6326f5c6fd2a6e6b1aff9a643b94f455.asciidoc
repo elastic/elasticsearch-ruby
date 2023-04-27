@@ -1,0 +1,46 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    text: 'quick brown fox',
+    popularity: 1
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 2,
+  refresh: true,
+  body: {
+    text: 'quick fox',
+    popularity: 5
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      function_score: {
+        query: {
+          match: {
+            text: 'quick brown fox'
+          }
+        },
+        script_score: {
+          script: {
+            lang: 'expression',
+            source: "_score * doc['popularity']"
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

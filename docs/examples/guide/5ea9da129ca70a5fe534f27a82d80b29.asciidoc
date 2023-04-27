@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'example',
+  body: {
+    mappings: {
+      properties: {
+        comment: {
+          type: 'text',
+          index_options: 'offsets'
+        }
+      }
+    }
+  }
+)
+puts response
+----

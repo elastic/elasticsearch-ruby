@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_queries1',
+  id: 1,
+  refresh: true,
+  body: {
+    query: {
+      term: {
+        "my_field.prefix": 'abc'
+      }
+    }
+  }
+)
+puts response
+----

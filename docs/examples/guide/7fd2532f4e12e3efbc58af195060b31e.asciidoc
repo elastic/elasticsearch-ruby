@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    text: 'The fooBarBaz method'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    query: {
+      match: {
+        text: 'bar'
+      }
+    },
+    highlight: {
+      fields: {
+        text: {}
+      }
+    }
+  }
+)
+puts response
+----

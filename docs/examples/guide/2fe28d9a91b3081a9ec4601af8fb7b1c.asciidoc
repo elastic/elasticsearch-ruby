@@ -15,7 +15,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'test',
   refresh: true,
   body: {
@@ -25,7 +25,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.index(
   index: 'test',
   refresh: true,
   body: {
@@ -35,7 +35,7 @@ response = client.indices.create(
 )
 puts response
 
-response = client.indices.create(
+response = client.indices.put_mapping(
   index: 'test',
   body: {
     properties: {

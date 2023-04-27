@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.update_by_query(
+  index: 'my-data-stream',
+  pipeline: 'my-pipeline'
+)
+puts response
+
+response = client.reindex(
+  body: {
+    source: {
+      index: 'my-data-stream'
+    },
+    dest: {
+      index: 'my-new-data-stream',
+      op_type: 'create',
+      pipeline: 'my-pipeline'
+    }
+  }
+)
+puts response
+----

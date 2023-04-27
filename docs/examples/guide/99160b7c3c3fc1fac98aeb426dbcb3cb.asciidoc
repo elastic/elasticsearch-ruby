@@ -1,0 +1,45 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        first_name: {
+          type: 'text'
+        },
+        last_name: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    first_name: 'Barry',
+    last_name: 'White'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    script_fields: {
+      full_name: {
+        script: {
+          lang: 'painless',
+          source: "params._source.first_name + ' ' + params._source.last_name"
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.stats(
+  metric: 'fielddata',
+  human: true,
+  fields: 'my_join_field'
+)
+puts response
+
+response = client.nodes.stats(
+  metric: 'indices',
+  index_metric: 'fielddata',
+  human: true,
+  fields: 'my_join_field'
+)
+puts response
+----

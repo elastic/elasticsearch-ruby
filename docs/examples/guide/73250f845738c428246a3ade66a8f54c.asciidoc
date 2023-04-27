@@ -1,0 +1,52 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'exams',
+  refresh: true,
+  body: {
+    grade: 100,
+    weight: [
+      2,
+      3
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'exams',
+  refresh: true,
+  body: {
+    grade: 80,
+    weight: 3
+  }
+)
+puts response
+
+response = client.search(
+  index: 'exams',
+  filter_path: 'aggregations',
+  body: {
+    size: 0,
+    runtime_mappings: {
+      "weight.combined": {
+        type: 'double',
+        script: "\n        double s = 0;\n        for (double w : doc['weight']) {\n          s += w;\n        }\n        emit(s);\n      "
+      }
+    },
+    aggregations: {
+      weighted_grade: {
+        weighted_avg: {
+          value: {
+            script: 'doc.grade.value + 1'
+          },
+          weight: {
+            field: 'weight.combined'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

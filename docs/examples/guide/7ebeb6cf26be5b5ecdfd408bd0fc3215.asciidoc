@@ -1,0 +1,63 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-knn-index',
+  body: {
+    mappings: {
+      properties: {
+        "my-vector": {
+          type: 'dense_vector',
+          dims: 3,
+          index: true,
+          similarity: 'l2_norm'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'my-knn-index',
+  refresh: true,
+  body: [
+    {
+      index: {
+        _id: '1'
+      }
+    },
+    {
+      "my-vector": [
+        1,
+        5,
+        -20
+      ]
+    },
+    {
+      index: {
+        _id: '2'
+      }
+    },
+    {
+      "my-vector": [
+        42,
+        8,
+        -15
+      ]
+    },
+    {
+      index: {
+        _id: '3'
+      }
+    },
+    {
+      "my-vector": [
+        15,
+        11,
+        23
+      ]
+    }
+  ]
+)
+puts response
+----

@@ -1,0 +1,59 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'index_1',
+  id: 1,
+  body: {
+    text: 'Document in index 1'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'index_2',
+  id: 2,
+  refresh: true,
+  body: {
+    text: 'Document in index 2'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'index_1,index_2',
+  body: {
+    query: {
+      terms: {
+        _index: [
+          'index_1',
+          'index_2'
+        ]
+      }
+    },
+    aggregations: {
+      indices: {
+        terms: {
+          field: '_index',
+          size: 10
+        }
+      }
+    },
+    sort: [
+      {
+        _index: {
+          order: 'asc'
+        }
+      }
+    ],
+    script_fields: {
+      index_name: {
+        script: {
+          lang: 'painless',
+          source: "doc['_index']"
+        }
+      }
+    }
+  }
+)
+puts response
+----

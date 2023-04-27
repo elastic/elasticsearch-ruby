@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    cost_price: 100
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    script_fields: {
+      sales_price: {
+        script: {
+          lang: 'expression',
+          source: "doc['cost_price'] * markup",
+          params: {
+            markup: 0.2
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

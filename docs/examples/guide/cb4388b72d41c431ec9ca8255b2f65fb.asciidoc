@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'example',
+  body: {
+    mappings: {
+      properties: {
+        geometry: {
+          type: 'shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'example',
+  id: 1,
+  refresh: 'wait_for',
+  body: {
+    name: 'Lucky Landing',
+    geometry: {
+      type: 'point',
+      coordinates: [
+        1355.400544,
+        5255.530286
+      ]
+    }
+  }
+)
+puts response
+----

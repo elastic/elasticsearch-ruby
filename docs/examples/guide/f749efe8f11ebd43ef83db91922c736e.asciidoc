@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      cluster: {
+        remote: {
+          "clusterB": {
+            mode: 'proxy',
+            skip_unavailable: 'true',
+            server_name: 'clusterb.es.region-b.gcp.elastic-cloud.com',
+            proxy_socket_connections: '18',
+            proxy_address: 'clusterb.es.region-b.gcp.elastic-cloud.com:9400'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,45 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      properties: {
+        "my-small": {
+          type: 'keyword',
+          ignore_above: 2
+        },
+        "my-large": {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index-000001',
+  id: 1,
+  refresh: true,
+  body: {
+    "my-small": [
+      'ok',
+      'bad'
+    ],
+    "my-large": 'ok content'
+  }
+)
+puts response
+
+response = client.search(
+  index: 'my-index-000001',
+  body: {
+    fields: [
+      'my-*'
+    ],
+    _source: false
+  }
+)
+puts response
+----

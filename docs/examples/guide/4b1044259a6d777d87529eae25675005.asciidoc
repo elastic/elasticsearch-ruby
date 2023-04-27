@@ -16,7 +16,7 @@ response = client.ingest.put_pipeline(
 )
 puts response
 
-response = client.ingest.put_pipeline(
+response = client.update_by_query(
   index: 'my-index-000001',
   pipeline: 'set-foo'
 )

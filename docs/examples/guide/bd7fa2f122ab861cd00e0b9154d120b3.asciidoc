@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      properties: {
+        "@timestamp": {
+          format: 'strict_date_optional_time||epoch_second',
+          type: 'date'
+        },
+        message: {
+          type: 'wildcard'
+        }
+      }
+    }
+  }
+)
+puts response
+----

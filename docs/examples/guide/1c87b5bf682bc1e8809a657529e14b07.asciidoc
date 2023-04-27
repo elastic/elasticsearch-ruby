@@ -1,0 +1,59 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'shapes',
+  body: {
+    mappings: {
+      properties: {
+        location: {
+          type: 'geo_shape'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'shapes',
+  id: 'deu',
+  body: {
+    location: {
+      type: 'envelope',
+      coordinates: [
+        [
+          13,
+          53
+        ],
+        [
+          14,
+          52
+        ]
+      ]
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'example',
+  body: {
+    query: {
+      bool: {
+        filter: {
+          geo_shape: {
+            location: {
+              indexed_shape: {
+                index: 'shapes',
+                id: 'deu',
+                path: 'location'
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -5,7 +5,7 @@ response = client.indices.delete(
 )
 puts response
 
-response = client.indices.delete(
+response = client.indices.delete_data_stream(
   name: 'logs-my_app-default'
 )
 puts response
