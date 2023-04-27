@@ -2,6 +2,16 @@
 === 8.7 Release notes
 
 [discrete]
+[[release_notes_871]]
+=== 8.7.1 Release notes
+
+[discrete]
+==== API Bugfix
+
+- Updates `logstash.get_pipeline`, fixed in the specification `id` is not a required parameter, so removes raising `ArgumentError` when id is not present.
+
+
+[discrete]
 [[release_notes_870]]
 === 8.7.0 Release notes
 

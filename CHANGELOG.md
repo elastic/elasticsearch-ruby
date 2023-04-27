@@ -1,5 +1,11 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.7.1 Release notes
+
+### API Bugfix
+
+- Updates `logstash.get_pipeline`, fixed in the specification `id` is not a required parameter, so removes raising `ArgumentError` when id is not present.
+
 ## 8.7.0 Release notes
 
 - Tested versions of Ruby for 8.6.0: Ruby (MRI) 2.7, 3.0, 3.1 and **3.2**. JRuby 9.3 and JRuby 9.4. Ruby 2.7's end of life is coming in a few days, so this'll probably be the last release to test for Ruby 2.7.
