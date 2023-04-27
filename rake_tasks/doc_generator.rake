@@ -143,8 +143,8 @@ namespace :docs do
 
   def self.is_boolean?(value)
     (['false', 'true'].include? value) ||
-                               value.is_a?(TrueClass) ||
-                               value.is_a?(FalseClass)
+      value.is_a?(TrueClass) ||
+      value.is_a?(FalseClass)
   end
 
   def write_file(code, filename)
@@ -168,13 +168,17 @@ module TestDocs
   def self.perform(code, filename)
     # Eval the example code, but remove printing out the response
     response = eval(code.gsub('puts response', ''))
-    log_successful_code(filename) if response.status == 200
+    log_successful_code(filename) if response_successful(response)
   rescue Elastic::Transport::Transport::Errors::NotFound => e
     log_successful_code(filename)
+  rescue Elastic::Transport::Transport::Errors::BadRequest => e
+    if e.message.match? /resource_already_exists/
+      log_successful_code(filename)
+    else
+      log_elasticsearch_error(filename, e)
+    end
   rescue Elastic::Transport::Transport::Error => e
-    logger = Logger.new('log/docs-generation-elasticsearch.log')
-    logger.formatter = @formatter
-    logger.info("Located in #{filename}: #{e.message}\n")
+    log_elasticsearch_error(filename, e)
   rescue ArgumentError, NoMethodError, TypeError => e
     logger = Logger.new('log/docs-generation-client.log')
     logger.formatter = @formatter
@@ -189,5 +193,16 @@ module TestDocs
     logger = Logger.new('log/200-ok.log')
     logger.formatter = -> (_, _, _, msg) { "#{msg} " }
     logger.info(filename)
+  end
+
+  def self.log_elasticsearch_error(filename, e)
+    logger = Logger.new('log/docs-generation-elasticsearch.log')
+    logger.formatter = @formatter
+    logger.info("Located in #{filename}: #{e.message}\n")
+  end
+
+  def self.response_successful(response)
+    [true, false].include?(response) ||
+                           (response.is_a?(Elasticsearch::API::Response) && response.status == 200)
   end
 end
