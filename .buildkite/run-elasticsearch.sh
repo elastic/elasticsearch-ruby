@@ -43,6 +43,7 @@ environment=($(cat <<-END
   --env cluster.initial_master_nodes=$master_node_name
   --env discovery.seed_hosts=$master_node_name
   --env cluster.routing.allocation.disk.threshold_enabled=false
+  --env cluster.indices.close.enable: true
   --env bootstrap.memory_lock=true
   --env node.attr.testattr=test
   --env path.repo=/tmp
