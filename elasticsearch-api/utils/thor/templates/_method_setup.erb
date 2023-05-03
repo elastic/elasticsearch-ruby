@@ -27,7 +27,7 @@
   endpoint = arguments.delete(:endpoint) || '_termvectors'
 <%- end -%>
 <%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
-<%- unless @params.empty? -%>
+<%- if !@params.empty? || needs_ignore_404?(@endpoint_name) || needs_complex_ignore_404?(@endpoint_name)-%>
   <%= '  '*(@namespace_depth+4) %>params = Utils.process_params(arguments)
 <%- else -%>
   <%= '  '*(@namespace_depth+4) %>params = {}

@@ -33,18 +33,19 @@ module Elasticsearch
       # Endpoints that need Utils.__rescue_from_not_found if the ignore
       # parameter is included
       COMPLEX_IGNORE_404 = %w[
+        clear_scroll
         delete
         get
-        indices.flush_synced
-        indices.delete_template
         indices.delete
+        indices.delete_template
+        indices.flush_synced
         security.get_role
         security.get_user
-        snapshot.status
+        snapshot.delete
+        snapshot.delete_repository
         snapshot.get
         snapshot.get_repository
-        snapshot.delete_repository
-        snapshot.delete
+        snapshot.status
         update
         watcher.delete_watch
       ].freeze
