@@ -48,11 +48,19 @@ module Elasticsearch
                  else
                    "_search/scroll"
                  end
-        params = {}
+        params = Utils.process_params(arguments)
 
-        Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
-        )
+        if Array(arguments[:ignore]).include?(404)
+          Utils.__rescue_from_not_found {
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers)
+            )
+          }
+        else
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers)
+          )
+        end
       end
     end
   end
