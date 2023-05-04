@@ -41,7 +41,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_watcher/watch/#{Utils.__listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
