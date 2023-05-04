@@ -43,7 +43,7 @@ module Elasticsearch
                    else
                      "_security/role"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
