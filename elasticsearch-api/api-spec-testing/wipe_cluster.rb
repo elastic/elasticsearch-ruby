@@ -85,7 +85,7 @@ module Elasticsearch
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
           clear_tasks(client)
-          # clear_transforms(client)
+          clear_transforms(client)
 
           # Custom implementations
           CustomCleanup::wipe_calendars(client)
