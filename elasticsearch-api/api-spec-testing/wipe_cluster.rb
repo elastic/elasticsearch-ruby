@@ -65,7 +65,7 @@ module Elasticsearch
           read_plugins(client)
           if @has_rollups
             wipe_rollup_jobs(client)
-            wait_for_pending_rollup_tasks(client)
+            # wait_for_pending_rollup_tasks(client)
           end
           delete_all_slm_policies(client)
           wipe_searchable_snapshot_indices(client) if @has_xpack
@@ -157,7 +157,7 @@ module Elasticsearch
 
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (start_time + 5)
+            break unless count.positive? && Time.now.to_i < (start_time + 1)
           end
           logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
