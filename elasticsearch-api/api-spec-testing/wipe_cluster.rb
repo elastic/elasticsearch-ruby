@@ -84,7 +84,7 @@ module Elasticsearch
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
-          # clear_tasks(client)
+          clear_tasks(client)
           # clear_transforms(client)
 
           # Custom implementations
