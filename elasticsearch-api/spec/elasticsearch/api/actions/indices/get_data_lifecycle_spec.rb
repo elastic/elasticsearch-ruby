@@ -21,24 +21,14 @@ describe 'client.indices#get_data_lifecycle' do
   let(:expected_args) do
     [
       'GET',
-      url,
+      '_data_stream/foo/_lifecycle',
       {},
       nil,
       {}
     ]
   end
 
-  let(:url) { '_data_stream/_lifecycle'}
-
   it 'performs the request' do
-    expect(client_double.indices.get_data_lifecycle).to be_a Elasticsearch::API::Response
-  end
-
-  context 'when name is specified' do
-    let(:url) { '_data_stream/foo/_lifecycle'}
-
-    it 'performs the request' do
-      expect(client_double.indices.get_data_lifecycle(name: 'foo')).to be_a Elasticsearch::API::Response
-    end
+    expect(client_double.indices.get_data_lifecycle(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
