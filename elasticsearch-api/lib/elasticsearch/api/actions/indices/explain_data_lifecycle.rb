@@ -30,6 +30,7 @@ module Elasticsearch
         #
         # @option arguments [String] :index The name of the index to explain
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-explain-lifecycle.html
@@ -44,7 +45,7 @@ module Elasticsearch
 
           _index = arguments.delete(:index)
 
-          method = Elasticsearch::API::HTTP_POST
+          method = Elasticsearch::API::HTTP_GET
           path   = "#{Utils.__listify(_index)}/_lifecycle/explain"
           params = Utils.process_params(arguments)
 
