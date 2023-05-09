@@ -59,7 +59,8 @@ namespace :unified_release do
 
   desc 'Generate API code'
   task :codegen do
-    version = YAML.load_file(File.expand_path(__dir__ + '/../.ci/test-matrix.yml'))['STACK_VERSION'].first
+    version = YAML.load_file(File.expand_path(__dir__ + '/../.buildkite/pipeline.yml'))['steps'].first['env']['STACK_VERSION']
+
     Rake::Task['elasticsearch:download_artifacts'].invoke(version)
     sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} \
           && BUNDLE_GEMFILE=`pwd`/Gemfile \
@@ -109,7 +110,6 @@ namespace :unified_release do
 
   desc <<-DESC
   Bump the version in test matrixes:
-  - .ci/test-matrix.yml
   - .github/workflows
   - .buildkite/pipeline.yml
 
@@ -121,7 +121,6 @@ namespace :unified_release do
     abort('[!] Required argument [version] missing') unless (version = args[:version])
 
     files = [
-      '.ci/test-matrix.yml',
       '.github/workflows/main.yml',
       '.github/workflows/unified-release.yml',
       '.buildkite/pipeline.yml'
