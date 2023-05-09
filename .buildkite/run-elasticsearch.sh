@@ -32,8 +32,12 @@ cleanup_node $es_node_name
 master_node_name=${es_node_name}
 cluster_name=${moniker}${suffix}
 
-# Set vm.max_map_count kernel setting to 262144
-sudo sysctl -w vm.max_map_count=262144
+BUILDKITE=${BUILDKITE-false}
+
+# Set vm.max_map_count kernel setting to 262144 if we're in CI
+if [[ "$BUILDKITE" == "true" ]]; then
+  sudo sysctl -w vm.max_map_count=262144
+fi
 
 declare -a volumes
 environment=($(cat <<-END
