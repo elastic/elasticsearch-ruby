@@ -20,7 +20,7 @@ require 'spec_helper'
 describe 'client.indices#explain_data_lifecycle' do
   let(:expected_args) do
     [
-        'POST',
+        'GET',
         'foo/_lifecycle/explain',
         {},
         nil,
