@@ -78,10 +78,10 @@ case $CMD in
         TASK_ARGS=("$VERSION" "$codegen_folder")
         ;;
     examplesgen)
-        echo -e "\033[36;1mTARGET: generate examples\033[0m"
-        TASK=codegen
+        echo -e "\033[36;1mTARGET: generate docs examples\033[0m"
+        TASK='docs:generate'
         # VERSION is BRANCH here for now
-        TASK_ARGS=("$VERSION" "$codegen_folder")
+        TASK_ARGS=()
         ;;
     bump)
         if [ -v $VERSION ]; then
@@ -104,12 +104,18 @@ case $CMD in
       ;;
     *)
         echo -e "\nUsage:"
-        echo -e "\t Clean workspace:"
-        echo -e "\t $0 clean\n"
+        echo -e "\t Generate API code:"
+        echo -e "\t $0 codegen\n"
         echo -e "\t Build gems:"
         echo -e "\t $0 assemble [version_qualifier]\n"
         echo -e "\t Bump version:"
         echo -e "\t $0 bump [version_qualifier]\n"
+        echo -e "\t Bump stack version in test matrices:"
+        echo -e "\t $0 bumpmatrix [version_qualifier]\n"
+        echo -e "\t Clean workspace:"
+        echo -e "\t $0 clean\n"
+        echo -e "\t Generate example documentation:"
+        echo -e "\t $0 examplesgen\n"
         exit 1
 esac
 
@@ -159,9 +165,5 @@ if [[ "$CMD" == "assemble" ]]; then
 fi
 
 if [[ "$CMD" == "docsgen" ]]; then
-    echo "TODO"
-fi
-
-if [[ "$CMD" == "examplesgen" ]]; then
     echo "TODO"
 fi
