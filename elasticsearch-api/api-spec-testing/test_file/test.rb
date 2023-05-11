@@ -257,7 +257,7 @@ module Elasticsearch
         end
 
         def pre_defined_skip?
-          SKIPPED_TESTS.find do |t|
+          SKIPPED_TESTS.compact.find do |t|
             file_basename == t[:file] && (description == t[:description] || t[:description] == '*')
           end
         end
