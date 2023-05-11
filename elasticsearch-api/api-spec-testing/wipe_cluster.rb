@@ -371,7 +371,7 @@ module Elasticsearch
 
         def clear_transforms(client)
           client.transform.get_transform(transform_id: '*')['transforms'].each do |transform|
-            client.transform.delete_transform(transform_id: transform[:id])
+            client.transform.delete_transform(transform_id: transform['id'])
           end
         end
 
