@@ -1,0 +1,62 @@
+[[Helpers]]
+== Client Helpers
+
+The Elasticsearch Ruby client includes some useful helpers for a more comfortable experience with some APIs.
+
+=== Bulk Helper
+
+This helper aims to provide a nicer developer experience when using the Bulk API. At its simplest, you can send it a collection of Hashes in an Array, and it will bulk ingest them into Elasticsearch.
+
+To use the BulkHelper, you need to require it in your code:
+
+[source,ruby]
+----
+require 'elasticsearch/helpers/bulk_helper'
+----
+
+You need to instantiate a BulkHelper with a client, and an index:
+[source,ruby]
+----
+client = Elasticsearch::Client.new
+bulk_helper = Elasticsearch::Helpers::BulkHelper.new(client, index)
+----
+
+This helper will work on the index you pass in during initialization, but you can change the index any time in your code:
+
+[source,ruby]
+----
+bulk_helper.index = 'new_index'
+----
+
+If you want to index a collection of documents, you can use the `ingest` method:
+
+[source,ruby]
+----
+documents = [
+  { name: 'document1', date: '2024-05-16' },
+  { name: 'document2', date: '2023-12-19' },
+  { name: 'document3', date: '2024-07-07' }
+]
+bulk_helper.ingest(documents)
+----
+
+If you're ingesting a large set of data and want to separate the documents into smaller pieces before sending them to Elasticsearch, you can use the `slice` parameter.
+
+[source,ruby]
+----
+bulk_helper.ingest(documents, { slice: 2 })
+----
+
+This way the data will be sent in two different bulk requests.
+
+You can also send the parameters you would send to the Bulk API in the query parameters or body. The method signature is `ingest(docs, params = {}, body = {}, &block)`. The method can be called with a block, that will yield the response object from calling the Bulk API and the documents sent in the request:
+
+[source,ruby]
+----
+helper.ingest(documents) { |_, docs| puts "Ingested #{docs.count} documents" }
+----
+
+
+=== Scroll Helper
+
+=== Point in Time Helper
