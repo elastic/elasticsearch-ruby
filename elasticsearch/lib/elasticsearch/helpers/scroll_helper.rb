@@ -20,41 +20,59 @@ module Elasticsearch
     class ScrollHelper
       include Enumerable
 
+      # Create a ScrollHelper
+      #
+      # @param [Elasticsearch::Client] client (Required) Instance of Elasticsearch client to use.
+      # @param [String] index (Required) Index on which to perform the Bulk actions.
+      # @param [Hash] body Body parameters to re-use in every scroll request
+      # @param [Time] scroll Specify how long a consistent view of the index should be maintained for scrolled search
+      #
       def initialize(client, index, body, scroll = '1m')
         @index = index
         @client = client
         @scroll = scroll
         @body = body
-        @docs = []
       end
 
+      # Implementation of +each+ for Enumerable module inclusion
+      #
+      # @yieldparam document [Hash] yields a document found in the search hits.
+      #
       def each(&block)
+        @docs = []
+        @scroll_id = nil
         refresh_docs
         for doc in @docs do
           refresh_docs
           yield doc
         end
         clear
-        @docs = []
       end
 
+      # Results from a scroll.
+      # Can be called repeatedly (e.g. in a loop) to get the scroll pages.
+      #
       def results
         if @scroll_id
-          @client.scroll(body: {scroll: @scroll, scroll_id: @scroll_id})['hits']['hits']
+          scroll_request
         else
           initial_search
         end
-      rescue Elastic::Transport::Transport::Errors::NotFound => e
-        if e.message.match?('search_context_missing_exception')
-          initial_search
-        else
-          raise e
-        end
+      rescue StandardError => e
+        raise e
+      end
+
+      # Clear Scroll and resets inner documents collection
+      #
+      def clear
+        @client.clear_scroll(body: { scroll_id: @scroll_id }) if @scroll_id
+        @docs = []
       end
 
       private
 
       def refresh_docs
+        @docs ||= []
         @docs << results
         @docs.flatten!
       end
@@ -65,8 +83,8 @@ module Elasticsearch
         response['hits']['hits']
       end
 
-      def clear
-        @client.clear_scroll(body: { scroll_id: @scroll_id })
+      def scroll_request
+        @client.scroll(body: {scroll: @scroll, scroll_id: @scroll_id})['hits']['hits']
       end
     end
   end
