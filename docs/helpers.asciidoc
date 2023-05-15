@@ -59,4 +59,41 @@ helper.ingest(documents) { |_, docs| puts "Ingested #{docs.count} documents" }
 
 === Scroll Helper
 
-=== Point in Time Helper
+This helper provides an easy way to get results from a Scroll.
+
+To use the ScrollHelper, you need to require it in your code:
+
+[source,ruby]
+----
+require 'elasticsearch/helpers/scroll_helper'
+----
+
+You need to instantiate a ScrollHelper with a client, an index, and a body (with the scroll API parameters) which will be used in every following scroll request:
+
+[source,ruby]
+----
+client = Elasticsearch::Client.new
+scroll_helper = Elasticsearch::Helpers::ScrollHelper.new(client, index, body)
+----
+
+There are two ways to get the results from a scroll using the helper.
+
+You can iterate over a scroll using the methods in `Enumerable` such as `each` and `map`:
+
+[source,ruby]
+----
+scroll_helper.each do |item|
+  puts item
+end
+----
+
+You can fetch results by page, with the `results` function:
+
+[source,ruby]
+----
+my_documents = []
+while !(documents = scroll_helper.results).empty?
+  my_documents << documents
+end
+scroll_helper.clear
+----
