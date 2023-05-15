@@ -2,9 +2,11 @@
 
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib', __dir__))
 $LOAD_PATH.unshift(File.expand_path('../../elasticsearch-api/lib', __dir__))
+$LOAD_PATH.unshift(File.expand_path('../../elasticsearch/lib/elasticsearch/helpers', __dir__))
 
 require 'elasticsearch'
 require 'elasticsearch-api'
+require 'elasticsearch/helpers/bulk_helper'
 
 include Elasticsearch
 
