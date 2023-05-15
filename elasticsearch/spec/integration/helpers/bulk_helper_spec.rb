@@ -17,8 +17,9 @@
 ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
 raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
-require 'spec_helper'
 require 'elasticsearch/helpers/bulk_helper'
+require 'spec_helper'
+require 'tempfile'
 
 context 'Elasticsearch client helpers' do
   context 'Bulk helper' do
@@ -53,7 +54,9 @@ context 'Elasticsearch client helpers' do
 
     it 'Ingests documents' do
       response = bulk_helper.ingest(docs)
+      expect(response).to be_an_instance_of Elasticsearch::API::Response
       expect(response.status).to eq(200)
+      expect(response['items'].map { |a| a['index']['status'] }.uniq.first).to eq 201
     end
 
     it 'Updates documents' do
@@ -86,6 +89,122 @@ context 'Elasticsearch client helpers' do
       response = bulk_helper.ingest(docs, {slice: slice}) do |response, docs|
         expect(response).to be_an_instance_of Elasticsearch::API::Response
         expect(docs.count).to eq slice
+      end
+    end
+
+    context 'JSON File helper' do
+      let(:file) { Tempfile.new('test-data.json') }
+      let(:json) do
+        json = <<~JSON
+        [
+          {
+            "character_name": "Anallese Lonie",
+           "species": "mouse",
+           "catchphrase": "Seamless regional definition",
+           "favorite_food": "pizza"
+          },
+          {
+            "character_name": "Janey Davidovsky",
+           "species": "cat",
+           "catchphrase": "Down-sized responsive pricing structure",
+           "favorite_food": "pizza"
+          },
+          {
+            "character_name": "Morse Mountford",
+           "species": "cat",
+           "catchphrase": "Ameliorated modular data-warehouse",
+           "favorite_food": "carrots"
+          },
+          {
+            "character_name": "Saundra Kauble",
+           "species": "dog",
+           "catchphrase": "Synchronised 24/7 support",
+           "favorite_food": "carrots"
+          },
+          {
+            "character_name": "Kain Viggars",
+           "species": "cat",
+           "catchphrase": "Open-architected asymmetric circuit",
+           "favorite_food": "carrots"
+          }
+        ]
+        JSON
+      end
+
+      before do
+        file.write(json)
+        file.rewind
+      end
+
+      after do
+        file.close
+        file.unlink
+      end
+
+      it 'Ingests a JSON file' do
+        response = bulk_helper.ingest_json(file)
+
+        expect(response).to be_an_instance_of Elasticsearch::API::Response
+        expect(response.status).to eq(200)
+      end
+
+      context 'with data not in root of JSON file' do
+        let(:json) do
+          json = <<~JSON
+          {
+            "field": "value",
+            "status": 200,
+            "data": {
+              "items": [
+                {
+                  "character_name": "Anallese Lonie",
+                  "species": "mouse",
+                  "catchphrase": "Seamless regional definition",
+                  "favorite_food": "pizza"
+                },
+                {
+                  "character_name": "Janey Davidovsky",
+                  "species": "cat",
+                  "catchphrase": "Down-sized responsive pricing structure",
+                  "favorite_food": "pizza"
+                },
+                {
+                  "character_name": "Morse Mountford",
+                  "species": "cat",
+                  "catchphrase": "Ameliorated modular data-warehouse",
+                  "favorite_food": "carrots"
+                },
+                {
+                  "character_name": "Saundra Kauble",
+                  "species": "dog",
+                  "catchphrase": "Synchronised 24/7 support",
+                  "favorite_food": "carrots"
+                },
+                {
+                  "character_name": "Kain Viggars",
+                  "species": "cat",
+                  "catchphrase": "Open-architected asymmetric circuit",
+                  "favorite_food": "carrots"
+                }
+              ]
+            }
+          }
+          JSON
+        end
+
+        it 'Ingests a JSON file passing keys as Array' do
+          response = bulk_helper.ingest_json(file, { keys: ['data', 'items'] })
+          expect(response).to be_an_instance_of Elasticsearch::API::Response
+          expect(response.status).to eq(200)
+          expect(response['items'].map { |a| a['index']['status'] }.uniq.first).to eq 201
+        end
+
+        it 'Ingests a JSON file passing keys as String' do
+          response = bulk_helper.ingest_json(file, { keys: 'data,items' })
+          expect(response).to be_an_instance_of Elasticsearch::API::Response
+          expect(response.status).to eq(200)
+          expect(response['items'].map { |a| a['index']['status'] }.uniq.first).to eq 201
+        end
       end
     end
   end
