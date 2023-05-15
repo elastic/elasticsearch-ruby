@@ -25,8 +25,8 @@ module Elasticsearch
 
       # Create a BulkHelper
       #
-      # @param [Elasticsearch::Client] client (Required) - Instance of Elasticsearch client to use.
-      # @param [String] index (Required) - Index on which to perform the Bulk actions.
+      # @param [Elasticsearch::Client] client Instance of Elasticsearch client to use.
+      # @param [String] index Index on which to perform the Bulk actions.
       # @param [Hash] params Parameters to re-use in every bulk call
       #
       def initialize(client, index, params = {})
