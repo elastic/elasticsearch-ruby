@@ -27,7 +27,7 @@ module Elasticsearch
       #
       # @param [Elasticsearch::Client] client (Required) - Instance of Elasticsearch client to use.
       # @param [String] index (Required) - Index on which to perform the Bulk actions.
-      # @param [Hash] params (Optional) - Parameters to re-use in every bulk call
+      # @param [Hash] params Parameters to re-use in every bulk call
       #
       def initialize(client, index, params = {})
         @client = client
@@ -37,12 +37,12 @@ module Elasticsearch
 
       # Index documents using the Bulk API.
       #
-      # @param [Array<Hash>] docs (Required) - The documents to be indexed.
-      # @param [Hash] params - Parameters to use in the bulk ingestion. See the official Elastic documentation for Bulk API for parameters to send to the Bulk API.
-      # @option params [Integer] slice - number of documents to send to the Bulk API for eatch batch of ingestion.
-      # @param [Block] - Optional block to run after ingesting a batch of documents.
-      #
-      # @yield Elasticsearch::Transport::Response, [Array<Hash>] - Yields the response object from calling the Bulk API and the documents sent in the request.
+      # @param [Array<Hash>] docs The documents to be indexed.
+      # @param [Hash] params Parameters to use in the bulk ingestion. See the official Elastic documentation for Bulk API for parameters to send to the Bulk API.
+      # @option params [Integer] slice number of documents to send to the Bulk API for eatch batch of ingestion.
+      # @param block [Block] Optional block to run after ingesting a batch of documents.
+      # @yieldparam response [Elasticsearch::Transport::Response] The response object from calling the Bulk API.
+      # @yieldparam ingest_docs [Array<Hash>] The collection of documents sent in the bulk request.
       #
       def ingest(docs, params = {}, body = {}, &block)
         ingest_docs = docs.map { |doc| { index: { _index: @index, data: doc} } }
@@ -55,8 +55,8 @@ module Elasticsearch
 
       # Delete documents using the Bulk API
       #
-      # @param [Array] ids - Array of id's for documents to delete.
-      # @param [Hash] params - Parameters to send to bulk delete.
+      # @param [Array] ids Array of id's for documents to delete.
+      # @param [Hash] params Parameters to send to bulk delete.
       #
       def delete(ids, params = {}, body = {})
         delete_docs = ids.map { |id| { delete: { _index: @index, _id: id} } }
@@ -65,11 +65,12 @@ module Elasticsearch
 
       # Update documents using the Bulk API
       #
-      # @param [Array<Hash>] docs (Required) - The documents to be updated.
-      # @option params [Integer] slice - number of documents to send to the Bulk API for eatch batch of updates.
-      # @param [Block] - Optional block to run after ingesting a batch of documents.
+      # @param [Array<Hash>] docs (Required) The documents to be updated.
+      # @option params [Integer] slice number of documents to send to the Bulk API for eatch batch of updates.
+      # @param block [Block]  Optional block to run after ingesting a batch of documents.
       #
-      # @yield Elasticsearch::Transport::Response, [Array<Hash>] - Yields the response object from calling the Bulk API and the documents sent in the request.
+      # @yieldparam response [Elasticsearch::Transport::Response] The response object from calling the Bulk API.
+      # @yieldparam ingest_docs [Array<Hash>] The collection of documents sent in the bulk request.
       #
       def update(docs, params = {}, body = {}, &block)
         ingest_docs = docs.map do |doc|
@@ -80,6 +81,37 @@ module Elasticsearch
         else
           bulk_request(ingest_docs, params, &block)
         end
+      end
+
+      # Ingest data directly from a JSON file
+      #
+      # @param [String] file (Required) The file path.
+      # @param [Hash] params Parameters to use in the bulk ingestion.
+      # @option params [Integer] slice number of documents to send to the Bulk API for eatch batch of updates.
+      # @option params [Array|String] keys If the data needs to be digged from the JSON file, the
+      #                                      keys can be passed in  with this parameter to find it.
+      #
+      #                                      E.g.: If the data in the parsed JSON Hash is found in
+      #                                      +json_parsed['data']['items']+, keys would be passed
+      #                                      like this (as an Array):
+      #
+      #                                      +bulk_helper.ingest_json(file, { keys: ['data', 'items'] })+
+      #
+      #                                      or as a String:
+      #
+      #                                      +bulk_helper.ingest_json(file, { keys: 'data, items' })+
+      #
+      # @yieldparam response [Elasticsearch::Transport::Response] The response object from calling the Bulk API.
+      # @yieldparam ingest_docs [Array<Hash>] The collection of documents sent in the bulk request.
+      #
+      def ingest_json(file, params = {}, &block)
+        data = JSON.parse(File.read(file))
+        if (keys = params.delete(:keys))
+          keys = keys.split(',') if keys.is_a?(String)
+          data = data.dig(*keys)
+        end
+
+        ingest(data, params, &block)
       end
 
       private
