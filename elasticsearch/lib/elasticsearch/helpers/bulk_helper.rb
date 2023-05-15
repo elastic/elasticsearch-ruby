@@ -25,9 +25,7 @@ module Elasticsearch
       end
 
       def ingest(docs, params = {}, &block)
-        ingest_docs = docs.map do |doc|
-          { index: { _index: @index, data: doc} }
-        end
+        ingest_docs = docs.map { |doc| { index: { _index: @index, data: doc} } }
         if (slice = params.delete(:slice))
           ingest_docs.each_slice(slice) do |items|
             ingest(items, params, &block)
@@ -39,10 +37,8 @@ module Elasticsearch
       end
 
       def delete(ids, params = {})
-        to_delete = ids.map do |id|
-          { delete: { _index: @index, _id: id} }
-        end
-        @client.bulk({ body: to_delete }.merge(params.merge(@params)))
+        delete_docs = ids.map { |id| { delete: { _index: @index, _id: id} } }
+        @client.bulk({ body: delete_docs }.merge(params.merge(@params)))
       end
 
       def update(docs, params = {})
