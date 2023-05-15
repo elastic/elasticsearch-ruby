@@ -24,11 +24,18 @@ module Elasticsearch
         @params = params
       end
 
-      def ingest(docs, params = {})
+      def ingest(docs, params = {}, &block)
         ingest_docs = docs.map do |doc|
           { index: { _index: @index, data: doc} }
         end
-        @client.bulk({ body: ingest_docs }.merge(params.merge(@params)))
+        if (slice = params.delete(:slice))
+          ingest_docs.each_slice(slice) do |items|
+            ingest(items, params, &block)
+          end
+        else
+          yield ingest_docs if block_given?
+          @client.bulk({ body: ingest_docs }.merge(params.merge(@params)))
+        end
       end
 
       def delete(ids, params = {})
