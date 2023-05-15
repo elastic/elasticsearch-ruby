@@ -17,35 +17,77 @@
 
 module Elasticsearch
   module Helpers
+    # Elasticsearch Client Helper for the Bulk API
+    #
+    # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
     class BulkHelper
-      def initialize(client:, index:, params: {})
+      attr_accessor :index
+
+      # Create a BulkHelper
+      #
+      # @param [Elasticsearch::Client] client (Required) - Instance of Elasticsearch client to use.
+      # @param [String] index (Required) - Index on which to perform the Bulk actions.
+      # @param [Hash] params (Optional) - Parameters to re-use in every bulk call
+      #
+      def initialize(client, index, params = {})
         @client = client
         @index = index
         @params = params
       end
 
-      def ingest(docs, params = {}, &block)
+      # Index documents using the Bulk API.
+      #
+      # @param [Array<Hash>] docs (Required) - The documents to be indexed.
+      # @param [Hash] params - Parameters to use in the bulk ingestion. See the official Elastic documentation for Bulk API for parameters to send to the Bulk API.
+      # @option params [Integer] slice - number of documents to send to the Bulk API for eatch batch of ingestion.
+      # @param [Block] - Optional block to run after ingesting a batch of documents.
+      #
+      # @yield Elasticsearch::Transport::Response, [Array<Hash>] - Yields the response object from calling the Bulk API and the documents sent in the request.
+      #
+      def ingest(docs, params = {}, body = {}, &block)
         ingest_docs = docs.map { |doc| { index: { _index: @index, data: doc} } }
         if (slice = params.delete(:slice))
-          ingest_docs.each_slice(slice) do |items|
-            ingest(items, params, &block)
-          end
+          ingest_docs.each_slice(slice) { |items| ingest(items, params, &block) }
         else
-          yield ingest_docs if block_given?
-          @client.bulk({ body: ingest_docs }.merge(params.merge(@params)))
+          bulk_request(ingest_docs, params, &block)
         end
       end
 
-      def delete(ids, params = {})
+      # Delete documents using the Bulk API
+      #
+      # @param [Array] ids - Array of id's for documents to delete.
+      # @param [Hash] params - Parameters to send to bulk delete.
+      #
+      def delete(ids, params = {}, body = {})
         delete_docs = ids.map { |id| { delete: { _index: @index, _id: id} } }
         @client.bulk({ body: delete_docs }.merge(params.merge(@params)))
       end
 
-      def update(docs, params = {})
+      # Update documents using the Bulk API
+      #
+      # @param [Array<Hash>] docs (Required) - The documents to be updated.
+      # @option params [Integer] slice - number of documents to send to the Bulk API for eatch batch of updates.
+      # @param [Block] - Optional block to run after ingesting a batch of documents.
+      #
+      # @yield Elasticsearch::Transport::Response, [Array<Hash>] - Yields the response object from calling the Bulk API and the documents sent in the request.
+      #
+      def update(docs, params = {}, body = {}, &block)
         ingest_docs = docs.map do |doc|
           { update: { _index: @index, _id: doc.delete('id'), data: { doc: doc } } }
         end
-        @client.bulk({ body: ingest_docs }.merge(params.merge(@params)))
+        if (slice = params.delete(:slice))
+          ingest_docs.each_slice(slice) { |items| update(items, params, &block) }
+        else
+          bulk_request(ingest_docs, params, &block)
+        end
+      end
+
+      private
+
+      def bulk_request(ingest_docs, params, &block)
+        response = @client.bulk({ body: ingest_docs }.merge(params.merge(@params)))
+        yield response, ingest_docs if block_given?
+        response
       end
     end
   end

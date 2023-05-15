@@ -31,7 +31,7 @@ context 'Elasticsearch client helpers' do
     end
     let(:index) { 'bulk_animals' }
     let(:params) { { refresh: 'wait_for' } }
-    let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(index: index, client: client, params: params) }
+    let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(client, index, params) }
     let(:docs) do
       [
         { scientific_name: 'Lama guanicoe', name:'Guanaco' },
@@ -51,12 +51,12 @@ context 'Elasticsearch client helpers' do
       client.indices.delete(index: index, ignore: 404)
     end
 
-    it 'ingests' do
+    it 'Ingests documents' do
       response = bulk_helper.ingest(docs)
       expect(response.status).to eq(200)
     end
 
-    it 'updates' do
+    it 'Updates documents' do
       docs = [
         { scientific_name: 'Otocyon megalotos', name: 'Bat-eared fox' },
         { scientific_name: 'Herpestes javanicus', name: 'Small Indian mongoose' }
@@ -72,13 +72,21 @@ context 'Elasticsearch client helpers' do
       expect(response['items'].map { |i| i['update']['result'] }.uniq.first).to eq('updated')
     end
 
-    it 'deletes' do
+    it 'Deletes documents' do
       response = bulk_helper.ingest(docs)
       ids = response.body['items'].map { |a| a['index']['_id'] }
       response = bulk_helper.delete(ids)
       expect(response.status).to eq 200
       expect(response['items'].map { |item| item['delete']['result'] }.uniq.first).to eq('deleted')
       expect(client.count(index: index)['count']).to eq(0)
+    end
+
+    it 'Ingests documents and yields response and docs' do
+      slice = 2
+      response = bulk_helper.ingest(docs, {slice: slice}) do |response, docs|
+        expect(response).to be_an_instance_of Elasticsearch::API::Response
+        expect(docs.count).to eq slice
+      end
     end
   end
 end
