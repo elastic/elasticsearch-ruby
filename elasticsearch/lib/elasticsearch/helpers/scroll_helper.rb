@@ -17,6 +17,10 @@
 
 module Elasticsearch
   module Helpers
+    # Elasticsearch Client Helper for the Scroll API
+    #
+    # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/scroll-api.html
+    #
     class ScrollHelper
       include Enumerable
 

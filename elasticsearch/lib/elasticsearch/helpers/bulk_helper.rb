@@ -20,6 +20,7 @@ module Elasticsearch
     # Elasticsearch Client Helper for the Bulk API
     #
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-bulk.html
+    #
     class BulkHelper
       attr_accessor :index
 
