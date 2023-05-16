@@ -1,34 +1,34 @@
 [[Helpers]]
 == Client Helpers
 
-The Elasticsearch Ruby client includes some useful helpers for a more comfortable experience with some APIs.
+The {es} Ruby client includes some useful helpers for a more comfortable experience with some APIs.
 
 === Bulk Helper
 
-This helper aims to provide a nicer developer experience when using the Bulk API. At its simplest, you can send it a collection of Hashes in an Array, and it will bulk ingest them into Elasticsearch.
+This helper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into {es}.
 
-To use the BulkHelper, you need to require it in your code:
+To use the BulkHelper, require it in your code:
 
 [source,ruby]
 ----
 require 'elasticsearch/helpers/bulk_helper'
 ----
 
-You need to instantiate a BulkHelper with a client, and an index:
+Instantiate a BulkHelper with a client, and an index:
 [source,ruby]
 ----
 client = Elasticsearch::Client.new
 bulk_helper = Elasticsearch::Helpers::BulkHelper.new(client, index)
 ----
 
-This helper will work on the index you pass in during initialization, but you can change the index any time in your code:
+This helper works on the index you pass in during initialization, but you can change the index at any time in your code:
 
 [source,ruby]
 ----
 bulk_helper.index = 'new_index'
 ----
 
-If you want to index a collection of documents, you can use the `ingest` method:
+If you want to index a collection of documents, use the `ingest` method:
 
 [source,ruby]
 ----
@@ -40,7 +40,7 @@ documents = [
 bulk_helper.ingest(documents)
 ----
 
-If you're ingesting a large set of data and want to separate the documents into smaller pieces before sending them to Elasticsearch, you can use the `slice` parameter.
+If you're ingesting a large set of data and want to separate the documents into smaller pieces before sending them to {es}, use the `slice` parameter.
 
 [source,ruby]
 ----
@@ -49,7 +49,7 @@ bulk_helper.ingest(documents, { slice: 2 })
 
 This way the data will be sent in two different bulk requests.
 
-You can also send the parameters you would send to the Bulk API in the query parameters or body. The method signature is `ingest(docs, params = {}, body = {}, &block)`. The method can be called with a block, that will yield the response object from calling the Bulk API and the documents sent in the request:
+You can also include the parameters you would send to the Bulk API either in the query parameters or in the request body. The method signature is `ingest(docs, params = {}, body = {}, &block)`. Additionally, the method can be called with a block, that will provide access to the response object received from calling the Bulk API and the documents sent in the request:
 
 [source,ruby]
 ----
@@ -61,14 +61,14 @@ helper.ingest(documents) { |_, docs| puts "Ingested #{docs.count} documents" }
 
 This helper provides an easy way to get results from a Scroll.
 
-To use the ScrollHelper, you need to require it in your code:
+To use the ScrollHelper, require it in your code:
 
 [source,ruby]
 ----
 require 'elasticsearch/helpers/scroll_helper'
 ----
 
-You need to instantiate a ScrollHelper with a client, an index, and a body (with the scroll API parameters) which will be used in every following scroll request:
+Instantiate a ScrollHelper with a client, an index, and a body (with the scroll API parameters) which will be used in every following scroll request:
 
 [source,ruby]
 ----
@@ -78,17 +78,19 @@ scroll_helper = Elasticsearch::Helpers::ScrollHelper.new(client, index, body)
 
 There are two ways to get the results from a scroll using the helper.
 
-You can iterate over a scroll using the methods in `Enumerable` such as `each` and `map`:
-
+1. You can iterate over a scroll using the methods in `Enumerable` such as `each` and `map`:
++
+--
 [source,ruby]
 ----
 scroll_helper.each do |item|
   puts item
 end
 ----
-
-You can fetch results by page, with the `results` function:
-
+--
+2. You can fetch results by page, with the `results` function:
++
+--
 [source,ruby]
 ----
 my_documents = []
@@ -97,3 +99,4 @@ while !(documents = scroll_helper.results).empty?
 end
 scroll_helper.clear
 ----
+--
