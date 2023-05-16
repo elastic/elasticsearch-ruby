@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.stats(
+  level: 'shards',
+  human: true,
+  expand_wildcards: 'all',
+  filter_path: 'indices.*.total.indexing.index_total'
+)
+puts response
+----

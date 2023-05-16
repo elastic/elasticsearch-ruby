@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.put_template(
+  name: 'custom_monitoring',
+  body: {
+    index_patterns: [
+      '.monitoring-beats-7-*',
+      '.monitoring-es-7-*',
+      '.monitoring-kibana-7-*',
+      '.monitoring-logstash-7-*'
+    ],
+    order: 1,
+    settings: {
+      number_of_shards: 5,
+      number_of_replicas: 2
+    }
+  }
+)
+puts response
+----

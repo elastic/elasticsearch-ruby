@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.allocation(
+  v: true,
+  s: 'node',
+  h: 'node,shards,disk.percent,disk.indices,disk.used'
+)
+puts response
+----
