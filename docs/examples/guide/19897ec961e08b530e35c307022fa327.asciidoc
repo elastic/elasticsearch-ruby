@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.get_index_template(
-  name: '.monitoring-es-mb*'
-)
-puts response
-----

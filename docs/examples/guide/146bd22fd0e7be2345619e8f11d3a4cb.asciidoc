@@ -1,0 +1,9 @@
+[source, ruby]
+----
+response = client.cat.tasks(
+  v: true,
+  s: 'time:desc',
+  h: 'type,action,running_time,node,cancellable'
+)
+puts response
+----

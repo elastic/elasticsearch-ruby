@@ -1,0 +1,40 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-000001',
+  body: {
+    mappings: {
+      dynamic_templates: [
+        {
+          ip_fields: {
+            match: [
+              'ip_*',
+              '*_ip'
+            ],
+            unmatch: [
+              'one*',
+              '*two'
+            ],
+            mapping: {
+              type: 'ip'
+            }
+          }
+        }
+      ]
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'my-index',
+  id: 1,
+  body: {
+    one_ip: 'will not match',
+    ip_two: 'will not match',
+    three_ip: '12.12.12.12',
+    ip_four: '13.13.13.13'
+  }
+)
+puts response
+----

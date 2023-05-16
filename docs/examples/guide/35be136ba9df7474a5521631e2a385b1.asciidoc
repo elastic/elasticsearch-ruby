@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.explain_data_lifecycle(
+  index: '.ds-metrics-2023.03.22-000001'
+)
+puts response
+----
