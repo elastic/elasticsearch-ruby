@@ -56,6 +56,23 @@ You can also include the parameters you would send to the Bulk API either in the
 helper.ingest(documents) { |_, docs| puts "Ingested #{docs.count} documents" }
 ----
 
+You can update and delete documents with the BulkHelper too. To delete a set of documents, you can send an array of document ids:
+
+[source,ruby]
+----
+ids = ['shm0I4gB6LpJd9ljO9mY', 'sxm0I4gB6LpJd9ljO9mY', 'tBm0I4gB6LpJd9ljO9mY', 'tRm0I4gB6LpJd9ljO9mY', 'thm0I4gB6LpJd9ljO9mY', 'txm0I4gB6LpJd9ljO9mY', 'uBm0I4gB6LpJd9ljO9mY', 'uRm0I4gB6LpJd9ljO9mY', 'uhm0I4gB6LpJd9ljO9mY', 'uxm0I4gB6LpJd9ljO9mY']
+helper.delete(ids)
+----
+
+To update documents, you can send the array of documents with their respective ids:
+[source,ruby]
+----
+documents = [
+  {name: 'updated name 1', id: 'AxkFJYgB6LpJd9ljOtr7'},
+  {name: 'updated name 2', 'BBkFJYgB6LpJd9ljOtr7'}
+]
+helper.update(documents)
+----
 
 === Scroll Helper
 
