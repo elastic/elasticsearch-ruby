@@ -1,0 +1,47 @@
+[[release_notes_88]]
+=== 8.8 Release notes
+
+[discrete]
+[[release_notes_880]]
+=== 8.8.0 Release notes
+
+- Tested versions of Ruby for 8.8.0: Ruby (MRI) 3.0, 3.1 and **3.2**. JRuby 9.3 and JRuby 9.4.
+
+[discrete]
+==== API
+
+- Updates development dependency `minitest-reporters` to `>= 1.6` to include showing failures at the end of the test run.
+
+[discrete]
+===== New APIs
+
+- `watcher.get_settings` - Retrieve settings for the watcher system index.
+- `watcher.update_settings` - Update settings for the watcher system index.
+
+[discrete]
+===== New Experimental APIs
+
+- `indices.delete_data_lifecycle`- Deletes the data lifecycle of the selected data streams
+- `indices.explain_data_lifecycle` - Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
+- `indices.get_data_lifecycle` - Returns the data lifecycle of the selected data streams.
+- `indices.put_data_lifecycle` - Updates the data lifecycle of the selected data streams.
+- `search_application.delete` - Deletes a search application.
+- `search_application.delete_behavioral_analytics` - Delete a behavioral analytics collection.
+- `search_application.get` - Returns the details about a search application.
+- `search_application.get_behavioral_analytics` - Returns the existing behavioral analytics collections.
+- `search_application.list` - Returns the existing search applications.
+- `search_application.post_behavioral_analytics_event` - Creates a behavioral analytics event for existing collection.
+- `search_application.put` - Creates or updates a search application.
+- `search_application.put_behavioral_analytics` - Creates a behavioral analytics collection.
+- `search_application.search` - Perform a search against a search application.
+
+[discrete]
+===== API Changes
+
+- `clear_scroll` now works with the argument `ignore: 404`. https://github.com/elastic/elasticsearch-ruby/issues/2067[Issue on GitHub].
+- The code generator was updated to fix a bug for `ignore: 404`. APIs that were supposed to support this wouldn't parse the parameters correctly. The support it now: `security.get_role`, `watcher.delete_watch`
+- `cluster.get_component_template`, `indices.get_data_stream`, `indices.get_index_template`, `indices.simulate_index_template`, `indices.simulate_template` - Add `include_defaults` (Boolean) parameter: Return all default configurations for the component template (default: false).
+- `machine_learning.put_trained_model` - Adds `wait_for_completion` (Boolean) parameter: Whether to wait for all child operations(e.g. model download) to complete, before returning or not (default: false).
+- `machine_learning.start_trained_model_deployment` - Adds `deployiment_id` (String) parameter: The Id of the new deployment. Defaults to the model_id if not set.
+- `search` - Adds `include_named_queries_score` (Boolean) parameter: Indicates whether hit.matched_queries should be rendered as a map that includes the name of the matched query associated with its score (true) or as an array containing the name of the matched queries (false).
+- `transform.delete_transform` - Adds `delete_dest_index` (Boolean) parameter: When `true`, the destination index is deleted together with the transform. The default value is `false`, meaning that the destination index will not be deleted.
