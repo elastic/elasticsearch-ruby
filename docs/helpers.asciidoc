@@ -74,6 +74,44 @@ documents = [
 helper.update(documents)
 ----
 
+[discrete]
+==== Ingest a JSON file
+
+`BulkHelper` also provides a helper to ingest data straight from a JSON file. You can pass in a file path, and th helper will parse and ingest the documents in the file:
+
+[source,ruby]
+----
+file_path = './data.json'
+helper.ingest_json(file_path)
+----
+
+In cases where the array of data you want to ingest is not necessarily in the root of the JSON file, you can pass in the keys to access the data, for example given the following JSON file:
+
+[source,json]
+----
+{
+  "field": "value",
+  "status": 200,
+  "data": {
+    "items": [
+      {
+        "name": "Item 1",
+        (...)
+      },
+      {
+      (...)
+    ]
+  }
+}
+----
+
+You would write the following Ruby code to ingest it:
+
+[source,ruby]
+----
+bulk_helper.ingest_json(file_path, { keys: ['data', 'items'] })
+----
+
 === Scroll Helper
 
 This helper provides an easy way to get results from a Scroll.
