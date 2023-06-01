@@ -52,3 +52,15 @@
 -
   :file: 'transform/transforms_upgrade.yml'
   :description: 'Test upgrade transform'
+
+# Migrated to manual integration test:
+-
+  :file: 'api_key/10_basic.yml'
+  :description: 'Test get api key'
+
+-
+  :file: 'api_key/11_invalidation.yml'
+  :description: '*'
+
+- :file: 'health/10_usage.yml'
+  :description: 'Usage stats on the health API'
