@@ -34,13 +34,14 @@ namespace :test do
   desc 'Run unit tests'
   task unit: :spec
   RSpec::Core::RakeTask.new(:spec) do |t|
-    t.exclude_pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
+    t.pattern = 'spec/elasticsearch/api/**/*_spec.rb'
+    t.exclude_pattern = 'spec/platinum/**/*_spec.rb'
   end
 
   desc 'Run Rest API Spec tests'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
     test_dir = Rake.application.original_dir
-    t.pattern = "#{test_dir}/spec/elasticsearch/api/rest_api_yaml_spec.rb"
+    t.pattern = "#{test_dir}/spec/rest_api/rest_api_yaml_spec.rb"
   end
 
   desc 'Run integration tests'
