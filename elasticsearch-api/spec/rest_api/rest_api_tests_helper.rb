@@ -14,7 +14,6 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/test_file"
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/rspec_matchers"
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/wipe_cluster"
@@ -29,11 +28,11 @@ password = ENV['ELASTIC_PASSWORD'] || 'changeme'
 uri = URI.parse(host)
 
 if test_suite == 'platinum'
-  raw_certificate = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.crt'))
+  raw_certificate = File.read(File.join(PROJECT_PATH, '../../.ci/certs/testnode.crt'))
   certificate = OpenSSL::X509::Certificate.new(raw_certificate)
-  raw_key = File.read(File.join(PROJECT_PATH, '../.ci/certs/testnode.key'))
+  raw_key = File.read(File.join(PROJECT_PATH, '../../.ci/certs/testnode.key'))
   key = OpenSSL::PKey::RSA.new(raw_key)
-  ca_file = File.expand_path(File.join(PROJECT_PATH, '/.ci/certs/ca.crt'))
+  ca_file = File.expand_path(File.join(PROJECT_PATH, './../../.ci/certs/ca.crt'))
   host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
   transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
 else
@@ -60,16 +59,16 @@ end
 
 Elasticsearch::RestAPIYAMLTests::WipeCluster.create_xpack_rest_user(ADMIN_CLIENT) if test_suite == 'platinum'
 
-YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}".freeze
+YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../../tmp/rest-api-spec/test/#{test_suite}".freeze
 
 SINGLE_TEST = if ENV['SINGLE_TEST'] && !ENV['SINGLE_TEST'].empty?
                 test_target = ENV['SINGLE_TEST']
 
                 if test_target.match?(/\.yml$/)
-                  ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}/#{test_target}"]
+                  ["#{PROJECT_PATH}/../../tmp/rest-api-spec/test/#{test_suite}/#{test_target}"]
                 else
                   Dir.glob(
-                    ["#{PROJECT_PATH}/../tmp/rest-api-spec/test/#{test_suite}/#{test_target}/*.yml"]
+                    ["#{PROJECT_PATH}/../../tmp/rest-api-spec/test/#{test_suite}/#{test_target}/*.yml"]
                   )
                 end
               end

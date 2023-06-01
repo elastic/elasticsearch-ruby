@@ -16,7 +16,7 @@
 # under the License.
 
 require 'spec_helper'
-require 'rest_api_tests_helper'
+require_relative 'rest_api_tests_helper'
 require_relative './run_rspec_matchers'
 
 LOGGER = Logger.new($stdout)
