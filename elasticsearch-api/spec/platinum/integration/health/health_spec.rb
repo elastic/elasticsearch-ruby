@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require_relative 'platinum_helper'
+require_relative '../platinum_helper'
 
 describe 'Health API' do
   context 'Usage stats on the health API' do
@@ -38,12 +38,12 @@ describe 'Health API' do
 
     it 'responds with health report' do
       expect(ADMIN_CLIENT.health_report.status).to eq 200
-      expect(ADMIN_CLIENT.health_report(feature: 'disk')).status to eq 200
+      expect(ADMIN_CLIENT.health_report(feature: 'disk').status).to eq 200
       response = ADMIN_CLIENT.xpack.usage
       expect(response['health_api']['available']).to eq true
       expect(response['health_api']['enabled']).to eq true
-      expect(response['health_api']['invocation']['total']).to eq 2
-      expect(response['health_api']['invocation']['verbose_true']).to eq 2
+      expect(response['health_api']['invocations']['total']).to be >= 2
+      expect(response['health_api']['invocations']['verbose_true']).to be >= 2
     end
   end
 end

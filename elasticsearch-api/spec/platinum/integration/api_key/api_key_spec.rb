@@ -16,7 +16,7 @@
 # under the License.
 
 require 'base64'
-require_relative 'platinum_helper'
+require_relative '../platinum_helper'
 
 describe 'API keys API' do
   before do
