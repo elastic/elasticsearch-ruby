@@ -20,11 +20,10 @@ require 'json'
 
 task(:default) { system 'rake --tasks' }
 task test: 'test:unit'
-
-# ----- Test tasks ------------------------------------------------------------
-
 require 'rake/testtask'
 require 'rspec/core/rake_task'
+
+# Test Tasks
 
 namespace :test do
   desc 'Wait for Elasticsearch to be in a green state'
@@ -32,12 +31,27 @@ namespace :test do
     sh '../scripts/wait-cluster.sh'
   end
 
-  # Unit tests - rake test:unit
-  #
   desc 'Run unit tests'
   task unit: :spec
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.exclude_pattern = 'spec/elasticsearch/api/rest_api_yaml_spec.rb'
+  end
+
+  desc 'Run Rest API Spec tests'
+  RSpec::Core::RakeTask.new(:rest_api) do |t|
+    test_dir = Rake.application.original_dir
+    t.pattern = "#{test_dir}/spec/elasticsearch/api/rest_api_yaml_spec.rb"
+  end
+
+  desc 'Run integration tests'
+  task :integration do
+    Rake::Task['test:platinum:integration'].invoke
+  end
+
+  desc 'Run unit and integration tests'
+  task :all do
+    Rake::Task['test:unit'].invoke
+    Rake::Task['test:integration'].invoke
   end
 
   namespace :platinum do
@@ -49,39 +63,30 @@ namespace :test do
 
     desc 'Run Platinum Unit tests - DEPRECATED: Will be migrated to RSpec'
     Rake::TestTask.new(:unit) do |test|
-      test.libs << 'spec/unit_tests_platinum'
-      test.test_files = FileList['spec/unit_tests_platinum/unit/**/*_test.rb']
+      test.libs << 'spec/platinum/unit'
+      test.test_files = FileList['spec/platinum/unit/**/*_test.rb']
       test.verbose = false
       test.warning = false
     end
-  end
 
-  desc 'Run Rest API Spec tests'
-  RSpec::Core::RakeTask.new(:rest_api) do |t|
-    test_dir = Rake.application.original_dir
-    t.pattern = "#{test_dir}/spec/elasticsearch/api/rest_api_yaml_spec.rb"
-  end
+    desc 'Run Platinum Integration Specs'
+    RSpec::Core::RakeTask.new(:integration) do |t|
+      return unless ENV['TEST_SUITE'] == 'platinum'
 
-  desc 'Run integration tests'
-  task :integration do
-    Rake::Task['test:rest_api'].invoke
-  end
-
-  desc 'Run unit and integration tests'
-  task :all do
-    Rake::Task['test:unit'].invoke
-    Rake::Task['test:integration'].invoke
+      t.pattern = 'spec/platinum/integration/**/*_spec.rb'
+      t.ruby_opts = '-W0'
+    end
   end
 end
 
-# ----- Documentation tasks ---------------------------------------------------
+# Documentation tasks
 
 require 'yard'
 YARD::Rake::YardocTask.new(:doc) do |t|
   t.options = %w| --embed-mixins --markup=markdown |
 end
 
-# ----- Code analysis tasks ---------------------------------------------------
+# Code analysis tasks
 
 require 'cane/rake_task'
 Cane::RakeTask.new(:quality) do |cane|
