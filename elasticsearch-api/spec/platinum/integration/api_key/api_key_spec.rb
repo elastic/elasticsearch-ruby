@@ -18,7 +18,7 @@
 require 'base64'
 require_relative '../platinum_helper'
 
-describe 'API keys API' do
+describe 'API keys' do
   before do
     ADMIN_CLIENT.security.put_role(
       name: 'admin_role',
@@ -74,18 +74,69 @@ describe 'API keys API' do
 
   let(:client) do
     Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
       user: 'api_key_user',
       password: 'x-pack-test-password',
       transport_options: TRANSPORT_OPTIONS
     )
   end
 
-  describe 'Create API Key' do
-    it 'creates api key' do
+  it 'creates api key' do
+    response = client.security.create_api_key(
+      body: {
+        name: "my-api-key",
+        expiration: "1d",
+        role_descriptors: {
+          'role-a' => {
+            cluster: ["all"],
+            index: [
+              {
+                names: ["index-a"],
+                privileges: ["read"]
+              }
+            ]
+          },
+          'role-b' => {
+            cluster: ["manage"],
+            index: [
+              {
+                names: ["index-b"],
+                privileges: ["all"]
+              }
+            ]
+          }
+        }
+      }
+    )
+    expect(response['name']).to eq 'my-api-key'
+    id = response['id']
+    expect(id).not_to be nil
+    expect(response['api_key']).not_to be nil
+    expect(response['expiration']).not_to be nil
+    credentials = Base64.strict_encode64("#{response['id']}:#{response['api_key']}")
+    expect(credentials).to eq response['encoded']
+    new_client = Elasticsearch::Client.new(
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
+      transport_options: TRANSPORT_OPTIONS
+    )
+    response = new_client.security.authenticate(headers: { authorization: "ApiKey #{credentials}" })
+    expect(response['username']).to eq 'api_key_user'
+    expect(response['roles'].length).to eq 0
+    expect(response['authentication_realm']['name']).to eq '_es_api_key'
+    expect(response['authentication_realm']['type']).to eq '_es_api_key'
+    expect(response['api_key']['id']).to eq id
+    expect(response['api_key']['name']).to eq 'my-api-key'
+    response = ADMIN_CLIENT.security.clear_api_key_cache(ids: id)
+    expect(response['_nodes']['failed']).to eq 0
+  end
+
+  context 'Test get api key' do
+    let(:name) { 'my-api-key-2'}
+
+    it 'gets api key' do
       response = client.security.create_api_key(
         body: {
-          name: "my-api-key",
+          name: name,
           expiration: "1d",
           role_descriptors: {
             'role-a' => {
@@ -109,73 +160,20 @@ describe 'API keys API' do
           }
         }
       )
-      expect(response['name']).to eq 'my-api-key'
+      expect(response['name']).to eq name
       id = response['id']
       expect(id).not_to be nil
       expect(response['api_key']).not_to be nil
       expect(response['expiration']).not_to be nil
-      credentials = Base64.strict_encode64("#{response['id']}:#{response['api_key']}")
-      expect(credentials).to eq response['encoded']
-      new_client = Elasticsearch::Client.new(
-        host: 'https://localhost:9200',
-        transport_options: TRANSPORT_OPTIONS
-      )
-      response = new_client.security.authenticate(headers: { authorization: "ApiKey #{credentials}" })
-      expect(response['username']).to eq 'api_key_user'
-      expect(response['roles'].length).to eq 0
-      expect(response['authentication_realm']['name']).to eq '_es_api_key'
-      expect(response['authentication_realm']['type']).to eq '_es_api_key'
-      expect(response['api_key']['id']).to eq id
-      expect(response['api_key']['name']).to eq 'my-api-key'
-      response = ADMIN_CLIENT.security.clear_api_key_cache(ids: id)
-      expect(response['_nodes']['failed']).to eq 0
-    end
 
-    context 'Test get api key' do
-      let(:name) { 'my-api-key-2'}
-
-      it 'gets api key' do
-        response = client.security.create_api_key(
-          body: {
-            name: name,
-            expiration: "1d",
-            role_descriptors: {
-              'role-a' => {
-                cluster: ["all"],
-                index: [
-                  {
-                    names: ["index-a"],
-                    privileges: ["read"]
-                  }
-                ]
-              },
-              'role-b' => {
-                cluster: ["manage"],
-                index: [
-                  {
-                    names: ["index-b"],
-                    privileges: ["all"]
-                  }
-                ]
-              }
-            }
-          }
-        )
-        expect(response['name']).to eq name
-        id = response['id']
-        expect(id).not_to be nil
-        expect(response['api_key']).not_to be nil
-        expect(response['expiration']).not_to be nil
-
-        response = client.security.get_api_key(id: id)
-        expect(response['api_keys'].first['id']).to eq id
-        expect(response['api_keys'].first['name']).to eq name
-        expect(response['api_keys'].first['username']).to eq 'api_key_user'
-        expect(response['api_keys'].first['invalidated']).to eq false
-        expect(response['api_keys'].first['creation']).not_to be nil
-        response = client.security.get_api_key(owner: true)
-        expect(response['api_keys'].length).to be > 0
-      end
+      response = client.security.get_api_key(id: id)
+      expect(response['api_keys'].first['id']).to eq id
+      expect(response['api_keys'].first['name']).to eq name
+      expect(response['api_keys'].first['username']).to eq 'api_key_user'
+      expect(response['api_keys'].first['invalidated']).to eq false
+      expect(response['api_keys'].first['creation']).not_to be nil
+      response = client.security.get_api_key(owner: true)
+      expect(response['api_keys'].length).to be > 0
     end
   end
 end

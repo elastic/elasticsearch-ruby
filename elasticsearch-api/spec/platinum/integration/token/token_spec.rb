@@ -48,7 +48,7 @@ describe 'Token API' do
     expect(response['access_token']).not_to be_nil
     access_token = response['access_token']
     client = Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
       transport_options: TRANSPORT_OPTIONS.merge(
         headers: { Authorization: "Bearer #{access_token}" }
       )
@@ -75,7 +75,7 @@ describe 'Token API' do
     expect(response['access_token']).not_to be_nil
     access_token = response['access_token']
     client = Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
       transport_options: TRANSPORT_OPTIONS.merge(
         headers: { Authorization: "Bearer #{access_token}" }
       )

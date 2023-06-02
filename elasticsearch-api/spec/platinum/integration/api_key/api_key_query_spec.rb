@@ -17,7 +17,7 @@
 
 require_relative '../platinum_helper'
 
-describe 'API keys API' do
+describe 'API keys' do
   before do
     ADMIN_CLIENT.security.put_role(
       name: 'admin_role',
@@ -65,7 +65,7 @@ describe 'API keys API' do
 
   def client(headers)
     Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
       transport_options: TRANSPORT_OPTIONS.merge(headers: headers)
     )
   end
@@ -80,72 +80,70 @@ describe 'API keys API' do
     { Authorization: "Basic YXBpX2tleV91c2VyXzI6eC1wYWNrLXRlc3QtcGFzc3dvcmQ=" }
   end
 
-  describe 'Query API Key' do
-    it 'queries api key' do
-      # api_key_manager authorization:
-      client = client(manager_auth)
-      response = client.security.create_api_key(
-        body: {
-          name: 'manager-api-key',
-          expiration: '10d',
-          metadata: {
-            letter: 'a',
-            number: 42
-          }
+  it 'queries api key' do
+    # api_key_manager authorization:
+    client = client(manager_auth)
+    response = client.security.create_api_key(
+      body: {
+        name: 'manager-api-key',
+        expiration: '10d',
+        metadata: {
+          letter: 'a',
+          number: 42
         }
-      )
-      expect(response.status).to eq 200
-      manager_key_id = response['id']
+      }
+    )
+    expect(response.status).to eq 200
+    manager_key_id = response['id']
 
-      # api_key_user1 authorization:
-      client = client(user1_auth)
-      response = client.security.create_api_key(
-        body: {
-          name: 'user1-api-key',
-          expiration: '1d',
-          metadata: {
-            letter: 'a',
-            number: 1
-          }
+    # api_key_user1 authorization:
+    client = client(user1_auth)
+    response = client.security.create_api_key(
+      body: {
+        name: 'user1-api-key',
+        expiration: '1d',
+        metadata: {
+          letter: 'a',
+          number: 1
         }
-      )
-      expect(response.status).to eq 200
-      user1_key_id = response['id']
+      }
+    )
+    expect(response.status).to eq 200
+    user1_key_id = response['id']
 
-      # api_key_user2 authorization
-      client = client(user2_auth)
-      response = client.security.create_api_key(
-        body: {
-          name: 'user2-api-key',
-          expiration: '1d',
-          metadata: {
-            letter: 'b',
-            number: 42
-          }
+    # api_key_user2 authorization
+    client = client(user2_auth)
+    response = client.security.create_api_key(
+      body: {
+        name: 'user2-api-key',
+        expiration: '1d',
+        metadata: {
+          letter: 'b',
+          number: 42
         }
-      )
-      expect(response.status).to eq 200
-      user1_key_id = response['id']
+      }
+    )
+    expect(response.status).to eq 200
+    user1_key_id = response['id']
 
-      client = client(manager_auth)
-      response = client.security.query_api_keys
-      expect(response.status).to eq 200
-      manager_total = response['total']
-      expect(manager_total).to be >= 3
+    client = client(manager_auth)
+    response = client.security.query_api_keys
+    expect(response.status).to eq 200
+    manager_total = response['total']
+    expect(manager_total).to be >= 3
 
-      client = client(user1_auth)
-      response = client.security.query_api_keys
-      expect(response.status).to eq 200
-      user_1_total = response['total']
-      expect(user_1_total).to be >= 1
-      expect(user_1_total).to be < manager_total
+    client = client(user1_auth)
+    response = client.security.query_api_keys
+    expect(response.status).to eq 200
+    user_1_total = response['total']
+    expect(user_1_total).to be >= 1
+    expect(user_1_total).to be < manager_total
 
-      client = client(user2_auth)
-      response = client.security.query_api_keys
-      expect(response.status).to eq 200
-      user_2_total = response['total']
-      expect(user_2_total).to be >= 1
-      expect(user_2_total).to be < manager_total
-    end
+    client = client(user2_auth)
+    response = client.security.query_api_keys
+    expect(response.status).to eq 200
+    user_2_total = response['total']
+    expect(user_2_total).to be >= 1
+    expect(user_2_total).to be < manager_total
   end
 end

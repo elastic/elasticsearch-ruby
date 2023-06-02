@@ -49,94 +49,92 @@ describe 'API keys API' do
 
   let(:client) do
     Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
       transport_options: TRANSPORT_OPTIONS.merge(
         headers: { Authorization: "Basic YXBpX2tleV91c2VyXzE6eC1wYWNrLXRlc3QtcGFzc3dvcmQ=" }
       )
     )
   end
 
-  describe 'Update API Key' do
-    it 'updates api key' do
-      response = client.security.create_api_key(
-        body: {
-          name: 'user1-api-key',
-          role_descriptors: {
-            "role-a" => {
-              cluster: ["none"],
-              index: [
-                {
-                  names: ["index-a"],
-                  privileges: ["read"]
-                }
-              ]
-            }
+  it 'updates api key' do
+    response = client.security.create_api_key(
+      body: {
+        name: 'user1-api-key',
+        role_descriptors: {
+          "role-a" => {
+            cluster: ["none"],
+            index: [
+              {
+                names: ["index-a"],
+                privileges: ["read"]
+              }
+            ]
           }
         }
-      )
-      expect(response.status).to eq 200
-      expect(response['name']).to eq 'user1-api-key'
-      id = response['id']
-      expect(id).not_to be nil
-      expect(response['api_key']).not_to be nil
-      credentials = Base64.strict_encode64("#{response['id']}:#{response['api_key']}")
-      expect(credentials).to eq response['encoded']
-
-      new_client = Elasticsearch::Client.new(
-        host: 'https://localhost:9200',
-        transport_options: TRANSPORT_OPTIONS
-      )
-      privileges_body = {
-        cluster: ['manage_own_api_key'],
-        index: [
-          {
-            names: ['index-a'],
-            privileges: ['write']
-          },
-          {
-            names: ['index-b'],
-            privileges: ['read']
-          }
-        ]
       }
-      response = new_client.security.has_privileges(
-        headers: { authorization: "ApiKey #{credentials}" },
-        body: privileges_body
-      )
-      expect(response['has_all_requested']).to eq false
+    )
+    expect(response.status).to eq 200
+    expect(response['name']).to eq 'user1-api-key'
+    id = response['id']
+    expect(id).not_to be nil
+    expect(response['api_key']).not_to be nil
+    credentials = Base64.strict_encode64("#{response['id']}:#{response['api_key']}")
+    expect(credentials).to eq response['encoded']
 
-      response = client.security.update_api_key(
-        id: id,
-        body: {
-          role_descriptors: {
-            "role-a" => {
-              cluster: ["all"],
-              index: [
-                {
-                  names: ["index-a"],
-                  privileges: ["write"]
-                },
-                {
-                  names: ["index-b"],
-                  privileges: ["read"]
-                }
-              ]
-            }
-          },
-          metadata: {
-            letter: "a",
-            number: 42
-          }
+    new_client = Elasticsearch::Client.new(
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
+      transport_options: TRANSPORT_OPTIONS
+    )
+    privileges_body = {
+      cluster: ['manage_own_api_key'],
+      index: [
+        {
+          names: ['index-a'],
+          privileges: ['write']
+        },
+        {
+          names: ['index-b'],
+          privileges: ['read']
         }
-      )
-      expect(response['updated']).to eq true
+      ]
+    }
+    response = new_client.security.has_privileges(
+      headers: { authorization: "ApiKey #{credentials}" },
+      body: privileges_body
+    )
+    expect(response['has_all_requested']).to eq false
 
-      response = new_client.security.has_privileges(
-        headers: { authorization: "ApiKey #{credentials}" },
-        user: nil,
-        body: privileges_body
-      )
-      expect(response['has_all_requested']).to eq true
-    end
+    response = client.security.update_api_key(
+      id: id,
+      body: {
+        role_descriptors: {
+          "role-a" => {
+            cluster: ["all"],
+            index: [
+              {
+                names: ["index-a"],
+                privileges: ["write"]
+              },
+              {
+                names: ["index-b"],
+                privileges: ["read"]
+              }
+            ]
+          }
+        },
+        metadata: {
+          letter: "a",
+          number: 42
+        }
+      }
+    )
+    expect(response['updated']).to eq true
+
+    response = new_client.security.has_privileges(
+      headers: { authorization: "ApiKey #{credentials}" },
+      user: nil,
+      body: privileges_body
+    )
+    expect(response['has_all_requested']).to eq true
   end
 end
