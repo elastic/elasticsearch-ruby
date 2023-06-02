@@ -44,11 +44,6 @@ namespace :test do
     t.pattern = "#{test_dir}/spec/rest_api/rest_api_yaml_spec.rb"
   end
 
-  desc 'Run integration tests'
-  task :integration do
-    Rake::Task['test:platinum:integration'].invoke
-  end
-
   desc 'Run unit and integration tests'
   task :all do
     Rake::Task['test:unit'].invoke
@@ -72,7 +67,7 @@ namespace :test do
 
     desc 'Run Platinum Integration Specs'
     RSpec::Core::RakeTask.new(:integration) do |t|
-      return unless ENV['TEST_SUITE'] == 'platinum'
+      exit(0) unless ENV['TEST_SUITE'] == 'platinum'
 
       t.pattern = 'spec/platinum/integration/**/*_spec.rb'
       t.ruby_opts = '-W0'

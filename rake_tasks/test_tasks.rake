@@ -61,6 +61,14 @@ namespace :test do
     puts "\n"
   end
 
+  namespace :platinum do
+    desc 'Run platinum integration tests'
+    task :integration do
+      sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:platinum:integration"
+      puts "\n"
+    end
+  end
+
   # Returns: version_number, build_hash
   def cluster_info
     require 'elasticsearch'
