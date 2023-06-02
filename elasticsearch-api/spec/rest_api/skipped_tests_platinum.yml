@@ -46,3 +46,33 @@
 -
   :file: 'health/10_usage.yml'
   :description: 'Usage stats on the health API'
+
+# Skipping due to testing conditions:
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test put model alias on pytorch model'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test update model alias on pytorch model to undeployed model'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test cannot start 2 deployments with the same Id'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test cannot create model with a deployment Id'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test clear deployment cache'
+
+-
+  :file: 'searchable_snapshots/20_synthetic_source.yml'
+  :description: 'Tests searchable snapshots usage stats'
+-
+  :file: 'snapshot/20_operator_privileges_disabled.yml'
+  :description: '*'
+-
+  :file: 'token/11_invalidation.yml'
+  :description: 'Test invalidate access token return statuses'
+-
+  :file: 'token/11_invalidation.yml'
+  :description: 'Test invalidate refresh token return statuses'
