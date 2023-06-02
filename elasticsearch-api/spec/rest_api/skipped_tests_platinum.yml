@@ -33,6 +33,10 @@
 -
   :file: 'api_key/20_query.yml'
   :description: '*'
+-
+  :file: 'api_key/30_update.yml'
+  :description: '*'
 
-- :file: 'health/10_usage.yml'
+-
+  :file: 'health/10_usage.yml'
   :description: 'Usage stats on the health API'
