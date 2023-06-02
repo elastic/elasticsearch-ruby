@@ -54,7 +54,11 @@
 -
   :file: 'token/10_basic.yml'
   :description: "Test invalidate user's tokens"
-# Skipping due to testing conditions:
+-
+  :file: 'token/10_basic.yml'
+  :description: "Test invalidate realm's tokens"
+
+ # Skipping due to testing conditions:
 -
   :file: 'ml/3rd_party_deployment.yml'
   :description: 'Test put model alias on pytorch model'

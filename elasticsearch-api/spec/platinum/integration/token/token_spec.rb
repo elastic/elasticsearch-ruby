@@ -65,4 +65,30 @@ describe 'Token API' do
       client.security.authenticate
     end.to raise_error(Elastic::Transport::Transport::Errors::Unauthorized)
   end
+
+  it 'invalidates realm token' do
+    response = ADMIN_CLIENT.security.get_token(
+      body: { grant_type: "password", username: "token_user", password: "x-pack-test-password" }
+    )
+    expect(response.status).to eq 200
+    expect(response['type']).to eq 'Bearer'
+    expect(response['access_token']).not_to be_nil
+    access_token = response['access_token']
+    client = Elasticsearch::Client.new(
+      host: 'https://localhost:9200',
+      transport_options: TRANSPORT_OPTIONS.merge(
+        headers: { Authorization: "Bearer #{access_token}" }
+      )
+    )
+    response = client.security.authenticate
+    expect(response.status).to eq 200
+    expect(response['username']).to eq 'token_user'
+    expect(response['roles'].first).to eq 'admin_role'
+    response = ADMIN_CLIENT.security.invalidate_token(body: { realm_name: 'default_native' })
+    expect(response.status).to eq 200
+
+    expect do
+      client.security.authenticate
+    end.to raise_error(Elastic::Transport::Transport::Errors::Unauthorized)
+  end
 end
