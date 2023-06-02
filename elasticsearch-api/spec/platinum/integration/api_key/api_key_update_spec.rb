@@ -140,4 +140,3 @@ describe 'API keys API' do
     end
   end
 end
-

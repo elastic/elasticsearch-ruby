@@ -36,6 +36,12 @@
 -
   :file: 'api_key/30_update.yml'
   :description: '*'
+-
+  :file: 'api_key/40_view_role_descriptors.yml'
+  :description: '*'
+-
+  :file: 'api_key/50_cross_cluster.yml'
+  :description: '*'
 
 -
   :file: 'health/10_usage.yml'
