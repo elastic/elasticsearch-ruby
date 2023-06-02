@@ -19,15 +19,17 @@ require 'base64'
 require_relative '../platinum_helper'
 
 describe 'API keys API' do
+  let(:user) { 'admin_user' }
+  let(:password) { 'x-pack-test-password' }
   before do
     ADMIN_CLIENT.security.put_role(
       name: 'admin_role',
       body: { cluster: ['manage_security'] }
     )
     ADMIN_CLIENT.security.put_user(
-      username: 'admin_user',
+      username: user,
       body: {
-        password: 'x-pack-test-password',
+        password: password,
         roles: [ 'admin_role' ],
         full_name: 'Admin user'
       }
@@ -35,16 +37,14 @@ describe 'API keys API' do
   end
 
   after do
-    ADMIN_CLIENT.security.delete_role(name: "admin_role", ignore: 404)
-    ADMIN_CLIENT.security.delete_user(username: "admin_user", ignore: 404)
+    ADMIN_CLIENT.security.delete_role(name: 'admin_role', ignore: 404)
+    ADMIN_CLIENT.security.delete_user(username: user, ignore: 404)
   end
 
   let(:client) do
     Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
-      transport_options: TRANSPORT_OPTIONS.merge(
-        headers: { Authorization: "Basic YWRtaW5fdXNlcjp4LXBhY2stdGVzdC1wYXNzd29yZA==" } # admin_user
-      )
+      host: "https://admin_user:x-pack-test-password@#{HOST_URI.host}:#{HOST_URI.port}",
+      transport_options: TRANSPORT_OPTIONS
     )
   end
 
@@ -90,11 +90,11 @@ describe 'API keys API' do
       expect(credentials).to eq response['encoded']
 
       new_client = Elasticsearch::Client.new(
-        host: 'https://localhost:9200',
+        host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
         transport_options: TRANSPORT_OPTIONS
       )
       expect do
-        new_client.security.authenticate
+        new_client.security.authenticate(headers: { authorization: "ApiKey #{credentials}" })
       end.to raise_error(Elastic::Transport::Transport::Errors::Unauthorized)
 
       response = client.security.get_api_key(id: id, with_limited_by: true)
