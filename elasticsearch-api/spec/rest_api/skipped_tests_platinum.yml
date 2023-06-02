@@ -47,6 +47,10 @@
   :file: 'health/10_usage.yml'
   :description: 'Usage stats on the health API'
 
+-
+  :file: 'snapshot/10_basic.yml'
+  :description: 'Create a source only snapshot and then restore it'
+
 # Skipping due to testing conditions:
 -
   :file: 'ml/3rd_party_deployment.yml'
@@ -70,6 +74,7 @@
 -
   :file: 'snapshot/20_operator_privileges_disabled.yml'
   :description: '*'
+
 -
   :file: 'token/11_invalidation.yml'
   :description: 'Test invalidate access token return statuses'
