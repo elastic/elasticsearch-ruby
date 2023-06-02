@@ -27,9 +27,11 @@
 -
   :file: 'api_key/10_basic.yml'
   :description: 'Test get api key'
-
 -
   :file: 'api_key/11_invalidation.yml'
+  :description: '*'
+-
+  :file: 'api_key/20_query.yml'
   :description: '*'
 
 - :file: 'health/10_usage.yml'
