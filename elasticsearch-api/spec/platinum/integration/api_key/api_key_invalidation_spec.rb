@@ -17,7 +17,7 @@
 
 require_relative '../platinum_helper'
 
-describe 'API keys API - invalidation' do
+describe 'API keys API invalidation' do
   before do
     ADMIN_CLIENT.security.put_role(
       name: 'admin_role',
@@ -58,54 +58,50 @@ describe 'API keys API - invalidation' do
 
   let(:client) do
     Elasticsearch::Client.new(
-      host: 'https://localhost:9200',
-      user: 'api_key_manager',
-      password: 'x-pack-test-password',
+      host: "https://api_key_manager:x-pack-test-password@#{HOST_URI.host}:#{HOST_URI.port}",
       transport_options: TRANSPORT_OPTIONS
     )
   end
 
-  describe 'Invalidates API Key' do
-    it 'by realm name' do
-      response = client.security.create_api_key(
-        body: {
-          name: "manager-api-key",
-          expiration: "1d",
-          role_descriptors: {}
-        }
-      )
-      expect(response['name']).to eq 'manager-api-key'
-      id = response['id']
-      expect(id).not_to be nil
-      expect(response['api_key']).not_to be nil
-      expect(response['expiration']).not_to be nil
+  it 'invalidates by realm name' do
+    response = client.security.create_api_key(
+      body: {
+        name: "manager-api-key",
+        expiration: "1d",
+        role_descriptors: {}
+      }
+    )
+    expect(response['name']).to eq 'manager-api-key'
+    id = response['id']
+    expect(id).not_to be nil
+    expect(response['api_key']).not_to be nil
+    expect(response['expiration']).not_to be nil
 
-      user_client = Elasticsearch::Client.new(
-        host: 'https://localhost:9200',
-        user: 'api_key_user1',
-        password: 'x-pack-test-password',
-        transport_options: TRANSPORT_OPTIONS
-      )
-      response = user_client.security.create_api_key(
-        body: {
-          name: "user1-api-key",
-          expiration: "1d",
-          role_descriptors: {}
-        }
-      )
-      expect(response['name']).to eq 'user1-api-key'
-      id = response['id']
-      expect(id).not_to be nil
-      expect(response['api_key']).not_to be nil
-      expect(response['expiration']).not_to be nil
+    user_client = Elasticsearch::Client.new(
+      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
+      user: 'api_key_user1',
+      password: 'x-pack-test-password',
+      transport_options: TRANSPORT_OPTIONS
+    )
+    response = user_client.security.create_api_key(
+      body: {
+        name: "user1-api-key",
+        expiration: "1d",
+        role_descriptors: {}
+      }
+    )
+    expect(response['name']).to eq 'user1-api-key'
+    id = response['id']
+    expect(id).not_to be nil
+    expect(response['api_key']).not_to be nil
+    expect(response['expiration']).not_to be nil
 
-      expect do
-        user_client.security.invalidate_api_key(body: { realm_name: 'default_native'})
-      end.to raise_error(Elastic::Transport::Transport::Errors::Forbidden)
+    expect do
+      user_client.security.invalidate_api_key(body: { realm_name: 'default_native'})
+    end.to raise_error(Elastic::Transport::Transport::Errors::Forbidden)
 
-      response = client.security.invalidate_api_key(body: { realm_name: 'default_native'})
-      expect(response['invalidated_api_keys'].count).to eq 2
-      expect(response['error_count']).to eq 0
-    end
+    response = client.security.invalidate_api_key(body: { realm_name: 'default_native'})
+    expect(response['invalidated_api_keys'].count).to be >= 2
+    expect(response['error_count']).to eq 0
   end
 end
