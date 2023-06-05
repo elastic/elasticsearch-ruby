@@ -83,7 +83,8 @@ describe 'API keys API' do
 
     new_client = Elasticsearch::Client.new(
       host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
-      transport_options: TRANSPORT_OPTIONS
+      transport_options: TRANSPORT_OPTIONS,
+      api_key: credentials
     )
     privileges_body = {
       cluster: ['manage_own_api_key'],
@@ -98,10 +99,7 @@ describe 'API keys API' do
         }
       ]
     }
-    response = new_client.security.has_privileges(
-      headers: { authorization: "ApiKey #{credentials}" },
-      body: privileges_body
-    )
+    response = new_client.security.has_privileges(body: privileges_body)
     expect(response['has_all_requested']).to eq false
 
     response = client.security.update_api_key(
@@ -130,11 +128,7 @@ describe 'API keys API' do
     )
     expect(response['updated']).to eq true
 
-    response = new_client.security.has_privileges(
-      headers: { authorization: "ApiKey #{credentials}" },
-      user: nil,
-      body: privileges_body
-    )
+    response = new_client.security.has_privileges(user: nil, body: privileges_body)
     expect(response['has_all_requested']).to eq true
   end
 end
