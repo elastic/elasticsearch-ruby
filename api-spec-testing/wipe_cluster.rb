@@ -24,7 +24,8 @@ module Elasticsearch
       PRESERVE_ILM_POLICY_IDS = [
         'ilm-history-ilm-policy', 'slm-history-ilm-policy',
         'watch-history-ilm-policy', 'ml-size-based-ilm-policy', 'logs',
-        'metrics', '.deprecation-indexing-ilm-policy'
+        'metrics', '.deprecation-indexing-ilm-policy',  '.monitoring-8-ilm-policy',
+        'behavioral_analytics-events-default_policy'
       ].freeze
 
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -168,7 +169,8 @@ module Elasticsearch
           'synthetics', 'synthetics-settings', 'synthetics-mappings',
           '.snapshot-blob-cache', '.deprecation-indexing-template',
           '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-          'security-index-template', 'data-streams-mappings'
+          'security-index-template', 'data-streams-mappings',
+          'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings'
         ].freeze
 
         def xpack_template?(template)
