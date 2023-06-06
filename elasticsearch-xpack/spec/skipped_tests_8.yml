@@ -93,3 +93,67 @@
 -
   :file: 'vectors/15_dense_vector_l1l2.yml'
   :description: 'L2 norm'
+
+# Matching error incorrectly
+-
+  :file: 'aggregate-metrics/90_tsdb_mappings.yml'
+  :description: 'aggregate_double_metric with wrong time series mappings'
+-
+  :file: 'analytics/histogram.yml'
+  :description: 'histogram with wrong time series mappings'
+
+-
+  :file: 'api_key/10_basic.yml'
+  :description: 'Test get api key'
+-
+  :file: 'api_key/11_invalidation.yml'
+  :description: 'Test invalidate api key by realm name'
+-
+  :file: 'api_key/20_query.yml'
+  :description: 'Test query api key'
+
+-
+  :file: 'data_stream/80_resolve_index_data_streams.yml'
+  :description: 'Resolve index with hidden and closed indices'
+-
+  :file: 'eql/10_basic.yml'
+  :description: 'EQL status API'
+-
+  :file: 'ml/get_trained_model_stats.yml'
+  :description: 'Test get stats given expression without matches and allow_no_match is false'
+-
+  :file: 'ml/get_trained_model_stats.yml'
+  :description: 'Test get stats given expression without matches and allow_no_match is true'
+
+-
+  :file: 'ml/get_trained_model_stats.yml'
+  :description: 'Test get stats given trained models'
+
+-
+  :file: 'ml/inference_crud.yml'
+  :description: '*'
+-
+  :file: 'ml/inference_processor.yml'
+  :description: 'Test simulate'
+
+-
+  :file: 'snapshot/10_basic.yml'
+  :description: 'Create a source only snapshot and then restore it'
+-
+  :file: 'snapshot/20_operator_privileges_disabled.yml'
+  :description: 'Operator only settings can be set and restored by non-operator user when operator privileges is disabled'
+-
+  :file: 'token/10_basic.yml'
+  :description: "Test invalidate user's tokens"
+-
+  :file: 'token/10_basic.yml'
+  :description: "Test invalidate realm's tokens"
+-
+  :file: 'token/11_invalidation.yml'
+  :description: 'Test invalidate access token return statuses'
+-
+  :file: 'token/11_invalidation.yml'
+  :description: 'Test invalidate refresh token return statuses'
+
+
+
