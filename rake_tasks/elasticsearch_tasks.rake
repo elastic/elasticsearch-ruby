@@ -41,29 +41,6 @@ namespace :elasticsearch do
     end
   end
 
-  def package_url(filename)
-    begin
-      artifacts = JSON.parse(File.read(filename))
-    rescue StandardError => e
-      STDERR.puts "[!] Couldn't read JSON file #{filename}"
-      exit 1
-    end
-
-    build_hash_artifact = artifacts['version']['builds'].select do |build|
-      build.dig('projects', 'elasticsearch', 'commit_hash') == @build_hash
-    end.first
-
-    unless build_hash_artifact
-      STDERR.puts "[!] Could not find artifact with build hash #{@build_hash}, using latest instead"
-
-      build_hash_artifact = artifacts['version']['builds'].first
-      @build_hash = artifacts['version']['builds'].first['projects']['elasticsearch']['commit_hash']
-    end
-
-    # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
-    build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k, _| k =~ /rest-resources-zip/ }.map { |_, v| v['url'] }.first
-  end
-
   def download_file!(url, filename)
     puts "Downloading #{filename} from #{url}"
     File.open(filename, "w") do |downloaded_file|
@@ -88,8 +65,7 @@ namespace :elasticsearch do
     unless (version_number = args[:version] || ENV['STACK_VERSION'])
       # Get version number and build hash of running cluster:
       version_number = cluster_info['number']
-      @build_hash = cluster_info['build_hash']
-      puts "Build hash: #{@build_hash}"
+      @build_hash = cluster_info['build_hash'] if cluster_info['build_hash']
     end
 
     # Create ./tmp if it doesn't exist
@@ -99,8 +75,24 @@ namespace :elasticsearch do
     json_url = "https://artifacts-api.elastic.co/v1/versions/#{version_number}"
     download_file!(json_url, json_filename)
 
-    # Get the package url from the json file given the build hash
-    zip_url = package_url(json_filename)
+    # Parse the downloaded JSON
+    begin
+      artifacts = JSON.parse(File.read(json_filename))
+    rescue StandardError => e
+      STDERR.puts "[!] Couldn't read JSON file #{json_filename}"
+      exit 1
+    end
+
+    # Get the build hash if it hasn't been set from a running cluster
+    @build_hash ||= artifacts['version']['builds'].first.dig('projects', 'elasticsearch', 'commit_hash')
+
+    build_hash_artifact = artifacts['version']['builds'].find do |build|
+      build.dig('projects', 'elasticsearch', 'commit_hash') == @build_hash
+    end
+    zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k, _| k =~ /rest-resources-zip/ }.map { |_, v| v['url'] }.first
+
+    # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
+    build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k, _| k =~ /rest-resources-zip/ }.map { |_, v| v['url'] }.first
 
     # Download the zip file
     filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
