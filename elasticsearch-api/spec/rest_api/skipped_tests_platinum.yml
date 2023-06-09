@@ -118,3 +118,8 @@
 -
   :file: 'token/11_invalidation.yml'
   :description: 'Test invalidate refresh token return statuses'
+
+# Implemented manually:
+-
+  :file: 'ml/get_memory_stats.yml'
+  :description: '*'
