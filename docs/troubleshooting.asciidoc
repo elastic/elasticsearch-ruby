@@ -1,0 +1,29 @@
+[[troubleshooting]]
+== Troubleshooting
+
+The client provides several options for logging that can help when things go wrong. Check out the extensive documentation on <<logging>>.
+
+If you are having trouble sending a request to Elasticsearch with the client, we suggest enabling `tracing` on the client and testing the cUrl command that appears in your terminal:
+
+[source,rb]
+----------------------------
+client = Elasticsearch::Client.new(trace: true)
+client.info
+curl -X GET -H 'x-elastic-client-meta: es=8.9.0,rb=3.2.2,t=8.2.1,fd=2.7.4,nh=0.3.2, User-Agent: elastic-t
+ransport-ruby/8.2.1 (RUBY_VERSION: 3.2.2; linux x86_64; Faraday v2.7.4), Content-Type: application/json' 'http://localhost:9200//?pretty'
+----------------------------
+
+Testing the curl command can help find out if there's a connection issue or if the issue is in the client code.
+
+[discrete]
+=== Connection
+When working with multiple hosts, you probably want to enable the `retry_on_failure` or `retry_on_status` options to perform a failed request on another node (refer to <<retry-failures>>).
+
+For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections, such as https://github.com/toland/patron[patron] or https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library (`require 'patron'`) in your code for Faraday 1.x or the adapter (`require 'faraday/patron'`) for Faraday 2.x, and it will be automatically used.
+
+[discrete]
+=== More Help
+
+If you need more help, you can hop on our https://discuss.elastic.co/[Elastic community forums] and get answers from the experts in the community, including people from Elastic.
+
+If you find a bug, have feedback or find any other issue using the client, please https://github.com/elastic/elasticsearch-ruby/issues/new/choose[submit an issue] on GitHub.
