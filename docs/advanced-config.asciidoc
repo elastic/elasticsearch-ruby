@@ -32,7 +32,7 @@ Instead of strings, you can pass host information as an array of Hashes:
 Elasticsearch::Client.new(hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ])
 ```
 
-NOTE: When specifying multiple hosts, you probably want to enable the 
+NOTE: When specifying multiple hosts, you might want to enable the
 `retry_on_failure` or `retry_on_status` options to perform a failed request on 
 another node (refer to <<retry-failures>>).
 
