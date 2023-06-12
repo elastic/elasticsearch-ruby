@@ -22,4 +22,6 @@ include::integrations.asciidoc[]
 
 include::examples.asciidoc[]
 
+include::troubleshooting.asciidoc[]
+
 include::release_notes/index.asciidoc[]
