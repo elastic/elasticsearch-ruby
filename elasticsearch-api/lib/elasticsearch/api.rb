@@ -81,7 +81,8 @@ module Elasticsearch
                 Elasticsearch::API::Watcher,
                 Elasticsearch::API::XPack,
                 Elasticsearch::API::SearchApplication,
-                Elasticsearch::API::Synonyms
+                Elasticsearch::API::Synonyms,
+                Elasticsearch::API::SynonymsSets
     end
 
     # The serializer class
