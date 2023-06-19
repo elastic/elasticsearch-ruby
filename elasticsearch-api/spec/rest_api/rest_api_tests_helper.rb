@@ -40,15 +40,27 @@ else
   transport_options = {}
 end
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
+require 'faraday/typhoeus'
+adapter = :typhoeus
+
+ADMIN_CLIENT = Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  adapter: adapter
+)
 
 DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
-                   Elasticsearch::Client.new(host: host, transport_options: transport_options)
+                   Elasticsearch::Client.new(
+                     host: host,
+                     transport_options: transport_options,
+                     adapter: adapter
+                   )
                  else
                    Elasticsearch::Client.new(
                      host: host,
                      tracer: Logger.new($stdout),
-                     transport_options: transport_options
+                     transport_options: transport_options,
+                     adapter: adapter
                    )
                  end
 
