@@ -34,7 +34,15 @@ if test_suite == 'platinum'
   key = OpenSSL::PKey::RSA.new(raw_key)
   ca_file = File.expand_path(File.join(PROJECT_PATH, '/../.buildkite/certs/ca.crt'))
   host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
-  transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
+  transport_options = {
+    ssl: {
+      verify: false,
+      verify_mode: OpenSSL::SSL::VERIFY_NONE,
+      client_cert: certificate,
+      client_key: key,
+      ca_file: ca_file
+    }
+  }
 else
   host = "http://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
   transport_options = {}
