@@ -5,7 +5,10 @@ The {es} Ruby client includes some useful helpers for a more comfortable experie
 
 === Bulk Helper
 
-This helper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into {es}.
+The Bulk API in Elasticsearch allows you to perform multiple indexing or delete operations in a single API call. This reduces overhead and can greatly increase indexing speed. The actions are specified in the request body using a newline delimited JSON (NDJSON) structure. In the Elasticsearch Ruby client, the `bulk` method supports several data structures as a parameter. You can use the Bulk API in an idiomatic way without worrying about the formatting of the payload. See <<ex-bulk>> for more information.
+
+
+The BulkHelper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into {es}.
 
 To use the BulkHelper, require it in your code:
 
