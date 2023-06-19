@@ -20,6 +20,7 @@ require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/wipe_cluster"
 include Elasticsearch::RestAPIYAMLTests
 
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
+CERTS_PATH = "#{PROJECT_PATH}/../../.buildkite/certs/"
 host = ENV['TEST_ES_SERVER'] || 'http://localhost:9200'
 raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
 
@@ -28,13 +29,20 @@ password = ENV['ELASTIC_PASSWORD'] || 'changeme'
 uri = URI.parse(host)
 
 if test_suite == 'platinum'
-  raw_certificate = File.read(File.join(PROJECT_PATH, '../../.ci/certs/testnode.crt'))
+  raw_certificate = File.read("#{CERTS_PATH}/testnode.crt")
   certificate = OpenSSL::X509::Certificate.new(raw_certificate)
-  raw_key = File.read(File.join(PROJECT_PATH, '../../.ci/certs/testnode.key'))
+  raw_key = File.read("#{CERTS_PATH}/testnode.key")
   key = OpenSSL::PKey::RSA.new(raw_key)
-  ca_file = File.expand_path(File.join(PROJECT_PATH, './../../.ci/certs/ca.crt'))
+  ca_file = File.expand_path("#{CERTS_PATH}/ca.crt")
   host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
-  transport_options = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
+  transport_options = {
+    ssl: {
+      client_cert: certificate,
+      client_key: key,
+      ca_file: ca_file,
+      verify: false
+    }
+  }
 else
   host = "http://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
   transport_options = {}
