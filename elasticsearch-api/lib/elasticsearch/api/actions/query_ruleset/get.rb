@@ -20,31 +20,31 @@
 #
 module Elasticsearch
   module API
-    module SearchApplication
+    module QueryRuleset
       module Actions
-        # Deletes a search application.
+        # Returns the details about a query ruleset.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the search application
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-search-application.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-ruleset.html
         #
-        def delete(arguments = {})
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+        def get(arguments = {})
+          raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
-          _name = arguments.delete(:name)
+          _ruleset_id = arguments.delete(:ruleset_id)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_application/search_application/#{Utils.__listify(_name)}"
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(
