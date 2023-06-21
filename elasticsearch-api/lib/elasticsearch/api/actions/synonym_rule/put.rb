@@ -20,31 +20,37 @@
 #
 module Elasticsearch
   module API
-    module SearchApplication
+    module SynonymRule
       module Actions
-        # Deletes a search application.
+        # Creates or updates a synonym rule in a synonym set
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the search application
+        # @option arguments [String] :synonyms_set The id of the synonym set to be updated with the synonym rule
+        # @option arguments [String] :synonym_rule The id of the synonym rule to be updated or created
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body Synonym rule (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-search-application.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonym-rule.html
         #
-        def delete(arguments = {})
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+        def put(arguments = {})
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]
+          raise ArgumentError, "Required argument 'synonym_rule' missing" unless arguments[:synonym_rule]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
+          _synonyms_set = arguments.delete(:synonyms_set)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_application/search_application/#{Utils.__listify(_name)}"
+          _synonym_rule = arguments.delete(:synonym_rule)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_synonyms/#{Utils.__listify(_synonyms_set)}/#{Utils.__listify(_synonym_rule)}"
           params = {}
 
           Elasticsearch::API::Response.new(
