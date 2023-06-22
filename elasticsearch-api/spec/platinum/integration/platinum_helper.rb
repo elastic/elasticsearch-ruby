@@ -34,3 +34,9 @@ TRANSPORT_OPTIONS = { ssl: { verify: false, client_cert: certificate, client_key
 HOST = "https://elastic:#{password}@#{HOST_URI.host}:#{HOST_URI.port}".freeze
 
 ADMIN_CLIENT = Elasticsearch::Client.new(host: HOST, transport_options: TRANSPORT_OPTIONS)
+
+RSpec.configure do |config|
+  config.add_formatter('documentation')
+  config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/platinum-integration.html")
+  config.color_mode = :on
+end
