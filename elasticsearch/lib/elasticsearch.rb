@@ -43,6 +43,7 @@ module Elasticsearch
     #                                                     if you're using X-Opaque-Id
     def initialize(arguments = {}, &block)
       @verified = false
+      @warned = false
       @opaque_id_prefix = arguments[:opaque_id_prefix] || nil
       api_key(arguments) if arguments[:api_key]
       if arguments[:cloud_id]
@@ -67,8 +68,11 @@ module Elasticsearch
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
           args[4] = headers.merge('X-Opaque-Id' => opaque_id)
         end
-        verify_elasticsearch unless @verified
-        @transport.perform_request(*args, &block)
+        unless @verified
+          verify_elasticsearch(*args, &block)
+        else
+          @transport.perform_request(*args, &block)
+        end
       else
         @transport.send(name, *args, &block)
       end
@@ -80,42 +84,28 @@ module Elasticsearch
 
     private
 
-    def verify_elasticsearch
+    def verify_elasticsearch(*args, &block)
       begin
-        response = elasticsearch_validation_request
+        response = @transport.perform_request(*args, &block)
       rescue Elastic::Transport::Transport::Errors::Unauthorized,
              Elastic::Transport::Transport::Errors::Forbidden,
-             Elastic::Transport::Transport::Errors::RequestEntityTooLarge
-        @verified = true
+             Elastic::Transport::Transport::Errors::RequestEntityTooLarge => e
         warn(SECURITY_PRIVILEGES_VALIDATION_WARNING)
-        return
-      rescue Elastic::Transport::Transport::Error
+        @verified = true
+        raise e
+      rescue Elastic::Transport::Transport::Error => e
+        unless @warned
+          warn(VALIDATION_WARNING)
+          @warned = true
+        end
+        raise e
+      rescue StandardError => e
         warn(VALIDATION_WARNING)
-        return
+        raise e
       end
-
-      body = if response.headers['content-type'] == 'application/yaml'
-               require 'yaml'
-               YAML.safe_load(response.body)
-             else
-               response.body
-             end
-      version = body.dig('version', 'number')
-      verify_with_version_or_header(version, response.headers)
-    rescue StandardError => e
-      warn(VALIDATION_WARNING)
-      raise e
-    end
-
-    def verify_with_version_or_header(version, headers)
-      if version.nil? ||
-         Gem::Version.new(version) < Gem::Version.new('8.0.0.pre') && version != '8.0.0-SNAPSHOT' ||
-         headers['x-elastic-product'] != 'Elasticsearch'
-
-        raise Elasticsearch::UnsupportedProductError
-      end
-
+      raise Elasticsearch::UnsupportedProductError unless response.headers['x-elastic-product'] == 'Elasticsearch'
       @verified = true
+      response
     end
 
     def setup_cloud_host(cloud_id, user, password, port)
