@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/async-search.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -47,7 +47,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_async_search/{id}"], 'async_search.get')
           )
         end
       end

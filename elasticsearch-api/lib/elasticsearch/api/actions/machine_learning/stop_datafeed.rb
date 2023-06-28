@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The URL params optionally sent in the body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-stop-datafeed.html
         #
         def stop_datafeed(arguments = {})
           raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
@@ -49,7 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/datafeeds/{datafeed_id}/_stop"],
+                            'ml.stop_datafeed')
           )
         end
       end

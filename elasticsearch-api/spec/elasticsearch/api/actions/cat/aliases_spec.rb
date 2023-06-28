@@ -25,7 +25,9 @@ describe 'client.cat#aliases' do
         '_cat/aliases',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/aliases", "/_cat/aliases/{name}"],
+        "cat.aliases"
     ]
   end
 

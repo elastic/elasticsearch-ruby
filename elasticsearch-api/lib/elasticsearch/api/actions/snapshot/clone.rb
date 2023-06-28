@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot clone definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
         #
         def clone(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -55,7 +55,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_snapshot/{repository}/{snapshot}/_clone/{target_snapshot}"], 'snapshot.clone')
           )
         end
       end

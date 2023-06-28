@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-recovery.html
         #
         def recovery(arguments = {})
           arguments = arguments.clone
@@ -56,7 +56,8 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cat/recovery", "/_cat/recovery/{index}"],
+                            'cat.recovery')
           )
         end
       end

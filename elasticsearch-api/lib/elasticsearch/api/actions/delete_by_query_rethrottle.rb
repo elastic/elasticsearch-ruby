@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-delete-by-query.html
       #
       def delete_by_query_rethrottle(arguments = {})
         raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
@@ -44,7 +44,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_delete_by_query/{task_id}/_rethrottle"],
+                          'delete_by_query_rethrottle')
         )
       end
     end

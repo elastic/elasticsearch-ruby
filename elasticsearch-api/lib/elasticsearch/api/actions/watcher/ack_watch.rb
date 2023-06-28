@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-ack-watch.html
         #
         def ack_watch(arguments = {})
           raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
@@ -51,7 +51,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_watcher/watch/{watch_id}/_ack", "/_watcher/watch/{watch_id}/_ack/{action_id}"], 'watcher.ack_watch')
           )
         end
       end

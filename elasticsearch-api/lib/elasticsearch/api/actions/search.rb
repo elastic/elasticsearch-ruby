@@ -72,7 +72,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-search.html
       #
       def search(arguments = {})
         arguments = arguments.clone
@@ -96,7 +96,7 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_search", "/{index}/_search"], 'search')
         )
       end
     end

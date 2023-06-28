@@ -25,7 +25,9 @@ describe 'client.cat#thread_pool' do
         '_cat/thread_pool',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/thread_pool", "/_cat/thread_pool/{thread_pool_patterns}"],
+        "cat.thread_pool"
     ]
   end
 

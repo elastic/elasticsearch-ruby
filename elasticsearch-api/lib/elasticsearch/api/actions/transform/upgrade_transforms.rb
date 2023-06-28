@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the upgrade
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/upgrade-transforms.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/upgrade-transforms.html
         #
         def upgrade_transforms(arguments = {})
           arguments = arguments.clone
@@ -41,7 +41,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_transform/_upgrade"],
+                            'transform.upgrade_transforms')
           )
         end
       end

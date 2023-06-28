@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Query parameters can be specified in the body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-open-job.html
         #
         def open_job(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -45,7 +45,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}/_open"],
+                            'ml.open_job')
           )
         end
       end

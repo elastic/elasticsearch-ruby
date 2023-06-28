@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the password for the elasticsearch keystore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html#reloadable-secure-settings
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/secure-settings.html#reloadable-secure-settings
         #
         def reload_secure_settings(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_nodes/reload_secure_settings", "/_nodes/{node_id}/reload_secure_settings"], 'nodes.reload_secure_settings')
           )
         end
       end

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/schedule-now-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/schedule-now-transform.html
         #
         def schedule_now_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
@@ -45,7 +45,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_transform/{transform_id}/_schedule_now"],
+                            'transform.schedule_now_transform')
           )
         end
       end

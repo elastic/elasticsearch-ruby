@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The settings for the alias, such as `routing` or `filter`
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-aliases.html
         #
         def put_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -53,7 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_alias/{name}", "/{index}/_aliases/{name}"],
+                            'indices.put_alias')
           )
         end
       end

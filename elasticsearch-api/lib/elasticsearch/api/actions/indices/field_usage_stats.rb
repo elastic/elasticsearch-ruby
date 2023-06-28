@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/field-usage-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/field-usage-stats.html
         #
         def field_usage_stats(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -52,7 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_field_usage_stats"],
+                            'indices.field_usage_stats')
           )
         end
       end

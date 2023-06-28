@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The conditions that needs to be met for executing rollover
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-rollover-index.html
         #
         def rollover(arguments = {})
           raise ArgumentError, "Required argument 'alias' missing" unless arguments[:alias]
@@ -57,7 +57,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{alias}/_rollover", "/{alias}/_rollover/{new_index}"],
+                            'indices.rollover')
           )
         end
       end

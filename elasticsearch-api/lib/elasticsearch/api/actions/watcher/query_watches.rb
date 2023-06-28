@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-query-watches.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-query-watches.html
         #
         def query_watches(arguments = {})
           arguments = arguments.clone
@@ -45,7 +45,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_watcher/_query/watches"], 'watcher.query_watches')
           )
         end
       end

@@ -39,7 +39,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-multi-termvectors.html
       #
       def mtermvectors(arguments = {})
         arguments = arguments.clone
@@ -67,7 +67,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_mtermvectors", "/{index}/_mtermvectors"],
+                          'mtermvectors')
         )
       end
     end

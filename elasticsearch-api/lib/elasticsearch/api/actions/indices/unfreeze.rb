@@ -38,7 +38,7 @@ module Elasticsearch
         # Deprecated since version 7.14.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/unfreeze-index-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/unfreeze-index-api.html
         #
         def unfreeze(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -55,7 +55,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_unfreeze"], 'indices.unfreeze')
           )
         end
       end

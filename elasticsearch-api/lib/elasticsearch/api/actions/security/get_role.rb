@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of role names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-role.html
         #
         def get_role(arguments = {})
           arguments = arguments.clone
@@ -48,12 +48,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers)
+                perform_request(method, path, params, body, headers, ["/_security/role/{name}", "/_security/role"],
+                                'security.get_role')
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers)
+              perform_request(method, path, params, body, headers, ["/_security/role/{name}", "/_security/role"],
+                              'security.get_role')
             )
           end
         end

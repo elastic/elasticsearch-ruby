@@ -25,7 +25,9 @@ describe 'client.cat#fielddata' do
         '_cat/fielddata',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
+        "cat.fielddata"
     ]
   end
 
@@ -41,7 +43,9 @@ describe 'client.cat#fielddata' do
           '_cat/fielddata/foo,bar',
           {},
           nil,
-          {}
+          {},
+          ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
+          "cat.fielddata"
       ]
     end
 

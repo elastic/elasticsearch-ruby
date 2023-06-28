@@ -25,7 +25,9 @@ describe 'client.cat#nodeattrs' do
         '_cat/nodeattrs',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/nodeattrs"],
+        "cat.nodeattrs"
     ]
   end
 

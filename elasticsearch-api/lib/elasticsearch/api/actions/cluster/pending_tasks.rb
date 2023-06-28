@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-pending.html
         #
         def pending_tasks(arguments = {})
           arguments = arguments.clone
@@ -42,7 +42,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cluster/pending_tasks"], 'cluster.pending_tasks')
           )
         end
       end

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trial-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-trial-status.html
         #
         def get_trial_status(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_license/trial_status"], 'license.get_trial_status')
           )
         end
       end

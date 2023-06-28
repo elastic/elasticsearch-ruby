@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Synonyms set rules (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonyms.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-synonyms.html
         #
         def put(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_synonyms/{synonyms_set}"], 'synonyms.put')
           )
         end
       end

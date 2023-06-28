@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-put-follow.html
         #
         def follow(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -47,7 +47,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_ccr/follow"], 'ccr.follow')
           )
         end
       end

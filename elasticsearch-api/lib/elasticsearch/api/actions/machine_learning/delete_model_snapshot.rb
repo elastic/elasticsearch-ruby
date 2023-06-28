@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :snapshot_id The ID of the snapshot to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-snapshot.html
         #
         def delete_model_snapshot(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}"], 'ml.delete_model_snapshot')
           )
         end
       end

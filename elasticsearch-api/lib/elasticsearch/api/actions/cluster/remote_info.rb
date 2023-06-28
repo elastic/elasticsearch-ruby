@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-remote-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-remote-info.html
         #
         def remote_info(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_remote/info"], 'cluster.remote_info')
           )
         end
       end

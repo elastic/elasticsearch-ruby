@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-deactivate-watch.html
         #
         def deactivate_watch(arguments = {})
           raise ArgumentError, "Required argument 'watch_id' missing" unless arguments[:watch_id]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_watcher/watch/{watch_id}/_deactivate"],
+                            'watcher.deactivate_watch')
           )
         end
       end

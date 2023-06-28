@@ -25,7 +25,9 @@ describe 'client.cat#nodes' do
         '_cat/nodes',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/nodes"],
+        "cat.nodes"
     ]
   end
 

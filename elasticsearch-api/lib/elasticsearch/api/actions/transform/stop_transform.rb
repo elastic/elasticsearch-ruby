@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_checkpoint Whether to wait for the transform to reach a checkpoint before stopping. Default to false
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-transform.html
         #
         def stop_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
@@ -49,7 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_transform/{transform_id}/_stop"],
+                            'transform.stop_transform')
           )
         end
       end

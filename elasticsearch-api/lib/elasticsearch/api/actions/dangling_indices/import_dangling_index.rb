@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-gateway-dangling-indices.html
         #
         def import_dangling_index(arguments = {})
           raise ArgumentError, "Required argument 'index_uuid' missing" unless arguments[:index_uuid]
@@ -47,7 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_dangling/{index_uuid}"],
+                            'dangling_indices.import_dangling_index')
           )
         end
       end

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-authenticate.html
         #
         def authenticate(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_security/_authenticate"], 'security.authenticate')
           )
         end
       end

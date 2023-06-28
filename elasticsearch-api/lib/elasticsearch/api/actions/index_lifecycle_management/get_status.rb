@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ilm-get-status.html
         #
         def get_status(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ilm/status"], 'ilm.get_status')
           )
         end
       end

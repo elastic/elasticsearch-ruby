@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :only_errors filters the indices included in the response to ones in an ILM error state, implies only_managed
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ilm-explain-lifecycle.html
         #
         def explain_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -46,7 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_ilm/explain"],
+                            'ilm.explain_lifecycle')
           )
         end
       end

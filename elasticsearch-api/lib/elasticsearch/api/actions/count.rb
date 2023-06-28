@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body A query to restrict the results specified with the Query DSL (optional)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-count.html
       #
       def count(arguments = {})
         arguments = arguments.clone
@@ -65,7 +65,7 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_count", "/{index}/_count"], 'count')
         )
       end
     end

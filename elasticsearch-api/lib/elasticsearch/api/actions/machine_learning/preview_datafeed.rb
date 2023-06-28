@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-preview-datafeed.html
         #
         def preview_datafeed(arguments = {})
           arguments = arguments.clone
@@ -54,7 +54,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_ml/datafeeds/{datafeed_id}/_preview", "/_ml/datafeeds/_preview"], 'ml.preview_datafeed')
           )
         end
       end

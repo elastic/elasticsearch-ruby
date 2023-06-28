@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/index.html
       #
       def ping(arguments = {})
         arguments = arguments.clone
@@ -38,7 +38,7 @@ module Elasticsearch
         params = {}
 
         begin
-          perform_request(method, path, params, body, headers).status == 200 ? true : false
+          perform_request(method, path, params, body, headers, ["/"], 'ping').status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false

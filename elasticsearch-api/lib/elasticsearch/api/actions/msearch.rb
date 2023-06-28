@@ -34,7 +34,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-multi-search.html
       #
       def msearch(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -78,7 +78,7 @@ module Elasticsearch
 
         headers.merge!("Content-Type" => "application/x-ndjson")
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, payload, headers)
+          perform_request(method, path, params, payload, headers, ["/_msearch", "/{index}/_msearch"], 'msearch')
         )
       end
     end

@@ -25,7 +25,9 @@ describe 'client.cat#recovery' do
         '_cat/recovery',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/recovery", "/_cat/recovery/{index}"],
+        "cat.recovery"
     ]
   end
 

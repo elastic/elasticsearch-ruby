@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
         #
         def delete_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -48,12 +48,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers)
+                perform_request(method, path, params, body, headers, ["/_snapshot/{repository}"],
+                                'snapshot.delete_repository')
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers)
+              perform_request(method, path, params, body, headers, ["/_snapshot/{repository}"],
+                              'snapshot.delete_repository')
             )
           end
         end

@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on data frame analytics PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-dfanalytics.html
         #
         def get_data_frame_analytics(arguments = {})
           arguments = arguments.clone
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_ml/data_frame/analytics/{id}", "/_ml/data_frame/analytics"], 'ml.get_data_frame_analytics')
           )
         end
       end

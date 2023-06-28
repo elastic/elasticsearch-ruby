@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-credentials.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-service-credentials.html
         #
         def get_service_credentials(arguments = {})
           raise ArgumentError, "Required argument 'namespace' missing" unless arguments[:namespace]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_security/service/{namespace}/{service}/credential"],
+                            'security.get_service_credentials')
           )
         end
       end

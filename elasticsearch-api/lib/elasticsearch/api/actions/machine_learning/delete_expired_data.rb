@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body deleting expired data parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-expired-data.html
         #
         def delete_expired_data(arguments = {})
           arguments = arguments.clone
@@ -49,7 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_ml/_delete_expired_data/{job_id}", "/_ml/_delete_expired_data"], 'ml.delete_expired_data')
           )
         end
       end

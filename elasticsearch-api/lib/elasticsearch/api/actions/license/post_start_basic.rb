@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-basic.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-basic.html
         #
         def post_start_basic(arguments = {})
           arguments = arguments.clone
@@ -40,7 +40,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_license/start_basic"], 'license.post_start_basic')
           )
         end
       end

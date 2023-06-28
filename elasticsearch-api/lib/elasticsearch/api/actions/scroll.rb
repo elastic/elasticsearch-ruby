@@ -34,7 +34,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html#request-body-search-scroll
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-request-body.html#request-body-search-scroll
       #
       def scroll(arguments = {})
         arguments = arguments.clone
@@ -58,7 +58,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_search/scroll", "/_search/scroll/{scroll_id}"],
+                          'scroll')
         )
       end
     end

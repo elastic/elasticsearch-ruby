@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-allocation.html
         #
         def allocation(arguments = {})
           arguments = arguments.clone
@@ -55,7 +55,8 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cat/allocation", "/_cat/allocation/{node_id}"],
+                            'cat.allocation')
           )
         end
       end

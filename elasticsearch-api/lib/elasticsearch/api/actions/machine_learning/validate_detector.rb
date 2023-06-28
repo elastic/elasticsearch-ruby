@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The detector (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
+        # @see https://www.elastic.co/guide/en/machine-learning/8.10/ml-jobs.html
         #
         def validate_detector(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,7 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/_validate/detector"],
+                            'ml.validate_detector')
           )
         end
       end

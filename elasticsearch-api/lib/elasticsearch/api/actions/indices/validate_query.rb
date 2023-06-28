@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query definition specified with the Query DSL
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-validate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-validate.html
         #
         def validate_query(arguments = {})
           arguments = arguments.clone
@@ -64,7 +64,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_validate/query", "/{index}/_validate/query"],
+                            'indices.validate_query')
           )
         end
       end

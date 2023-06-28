@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-exists.html
         #
         def exists(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body, headers).status == 200 ? true : false
+            perform_request(method, path, params, body, headers, ["/{index}"],
+                            'indices.exists').status == 200 ? true : false
           end
         end
 

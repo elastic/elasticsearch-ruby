@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the job to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-delete-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/rollup-delete-job.html
         #
         def delete_job(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -48,7 +48,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_rollup/job/{id}"], 'rollup.delete_job')
           )
         end
       end

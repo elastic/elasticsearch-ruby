@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The role to add (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-put-role.html
         #
         def put_role(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -47,7 +47,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_security/role/{name}"], 'security.put_role')
           )
         end
       end

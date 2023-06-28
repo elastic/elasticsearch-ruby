@@ -40,7 +40,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-template.html
       #
       def search_template(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -61,7 +61,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_search/template", "/{index}/_search/template"],
+                          'search_template')
         )
       end
     end

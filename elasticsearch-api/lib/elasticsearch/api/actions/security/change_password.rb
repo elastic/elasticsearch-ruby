@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body the new password for the user (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-change-password.html
         #
         def change_password(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_security/user/{username}/_password", "/_security/user/_password"], 'security.change_password')
           )
         end
       end

@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-alias.html
         #
         def aliases(arguments = {})
           arguments = arguments.clone
@@ -54,7 +54,8 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cat/aliases", "/_cat/aliases/{name}"],
+                            'cat.aliases')
           )
         end
       end

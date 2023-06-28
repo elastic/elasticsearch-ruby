@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The stop data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-dfanalytics.html
         #
         def stop_data_frame_analytics(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/data_frame/analytics/{id}/_stop"],
+                            'ml.stop_data_frame_analytics')
           )
         end
       end

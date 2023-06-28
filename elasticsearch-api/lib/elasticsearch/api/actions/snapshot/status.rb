@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether to ignore unavailable snapshots, defaults to false which means a SnapshotMissingException is thrown
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
         #
         def status(arguments = {})
           arguments = arguments.clone
@@ -55,12 +55,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers)
+                perform_request(method, path, params, body, headers,
+                                ["/_snapshot/_status", "/_snapshot/{repository}/_status", "/_snapshot/{repository}/{snapshot}/_status"], 'snapshot.status')
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers)
+              perform_request(method, path, params, body, headers,
+                              ["/_snapshot/_status", "/_snapshot/{repository}/_status", "/_snapshot/{repository}/{snapshot}/_status"], 'snapshot.status')
             )
           end
         end

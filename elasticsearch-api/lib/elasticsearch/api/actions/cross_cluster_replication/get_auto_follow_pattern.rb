@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-get-auto-follow-pattern.html
         #
         def get_auto_follow_pattern(arguments = {})
           arguments = arguments.clone
@@ -46,7 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ccr/auto_follow", "/_ccr/auto_follow/{name}"],
+                            'ccr.get_auto_follow_pattern')
           )
         end
       end

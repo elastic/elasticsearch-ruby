@@ -25,7 +25,9 @@ describe 'client.cat#shards' do
         '_cat/shards',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/shards", "/_cat/shards/{index}"],
+        "cat.shards"
     ]
   end
 

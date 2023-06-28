@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :resource changed resource to reload analyzers from if applicable
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-reload-analyzers.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-reload-analyzers.html
         #
         def reload_search_analyzers(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_reload_search_analyzers"],
+                            'indices.reload_search_analyzers')
           )
         end
       end

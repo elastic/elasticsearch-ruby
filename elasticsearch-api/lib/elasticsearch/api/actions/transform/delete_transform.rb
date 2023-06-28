@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the transform deletion
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-transform.html
         #
         def delete_transform(arguments = {})
           raise ArgumentError, "Required argument 'transform_id' missing" unless arguments[:transform_id]
@@ -47,7 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_transform/{transform_id}"],
+                            'transform.delete_transform')
           )
         end
       end

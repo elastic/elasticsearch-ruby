@@ -25,7 +25,9 @@ describe 'client.cat#pending_tasks' do
         '_cat/pending_tasks',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/pending_tasks"],
+        + "cat.pending_tasks"
     ]
   end
 

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Execution control
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-execute-watch.html
         #
         def execute_watch(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_watcher/watch/{id}/_execute", "/_watcher/watch/_execute"], 'watcher.execute_watch')
           )
         end
       end

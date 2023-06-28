@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The Pipeline to add or update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-put-pipeline.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/logstash-api-put-pipeline.html
         #
         def put_pipeline(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,7 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_logstash/pipeline/{id}"],
+                            'logstash.put_pipeline')
           )
         end
       end

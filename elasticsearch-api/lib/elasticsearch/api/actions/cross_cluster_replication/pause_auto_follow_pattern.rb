@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the auto follow pattern that should pause discovering new indices to follow.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-pause-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-pause-auto-follow-pattern.html
         #
         def pause_auto_follow_pattern(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ccr/auto_follow/{name}/pause"],
+                            'ccr.pause_auto_follow_pattern')
           )
         end
       end

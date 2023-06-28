@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-set-upgrade-mode.html
         #
         def set_upgrade_mode(arguments = {})
           arguments = arguments.clone
@@ -41,7 +41,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/set_upgrade_mode"], 'ml.set_upgrade_mode')
           )
         end
       end

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :name Role name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-clear-role-cache.html
         #
         def clear_cached_roles(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_security/role/{name}/_clear_cache"],
+                            'security.clear_cached_roles')
           )
         end
       end

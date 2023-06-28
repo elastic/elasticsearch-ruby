@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-forcemerge.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-forcemerge.html
         #
         def forcemerge(arguments = {})
           arguments = arguments.clone
@@ -53,7 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_forcemerge", "/{index}/_forcemerge"],
+                            'indices.forcemerge')
           )
         end
       end

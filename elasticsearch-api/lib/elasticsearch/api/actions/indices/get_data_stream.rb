@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/data-streams.html
         #
         def get_data_stream(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_data_stream", "/_data_stream/{name}"],
+                            'indices.get_data_stream')
           )
         end
       end

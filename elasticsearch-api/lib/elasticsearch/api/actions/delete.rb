@@ -35,7 +35,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-delete.html
       #
       def delete(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -57,12 +57,12 @@ module Elasticsearch
         if Array(arguments[:ignore]).include?(404)
           Utils.__rescue_from_not_found {
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers)
+              perform_request(method, path, params, body, headers, ["/{index}/_doc/{id}"], 'delete')
             )
           }
         else
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_doc/{id}"], 'delete')
           )
         end
       end

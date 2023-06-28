@@ -24,7 +24,9 @@ describe 'client.cat#component_templates' do
       url,
       {},
       nil,
-      {}
+      {},
+      ["/_cat/component_templates", "/_cat/component_templates/{name}"],
+      "cat.component_templates"
     ]
   end
 

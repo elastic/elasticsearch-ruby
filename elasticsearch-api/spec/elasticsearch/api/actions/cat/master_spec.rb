@@ -25,7 +25,9 @@ describe 'client.cat#master' do
         '_cat/master',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/master"],
+        "cat.master"
     ]
   end
 

@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-contexts.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.10/painless-contexts.html
       #
       def get_script_context(arguments = {})
         arguments = arguments.clone
@@ -38,7 +38,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_script_context"], 'get_script_context')
         )
       end
     end

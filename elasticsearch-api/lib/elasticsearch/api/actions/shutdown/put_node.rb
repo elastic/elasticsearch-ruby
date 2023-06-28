@@ -46,7 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_nodes/{node_id}/shutdown"],
+                            'shutdown.put_node')
           )
         end
       end

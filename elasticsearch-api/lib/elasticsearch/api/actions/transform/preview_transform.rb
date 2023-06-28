@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition for the transform to preview
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/preview-transform.html
         #
         def preview_transform(arguments = {})
           arguments = arguments.clone
@@ -53,7 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_transform/{transform_id}/_preview", "/_transform/_preview"], 'transform.preview_transform')
           )
         end
       end

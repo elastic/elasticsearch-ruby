@@ -25,7 +25,9 @@ describe 'client.cat#snapshots' do
         '_cat/snapshots/foo',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/snapshots", "/_cat/snapshots/{repository}"],
+        "cat.snapshots"
     ]
   end
 

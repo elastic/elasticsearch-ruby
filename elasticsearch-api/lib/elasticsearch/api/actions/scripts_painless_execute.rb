@@ -30,7 +30,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The script to execute
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.10/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
         arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_scripts/painless/_execute"],
+                          'scripts_painless_execute')
         )
       end
     end

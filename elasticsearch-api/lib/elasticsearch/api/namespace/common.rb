@@ -34,8 +34,8 @@ module Elasticsearch
 
         # Delegates the `perform_request` method to the wrapped client
         #
-        def perform_request(method, path, params={}, body=nil, headers=nil)
-          client.perform_request method, path, params, body, headers
+        def perform_request(method, path, params={}, body=nil, headers=nil, paths=nil, endpoint=nil)
+          client.perform_request method, path, params, body, headers, paths, endpoint
         end
       end
 

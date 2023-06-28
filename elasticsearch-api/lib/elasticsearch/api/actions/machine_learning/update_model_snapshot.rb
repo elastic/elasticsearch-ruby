@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The model snapshot properties to update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-snapshot.html
         #
         def update_model_snapshot(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_update"], 'ml.update_model_snapshot')
           )
         end
       end

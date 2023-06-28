@@ -25,7 +25,9 @@ describe 'client.cat#allocation' do
         '_cat/allocation',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/allocation", "/_cat/allocation/{node_id}"],
+        "cat.allocation"
     ]
   end
 

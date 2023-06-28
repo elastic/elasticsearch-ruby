@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-put-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/rollup-put-job.html
         #
         def put_job(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_rollup/job/{id}"], 'rollup.put_job')
           )
         end
       end

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Specify the cursor value in the `cursor` element to clean the cursor. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/clear-sql-cursor-api.html
         #
         def clear_cursor(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,7 +42,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_sql/close"], 'sql.clear_cursor')
           )
         end
       end

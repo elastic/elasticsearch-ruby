@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_status Wait until cluster is in a specific state (options: green, yellow, red)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-health.html
         #
         def health(arguments = {})
           arguments = arguments.clone
@@ -57,7 +57,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cluster/health", "/_cluster/health/{index}"],
+                            'cluster.health')
           )
         end
       end

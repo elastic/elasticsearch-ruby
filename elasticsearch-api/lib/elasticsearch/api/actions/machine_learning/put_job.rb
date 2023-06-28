@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-job.html
         #
         def put_job(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}"],
+                            'ml.put_job')
           )
         end
       end

@@ -25,7 +25,9 @@ describe 'client.cat#repositories' do
         '_cat/repositories',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/repositories"],
+        "cat.repositories"
     ]
   end
 

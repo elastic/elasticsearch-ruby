@@ -55,7 +55,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_application/analytics/{collection_name}/event/{event_type}"], 'search_application.post_behavioral_analytics_event')
           )
         end
       end

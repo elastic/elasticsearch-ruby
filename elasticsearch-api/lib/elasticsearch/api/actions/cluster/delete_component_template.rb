@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-component-template.html
         #
         def delete_component_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -46,7 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_component_template/{name}"],
+                            'cluster.delete_component_template')
           )
         end
       end

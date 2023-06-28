@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :active_only Display only those recoveries that are currently on-going
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-recovery.html
         #
         def recovery(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_recovery", "/{index}/_recovery"],
+                            'indices.recovery')
           )
         end
       end

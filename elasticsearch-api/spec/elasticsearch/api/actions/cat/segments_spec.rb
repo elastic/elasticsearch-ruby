@@ -25,7 +25,9 @@ describe 'client.cat#segments' do
       url,
       {},
       nil,
-      {}
+      {},
+      ["/_cat/segments", "/_cat/segments/{index}"],
+      "cat.segments"
     ]
   end
 

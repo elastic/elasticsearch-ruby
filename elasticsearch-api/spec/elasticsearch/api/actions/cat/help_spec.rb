@@ -25,7 +25,9 @@ describe 'client.cat#help' do
         '_cat',
         {},
         nil,
-        {}
+        {},
+        ["/_cat"],
+        "cat.help"
     ]
   end
 

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-gateway-dangling-indices.html
         #
         def list_dangling_indices(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_dangling"],
+                            'dangling_indices.list_dangling_indices')
           )
         end
       end

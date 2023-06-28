@@ -25,7 +25,9 @@ describe 'client.cat#indices' do
         '_cat/indices',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/indices", "/_cat/indices/{index}"],
+        "cat.indices"
     ]
   end
 

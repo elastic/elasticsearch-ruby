@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :rarely_abort_writes Whether to rarely abort writes before they complete. Defaults to 'true'.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
         #
         def repository_analyze(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -55,7 +55,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_snapshot/{repository}/_analyze"],
+                            'snapshot.repository_analyze')
           )
         end
       end

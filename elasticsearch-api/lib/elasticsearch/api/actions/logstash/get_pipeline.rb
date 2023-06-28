@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id A comma-separated list of Pipeline IDs
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get-pipeline.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/logstash-api-get-pipeline.html
         #
         def get_pipeline(arguments = {})
           arguments = arguments.clone
@@ -46,7 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_logstash/pipeline", "/_logstash/pipeline/{id}"],
+                            'logstash.get_pipeline')
           )
         end
       end

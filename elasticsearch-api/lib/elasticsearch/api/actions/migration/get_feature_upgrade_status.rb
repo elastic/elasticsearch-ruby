@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/migration-api-feature-upgrade.html
         #
         def get_feature_upgrade_status(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_migration/system_features"],
+                            'migration.get_feature_upgrade_status')
           )
         end
       end

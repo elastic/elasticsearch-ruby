@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the analytics collection to be created or updated
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-analytics-collection.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-analytics-collection.html
         #
         def put_behavioral_analytics(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_application/analytics/{name}"],
+                            'search_application.put_behavioral_analytics')
           )
         end
       end

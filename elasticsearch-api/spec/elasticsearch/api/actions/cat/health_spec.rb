@@ -25,7 +25,9 @@ describe 'client.cat#health' do
         '_cat/health',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/health"],
+        "cat.health"
     ]
   end
 

@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-search-applications.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/list-search-applications.html
         #
         def list(arguments = {})
           arguments = arguments.clone
@@ -46,7 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_application/search_application"],
+                            'search_application.list')
           )
         end
       end

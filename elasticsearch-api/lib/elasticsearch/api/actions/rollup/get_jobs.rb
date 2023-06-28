@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the job(s) to fetch. Accepts glob patterns, or left blank for all jobs
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-get-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/rollup-get-job.html
         #
         def get_jobs(arguments = {})
           arguments = arguments.clone
@@ -50,7 +50,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_rollup/job/{id}", "/_rollup/job/"],
+                            'rollup.get_jobs')
           )
         end
       end

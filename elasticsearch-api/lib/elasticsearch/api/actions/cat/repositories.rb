@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-repositories.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-repositories.html
         #
         def repositories(arguments = {})
           arguments = arguments.clone
@@ -46,7 +46,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_cat/repositories"], 'cat.repositories')
           )
         end
       end

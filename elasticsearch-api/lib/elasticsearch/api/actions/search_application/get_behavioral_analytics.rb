@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of analytics collections to limit the returned information
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-analytics-collection.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/list-analytics-collection.html
         #
         def get_behavioral_analytics(arguments = {})
           arguments = arguments.clone
@@ -50,7 +50,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers,
+                            ["/_application/analytics", "/_application/analytics/{name}"], 'search_application.get_behavioral_analytics')
           )
         end
       end

@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-search.html
       #
       def knn_search(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -54,7 +54,7 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/{index}/_knn_search"], 'knn_search')
         )
       end
     end

@@ -76,7 +76,8 @@ module Elasticsearch
 
           headers.merge!("Content-Type" => "application/x-ndjson")
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, payload, headers)
+            perform_request(method, path, params, payload, headers,
+                            ["/_fleet/_fleet_msearch", "/{index}/_fleet/_fleet_msearch"], 'fleet.msearch')
           )
         end
       end

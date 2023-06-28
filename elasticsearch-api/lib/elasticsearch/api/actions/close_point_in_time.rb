@@ -26,7 +26,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body a point-in-time id to close
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/point-in-time-api.html
       #
       def close_point_in_time(arguments = {})
         arguments = arguments.clone
@@ -39,7 +39,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, ["/_pit"], 'close_point_in_time')
         )
       end
     end

@@ -25,7 +25,9 @@ describe 'client.cat#templates' do
         '_cat/templates',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/templates", "/_cat/templates/{name}"],
+        "cat.templates"
     ]
   end
 

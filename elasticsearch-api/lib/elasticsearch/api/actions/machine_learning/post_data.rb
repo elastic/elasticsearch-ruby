@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data to process (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-post-data.html
         #
         def post_data(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}/_data"],
+                            'ml.post_data')
           )
         end
       end

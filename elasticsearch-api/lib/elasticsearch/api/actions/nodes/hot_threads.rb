@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments = {})
           arguments = arguments.clone
@@ -53,7 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_nodes/hot_threads", "/_nodes/{node_id}/hot_threads"],
+                            'nodes.hot_threads')
           )
         end
       end

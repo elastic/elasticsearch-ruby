@@ -57,7 +57,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/{index}/_fleet/_fleet_search"],
+                            'fleet.search')
           )
         end
       end

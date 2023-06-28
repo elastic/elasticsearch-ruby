@@ -25,7 +25,9 @@ describe 'client.cat#count' do
         '_cat/count',
         {},
         nil,
-        {}
+        {},
+        ["/_cat/count", "/_cat/count/{index}"],
+        "cat.count"
     ]
   end
 

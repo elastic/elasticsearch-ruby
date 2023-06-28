@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The start datafeed parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-start-datafeed.html
         #
         def start_datafeed(arguments = {})
           raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
@@ -48,7 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, ["/_ml/datafeeds/{datafeed_id}/_start"],
+                            'ml.start_datafeed')
           )
         end
       end
