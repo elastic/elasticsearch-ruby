@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client.query_ruleset#get' do
+describe 'client.query_ruleset#list' do
   let(:expected_args) do
     [
       'GET',
-      '_query_rules/foo',
+      '_query_rules',
       {},
       nil,
       {}
@@ -29,6 +29,6 @@ describe 'client.query_ruleset#get' do
   end
 
   it 'performs the request' do
-    expect(client_double.query_ruleset.get(ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.query_ruleset.list).to be_a Elasticsearch::API::Response
   end
 end
