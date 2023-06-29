@@ -23,8 +23,8 @@ require 'elasticsearch/api/version'
 Gem::Specification.new do |s|
   s.name          = 'elasticsearch-api'
   s.version       = Elasticsearch::API::VERSION
-  s.authors       = ['Karel Minarik']
-  s.email         = ['support@elastic.co']
+  s.authors       = ['Karel Minarik', 'Emily Stolfo', 'Fernando Briano']
+  s.email         = ['clients-team@elastic.co']
   s.summary       = 'Ruby API for Elasticsearch.'
   s.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html'
   s.license       = 'Apache-2.0'
