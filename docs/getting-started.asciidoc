@@ -8,7 +8,7 @@ operations with it.
 [discrete]
 === Requirements
 
-* TO DO
+A currently maintained version of Ruby (3.0+) or JRuby (9.3+).
 
 [discrete]
 === Installation 
@@ -17,7 +17,7 @@ To install the latest version of the client, run the following command:
 
 [source,shell]
 --------------------------
-
+gem install elasticsearch
 --------------------------
 
 Refer to the <<ruby-install>> page to learn more.
@@ -29,9 +29,12 @@ Refer to the <<ruby-install>> page to learn more.
 You can connect to the Elastic Cloud using an API key and the Elasticsearch 
 endpoint. 
 
-[source,]
+[source,rb]
 ----
-
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
+  api_key: '<ApiKey>'
+)
 ----
 
 Your Elasticsearch endpoint can be found on the **My deployment** page of your 
@@ -61,7 +64,7 @@ This is how you create the `my_index` index:
 
 [source,]
 ----
-
+client.indices.create(index: 'my_index')
 ----
 
 
@@ -72,7 +75,12 @@ This is a simple way of indexing a document:
 
 [source,]
 ----
-
+document = { name: 'elasticsearch-ruby' }
+response = client.index(index: 'my_index', body: document)
+# You can get the indexed document id with:
+response['_id']
+=> "PlgIDYkBWS9Ngdx5IMy-"
+id = response['_id']
 ----
 
 
@@ -83,7 +91,7 @@ You can get documents by using the following code:
 
 [source,]
 ----
-
+client.get(index: 'my_index', id: id)
 ----
 
 
@@ -94,7 +102,7 @@ This is how you can create a single match query with the Ruby client:
 
 [source,]
 ----
-
+client.search(index: 'my_index', body: { query: { match_all: {} } })
 ----
 
 
@@ -105,7 +113,7 @@ This is how you can update a document, for example to add a new field:
 
 [source,]
 ----
-
+client.update(index: 'my_index', id: id, body: { doc: { language: 'Ruby' } })
 ----
 
 
@@ -114,7 +122,7 @@ This is how you can update a document, for example to add a new field:
 
 [source,]
 ----
-
+client.delete(index: 'my_index', id: id)
 ----
 
 
@@ -123,7 +131,7 @@ This is how you can update a document, for example to add a new field:
 
 [source,]
 ----
-
+client.indices.delete(index: 'my_index')
 ----
 
 
