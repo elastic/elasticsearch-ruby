@@ -62,7 +62,7 @@ examples, refer to the <<examples>> page.
 
 This is how you create the `my_index` index:
 
-[source,]
+[source,rb]
 ----
 client.indices.create(index: 'my_index')
 ----
@@ -73,7 +73,7 @@ client.indices.create(index: 'my_index')
 
 This is a simple way of indexing a document:
 
-[source,]
+[source,rb]
 ----
 document = { name: 'elasticsearch-ruby' }
 response = client.index(index: 'my_index', body: document)
@@ -89,7 +89,7 @@ id = response['_id']
 
 You can get documents by using the following code:
 
-[source,]
+[source,rb]
 ----
 client.get(index: 'my_index', id: id)
 ----
@@ -100,7 +100,7 @@ client.get(index: 'my_index', id: id)
 
 This is how you can create a single match query with the Ruby client: 
 
-[source,]
+[source,rb]
 ----
 client.search(index: 'my_index', body: { query: { match_all: {} } })
 ----
@@ -111,7 +111,7 @@ client.search(index: 'my_index', body: { query: { match_all: {} } })
 
 This is how you can update a document, for example to add a new field:
 
-[source,]
+[source,rb]
 ----
 client.update(index: 'my_index', id: id, body: { doc: { language: 'Ruby' } })
 ----
@@ -120,7 +120,7 @@ client.update(index: 'my_index', id: id, body: { doc: { language: 'Ruby' } })
 [discrete]
 ==== Deleting documents
 
-[source,]
+[source,rb]
 ----
 client.delete(index: 'my_index', id: id)
 ----
@@ -129,7 +129,7 @@ client.delete(index: 'my_index', id: id)
 [discrete]
 ==== Deleting an index
 
-[source,]
+[source,rb]
 ----
 client.indices.delete(index: 'my_index')
 ----
