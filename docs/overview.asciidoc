@@ -5,6 +5,9 @@ The `elasticsearch` http://rubygems.org/gems/elasticsearch[Rubygem] provides a l
 
 More documentation is hosted in https://github.com/elastic/elasticsearch-ruby[Github] and http://rubydoc.info/gems/elasticsearch[RubyDoc].
 
+Refer to the <<getting-started-ruby>> page for a step-by-step quick start with
+the Ruby client.
+
 [discrete]
 === Features
 
