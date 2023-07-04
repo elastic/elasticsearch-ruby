@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Reversion options
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-revert-snapshot.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
         #
         def revert_model_snapshot(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -51,7 +51,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_revert"], 'ml.revert_model_snapshot')
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_revert"], :endpoint => 'ml.revert_model_snapshot' })
           )
         end
       end

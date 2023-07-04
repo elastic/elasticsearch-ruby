@@ -26,8 +26,8 @@ describe 'client.cat#health' do
         {},
         nil,
         {},
-        ["/_cat/health"],
-        "cat.health"
+        path_templates: ["/_cat/health"],
+        endpoint: "cat.health"
     ]
   end
 

@@ -42,7 +42,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Search request body.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-vector-tile-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-vector-tile-api.html
       #
       def search_mvt(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -71,8 +71,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/{index}/_mvt/{field}/{zoom}/{x}/{y}"],
-                          'search_mvt')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_mvt/{field}/{zoom}/{x}/{y}"], :endpoint => 'search_mvt' })
         )
       end
     end

@@ -39,7 +39,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Define parameters and or supply a document to get termvectors for. See documentation.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-termvectors.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
       #
       def termvectors(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -68,8 +68,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/{index}/_termvectors/{id}", "/{index}/_termvectors"],
-                          'termvectors')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_termvectors/{id}", "/{index}/_termvectors"], :endpoint => 'termvectors' })
         )
       end
 

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The simulate definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/simulate-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/simulate-pipeline-api.html
         #
         def simulate(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -51,7 +51,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ingest/pipeline/_simulate", "/_ingest/pipeline/{id}/_simulate"], 'ingest.simulate')
+                            { :path_templates => ["/_ingest/pipeline/_simulate", "/_ingest/pipeline/{id}/_simulate"], :endpoint => 'ingest.simulate' })
           )
         end
       end

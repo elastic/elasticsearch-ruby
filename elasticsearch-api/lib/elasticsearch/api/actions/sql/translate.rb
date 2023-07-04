@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/sql-translate-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html
         #
         def translate(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,7 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_sql/translate"], 'sql.translate')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_sql/translate"], :endpoint => 'sql.translate' })
           )
         end
       end

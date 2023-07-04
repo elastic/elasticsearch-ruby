@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-license.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-license.html
         #
         def delete(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_license"], 'license.delete')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_license"], :endpoint => 'license.delete' })
           )
         end
       end

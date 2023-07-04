@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Timeout to wait for global checkpoint to advance
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-global-checkpoints.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-global-checkpoints.html
         #
         def global_checkpoints(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_fleet/global_checkpoints"],
-                            'fleet.global_checkpoints')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_fleet/global_checkpoints"], :endpoint => 'fleet.global_checkpoints' })
           )
         end
       end

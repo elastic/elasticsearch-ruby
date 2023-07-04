@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-profile.html
         #
         def get_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'uid' missing" unless arguments[:uid]
@@ -45,8 +45,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/profile/{uid}"],
-                            'security.get_user_profile')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/profile/{uid}"], :endpoint => 'security.get_user_profile' })
           )
         end
       end

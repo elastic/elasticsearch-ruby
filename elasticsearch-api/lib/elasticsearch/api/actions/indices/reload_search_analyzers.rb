@@ -28,10 +28,9 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-        # @option arguments [String] :resource changed resource to reload analyzers from if applicable
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-reload-analyzers.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-reload-analyzers.html
         #
         def reload_search_analyzers(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -48,8 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_reload_search_analyzers"],
-                            'indices.reload_search_analyzers')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_reload_search_analyzers"], :endpoint => 'indices.reload_search_analyzers' })
           )
         end
       end

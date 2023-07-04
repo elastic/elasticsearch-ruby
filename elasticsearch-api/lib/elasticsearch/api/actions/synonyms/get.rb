@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-synonyms.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-synonyms.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_synonyms/{synonyms_set}"], 'synonyms.get')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_synonyms/{synonyms_set}"], :endpoint => 'synonyms.get' })
           )
         end
       end

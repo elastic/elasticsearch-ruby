@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of filters to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html
         #
         def get_filters(arguments = {})
           arguments = arguments.clone
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/filters", "/_ml/filters/{filter_id}"],
-                            'ml.get_filters')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/filters", "/_ml/filters/{filter_id}"], :endpoint => 'ml.get_filters' })
           )
         end
       end

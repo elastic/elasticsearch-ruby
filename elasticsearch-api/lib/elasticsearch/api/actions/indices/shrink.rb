@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-shrink-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-shrink-index.html
         #
         def shrink(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -52,7 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_shrink/{target}"], 'indices.shrink')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_shrink/{target}"], :endpoint => 'indices.shrink' })
           )
         end
       end

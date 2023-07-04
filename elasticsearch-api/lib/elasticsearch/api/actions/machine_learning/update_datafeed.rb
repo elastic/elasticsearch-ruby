@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed update settings (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
         #
         def update_datafeed(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,8 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/datafeeds/{datafeed_id}/_update"],
-                            'ml.update_datafeed')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/datafeeds/{datafeed_id}/_update"], :endpoint => 'ml.update_datafeed' })
           )
         end
       end

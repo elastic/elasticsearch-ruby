@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
       #
       def get_script_languages(arguments = {})
         arguments = arguments.clone
@@ -38,7 +38,8 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/_script_language"], 'get_script_languages')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/_script_language"], :endpoint => 'get_script_languages' })
         )
       end
     end

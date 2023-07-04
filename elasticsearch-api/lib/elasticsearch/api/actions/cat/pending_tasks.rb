@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-pending-tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html
         #
         def pending_tasks(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,8 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cat/pending_tasks"], 'cat.pending_tasks')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cat/pending_tasks"], :endpoint => 'cat.pending_tasks' })
           )
         end
       end

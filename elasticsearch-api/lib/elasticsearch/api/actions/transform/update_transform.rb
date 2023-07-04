@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The update transform definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/update-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
         #
         def update_transform(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_transform/{transform_id}/_update"],
-                            'transform.update_transform')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_transform/{transform_id}/_update"], :endpoint => 'transform.update_transform' })
           )
         end
       end

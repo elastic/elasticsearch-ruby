@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-forecast.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
         #
         def delete_forecast(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -54,7 +54,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/{job_id}/_forecast", "/_ml/anomaly_detectors/{job_id}/_forecast/{forecast_id}"], 'ml.delete_forecast')
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/_forecast", "/_ml/anomaly_detectors/{job_id}/_forecast/{forecast_id}"], :endpoint => 'ml.delete_forecast' })
           )
         end
       end

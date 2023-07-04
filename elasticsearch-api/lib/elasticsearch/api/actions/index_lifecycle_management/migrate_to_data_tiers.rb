@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Optionally specify a legacy index template name to delete and optionally specify a node attribute name used for index shard routing (defaults to "data")
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ilm-migrate-to-data-tiers.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-migrate-to-data-tiers.html
         #
         def migrate_to_data_tiers(arguments = {})
           arguments = arguments.clone
@@ -41,8 +41,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ilm/migrate_to_data_tiers"],
-                            'ilm.migrate_to_data_tiers')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ilm/migrate_to_data_tiers"], :endpoint => 'ilm.migrate_to_data_tiers' })
           )
         end
       end

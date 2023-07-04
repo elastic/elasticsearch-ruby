@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Influencer selection criteria
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-influencer.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
         #
         def get_influencers(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -58,8 +58,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}/results/influencers"],
-                            'ml.get_influencers')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/results/influencers"], :endpoint => 'ml.get_influencers' })
           )
         end
       end

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-delete-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-follow-pattern.html
         #
         def delete_auto_follow_pattern(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -44,8 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ccr/auto_follow/{name}"],
-                            'ccr.delete_auto_follow_pattern')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ccr/auto_follow/{name}"], :endpoint => 'ccr.delete_auto_follow_pattern' })
           )
         end
       end

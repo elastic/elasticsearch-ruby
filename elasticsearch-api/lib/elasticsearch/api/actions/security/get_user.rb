@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-user.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
         #
         def get_user(arguments = {})
           arguments = arguments.clone
@@ -49,14 +49,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers, ["/_security/user/{username}", "/_security/user"],
-                                'security.get_user')
+                perform_request(method, path, params, body, headers,
+                                { :path_templates => ["/_security/user/{username}", "/_security/user"], :endpoint => 'security.get_user' })
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers, ["/_security/user/{username}", "/_security/user"],
-                              'security.get_user')
+              perform_request(method, path, params, body, headers,
+                              { :path_templates => ["/_security/user/{username}", "/_security/user"], :endpoint => 'security.get_user' })
             )
           end
         end

@@ -34,7 +34,7 @@ module Elasticsearch
         # Deprecated since version 8.3.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/infer-trained-model.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-trained-model.html
         #
         def infer_trained_model(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -55,7 +55,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/trained_models/{model_id}/_infer", "/_ml/trained_models/{model_id}/deployment/_infer"], 'ml.infer_trained_model')
+                            { :path_templates => ["/_ml/trained_models/{model_id}/_infer", "/_ml/trained_models/{model_id}/deployment/_infer"], :endpoint => 'ml.infer_trained_model' })
           )
         end
       end

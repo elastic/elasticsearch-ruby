@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-pipeline-api.html
         #
         def get_pipeline(arguments = {})
           arguments = arguments.clone
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ingest/pipeline", "/_ingest/pipeline/{id}"],
-                            'ingest.get_pipeline')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ingest/pipeline", "/_ingest/pipeline/{id}"], :endpoint => 'ingest.get_pipeline' })
           )
         end
       end

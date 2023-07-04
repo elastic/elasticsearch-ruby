@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-service-accounts.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-accounts.html
         #
         def get_service_accounts(arguments = {})
           arguments = arguments.clone
@@ -52,7 +52,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_security/service/{namespace}/{service}", "/_security/service/{namespace}", "/_security/service"], 'security.get_service_accounts')
+                            { :path_templates => ["/_security/service/{namespace}/{service}", "/_security/service/{namespace}", "/_security/service"], :endpoint => 'security.get_service_accounts' })
           )
         end
       end

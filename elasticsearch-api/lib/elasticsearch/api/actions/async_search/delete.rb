@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/async-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_async_search/{id}"], 'async_search.delete')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_async_search/{id}"], :endpoint => 'async_search.delete' })
           )
         end
       end

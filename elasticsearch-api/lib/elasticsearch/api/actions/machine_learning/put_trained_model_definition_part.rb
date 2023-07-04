@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The trained model definition part (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-model-definition-part.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-definition-part.html
         #
         def put_trained_model_definition_part(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,8 +50,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/trained_models/{model_id}/definition/{part}"],
-                            'ml.put_trained_model_definition_part')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/trained_models/{model_id}/definition/{part}"], :endpoint => 'ml.put_trained_model_definition_part' })
           )
         end
       end

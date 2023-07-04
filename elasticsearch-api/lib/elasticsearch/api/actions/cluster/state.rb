@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-state.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
         #
         def state(arguments = {})
           arguments = arguments.clone
@@ -60,7 +60,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_cluster/state", "/_cluster/state/{metric}", "/_cluster/state/{metric}/{index}"], 'cluster.state')
+                            { :path_templates => ["/_cluster/state", "/_cluster/state/{metric}", "/_cluster/state/{metric}/{index}"], :endpoint => 'cluster.state' })
           )
         end
       end

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :index The name of the follower index that should pause following its leader index.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-post-pause-follow.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
         #
         def pause_follow(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -44,8 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_ccr/pause_follow"],
-                            'ccr.pause_follow')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_ccr/pause_follow"], :endpoint => 'ccr.pause_follow' })
           )
         end
       end

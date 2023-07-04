@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :delete_user_annotations Should annotations added by the user be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-job.html
         #
         def delete_job(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -47,8 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}"],
-                            'ml.delete_job')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}"], :endpoint => 'ml.delete_job' })
           )
         end
       end

@@ -59,7 +59,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
       #
       def update_by_query(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -76,7 +76,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/{index}/_update_by_query"], 'update_by_query')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_update_by_query"], :endpoint => 'update_by_query' })
         )
       end
     end

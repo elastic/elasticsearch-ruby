@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
         #
         def estimate_model_memory(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,8 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/_estimate_model_memory"],
-                            'ml.estimate_model_memory')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/anomaly_detectors/_estimate_model_memory"], :endpoint => 'ml.estimate_model_memory' })
           )
         end
       end

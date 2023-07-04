@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force True if the model should be forcefully deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-trained-models.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html
         #
         def delete_trained_model(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/trained_models/{model_id}"],
-                            'ml.delete_trained_model')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/trained_models/{model_id}"], :endpoint => 'ml.delete_trained_model' })
           )
         end
       end

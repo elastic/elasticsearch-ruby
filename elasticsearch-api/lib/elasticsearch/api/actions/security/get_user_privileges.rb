@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-user-privileges.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
         #
         def get_user_privileges(arguments = {})
           arguments = arguments.clone
@@ -39,8 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/user/_privileges"],
-                            'security.get_user_privileges')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/user/_privileges"], :endpoint => 'security.get_user_privileges' })
           )
         end
       end

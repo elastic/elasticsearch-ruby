@@ -56,7 +56,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_application/analytics/{collection_name}/event/{event_type}"], 'search_application.post_behavioral_analytics_event')
+                            { :path_templates => ["/_application/analytics/{collection_name}/event/{event_type}"], :endpoint => 'search_application.post_behavioral_analytics_event' })
           )
         end
       end

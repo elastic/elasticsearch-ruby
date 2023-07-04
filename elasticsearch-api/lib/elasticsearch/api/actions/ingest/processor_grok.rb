@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/grok-processor.html#grok-processor-rest-get
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html#grok-processor-rest-get
         #
         def processor_grok(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ingest/processor/grok"], 'ingest.processor_grok')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ingest/processor/grok"], :endpoint => 'ingest.processor_grok' })
           )
         end
       end

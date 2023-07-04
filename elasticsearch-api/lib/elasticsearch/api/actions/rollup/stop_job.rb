@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Block for (at maximum) the specified duration while waiting for the job to stop.  Defaults to 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/rollup-stop-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-stop-job.html
         #
         def stop_job(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_rollup/job/{id}/_stop"], 'rollup.stop_job')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_rollup/job/{id}/_stop"], :endpoint => 'rollup.stop_job' })
           )
         end
       end

@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_unloaded_segments If set to true segment stats will include stats for segments that are not currently loaded into memory
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-nodes.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html
         #
         def nodes(arguments = {})
           arguments = arguments.clone
@@ -50,7 +50,8 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h], escape: false) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cat/nodes"], 'cat.nodes')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cat/nodes"], :endpoint => 'cat.nodes' })
           )
         end
       end

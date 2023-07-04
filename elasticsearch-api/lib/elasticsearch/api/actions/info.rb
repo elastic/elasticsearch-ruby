@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
       #
       def info(arguments = {})
         arguments = arguments.clone
@@ -38,7 +38,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/"], 'info')
+          perform_request(method, path, params, body, headers, { :path_templates => ["/"], :endpoint => 'info' })
         )
       end
     end

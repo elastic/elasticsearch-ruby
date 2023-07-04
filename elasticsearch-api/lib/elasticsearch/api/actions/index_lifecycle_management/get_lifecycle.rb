@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ilm-get-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
         #
         def get_lifecycle(arguments = {})
           arguments = arguments.clone
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ilm/policy/{policy}", "/_ilm/policy"],
-                            'ilm.get_lifecycle')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ilm/policy/{policy}", "/_ilm/policy"], :endpoint => 'ilm.get_lifecycle' })
           )
         end
       end

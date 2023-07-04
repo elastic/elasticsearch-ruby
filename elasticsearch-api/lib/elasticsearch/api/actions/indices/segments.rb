@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose Includes detailed memory usage by Lucene. *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-segments.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
         #
         def segments(arguments = {})
           arguments = arguments.clone
@@ -50,8 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_segments", "/{index}/_segments"],
-                            'indices.segments')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_segments", "/{index}/_segments"], :endpoint => 'indices.segments' })
           )
         end
       end

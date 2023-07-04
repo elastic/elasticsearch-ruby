@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-nodes-usage.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-usage.html
         #
         def usage(arguments = {})
           arguments = arguments.clone
@@ -55,7 +55,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_nodes/usage", "/_nodes/{node_id}/usage", "/_nodes/usage/{metric}", "/_nodes/{node_id}/usage/{metric}"], 'nodes.usage')
+                            { :path_templates => ["/_nodes/usage", "/_nodes/{node_id}/usage", "/_nodes/usage/{metric}", "/_nodes/{node_id}/usage/{metric}"], :endpoint => 'nodes.usage' })
           )
         end
       end

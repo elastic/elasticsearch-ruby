@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
         #
         def delete_alias(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -52,8 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_alias/{name}", "/{index}/_aliases/{name}"],
-                            'indices.delete_alias')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_alias/{name}", "/{index}/_aliases/{name}"], :endpoint => 'indices.delete_alias' })
           )
         end
       end

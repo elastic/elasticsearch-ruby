@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :filter_id The ID of the filter to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
         #
         def delete_filter(arguments = {})
           raise ArgumentError, "Required argument 'filter_id' missing" unless arguments[:filter_id]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/filters/{filter_id}"], 'ml.delete_filter')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/filters/{filter_id}"], :endpoint => 'ml.delete_filter' })
           )
         end
       end

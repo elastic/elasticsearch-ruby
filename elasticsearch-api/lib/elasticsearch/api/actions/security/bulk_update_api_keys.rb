@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The API key request to update the attributes of multiple API keys. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-bulk-update-api-keys.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-bulk-update-api-keys.html
         #
         def bulk_update_api_keys(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,8 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/api_key/_bulk_update"],
-                            'security.bulk_update_api_keys')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/api_key/_bulk_update"], :endpoint => 'security.bulk_update_api_keys' })
           )
         end
       end

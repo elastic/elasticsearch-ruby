@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The watch
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-put-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-put-watch.html
         #
         def put_watch(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -49,7 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_watcher/watch/{id}"], 'watcher.put_watch')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_watcher/watch/{id}"], :endpoint => 'watcher.put_watch' })
           )
         end
       end

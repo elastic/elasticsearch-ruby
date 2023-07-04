@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force True if the datafeed should be forcefully deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
         #
         def delete_datafeed(arguments = {})
           raise ArgumentError, "Required argument 'datafeed_id' missing" unless arguments[:datafeed_id]
@@ -45,8 +45,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/datafeeds/{datafeed_id}"],
-                            'ml.delete_datafeed')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/datafeeds/{datafeed_id}"], :endpoint => 'ml.delete_datafeed' })
           )
         end
       end

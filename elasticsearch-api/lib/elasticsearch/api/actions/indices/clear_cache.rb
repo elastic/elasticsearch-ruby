@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :request Clear request cache
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-clearcache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html
         #
         def clear_cache(arguments = {})
           arguments = arguments.clone
@@ -53,8 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cache/clear", "/{index}/_cache/clear"],
-                            'indices.clear_cache')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cache/clear", "/{index}/_cache/clear"], :endpoint => 'indices.clear_cache' })
           )
         end
       end

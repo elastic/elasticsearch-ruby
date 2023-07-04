@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-query-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-api-key.html
         #
         def query_api_keys(arguments = {})
           arguments = arguments.clone
@@ -46,8 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/_query/api_key"],
-                            'security.query_api_keys')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/_query/api_key"], :endpoint => 'security.query_api_keys' })
           )
         end
       end

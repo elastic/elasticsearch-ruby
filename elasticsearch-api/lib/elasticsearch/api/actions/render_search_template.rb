@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/render-search-template-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html
       #
       def render_search_template(arguments = {})
         arguments = arguments.clone
@@ -51,8 +51,8 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/_render/template", "/_render/template/{id}"],
-                          'render_search_template')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/_render/template", "/_render/template/{id}"], :endpoint => 'render_search_template' })
         )
       end
     end

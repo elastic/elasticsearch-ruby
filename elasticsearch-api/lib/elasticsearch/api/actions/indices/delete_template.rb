@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def delete_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -48,13 +48,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers, ["/_template/{name}"],
-                                'indices.delete_template')
+                perform_request(method, path, params, body, headers,
+                                { :path_templates => ["/_template/{name}"], :endpoint => 'indices.delete_template' })
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers, ["/_template/{name}"], 'indices.delete_template')
+              perform_request(method, path, params, body, headers,
+                              { :path_templates => ["/_template/{name}"], :endpoint => 'indices.delete_template' })
             )
           end
         end

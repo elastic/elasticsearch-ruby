@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the index template (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def get_index_template(arguments = {})
           arguments = arguments.clone
@@ -50,8 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_index_template", "/_index_template/{name}"],
-                            'indices.get_index_template')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_index_template", "/_index_template/{name}"], :endpoint => 'indices.get_index_template' })
           )
         end
       end

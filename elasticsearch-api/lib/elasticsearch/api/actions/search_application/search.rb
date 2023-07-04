@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Search parameters, including template parameters that override defaults
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-application-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-search.html
         #
         def search(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -54,8 +54,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_application/search_application/{name}/_search"],
-                            'search_application.search')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_application/search_application/{name}/_search"], :endpoint => 'search_application.search' })
           )
         end
       end

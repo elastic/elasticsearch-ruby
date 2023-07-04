@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-datafeeds.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-datafeeds.html
         #
         def ml_datafeeds(arguments = {})
           arguments = arguments.clone
@@ -53,8 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cat/ml/datafeeds", "/_cat/ml/datafeeds/{datafeed_id}"],
-                            'cat.ml_datafeeds')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cat/ml/datafeeds", "/_cat/ml/datafeeds/{datafeed_id}"], :endpoint => 'cat.ml_datafeeds' })
           )
         end
       end

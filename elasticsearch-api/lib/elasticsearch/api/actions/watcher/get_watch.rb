@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-get-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-watch.html
         #
         def get_watch(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_watcher/watch/{id}"], 'watcher.get_watch')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_watcher/watch/{id}"], :endpoint => 'watcher.get_watch' })
           )
         end
       end

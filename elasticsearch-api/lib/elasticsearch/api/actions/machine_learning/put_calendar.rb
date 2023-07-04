@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The calendar details
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-calendar.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
         #
         def put_calendar(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
@@ -45,8 +45,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/calendars/{calendar_id}"],
-                            'ml.put_calendar')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/calendars/{calendar_id}"], :endpoint => 'ml.put_calendar' })
           )
         end
       end

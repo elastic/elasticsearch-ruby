@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The api key request to invalidate API key(s) (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-invalidate-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
         #
         def invalidate_api_key(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,8 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/api_key"],
-                            'security.invalidate_api_key')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/api_key"], :endpoint => 'security.invalidate_api_key' })
           )
         end
       end

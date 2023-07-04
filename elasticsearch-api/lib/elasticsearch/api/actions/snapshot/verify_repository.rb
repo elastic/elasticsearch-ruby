@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def verify_repository(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_snapshot/{repository}/_verify"],
-                            'snapshot.verify_repository')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_snapshot/{repository}/_verify"], :endpoint => 'snapshot.verify_repository' })
           )
         end
       end

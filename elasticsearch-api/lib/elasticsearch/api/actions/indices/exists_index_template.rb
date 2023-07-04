@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def exists_index_template(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
@@ -47,8 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_index_template/{name}"],
-                            'indices.exists_index_template')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_index_template/{name}"], :endpoint => 'indices.exists_index_template' })
           )
         end
 

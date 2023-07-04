@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter details (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-put-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-filter.html
         #
         def put_filter(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,7 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/filters/{filter_id}"], 'ml.put_filter')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/filters/{filter_id}"], :endpoint => 'ml.put_filter' })
           )
         end
       end

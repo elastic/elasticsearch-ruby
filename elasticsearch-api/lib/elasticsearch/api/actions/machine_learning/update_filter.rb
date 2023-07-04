@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter.html
         #
         def update_filter(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/filters/{filter_id}/_update"],
-                            'ml.update_filter')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/filters/{filter_id}/_update"], :endpoint => 'ml.update_filter' })
           )
         end
       end

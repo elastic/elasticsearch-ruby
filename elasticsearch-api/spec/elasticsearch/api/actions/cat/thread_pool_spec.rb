@@ -26,8 +26,8 @@ describe 'client.cat#thread_pool' do
         {},
         nil,
         {},
-        ["/_cat/thread_pool", "/_cat/thread_pool/{thread_pool_patterns}"],
-        "cat.thread_pool"
+        path_templates: ["/_cat/thread_pool", "/_cat/thread_pool/{thread_pool_patterns}"],
+        endpoint: "cat.thread_pool"
     ]
   end
 

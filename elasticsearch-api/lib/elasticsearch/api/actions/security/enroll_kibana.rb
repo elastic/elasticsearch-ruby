@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-kibana-enrollment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-kibana-enrollment.html
         #
         def enroll_kibana(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/enroll/kibana"], 'security.enroll_kibana')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/enroll/kibana"], :endpoint => 'security.enroll_kibana' })
           )
         end
       end

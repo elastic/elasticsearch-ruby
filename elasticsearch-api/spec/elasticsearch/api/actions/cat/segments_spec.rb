@@ -26,8 +26,8 @@ describe 'client.cat#segments' do
       {},
       nil,
       {},
-      ["/_cat/segments", "/_cat/segments/{index}"],
-      "cat.segments"
+      path_templates: ["/_cat/segments", "/_cat/segments/{index}"],
+      endpoint: "cat.segments"
     ]
   end
 

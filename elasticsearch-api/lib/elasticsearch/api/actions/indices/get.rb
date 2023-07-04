@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-get-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -52,7 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}"], 'indices.get')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}"], :endpoint => 'indices.get' })
           )
         end
       end

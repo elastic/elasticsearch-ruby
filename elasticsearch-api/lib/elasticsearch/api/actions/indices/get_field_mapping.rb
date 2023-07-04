@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
           arguments = arguments.clone
@@ -56,7 +56,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_mapping/field/{fields}", "/{index}/_mapping/field/{fields}"], 'indices.get_field_mapping')
+                            { :path_templates => ["/_mapping/field/{fields}", "/{index}/_mapping/field/{fields}"], :endpoint => 'indices.get_field_mapping' })
           )
         end
       end

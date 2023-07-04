@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to explain
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.10/explain-dfanalytics.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
         #
         def explain_data_frame_analytics(arguments = {})
           arguments = arguments.clone
@@ -53,7 +53,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/data_frame/analytics/_explain", "/_ml/data_frame/analytics/{id}/_explain"], 'ml.explain_data_frame_analytics')
+                            { :path_templates => ["/_ml/data_frame/analytics/_explain", "/_ml/data_frame/analytics/{id}/_explain"], :endpoint => 'ml.explain_data_frame_analytics' })
           )
         end
       end

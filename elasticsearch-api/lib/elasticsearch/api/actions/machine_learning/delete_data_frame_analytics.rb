@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait until a job is deleted. Defaults to 1 minute
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
         #
         def delete_data_frame_analytics(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/data_frame/analytics/{id}"],
-                            'ml.delete_data_frame_analytics')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/data_frame/analytics/{id}"], :endpoint => 'ml.delete_data_frame_analytics' })
           )
         end
       end

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
         #
         def put_data_frame_analytics(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/data_frame/analytics/{id}"],
-                            'ml.put_data_frame_analytics')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/data_frame/analytics/{id}"], :endpoint => 'ml.put_data_frame_analytics' })
           )
         end
       end

@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-templates.html
         #
         def templates(arguments = {})
           arguments = arguments.clone
@@ -53,8 +53,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cat/templates", "/_cat/templates/{name}"],
-                            'cat.templates')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cat/templates", "/_cat/templates/{name}"], :endpoint => 'cat.templates' })
           )
         end
       end

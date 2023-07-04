@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-flush.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-flush.html
         #
         def flush(arguments = {})
           arguments = arguments.clone
@@ -51,7 +51,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_flush", "/{index}/_flush"], 'indices.flush')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_flush", "/{index}/_flush"], :endpoint => 'indices.flush' })
           )
         end
       end

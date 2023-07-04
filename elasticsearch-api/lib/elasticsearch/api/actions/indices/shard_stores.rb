@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-shards-stores.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-shards-stores.html
         #
         def shard_stores(arguments = {})
           arguments = arguments.clone
@@ -50,8 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_shard_stores", "/{index}/_shard_stores"],
-                            'indices.shard_stores')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_shard_stores", "/{index}/_shard_stores"], :endpoint => 'indices.shard_stores' })
           )
         end
       end

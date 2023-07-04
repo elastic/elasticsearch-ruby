@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The stop deployment parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/stop-trained-model-deployment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-trained-model-deployment.html
         #
         def stop_trained_model_deployment(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
@@ -47,8 +47,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/trained_models/{model_id}/deployment/_stop"],
-                            'ml.stop_trained_model_deployment')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/trained_models/{model_id}/deployment/_stop"], :endpoint => 'ml.stop_trained_model_deployment' })
           )
         end
       end

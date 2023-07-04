@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/slm-api-get-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html
         #
         def get_lifecycle(arguments = {})
           arguments = arguments.clone
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_slm/policy/{policy_id}", "/_slm/policy"],
-                            'slm.get_lifecycle')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_slm/policy/{policy_id}", "/_slm/policy"], :endpoint => 'slm.get_lifecycle' })
           )
         end
       end

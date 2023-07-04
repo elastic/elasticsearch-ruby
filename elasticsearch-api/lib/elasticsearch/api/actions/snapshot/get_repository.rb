@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def get_repository(arguments = {})
           arguments = arguments.clone
@@ -50,14 +50,14 @@ module Elasticsearch
           if Array(arguments[:ignore]).include?(404)
             Utils.__rescue_from_not_found {
               Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers, ["/_snapshot", "/_snapshot/{repository}"],
-                                'snapshot.get_repository')
+                perform_request(method, path, params, body, headers,
+                                { :path_templates => ["/_snapshot", "/_snapshot/{repository}"], :endpoint => 'snapshot.get_repository' })
               )
             }
           else
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers, ["/_snapshot", "/_snapshot/{repository}"],
-                              'snapshot.get_repository')
+              perform_request(method, path, params, body, headers,
+                              { :path_templates => ["/_snapshot", "/_snapshot/{repository}"], :endpoint => 'snapshot.get_repository' })
             )
           end
         end

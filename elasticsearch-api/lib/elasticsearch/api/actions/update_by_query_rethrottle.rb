@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html
       #
       def update_by_query_rethrottle(arguments = {})
         raise ArgumentError, "Required argument 'task_id' missing" unless arguments[:task_id]
@@ -44,8 +44,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/_update_by_query/{task_id}/_rethrottle"],
-                          'update_by_query_rethrottle')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/_update_by_query/{task_id}/_rethrottle"], :endpoint => 'update_by_query_rethrottle' })
         )
       end
     end

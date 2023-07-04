@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/watcher-api-start.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
         #
         def start(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_watcher/_start"], 'watcher.start')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_watcher/_start"], :endpoint => 'watcher.start' })
           )
         end
       end

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request wait until the task is complete before responding to the caller. Default is false.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-upgrade-job-model-snapshot.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-upgrade-job-model-snapshot.html
         #
         def upgrade_job_snapshot(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -51,7 +51,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_upgrade"], 'ml.upgrade_job_snapshot')
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_upgrade"], :endpoint => 'ml.upgrade_job_snapshot' })
           )
         end
       end

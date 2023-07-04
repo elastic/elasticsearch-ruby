@@ -26,8 +26,8 @@ describe 'client.cat#master' do
         {},
         nil,
         {},
-        ["/_cat/master"],
-        "cat.master"
+        path_templates: ["/_cat/master"],
+        endpoint: "cat.master"
     ]
   end
 

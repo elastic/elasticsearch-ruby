@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-fielddata.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html
         #
         def fielddata(arguments = {})
           arguments = arguments.clone
@@ -52,8 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
-                            'cat.fielddata')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cat/fielddata", "/_cat/fielddata/{fields}"], :endpoint => 'cat.fielddata' })
           )
         end
       end

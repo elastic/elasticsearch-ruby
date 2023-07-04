@@ -26,8 +26,8 @@ describe 'client.cat#allocation' do
         {},
         nil,
         {},
-        ["/_cat/allocation", "/_cat/allocation/{node_id}"],
-        "cat.allocation"
+        path_templates: ["/_cat/allocation", "/_cat/allocation/{node_id}"],
+        endpoint: "cat.allocation"
     ]
   end
 

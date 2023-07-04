@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition of `actions` to perform (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
         #
         def update_aliases(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -44,7 +44,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_aliases"], 'indices.update_aliases')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_aliases"], :endpoint => 'indices.update_aliases' })
           )
         end
       end

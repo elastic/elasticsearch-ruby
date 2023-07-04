@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-nodes-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
         #
         def info(arguments = {})
           arguments = arguments.clone
@@ -56,7 +56,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_nodes", "/_nodes/{node_id}", "/_nodes/{metric}", "/_nodes/{node_id}/{metric}"], 'nodes.info')
+                            { :path_templates => ["/_nodes", "/_nodes/{node_id}", "/_nodes/{metric}", "/_nodes/{node_id}/{metric}"], :endpoint => 'nodes.info' })
           )
         end
       end

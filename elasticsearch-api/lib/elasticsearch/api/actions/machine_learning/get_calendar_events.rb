@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Integer] :size Specifies a max number of events to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-calendar-event.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html
         #
         def get_calendar_events(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
@@ -49,8 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/calendars/{calendar_id}/events"],
-                            'ml.get_calendar_events')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/calendars/{calendar_id}/events"], :endpoint => 'ml.get_calendar_events' })
           )
         end
       end

@@ -29,7 +29,7 @@ module Elasticsearch
       # @option arguments [Integer] :size Limit the number of affected resources the health API returns
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/health-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/health-api.html
       #
       def health_report(arguments = {})
         arguments = arguments.clone
@@ -48,8 +48,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/_health_report", "/_health_report/{feature}"],
-                          'health_report')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/_health_report", "/_health_report/{feature}"], :endpoint => 'health_report' })
         )
       end
     end

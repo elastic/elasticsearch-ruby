@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-refresh.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
         #
         def refresh(arguments = {})
           arguments = arguments.clone
@@ -49,7 +49,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_refresh", "/{index}/_refresh"], 'indices.refresh')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_refresh", "/{index}/_refresh"], :endpoint => 'indices.refresh' })
           )
         end
       end

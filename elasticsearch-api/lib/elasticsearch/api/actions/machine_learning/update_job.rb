@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job update settings (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-update-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
         #
         def update_job(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}/_update"],
-                            'ml.update_job')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/_update"], :endpoint => 'ml.update_job' })
           )
         end
       end

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body the specification of the autoscaling policy (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/autoscaling-put-autoscaling-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-put-autoscaling-policy.html
         #
         def put_autoscaling_policy(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_autoscaling/policy/{name}"],
-                            'autoscaling.put_autoscaling_policy')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_autoscaling/policy/{name}"], :endpoint => 'autoscaling.put_autoscaling_policy' })
           )
         end
       end

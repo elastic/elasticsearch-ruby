@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-job-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
         #
         def get_job_stats(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/_stats", "/_ml/anomaly_detectors/{job_id}/_stats"], 'ml.get_job_stats')
+                            { :path_templates => ["/_ml/anomaly_detectors/_stats", "/_ml/anomaly_detectors/{job_id}/_stats"], :endpoint => 'ml.get_job_stats' })
           )
         end
       end

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ccr-post-resume-follow.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
         #
         def resume_follow(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -45,8 +45,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/{index}/_ccr/resume_follow"],
-                            'ccr.resume_follow')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/{index}/_ccr/resume_follow"], :endpoint => 'ccr.resume_follow' })
           )
         end
       end

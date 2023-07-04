@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The trained model vocabulary (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-model-vocabulary.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-vocabulary.html
         #
         def put_trained_model_vocabulary(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/trained_models/{model_id}/vocabulary"],
-                            'ml.put_trained_model_vocabulary')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/trained_models/{model_id}/vocabulary"], :endpoint => 'ml.put_trained_model_vocabulary' })
           )
         end
       end

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on job PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job.html
         #
         def get_jobs(arguments = {})
           arguments = arguments.clone
@@ -49,7 +49,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/{job_id}", "/_ml/anomaly_detectors"], 'ml.get_jobs')
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}", "/_ml/anomaly_detectors"], :endpoint => 'ml.get_jobs' })
           )
         end
       end

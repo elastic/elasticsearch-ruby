@@ -26,8 +26,8 @@ describe 'client.cat#tasks' do
         {},
         nil,
         {},
-        ["/_cat/tasks"],
-        "cat.tasks"
+        path_templates: ["/_cat/tasks"],
+        endpoint: "cat.tasks"
     ]
   end
 

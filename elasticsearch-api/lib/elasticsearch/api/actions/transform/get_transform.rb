@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on transform PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform.html
         #
         def get_transform(arguments = {})
           arguments = arguments.clone
@@ -50,8 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_transform/{transform_id}", "/_transform"],
-                            'transform.get_transform')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_transform/{transform_id}", "/_transform"], :endpoint => 'transform.get_transform' })
           )
         end
       end

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :reassign If the model_alias already exists and points to a separate model_id, this parameter must be true. Defaults to false.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/put-trained-models-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models-aliases.html
         #
         def put_trained_model_alias(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
@@ -50,7 +50,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/trained_models/{model_id}/model_aliases/{model_alias}"], 'ml.put_trained_model_alias')
+                            { :path_templates => ["/_ml/trained_models/{model_id}/model_aliases/{model_alias}"], :endpoint => 'ml.put_trained_model_alias' })
           )
         end
       end

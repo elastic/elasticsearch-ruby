@@ -56,7 +56,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
       #
       def delete_by_query(arguments = {})
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -74,7 +74,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/{index}/_delete_by_query"], 'delete_by_query')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_delete_by_query"], :endpoint => 'delete_by_query' })
         )
       end
     end

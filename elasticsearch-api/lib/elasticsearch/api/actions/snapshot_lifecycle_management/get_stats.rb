@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/slm-api-get-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-stats.html
         #
         def get_stats(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_slm/stats"], 'slm.get_stats')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_slm/stats"], :endpoint => 'slm.get_stats' })
           )
         end
       end

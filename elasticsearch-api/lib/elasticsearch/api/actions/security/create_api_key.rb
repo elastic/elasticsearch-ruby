@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The api key request to create an API key (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-create-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
         #
         def create_api_key(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -43,8 +43,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/api_key"],
-                            'security.create_api_key')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/api_key"], :endpoint => 'security.create_api_key' })
           )
         end
       end

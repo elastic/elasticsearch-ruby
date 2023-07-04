@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on datafeed PUT
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-datafeed.html
         #
         def get_datafeeds(arguments = {})
           arguments = arguments.clone
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/datafeeds/{datafeed_id}", "/_ml/datafeeds"],
-                            'ml.get_datafeeds')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/datafeeds/{datafeed_id}", "/_ml/datafeeds"], :endpoint => 'ml.get_datafeeds' })
           )
         end
       end

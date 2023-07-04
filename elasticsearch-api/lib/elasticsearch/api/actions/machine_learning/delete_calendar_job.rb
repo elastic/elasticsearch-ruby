@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :job_id The ID of the job to remove from the calendar
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-calendar-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-job.html
         #
         def delete_calendar_job(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/calendars/{calendar_id}/jobs/{job_id}"],
-                            'ml.delete_calendar_job')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/calendars/{calendar_id}/jobs/{job_id}"], :endpoint => 'ml.delete_calendar_job' })
           )
         end
       end

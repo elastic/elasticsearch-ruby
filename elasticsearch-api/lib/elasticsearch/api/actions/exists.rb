@@ -37,7 +37,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
       #
       def exists(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -57,8 +57,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body, headers, ["/{index}/_doc/{id}"],
-                          'exists').status == 200 ? true : false
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_doc/{id}"], :endpoint => 'exists' }).status == 200 ? true : false
         end
       end
 

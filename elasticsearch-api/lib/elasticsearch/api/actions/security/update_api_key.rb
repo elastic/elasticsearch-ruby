@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The API key request to update attributes of an API key.
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-update-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-api-key.html
         #
         def update_api_key(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -45,8 +45,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/api_key/{id}"],
-                            'security.update_api_key')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/api_key/{id}"], :endpoint => 'security.update_api_key' })
           )
         end
       end

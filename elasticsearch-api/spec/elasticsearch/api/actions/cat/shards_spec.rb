@@ -26,8 +26,8 @@ describe 'client.cat#shards' do
         {},
         nil,
         {},
-        ["/_cat/shards", "/_cat/shards/{index}"],
-        "cat.shards"
+        path_templates: ["/_cat/shards", "/_cat/shards/{index}"],
+        endpoint: "cat.shards"
     ]
   end
 

@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The URL params optionally sent in the body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-close-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-close-job.html
         #
         def close_job(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/anomaly_detectors/{job_id}/_close"],
-                            'ml.close_job')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/_close"], :endpoint => 'ml.close_job' })
           )
         end
       end

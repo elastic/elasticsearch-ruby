@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ilm-delete-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
         #
         def delete_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'policy' missing" unless arguments[:policy]
@@ -44,8 +44,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ilm/policy/{policy}"],
-                            'ilm.delete_lifecycle')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ilm/policy/{policy}"], :endpoint => 'ilm.delete_lifecycle' })
           )
         end
       end

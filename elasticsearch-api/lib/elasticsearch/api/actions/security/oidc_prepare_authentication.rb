@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The OpenID Connect authentication realm configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-oidc-prepare-authentication.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-prepare-authentication.html
         #
         def oidc_prepare_authentication(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,8 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/oidc/prepare"],
-                            'security.oidc_prepare_authentication')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/oidc/prepare"], :endpoint => 'security.oidc_prepare_authentication' })
           )
         end
       end

@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-ruleset.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_query_rules/{ruleset_id}"],
-                            'query_ruleset.get')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_query_rules/{ruleset_id}"], :endpoint => 'query_ruleset.get' })
           )
         end
       end

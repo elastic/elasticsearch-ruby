@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/autoscaling-get-autoscaling-capacity.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-capacity.html
         #
         def get_autoscaling_capacity(arguments = {})
           arguments = arguments.clone
@@ -39,8 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_autoscaling/capacity"],
-                            'autoscaling.get_autoscaling_capacity')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_autoscaling/capacity"], :endpoint => 'autoscaling.get_autoscaling_capacity' })
           )
         end
       end

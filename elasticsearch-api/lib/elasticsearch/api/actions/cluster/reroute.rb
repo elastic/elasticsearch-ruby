@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition of `commands` to perform (`move`, `cancel`, `allocate`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cluster-reroute.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
         #
         def reroute(arguments = {})
           arguments = arguments.clone
@@ -46,7 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_cluster/reroute"], 'cluster.reroute')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_cluster/reroute"], :endpoint => 'cluster.reroute' })
           )
         end
       end

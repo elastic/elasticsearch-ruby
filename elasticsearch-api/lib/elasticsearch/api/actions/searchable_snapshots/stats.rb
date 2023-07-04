@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
         #
         def stats(arguments = {})
           arguments = arguments.clone
@@ -48,7 +48,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_searchable_snapshots/stats", "/{index}/_searchable_snapshots/stats"], 'searchable_snapshots.stats')
+                            { :path_templates => ["/_searchable_snapshots/stats", "/{index}/_searchable_snapshots/stats"], :endpoint => 'searchable_snapshots.stats' })
           )
         end
       end

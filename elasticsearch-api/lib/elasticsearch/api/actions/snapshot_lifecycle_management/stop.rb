@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/slm-api-stop.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.html
         #
         def stop(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_slm/stop"], 'slm.stop')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_slm/stop"], :endpoint => 'slm.stop' })
           )
         end
       end

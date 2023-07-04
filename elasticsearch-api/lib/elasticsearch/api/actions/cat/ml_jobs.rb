@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-anomaly-detectors.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-anomaly-detectors.html
         #
         def ml_jobs(arguments = {})
           arguments = arguments.clone
@@ -55,7 +55,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_cat/ml/anomaly_detectors", "/_cat/ml/anomaly_detectors/{job_id}"], 'cat.ml_jobs')
+                            { :path_templates => ["/_cat/ml/anomaly_detectors", "/_cat/ml/anomaly_detectors/{job_id}"], :endpoint => 'cat.ml_jobs' })
           )
         end
       end

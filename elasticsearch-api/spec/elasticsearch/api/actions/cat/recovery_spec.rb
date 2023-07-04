@@ -26,8 +26,8 @@ describe 'client.cat#recovery' do
         {},
         nil,
         {},
-        ["/_cat/recovery", "/_cat/recovery/{index}"],
-        "cat.recovery"
+        path_templates: ["/_cat/recovery", "/_cat/recovery/{index}"],
+        endpoint: "cat.recovery"
     ]
   end
 

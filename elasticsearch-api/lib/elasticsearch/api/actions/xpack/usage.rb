@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/usage-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
         #
         def usage(arguments = {})
           arguments = arguments.clone
@@ -40,7 +40,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_xpack/usage"], 'xpack.usage')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_xpack/usage"], :endpoint => 'xpack.usage' })
           )
         end
       end

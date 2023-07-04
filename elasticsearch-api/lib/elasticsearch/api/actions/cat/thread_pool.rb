@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/cat-thread-pool.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
           arguments = arguments.clone
@@ -57,7 +57,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_cat/thread_pool", "/_cat/thread_pool/{thread_pool_patterns}"], 'cat.thread_pool')
+                            { :path_templates => ["/_cat/thread_pool", "/_cat/thread_pool/{thread_pool_patterns}"], :endpoint => 'cat.thread_pool' })
           )
         end
       end

@@ -36,7 +36,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
       #
       def get_source(arguments = {})
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
@@ -56,7 +56,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/{index}/_source/{id}"], 'get_source')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/{index}/_source/{id}"], :endpoint => 'get_source' })
         )
       end
     end

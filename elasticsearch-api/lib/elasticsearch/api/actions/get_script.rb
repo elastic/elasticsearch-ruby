@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-scripting.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
       #
       def get_script(arguments = {})
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -44,7 +44,8 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers, ["/_scripts/{id}"], 'get_script')
+          perform_request(method, path, params, body, headers,
+                          { :path_templates => ["/_scripts/{id}"], :endpoint => 'get_script' })
         )
       end
     end

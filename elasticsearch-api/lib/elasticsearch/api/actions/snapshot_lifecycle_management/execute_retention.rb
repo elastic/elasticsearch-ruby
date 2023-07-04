@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/slm-api-execute-retention.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
         #
         def execute_retention(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_slm/_execute_retention"], 'slm.execute_retention')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_slm/_execute_retention"], :endpoint => 'slm.execute_retention' })
           )
         end
       end

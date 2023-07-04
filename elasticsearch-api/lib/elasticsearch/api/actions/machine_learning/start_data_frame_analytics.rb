@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The start data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
         #
         def start_data_frame_analytics(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
@@ -46,8 +46,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/data_frame/analytics/{id}/_start"],
-                            'ml.start_data_frame_analytics')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/data_frame/analytics/{id}/_start"], :endpoint => 'ml.start_data_frame_analytics' })
           )
         end
       end

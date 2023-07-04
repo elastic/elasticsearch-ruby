@@ -26,8 +26,8 @@ describe 'client.cat#plugins' do
         {},
         nil,
         {},
-        ["/_cat/plugins"],
-        "cat.plugins"
+        path_templates: ["/_cat/plugins"],
+        endpoint: "cat.plugins"
     ]
   end
 

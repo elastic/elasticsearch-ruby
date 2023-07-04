@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The privileges to check and the list of profile IDs (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-has-privileges-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges-user-profile.html
         #
         def has_privileges_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -42,8 +42,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/profile/_has_privileges"],
-                            'security.has_privileges_user_profile')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/profile/_has_privileges"], :endpoint => 'security.has_privileges_user_profile' })
           )
         end
       end

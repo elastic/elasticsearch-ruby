@@ -26,8 +26,8 @@ describe 'client.cat#count' do
         {},
         nil,
         {},
-        ["/_cat/count", "/_cat/count/{index}"],
-        "cat.count"
+        path_templates: ["/_cat/count", "/_cat/count/{index}"],
+        endpoint: "cat.count"
     ]
   end
 

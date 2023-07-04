@@ -26,8 +26,8 @@ describe 'client.cat#snapshots' do
         {},
         nil,
         {},
-        ["/_cat/snapshots", "/_cat/snapshots/{repository}"],
-        "cat.snapshots"
+        path_templates: ["/_cat/snapshots", "/_cat/snapshots/{repository}"],
+        endpoint: "cat.snapshots"
     ]
   end
 

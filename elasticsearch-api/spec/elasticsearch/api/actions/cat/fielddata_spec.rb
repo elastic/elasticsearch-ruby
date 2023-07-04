@@ -26,8 +26,8 @@ describe 'client.cat#fielddata' do
         {},
         nil,
         {},
-        ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
-        "cat.fielddata"
+        path_templates: ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
+        endpoint: "cat.fielddata"
     ]
   end
 
@@ -44,8 +44,8 @@ describe 'client.cat#fielddata' do
           {},
           nil,
           {},
-          ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
-          "cat.fielddata"
+          path_templates: ["/_cat/fielddata", "/_cat/fielddata/{fields}"],
+          endpoint: "cat.fielddata"
       ]
     end
 

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-get-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
         #
         def get_api_key(arguments = {})
           arguments = arguments.clone
@@ -45,7 +45,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_security/api_key"], 'security.get_api_key')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_security/api_key"], :endpoint => 'security.get_api_key' })
           )
         end
       end

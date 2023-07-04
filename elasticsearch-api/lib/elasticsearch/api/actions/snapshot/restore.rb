@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Details of what to restore
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def restore(arguments = {})
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
@@ -51,8 +51,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_snapshot/{repository}/{snapshot}/_restore"],
-                            'snapshot.restore')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_snapshot/{repository}/{snapshot}/_restore"], :endpoint => 'snapshot.restore' })
           )
         end
       end

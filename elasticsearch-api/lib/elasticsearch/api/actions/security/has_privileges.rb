@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The privileges to test (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/security-api-has-privileges.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
         #
         def has_privileges(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
@@ -50,7 +50,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_security/user/_has_privileges", "/_security/user/{user}/_has_privileges"], 'security.has_privileges')
+                            { :path_templates => ["/_security/user/_has_privileges", "/_security/user/{user}/_has_privileges"], :endpoint => 'security.has_privileges' })
           )
         end
       end

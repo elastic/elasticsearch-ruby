@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-basic-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html
         #
         def get_basic_status(arguments = {})
           arguments = arguments.clone
@@ -39,7 +39,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_license/basic_status"], 'license.get_basic_status')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_license/basic_status"], :endpoint => 'license.get_basic_status' })
           )
         end
       end

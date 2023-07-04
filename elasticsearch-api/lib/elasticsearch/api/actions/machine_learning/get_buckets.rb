@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Bucket selection details if not provided in URI
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-get-bucket.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
         #
         def get_buckets(arguments = {})
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
@@ -67,7 +67,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_ml/anomaly_detectors/{job_id}/results/buckets/{timestamp}", "/_ml/anomaly_detectors/{job_id}/results/buckets"], 'ml.get_buckets')
+                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/results/buckets/{timestamp}", "/_ml/anomaly_detectors/{job_id}/results/buckets"], :endpoint => 'ml.get_buckets' })
           )
         end
       end

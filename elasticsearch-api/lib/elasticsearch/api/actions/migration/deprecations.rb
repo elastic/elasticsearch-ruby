@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :index Index pattern
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/migration-api-deprecation.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
         #
         def deprecations(arguments = {})
           arguments = arguments.clone
@@ -47,7 +47,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_migration/deprecations", "/{index}/_migration/deprecations"], 'migration.deprecations')
+                            { :path_templates => ["/_migration/deprecations", "/{index}/_migration/deprecations"], :endpoint => 'migration.deprecations' })
           )
         end
       end

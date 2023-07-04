@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of enrich policy names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-enrich-policy-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
         #
         def get_policy(arguments = {})
           arguments = arguments.clone
@@ -46,8 +46,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_enrich/policy/{name}", "/_enrich/policy"],
-                            'enrich.get_policy')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_enrich/policy/{name}", "/_enrich/policy"], :endpoint => 'enrich.get_policy' })
           )
         end
       end

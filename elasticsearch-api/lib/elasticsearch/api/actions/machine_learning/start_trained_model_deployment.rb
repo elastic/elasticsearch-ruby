@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for The allocation status for which to wait (options: starting, started, fully_allocated)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/start-trained-model-deployment.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-trained-model-deployment.html
         #
         def start_trained_model_deployment(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
@@ -52,8 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/trained_models/{model_id}/deployment/_start"],
-                            'ml.start_trained_model_deployment')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/trained_models/{model_id}/deployment/_start"], :endpoint => 'ml.start_trained_model_deployment' })
           )
         end
       end

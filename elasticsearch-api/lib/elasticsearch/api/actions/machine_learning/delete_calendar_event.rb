@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :event_id The ID of the event to remove from the calendar
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/ml-delete-calendar-event.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-event.html
         #
         def delete_calendar_event(arguments = {})
           raise ArgumentError, "Required argument 'calendar_id' missing" unless arguments[:calendar_id]
@@ -48,8 +48,8 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_ml/calendars/{calendar_id}/events/{event_id}"],
-                            'ml.delete_calendar_event')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_ml/calendars/{calendar_id}/events/{event_id}"], :endpoint => 'ml.delete_calendar_event' })
           )
         end
       end

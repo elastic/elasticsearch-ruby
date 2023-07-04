@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def list(arguments = {})
           arguments = arguments.clone
@@ -50,7 +50,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_tasks"], 'tasks.list')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_tasks"], :endpoint => 'tasks.list' })
           )
         end
       end

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body New index template definition to be simulated, if no index template name is specified
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
         #
         def simulate_template(arguments = {})
           arguments = arguments.clone
@@ -52,7 +52,7 @@ module Elasticsearch
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers,
-                            ["/_index_template/_simulate", "/_index_template/_simulate/{name}"], 'indices.simulate_template')
+                            { :path_templates => ["/_index_template/_simulate", "/_index_template/_simulate/{name}"], :endpoint => 'indices.simulate_template' })
           )
         end
       end

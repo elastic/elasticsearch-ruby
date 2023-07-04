@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request block until the cancellation of the task and its descendant tasks is completed. Defaults to false
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def cancel(arguments = {})
           arguments = arguments.clone
@@ -54,8 +54,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_tasks/_cancel", "/_tasks/{task_id}/_cancel"],
-                            'tasks.cancel')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_tasks/_cancel", "/_tasks/{task_id}/_cancel"], :endpoint => 'tasks.cancel' })
           )
         end
       end

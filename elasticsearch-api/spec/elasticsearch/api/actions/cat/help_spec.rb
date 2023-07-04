@@ -26,8 +26,8 @@ describe 'client.cat#help' do
         {},
         nil,
         {},
-        ["/_cat"],
-        "cat.help"
+        path_templates: ["/_cat"],
+        endpoint: "cat.help"
     ]
   end
 

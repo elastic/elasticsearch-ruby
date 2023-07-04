@@ -52,8 +52,8 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_data_stream/{name}/_lifecycle"],
-                            'indices.put_data_lifecycle')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_data_stream/{name}/_lifecycle"], :endpoint => 'indices.put_data_lifecycle' })
           )
         end
       end

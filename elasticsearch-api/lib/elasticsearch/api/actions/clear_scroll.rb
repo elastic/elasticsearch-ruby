@@ -32,7 +32,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/clear-scroll-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
       #
       def clear_scroll(arguments = {})
         arguments = arguments.clone
@@ -53,14 +53,14 @@ module Elasticsearch
         if Array(arguments[:ignore]).include?(404)
           Utils.__rescue_from_not_found {
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers, ["/_search/scroll", "/_search/scroll/{scroll_id}"],
-                              'clear_scroll')
+              perform_request(method, path, params, body, headers,
+                              { :path_templates => ["/_search/scroll", "/_search/scroll/{scroll_id}"], :endpoint => 'clear_scroll' })
             )
           }
         else
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, ["/_search/scroll", "/_search/scroll/{scroll_id}"],
-                            'clear_scroll')
+            perform_request(method, path, params, body, headers,
+                            { :path_templates => ["/_search/scroll", "/_search/scroll/{scroll_id}"], :endpoint => 'clear_scroll' })
           )
         end
       end

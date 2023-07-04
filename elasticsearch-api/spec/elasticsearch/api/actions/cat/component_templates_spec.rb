@@ -25,8 +25,8 @@ describe 'client.cat#component_templates' do
       {},
       nil,
       {},
-      ["/_cat/component_templates", "/_cat/component_templates/{name}"],
-      "cat.component_templates"
+      path_templates: ["/_cat/component_templates", "/_cat/component_templates/{name}"],
+      endpoint: "cat.component_templates"
     ]
   end
 
