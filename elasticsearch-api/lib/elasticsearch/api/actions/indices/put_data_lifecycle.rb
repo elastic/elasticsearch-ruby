@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates the data lifecycle of the selected data streams.
+        # Updates the data stream lifecycle of the selected data streams.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit timestamp for the document
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The data lifecycle configuration that consist of the data retention
+        # @option arguments [Hash] :body The data stream lifecycle configuration that consist of the data retention
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-put-lifecycle.html
         #
