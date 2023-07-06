@@ -24,11 +24,13 @@ module Elasticsearch
     module WipeCluster
       PRESERVE_ILM_POLICY_IDS = [
         'ilm-history-ilm-policy', 'slm-history-ilm-policy', 'watch-history-ilm-policy',
-        'watch-history-ilm-policy-16', 'ml-size-based-ilm-policy', 'logs', 'metrics', 'synthetics',
-        '7-days-default', '30-days-default', '90-days-default', '180-days-default',
-        '365-days-default', '.fleet-actions-results-ilm-policy', '.fleet-file-data-ilm-policy',
-        '.fleet-files-ilm-policy', '.deprecation-indexing-ilm-policy', '.monitoring-8-ilm-policy',
-        'behavioral_analytics-events-default_policy'
+        'watch-history-ilm-policy-16', 'ml-size-based-ilm-policy', 'logs', 'metrics', 'profiling',
+        'synthetics', '7-days-default', '30-days-default', '90-days-default', '180-days-default',
+        '365-days-default', '.fleet-files-ilm-policy', '.fleet-file-data-ilm-policy',
+        '.fleet-actions-results-ilm-policy', '.fleet-file-fromhost-data-ilm-policy',
+        '.fleet-file-fromhost-meta-ilm-policy', '.fleet-file-tohost-data-ilm-policy',
+        '.fleet-file-tohost-meta-ilm-policy', '.deprecation-indexing-ilm-policy',
+        '.monitoring-8-ilm-policy', 'behavioral_analytics-events-default_policy'
       ].freeze
 
       PLATINUM_TEMPLATES = [
@@ -267,7 +269,6 @@ module Elasticsearch
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
-
               next if task.empty? || skippable_task?(task)
 
               count += 1
