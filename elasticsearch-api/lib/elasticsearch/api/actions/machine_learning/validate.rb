@@ -34,6 +34,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ml.validate" }
 
           body   = arguments.delete(:body)
 
@@ -42,8 +43,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ml/anomaly_detectors/_validate"], :endpoint => 'ml.validate' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

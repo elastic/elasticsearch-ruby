@@ -35,6 +35,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.put_privileges" }
 
           body   = arguments.delete(:body)
 
@@ -43,8 +44,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/privilege/"], :endpoint => 'security.put_privileges' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

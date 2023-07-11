@@ -33,6 +33,7 @@ module Elasticsearch
         def post_start_trial(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "license.post_start_trial" }
 
           body   = nil
 
@@ -41,8 +42,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_license/start_trial"], :endpoint => 'license.post_start_trial' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

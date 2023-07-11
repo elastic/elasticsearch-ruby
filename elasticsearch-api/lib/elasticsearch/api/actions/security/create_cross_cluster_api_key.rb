@@ -38,6 +38,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.create_cross_cluster_api_key" }
 
           body   = arguments.delete(:body)
 
@@ -46,8 +47,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/cross_cluster/api_key"], :endpoint => 'security.create_cross_cluster_api_key' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

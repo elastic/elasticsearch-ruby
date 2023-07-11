@@ -31,6 +31,7 @@ module Elasticsearch
         def get_status(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "slm.get_status" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_slm/status"], :endpoint => 'slm.get_status' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

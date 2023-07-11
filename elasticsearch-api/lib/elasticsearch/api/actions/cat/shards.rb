@@ -40,6 +40,13 @@ module Elasticsearch
         def shards(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cat.shards" }
+
+          defined_params = ["index"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body   = nil
 
@@ -55,8 +62,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cat/shards", "/_cat/shards/{index}"], :endpoint => 'cat.shards' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

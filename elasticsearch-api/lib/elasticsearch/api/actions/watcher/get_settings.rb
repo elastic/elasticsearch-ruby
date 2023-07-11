@@ -31,6 +31,7 @@ module Elasticsearch
         def get_settings(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "watcher.get_settings" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_watcher/settings"], :endpoint => 'watcher.get_settings' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

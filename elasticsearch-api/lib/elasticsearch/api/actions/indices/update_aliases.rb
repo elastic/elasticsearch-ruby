@@ -36,6 +36,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "indices.update_aliases" }
 
           body   = arguments.delete(:body)
 
@@ -44,8 +45,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_aliases"], :endpoint => 'indices.update_aliases' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -33,6 +33,7 @@ module Elasticsearch
         def migrate_to_data_tiers(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ilm.migrate_to_data_tiers" }
 
           body   = arguments.delete(:body)
 
@@ -41,8 +42,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ilm/migrate_to_data_tiers"], :endpoint => 'ilm.migrate_to_data_tiers' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

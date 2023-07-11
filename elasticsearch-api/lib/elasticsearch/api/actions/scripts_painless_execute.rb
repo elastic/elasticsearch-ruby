@@ -35,6 +35,7 @@ module Elasticsearch
       def scripts_painless_execute(arguments = {})
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "scripts_painless_execute" }
 
         body   = arguments.delete(:body)
 
@@ -48,8 +49,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers,
-                          { :path_templates => ["/_scripts/painless/_execute"], :endpoint => 'scripts_painless_execute' })
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

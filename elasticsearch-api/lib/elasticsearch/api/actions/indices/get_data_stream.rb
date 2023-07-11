@@ -34,6 +34,13 @@ module Elasticsearch
         def get_data_stream(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "indices.get_data_stream" }
+
+          defined_params = ["name"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -48,8 +55,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_data_stream", "/_data_stream/{name}"], :endpoint => 'indices.get_data_stream' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

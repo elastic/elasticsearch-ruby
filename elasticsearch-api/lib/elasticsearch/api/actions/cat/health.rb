@@ -38,6 +38,7 @@ module Elasticsearch
         def health(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cat.health" }
 
           body   = nil
 
@@ -47,8 +48,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cat/health"], :endpoint => 'cat.health' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

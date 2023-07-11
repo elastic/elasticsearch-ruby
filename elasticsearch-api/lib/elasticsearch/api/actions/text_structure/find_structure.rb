@@ -49,6 +49,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "text_structure.find_structure" }
 
           body   = arguments.delete(:body)
 
@@ -64,8 +65,7 @@ module Elasticsearch
 
           headers.merge!("Content-Type" => "application/x-ndjson")
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, payload, headers,
-                            { :path_templates => ["/_text_structure/find_structure"], :endpoint => 'text_structure.find_structure' })
+            perform_request(method, path, params, payload, headers, request_opts)
           )
         end
       end

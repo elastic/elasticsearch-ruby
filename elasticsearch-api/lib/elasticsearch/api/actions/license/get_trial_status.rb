@@ -31,6 +31,7 @@ module Elasticsearch
         def get_trial_status(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "license.get_trial_status" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_license/trial_status"], :endpoint => 'license.get_trial_status' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

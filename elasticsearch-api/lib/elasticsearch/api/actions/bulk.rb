@@ -45,6 +45,13 @@ module Elasticsearch
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "bulk" }
+
+        defined_params = ["index"].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
 
         body   = arguments.delete(:body)
 
@@ -66,8 +73,7 @@ module Elasticsearch
 
         headers.merge!("Content-Type" => "application/x-ndjson")
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, payload, headers,
-                          { :path_templates => ["/_bulk", "/{index}/_bulk"], :endpoint => 'bulk' })
+          perform_request(method, path, params, payload, headers, request_opts)
         )
       end
     end

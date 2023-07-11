@@ -32,6 +32,13 @@ module Elasticsearch
       def render_search_template(arguments = {})
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "render_search_template" }
+
+        defined_params = ["id"].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
 
         body = arguments.delete(:body)
 
@@ -51,8 +58,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers,
-                          { :path_templates => ["/_render/template", "/_render/template/{id}"], :endpoint => 'render_search_template' })
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

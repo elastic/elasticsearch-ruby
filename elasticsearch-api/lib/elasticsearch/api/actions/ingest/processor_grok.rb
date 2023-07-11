@@ -31,6 +31,7 @@ module Elasticsearch
         def processor_grok(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ingest.processor_grok" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ingest/processor/grok"], :endpoint => 'ingest.processor_grok' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

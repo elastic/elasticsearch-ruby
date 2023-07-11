@@ -34,6 +34,7 @@ module Elasticsearch
         def pending_tasks(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cluster.pending_tasks" }
 
           body   = nil
 
@@ -42,8 +43,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cluster/pending_tasks"], :endpoint => 'cluster.pending_tasks' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

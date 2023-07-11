@@ -36,6 +36,13 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ccr.forget_follower" }
+
+          defined_params = ["index"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body   = arguments.delete(:body)
 
@@ -46,8 +53,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/{index}/_ccr/forget_follower"], :endpoint => 'ccr.forget_follower' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -33,6 +33,7 @@ module Elasticsearch
         def query_api_keys(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.query_api_keys" }
 
           body   = arguments.delete(:body)
 
@@ -46,8 +47,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/_query/api_key"], :endpoint => 'security.query_api_keys' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

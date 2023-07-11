@@ -87,6 +87,8 @@ module Elasticsearch
           @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
           @http_method      = __http_method
           @paths            = @spec['url']['paths'].map { |b| b['path'] }
+          @path_params   = __path_variables.flatten.uniq
+          @perform_request_opts = { endpoint: @endpoint_name }
           # Using Ruby's safe operator on array:
           @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
           @http_path        = __http_path

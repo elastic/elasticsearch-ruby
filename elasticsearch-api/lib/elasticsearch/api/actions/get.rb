@@ -46,6 +46,13 @@ module Elasticsearch
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "get" }
+
+        defined_params = ["index", "id"].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
 
         body = nil
 
@@ -60,14 +67,12 @@ module Elasticsearch
         if Array(arguments[:ignore]).include?(404)
           Utils.__rescue_from_not_found {
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers,
-                              { :path_templates => ["/{index}/_doc/{id}"], :endpoint => 'get' })
+              perform_request(method, path, params, body, headers, request_opts)
             )
           }
         else
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/{index}/_doc/{id}"], :endpoint => 'get' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

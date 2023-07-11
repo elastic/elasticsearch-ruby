@@ -31,6 +31,7 @@ module Elasticsearch
       def close_point_in_time(arguments = {})
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "close_point_in_time" }
 
         body   = arguments.delete(:body)
 
@@ -39,8 +40,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers,
-                          { :path_templates => ["/_pit"], :endpoint => 'close_point_in_time' })
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

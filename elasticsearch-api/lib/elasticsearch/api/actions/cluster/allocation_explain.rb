@@ -34,6 +34,7 @@ module Elasticsearch
         def allocation_explain(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cluster.allocation_explain" }
 
           body   = arguments.delete(:body)
 
@@ -47,8 +48,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cluster/allocation/explain"], :endpoint => 'cluster.allocation_explain' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

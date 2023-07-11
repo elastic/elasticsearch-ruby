@@ -31,6 +31,7 @@ module Elasticsearch
         def stop(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "watcher.stop" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_watcher/_stop"], :endpoint => 'watcher.stop' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

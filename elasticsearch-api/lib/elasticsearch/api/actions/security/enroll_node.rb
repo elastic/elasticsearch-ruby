@@ -31,6 +31,7 @@ module Elasticsearch
         def enroll_node(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.enroll_node" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/enroll/node"], :endpoint => 'security.enroll_node' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

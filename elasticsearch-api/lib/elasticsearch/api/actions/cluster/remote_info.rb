@@ -31,6 +31,7 @@ module Elasticsearch
         def remote_info(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cluster.remote_info" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_remote/info"], :endpoint => 'cluster.remote_info' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

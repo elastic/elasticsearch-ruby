@@ -30,6 +30,7 @@ module Elasticsearch
       def ping(arguments = {})
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
+        request_opts = { :endpoint => "ping" }
 
         body   = nil
 
@@ -38,8 +39,7 @@ module Elasticsearch
         params = {}
 
         begin
-          perform_request(method, path, params, body, headers,
-                          { :path_templates => ["/"], :endpoint => 'ping' }).status == 200 ? true : false
+          perform_request(method, path, params, body, headers, request_opts).status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false

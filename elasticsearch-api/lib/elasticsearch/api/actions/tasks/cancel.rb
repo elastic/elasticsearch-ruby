@@ -40,6 +40,13 @@ module Elasticsearch
         def cancel(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "tasks.cancel" }
+
+          defined_params = ["task_id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -54,8 +61,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_tasks/_cancel", "/_tasks/{task_id}/_cancel"], :endpoint => 'tasks.cancel' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

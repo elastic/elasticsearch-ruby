@@ -33,6 +33,13 @@ module Elasticsearch
         def stats(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "watcher.stats" }
+
+          defined_params = ["metric"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -47,8 +54,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_watcher/stats", "/_watcher/stats/{metric}"], :endpoint => 'watcher.stats' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

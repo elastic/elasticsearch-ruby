@@ -36,6 +36,13 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ml.delete_calendar_event" }
+
+          defined_params = ["calendar_id", "event_id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -48,8 +55,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ml/calendars/{calendar_id}/events/{event_id}"], :endpoint => 'ml.delete_calendar_event' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

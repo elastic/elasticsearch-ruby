@@ -33,6 +33,7 @@ module Elasticsearch
         def info(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "xpack.info" }
 
           body   = nil
 
@@ -41,8 +42,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_xpack"], :endpoint => 'xpack.info' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

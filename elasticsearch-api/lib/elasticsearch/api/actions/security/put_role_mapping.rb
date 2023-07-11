@@ -37,6 +37,13 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.put_role_mapping" }
+
+          defined_params = ["name"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = arguments.delete(:body)
 
@@ -47,8 +54,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/role_mapping/{name}"], :endpoint => 'security.put_role_mapping' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -34,6 +34,13 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.clear_cached_privileges" }
+
+          defined_params = ["application"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -44,8 +51,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/privilege/{application}/_clear_cache"], :endpoint => 'security.clear_cached_privileges' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

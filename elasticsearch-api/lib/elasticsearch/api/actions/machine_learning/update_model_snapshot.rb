@@ -38,6 +38,13 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ml.update_model_snapshot" }
+
+          defined_params = ["job_id", "snapshot_id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = arguments.delete(:body)
 
@@ -50,8 +57,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ml/anomaly_detectors/{job_id}/model_snapshots/{snapshot_id}/_update"], :endpoint => 'ml.update_model_snapshot' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

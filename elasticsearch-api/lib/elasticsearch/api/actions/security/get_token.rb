@@ -34,6 +34,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.get_token" }
 
           body   = arguments.delete(:body)
 
@@ -42,8 +43,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/oauth2/token"], :endpoint => 'security.get_token' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

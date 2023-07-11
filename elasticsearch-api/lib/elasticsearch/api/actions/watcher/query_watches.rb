@@ -32,6 +32,7 @@ module Elasticsearch
         def query_watches(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "watcher.query_watches" }
 
           body   = arguments.delete(:body)
 
@@ -45,8 +46,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_watcher/_query/watches"], :endpoint => 'watcher.query_watches' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

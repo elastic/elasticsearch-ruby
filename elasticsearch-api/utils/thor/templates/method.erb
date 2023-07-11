@@ -43,6 +43,15 @@ module Elasticsearch
     arguments = arguments.clone
     <%- end -%>
     headers = arguments.delete(:headers) || {}
+    request_opts = <%= @perform_request_opts %>
+    <%- unless @path_params.empty? %>
+      defined_params =<%=  @path_params %>.inject({}) do |set_variables, variable|
+        set_variables[variable] = arguments[variable] if arguments.key?(variable)
+        set_variables
+      end
+    request_opts[:defined_params] = defined_params unless defined_params.empty?
+    <%- end %>
+    <%-    %>
     <%- #Body %>
     <%= ERB.new(File.new("./thor/templates/_body.erb").read, trim_mode: '-').result(binding) %>
     <%- # Method setup -%>

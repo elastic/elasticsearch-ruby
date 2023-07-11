@@ -41,6 +41,7 @@ module Elasticsearch
         def nodes(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cat.nodes" }
 
           body   = nil
 
@@ -50,8 +51,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h], escape: false) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cat/nodes"], :endpoint => 'cat.nodes' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

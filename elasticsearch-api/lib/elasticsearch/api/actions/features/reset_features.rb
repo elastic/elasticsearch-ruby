@@ -35,6 +35,7 @@ module Elasticsearch
         def reset_features(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "features.reset_features" }
 
           body   = nil
 
@@ -43,8 +44,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_features/_reset"], :endpoint => 'features.reset_features' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

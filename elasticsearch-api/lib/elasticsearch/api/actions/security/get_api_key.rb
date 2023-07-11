@@ -37,6 +37,7 @@ module Elasticsearch
         def get_api_key(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.get_api_key" }
 
           body   = nil
 
@@ -45,8 +46,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/api_key"], :endpoint => 'security.get_api_key' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

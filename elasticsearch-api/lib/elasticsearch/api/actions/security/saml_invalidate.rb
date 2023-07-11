@@ -34,6 +34,7 @@ module Elasticsearch
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "security.saml_invalidate" }
 
           body   = arguments.delete(:body)
 
@@ -42,8 +43,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_security/saml/invalidate"], :endpoint => 'security.saml_invalidate' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

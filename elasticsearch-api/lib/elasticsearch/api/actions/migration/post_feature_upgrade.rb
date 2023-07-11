@@ -31,6 +31,7 @@ module Elasticsearch
         def post_feature_upgrade(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "migration.post_feature_upgrade" }
 
           body   = nil
 
@@ -39,8 +40,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_migration/system_features"], :endpoint => 'migration.post_feature_upgrade' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

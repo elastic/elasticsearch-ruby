@@ -36,6 +36,13 @@ module Elasticsearch
         def get_data_frame_analytics(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ml.get_data_frame_analytics" }
+
+          defined_params = ["id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -50,8 +57,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ml/data_frame/analytics/{id}", "/_ml/data_frame/analytics"], :endpoint => 'ml.get_data_frame_analytics' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

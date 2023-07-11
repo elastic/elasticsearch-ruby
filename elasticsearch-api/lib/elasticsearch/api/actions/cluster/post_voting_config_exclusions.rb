@@ -35,6 +35,7 @@ module Elasticsearch
         def post_voting_config_exclusions(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "cluster.post_voting_config_exclusions" }
 
           body   = nil
 
@@ -43,8 +44,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_cluster/voting_config_exclusions"], :endpoint => 'cluster.post_voting_config_exclusions' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

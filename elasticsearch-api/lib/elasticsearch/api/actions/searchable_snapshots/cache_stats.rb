@@ -36,6 +36,13 @@ module Elasticsearch
         def cache_stats(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "searchable_snapshots.cache_stats" }
+
+          defined_params = ["node_id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -50,8 +57,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_searchable_snapshots/cache/stats", "/_searchable_snapshots/{node_id}/cache/stats"], :endpoint => 'searchable_snapshots.cache_stats' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

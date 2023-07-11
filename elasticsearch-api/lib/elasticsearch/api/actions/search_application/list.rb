@@ -38,6 +38,7 @@ module Elasticsearch
         def list(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "search_application.list" }
 
           body   = nil
 
@@ -46,8 +47,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_application/search_application"], :endpoint => 'search_application.list' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

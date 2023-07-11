@@ -33,6 +33,13 @@ module Elasticsearch
         def get_job_stats(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "ml.get_job_stats" }
+
+          defined_params = ["job_id"].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           body = nil
 
@@ -47,8 +54,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_ml/anomaly_detectors/_stats", "/_ml/anomaly_detectors/{job_id}/_stats"], :endpoint => 'ml.get_job_stats' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

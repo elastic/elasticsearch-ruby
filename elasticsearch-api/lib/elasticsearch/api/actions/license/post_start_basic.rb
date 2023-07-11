@@ -32,6 +32,7 @@ module Elasticsearch
         def post_start_basic(arguments = {})
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
+          request_opts = { :endpoint => "license.post_start_basic" }
 
           body   = nil
 
@@ -40,8 +41,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers,
-                            { :path_templates => ["/_license/start_basic"], :endpoint => 'license.post_start_basic' })
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end
