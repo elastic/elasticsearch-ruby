@@ -41,7 +41,8 @@ module Elasticsearch
         'synthetics', 'synthetics-settings', 'synthetics-mappings',
         '.snapshot-blob-cache', '.deprecation-indexing-template',
         '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-        'security-index-template', 'data-streams-mappings', 'ecs@dynamic_templates'
+        'security-index-template', 'data-streams-mappings', 'ecs@dynamic_templates',
+        'search-acl-filter'
       ].freeze
 
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -256,7 +257,7 @@ module Elasticsearch
           platinum_prefixes = [
             '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-',
             '.transform', '.deprecation', 'data-streams-mappings', '.fleet',
-            'behavioral_analytics-'
+            'behavioral_analytics-', 'profiling', 'elastic-connectors'
           ].freeze
           return true if template.start_with?(*platinum_prefixes)
 
