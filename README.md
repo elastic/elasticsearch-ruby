@@ -19,6 +19,10 @@ documentation at RubyDocs.
 
 ## Installation
 
+```ruby
+gem install elasticsearch
+```
+
 Refer to the [Installation section](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_installation)
 of the getting started documentation.
 
@@ -29,6 +33,13 @@ of the getting started documentation.
 
 ## Usage
 
+```ruby
+require 'elasticsearch'
+client = Elasticsearch::Client.new(host: 'https://my-elasticsearch-host.example')
+client.ping
+client.search(q: 'test')
+```
+
 * [Creating an index](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_creating_an_index)
 * [Indexing a document](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_indexing_documents)
 * [Getting documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_getting_documents)
@@ -36,7 +47,6 @@ of the getting started documentation.
 * [Updating documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_updating_documents)
 * [Deleting documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_deleting_documents)
 * [Deleting an index](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_deleting_an_index)
-
 
 Refer to [the official documentation](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html)
 for examples of how to use the most frequently called APIs and 
