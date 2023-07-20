@@ -8,44 +8,50 @@ This repository contains the official [Elasticsearch](https://www.elastic.co/pro
 
 ## Documentation
 
-Please refer to [the full documentation on elastic.co](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html) for comprehensive information.
+Please refer to 
+[the full documentation on elastic.co](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html) 
+for comprehensive information.
 
-Both `elastic-transport` and `elasticsearch-api` are also documented. You can check the [`elastic-transport`](https://rubydoc.info/github/elastic/elastic-transport-ruby/) and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) documentation at RubyDocs.
+Both `elastic-transport` and `elasticsearch-api` are documented. You can check 
+the [`elastic-transport`](https://rubydoc.info/github/elastic/elastic-transport-ruby/) 
+and the [`elasticsearch-api`](http://rubydoc.info/gems/elasticsearch-api) 
+documentation at RubyDocs.
 
 ## Installation
 
-Install the `elasticsearch` gem from [Rubygems](https://rubygems.org/gems/elasticsearch):
-
-```
-$ gem install elasticsearch
-```
-
-Or add it to your project's Gemfile:
-
 ```ruby
-gem 'elasticsearch', 'VERSION'
+gem install elasticsearch
 ```
 
-## Usage example
+Refer to the [Installation section](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_installation)
+of the getting started documentation.
+
+## Connecting
+
+Refer to the [Connecting section](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_connecting)
+of the getting started documentation.
+
+## Usage
 
 ```ruby
 require 'elasticsearch'
-
-client = Elasticsearch::Client.new(log: true)
-
-# if you specify Elasticsearch host
-# client = Elasticsearch::Client.new url: 'http://localhost:9200', log: true
-
-client.transport.reload_connections!
-
-client.cluster.health
-
+client = Elasticsearch::Client.new(host: 'https://my-elasticsearch-host.example')
+client.ping
 client.search(q: 'test')
-
-# etc.
 ```
 
-See also [the official documentation](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html) for examples of how to use the most frequently called APIs and [`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) for some practical examples.
+* [Creating an index](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_creating_an_index)
+* [Indexing a document](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_indexing_documents)
+* [Getting documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_getting_documents)
+* [Searching documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_searching_documents)
+* [Updating documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_updating_documents)
+* [Deleting documents](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_deleting_documents)
+* [Deleting an index](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/getting-started-ruby.html#_deleting_an_index)
+
+Refer to [the official documentation](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html)
+for examples of how to use the most frequently called APIs and 
+[`doc/examples`](https://github.com/elastic/elasticsearch-ruby/blob/main/docs/examples/) 
+for some practical examples.
 
 **For optimal performance, you should use a HTTP library which supports persistent ("keep-alive") connections, e.g. [Patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus).** These libraries are not dependencies of the Elasticsearch gems. Ensure you define a dependency for a HTTP library in your own application.
 
