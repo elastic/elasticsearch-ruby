@@ -32,6 +32,8 @@ require 'elasticsearch'
 require 'elasticsearch-api'
 require 'openssl'
 require 'logger'
+require_relative '../utils/thor/generator/files_helper'
+require_relative '../utils/thor/generator/endpoint_specifics'
 
 tracer = ::Logger.new(STDERR)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }

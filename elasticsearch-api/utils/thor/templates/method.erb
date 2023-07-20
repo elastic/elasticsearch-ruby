@@ -16,37 +16,39 @@
 # under the License.
 #
 module Elasticsearch
-<%= '  '*(@namespace_depth) %>module API
-<%- @module_namespace.each_with_index do |name, i| -%>
-  <%= '  '*i %>module <%= module_name_helper(name) %>
+<%= '  '*(@spec.namespace_depth) %>module API
+<%- @spec.module_namespace.each_with_index do |name, i| -%>
+  <%= '  '*i %>module <%= @spec.module_name_helper(name) %>
 <%- end -%>
-<%= '  '*(@namespace_depth+2) %>module Actions
+<%= '  '*(@spec.namespace_depth+2) %>module Actions
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
 <%# Method definition -%>
-<%= '  '*(@namespace_depth+3) -%>def <%= @method_name %>(arguments = {})
-<%- if @endpoint_name == 'create' -%>
-  <%= '  '*(@namespace_depth+3) %>if arguments[:id]
-  <%= '  '*(@namespace_depth+3) %>  index arguments.update op_type: 'create'
-  <%= '  '*(@namespace_depth+3) %>else
-  <%= '  '*(@namespace_depth+3) %>  index arguments
-  <%= '  '*(@namespace_depth+3) %>end
-  <%= '  '*(@namespace_depth+2) %>end
+<%= '  '*(@spec.namespace_depth+3) -%>def <%= @method_name %>(arguments = {})
+<%- if @spec.endpoint_name == 'create' -%>
+  <%= '  '*(@spec.namespace_depth+3) %>if arguments[:id]
+  <%= '  '*(@spec.namespace_depth+3) %>  index arguments.update op_type: 'create'
+  <%= '  '*(@spec.namespace_depth+3) %>else
+  <%= '  '*(@spec.namespace_depth+3) %>  index arguments
+  <%= '  '*(@spec.namespace_depth+3) %>end
+  <%= '  '*(@spec.namespace_depth+2) %>end
 <%- else -%>
-  <%- if @method_name == 'get_field_mapping' %>
+  <%- if @spec.method_name == 'get_field_mapping' %>
     arguments = arguments.clone
     _fields = arguments.delete(:field) || arguments.delete(:fields)
     raise ArgumentError, "Required argument 'field' missing" unless _fields
   <%- else -%>
-    <%- @required_parts.each do |required| %><%# Arguments -%>
-      <%= '  '*(@namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
+    <%- @spec.required_parts.each do |required| %><%# Arguments -%>
+      <%= '  '*(@spec.namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
     <%- end -%>
     arguments = arguments.clone
     <%- end -%>
     headers = arguments.delete(:headers) || {}
-    request_opts = <%= @perform_request_opts %>
-    <%- unless @path_params.empty? %>
-      defined_params =<%=  @path_params %>.inject({}) do |set_variables, variable|
-        set_variables[variable] = arguments[variable] if arguments.key?(variable)
+    request_opts = <%= @spec.perform_request_opts %>
+    <%- unless @spec.path_params.empty? %>
+      defined_params =<%=  @spec.path_params %>.inject({}) do |set_variables, variable|
+        var_sym = variable.to_sym
+        set_variables[var_sym] = arguments[var_sym] if arguments.key?(var_sym)
+        set_variables[var_sym] = arguments[variable] if arguments.key?(variable)
         set_variables
       end
     request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -59,10 +61,10 @@ module Elasticsearch
     <%- # Perform request -%>
     <%= ERB.new(File.new("./thor/templates/_perform_request.erb").read, trim_mode: '-').result(binding) %>
 <%- end -%>
-<%- if @method_name.match?(/^exists\S*/) -%>
-  alias_method :<%= @method_name %>?, :<%= @method_name %>
+<%- if @spec.method_name.match?(/^exists\S*/) -%>
+  alias_method :<%= @spec.method_name %>?, :<%= @spec.method_name %>
 <%- end -%>
-<%- if @method_name == 'termvectors' %>
+<%- if @spec.method_name == 'termvectors' %>
 
   # Deprecated: Use the plural version, {#termvectors}
   #

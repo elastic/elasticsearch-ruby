@@ -26,8 +26,7 @@ describe 'client.cat#nodes' do
         {},
         nil,
         {},
-        path_templates: ["/_cat/nodes"],
-        endpoint: "cat.nodes"
+        { endpoint: "cat.nodes" }
     ]
   end
 

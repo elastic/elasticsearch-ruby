@@ -26,8 +26,7 @@ describe 'client.cat#indices' do
         {},
         nil,
         {},
-        path_templates: ["/_cat/indices", "/_cat/indices/{index}"],
-        endpoint: "cat.indices"
+        { endpoint: "cat.indices" }
     ]
   end
 

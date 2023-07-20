@@ -33,3 +33,6 @@ group :development do
     gem 'pry-byebug'
   end
 end
+
+gem 'elastic-transport', git: 'git@github.com:estolfo/elastic-transport-ruby.git', branch: 'otel-instrumentation'
+gem 'opentelemetry-sdk'

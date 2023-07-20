@@ -40,7 +40,6 @@ module Elasticsearch
     class SourceGenerator < Thor
       namespace 'code'
       include Thor::Actions
-      include EndpointSpecifics
 
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
@@ -59,29 +58,21 @@ module Elasticsearch
         print_tree if options[:verbose]
       end
 
-      private
+      class Spec
+        include EndpointSpecifics
 
-      def generate_source
-        @output = FilesHelper.output_dir
-        cleanup_directory!
-
-        FilesHelper.files.each do |filepath|
+        def initialize(filepath)
           @path = Pathname(filepath)
-          @json = MultiJson.load(File.read(@path))
-          @spec = @json.values.first
-          say_status 'json', @path, :yellow
+          json = MultiJson.load(File.read(@path))
+          @spec = json.values.first
+          @endpoint_name    = json.keys.first
 
           @spec['url'] ||= {}
-
-          @endpoint_name    = @json.keys.first
           @full_namespace   = __full_namespace
           @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
           @module_namespace = @full_namespace[0, @namespace_depth]
-
-          # Don't generate code for internal APIs:
-          next if @module_namespace.flatten.first == '_internal'
-
           @method_name      = @full_namespace.last
+
           @parts            = __endpoint_parts
           @params           = @spec['params'] || {}
           @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
@@ -93,9 +84,141 @@ module Elasticsearch
           @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
           @http_path        = __http_path
           @required_parts   = __required_parts
+        end
 
-          @path_to_file = @output.join(@module_namespace.join('/')).join("#{@method_name}.rb")
-          dir = @output.join(@module_namespace.join('/'))
+        attr_reader :module_namespace, :method_name, :path, :namespace_depth
+
+        def module_name_helper(name)
+          return name.upcase if %w[sql ssl].include? name
+
+          name.split('_').map(&:capitalize).map{ |n| n == 'Xpack' ? 'XPack' : n }.join
+        end
+
+        private
+
+        def __full_namespace
+          names = @endpoint_name.split('.')
+          # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
+          names.map do |name|
+            name
+              .gsub(/^ml$/, 'machine_learning')
+              .gsub(/^ilm$/, 'index_lifecycle_management')
+              .gsub(/^ccr/, 'cross_cluster_replication')
+              .gsub(/^slm/, 'snapshot_lifecycle_management')
+          end
+        end
+
+        # Extract parts from each path
+        #
+        def __endpoint_parts
+          parts = @spec['url']['paths'].select do |a|
+            a.keys.include?('parts')
+          end.map do |path|
+            path&.[]('parts')
+          end
+          (parts.inject(&:merge) || [])
+        end
+
+        def __http_method
+          return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
+          return '_name ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @method_name == 'create_service_token'
+          return post_and_get if @endpoint_name == 'count'
+
+          default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
+          if @spec['body'] && default_method == 'GET'
+            # When default method is GET and body is required, we should always use POST
+            if @spec['body']['required']
+              'Elasticsearch::API::HTTP_POST'
+            else
+              post_and_get
+            end
+          else
+            "Elasticsearch::API::HTTP_#{default_method}"
+          end
+        end
+
+        def post_and_get
+          # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
+          <<~SRC
+          if body
+            Elasticsearch::API::HTTP_POST
+          else
+            Elasticsearch::API::HTTP_GET
+          end
+          SRC
+        end
+
+        def __http_path
+          return "\"#{__parse_path(@paths.first)}\"" if @paths.size == 1
+
+          result = ''
+          anchor_string = []
+          @paths.sort { |a, b| b.length <=> a.length }.each_with_index do |path, i|
+            var_string = __extract_path_variables(path).map { |var| "_#{var}" }.join(' && ')
+            next if anchor_string.include? var_string
+
+            anchor_string << var_string
+            result += if i.zero?
+                        "if #{var_string}\n"
+                      elsif (i == @paths.size - 1) || var_string.empty?
+                        "else\n"
+                      else
+                        "elsif #{var_string}\n"
+                      end
+            result += "\"#{__parse_path(path)}\"\n"
+          end
+          result += 'end'
+          result
+        end
+
+        def __parse_path(path)
+          path.gsub(/^\//, '')
+              .gsub(/\/$/, '')
+              .gsub('{', "\#{Utils.__listify(_")
+              .gsub('}', ')}')
+        end
+
+        def __path_variables
+          @paths.map do |path|
+            __extract_path_variables(path)
+          end
+        end
+
+        # extract values that are in the {var} format:
+        def __extract_path_variables(path)
+          path.scan(/{(\w+)}/).flatten
+        end
+
+        # Find parts that are definitely required and should raise an error if
+        # they're not present
+        #
+        def __required_parts
+          required = []
+          return required if @endpoint_name == 'tasks.get'
+
+          required << 'body' if (@spec['body'] && @spec['body']['required'])
+          # Get required variables from paths:
+          req_variables = __path_variables.inject(:&) # find intersection
+          required << req_variables unless req_variables.empty?
+          required.flatten
+        end
+      end
+
+      private
+
+      def generate_source
+        @output = FilesHelper.output_dir
+        cleanup_directory!
+
+        FilesHelper.files.each do |filepath|
+          @spec = Spec.new(filepath)
+          say_status 'json', @spec.path, :yellow
+
+          # Don't generate code for internal APIs:
+          next if @spec.module_namespace.flatten.first == '_internal'
+
+          @path_to_file = @output.join(@spec.module_namespace.join('/')).join("#{@spec.method_name}.rb")
+          dir = @output.join(@spec.module_namespace.join('/'))
 
           empty_directory(dir, verbose: false)
 
@@ -139,18 +262,6 @@ module Elasticsearch
         match[1]
       end
 
-      def __full_namespace
-        names = @endpoint_name.split('.')
-        # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
-        names.map do |name|
-          name
-            .gsub(/^ml$/, 'machine_learning')
-            .gsub(/^ilm$/, 'index_lifecycle_management')
-            .gsub(/^ccr/, 'cross_cluster_replication')
-            .gsub(/^slm/, 'snapshot_lifecycle_management')
-        end
-      end
-
       # Create the hierarchy of directories based on API namespaces
       #
       def __create_directories(key, value)
@@ -158,101 +269,6 @@ module Elasticsearch
 
         empty_directory @output.join(key)
         create_directory_hierarchy * value.to_a.first
-      end
-
-      # Extract parts from each path
-      #
-      def __endpoint_parts
-        parts = @spec['url']['paths'].select do |a|
-          a.keys.include?('parts')
-        end.map do |path|
-          path&.[]('parts')
-        end
-        (parts.inject(&:merge) || [])
-      end
-
-      def __http_method
-        return '_id ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @endpoint_name == 'index'
-        return '_name ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST' if @method_name == 'create_service_token'
-        return post_and_get if @endpoint_name == 'count'
-
-        default_method = @spec['url']['paths'].map { |a| a['methods'] }.flatten.first
-        if @spec['body'] && default_method == 'GET'
-          # When default method is GET and body is required, we should always use POST
-          if @spec['body']['required']
-            'Elasticsearch::API::HTTP_POST'
-          else
-            post_and_get
-          end
-        else
-          "Elasticsearch::API::HTTP_#{default_method}"
-        end
-      end
-
-      def post_and_get
-        # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
-        <<~SRC
-          if body
-            Elasticsearch::API::HTTP_POST
-          else
-            Elasticsearch::API::HTTP_GET
-          end
-        SRC
-      end
-
-      def __http_path
-        return "\"#{__parse_path(@paths.first)}\"" if @paths.size == 1
-
-        result = ''
-        anchor_string = []
-        @paths.sort { |a, b| b.length <=> a.length }.each_with_index do |path, i|
-          var_string = __extract_path_variables(path).map { |var| "_#{var}" }.join(' && ')
-          next if anchor_string.include? var_string
-
-          anchor_string << var_string
-          result += if i.zero?
-                      "if #{var_string}\n"
-                    elsif (i == @paths.size - 1) || var_string.empty?
-                      "else\n"
-                    else
-                      "elsif #{var_string}\n"
-                    end
-          result += "\"#{__parse_path(path)}\"\n"
-        end
-        result += 'end'
-        result
-      end
-
-      def __parse_path(path)
-        path.gsub(/^\//, '')
-          .gsub(/\/$/, '')
-          .gsub('{', "\#{Utils.__listify(_")
-          .gsub('}', ')}')
-      end
-
-      def __path_variables
-        @paths.map do |path|
-          __extract_path_variables(path)
-        end
-      end
-
-      # extract values that are in the {var} format:
-      def __extract_path_variables(path)
-        path.scan(/{(\w+)}/).flatten
-      end
-
-      # Find parts that are definitely required and should raise an error if
-      # they're not present
-      #
-      def __required_parts
-        required = []
-        return required if @endpoint_name == 'tasks.get'
-
-        required << 'body' if (@spec['body'] && @spec['body']['required'])
-        # Get required variables from paths:
-        req_variables = __path_variables.inject(:&) # find intersection
-        required << req_variables unless req_variables.empty?
-        required.flatten
       end
 
       def docs_helper(name, info)

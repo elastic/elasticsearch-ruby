@@ -75,12 +75,6 @@ module Elasticsearch
         COMPLEX_IGNORE_404.include? endpoint
       end
 
-      def module_name_helper(name)
-        return name.upcase if %w[sql ssl].include? name
-
-        name.split('_').map(&:capitalize).map{ |n| n == 'Xpack' ? 'XPack' : n }.join
-      end
-
       def ping_perform_request
         <<~SRC
           begin

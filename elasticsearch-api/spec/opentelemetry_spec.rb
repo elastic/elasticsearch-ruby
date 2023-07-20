@@ -20,6 +20,7 @@ require 'elastic-transport'
 require 'opentelemetry-sdk'
 
 include Elasticsearch::API::EndpointSpecifics
+
 def __full_namespace
   names = @endpoint_name.split('.')
   # Return an array to expand 'ccr', 'ilm', 'ml' and 'slm'
@@ -59,6 +60,28 @@ def __http_method
   end
 end
 
+def __required_parts
+  required = []
+  return required if @endpoint_name == 'tasks.get'
+
+  required << 'body' if (@spec['body'] && @spec['body']['required'])
+  # Get required variables from paths:
+  req_variables = __path_variables.inject(:&) # find intersection
+  required << req_variables unless req_variables.empty?
+  required.flatten
+end
+
+def __path_variables
+  @paths.map do |path|
+    __extract_path_variables(path)
+  end
+end
+
+# extract values that are in the {var} format:
+def __extract_path_variables(path)
+  path.scan(/{(\w+)}/).flatten
+end
+
 def post_and_get
   # the METHOD is defined after doing arguments.delete(:body), so we need to check for `body`
   <<~SRC
@@ -72,70 +95,84 @@ end
 
 describe 'OpenTelemetry' do
 
+   Elasticsearch::API::FilesHelper.files.each do |filepath|
+   #filepath = Elasticsearch::API::FilesHelper.files[1]
+     @path = Pathname(filepath)
+     @json = MultiJson.load(File.read(@path))
+     @spec = @json.values.first
 
+     @spec['url'] ||= {}
 
-   #Elasticsearch::API::FilesHelper.files.each do |filepath|
-   filepath = Elasticsearch::API::FilesHelper.files[1]
-   @path = Pathname(filepath)
-   @json = MultiJson.load(File.read(@path))
-   @spec = @json.values.first
+     @endpoint_name    = @json.keys.first
+     @full_namespace   = __full_namespace
+     @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
+     @module_namespace = @full_namespace[0, @namespace_depth]
 
-   @spec['url'] ||= {}
+     # Don't generate code for internal APIs:
+     next if @module_namespace.flatten.first == '_internal'
 
-   @endpoint_name    = @json.keys.first
-   @full_namespace   = __full_namespace
-   @namespace_depth  = @full_namespace.size > 0 ? @full_namespace.size - 1 : 0
-   @module_namespace = @full_namespace[0, @namespace_depth]
+     @method_name      = @full_namespace.last
+     @parts            = __endpoint_parts
+     @params           = @spec['params'] || {}
+     @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
+     @paths            = @spec['url']['paths'].map { |b| b['path'] }
+     @required_parts   = __required_parts
 
-   # Don't generate code for internal APIs:
-   next if @module_namespace.flatten.first == '_internal'
+     @example_paths = @paths.collect { |path| path.gsub(/\{[^\/]+\}/, 'testing')}
 
-   @method_name      = @full_namespace.last
-   @parts            = __endpoint_parts
-   @params           = @spec['params'] || {}
-   @specific_params  = specific_params(@module_namespace.first) # See EndpointSpecifics
-   @paths            = @spec['url']['paths'].map { |b| b['path'] }
+     defined_params = @parts.inject({}) do |args, part|
+       args[part[0].to_sym] = 'testing'
+       args
+     end
 
-   @example_paths = @paths.collect { |path| path.gsub(/\{[^\/]+\}/, 'testing')}
+     args = @required_parts.inject({}) do |arguments, required_part|
+       arguments[required_part.to_sym] = 'testing'
+       arguments
+     end
 
-   client = Elasticsearch::Client.new
-   defined_params = @parts.inject({}) do |args, part|
-     args[part[0].to_sym] = 'testing'
-     args
-   end
+     namespace = @module_namespace
+     method_name = @method_name
+     endpoint_name = @endpoint_name
+     parts = @parts
 
-   namespace = @module_namespace
-   method_name = @method_name
-   endpoint_name = @endpoint_name
-   parts = @parts
-   binding.pry
+     # check request_opts
+     # {:endpoint=>"indices.refresh", :defined_params=>{"index"=>"testing"}}
 
-   # check request_opts
-   # {:endpoint=>"indices.refresh", :defined_params=>{"index"=>"testing"}}
-
-   let(:client_double) do
-     Class.new { include Elasticsearch::API }.new.tap do |client|
-       expect(client).to receive(:perform_request) do |_, _, _, _, _, request_params|
-         expect(request_params).to eq(expected_params)
+     let(:client_double) do
+       Class.new { include Elasticsearch::API }.new.tap do |client|
+         expect(client).to receive(:perform_request) do |_, _, _, _, _, request_params|
+           expect(request_params).to eq(expected_params)
+         end
        end
      end
-   end
 
-   let(:response_double) do
-     double('response', status: 200, body: {}, headers: {})
-   end
-   context(@endpoint_name) do
-
-     let(:expected_params) do
-       { defined_params: defined_params, endpoint: endpoint_name}
+     let(:response_double) do
+       double('response', status: 200, body: {}, headers: {})
      end
+     context(@endpoint_name) do
 
-     it("passes the right params to the request: #{parts.keys}") do
-       binding.pry
-       unless namespace.empty?
-         client_double.send(namespace[0]).send(method_name, defined_params)
+       let(:expected_params) do
+         params = {endpoint: endpoint_name}
+         params[:defined_params] = defined_params unless defined_params.empty?
+         params
+       end
+
+       if parts.empty?
+         it("passes the endpoint id to the request") do
+           unless namespace.empty?
+             client_double.send(namespace[0]).send(method_name, args.merge(defined_params))
+           else
+             client_double.send(method_name, defined_params)
+           end
+         end
        else
-         client_double.send(method_name, defined_params)
+         it("passes the right params to the request: #{parts.keys}") do
+           unless namespace.empty?
+             client_double.send(namespace[0]).send(method_name, args.merge(defined_params))
+           else
+             client_double.send(method_name, args.merge(defined_params))
+           end
+         end
        end
      end
    end
