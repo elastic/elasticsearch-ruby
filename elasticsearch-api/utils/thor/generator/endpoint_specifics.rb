@@ -55,10 +55,10 @@ module Elasticsearch
                     recovery shards thread_pool].freeze
 
       # Function that adds the listified h param code
-      def specific_params(namespace)
+      def specific_params(namespace, method_name)
         params = []
-        if H_PARAMS.include?(@method_name) && namespace == 'cat'
-          if @method_name == 'nodes'
+        if H_PARAMS.include?(method_name) && namespace == 'cat'
+          if method_name == 'nodes'
             params << 'params[:h] = Utils.__listify(params[:h], escape: false) if params[:h]'
           else
             params << 'params[:h] = Utils.__listify(params[:h]) if params[:h]'
