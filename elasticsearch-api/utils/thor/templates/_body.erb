@@ -17,7 +17,7 @@
 # under the License.
 %>
 <%-
-case @endpoint_name
+case @spec.endpoint_name
 when 'mtermvectors'
 -%>
   body = if(ids = arguments.delete(:ids))
@@ -30,5 +30,5 @@ when 'mtermvectors'
 <%- when 'ml.find_file_structure' %>
   body = Utils.__bulkify(arguments.delete(:body))
 <%- else -%>
-  <%= '  '*(@namespace_depth+3) %>body   = <%= @spec['body'].nil? ? 'nil' : 'arguments.delete(:body)' %>
+  <%= '  '*(@spec.namespace_depth+3) %>body   = <%= @spec.body.nil? ? 'nil' : 'arguments.delete(:body)' %>
 <%- end -%>

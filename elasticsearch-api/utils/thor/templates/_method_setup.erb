@@ -16,22 +16,22 @@
 # specific language governing permissions and limitations
 # under the License.
 %>
-<%- @parts.each do |name, _| %>
-  <%- unless @method_name == 'get_field_mapping' && name == 'fields' %>
-    <%= '  '*(@namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
+<%- @spec.path_parts.each do |name, _| %>
+  <%- unless @spec.method_name == 'get_field_mapping' && name == 'fields' %>
+    <%= '  '*(@spec.namespace_depth+3) + "_#{name}" %> = arguments.delete(:<%=name %>)
   <%- end -%>
 <%- end -%>
 
-<%= '  '*(@namespace_depth+4) %>method = <%= @http_method %>
-<%- if @method_name == 'termvectors' %>
+<%= '  '*(@spec.namespace_depth+4) %>method = <%= @spec.http_method %>
+<%- if @spec.method_name == 'termvectors' %>
   endpoint = arguments.delete(:endpoint) || '_termvectors'
 <%- end -%>
-<%= '  '*(@namespace_depth+4) %>path   = <%= @http_path %>
-<%- if !@params.empty? || needs_ignore_404?(@endpoint_name) || needs_complex_ignore_404?(@endpoint_name)-%>
-  <%= '  '*(@namespace_depth+4) %>params = Utils.process_params(arguments)
+<%= '  '*(@spec.namespace_depth+4) %>path   = <%= @spec.http_path %>
+<%- if !@spec.params.empty? || needs_ignore_404?(@spec.endpoint_name) || needs_complex_ignore_404?(@spec.endpoint_name)-%>
+  <%= '  '*(@spec.namespace_depth+4) %>params = Utils.process_params(arguments)
 <%- else -%>
-  <%= '  '*(@namespace_depth+4) %>params = {}
+  <%= '  '*(@spec.namespace_depth+4) %>params = {}
 <%- end -%>
-<%- @specific_params.each do |param| -%>
+<%- @spec.specific_params.each do |param| -%>
   <%= param %>
 <%- end -%>

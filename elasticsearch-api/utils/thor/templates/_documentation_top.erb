@@ -13,45 +13,45 @@
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 # KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
+# @specific language governing permissions and limitations
 # under the License.
 %>
-<%- if @spec['documentation']['description'] -%>
-  <%= '  '*(@namespace_depth+3) %># <%= @spec['documentation']['description'].gsub("\n", "\n#{'  '*(@namespace_depth+3)}# ") -%>
+<%- if @spec.documentation['description'] -%>
+  <%= '  '*(@spec.namespace_depth+3) %># <%= @spec.documentation['description'] .gsub("\n", "\n#{'  '*(@spec.namespace_depth+3)}# ") -%>
 <%- else %>
-  <%= '  '*(@namespace_depth+3) %># TODO: Description
+  <%= '  '*(@spec.namespace_depth+3) %># TODO: Description
 <%- end %>
-<%= stability_doc_helper(@spec['stability']) -%>
-<%= '  '*(@namespace_depth+3) %>#
-<%- unless @parts.nil? || @parts.empty? %><%# URL parts -%>
-  <%- @parts.each do |name, info| -%>
+<%= stability_doc_helper(@spec.stability) -%>
+<%= '  '*(@spec.namespace_depth+3) %>#
+<%- unless @spec.path_parts.nil? || @spec.path_parts.empty? %><%# URL parts -%>
+  <%- @spec.path_parts.each do |name, info| -%>
     <%= docs_helper(name, info) -%>
   <%- end -%>
 <%- end -%><%# Body -%>
 <%# URL parameters -%>
-<%- @params.each do |name, info| -%>
-  <%= docs_helper(name, info) unless (!@parts.empty? && @parts.keys.include?(name)) -%>
+<%- @spec.params.each do |name, info| -%>
+  <%= docs_helper(name, info) unless (!@spec.path_parts.empty? && @spec.path_parts.keys.include?(name)) -%>
 <%- end -%>
 # @option arguments [Hash] :headers Custom HTTP headers
-<%- if @spec['body'] -%>
-  <%- if @method_name == 'bulk' -%>
-    <%= bulk_doc_helper(@spec['body']['description']) -%>
+<%- if @spec.body -%>
+  <%- if @spec.method_name == 'bulk' -%>
+    <%= bulk_doc_helper(@spec.body['description']) -%>
   <%- else -%>
-    <%= '  '*(@namespace_depth+1) +
-    '# @option arguments [Hash] :body ' + (@spec['body']['description'] ?
-                                           @spec['body']['description'].strip : 'TODO: Description') +
-                                           (@spec['body']['required'] ? ' (*Required*)' : '') + "\n"
+    <%= '  '*(@spec.namespace_depth+1) +
+    '# @option arguments [Hash] :body ' + (@spec.body['description'] ?
+                                           @spec.body['description'].strip : 'TODO: Description') +
+                                           (@spec.body['required'] ? ' (*Required*)' : '') + "\n"
     -%>
   <%- end -%>
 <%- end -%>
-<% if @deprecation_note -%>
+<% if @spec.deprecation_note -%>
   #
   # *Deprecation notice*:
-  # <%=  @deprecation_note['description'] %>
-  # Deprecated since version <%=  @deprecation_note['version'] %>
+  # <%=  @spec.deprecation_note['description'] %>
+  # Deprecated since version <%=  @spec.deprecation_note['version'] %>
   #
 <% end -%>
-<%= '  '*(@namespace_depth+3) -%>#
+<%= '  '*(@spec.namespace_depth+3) -%>#
 <%# Documentation link -%>
-<%=  '  '*(@namespace_depth+3) %># @see <%= @spec['documentation']['url'] ? Elasticsearch::API::FilesHelper.documentation_url(@spec['documentation']['url']) : "[TODO]" %>
-<%= '  '*(@namespace_depth+3) %>#
+<%=  '  '*(@spec.namespace_depth+3) %># @see <%= @spec.documentation['url'] ? Elasticsearch::API::FilesHelper.documentation_url(@spec.documentation['url']) : "[TODO]" %>
+<%= '  '*(@spec.namespace_depth+3) %>#
