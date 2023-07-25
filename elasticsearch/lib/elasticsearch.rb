@@ -35,12 +35,15 @@ module Elasticsearch
 
     # Create a client connected to an Elasticsearch cluster.
     #
+    # @param [Hash] arguments - initializer arguments
     # @option arguments [String] :cloud_id - The Cloud ID to connect to Elastic Cloud
-    # @option api_key [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
-    #                                         joined by a colon as a String, or a hash with the `id` and `api_key` values.
-    # @option opaque_id_prefix [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
-    #                                                     This will be prepended to the id you set before each request
-    #                                                     if you're using X-Opaque-Id
+    # @option arguments [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
+    #                                           joined by a colon as a String, or a hash with the `id` and `api_key` values.
+    # @option arguments [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
+    #                                              This will be prepended to the id you set before each request
+    #                                              if you're using X-Opaque-Id
+    # @option arguments [Hash] :headers Custom HTTP Request Headers
+    #
     def initialize(arguments = {}, &block)
       @verified = false
       @warned = false
