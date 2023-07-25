@@ -95,3 +95,7 @@
 -
   :file: 'ml/get_memory_stats.yml'
   :description: '*'
+
+-
+  :file: 'eql/30_async_missing_events.yml'
+  :description: 'Execute async EQL with missing events'
