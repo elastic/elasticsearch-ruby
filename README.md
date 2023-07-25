@@ -2,7 +2,7 @@
 
 This repository contains Ruby integrations for [Elasticsearch](https://www.elastic.co/products/elasticsearch).
 
-[![6.x](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml/badge.svg?branch=6.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/6.x.yml) [![7.x](https://github.com/elastic/elasticsearch-ruby/workflows/7.x/badge.svg?branch=7.x)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.x.yml) [![master](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/master.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
+[![7.17](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml/badge.svg?branch=7.17)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml) [![Code Climate](https://codeclimate.com/github/elastic/elasticsearch-ruby/badges/gpa.svg)](https://codeclimate.com/github/elastic/elasticsearch-ruby)
 
 The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/master/elasticsearch)
 library is a wrapper for two separate libraries:
