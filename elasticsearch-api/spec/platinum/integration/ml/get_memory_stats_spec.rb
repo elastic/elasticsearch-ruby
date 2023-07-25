@@ -18,30 +18,30 @@
 require_relative '../platinum_helper'
 
 describe 'ML/Get Memory Stats API' do
-    it 'gets memory for all nodes' do
-      response = ADMIN_CLIENT.ml.get_memory_stats
-      expect(response.status).to eq 200
-      expect(response['cluster_name']).not_to be_nil
-      expect(response['_nodes']['total']).to be >= 1
-      expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
-    end
-
-    it 'gets memory for ML nodes' do
-      response = ADMIN_CLIENT.ml.get_memory_stats
-      expect(response.status).to eq 200
-      expect(response['cluster_name']).not_to be_nil
-      expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
-    end
-
-    it 'gets memory for specific node' do
-      response = ADMIN_CLIENT.ml.get_memory_stats
-      expect(response.status).to eq 200
-      node_id = response['nodes'].keys.first
-
-      response = ADMIN_CLIENT.ml.get_memory_stats(node_id: node_id, timeout: '29s')
-      expect(response.status).to eq 200
-      expect(response['cluster_name']).not_to be_nil
-      expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
-      expect(response['_nodes']['total']).to be 1
-    end
+  it 'gets memory for all nodes' do
+    response = ADMIN_CLIENT.ml.get_memory_stats
+    expect(response.status).to eq 200
+    expect(response['cluster_name']).not_to be_nil
+    expect(response['_nodes']['total']).to be >= 1
+    expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
   end
+
+  it 'gets memory for ML nodes' do
+    response = ADMIN_CLIENT.ml.get_memory_stats
+    expect(response.status).to eq 200
+    expect(response['cluster_name']).not_to be_nil
+    expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
+  end
+
+  it 'gets memory for specific node' do
+    response = ADMIN_CLIENT.ml.get_memory_stats
+    expect(response.status).to eq 200
+    node_id = response['nodes'].keys.first
+
+    response = ADMIN_CLIENT.ml.get_memory_stats(node_id: node_id, timeout: '29s')
+    expect(response.status).to eq 200
+    expect(response['cluster_name']).not_to be_nil
+    expect(response['nodes'].first[1]['mem']['total_in_bytes']).to be > 1
+    expect(response['_nodes']['total']).to be 1
+  end
+end
