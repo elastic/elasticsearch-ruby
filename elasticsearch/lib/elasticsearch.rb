@@ -46,14 +46,8 @@ module Elasticsearch
       @warned = false
       @opaque_id_prefix = arguments[:opaque_id_prefix] || nil
       api_key(arguments) if arguments[:api_key]
-      if arguments[:cloud_id]
-        arguments[:hosts] = setup_cloud_host(
-          arguments[:cloud_id],
-          arguments[:user],
-          arguments[:password],
-          arguments[:port]
-        )
-      end
+      setup_cloud(arguments) if arguments[:cloud_id]
+      set_user_agent!(arguments) unless sent_user_agent?(arguments)
       @transport = Elastic::Transport::Client.new(arguments, &block)
     end
 
@@ -139,6 +133,15 @@ module Elasticsearch
       end
     end
 
+    def setup_cloud(arguments)
+      arguments[:hosts] = setup_cloud_host(
+        arguments[:cloud_id],
+        arguments[:user],
+        arguments[:password],
+        arguments[:port]
+      )
+    end
+
     # Encode credentials for the Authorization Header
     # Credentials is the base64 encoding of id and api_key joined by a colon
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
@@ -148,6 +151,25 @@ module Elasticsearch
 
     def elasticsearch_validation_request
       @transport.perform_request('GET', '/')
+    end
+
+    def sent_user_agent?(arguments)
+      return unless (headers = arguments&.[](:transport_options)&.[](:headers))
+      !!headers.keys.detect { |h| h =~ /user-?_?agent/ }
+    end
+
+    def set_user_agent!(arguments)
+      user_agent = [
+        "elasticsearch-ruby/#{Elasticsearch::VERSION}",
+        "elastic-transport-ruby/#{Elastic::Transport::VERSION}",
+        "RUBY_VERSION: #{RUBY_VERSION}"
+      ]
+      if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
+        user_agent << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
+      end
+      arguments[:transport_options] ||= {}
+      arguments[:transport_options][:headers] ||= {}
+      arguments[:transport_options][:headers].merge!({ user_agent: user_agent.join('; ')})
     end
   end
 
