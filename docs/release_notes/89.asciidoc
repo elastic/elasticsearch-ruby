@@ -1,0 +1,54 @@
+[[release_notes_89]]
+=== 8.9 Release notes
+
+[discrete]
+[[release_notes_890]]
+=== 8.9.0 Release notes
+
+[discrete]
+=== Client
+* Tested versions of Ruby for 8.9.0: Ruby (MRI) 3.0, 3.1 and 3.2. JRuby 9.3 and JRuby 9.4.
+* Updated product validation. The code for the product validation was refactored in a few ways:
+** Just check header, does not check the version of the server.
+** Warns only once when there's a general server error.
+** Removes the call to '/' (client.info) when doing the first request, checking on the first actual request from the client.
+* Fixes User-Agent code. In the migration to 8.x, the user agent code was extracted into transport, since we're now using that library in other projects. So for the Elasticsearch Client, the user-agent would be reported as the one defined in elastic-transport. This release fixes the issue and brings back the user agent in the format that was being used in 7.x
+
+[discrete]
+=== Helpers
+This release introduces two new Helpers in the client:
+
+* BulkHelper - This helper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into {es}.
+* ScrollHelper - This helper provides an easy way to get results from a Scroll.
+
+See <<Helpers>> to read more about them.
+
+[discrete]
+=== API
+
+[discrete]
+==== New APIs
+
+* `cluster.info` - Returns different information about the cluster.
+
+[discrete]
+==== New Experimental APIs and namespaces:
+
+This functionality is Experimental and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but experimental features are not subject to the support SLA of official GA features.
+
+* New namespace: `query_ruleset`
+** `query_ruleset.delete` - Deletes a query ruleset.
+** `query_ruleset.get` - Returns the details about a query ruleset.
+** `query_ruleset.put` - Creates or updates a query ruleset.
+* New API: `search_application.render_query` Renders a query for given search application search parameters.
+* New API: `security.create_cross_cluster_api_key` -  Creates a cross-cluster API key for API key based remote cluster access.
+* New API: `security.upate_cross_cluster_api_key` - Updates attributes of an existing cross-cluster API key.
+* New namespace: `synonyms`
+** `synonyms.delete`- Deletes a synonym set
+** `synonyms.get` - Retrieves a synonym set
+** `synonyms.put` - Creates or updates a synonyms set
+* New namespace: `synonym_rule`
+** `synonym_rule.put` - Creates or updates a synonym rule in a synonym set
+* New namespace: `synonyms`
+** `synonyms_set.get` - Retrieves a summary of all defined synonym sets
+
