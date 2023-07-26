@@ -3,6 +3,7 @@
 
 The {es} Ruby client includes some useful helpers for a more comfortable experience with some APIs.
 
+[discrete]
 === Bulk Helper
 
 This helper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into {es}.
@@ -69,7 +70,7 @@ To update documents, you can send the array of documents with their respective i
 ----
 documents = [
   {name: 'updated name 1', id: 'AxkFJYgB6LpJd9ljOtr7'},
-  {name: 'updated name 2', 'BBkFJYgB6LpJd9ljOtr7'}
+  {name: 'updated name 2', id: 'BBkFJYgB6LpJd9ljOtr7'}
 ]
 helper.update(documents)
 ----
@@ -112,6 +113,7 @@ The following is an example of the Ruby code to ingest the documents in the JSON
 bulk_helper.ingest_json(file_path, { keys: ['data', 'items'] })
 ----
 
+[discrete]
 === Scroll Helper
 
 This helper provides an easy way to get results from a Scroll.
