@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-trained-model-deployment-cache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/clear-trained-model-deployment-cache.html
         #
         def clear_trained_model_deployment_cache(arguments = {})
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]

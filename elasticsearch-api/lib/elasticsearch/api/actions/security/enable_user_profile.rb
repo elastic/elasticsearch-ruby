@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/security-api-enable-user-profile.html
         #
         def enable_user_profile(arguments = {})
           raise ArgumentError, "Required argument 'uid' missing" unless arguments[:uid]

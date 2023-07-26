@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-ml-info.html
         #
         def info(arguments = {})
           arguments = arguments.clone

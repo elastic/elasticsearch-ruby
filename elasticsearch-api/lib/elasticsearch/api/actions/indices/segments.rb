@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose Includes detailed memory usage by Lucene. *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/indices-segments.html
         #
         def segments(arguments = {})
           arguments = arguments.clone
