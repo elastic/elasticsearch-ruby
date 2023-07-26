@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/security-api-get-builtin-privileges.html
         #
         def get_builtin_privileges(arguments = {})
           arguments = arguments.clone

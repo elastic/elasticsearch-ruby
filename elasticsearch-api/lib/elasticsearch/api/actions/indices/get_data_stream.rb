@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/data-streams.html
         #
         def get_data_stream(arguments = {})
           arguments = arguments.clone

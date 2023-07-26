@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :synonyms_set The name of the synonyms set to be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-synonyms.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/delete-synonyms.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]

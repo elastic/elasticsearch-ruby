@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the search application
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-search-application.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/get-search-application.html
         #
         def get(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]

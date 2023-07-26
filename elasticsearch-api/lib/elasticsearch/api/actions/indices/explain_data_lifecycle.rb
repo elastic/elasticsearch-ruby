@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Indices
       module Actions
-        # Retrieves information about the index's current DLM lifecycle, such as any potential encountered error, time since creation etc.
+        # Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/dlm-explain-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.9/data-streams-explain-lifecycle.html
         #
         def explain_data_lifecycle(arguments = {})
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
