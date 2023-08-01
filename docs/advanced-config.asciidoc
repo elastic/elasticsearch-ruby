@@ -232,7 +232,7 @@ failed request on a different host:
 Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true)
 ```
 
-By default, the client retries the request 3 times. You can specify how many 
+By default, the client does not retry the request. You can specify how many 
 times to retry before it raises an exception by passing a number to 
 `retry_on_failure`:
 
