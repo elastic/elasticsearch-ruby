@@ -22,8 +22,8 @@ require 'elasticsearch/version'
 Gem::Specification.new do |s|
   s.name          = 'elasticsearch'
   s.version       = Elasticsearch::VERSION
-  s.authors       = ['Karel Minarik', 'Emily Stolfo', 'Fernando Briano']
-  s.email         = ['clients-team@elastic.co']
+  s.authors       = ['Elastic Client Library Maintainers']
+  s.email         = ['client-libs@elastic.co']
   s.summary       = 'Ruby integrations for Elasticsearch'
   s.homepage      = 'https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html'
   s.license       = 'Apache-2.0'
