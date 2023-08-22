@@ -20,28 +20,33 @@
 #
 module Elasticsearch
   module API
-    module SynonymsSets
+    module Synonyms
       module Actions
-        # Retrieves a summary of all defined synonym sets
+        # Retrieves a synonym set
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
+        # @option arguments [String] :id The name of the synonyms set to be retrieved
         # @option arguments [Integer] :from Starting offset
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-synonyms-sets.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-synonyms-set.html
         #
-        def get(arguments = {})
+        def get_synonym(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
+
+          _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_synonyms"
+          path   = "_synonyms/#{Utils.__listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
