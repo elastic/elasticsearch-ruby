@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client.synonym_rule#put' do
+describe 'client.synonyms#delete_synonym' do
   let(:expected_args) do
     [
       'DELETE',
-      '_synonyms/set/rule',
+      '_synonyms/foo',
       {},
       nil,
       {}
@@ -29,6 +29,6 @@ describe 'client.synonym_rule#put' do
   end
 
   it 'performs the request' do
-    expect(client_double.synonym_rule.delete(synonyms_set: 'set', synonym_rule: 'rule')).to be_a Elasticsearch::API::Response
+    expect(client_double.synonyms.delete_synonym(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

@@ -20,37 +20,33 @@
 #
 module Elasticsearch
   module API
-    module SynonymRule
+    module Synonyms
       module Actions
-        # Creates or updates a synonym rule in a synonym set
+        # Creates or updates a synonyms set
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :synonyms_set The id of the synonym set to be updated with the synonym rule
-        # @option arguments [String] :synonym_rule The id of the synonym rule to be updated or created
+        # @option arguments [String] :id The id of the synonyms set to be created or updated
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Synonym rule (*Required*)
+        # @option arguments [Hash] :body Synonyms set rules (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonym-rule.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonyms-set.html
         #
-        def put(arguments = {})
+        def put_synonym(arguments = {})
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]
-          raise ArgumentError, "Required argument 'synonym_rule' missing" unless arguments[:synonym_rule]
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _synonyms_set = arguments.delete(:synonyms_set)
-
-          _synonym_rule = arguments.delete(:synonym_rule)
+          _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_synonyms/#{Utils.__listify(_synonyms_set)}/#{Utils.__listify(_synonym_rule)}"
+          path   = "_synonyms/#{Utils.__listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

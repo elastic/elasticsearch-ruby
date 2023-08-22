@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module SynonymRule
+    module Synonyms
       module Actions
         # Deletes a synonym rule in a synonym set
         # This functionality is Experimental and may be changed or removed
@@ -28,27 +28,27 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :synonyms_set The id of the synonym set to be updated
-        # @option arguments [String] :synonym_rule The id of the synonym rule to be deleted
+        # @option arguments [String] :set_id The id of the synonym set to be updated
+        # @option arguments [String] :rule_id The id of the synonym rule to be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-synonym-rule.html
         #
-        def delete(arguments = {})
-          raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]
-          raise ArgumentError, "Required argument 'synonym_rule' missing" unless arguments[:synonym_rule]
+        def delete_synonym_rule(arguments = {})
+          raise ArgumentError, "Required argument 'set_id' missing" unless arguments[:set_id]
+          raise ArgumentError, "Required argument 'rule_id' missing" unless arguments[:rule_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
-          _synonyms_set = arguments.delete(:synonyms_set)
+          _set_id = arguments.delete(:set_id)
 
-          _synonym_rule = arguments.delete(:synonym_rule)
+          _rule_id = arguments.delete(:rule_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_synonyms/#{Utils.__listify(_synonyms_set)}/#{Utils.__listify(_synonym_rule)}"
+          path   = "_synonyms/#{Utils.__listify(_set_id)}/#{Utils.__listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

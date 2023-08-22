@@ -17,11 +17,11 @@
 
 require 'spec_helper'
 
-describe 'client.synonyms_sets#get' do
+describe 'client.synonyms#get_synonym' do
   let(:expected_args) do
     [
       'GET',
-      '_synonyms',
+      '_synonyms/foo',
       {},
       nil,
       {}
@@ -29,6 +29,6 @@ describe 'client.synonyms_sets#get' do
   end
 
   it 'performs the request' do
-    expect(client_double.synonyms_sets.get).to be_a Elasticsearch::API::Response
+    expect(client_double.synonyms.get_synonym(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
