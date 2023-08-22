@@ -99,3 +99,6 @@
 -
   :file: 'eql/30_async_missing_events.yml'
   :description: 'Execute async EQL with missing events'
+-
+  :file: 'api_key/60_admin_user.yml'
+  :description: 'Test get api key (with role descriptors + metadata)'
