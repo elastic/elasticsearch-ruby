@@ -102,3 +102,6 @@
 -
   :file: 'api_key/60_admin_user.yml'
   :description: 'Test get api key (with role descriptors + metadata)'
+-
+  :file: 'api_key/60_admin_user.yml'
+  :description: 'Test query api keys'
