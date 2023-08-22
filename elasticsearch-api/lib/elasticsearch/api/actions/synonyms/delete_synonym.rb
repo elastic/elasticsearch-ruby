@@ -28,23 +28,23 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :synonyms_set The name of the synonyms set to be deleted
+        # @option arguments [String] :id The id of the synonyms set to be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-synonyms-set.html
         #
-        def delete(arguments = {})
-          raise ArgumentError, "Required argument 'synonyms_set' missing" unless arguments[:synonyms_set]
+        def delete_synonym(arguments = {})
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
-          _synonyms_set = arguments.delete(:synonyms_set)
+          _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_synonyms/#{Utils.__listify(_synonyms_set)}"
+          path   = "_synonyms/#{Utils.__listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

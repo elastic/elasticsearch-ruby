@@ -17,18 +17,18 @@
 
 require 'spec_helper'
 
-describe 'client.synonyms#put_synonym' do
+describe 'client.synonyms#get_synonym_rule' do
   let(:expected_args) do
     [
-      'PUT',
-      '_synonyms/foo',
+      'GET',
+      '_synonyms/foo/bar',
       {},
-      {},
+      nil,
       {}
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.synonyms.put_synonym(body: {}, id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.synonyms.get_synonym_rule(set_id: 'foo', rule_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
