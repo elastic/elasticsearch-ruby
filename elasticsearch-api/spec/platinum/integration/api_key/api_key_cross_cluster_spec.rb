@@ -41,16 +41,9 @@ describe 'API keys API' do
     ADMIN_CLIENT.security.delete_user(username: user, ignore: 404)
   end
 
-  let(:client) do
-    Elasticsearch::Client.new(
-      host: "https://admin_user:x-pack-test-password@#{HOST_URI.host}:#{HOST_URI.port}",
-      transport_options: TRANSPORT_OPTIONS
-    )
-  end
-
   describe 'Cross Cluster API Key' do
     it 'updates api key' do
-      response = client.security.create_cross_cluster_api_key(
+      response = ADMIN_CLIENT.security.create_cross_cluster_api_key(
         body: {
           name: "my-cc-api-key",
           expiration: "1d",
@@ -97,7 +90,7 @@ describe 'API keys API' do
         new_client.security.authenticate(headers: { authorization: "ApiKey #{credentials}" })
       end.to raise_error(Elastic::Transport::Transport::Errors::Unauthorized)
 
-      response = client.security.get_api_key(id: id, with_limited_by: true)
+      response = ADMIN_CLIENT.security.get_api_key(id: id, with_limited_by: true)
       expect(response.status).to eq 200
       api_key = response['api_keys'].first
       expect(api_key['name']) == 'my-cc-api-key'
@@ -106,7 +99,7 @@ describe 'API keys API' do
       expect(api_key['metadata']).to eq({'answer' => 42, 'tag' => 'dev'})
 
       # Tests update cc api_key
-      response = client.security.update_cross_cluster_api_key(
+      response = ADMIN_CLIENT.security.update_cross_cluster_api_key(
         id: id,
         body: {
           access: {
@@ -117,7 +110,7 @@ describe 'API keys API' do
       )
       expect(response['updated']).to be true
 
-      response = client.security.get_api_key(id: id, with_limited_by: true)
+      response = ADMIN_CLIENT.security.get_api_key(id: id, with_limited_by: true)
       expect(response['api_keys'].length).to eq 1
       api_key = response['api_keys'].first
       expect(api_key['name']) == 'my-cc-api-key'

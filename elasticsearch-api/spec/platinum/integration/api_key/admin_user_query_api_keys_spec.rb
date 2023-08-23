@@ -27,18 +27,16 @@ describe 'API keys' do
   end
 
   after do
-    ADMIN_CLIENT.security.delete_privileges(application: 'myapp', name: 'read,write', ignore: 404)
     ADMIN_CLIENT.security.delete_user(username: client_username)
   end
 
   let(:client_username) { "query_api_keys_#{Time.new.to_i}"}
+  let(:credentials) { Base64.strict_encode64("#{client_username}:test-password") }
 
   let(:client) do
     Elasticsearch::Client.new(
-      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
-      user: client_username,
-      password: 'test-password',
-      transport_options: TRANSPORT_OPTIONS
+      host: HOST,
+      transport_options: TRANSPORT_OPTIONS.merge(headers: { Authorization: "Basic #{credentials}" })
     )
   end
 
@@ -47,8 +45,8 @@ describe 'API keys' do
     response = client.security.create_api_key(
       body: {
         name: key_name_1,
-        expiration: "1d",
         role_descriptors: {},
+        expiration: "1d",
         metadata: { search: "this" }
       }
     )
