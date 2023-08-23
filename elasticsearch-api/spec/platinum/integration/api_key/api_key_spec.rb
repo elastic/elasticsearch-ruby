@@ -42,7 +42,7 @@ describe 'API keys' do
     ADMIN_CLIENT.security.put_user(
       username: 'api_key_user',
       body: {
-        password: 'x-pack-test-password',
+        password: 'test-password',
         roles: [ 'admin_role' ],
         full_name: 'API key user'
       }
@@ -72,12 +72,11 @@ describe 'API keys' do
     ADMIN_CLIENT.security.delete_privileges(application: 'myapp', name: "read,write", ignore: 404)
   end
 
+  let(:credentials) { Base64.strict_encode64("api_key_user:test-password") }
   let(:client) do
     Elasticsearch::Client.new(
-      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
-      user: 'api_key_user',
-      password: 'x-pack-test-password',
-      transport_options: TRANSPORT_OPTIONS
+      host: HOST,
+      transport_options: TRANSPORT_OPTIONS.merge(headers: { Authorization: "Basic #{credentials}" })
     )
   end
 

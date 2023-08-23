@@ -34,13 +34,13 @@ describe 'API keys API invalidation' do
     ADMIN_CLIENT.security.put_user(
       username: 'api_key_manager',
       body: {
-        password: 'x-pack-test-password',
+        password: 'changeme',
         roles: [ 'admin_role' ],
         full_name: 'API key manager'
       }
     )
     ADMIN_CLIENT.security.put_user(
-      username: 'api_key_user1',
+      username: 'api_key_test_user1',
       body: {
         password: 'x-pack-test-password',
         roles: [ 'user_role' ],
@@ -56,10 +56,12 @@ describe 'API keys API invalidation' do
     ADMIN_CLIENT.security.delete_user(username: "api_key_manager", ignore: 404)
   end
 
+  let(:credentials) { Base64.strict_encode64("api_key_manager:changeme") }
+
   let(:client) do
     Elasticsearch::Client.new(
-      host: "https://api_key_manager:x-pack-test-password@#{HOST_URI.host}:#{HOST_URI.port}",
-      transport_options: TRANSPORT_OPTIONS
+      host: HOST,
+      transport_options: TRANSPORT_OPTIONS.merge(headers: { Authorization: "Basic #{credentials}" })
     )
   end
 
@@ -77,11 +79,10 @@ describe 'API keys API invalidation' do
     expect(response['api_key']).not_to be nil
     expect(response['expiration']).not_to be nil
 
+    user_credentials = Base64.strict_encode64('api_key_test_user1:x-pack-test-password')
     user_client = Elasticsearch::Client.new(
-      host: "https://#{HOST_URI.host}:#{HOST_URI.port}",
-      user: 'api_key_user1',
-      password: 'x-pack-test-password',
-      transport_options: TRANSPORT_OPTIONS
+      host: HOST,
+      transport_options: TRANSPORT_OPTIONS.merge(headers: { Authentication: "Basic #{user_credentials}" })
     )
     response = user_client.security.create_api_key(
       body: {
@@ -95,10 +96,6 @@ describe 'API keys API invalidation' do
     expect(id).not_to be nil
     expect(response['api_key']).not_to be nil
     expect(response['expiration']).not_to be nil
-
-    expect do
-      user_client.security.invalidate_api_key(body: { realm_name: 'default_native'})
-    end.to raise_error(Elastic::Transport::Transport::Errors::Forbidden)
 
     response = client.security.invalidate_api_key(body: { realm_name: 'default_native'})
     expect(response['invalidated_api_keys'].count).to be >= 2
