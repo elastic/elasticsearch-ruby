@@ -22,6 +22,8 @@ require_relative './run_rspec_matchers'
 LOGGER = Logger.new($stdout)
 
 describe 'Rest API YAML tests' do
+  LOGGER.info "Elastic Transport version: #{Elastic::Transport::VERSION}"
+
   if REST_API_YAML_FILES.empty?
     LOGGER.error 'No test files found!'
     LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'

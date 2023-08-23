@@ -12,6 +12,7 @@ ARG QUIET=${QUIET:-true}
 ARG CI=${CI:-false}
 ENV QUIET=$QUIET
 ENV CI=$CI
+ARG TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
 
 # Install required tools
 RUN apt-get -q update \
