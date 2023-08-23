@@ -25,3 +25,7 @@ gemspec
 if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
   gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
 end
+
+if ENV['TRANSPORT_VERSION'] == 'main'
+  gem 'elastic-transport', git: 'https://github.com/elastic/elastic-transport-ruby.git', branch: 'main'
+end

@@ -7,12 +7,14 @@ set -euo pipefail
 repo=`pwd`
 
 export RUBY_VERSION=${RUBY_VERSION:-3.1}
+export TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
 
 echo "--- :ruby: Building Docker image"
 docker build \
        --file $script_path/Dockerfile \
        --tag elastic/elasticsearch-ruby \
        --build-arg RUBY_VERSION=$RUBY_VERSION \
+       --build-arg TRANSPORT_VERSION=$TRANSPORT_VERSION \
        .
 
 mkdir -p elasticsearch-api/tmp
@@ -26,6 +28,7 @@ docker run \
        --env "TEST_SUITE=${TEST_SUITE}" \
        --env "ELASTIC_USER=elastic" \
        --env "BUILDKITE=true" \
+       --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        --volume $repo:/usr/src/app \
        --name elasticsearch-ruby \
        --rm \

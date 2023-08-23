@@ -11,5 +11,4 @@ set -euo pipefail
 echo "--- :elasticsearch: Starting Elasticsearch"
 DETACH=true bash $script_path/run-elasticsearch.sh
 
-echo "+++ :ruby: Run Client"
 bash $script_path/run-client.sh

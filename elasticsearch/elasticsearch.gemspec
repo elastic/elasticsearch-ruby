@@ -45,7 +45,15 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.5'
 
-  s.add_dependency 'elastic-transport', '~> 8'
+  transport_version = ENV.fetch('TRANSPORT_VERSION', '8')
+  if ['8', 'main'].include? transport_version
+    s.add_dependency 'elastic-transport', '~> 8'
+  else
+    major_version = transport_version.gsub(/[0-9]+$/, '')
+    next_minor_version = transport_version.gsub(/[0-9]+\./, '').to_i + 1
+    s.add_dependency 'elastic-transport', "~> #{transport_version}", "< #{major_version}#{next_minor_version}"
+  end
+
   s.add_dependency 'elasticsearch-api', '8.11.0'
 
   s.add_development_dependency 'bundler'
