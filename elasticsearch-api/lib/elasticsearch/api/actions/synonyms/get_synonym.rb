@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-synonyms-set.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/get-synonyms-set.html
         #
         def get_synonym(arguments = {})
           raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Search parameters, which will override any default search parameters defined in the search application template
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-render-query.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/search-application-render-query.html
         #
         def render_query(arguments = {})
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
