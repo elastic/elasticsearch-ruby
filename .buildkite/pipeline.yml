@@ -16,6 +16,7 @@ steps:
           - "3.2"
           - "3.1"
           - "3.0"
+          - "jruby-9.3"
         transport:
           - "8.2"
       # Only run platinum once for the latest Ruby. You can use lots of combinations, check the
