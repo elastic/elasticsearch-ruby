@@ -102,7 +102,7 @@ module Elasticsearch
           def response
             @response ||= begin
               if do_actions.any? { |a| a.yaml_response? }
-                YAML.load(do_actions[-1].response)
+                YAML.load(do_actions[-1].response.body)
               else
                 do_actions[-1].response
               end
