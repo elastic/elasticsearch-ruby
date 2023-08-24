@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/tasks.html
         #
         def tasks(arguments = {})
           arguments = arguments.clone

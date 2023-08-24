@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/delete-query-ruleset.html
         #
         def delete(arguments = {})
           raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]

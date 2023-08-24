@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.10/indices-get-mapping.html
         #
         def get_mapping(arguments = {})
           arguments = arguments.clone
