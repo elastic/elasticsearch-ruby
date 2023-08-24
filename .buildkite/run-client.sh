@@ -15,6 +15,7 @@ docker build \
        --tag elastic/elasticsearch-ruby \
        --build-arg RUBY_VERSION=$RUBY_VERSION \
        --build-arg TRANSPORT_VERSION=$TRANSPORT_VERSION \
+       --build-arg RUBY_SOURCE=$RUBY_SOURCE \
        .
 
 mkdir -p elasticsearch-api/tmp
