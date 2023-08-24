@@ -17,7 +17,7 @@ ARG TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
 
 # Install required tools
 RUN apt-get -q update \
-    && apt-get -y install zip curl
+    && apt-get -y install zip curl git
 
 # Create user
 RUN groupadd --system -g ${BUILDER_GID} ${BUILDER_GROUP} \
