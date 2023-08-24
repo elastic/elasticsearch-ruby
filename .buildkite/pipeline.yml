@@ -35,19 +35,23 @@ steps:
         - with:
             suite: "free"
             ruby: "3.2"
+            ruby_source: "ruby"
             transport: "8.0"
         - with:
             suite: "free"
             ruby: "3.2"
+            ruby_source: "ruby"
             transport: "8.1"
         - with:
             suite: "free"
             ruby: "3.2"
+            ruby_source: "ruby"
             transport: "main"
         - with:
-            suite: 'free'
-            ruby: '9.3'
-            ruby_source: 'jruby'
+            suite: "free"
+            ruby: "9.3"
+            ruby_source: "jruby"
+            transport: "8.2"
     command: ./.buildkite/run-tests.sh
     # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
     # available in the Artifacts tab of a build in Buildkite.
