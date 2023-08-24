@@ -1,5 +1,6 @@
 ARG RUBY_VERSION=${RUBY_VERSION:-3.1}
-FROM ruby:$RUBY_VERSION
+ARG RUBY_SOURCE=${RUBY_SOURCE:-ruby}
+FROM $RUBY_SOURCE:$RUBY_VERSION
 
 # Default UID/GID to 1000
 # it can be overridden at build time

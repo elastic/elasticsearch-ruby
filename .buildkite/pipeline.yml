@@ -7,6 +7,7 @@ steps:
       TEST_SUITE: "{{ matrix.suite }}"
       STACK_VERSION: 8.10.0-SNAPSHOT
       TRANSPORT_VERSION: "{{ matrix.transport }}"
+      RUBY_SOURCE: "{{ matrix.ruby_source }}"
     matrix:
       setup:
         suite:
@@ -16,9 +17,10 @@ steps:
           - "3.2"
           - "3.1"
           - "3.0"
-          - "jruby-9.3"
         transport:
           - "8.2"
+        ruby_source:
+          - 'ruby'
       # Only run platinum once for the latest Ruby. You can use lots of combinations, check the
       # documentation on https://buildkite.com/docs/pipelines/build-matrix for more information.
       adjustments:
@@ -42,6 +44,10 @@ steps:
             suite: "free"
             ruby: "3.2"
             transport: "main"
+        - with:
+            suite: 'free'
+            ruby: '9.3'
+            ruby_source: 'jruby'
     command: ./.buildkite/run-tests.sh
     # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
     # available in the Artifacts tab of a build in Buildkite.
