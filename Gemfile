@@ -37,6 +37,6 @@ unless defined?(JRUBY_VERSION) || defined?(Rubinius)
 end
 
 group :development, :test do
-  gem 'byebug'
+  gem 'byebug' unless defined?(JRUBY_VERSION)
   gem 'rspec'
 end

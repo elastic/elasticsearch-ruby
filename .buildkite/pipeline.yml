@@ -1,5 +1,5 @@
 steps:
-  - label: ":ruby: v{{ matrix.ruby }} :phone: Transport: {{ matrix.transport }} :elasticsearch: Suite: {{ matrix.suite }}"
+  - label: ":ruby: {{ matrix.ruby_source}}:{{ matrix.ruby }} :phone: Transport: {{ matrix.transport }} :elasticsearch: Suite: {{ matrix.suite }}"
     agents:
       provider: "gcp"
     env:
