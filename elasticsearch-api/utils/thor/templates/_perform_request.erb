@@ -20,30 +20,30 @@
   <%= self.send("#{@spec.method_name}_body_helper".to_s) %>
   headers.merge!("Content-Type" => "application/x-ndjson")
   Elasticsearch::API::Response.new(
-    perform_request(method, path, params, payload, headers)
+    perform_request(method, path, params, payload, headers, request_opts)
   )
 <%- elsif @spec.method_name == 'ping' -%>
   <%= ping_perform_request %>
 <%- else -%>
   <%- if needs_ignore_404?(@spec.endpoint_name) %>
     Utils.__rescue_from_not_found do
-      perform_request(method, path, params, body, headers).status == 200 ? true : false
+      perform_request(method, path, params, body, headers, request_opts).status == 200 ? true : false
     end
   <%- elsif needs_complex_ignore_404?(@spec.endpoint_name) -%>
     if Array(arguments[:ignore]).include?(404)
     Utils.__rescue_from_not_found {
       Elasticsearch::API::Response.new(
-        perform_request(method, path, params, body, headers)
+        perform_request(method, path, params, body, headers, request_opts)
       )
     }
     else
     Elasticsearch::API::Response.new(
-      perform_request(method, path, params, body, headers)
+      perform_request(method, path, params, body, headers, request_opts)
     )
     end
   <%- else -%>
     Elasticsearch::API::Response.new(
-      perform_request(method, path, params, body, headers)
+      perform_request(method, path, params, body, headers, request_opts)
     )
   <%- end -%>
 <%- end -%>
