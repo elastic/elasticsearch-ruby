@@ -24,7 +24,7 @@ module Elasticsearch
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
 <%# Method definition -%>
 <%= '  '*(@spec.namespace_depth+3) -%>def <%= @spec.method_name %>(arguments = {})
-request_opts = <%= @spec.perform_request_opts %>
+  request_opts = { endpoint: arguments[:endpoint] || "<%= @spec.endpoint_name %>" }
 <%- unless @spec.path_params.empty? %>
   defined_params =<%=  @spec.path_params %>.inject({}) do |set_variables, variable|
     set_variables[variable] = arguments[variable] if arguments.key?(variable)
@@ -34,6 +34,7 @@ request_opts = <%= @spec.perform_request_opts %>
 <%- end %>
 <%-    %>
 <%- if @spec.endpoint_name == 'create' -%>
+  <%= '  '*(@spec.namespace_depth+3) %>arguments.update endpoint: 'create'
   <%= '  '*(@spec.namespace_depth+3) %>if arguments[:id]
   <%= '  '*(@spec.namespace_depth+3) %>  index arguments.update op_type: 'create'
   <%= '  '*(@spec.namespace_depth+3) %>else

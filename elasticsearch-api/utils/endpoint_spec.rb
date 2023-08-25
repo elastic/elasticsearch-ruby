@@ -39,7 +39,6 @@ module Elasticsearch
         @params = @spec['params'] || {}
         @paths = @spec['url']['paths'].map { |b| b['path'] } if @spec['url']
         @path_params   = path_variables.flatten.uniq.collect(&:to_sym)
-        @perform_request_opts = { endpoint: @endpoint_name }
         @http_method = parse_http_method(@spec)
         @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
         @http_path        = parse_http_path(@paths)
