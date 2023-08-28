@@ -37,6 +37,7 @@ module Elasticsearch
       # @since 6.2.0
       def initialize(definition)
         @definition = definition
+        @retries = 0
       end
 
       # Execute the action. The method returns the client, in case the action created a new client
@@ -66,71 +67,9 @@ module Elasticsearch
                 shadow_client.send(method)
               end
             end
-
             _method = chain[-1]
-            case _method
-            when 'bulk'
-              arguments = prepare_arguments(args, test)
-              arguments[:body].map! do |item|
-                if item.is_a?(Hash)
-                  item
-                elsif item.is_a?(String)
-                  symbolize_keys(JSON.parse(item))
-                end
-              end if arguments[:body].is_a? Array
-              @response = client.send(_method, arguments)
-              client
-            when 'headers'
-              headers = prepare_arguments(args, test)
-              host = client.transport.instance_variable_get('@hosts')
-              transport_options = client.transport.instance_variable_get('@options')&.dig(:transport_options) || {}
-              if ENV['QUIET'] == 'true'
-                # todo: create a method on Elasticsearch::Client that can clone the client with new options
-                Elasticsearch::Client.new(
-                  host: host,
-                  transport_options: transport_options.merge(headers: headers)
-                )
-              else
-                Elasticsearch::Client.new(
-                  host: host,
-                  tracer: Logger.new($stdout),
-                  transport_options: transport_options.merge(headers: headers)
-                )
-              end
-            when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex'
-              client
-            when 'put_trained_model_alias'
-              args.merge!('reassign' => true) unless args['reassign'] === false
-              @response = client.send(_method, prepare_arguments(args, test))
-              client
-            when 'create'
-              begin
-                @response = client.send(_method, prepare_arguments(args, test))
-              rescue Elastic::Transport::Transport::Errors::BadRequest => e
-                case e.message
-                when /resource_already_exists_exception/
-                  client.delete(index: args['index'])
-                when /failed to parse date field/
-                  body = args['body']
-                  time_series = body['settings']['index']['time_series']
-                  time_series.each { |k, v| time_series[k] = v.strftime("%FT%TZ") }
-                  args['body'] = body
-                else
-                  raise e
-                end
-                @response = client.send(_method, prepare_arguments(args, test))
-              end
-              client
-            when 'update_user_profile_data', 'get_user_profile', 'enable_user_profile', 'disable_user_profile'
-              args.each do |key, value|
-                args[key] = value.gsub(value, test.cached_values[value.gsub('$', '')]) if value.match?(/^\$/)
-              end
-              @response = client.send(_method, prepare_arguments(args, test))
-              client
-            else
-              @response = client.send(_method, prepare_arguments(args, test))
-              client
-            end
+
+            perform_action(_method, args, client, test)
           end
         end
       end
@@ -186,6 +125,79 @@ module Elasticsearch
         args = prepare_arguments(args, test)
         @response = Elasticsearch::API::Response.new(client.perform_request(http, path, args, body))
         client
+      end
+
+      def perform_action(_method, args, client, test)
+        case _method
+        when 'bulk'
+          arguments = prepare_arguments(args, test)
+          arguments[:body].map! do |item|
+            if item.is_a?(Hash)
+              item
+            elsif item.is_a?(String)
+              symbolize_keys(JSON.parse(item))
+            end
+          end if arguments[:body].is_a? Array
+          @response = client.send(_method, arguments)
+          client
+        when 'headers'
+          headers = prepare_arguments(args, test)
+          host = client.transport.instance_variable_get('@hosts')
+          transport_options = client.transport.instance_variable_get('@options')&.dig(:transport_options) || {}
+          if ENV['QUIET'] == 'true'
+            # todo: create a method on Elasticsearch::Client that can clone the client with new options
+            Elasticsearch::Client.new(
+              host: host,
+              transport_options: transport_options.merge(headers: headers)
+            )
+          else
+            Elasticsearch::Client.new(
+              host: host,
+              tracer: Logger.new($stdout),
+              transport_options: transport_options.merge(headers: headers)
+            )
+          end
+        when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex'
+          client
+        when 'put_trained_model_alias'
+          args.merge!('reassign' => true) unless args['reassign'] === false
+          @response = client.send(_method, prepare_arguments(args, test))
+          client
+        when 'create'
+          begin
+            @response = client.send(_method, prepare_arguments(args, test))
+          rescue Elastic::Transport::Transport::Errors::BadRequest => e
+            case e.message
+            when /resource_already_exists_exception/
+              client.delete(index: args['index'])
+            when /failed to parse date field/
+              body = args['body']
+              time_series = body['settings']['index']['time_series']
+              time_series.each { |k, v| time_series[k] = v.strftime("%FT%TZ") }
+              args['body'] = body
+            else
+              raise e
+            end
+            @response = client.send(_method, prepare_arguments(args, test))
+          end
+          client
+        when 'update_user_profile_data', 'get_user_profile', 'enable_user_profile', 'disable_user_profile'
+          args.each do |key, value|
+            args[key] = value.gsub(value, test.cached_values[value.gsub('$', '')]) if value.match?(/^\$/)
+          end
+          @response = client.send(_method, prepare_arguments(args, test))
+          client
+        else
+          @response = client.send(_method, prepare_arguments(args, test))
+          client
+        end
+      rescue Elastic::Transport::Transport::Error => e
+        if e.message.match(/Net::ReadTimeout/) && @retries <= 5
+          @retries += 1
+          perform_action(method, args, client, test)
+        else
+          raise e
+        end
       end
 
       def prepare_arguments(args, test)
