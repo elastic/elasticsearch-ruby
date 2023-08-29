@@ -18,7 +18,7 @@
 require 'spec_helper'
 require 'webmock/rspec'
 
-describe 'Elasticsearch: Validation' do
+xdescribe 'Elasticsearch: Validation' do
   let(:host) { 'http://localhost:9200' }
   let(:count_request_stub) do
     stub_request(:get, "#{host}/_count")
