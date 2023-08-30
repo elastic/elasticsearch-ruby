@@ -18,18 +18,19 @@
 require 'spec_helper'
 
 describe 'client.cat#component_templates' do
-  let(:expected_args) do
-    [
-      'GET',
-      url,
-      {},
-      nil,
-      {}
-    ]
-  end
-
   context 'without a name' do
     let(:url) { '_cat/component_templates' }
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { endpoint: 'cat.component_templates' }
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.cat.component_templates).to be_a Elasticsearch::API::Response
@@ -38,6 +39,17 @@ describe 'client.cat#component_templates' do
 
   context 'with a name' do
     let(:url) { '_cat/component_templates/foo' }
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'cat.component_templates' }
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.cat.component_templates(name: 'foo')).to be_a Elasticsearch::API::Response

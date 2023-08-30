@@ -25,7 +25,8 @@ describe 'client.cat#help' do
         '_cat',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.help' }
     ]
   end
 

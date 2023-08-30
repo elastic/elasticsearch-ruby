@@ -25,7 +25,8 @@ describe 'client.cat#tasks' do
         '_cat/tasks',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.tasks' }
     ]
   end
 

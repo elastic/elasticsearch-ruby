@@ -25,7 +25,8 @@ describe 'client.cat#shards' do
         '_cat/shards',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.shards' }
     ]
   end
 

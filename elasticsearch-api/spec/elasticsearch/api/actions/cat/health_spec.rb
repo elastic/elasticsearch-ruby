@@ -25,7 +25,8 @@ describe 'client.cat#health' do
         '_cat/health',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.health' }
     ]
   end
 

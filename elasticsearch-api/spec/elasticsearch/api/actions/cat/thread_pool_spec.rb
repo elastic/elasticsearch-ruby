@@ -25,7 +25,8 @@ describe 'client.cat#thread_pool' do
         '_cat/thread_pool',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.thread_pool' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client.cat#templates' do
         '_cat/templates',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.templates' }
     ]
   end
 

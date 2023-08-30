@@ -25,7 +25,8 @@ describe 'client.cat#fielddata' do
         '_cat/fielddata',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.fielddata' }
     ]
   end
 
@@ -41,7 +42,8 @@ describe 'client.cat#fielddata' do
           '_cat/fielddata/foo,bar',
           {},
           nil,
-          {}
+          {},
+          { defined_params: { fields: ['foo', 'bar'] }, endpoint: 'cat.fielddata' }
       ]
     end
 

@@ -25,7 +25,8 @@ describe 'client.cat#indices' do
         '_cat/indices',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.indices' }
     ]
   end
 

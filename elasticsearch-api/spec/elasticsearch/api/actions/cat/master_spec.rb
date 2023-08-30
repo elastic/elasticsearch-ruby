@@ -25,7 +25,8 @@ describe 'client.cat#master' do
         '_cat/master',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.master' }
     ]
   end
 
