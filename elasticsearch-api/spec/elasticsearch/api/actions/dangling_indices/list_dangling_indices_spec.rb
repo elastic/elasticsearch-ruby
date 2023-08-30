@@ -24,7 +24,8 @@ describe 'dangling_indices#list_dangling_index' do
       '_dangling',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'dangling_indices.list_dangling_indices' }
     ]
   end
 
