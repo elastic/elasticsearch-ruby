@@ -24,7 +24,8 @@ describe 'dangling_indices#delete_dangling_index' do
       '_dangling/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index_uuid:'foo' }, endpoint: 'dangling_indices.delete_dangling_index' }
     ]
   end
 
