@@ -26,7 +26,7 @@ describe Elasticsearch::Client do
       allow(client).to receive(:perform_request) { OpenStruct.new(body: '') }
       expect { client.search(headers: headers) }.not_to raise_error
       expect(client).to have_received(:perform_request)
-        .with('GET', '_search', {}, nil, headers)
+        .with('GET', '_search', {}, nil, headers, { endpoint: 'search' })
     end
   end
 
