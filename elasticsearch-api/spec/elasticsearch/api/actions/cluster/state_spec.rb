@@ -25,7 +25,8 @@ describe 'client.cluster#state' do
         '_cluster/state',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cluster.state' }
     ]
   end
 
@@ -41,7 +42,8 @@ describe 'client.cluster#state' do
           '_cluster/state/foo,bar',
           {},
           nil,
-          {}
+          {},
+          { defined_params: { metric: ['foo', 'bar']}, endpoint: 'cluster.state' }
       ]
     end
 

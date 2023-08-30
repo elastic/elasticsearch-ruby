@@ -25,7 +25,8 @@ describe 'client.cluster#allocation_explain' do
         '_cluster/allocation/explain',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cluster.allocation_explain' }
     ]
   end
 

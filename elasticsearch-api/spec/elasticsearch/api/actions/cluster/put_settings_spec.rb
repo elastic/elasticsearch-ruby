@@ -25,7 +25,8 @@ describe 'client.cluster#put_settings' do
         '_cluster/settings',
         {},
         {},
-        {}
+        {},
+        { endpoint: 'cluster.put_settings' }
     ]
   end
 

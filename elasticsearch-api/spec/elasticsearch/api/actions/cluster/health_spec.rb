@@ -25,7 +25,8 @@ describe 'client.cluster#health' do
         '_cluster/health',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cluster.health' }
     ]
   end
 
@@ -41,7 +42,8 @@ describe 'client.cluster#health' do
           '_cluster/health',
           { level: 'indices' },
           nil,
-          {}
+          {},
+          { endpoint: 'cluster.health' }
       ]
     end
 
@@ -58,7 +60,8 @@ describe 'client.cluster#health' do
           '_cluster/health/foo',
           {},
           nil,
-          {}
+          {},
+          { defined_params: { index: 'foo' }, endpoint: 'cluster.health' }
       ]
     end
 
