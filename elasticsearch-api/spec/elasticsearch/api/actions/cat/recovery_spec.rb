@@ -25,7 +25,8 @@ describe 'client.cat#recovery' do
         '_cat/recovery',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.recovery' }
     ]
   end
 

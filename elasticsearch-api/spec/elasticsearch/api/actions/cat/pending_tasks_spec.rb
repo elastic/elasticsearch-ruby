@@ -25,7 +25,8 @@ describe 'client.cat#pending_tasks' do
         '_cat/pending_tasks',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.pending_tasks' }
     ]
   end
 

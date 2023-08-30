@@ -25,7 +25,8 @@ describe 'client.cat#nodes' do
         '_cat/nodes',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.nodes' }
     ]
   end
 

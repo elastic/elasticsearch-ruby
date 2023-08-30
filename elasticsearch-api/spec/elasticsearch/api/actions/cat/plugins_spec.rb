@@ -25,7 +25,8 @@ describe 'client.cat#plugins' do
         '_cat/plugins',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.plugins' }
     ]
   end
 

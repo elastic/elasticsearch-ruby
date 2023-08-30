@@ -25,7 +25,8 @@ describe 'client.cat#allocation' do
         '_cat/allocation',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.allocation' }
     ]
   end
 

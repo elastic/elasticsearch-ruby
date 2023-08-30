@@ -25,7 +25,8 @@ describe 'client.cat#segments' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'cat.segments' }
     ]
   end
 
@@ -40,6 +41,17 @@ describe 'client.cat#segments' do
   context 'when index is specified' do
     let(:url) do
       '_cat/segments/foo'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'cat.segments' }
+      ]
     end
 
     it 'performs the request' do

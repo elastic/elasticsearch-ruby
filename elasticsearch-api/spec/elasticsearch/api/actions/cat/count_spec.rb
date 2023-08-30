@@ -25,7 +25,8 @@ describe 'client.cat#count' do
         '_cat/count',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cat.count' }
     ]
   end
 

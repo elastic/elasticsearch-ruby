@@ -25,7 +25,8 @@ describe 'client.cat#snapshots' do
         '_cat/snapshots/foo',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { repository: 'foo' }, endpoint: 'cat.snapshots' }
     ]
   end
 
