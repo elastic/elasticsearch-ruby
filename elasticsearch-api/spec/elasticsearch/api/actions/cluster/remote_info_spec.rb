@@ -25,7 +25,8 @@ describe 'client.cluster#remote_info' do
         '_remote/info',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cluster.remote_info' }
     ]
   end
 

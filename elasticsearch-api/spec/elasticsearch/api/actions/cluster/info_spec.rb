@@ -25,7 +25,8 @@ describe 'client.cluster#info' do
       '_info/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { target: 'foo' }, endpoint: 'cluster.info' }
     ]
   end
 

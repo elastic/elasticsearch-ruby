@@ -25,7 +25,8 @@ describe 'client.cluster#stats' do
         '_cluster/stats',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'cluster.stats' }
     ]
   end
 

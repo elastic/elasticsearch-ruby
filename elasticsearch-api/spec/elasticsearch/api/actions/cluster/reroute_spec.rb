@@ -25,7 +25,8 @@ describe 'client.cluster#reroute' do
         '_cluster/reroute',
         {},
         {},
-        {}
+        {},
+        { endpoint: 'cluster.reroute' }
     ]
   end
 
@@ -41,7 +42,8 @@ describe 'client.cluster#reroute' do
           '_cluster/reroute',
           {},
           { commands: [ move: { index: 'myindex', shard: 0 }] },
-          {}
+          {},
+          { endpoint: 'cluster.reroute' }
       ]
     end
 
