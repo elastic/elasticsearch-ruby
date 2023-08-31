@@ -24,7 +24,8 @@ describe 'client.index_lifecycle_management#migrate_to_data_tiers' do
       '_ilm/migrate_to_data_tiers',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'ilm.migrate_to_data_tiers' }
     ]
   end
 
