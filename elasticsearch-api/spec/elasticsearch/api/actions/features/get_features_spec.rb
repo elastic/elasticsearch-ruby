@@ -24,7 +24,8 @@ describe 'client.features#get_features' do
         '_features',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'features.get_features' }
     ]
   end
 
