@@ -24,7 +24,8 @@ describe 'client#fleet.msearch' do
       '_fleet/_fleet_msearch',
       {},
       {},
-      { 'Content-Type' => 'application/x-ndjson' }
+      { 'Content-Type' => 'application/x-ndjson' },
+      { endpoint: 'fleet.msearch' }
     ]
   end
 

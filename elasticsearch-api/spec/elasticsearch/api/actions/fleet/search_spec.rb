@@ -24,7 +24,8 @@ describe 'client#fleet.search' do
       'foo/_fleet/_fleet_search',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'fleet.search' }
     ]
   end
 

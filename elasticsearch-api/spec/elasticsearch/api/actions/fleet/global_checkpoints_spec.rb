@@ -24,7 +24,8 @@ describe 'client#fleet.global_checkpoints' do
       'foo/_fleet/global_checkpoints',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'fleet.global_checkpoints' }
     ]
   end
 
