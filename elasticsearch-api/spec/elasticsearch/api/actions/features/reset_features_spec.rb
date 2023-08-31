@@ -24,7 +24,8 @@ describe 'client.features#reset_features' do
         '_features/_reset',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'features.reset_features' }
     ]
   end
 
