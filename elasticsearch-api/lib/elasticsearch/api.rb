@@ -84,7 +84,8 @@ module Elasticsearch
                 Elasticsearch::API::Synonyms,
                 Elasticsearch::API::SynonymsSets,
                 Elasticsearch::API::QueryRuleset,
-                Elasticsearch::API::SynonymRule
+                Elasticsearch::API::SynonymRule,
+                Elasticsearch::API::Esql
     end
 
     # The serializer class
