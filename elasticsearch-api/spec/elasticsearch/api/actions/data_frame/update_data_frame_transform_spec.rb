@@ -25,7 +25,8 @@ describe 'client#update_transform' do
       '_transform/foo/_update',
       params,
       {},
-      {}
+      {},
+      { defined_params: { transform_id: 'foo'}, endpoint: 'transform.update_transform' }
     ]
   end
 
