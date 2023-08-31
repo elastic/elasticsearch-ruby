@@ -82,9 +82,7 @@ module Elasticsearch
                 Elasticsearch::API::XPack,
                 Elasticsearch::API::SearchApplication,
                 Elasticsearch::API::Synonyms,
-                Elasticsearch::API::SynonymsSets,
                 Elasticsearch::API::QueryRuleset,
-                Elasticsearch::API::SynonymRule,
                 Elasticsearch::API::Esql
     end
 
