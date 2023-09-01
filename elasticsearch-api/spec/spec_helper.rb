@@ -61,10 +61,6 @@ RSpec.configure do |config|
   config.add_formatter('documentation')
   config.add_formatter('RspecJunitFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-junit.xml")
   config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
-  if ENV['BUILDKITE']
-    require_relative "./rspec_formatter.rb"
-    config.add_formatter('RSpecCustomFormatter')
-  end
   config.color_mode = :on
 end
 
