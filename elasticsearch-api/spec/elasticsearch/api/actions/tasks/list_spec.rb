@@ -24,7 +24,8 @@ describe 'client.tasks#list' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'tasks.list' }
     ]
   end
 
