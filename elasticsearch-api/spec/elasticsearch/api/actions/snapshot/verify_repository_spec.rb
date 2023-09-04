@@ -24,7 +24,9 @@ describe 'client.snapshot#verify_repository' do
       '_snapshot/foo/_verify',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { repository: 'foo' },
+        endpoint: 'snapshot.verify_repository' }
     ]
   end
 

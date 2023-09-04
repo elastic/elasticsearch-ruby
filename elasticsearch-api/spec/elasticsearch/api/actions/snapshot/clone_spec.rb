@@ -24,7 +24,10 @@ describe 'client.snapshot#clone' do
         '_snapshot/foo/bar/_clone/snapshot',
         {},
         {},
-        {}
+        {},
+        { defined_params:
+            { repository: 'foo', snapshot: 'bar', target_snapshot: 'snapshot' },
+          endpoint: 'snapshot.clone' }
     ]
   end
 

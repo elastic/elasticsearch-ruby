@@ -24,7 +24,9 @@ describe 'client.snapshot#repository_analyze' do
       url,
       {},
       nil,
-      {}
+      {},
+      { defined_params: { repository: 'foo' },
+        endpoint: 'snapshot.repository_analyze' }
     ]
   end
 
