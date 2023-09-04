@@ -24,7 +24,8 @@ describe 'client.ingest#geo_ip_stats' do
       '_ingest/geoip/stats',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'ingest.geo_ip_stats' }
     ]
   end
 

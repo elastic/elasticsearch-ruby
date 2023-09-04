@@ -25,7 +25,8 @@ describe 'client.ingest#delete_pipeline' do
         url,
         {},
         nil,
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'ingest.delete_pipeline' }
     ]
   end
 
@@ -51,6 +52,17 @@ describe 'client.ingest#delete_pipeline' do
 
     let(:url) do
       '_ingest/pipeline/foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'DELETE',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { id: 'foo^bar' }, endpoint: 'ingest.delete_pipeline' }
+      ]
     end
 
     it 'performs the request' do

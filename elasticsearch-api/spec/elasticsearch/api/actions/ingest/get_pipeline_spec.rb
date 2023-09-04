@@ -25,7 +25,8 @@ describe 'client.ingest#get_pipeline' do
         url,
         {},
         nil,
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'ingest.get_pipeline' }
     ]
   end
 
@@ -41,6 +42,17 @@ describe 'client.ingest#get_pipeline' do
 
     let(:url) do
       '_ingest/pipeline/foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { id: 'foo^bar' }, endpoint: 'ingest.get_pipeline' }
+      ]
     end
 
     it 'performs the request' do
