@@ -24,7 +24,8 @@ describe 'client#msearch' do
       url,
       params,
       body,
-      headers
+      headers,
+      { endpoint: 'msearch' }
     ]
   end
 
@@ -97,6 +98,17 @@ describe 'client#msearch' do
       ''
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: 'foo' }, endpoint: 'msearch' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.msearch(index: 'foo', body: []))
     end
@@ -112,6 +124,17 @@ describe 'client#msearch' do
       ''
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'msearch' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.msearch(index: ['foo', 'bar'], body: []))
     end
@@ -125,6 +148,17 @@ describe 'client#msearch' do
 
     let(:body) do
       ''
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: 'foo^bar' }, endpoint: 'msearch' }
+      ]
     end
 
     it 'performs the request' do

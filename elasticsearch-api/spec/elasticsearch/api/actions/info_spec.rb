@@ -25,7 +25,8 @@ describe 'client#info' do
         '',
         { },
         nil,
-        {}
+        {},
+        { endpoint: 'info' }
     ]
   end
 

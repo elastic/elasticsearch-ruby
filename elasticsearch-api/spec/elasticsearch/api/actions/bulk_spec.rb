@@ -24,7 +24,8 @@ describe 'client#bulk' do
         url,
         params,
         body,
-        headers
+        headers,
+        {:endpoint=>"bulk"}
     ]
   end
 
@@ -58,6 +59,17 @@ describe 'client#bulk' do
 
   context 'when an index is specified' do
     let(:url) { 'myindex/_bulk' }
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: 'myindex' }, :endpoint=>"bulk"}
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.bulk(index: 'myindex', body: [])).to be_a Elasticsearch::API::Response
@@ -111,6 +123,17 @@ describe 'client#bulk' do
   context 'when url characters need to be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_bulk'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: 'foo^bar' }, :endpoint=>"bulk"}
+      ]
     end
 
     it 'performs the request' do

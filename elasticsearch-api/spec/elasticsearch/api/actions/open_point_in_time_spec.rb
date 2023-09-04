@@ -24,7 +24,8 @@ describe 'client#open_point_in_time' do
       'foo/_pit',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'open_point_in_time' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client#ping' do
         '',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'ping' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client#delete_by_query' do
       'foo/_delete_by_query',
       {},
       { term: {} },
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'delete_by_query' }
     ]
   end
 
@@ -46,7 +47,8 @@ describe 'client#delete_by_query' do
         'foo/_delete_by_query',
         { q: 'foo:bar' },
         { query: 'query' },
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'delete_by_query' }
       ]
     end
 

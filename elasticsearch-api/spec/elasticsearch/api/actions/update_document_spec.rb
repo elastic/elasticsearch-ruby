@@ -24,7 +24,8 @@ describe 'client#update' do
       url,
       params,
       body,
-      {}
+      {},
+      { defined_params: { id: '1', index: 'foo' }, endpoint: 'update' }
     ]
   end
 
@@ -81,6 +82,17 @@ describe 'client#update' do
 
     let(:body) do
       {}
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '1', index: 'foo^bar' }, endpoint: 'update' }
+      ]
     end
 
     it 'escapes the parts' do

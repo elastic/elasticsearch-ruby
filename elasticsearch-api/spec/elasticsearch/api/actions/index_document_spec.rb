@@ -25,7 +25,8 @@ describe 'client#index' do
         url,
         params,
         body,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'index' }
     ]
   end
 
@@ -68,6 +69,17 @@ describe 'client#index' do
       'foo/_doc/1'
     end
 
+    let(:expected_args) do
+      [
+        request_type,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'index' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.index(index: 'foo', id: '1', body: body)).to be_a Elasticsearch::API::Response
     end
@@ -101,6 +113,17 @@ describe 'client#index' do
 
       let(:params) do
         { op_type: 'create' }
+      end
+
+      let(:expected_args) do
+        [
+          request_type,
+          url,
+          params,
+          body,
+          {},
+          { defined_params: { id: '1', index: 'foo' }, endpoint: 'index' }
+        ]
       end
 
       it 'passes the URL params' do

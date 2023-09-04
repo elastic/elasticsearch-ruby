@@ -24,7 +24,8 @@ describe 'client#health_report' do
       '_health_report',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'health_report' }
     ]
   end
 
@@ -39,7 +40,8 @@ describe 'client#health_report' do
         '_health_report/foo',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { feature: 'foo' }, endpoint: 'health_report' }
       ]
     end
 

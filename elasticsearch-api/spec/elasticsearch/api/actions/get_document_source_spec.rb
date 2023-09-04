@@ -25,7 +25,8 @@ describe 'client#get_source' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'get_source'   }
     ]
   end
 
@@ -67,6 +68,17 @@ describe 'client#get_source' do
 
     let(:url) do
       'foo%5Ebar/_source/1'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { id: '1', index: 'foo^bar' }, endpoint: 'get_source'   }
+      ]
     end
 
     it 'URL-escapes the parts' do

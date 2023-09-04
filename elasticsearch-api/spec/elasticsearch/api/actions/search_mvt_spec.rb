@@ -24,7 +24,9 @@ describe 'client#search_mvt' do
       url,
       params,
       body,
-      {}
+      {},
+      { defined_params: { field: 'field', index: 'foo', x: 57.2127, y: 6.2348, zoom: 10 },
+        endpoint: 'search_mvt' }
     ]
   end
 

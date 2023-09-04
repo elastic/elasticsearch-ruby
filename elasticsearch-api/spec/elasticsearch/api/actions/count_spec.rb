@@ -24,7 +24,8 @@ describe 'client#count' do
       '_count',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'count' }
     ]
   end
 
@@ -39,7 +40,8 @@ describe 'client#count' do
         'foo,bar/_count',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'count' }
       ]
     end
 
@@ -55,7 +57,8 @@ describe 'client#count' do
         '_count',
         {},
         { match: { foo: 'bar' } },
-        {}
+        {},
+        { endpoint: 'count' }
       ]
     end
 

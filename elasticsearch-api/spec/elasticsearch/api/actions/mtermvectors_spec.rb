@@ -24,7 +24,8 @@ describe 'client#mtermvectors' do
       'my-index/_mtermvectors',
       {},
       body,
-      {}
+      {},
+      { defined_params: { index: 'my-index' }, endpoint: 'mtermvectors' }
     ]
   end
 

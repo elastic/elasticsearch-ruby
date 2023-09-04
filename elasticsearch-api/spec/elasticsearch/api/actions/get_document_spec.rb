@@ -25,7 +25,8 @@ describe 'client#get' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'get' }
     ]
   end
 
@@ -66,6 +67,17 @@ describe 'client#get' do
   context 'when the request needs to be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_doc/1'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { id: '1', index: 'foo^bar' }, endpoint: 'get' }
+      ]
     end
 
     it 'URL-escapes the parts' do

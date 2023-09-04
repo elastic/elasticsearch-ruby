@@ -26,7 +26,8 @@ describe 'client#delete_script' do
           '_scripts/foo',
           {},
           nil,
-          {}
+          {},
+          { defined_params: { id: 'foo' }, endpoint: 'delete_script' }
       ]
     end
 

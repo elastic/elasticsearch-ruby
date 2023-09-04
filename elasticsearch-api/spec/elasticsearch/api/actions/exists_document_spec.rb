@@ -25,7 +25,8 @@ describe 'client#exists' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'exists' }
     ]
   end
 

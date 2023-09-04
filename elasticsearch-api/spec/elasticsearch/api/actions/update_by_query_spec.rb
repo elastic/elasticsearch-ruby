@@ -24,7 +24,8 @@ describe 'client#update_by_query' do
       'foo/_update_by_query',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'update_by_query' }
     ]
   end
 

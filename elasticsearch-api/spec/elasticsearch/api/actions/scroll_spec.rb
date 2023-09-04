@@ -25,7 +25,8 @@ describe 'client#scroll' do
         '_search/scroll/cXVlcn...',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { scroll_id: 'cXVlcn...' }, endpoint: 'scroll' }
       ]
     end
 
@@ -41,7 +42,8 @@ describe 'client#scroll' do
         '_search/scroll',
         {},
         { scroll_id: 'cXVlcn...' },
-        {}
+        {},
+        { endpoint: 'scroll' }
       ]
     end
 
