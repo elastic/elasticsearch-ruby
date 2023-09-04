@@ -24,7 +24,8 @@ describe 'client#set_upgrade_mode' do
        '_ml/set_upgrade_mode',
        {},
        nil,
-       {}
+       {},
+       { endpoint: 'ml.set_upgrade_mode' }
     ]
   end
 
@@ -40,7 +41,8 @@ describe 'client#set_upgrade_mode' do
         '_ml/set_upgrade_mode',
         { enabled: true, timeout: '10m' },
         nil,
-        {}
+        {},
+        { endpoint: 'ml.set_upgrade_mode' }
       ]
     end
 

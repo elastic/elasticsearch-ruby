@@ -24,7 +24,8 @@ describe 'client#ml.infer_trained_model_deployment' do
       '_ml/trained_models/foo/deployment/_infer',
       {},
       {},
-      {}
+      {},
+      { defined_params: { model_id: 'foo' }, endpoint: 'ml.infer_trained_model' }
     ]
   end
 

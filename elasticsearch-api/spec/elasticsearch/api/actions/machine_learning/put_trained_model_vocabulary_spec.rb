@@ -24,7 +24,9 @@ describe 'client#ml.put_trained_model_vocabulary' do
       '_ml/trained_models/foo/vocabulary',
       {},
       {},
-      {}
+      {},
+      { defined_params: { model_id: 'foo' },
+        endpoint: 'ml.put_trained_model_vocabulary' }
     ]
   end
 

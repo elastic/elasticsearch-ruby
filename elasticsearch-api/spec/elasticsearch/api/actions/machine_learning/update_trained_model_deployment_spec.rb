@@ -24,7 +24,9 @@ describe 'client#ml.update_trained_model_deployment' do
       '_ml/trained_models/foo/deployment/_update',
       {},
       {},
-      {}
+      {},
+      { defined_params: { model_id: 'foo' },
+        endpoint: 'ml.update_trained_model_deployment' }
     ]
   end
 
