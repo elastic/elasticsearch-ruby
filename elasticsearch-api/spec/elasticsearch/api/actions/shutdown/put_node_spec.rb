@@ -24,7 +24,8 @@ describe 'client.shutdown#put_node' do
       '_nodes/id/shutdown',
       {},
       {},
-      {}
+      {},
+      { defined_params: { node_id: 'id' }, endpoint: 'shutdown.put_node' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client.shutdown#get_node' do
       url,
       {},
       nil,
-      {}
+      {},
+      { defined_params: { node_id: 'id' }, endpoint: 'shutdown.get_node' }
     ]
   end
 
@@ -38,6 +39,17 @@ describe 'client.shutdown#get_node' do
 
   context 'when no id is provided' do
     let(:url) { '_nodes/shutdown' }
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { endpoint: 'shutdown.get_node' }
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.shutdown.get_node).to be_a Elasticsearch::API::Response

@@ -24,7 +24,8 @@ describe 'client.shutdown#delete_node' do
       '_nodes/id/shutdown',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { node_id: 'id' }, endpoint: 'shutdown.delete_node' }
     ]
   end
 
