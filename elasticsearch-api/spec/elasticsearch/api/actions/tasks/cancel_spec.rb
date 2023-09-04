@@ -24,7 +24,8 @@ describe 'client.tasks#cancel' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'tasks.cancel' }
     ]
   end
 
@@ -40,6 +41,17 @@ describe 'client.tasks#cancel' do
 
     let(:url) do
       '_tasks/foo/_cancel'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { task_id: 'foo' }, endpoint: 'tasks.cancel' }
+      ]
     end
 
     it 'performs the request' do

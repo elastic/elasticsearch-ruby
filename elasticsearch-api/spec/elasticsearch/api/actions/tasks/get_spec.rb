@@ -25,7 +25,8 @@ describe 'client.tasks#get' do
         '_tasks/foo1',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { task_id: 'foo1' }, endpoint: 'tasks.get' }
     ]
   end
 
