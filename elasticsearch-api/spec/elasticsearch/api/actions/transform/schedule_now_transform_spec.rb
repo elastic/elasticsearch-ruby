@@ -24,7 +24,9 @@ describe 'client.transform#schedule_now_transform' do
       '_transform/id/_schedule_now',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { transform_id: 'id' },
+        endpoint: 'transform.schedule_now_transform' }
     ]
   end
 
