@@ -24,7 +24,8 @@ describe 'client.sql#get_async' do
       '_sql/async/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { id: 'foo' }, endpoint: 'sql.get_async' }
     ]
   end
 
