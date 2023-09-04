@@ -25,7 +25,8 @@ describe 'client.cluster#recovery' do
         'foo/_recovery',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.recovery' }
     ]
   end
 

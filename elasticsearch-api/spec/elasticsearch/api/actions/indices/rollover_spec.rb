@@ -25,7 +25,8 @@ describe 'client.cluster#rollover' do
         url,
         params,
         body,
-        {}
+        {},
+        { defined_params: { alias: 'foo' }, endpoint: 'indices.rollover' }
     ]
   end
 
@@ -49,6 +50,17 @@ describe 'client.cluster#rollover' do
 
     let(:url) do
       'foo/_rollover/bar'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { alias: 'foo', new_index: 'bar' }, endpoint: 'indices.rollover' }
+      ]
     end
 
     it 'performs the request' do

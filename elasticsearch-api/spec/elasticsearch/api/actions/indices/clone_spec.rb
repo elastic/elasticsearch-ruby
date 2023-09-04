@@ -25,7 +25,9 @@ describe 'client.indices#clone' do
         url,
         params,
         body,
-        {}
+        {},
+        { defined_params: { index: 'my_source_index', target: 'my_target_index' },
+         endpoint: 'indices.clone' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client.cluster#put_mapping' do
         url,
         {},
         body,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.put_mapping' }
     ]
   end
 
@@ -79,6 +80,17 @@ describe 'client.cluster#put_mapping' do
       'foo,bar/_mapping'
     end
 
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        {},
+        body,
+        {},
+        { defined_params: { index: ['foo','bar'] }, endpoint: 'indices.put_mapping' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.put_mapping(index: ['foo','bar'], body: {})).to be_a Elasticsearch::API::Response
     end
@@ -87,6 +99,17 @@ describe 'client.cluster#put_mapping' do
   context 'when the path needs to be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_mapping'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        {},
+        body,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.put_mapping' }
+      ]
     end
 
     it 'performs the request' do

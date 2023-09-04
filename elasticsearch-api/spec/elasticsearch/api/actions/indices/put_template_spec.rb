@@ -25,7 +25,8 @@ describe 'client.cluster#put_template' do
         url,
         params,
         body,
-        {}
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.put_template' }
     ]
   end
 
@@ -98,6 +99,17 @@ describe 'client.cluster#put_template' do
 
     let(:body) do
       {}
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { name: 'foo^bar' }, endpoint: 'indices.put_template' }
+      ]
     end
 
     it 'performs the request' do

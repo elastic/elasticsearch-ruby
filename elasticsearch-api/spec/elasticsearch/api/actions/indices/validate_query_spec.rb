@@ -24,9 +24,11 @@ describe 'client.cluster#validate_query' do
       url,
       params,
       body,
-      {}
+      {},
+      { endpoint: 'indices.validate_query' }
     ]
   end
+
   let(:method) { 'GET' }
 
   let(:url) do
@@ -50,6 +52,17 @@ describe 'client.cluster#validate_query' do
       'foo/_validate/query'
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.validate_query' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.validate_query(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -60,6 +73,17 @@ describe 'client.cluster#validate_query' do
       'foo,bar/_validate/query'
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'indices.validate_query' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.validate_query(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
@@ -68,6 +92,17 @@ describe 'client.cluster#validate_query' do
   context 'when multiple indicies are specified as a string' do
     let(:url) do
       'foo,bar/_validate/query'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo,bar' }, endpoint: 'indices.validate_query' }
+      ]
     end
 
     it 'performs the request' do
@@ -84,6 +119,17 @@ describe 'client.cluster#validate_query' do
       '_validate/query'
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { endpoint: 'indices.validate_query' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.validate_query(explain: true, q: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -95,6 +141,17 @@ describe 'client.cluster#validate_query' do
     end
     let(:method) { 'POST' }
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { endpoint: 'indices.validate_query' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.validate_query(body: { filtered: {} })).to be_a Elasticsearch::API::Response
     end
@@ -103,6 +160,17 @@ describe 'client.cluster#validate_query' do
   context 'when the path needs to be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_validate/query'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.validate_query' }
+      ]
     end
 
     it 'performs the request' do

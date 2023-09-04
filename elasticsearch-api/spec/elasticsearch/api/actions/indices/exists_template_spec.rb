@@ -25,7 +25,8 @@ describe 'client.indices#exists_template' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.exists_template' }
     ]
   end
 
@@ -45,6 +46,17 @@ describe 'client.indices#exists_template' do
 
     let(:url) do
       '_template/bar%2Fbam'
+    end
+
+    let(:expected_args) do
+      [
+        'HEAD',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { name: 'bar/bam' }, endpoint: 'indices.exists_template' }
+      ]
     end
 
     it 'performs the request' do

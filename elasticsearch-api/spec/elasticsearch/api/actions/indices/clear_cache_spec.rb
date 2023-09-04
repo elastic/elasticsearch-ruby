@@ -25,7 +25,8 @@ describe 'client.indices#clear_cache' do
         url,
         params,
         nil,
-        {}
+        {},
+        { endpoint: 'indices.clear_cache' }
     ]
   end
 
@@ -45,6 +46,17 @@ describe 'client.indices#clear_cache' do
 
     let(:url) do
       'foo/_cache/clear'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.clear_cache' }
+      ]
     end
 
     it 'performs the request' do
@@ -67,6 +79,17 @@ describe 'client.indices#clear_cache' do
 
     let(:url) do
       'foo%5Ebar/_cache/clear'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.clear_cache' }
+      ]
     end
 
     let(:params) do

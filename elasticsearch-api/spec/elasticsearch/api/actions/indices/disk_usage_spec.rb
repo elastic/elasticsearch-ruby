@@ -24,7 +24,8 @@ describe 'client.indices#disk_usage' do
       "#{index}/_disk_usage",
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'indices.disk_usage' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client.indices#unfreeze' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.unfreeze' }
     ]
   end
 
@@ -76,6 +77,17 @@ describe 'client.indices#unfreeze' do
 
     let(:url) do
       'foo%5Ebar/_unfreeze'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.unfreeze' }
+      ]
     end
 
     it 'performs the request' do

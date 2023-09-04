@@ -25,7 +25,8 @@ describe 'client.indices#flush' do
         url,
         params,
         nil,
-        {}
+        {},
+        { endpoint: 'indices.flush' }
     ]
   end
 
@@ -47,6 +48,17 @@ describe 'client.indices#flush' do
       'foo/_flush'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.flush' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.flush(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -56,6 +68,17 @@ describe 'client.indices#flush' do
 
     let(:url) do
       'foo,bar/_flush'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: ['foo','bar'] }, endpoint: 'indices.flush' }
+      ]
     end
 
     it 'performs the request' do
@@ -69,6 +92,17 @@ describe 'client.indices#flush' do
       'foo%5Ebar/_flush'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.flush' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.flush(index: 'foo^bar')).to be_a Elasticsearch::API::Response
     end
@@ -78,6 +112,17 @@ describe 'client.indices#flush' do
 
     let(:url) do
       'foo/_flush'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.flush' }
+      ]
     end
 
     let(:params) do

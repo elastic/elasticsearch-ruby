@@ -24,7 +24,8 @@ describe 'client.indices#data_streams_stats' do
       url,
       params,
       nil,
-      {}
+      {},
+      { endpoint: 'indices.data_streams_stats' }
     ]
   end
 
@@ -49,6 +50,17 @@ describe 'client.indices#data_streams_stats' do
   context 'when name is specified' do
     let(:url) do
       '_data_stream/foo/_stats'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.data_streams_stats' }
+      ]
     end
 
     it 'performs the request' do

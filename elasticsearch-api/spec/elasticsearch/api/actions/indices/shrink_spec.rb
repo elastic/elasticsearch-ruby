@@ -25,7 +25,9 @@ describe 'client.cluster#shrink' do
         'foo/_shrink/bar',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo', target: 'bar' },
+          endpoint: 'indices.shrink' }
     ]
   end
 

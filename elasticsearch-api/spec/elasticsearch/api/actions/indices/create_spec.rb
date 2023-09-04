@@ -25,7 +25,8 @@ describe 'client.indices#create' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.create' }
     ]
   end
 
@@ -76,6 +77,17 @@ describe 'client.indices#create' do
 
     let(:url) do
       'foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.create' }
+      ]
     end
 
     it 'performs the request' do

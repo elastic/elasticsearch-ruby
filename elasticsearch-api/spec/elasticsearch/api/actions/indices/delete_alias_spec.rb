@@ -25,7 +25,9 @@ describe 'client.indices#delete_alias' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo', name: 'bar'},
+          endpoint: 'indices.delete_alias' }
     ]
   end
 
@@ -74,6 +76,18 @@ describe 'client.indices#delete_alias' do
 
     let(:url) do
       'foo%5Ebar/_aliases/bar%2Fbam'
+    end
+
+    let(:expected_args) do
+      [
+        'DELETE',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar', name: 'bar/bam'},
+          endpoint: 'indices.delete_alias' }
+      ]
     end
 
     it 'performs the request' do

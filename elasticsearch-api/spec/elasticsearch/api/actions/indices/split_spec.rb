@@ -25,7 +25,9 @@ describe 'client.cluster#split' do
         'foo/_split/bar',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo', target: 'bar' },
+          endpoint:'indices.split' }
     ]
   end
 

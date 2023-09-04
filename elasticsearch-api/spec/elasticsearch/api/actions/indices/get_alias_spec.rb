@@ -25,7 +25,8 @@ describe 'client.cluster#get_alias' do
         url,
         {},
         nil,
-        {}
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.get_alias' }
     ]
   end
 
@@ -43,6 +44,18 @@ describe 'client.cluster#get_alias' do
       'foo,bar/_alias/bam'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: ['foo', 'bar'], name: 'bam' }, endpoint: 'indices.get_alias' }
+      ]
+    end
+
+
     it 'performs the request' do
       expect(client_double.indices.get_alias(index: ['foo','bar'], name: 'bam')).to be_a Elasticsearch::API::Response
     end
@@ -52,6 +65,17 @@ describe 'client.cluster#get_alias' do
 
     let(:url) do
       'foo%5Ebar/_alias/bar%2Fbam'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar', name: 'bar/bam' }, endpoint: 'indices.get_alias' }
+      ]
     end
 
     it 'performs the request' do
