@@ -24,7 +24,9 @@ describe 'client#searchable_snapshots.mount' do
       '_snapshot/foo/bar/_mount',
       {},
       {},
-      {}
+      {},
+      { defined_params: { repository: 'foo', snapshot: 'bar' },
+        endpoint: 'searchable_snapshots.mount' }
     ]
   end
 

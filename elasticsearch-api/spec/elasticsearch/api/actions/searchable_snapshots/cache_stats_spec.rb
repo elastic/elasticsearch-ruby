@@ -24,7 +24,8 @@ describe 'client#searchable_snapshots.cache_stats' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'searchable_snapshots.cache_stats' }
     ]
   end
 
@@ -36,6 +37,17 @@ describe 'client#searchable_snapshots.cache_stats' do
 
   context 'when using index' do
     let(:url){ '_searchable_snapshots/foo/cache/stats' }
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { node_id: 'foo' }, endpoint: 'searchable_snapshots.cache_stats' }
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.searchable_snapshots.cache_stats(node_id: 'foo')).to be_a Elasticsearch::API::Response
