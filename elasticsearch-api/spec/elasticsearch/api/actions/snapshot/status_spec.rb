@@ -25,7 +25,8 @@ describe 'client.snapshot#status' do
         url,
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'snapshot.status' }
     ]
   end
 
@@ -40,6 +41,17 @@ describe 'client.snapshot#status' do
   context 'when a repository and snapshot are specified' do
     let(:url) do
       '_snapshot/foo/bar/_status'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { repository: 'foo', snapshot: 'bar' }, endpoint: 'snapshot.status' }
+      ]
     end
 
     it 'performs the request' do

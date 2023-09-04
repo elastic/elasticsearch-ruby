@@ -25,7 +25,9 @@ describe 'client.snapshot#delete_repository' do
         url,
         {},
         nil,
-        {}
+        {},
+        { defined_params: { repository: 'foo' },
+          endpoint: 'snapshot.delete_repository' }
     ]
   end
 
@@ -41,6 +43,18 @@ describe 'client.snapshot#delete_repository' do
 
     let(:url) do
       '_snapshot/foo,bar'
+    end
+
+    let(:expected_args) do
+      [
+        'DELETE',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { repository: ['foo','bar'] },
+          endpoint: 'snapshot.delete_repository' }
+      ]
     end
 
     it 'performs the request' do

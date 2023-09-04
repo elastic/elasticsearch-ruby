@@ -25,7 +25,9 @@ describe 'client.snapshot#get' do
         '_snapshot/foo/bar',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { repository: 'foo', snapshot: 'bar' },
+          endpoint: 'snapshot.get' }
     ]
   end
 
