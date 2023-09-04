@@ -24,7 +24,8 @@ describe 'client#watcher.get_settings' do
       '_watcher/settings',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'watcher.get_settings' }
     ]
   end
 

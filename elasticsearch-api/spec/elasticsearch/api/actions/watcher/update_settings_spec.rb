@@ -17,14 +17,15 @@
 
 require 'spec_helper'
 
-describe 'client#watcher.get_settings' do
+describe 'client#watcher.update_settings' do
   let(:expected_args) do
     [
       'PUT',
       '_watcher/settings',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'watcher.update_settings' }
     ]
   end
 
