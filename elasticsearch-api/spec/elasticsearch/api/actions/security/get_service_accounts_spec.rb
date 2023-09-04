@@ -24,7 +24,8 @@ describe 'client#security#get_service_accounts' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'security.get_service_accounts' }
     ]
   end
 
@@ -39,6 +40,18 @@ describe 'client#security#get_service_accounts' do
   context 'when using namespace' do
     let(:url) { '_security/service/foo' }
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { namespace: 'foo' },
+          endpoint: 'security.get_service_accounts' }
+      ]
+    end
+
     it 'performs the request' do
       expect(
         client_double.security.get_service_accounts(namespace: 'foo')
@@ -48,6 +61,18 @@ describe 'client#security#get_service_accounts' do
 
   context 'when using namespace and service' do
     let(:url) { '_security/service/foo/bar' }
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { service: 'bar', namespace: 'foo' },
+          endpoint: 'security.get_service_accounts' }
+      ]
+    end
 
     it 'performs the request' do
       expect(

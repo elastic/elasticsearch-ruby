@@ -24,7 +24,9 @@ describe 'client#security#delete_service_token' do
       '_security/service/foo/bar/credential/token/service_token',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'service_token', namespace: 'foo', service: 'bar' },
+        endpoint: 'security.delete_service_token' }
     ]
   end
 

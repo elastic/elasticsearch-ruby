@@ -24,7 +24,8 @@ describe 'client.security#saml_invalidate' do
       '_security/saml/invalidate',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'security.saml_invalidate' }
     ]
   end
 

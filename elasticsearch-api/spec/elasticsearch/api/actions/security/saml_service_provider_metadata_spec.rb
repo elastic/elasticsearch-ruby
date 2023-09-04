@@ -24,7 +24,9 @@ describe 'client.security#saml_service_provider_metadata' do
       "_security/saml/metadata/#{realm_name}",
       {},
       nil,
-      {}
+      {},
+      { defined_params: { realm_name: 'foo' },
+        endpoint: 'security.saml_service_provider_metadata' }
     ]
   end
 

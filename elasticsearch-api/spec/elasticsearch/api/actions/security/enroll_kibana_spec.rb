@@ -24,7 +24,8 @@ describe 'client#security#enroll_kibana' do
       '_security/enroll/kibana',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'security.enroll_kibana' }
     ]
   end
 

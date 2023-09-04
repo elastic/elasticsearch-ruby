@@ -24,7 +24,8 @@ describe 'client#security#has_privileges_user_profile' do
       '_security/profile/_has_privileges',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'security.has_privileges_user_profile' }
     ]
   end
 

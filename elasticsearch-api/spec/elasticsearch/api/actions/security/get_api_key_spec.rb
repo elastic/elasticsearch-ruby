@@ -25,7 +25,8 @@ describe 'client#security#get_api_key' do
         '_security/api_key',
         params,
         nil,
-        {}
+        {},
+        { endpoint: 'security.get_api_key' }
     ]
   end
 

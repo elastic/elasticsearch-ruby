@@ -26,7 +26,9 @@ describe 'client#security#create_service_token' do
       expected_path,
       {},
       nil,
-      {}
+      {},
+      { defined_params: { namespace: 'foo', service: 'bar' },
+        endpoint: 'security.create_service_token' }
     ]
   end
 
@@ -34,6 +36,18 @@ describe 'client#security#create_service_token' do
     let(:expected_request_method) { 'PUT' }
     let(:token_name) { 'test-token' }
     let(:expected_path) { "#{super()}/#{token_name}" }
+    let(:expected_args) do
+      [
+        expected_request_method,
+        expected_path,
+        {},
+        nil,
+        {},
+        { defined_params: { name: 'test-token', namespace: 'foo', service: 'bar' },
+          endpoint: 'security.create_service_token' }
+      ]
+    end
+
     it 'performs the request' do
       expect(
         client_double.security.create_service_token(

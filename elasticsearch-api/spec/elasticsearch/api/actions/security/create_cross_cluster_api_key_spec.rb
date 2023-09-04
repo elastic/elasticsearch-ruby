@@ -25,7 +25,8 @@ describe 'client#security#create_api_key' do
       '_security/cross_cluster/api_key',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'security.create_cross_cluster_api_key' }
     ]
   end
 

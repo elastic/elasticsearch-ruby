@@ -24,7 +24,9 @@ describe 'client#security#clear_cached_service_tokens' do
       '_security/service/foo/bar/credential/token/service_token/_clear_cache',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'service_token', namespace: 'foo', service: 'bar' },
+        endpoint: 'security.clear_cached_service_tokens' }
     ]
   end
 

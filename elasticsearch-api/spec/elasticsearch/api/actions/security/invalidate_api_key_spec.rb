@@ -24,7 +24,8 @@ describe 'client.security#invalidate_api_key_sp' do
       '_security/api_key',
       {},
       body,
-      {}
+      {},
+      { endpoint: 'security.invalidate_api_key' }
     ]
   end
 

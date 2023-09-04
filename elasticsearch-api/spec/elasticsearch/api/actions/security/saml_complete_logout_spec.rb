@@ -24,7 +24,8 @@ describe 'client#security.saml_complete_logout' do
       '_security/saml/complete_logout',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'security.saml_complete_logout' }
     ]
   end
 

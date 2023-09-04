@@ -25,7 +25,9 @@ describe 'client#security#create_api_key' do
       '_security/cross_cluster/api_key/the_id',
       {},
       {},
-      {}
+      {},
+      { defined_params: { id: 'the_id' },
+        endpoint: 'security.update_cross_cluster_api_key' }
     ]
   end
 
