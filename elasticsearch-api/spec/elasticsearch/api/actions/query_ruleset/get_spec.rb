@@ -24,7 +24,8 @@ describe 'client.query_ruleset#get' do
       '_query_rules/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.get' }
     ]
   end
 
