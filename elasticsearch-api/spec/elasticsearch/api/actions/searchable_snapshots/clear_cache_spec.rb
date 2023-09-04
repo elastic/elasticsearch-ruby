@@ -24,7 +24,8 @@ describe 'client#searchable_snapshots.clear_cache' do
       url,
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'searchable_snapshots.clear_cache' }
     ]
   end
 
@@ -36,6 +37,18 @@ describe 'client#searchable_snapshots.clear_cache' do
 
   context 'when using index' do
     let(:url){ 'foo/_searchable_snapshots/cache/clear' }
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo' },
+          endpoint: 'searchable_snapshots.clear_cache' }
+      ]
+    end
 
     it 'performs the request' do
       expect(client_double.searchable_snapshots.clear_cache(index: 'foo')).to be_a Elasticsearch::API::Response
