@@ -25,7 +25,8 @@ describe 'client.ingest#put_pipeline' do
         url,
         {},
         {},
-        {}
+        {},
+        { defined_params:{ id: 'foo' }, endpoint: 'ingest.put_pipeline' }
     ]
   end
 
@@ -51,6 +52,17 @@ describe 'client.ingest#put_pipeline' do
 
     let(:url) do
       '_ingest/pipeline/foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        {},
+        {},
+        {},
+        { defined_params:{ id: 'foo^bar' }, endpoint: 'ingest.put_pipeline' }
+      ]
     end
 
     it 'performs the request' do

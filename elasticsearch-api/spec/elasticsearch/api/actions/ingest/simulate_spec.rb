@@ -24,7 +24,8 @@ describe 'client.ingest#simulate' do
       url,
       {},
       {},
-      {}
+      {},
+      { endpoint: 'ingest.simulate' }
     ]
   end
   let(:method) { 'POST' }
@@ -40,6 +41,17 @@ describe 'client.ingest#simulate' do
   context 'when a pipeline id is provided' do
     let(:url) do
       '_ingest/pipeline/foo/_simulate'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        {},
+        {},
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'ingest.simulate' }
+      ]
     end
 
     it 'performs the request' do
