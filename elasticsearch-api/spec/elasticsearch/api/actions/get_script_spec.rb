@@ -25,7 +25,8 @@ describe 'client#get_script' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'get_script' }
     ]
   end
 

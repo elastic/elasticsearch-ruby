@@ -24,7 +24,8 @@ describe 'client#mget' do
       url,
       params,
       body,
-      {}
+      {},
+      { endpoint: 'mget' }
     ]
   end
 
@@ -48,6 +49,17 @@ describe 'client#mget' do
 
     let(:url) do
       'foo/_mget'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'mget' }
+      ]
     end
 
     it 'performs the request' do
@@ -78,6 +90,17 @@ describe 'client#mget' do
 
     let(:body) do
       { ids: [ '1', '2' ]}
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'mget' }
+      ]
     end
 
     it 'performs the request' do

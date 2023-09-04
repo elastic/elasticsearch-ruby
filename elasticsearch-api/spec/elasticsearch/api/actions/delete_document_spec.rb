@@ -25,7 +25,8 @@ describe 'client#delete' do
         'foo/_doc/1',
         params,
         nil,
-        {}
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'delete' }
     ]
   end
 
@@ -70,7 +71,8 @@ describe 'client#delete' do
           'foo%5Ebar/_doc/1',
           params,
           nil,
-          {}
+          {},
+          { defined_params: { id: 1, index: 'foo^bar' }, endpoint: 'delete' }
       ]
     end
 

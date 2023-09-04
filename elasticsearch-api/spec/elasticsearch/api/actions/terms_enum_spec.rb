@@ -24,7 +24,8 @@ describe 'client#terms_enum' do
       'foo/_terms_enum',
       {},
       body,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'terms_enum' }
     ]
   end
 

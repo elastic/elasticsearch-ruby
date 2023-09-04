@@ -24,7 +24,8 @@ describe 'client#msearch_template' do
       url,
       params,
       body,
-      headers
+      headers,
+      { endpoint: 'msearch_template' }
     ]
   end
 
@@ -84,6 +85,17 @@ describe 'client#msearch_template' do
 
     let(:body) do
       ''
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        headers,
+        { defined_params: { index: 'foo' }, endpoint: 'msearch_template' }
+      ]
     end
 
     it 'performs the request' do

@@ -24,7 +24,8 @@ describe 'client#explain' do
       url,
       params,
       body,
-      {}
+      {},
+      { defined_params: { id: 1, index: 'foo' }, endpoint: 'explain' }
     ]
   end
 
@@ -68,6 +69,17 @@ describe 'client#explain' do
       { q: 'abc123' }
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'explain' }
+      ]
+    end
+
     let(:body) do
       nil
     end
@@ -82,6 +94,17 @@ describe 'client#explain' do
       { query: { match: {} } }
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '1', index: 'foo' }, endpoint: 'explain' }
+      ]
+    end
+
     it 'passes the query definition' do
       expect(client_double.explain(index: 'foo', id: '1', body: { query: { match: {} } })).to be_a Elasticsearch::API::Response
     end
@@ -90,6 +113,17 @@ describe 'client#explain' do
   context 'when the request needs to be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_explain/1'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '1', index: 'foo^bar' }, endpoint: 'explain' }
+      ]
     end
 
     it 'URL-escapes the parts' do

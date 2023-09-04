@@ -25,7 +25,8 @@ describe 'client#rank_eval' do
       url,
       params,
       body,
-      {}
+      {},
+      { defined_params: { index: 'my_index' }, endpoint: 'rank_eval' }
     ]
   end
 
@@ -73,6 +74,17 @@ describe 'client#rank_eval' do
           allow_no_indices: false,
           expand_wildcards: 'open'
       }
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { endpoint: 'rank_eval' }
+      ]
     end
 
     it 'performs the request' do

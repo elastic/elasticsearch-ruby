@@ -25,7 +25,8 @@ describe 'client#clear_scroll' do
       '_search/scroll/abc123',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { scroll_id: 'abc123' }, endpoint: 'clear_scroll' }
     ]
   end
 
@@ -41,7 +42,8 @@ describe 'client#clear_scroll' do
           '_search/scroll/abc123,def456',
           {},
           nil,
-          {}
+          {},
+          { defined_params: { scroll_id: ['abc123', 'def456'] }, endpoint: 'clear_scroll' }
       ]
     end
 

@@ -25,7 +25,8 @@ describe 'client#reindex' do
         '_reindex',
         {},
         {},
-        {}
+        {},
+        { endpoint: 'reindex' }
     ]
   end
 

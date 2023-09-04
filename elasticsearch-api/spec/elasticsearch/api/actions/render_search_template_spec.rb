@@ -25,7 +25,8 @@ describe 'client#render_search_template' do
         '_render/template',
         {},
         { foo: 'bar' },
-        {}
+        {},
+        { endpoint: 'render_search_template' }
       ]
     end
 
@@ -41,7 +42,8 @@ describe 'client#render_search_template' do
         '_render/template/foo',
         {},
         { foo: 'bar' },
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'render_search_template' }
       ]
     end
 

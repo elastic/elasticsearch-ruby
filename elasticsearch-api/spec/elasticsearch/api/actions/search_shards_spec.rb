@@ -25,7 +25,8 @@ describe 'client#search_shards' do
         '_search_shards',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'search_shards' }
     ]
   end
 

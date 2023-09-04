@@ -24,7 +24,8 @@ describe 'client#termvectors' do
       url,
       params,
       body,
-      {}
+      {},
+      { defined_params: { id: '123', index: 'foo' }, endpoint: 'termvectors' }
     ]
   end
 
@@ -57,6 +58,17 @@ describe 'client#termvectors' do
   context 'when the older api name \'termvector\' is used' do
     let(:url) do
       'foo/_termvectors/123'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { id: '123', index: 'foo' }, endpoint: '_termvector' }
+      ]
     end
 
     it 'performs the request' do

@@ -23,9 +23,10 @@ describe 'client#create_document' do
     [
         'PUT',
         'foo/_doc/123',
-        { op_type: 'create' },
+        { endpoint: 'create', op_type: 'create' },
         { foo: 'bar' },
-        {}
+        {},
+        { defined_params: { id: '123', index: 'foo' }, endpoint: 'create' }
     ]
   end
 
@@ -39,9 +40,20 @@ describe 'client#create_document' do
       [
           'PUT',
           'foo/_doc/123',
-          { op_type: 'create' },
+          { endpoint: 'create', op_type: 'create' },
           {},
           {}
+      ]
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        'foo/_doc/123',
+        { endpoint: 'create', op_type: 'create' },
+        {},
+        {},
+        { defined_params: { id: '123', index: 'foo' }, endpoint: 'create' }
       ]
     end
 
@@ -56,9 +68,20 @@ describe 'client#create_document' do
       [
           'PUT',
           'foo/_doc/1',
-          { op_type: 'create' },
+          { endpoint: 'create', op_type: 'create' },
           { foo: 'bar' },
           {}
+      ]
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        'foo/_doc/1',
+        { endpoint: 'create', op_type: 'create' },
+        { foo: 'bar' },
+        {},
+        { defined_params: { id: 1, index: 'foo' }, endpoint: 'create' }
       ]
     end
 
@@ -76,6 +99,17 @@ describe 'client#create_document' do
           { },
           { foo: 'bar' },
           {}
+      ]
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        'foo/_doc',
+        { endpoint: 'create' },
+        { foo: 'bar' },
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'create' }
       ]
     end
 

@@ -24,7 +24,8 @@ describe 'client#search_template' do
       'foo/_search/template',
       { },
       { foo: 'bar' },
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'search_template' }
     ]
   end
 

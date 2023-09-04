@@ -24,7 +24,8 @@ describe 'client#close_point_in_time' do
       '_pit',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'close_point_in_time' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client#search' do
       url,
       params,
       body,
-      {}
+      {},
+      { endpoint: 'search' }
     ]
   end
   let(:method) { 'GET' }
@@ -65,6 +66,17 @@ describe 'client#search' do
       'foo/_search'
     end
 
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'search' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.search(index: 'foo'))
     end
@@ -73,6 +85,17 @@ describe 'client#search' do
   context 'when multiple indices are specified' do
     let(:url) do
       'foo,bar/_search'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index:  ['foo', 'bar'] }, endpoint: 'search' }
+      ]
     end
 
     it 'performs the request' do

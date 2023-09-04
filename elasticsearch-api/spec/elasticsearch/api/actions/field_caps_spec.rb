@@ -25,7 +25,8 @@ describe 'client#field_caps' do
         'foo/_field_caps',
         { fields: 'bar' },
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'field_caps' }
     ]
   end
 

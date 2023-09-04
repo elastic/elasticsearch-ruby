@@ -29,7 +29,8 @@ describe 'client#put_script' do
         url,
         {},
         { script: 'bar', lang: 'groovy' },
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'put_script' }
       ]
     end
 
@@ -45,7 +46,8 @@ describe 'client#put_script' do
         url,
         {},
         { script: 'bar' },
-        {}
+        {},
+        { defined_params: { id: 'foo' }, endpoint: 'put_script' }
       ]
     end
 

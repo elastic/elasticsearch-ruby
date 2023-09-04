@@ -25,7 +25,8 @@ describe 'JSON builders' do
         '_search',
         {},
         body,
-        {}
+        {},
+        { endpoint: 'search' }
       ]
     end
 
@@ -57,7 +58,8 @@ describe 'JSON builders' do
         '_search',
         {},
         body,
-        {}
+        {},
+        { endpoint: 'search' }
       ]
     end
 
