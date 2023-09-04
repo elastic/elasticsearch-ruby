@@ -25,7 +25,8 @@ describe 'client.nodes#stats' do
         url,
         params,
         nil,
-        {}
+        {},
+        { endpoint: 'nodes.stats' }
     ]
   end
 
@@ -47,6 +48,17 @@ describe 'client.nodes#stats' do
       '_nodes/foo/stats'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.stats(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -58,6 +70,17 @@ describe 'client.nodes#stats' do
       '_nodes/stats/http,fs'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { metric: [:http, :fs] }, endpoint: 'nodes.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.stats(metric: [:http, :fs])).to be_a Elasticsearch::API::Response
     end
@@ -67,6 +90,17 @@ describe 'client.nodes#stats' do
 
     let(:url) do
       '_nodes/stats/indices/filter_cache'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { metric: :indices, index_metric: :filter_cache }, endpoint: 'nodes.stats' }
+      ]
     end
 
     it 'performs the request' do

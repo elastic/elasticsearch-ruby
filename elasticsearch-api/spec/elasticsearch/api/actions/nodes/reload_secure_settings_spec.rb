@@ -25,7 +25,8 @@ describe 'client#reload_secure_settings' do
         url,
         params,
         body,
-        {}
+        {},
+        { endpoint: 'nodes.reload_secure_settings' }
     ]
   end
 
@@ -43,6 +44,17 @@ describe 'client#reload_secure_settings' do
       '_nodes/foo/reload_secure_settings'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.reload_secure_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.reload_secure_settings(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -55,6 +67,17 @@ describe 'client#reload_secure_settings' do
       '_nodes/foo,bar/reload_secure_settings'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { node_id: 'foo,bar' }, endpoint: 'nodes.reload_secure_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.reload_secure_settings(node_id: 'foo,bar', body: { foo: 'bar' })).to be_a Elasticsearch::API::Response
     end
@@ -64,6 +87,17 @@ describe 'client#reload_secure_settings' do
     let(:body){ { foo: 'bar' } }
     let(:url) do
       '_nodes/foo,bar/reload_secure_settings'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { node_id: ['foo', 'bar'] }, endpoint: 'nodes.reload_secure_settings' }
+      ]
     end
 
     it 'performs the request' do
