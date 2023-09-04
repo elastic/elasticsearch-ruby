@@ -24,7 +24,8 @@ describe 'client.search_application#delete_behavioral_analytics' do
       '_application/search_application/foo/_search',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'foo' }, endpoint: 'search_application.search' }
     ]
   end
 

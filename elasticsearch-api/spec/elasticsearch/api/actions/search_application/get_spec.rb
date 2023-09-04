@@ -24,7 +24,8 @@ describe 'client.search_application#get' do
       '_application/search_application/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'foo' }, endpoint: 'search_application.get' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client.search_application#put' do
       '_application/search_application/foo',
       {},
       {},
-      {}
+      {},
+      { defined_params: { name: 'foo' }, endpoint: 'search_application.put' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client.search_application#get_behavioral_analytics' do
       '_application/analytics',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'search_application.get_behavioral_analytics' }
     ]
   end
 

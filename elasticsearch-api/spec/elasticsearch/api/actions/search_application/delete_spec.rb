@@ -24,7 +24,8 @@ describe 'client.search_application#delete' do
       '_application/search_application/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'foo' }, endpoint: 'search_application.delete' }
     ]
   end
 
