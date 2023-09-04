@@ -24,7 +24,8 @@ describe 'client.sql#delete_async' do
       '_sql/async/delete/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { id: 'foo' }, endpoint: 'sql.delete_async' }
     ]
   end
 

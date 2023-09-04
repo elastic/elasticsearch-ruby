@@ -24,7 +24,8 @@ describe 'client.sql#get_async_status' do
       '_sql/async/status/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { id: 'foo' }, endpoint: 'sql.get_async_status' }
     ]
   end
 
