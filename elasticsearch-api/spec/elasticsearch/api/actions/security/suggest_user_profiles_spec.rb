@@ -24,7 +24,8 @@ describe 'client#security#search_user_profiles' do
       '_security/profile/_suggest',
       {},
       body,
-      {}
+      {},
+      { endpoint: 'security.suggest_user_profiles' }
     ]
   end
   let(:method) { 'GET' }

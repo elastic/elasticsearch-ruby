@@ -24,7 +24,8 @@ describe 'client#security#query_api_keys' do
       '_security/_query/api_key',
       {},
       body,
-      {}
+      {},
+      { endpoint: 'security.query_api_keys' }
     ]
   end
 

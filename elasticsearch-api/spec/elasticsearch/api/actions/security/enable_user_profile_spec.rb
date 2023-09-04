@@ -24,7 +24,8 @@ describe 'client#security#enable_user_profile' do
       '_security/profile/foo/_enable',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { uid: 'foo' }, endpoint: 'security.enable_user_profile' }
     ]
   end
 

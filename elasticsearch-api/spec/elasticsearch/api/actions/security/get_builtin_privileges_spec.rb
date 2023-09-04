@@ -25,7 +25,8 @@ describe 'client#security#get_builtin_privileges' do
         '_security/privilege/_builtin',
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'security.get_builtin_privileges' }
     ]
   end
 

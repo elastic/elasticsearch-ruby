@@ -24,7 +24,9 @@ describe 'client#security#get_service_credentials' do
       '_security/service/foo/bar/credential',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { namespace: 'foo', service: 'bar' },
+        endpoint: 'security.get_service_credentials' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client#security#disable_user_profile' do
       '_security/profile/foo/_disable',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { uid: 'foo' }, endpoint: 'security.disable_user_profile' }
     ]
   end
 

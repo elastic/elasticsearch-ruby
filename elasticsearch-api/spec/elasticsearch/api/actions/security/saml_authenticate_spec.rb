@@ -24,7 +24,8 @@ describe 'client.security#saml_authenticate' do
       '_security/saml/authenticate',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'security.saml_authenticate' }
     ]
   end
 

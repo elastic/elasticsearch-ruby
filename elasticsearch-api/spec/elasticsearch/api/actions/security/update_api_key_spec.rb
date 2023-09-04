@@ -24,7 +24,8 @@ describe 'client#security#update_api_key' do
       '_security/api_key/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { id: 'foo' }, endpoint: 'security.update_api_key' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client#security#create_api_key' do
         '_security/api_key',
         {},
         body,
-        {}
+        {},
+        { endpoint: 'security.create_api_key' }
     ]
   end
 
@@ -68,7 +69,8 @@ describe 'client#security#create_api_key' do
           '_security/api_key',
           { refresh: 'wait_for' },
           body,
-          {}
+          {},
+          { endpoint: 'security.create_api_key' }
       ]
     end
 
