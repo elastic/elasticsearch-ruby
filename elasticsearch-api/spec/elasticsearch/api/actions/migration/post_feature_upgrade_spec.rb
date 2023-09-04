@@ -24,7 +24,8 @@ describe 'client#migration.post_feature_upgrade' do
       '_migration/system_features',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'migration.post_feature_upgrade' }
     ]
   end
 
