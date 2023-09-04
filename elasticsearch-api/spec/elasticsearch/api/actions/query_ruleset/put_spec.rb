@@ -25,7 +25,8 @@ describe 'client.query_ruleset#put' do
       '_query_rules/foo',
       {},
       {},
-      {}
+      {},
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.put' }
     ]
   end
 

@@ -25,7 +25,8 @@ describe 'client.query_ruleset#delete' do
       '_query_rules/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.delete' }
     ]
   end
 
