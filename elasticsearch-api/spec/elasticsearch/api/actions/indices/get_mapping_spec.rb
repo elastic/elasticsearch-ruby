@@ -24,7 +24,8 @@ describe 'client.cluster#get_mapping' do
         url,
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'indices.get_mapping' }
     ]
   end
 
@@ -41,6 +42,17 @@ describe 'client.cluster#get_mapping' do
       'foo/_mapping'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.get_mapping' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.get_mapping(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -51,6 +63,17 @@ describe 'client.cluster#get_mapping' do
       'foo,bar/_mapping'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'indices.get_mapping' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.get_mapping(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
@@ -59,6 +82,17 @@ describe 'client.cluster#get_mapping' do
   context 'when the path must be URL-escaped' do
     let(:url) do
       'foo%5Ebar/_mapping'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.get_mapping' }
+      ]
     end
 
     it 'performs the request' do

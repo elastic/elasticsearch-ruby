@@ -25,7 +25,8 @@ describe 'client.indices#close' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.close' }
     ]
   end
 
@@ -76,6 +77,17 @@ describe 'client.indices#close' do
 
     let(:url) do
       'foo%5Ebar/_close'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.close' }
+      ]
     end
 
     it 'performs the request' do

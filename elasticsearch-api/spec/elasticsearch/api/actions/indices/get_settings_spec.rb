@@ -25,7 +25,8 @@ describe 'client.cluster#get_settings' do
         url,
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'indices.get_settings' }
     ]
   end
 
@@ -43,6 +44,17 @@ describe 'client.cluster#get_settings' do
       'foo/_settings'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.get_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.get_settings(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -54,6 +66,17 @@ describe 'client.cluster#get_settings' do
       'foo/_settings/foo.bar'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo', name: 'foo.bar' }, endpoint: 'indices.get_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.get_settings(index: 'foo', name: 'foo.bar')).to be_a Elasticsearch::API::Response
     end
@@ -63,6 +86,17 @@ describe 'client.cluster#get_settings' do
 
     let(:url) do
       'foo%5Ebar/_settings'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.get_settings' }
+      ]
     end
 
     it 'performs the request' do

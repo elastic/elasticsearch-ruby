@@ -25,7 +25,8 @@ describe 'client.cluster#get_field_mapping' do
         url,
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'indices.get_field_mapping' }
     ]
   end
 
@@ -41,6 +42,17 @@ describe 'client.cluster#get_field_mapping' do
 
     let(:url) do
       'foo/_mapping/field/bam'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.get_field_mapping' }
+      ]
     end
 
     it 'performs the request' do

@@ -25,7 +25,9 @@ describe 'client.cluster#put_alias' do
         url,
         {},
         body,
-        {}
+        {},
+        { defined_params: { index: 'foo', name: 'bar' },
+          endpoint: 'indices.put_alias' }
     ]
   end
 
@@ -71,6 +73,18 @@ describe 'client.cluster#put_alias' do
       'foo,bar/_aliases/bam'
     end
 
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        {},
+        body,
+        {},
+        { defined_params: { index: ['foo','bar'], name: 'bam' },
+          endpoint: 'indices.put_alias' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.put_alias(index: ['foo','bar'], name: 'bam')).to be_a Elasticsearch::API::Response
     end
@@ -80,6 +94,18 @@ describe 'client.cluster#put_alias' do
 
     let(:url) do
       'foo%5Ebar/_aliases/bar%2Fbam'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        {},
+        body,
+        {},
+        { defined_params: { index: 'foo^bar', name: 'bar/bam' },
+          endpoint: 'indices.put_alias' }
+      ]
     end
 
     it 'performs the request' do

@@ -25,7 +25,8 @@ describe 'client.cluster#stats' do
         url,
         params,
         body,
-        {}
+        {},
+        { endpoint: 'indices.stats' }
     ]
   end
 
@@ -50,6 +51,17 @@ describe 'client.cluster#stats' do
       'foo/_stats'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.stats(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -60,6 +72,17 @@ describe 'client.cluster#stats' do
       'foo,bar/_stats'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'indices.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.stats(index: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
@@ -68,6 +91,17 @@ describe 'client.cluster#stats' do
   context 'when multiple indicies are specified as a string' do
     let(:url) do
       'foo,bar/_stats'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo,bar' }, endpoint: 'indices.stats' }
+      ]
     end
 
     it 'performs the request' do
@@ -84,6 +118,17 @@ describe 'client.cluster#stats' do
       'foo/_stats'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.stats(index: 'foo', expand_wildcards: true)).to be_a Elasticsearch::API::Response
     end
@@ -98,6 +143,17 @@ describe 'client.cluster#stats' do
       'foo/_stats/fielddata'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo', metric: 'fielddata' }, endpoint: 'indices.stats' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.stats(index: 'foo', metric: 'fielddata', fields: ['foo', 'bar'])).to be_a Elasticsearch::API::Response
     end
@@ -110,6 +166,17 @@ describe 'client.cluster#stats' do
 
     let(:url) do
       '_stats/search'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { metric: 'search' }, endpoint: 'indices.stats' }
+      ]
     end
 
     it 'performs the request' do

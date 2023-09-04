@@ -25,7 +25,8 @@ describe 'client.indices#get' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.get' }
     ]
   end
 

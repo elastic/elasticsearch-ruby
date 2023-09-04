@@ -25,7 +25,8 @@ describe 'client.cluster#update_aliases' do
         '_aliases',
         params,
         body,
-        {}
+        {},
+        { endpoint: 'indices.update_aliases' }
     ]
   end
 

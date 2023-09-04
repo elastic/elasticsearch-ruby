@@ -25,7 +25,8 @@ describe 'client.indices#delete_template' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.delete_template' }
     ]
   end
 
@@ -45,6 +46,17 @@ describe 'client.indices#delete_template' do
 
     let(:url) do
       '_template/foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'DELETE',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { name: 'foo^bar' }, endpoint: 'indices.delete_template' }
+      ]
     end
 
     it 'performs the request' do

@@ -25,7 +25,8 @@ describe 'client.cluster#refresh' do
         url,
         params,
         body,
-        {}
+        {},
+        { endpoint: 'indices.refresh' }
     ]
   end
 
@@ -51,6 +52,17 @@ describe 'client.cluster#refresh' do
       'foo/_refresh'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.refresh' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.refresh(index: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -60,6 +72,17 @@ describe 'client.cluster#refresh' do
 
     let(:url) do
       'foo,bar/_refresh'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: ['foo', 'bar'] }, endpoint: 'indices.refresh' }
+      ]
     end
 
     it 'performs the request' do
@@ -73,6 +96,17 @@ describe 'client.cluster#refresh' do
       'foo,bar/_refresh'
     end
 
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo,bar' }, endpoint: 'indices.refresh' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.refresh(index: 'foo,bar')).to be_a Elasticsearch::API::Response
     end
@@ -82,6 +116,17 @@ describe 'client.cluster#refresh' do
 
     let(:url) do
       'foo%5Ebar/_refresh'
+    end
+
+    let(:expected_args) do
+      [
+        'POST',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.refresh' }
+      ]
     end
 
     it 'performs the request' do

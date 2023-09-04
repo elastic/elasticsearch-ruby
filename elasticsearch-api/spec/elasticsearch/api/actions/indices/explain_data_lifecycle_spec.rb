@@ -24,7 +24,9 @@ describe 'client.indices#explain_data_lifecycle' do
         'foo/_lifecycle/explain',
         {},
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' },
+          endpoint: 'indices.explain_data_lifecycle' }
     ]
   end
 

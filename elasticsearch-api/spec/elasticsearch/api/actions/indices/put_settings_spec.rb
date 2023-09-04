@@ -25,7 +25,8 @@ describe 'client.cluster#put_settings' do
         url,
         params,
         body,
-        {}
+        {},
+        { endpoint: 'indices.put_settings' }
     ]
   end
 
@@ -68,6 +69,17 @@ describe 'client.cluster#put_settings' do
       'foo/_settings'
     end
 
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.put_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.put_settings(index: 'foo', flat_settings: true, body: {})).to be_a Elasticsearch::API::Response
     end
@@ -77,6 +89,17 @@ describe 'client.cluster#put_settings' do
 
     let(:url) do
       'foo/_settings'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.put_settings' }
+      ]
     end
 
     it 'performs the request' do
@@ -90,6 +113,17 @@ describe 'client.cluster#put_settings' do
       'foo,bar/_settings'
     end
 
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: ['foo','bar'] }, endpoint: 'indices.put_settings' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.put_settings(index: ['foo','bar'], body: {})).to be_a Elasticsearch::API::Response
     end
@@ -99,6 +133,17 @@ describe 'client.cluster#put_settings' do
 
     let(:url) do
       'foo%5Ebar/_settings'
+    end
+
+    let(:expected_args) do
+      [
+        'PUT',
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.put_settings' }
+      ]
     end
 
     it 'performs the request' do

@@ -24,7 +24,9 @@ describe 'client.indices#add_block' do
       url,
       {},
       nil,
-      {}
+      {},
+      { defined_params: { block: 'test_block', index: 'test_index' },
+        endpoint: 'indices.add_block'}
     ]
   end
   let(:url) { "#{index}/_block/#{block}"}

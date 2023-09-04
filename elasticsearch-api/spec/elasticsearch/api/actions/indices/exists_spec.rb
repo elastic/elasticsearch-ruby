@@ -25,7 +25,8 @@ describe 'client.indices#exists' do
         url,
         params,
         nil,
-        {}
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.exists' }
     ]
   end
 
@@ -51,6 +52,17 @@ describe 'client.indices#exists' do
       'foo,bar'
     end
 
+    let(:expected_args) do
+      [
+        'HEAD',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: ['foo','bar'] }, endpoint: 'indices.exists' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.exists(index: ['foo','bar'])).to eq(true)
     end
@@ -60,6 +72,17 @@ describe 'client.indices#exists' do
 
     let(:url) do
       'foo%5Ebar'
+    end
+
+    let(:expected_args) do
+      [
+        'HEAD',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { index: 'foo^bar' }, endpoint: 'indices.exists' }
+      ]
     end
 
     it 'performs the request' do

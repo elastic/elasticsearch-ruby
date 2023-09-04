@@ -24,7 +24,8 @@ describe 'client.indices#analyze' do
       url,
       params,
       body,
-      {}
+      {},
+      { endpoint: 'indices.analyze' }
     ]
   end
   let(:method) { 'GET' }
@@ -48,6 +49,17 @@ describe 'client.indices#analyze' do
   context 'when an index is specified' do
     let(:url) do
       'foo/_analyze'
+    end
+
+    let(:expected_args) do
+      [
+        method,
+        url,
+        params,
+        body,
+        {},
+        { defined_params: { index: 'foo' }, endpoint: 'indices.analyze' }
+      ]
     end
 
     it 'performs the request' do

@@ -24,7 +24,8 @@ describe 'client.indices#field_usage_stats' do
       'foo/_field_usage_stats',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { index: 'foo' }, endpoint: 'indices.field_usage_stats' }
     ]
   end
 

@@ -24,7 +24,8 @@ describe 'client.indices#get_data_lifecycle' do
       '_data_stream/foo/_lifecycle',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'foo' }, endpoint: 'indices.get_data_lifecycle' }
     ]
   end
 
