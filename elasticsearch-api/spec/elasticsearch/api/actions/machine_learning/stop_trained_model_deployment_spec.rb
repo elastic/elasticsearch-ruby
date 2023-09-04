@@ -24,7 +24,9 @@ describe 'client#ml.stop_trained_model_deployment' do
       '_ml/trained_models/foo/deployment/_stop',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { model_id: 'foo' },
+        endpoint: 'ml.stop_trained_model_deployment' }
     ]
   end
 

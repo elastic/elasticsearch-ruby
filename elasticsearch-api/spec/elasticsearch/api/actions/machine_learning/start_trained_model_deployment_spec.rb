@@ -24,7 +24,9 @@ describe 'client#ml.start_trained_model_deployment' do
       '_ml/trained_models/foo/deployment/_start',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { model_id: 'foo' },
+        endpoint: 'ml.start_trained_model_deployment' }
     ]
   end
 

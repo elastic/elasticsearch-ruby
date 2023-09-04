@@ -24,7 +24,11 @@ describe 'client#ml.get_model_snapshot_upgrade_stats' do
       '_ml/anomaly_detectors/foo/model_snapshots/bar/_upgrade/_stats',
       {},
       nil,
-      {}
+      {},
+      { defined_params: {
+        job_id: 'foo',
+        snapshot_id: 'bar' },
+        endpoint: 'ml.get_model_snapshot_upgrade_stats' }
     ]
   end
 

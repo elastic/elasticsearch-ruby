@@ -24,7 +24,8 @@ describe 'client#ml.reset_job' do
       '_ml/anomaly_detectors/foo/_reset',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { job_id: 'foo' }, endpoint: 'ml.reset_job' }
     ]
   end
 
