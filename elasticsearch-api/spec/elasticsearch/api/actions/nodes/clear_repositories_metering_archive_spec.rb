@@ -25,7 +25,9 @@ describe 'client.nodes#clear_repositories_metering_archive' do
       '_nodes/foo/_repositories_metering/bar',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { max_archive_version: 'bar', node_id: 'foo' },
+        endpoint: 'nodes.clear_repositories_metering_archive' }
     ]
   end
 

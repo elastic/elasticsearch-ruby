@@ -24,7 +24,9 @@ describe 'client.nodes#get_repositories_metering_info' do
       '_nodes/foo/_repositories_metering',
       {},
       nil,
-      {}
+      {},
+      { defined_params: {node_id: 'foo' },
+        endpoint: 'nodes.get_repositories_metering_info' }
     ]
   end
 

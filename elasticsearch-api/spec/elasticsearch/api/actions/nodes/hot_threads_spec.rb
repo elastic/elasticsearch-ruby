@@ -25,7 +25,8 @@ describe 'client.nodes#hot_threads' do
         url,
         {},
         nil,
-        {}
+        {},
+        { endpoint: 'nodes.hot_threads' }
     ]
   end
 
@@ -43,6 +44,17 @@ describe 'client.nodes#hot_threads' do
       '_nodes/foo/hot_threads'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.hot_threads' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.hot_threads(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -52,6 +64,17 @@ describe 'client.nodes#hot_threads' do
 
     let(:url) do
       '_nodes/foo%5Ebar/hot_threads'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        {},
+        nil,
+        {},
+        { defined_params: { node_id: 'foo^bar' }, endpoint: 'nodes.hot_threads' }
+      ]
     end
 
     it 'performs the request' do

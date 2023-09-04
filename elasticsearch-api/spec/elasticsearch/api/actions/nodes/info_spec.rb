@@ -25,7 +25,8 @@ describe 'client.nodes#info' do
         url,
         params,
         nil,
-        {}
+        {},
+        { endpoint: 'nodes.info' }
     ]
   end
 
@@ -47,6 +48,17 @@ describe 'client.nodes#info' do
       '_nodes/foo'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.info' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.info(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
@@ -58,6 +70,17 @@ describe 'client.nodes#info' do
       '_nodes/A,B,C'
     end
 
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { node_id: ['A', 'B', 'C'] }, endpoint: 'nodes.info' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.nodes.info(node_id: ['A', 'B', 'C'])).to be_a Elasticsearch::API::Response
     end
@@ -67,6 +90,17 @@ describe 'client.nodes#info' do
 
     let(:url) do
       '_nodes/A,B,C'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { node_id: 'A,B,C' }, endpoint: 'nodes.info' }
+      ]
     end
 
     it 'performs the request' do
@@ -93,6 +127,17 @@ describe 'client.nodes#info' do
 
     let(:url) do
       '_nodes/http,network'
+    end
+
+    let(:expected_args) do
+      [
+        'GET',
+        url,
+        params,
+        nil,
+        {},
+        { defined_params: { metric: ['http', 'network'] }, endpoint: 'nodes.info' }
+      ]
     end
 
     it 'performs the request' do
