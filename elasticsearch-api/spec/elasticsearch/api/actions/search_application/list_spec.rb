@@ -24,7 +24,8 @@ describe 'client.search_application#list' do
       '_application/search_application',
       {},
       nil,
-      {}
+      {},
+      { endpoint: 'search_application.list' }
     ]
   end
 

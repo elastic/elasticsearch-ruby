@@ -24,7 +24,9 @@ describe 'client.search_application#delete_behavioral_analytics_event' do
       '_application/analytics/foo/event/search',
       {},
       {},
-      {}
+      {},
+      { defined_params: { collection_name: 'foo', event_type: 'search' },
+        endpoint: 'search_application.post_behavioral_analytics_event' }
     ]
   end
 

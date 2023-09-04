@@ -24,7 +24,9 @@ describe 'client.search_application#put_behavioral_analytics' do
       '_application/analytics/foo',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { name: 'foo' },
+        endpoint: 'search_application.put_behavioral_analytics' }
     ]
   end
 
