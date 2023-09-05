@@ -170,7 +170,8 @@ module Elasticsearch
           '.snapshot-blob-cache', '.deprecation-indexing-template',
           '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
           'security-index-template', 'data-streams-mappings',
-          'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings'
+          'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings',
+          'ecs@dynamic_templates'
         ].freeze
 
         def xpack_template?(template)
