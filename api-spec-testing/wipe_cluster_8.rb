@@ -37,8 +37,9 @@ module Elasticsearch
         'synthetics', 'synthetics-settings', 'synthetics-mappings',
         '.snapshot-blob-cache', '.deprecation-indexing-template',
         '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-        'security-index-template', 'data-streams-mappings',
-        'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings'
+        'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings',
+        'security-index-template', 'data-streams-mappings', 'ecs@dynamic_templates',
+        'search-acl-filter'
       ].freeze
 
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -64,11 +65,7 @@ module Elasticsearch
           wipe_snapshots(client)
           wipe_datastreams(client)
           wipe_all_indices(client)
-          if platinum?
-            wipe_templates_for_xpack(client)
-          else
-            wipe_all_templates(client)
-          end
+          wipe_all_templates(client)
           wipe_cluster_settings(client)
           if platinum?
             clear_ml_jobs(client)
@@ -210,7 +207,7 @@ module Elasticsearch
           client.indices.delete(index: '*,-.ds-ilm-history-*', expand_wildcards: 'open,closed,hidden', ignore: 404)
         end
 
-        def wipe_templates_for_xpack(client)
+        def wipe_all_templates(client)
           templates = client.indices.get_index_template
 
           templates['index_templates'].each do |template|
@@ -242,18 +239,11 @@ module Elasticsearch
           end
         end
 
-        def wipe_all_templates(client)
-          client.indices.delete_template(name: '*')
-          begin
-            client.indices.delete_index_template(name: '*')
-            client.cluster.delete_component_template(name: '*')
-          rescue StandardError => e
-            logger.info('Using a version of ES that doesn\'t support index templates v2 yet, so it\'s safe to ignore')
-          end
-        end
-
         def platinum_template?(template)
-          platinum_prefixes = ['.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform', 'data-streams-mappings'].freeze
+          platinum_prefixes = [
+            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
+            'data-streams-mappings'
+          ].freeze
           platinum_prefixes.map { |a| return true if a.include? template }
 
           PLATINUM_TEMPLATES.include? template
