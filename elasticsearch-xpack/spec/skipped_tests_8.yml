@@ -154,6 +154,27 @@
 -
   :file: 'token/11_invalidation.yml'
   :description: 'Test invalidate refresh token return statuses'
-
-
-
+-
+  :file: 'analytics/boxplot.yml'
+  :description: '*'
+-
+  :file: 'analytics/moving_percentile.yml'
+  :description: 'Basic Search TDigest'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test outlier_detection auc_roc'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test outlier_detection auc_roc given actual_field is int'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test outlier_detection auc_roc include curve'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test outlier_detection auc_roc with default top_classes_field'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test classification auc_roc'
+-
+  :file: 'ml/evaluate_data_frame.yml'
+  :description: 'Test classification auc_roc with default top_classes_field'
