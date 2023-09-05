@@ -2,6 +2,16 @@
 === 7.17 Release notes
 
 [discrete]
+[[release_notes_7178]]
+=== 7.17.8 Release notes
+
+- Patch releases back to being detached from Elastic stack releases.
+- Tested compatibility with latest releases of Elasticsearch v7.17 APIs.
+- Tested versions of Ruby for 7.17.8: Ruby (MRI) 2.7, 3.0, 3.1, 3.2, JRuby 9.3, JRuby 9.4.
+- Bugfix in elasticsearch-transport: Fixes enforcing UTF-8 in Response body, causing an error when the string is frozen, particularly when using webmock: https://github.com/elastic/elastic-transport-ruby/issues/63[issue #63].
+
+
+[discrete]
 [[release_notes_7177]]
 === 7.17.7 Release notes
 
