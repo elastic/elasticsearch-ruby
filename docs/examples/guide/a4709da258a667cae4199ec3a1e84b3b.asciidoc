@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-index',
+  body: {
+    query: {
+      text_expansion: {
+        "ml.tokens": {
+          model_id: '.elser_model_1',
+          model_text: 'How to avoid muscle soreness after running?'
+        }
+      }
+    }
+  }
+)
+puts response
+----

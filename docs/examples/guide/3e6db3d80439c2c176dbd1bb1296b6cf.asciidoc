@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.render_search_template(
+  body: {
+    id: 'my-search-template',
+    params: {
+      query_string: 'hello world'
+    }
+  }
+)
+puts response
+----

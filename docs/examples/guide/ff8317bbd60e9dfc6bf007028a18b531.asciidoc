@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      properties: {
+        "ml.tokens": {
+          type: 'rank_features'
+        },
+        text_field: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----
