@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.render_search_template(
+  body: {
+    source: {
+      query: {
+        match: {
+          message: '{{^name_exists}}Hello World{{/name_exists}}'
+        }
+      }
+    },
+    params: {
+      name_exists: false
+    }
+  }
+)
+puts response
+----

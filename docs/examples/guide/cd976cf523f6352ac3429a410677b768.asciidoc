@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    query: {
+      text_expansion: {
+        "<rank_features_field>": {
+          model_id: 'the model to produce the token weights',
+          model_text: 'the query string'
+        }
+      }
+    }
+  }
+)
+puts response
+----

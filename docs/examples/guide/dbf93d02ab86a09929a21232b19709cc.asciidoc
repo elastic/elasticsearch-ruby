@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.ml.stop_trained_model_deployment(
+  model_id: 'my_model_for_search'
+)
+puts response
+----

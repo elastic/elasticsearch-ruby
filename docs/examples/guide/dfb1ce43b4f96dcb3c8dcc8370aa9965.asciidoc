@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.reindex(
+  wait_for_completion: false,
+  body: {
+    source: {
+      index: 'test-data'
+    },
+    dest: {
+      index: 'my-index',
+      pipeline: 'elser-v1-test'
+    }
+  }
+)
+puts response
+----
