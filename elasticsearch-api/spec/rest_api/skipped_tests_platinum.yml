@@ -105,3 +105,7 @@
 -
   :file: 'api_key/60_admin_user.yml'
   :description: 'Test query api keys'
+
+-
+  :file: 'spatial/70_script_doc_values.yml'
+  :description: '*'
