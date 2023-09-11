@@ -97,3 +97,7 @@
 -
   :file: 'eql/30_async_missing_events.yml'
   :description: 'Execute async EQL with missing events'
+
+-
+  :file: 'spatial/70_script_doc_values.yml'
+  :description: '*'
