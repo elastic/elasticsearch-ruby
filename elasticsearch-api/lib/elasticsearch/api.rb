@@ -83,7 +83,8 @@ module Elasticsearch
                 Elasticsearch::API::SearchApplication,
                 Elasticsearch::API::Synonyms,
                 Elasticsearch::API::QueryRuleset,
-                Elasticsearch::API::Esql
+                Elasticsearch::API::Esql,
+                Elasticsearch::API::Inference
     end
 
     # The serializer class
