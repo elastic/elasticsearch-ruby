@@ -35,6 +35,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-repositories-metering-archive-api.html
         #
         def clear_repositories_metering_archive(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "nodes.clear_repositories_metering_archive" }
+
+          defined_params = [:node_id, :max_archive_version].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
 
           raise ArgumentError,
@@ -54,7 +62,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

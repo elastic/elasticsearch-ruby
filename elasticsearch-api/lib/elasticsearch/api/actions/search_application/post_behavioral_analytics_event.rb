@@ -37,6 +37,14 @@ module Elasticsearch
         # @see http://todo.com/tbd
         #
         def post_behavioral_analytics_event(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "search_application.post_behavioral_analytics_event" }
+
+          defined_params = [:collection_name, :event_type].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'collection_name' missing" unless arguments[:collection_name]
           raise ArgumentError, "Required argument 'event_type' missing" unless arguments[:event_type]
@@ -55,7 +63,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -40,6 +40,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/monitor-elasticsearch-cluster.html
         #
         def bulk(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "monitoring.bulk" }
+
+          defined_params = [:type].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
@@ -65,7 +73,7 @@ module Elasticsearch
 
           headers.merge!("Content-Type" => "application/x-ndjson")
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, payload, headers)
+            perform_request(method, path, params, payload, headers, request_opts)
           )
         end
       end

@@ -24,7 +24,9 @@ describe 'client#inference.get_model' do
       '_inference/foo/bar',
       {},
       nil,
-      {}
+      {},
+      { defined_params: { model_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.get_model' }
     ]
   end
 

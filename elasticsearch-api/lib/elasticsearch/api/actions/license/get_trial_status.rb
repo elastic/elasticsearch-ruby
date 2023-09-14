@@ -29,6 +29,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trial-status.html
         #
         def get_trial_status(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "license.get_trial_status" }
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -39,7 +41,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

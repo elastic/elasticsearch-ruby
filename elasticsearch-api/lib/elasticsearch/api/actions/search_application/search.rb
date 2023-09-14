@@ -35,6 +35,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-search.html
         #
         def search(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "search_application.search" }
+
+          defined_params = [:name].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
           arguments = arguments.clone
@@ -54,7 +62,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -31,6 +31,14 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/preview-dfanalytics.html
         #
         def preview_data_frame_analytics(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ml.preview_data_frame_analytics" }
+
+          defined_params = [:id].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -52,7 +60,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -36,6 +36,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
         #
         def exists(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "indices.exists" }
+
+          defined_params = [:index].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
 
           arguments = arguments.clone
@@ -50,7 +58,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Utils.__rescue_from_not_found do
-            perform_request(method, path, params, body, headers).status == 200 ? true : false
+            perform_request(method, path, params, body, headers, request_opts).status == 200 ? true : false
           end
         end
 

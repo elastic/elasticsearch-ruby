@@ -37,6 +37,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html
         #
         def pending_tasks(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "cat.pending_tasks" }
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -48,7 +50,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

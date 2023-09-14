@@ -31,6 +31,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
         #
         def clear_cached_realms(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "security.clear_cached_realms" }
+
+          defined_params = [:realms].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
 
           arguments = arguments.clone
@@ -45,7 +53,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

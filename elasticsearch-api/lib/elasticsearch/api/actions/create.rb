@@ -40,6 +40,15 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
       #
       def create(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "create" }
+
+        defined_params = [:index, :id].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+        arguments.update endpoint: 'create'
         if arguments[:id]
           index arguments.update op_type: 'create'
         else

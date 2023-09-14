@@ -36,6 +36,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-rollup.html
         #
         def downsample(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "indices.downsample" }
+
+          defined_params = [:index, :target_index].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
           raise ArgumentError, "Required argument 'target_index' missing" unless arguments[:target_index]
@@ -54,7 +62,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

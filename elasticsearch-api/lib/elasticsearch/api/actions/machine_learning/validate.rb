@@ -30,6 +30,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
         #
         def validate(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ml.validate" }
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
@@ -42,7 +44,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -34,6 +34,8 @@ module Elasticsearch
         # @see [TODO]
         #
         def post_secret(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "fleet.post_secret" }
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
@@ -46,7 +48,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

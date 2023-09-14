@@ -29,6 +29,8 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
       #
       def close_point_in_time(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "close_point_in_time" }
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -39,7 +41,7 @@ module Elasticsearch
         params = {}
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

@@ -31,6 +31,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user-profile.html
         #
         def disable_user_profile(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "security.disable_user_profile" }
+
+          defined_params = [:uid].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'uid' missing" unless arguments[:uid]
 
           arguments = arguments.clone
@@ -45,7 +53,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

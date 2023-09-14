@@ -33,6 +33,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
         #
         def post_voting_config_exclusions(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "cluster.post_voting_config_exclusions" }
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -43,7 +45,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

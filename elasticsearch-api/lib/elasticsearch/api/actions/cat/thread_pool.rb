@@ -39,6 +39,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "cat.thread_pool" }
+
+          defined_params = [:thread_pool_patterns].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -56,7 +64,7 @@ module Elasticsearch
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end
