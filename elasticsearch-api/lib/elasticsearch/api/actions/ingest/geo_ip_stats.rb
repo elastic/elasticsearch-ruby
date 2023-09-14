@@ -29,6 +29,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-stats-api.html
         #
         def geo_ip_stats(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ingest.geo_ip_stats" }
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -39,7 +41,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

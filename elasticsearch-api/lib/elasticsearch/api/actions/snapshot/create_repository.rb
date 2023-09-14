@@ -34,6 +34,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def create_repository(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "snapshot.create_repository" }
+
+          defined_params = [:repository].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'repository' missing" unless arguments[:repository]
 
@@ -49,7 +57,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

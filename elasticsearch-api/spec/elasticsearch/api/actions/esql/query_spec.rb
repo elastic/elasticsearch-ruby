@@ -24,7 +24,8 @@ describe 'client.esql#query' do
       '_query',
       {},
       {},
-      {}
+      {},
+      { endpoint: 'esql.query' }
     ]
   end
 

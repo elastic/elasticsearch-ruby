@@ -32,6 +32,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-definition-part.html
         #
         def put_trained_model_definition_part(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ml.put_trained_model_definition_part" }
+
+          defined_params = [:model_id, :part].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
           raise ArgumentError, "Required argument 'part' missing" unless arguments[:part]
@@ -50,7 +58,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

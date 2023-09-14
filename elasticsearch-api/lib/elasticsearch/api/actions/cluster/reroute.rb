@@ -36,6 +36,8 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-reroute.html
         #
         def reroute(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "cluster.reroute" }
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -46,7 +48,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

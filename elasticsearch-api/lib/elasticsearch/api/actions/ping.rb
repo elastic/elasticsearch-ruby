@@ -28,6 +28,8 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
       #
       def ping(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "ping" }
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -38,7 +40,7 @@ module Elasticsearch
         params = {}
 
         begin
-          perform_request(method, path, params, body, headers).status == 200 ? true : false
+          perform_request(method, path, params, body, headers, request_opts).status == 200 ? true : false
         rescue Exception => e
           if e.class.to_s =~ /NotFound|ConnectionFailed/ || e.message =~ /Not *Found|404|ConnectionFailed/i
             false

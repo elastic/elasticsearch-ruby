@@ -36,6 +36,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonym-rule.html
         #
         def put_synonym_rule(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "synonyms.put_synonym_rule" }
+
+          defined_params = [:set_id, :rule_id].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'set_id' missing" unless arguments[:set_id]
           raise ArgumentError, "Required argument 'rule_id' missing" unless arguments[:rule_id]
@@ -54,7 +62,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

@@ -32,6 +32,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-reset-job.html
         #
         def reset_job(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ml.reset_job" }
+
+          defined_params = [:job_id].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'job_id' missing" unless arguments[:job_id]
 
           arguments = arguments.clone
@@ -46,7 +54,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

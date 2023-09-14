@@ -38,6 +38,14 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html
       #
       def delete(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "delete" }
+
+        defined_params = [:index, :id].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
+
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
@@ -57,12 +65,12 @@ module Elasticsearch
         if Array(arguments[:ignore]).include?(404)
           Utils.__rescue_from_not_found {
             Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers)
+              perform_request(method, path, params, body, headers, request_opts)
             )
           }
         else
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

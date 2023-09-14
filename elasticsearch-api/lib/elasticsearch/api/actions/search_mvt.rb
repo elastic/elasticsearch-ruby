@@ -45,6 +45,14 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-vector-tile-api.html
       #
       def search_mvt(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "search_mvt" }
+
+        defined_params = [:index, :field, :zoom, :x, :y].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
+
         raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
         raise ArgumentError, "Required argument 'field' missing" unless arguments[:field]
         raise ArgumentError, "Required argument 'zoom' missing" unless arguments[:zoom]
@@ -71,7 +79,7 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

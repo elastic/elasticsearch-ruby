@@ -35,6 +35,14 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-shards.html
       #
       def search_shards(arguments = {})
+        request_opts = { endpoint: arguments[:endpoint] || "search_shards" }
+
+        defined_params = [:index].inject({}) do |set_variables, variable|
+          set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          set_variables
+        end
+        request_opts[:defined_params] = defined_params unless defined_params.empty?
+
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
@@ -51,7 +59,7 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
-          perform_request(method, path, params, body, headers)
+          perform_request(method, path, params, body, headers, request_opts)
         )
       end
     end

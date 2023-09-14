@@ -36,6 +36,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "indices.get_field_mapping" }
+
+          defined_params = [:fields, :index].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           arguments = arguments.clone
           _fields = arguments.delete(:field) || arguments.delete(:fields)
           raise ArgumentError, "Required argument 'field' missing" unless _fields
@@ -55,7 +63,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

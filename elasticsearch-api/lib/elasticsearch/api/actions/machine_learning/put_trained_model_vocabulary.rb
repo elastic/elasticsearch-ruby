@@ -31,6 +31,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-vocabulary.html
         #
         def put_trained_model_vocabulary(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "ml.put_trained_model_vocabulary" }
+
+          defined_params = [:model_id].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
 
@@ -46,7 +54,7 @@ module Elasticsearch
           params = {}
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end

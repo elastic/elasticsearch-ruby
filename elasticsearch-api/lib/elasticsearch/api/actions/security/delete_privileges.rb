@@ -32,6 +32,14 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
         #
         def delete_privileges(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || "security.delete_privileges" }
+
+          defined_params = [:application, :name].inject({}) do |set_variables, variable|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
           raise ArgumentError, "Required argument 'application' missing" unless arguments[:application]
           raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
 
@@ -49,7 +57,7 @@ module Elasticsearch
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers)
+            perform_request(method, path, params, body, headers, request_opts)
           )
         end
       end
