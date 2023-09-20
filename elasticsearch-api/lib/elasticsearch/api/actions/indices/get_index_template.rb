@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the index template (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-template.html
         #
         def get_index_template(arguments = {})
           arguments = arguments.clone
