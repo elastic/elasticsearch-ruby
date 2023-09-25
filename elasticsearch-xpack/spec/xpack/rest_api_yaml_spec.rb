@@ -41,7 +41,7 @@ describe 'XPack Rest API YAML tests' do
     context ctx do
       before(:all) do
         # Runs once before all tests in a test file
-        if [true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+        if testing_compatibility?
           Elasticsearch::RestAPIYAMLTests::WipeCluster8.run(ADMIN_CLIENT)
         else
           Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)
@@ -70,7 +70,7 @@ describe 'XPack Rest API YAML tests' do
 
             after(:all) do
               test_file.teardown
-              if [true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+              if testing_compatibility?
                 Elasticsearch::RestAPIYAMLTests::WipeCluster8.run(ADMIN_CLIENT)
               else
                 Elasticsearch::RestAPIYAMLTests::WipeCluster.run(ADMIN_CLIENT)

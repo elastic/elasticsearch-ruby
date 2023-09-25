@@ -25,6 +25,10 @@ PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
 STACK_VERSION = ENV['STACK_VERSION']
 require 'elasticsearch/xpack'
 
+def testing_compatibility?
+  [1, true, 'true'].include?(ENV['ELASTIC_CLIENT_APIVERSIONING'])
+end
+
 if (hosts = ELASTICSEARCH_URL)
   split_hosts = hosts.split(',').map do |host|
     /(http\:\/\/)?\S+/.match(host)
