@@ -242,9 +242,9 @@ module Elasticsearch
         def platinum_template?(template)
           platinum_prefixes = [
             '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
-            'data-streams-mappings'
+            'data-streams-mappings', 'elastic-connectors'
           ].freeze
-          platinum_prefixes.map { |a| return true if a.include? template }
+          platinum_prefixes.map { |a| return true if (a.include?(template) || template.start_with?(a)) }
 
           PLATINUM_TEMPLATES.include? template
         end
@@ -261,7 +261,7 @@ module Elasticsearch
               logger.debug "Pending cluster task: #{task}"
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (time + 30)
+            break unless count.positive? && Time.now.to_i < (time + 10)
           end
         end
 

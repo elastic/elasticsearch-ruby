@@ -177,9 +177,9 @@ module Elasticsearch
         def xpack_template?(template)
           xpack_prefixes = [
             '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
-            'data-streams-mappings'
+            'data-streams-mappings', 'elastic-connectors'
           ].freeze
-          xpack_prefixes.map { |a| return true if a.include? template }
+          xpack_prefixes.map { |a| return true if (a.include?(template) || template.start_with?(a)) }
 
           XPACK_TEMPLATES.include? template
         end
