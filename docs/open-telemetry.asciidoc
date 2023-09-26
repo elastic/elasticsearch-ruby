@@ -50,6 +50,7 @@ With this configuration option you can enable (default) or disable the built-in 
 Per default, the built-in OpenTelemetry instrumentation does not capture request bodies because of data privacy reasons. You can use this option to enable capturing of search queries from the the request bodies of Elasticsearch search requests in case you wish to capture this information, regardless. The options are to capture the raw search query, sanitize the query with a default list of sensitive keys, or not capture it at all.
 
 **Default:** `omit`
+**Valid Options:** `omit`, `sanitize`, `raw`
 
 |============
 | Environment Variable | `OTEL_INSTRUMENTATION_ELASTICSEARCH_CAPTURE_SEARCH_QUERY`
