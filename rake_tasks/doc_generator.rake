@@ -134,6 +134,7 @@ namespace :docs do
     'body: ' +
       JSON.pretty_generate(body)
         .gsub(/\"([a-z_]+)\":/,'\\1: ') # Use Ruby 2 hash syntax
+        .gsub(/"([a-z_.]+\.[a-z_]+)+":/, '"\\1" =>')
         .gsub('aggs', 'aggregations')   # Replace 'aggs' with 'aggregations' for consistency
   end
 
