@@ -8,17 +8,17 @@ With that, applications https://opentelemetry.io/docs/instrumentation/ruby/manua
 The native instrumentation in the Ruby Client follows the https://opentelemetry.io/docs/specs/semconv/database/elasticsearch/[OpenTelemetry Semantic Conventions for Elasticsearch]. In particular, the instrumentation in the client covers the logical Elasticsearch request layer, thus, creates a single span per request the service executes against the Ruby Client. The following image shows a resulting trace in which two different Elasticsearch requests are executed, i.e. `ping` and a search `request`:
 
 [role="screenshot"]
-image::images/otel-waterfall-instrumented-without-http.jpg[alt="Distributed trace with Elasticsearch spans",align="center"]
+image::images/otel-waterfall-without-http.png[alt="Distributed trace with Elasticsearch spans",align="center"]
 
 Usually, OpenTelemetry auto-instrumentation modules come with instrumentation support for HTTP-level communication. In this case, in addition to the logical Elasticsearch client requests, spans will be captured for the physical HTTP requests emitted by the client. The following image shows a trace with both, Elasticsearch spans (in blue) and the corresponding HTTP-level spans (in red):
 
 [role="screenshot"]
-image::images/otel-waterfall-instrumented-with-http.jpg[alt="Distributed trace with Elasticsearch spans",align="center"]
+image::images/otel-waterfall-with-http.png[alt="Distributed trace with Elasticsearch spans",align="center"]
 
 Advanced Ruby Client behavior such as nodes round-robin and request retries are revealed through the combination of logical Elasticsearch spans and the physical HTTP spans. The following example shows an `search` request in a scenario with two Elasticsearch nodes:
 
 [role="screenshot"]
-image::images/otel-waterfall-retry.jpg[alt="Distributed trace with Elasticsearch spans",align="center"]
+image::images/otel-waterfall-retry.png[alt="Distributed trace with Elasticsearch spans",align="center"]
 
 The first node is unavailable and results in an HTTP error, while the retry to the second node succeeds. Both HTTP requests are subsumed by the logical Elasticsearch request span (in blue).
 
