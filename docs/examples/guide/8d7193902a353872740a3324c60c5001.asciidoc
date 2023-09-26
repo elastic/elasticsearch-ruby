@@ -5,8 +5,8 @@ response = client.indices.create(
   body: {
     settings: {
       index: {
-        "sort.field": 'timestamp',
-        "sort.order": 'desc'
+        'sort.field' => 'timestamp',
+        'sort.order' => 'desc'
       }
     },
     mappings: {

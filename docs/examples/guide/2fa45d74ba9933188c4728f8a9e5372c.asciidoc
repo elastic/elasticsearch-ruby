@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "action.auto_create_index": 'my-index-000001,index10,-index1*,+ind*'
+      'action.auto_create_index' => 'my-index-000001,index10,-index1*,+ind*'
     }
   }
 )
@@ -12,7 +12,7 @@ puts response
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "action.auto_create_index": 'false'
+      'action.auto_create_index' => 'false'
     }
   }
 )
@@ -21,7 +21,7 @@ puts response
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "action.auto_create_index": 'true'
+      'action.auto_create_index' => 'true'
     }
   }
 )

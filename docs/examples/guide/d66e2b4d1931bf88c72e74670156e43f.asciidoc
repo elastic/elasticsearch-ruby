@@ -6,7 +6,7 @@ response = client.search(
     track_total_hits: 100,
     query: {
       match: {
-        "user.id": 'elkbee'
+        'user.id' => 'elkbee'
       }
     }
   }

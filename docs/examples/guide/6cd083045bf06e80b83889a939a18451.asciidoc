@@ -44,12 +44,12 @@ response = client.search(
             must: [
               {
                 match: {
-                  "user.first": 'Alice'
+                  'user.first' => 'Alice'
                 }
               },
               {
                 match: {
-                  "user.last": 'Smith'
+                  'user.last' => 'Smith'
                 }
               }
             ]
@@ -72,12 +72,12 @@ response = client.search(
             must: [
               {
                 match: {
-                  "user.first": 'Alice'
+                  'user.first' => 'Alice'
                 }
               },
               {
                 match: {
-                  "user.last": 'White'
+                  'user.last' => 'White'
                 }
               }
             ]
@@ -86,7 +86,7 @@ response = client.search(
         inner_hits: {
           highlight: {
             fields: {
-              "user.first": {}
+              'user.first' => {}
             }
           }
         }

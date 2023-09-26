@@ -5,7 +5,7 @@ response = client.delete_by_query(
   body: {
     query: {
       match: {
-        "user.id": 'vlb44hny'
+        'user.id' => 'vlb44hny'
       }
     }
   }

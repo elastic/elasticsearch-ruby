@@ -4,8 +4,8 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.number_of_shards": 2,
-      "index.lifecycle.name": 'shrink-index'
+      'index.number_of_shards' => 2,
+      'index.lifecycle.name' => 'shrink-index'
     }
   }
 )

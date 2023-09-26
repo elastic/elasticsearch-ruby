@@ -7,7 +7,7 @@ response = client.search(
         terms: {
           field: 'genre',
           order: {
-            "playback_stats.max": 'desc'
+            'playback_stats.max' => 'desc'
           }
         },
         aggregations: {

@@ -7,7 +7,7 @@ response = client.search(
     profile: true,
     query: {
       term: {
-        "user.id": {
+        'user.id' => {
           value: 'elkbee'
         }
       }

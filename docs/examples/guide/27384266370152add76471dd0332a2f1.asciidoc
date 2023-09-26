@@ -7,7 +7,7 @@ response = client.transform.update_transform(
       index: 'kibana_sample_data_ecommerce',
       query: {
         term: {
-          "geoip.continent_name": {
+          'geoip.continent_name' => {
             value: 'Asia'
           }
         }

@@ -9,14 +9,14 @@ response = client.search(
     },
     sort: [
       {
-        "offer.price": {
+        'offer.price' => {
           mode: 'avg',
           order: 'asc',
           nested: {
             path: 'offer',
             filter: {
               term: {
-                "offer.color": 'blue'
+                'offer.color' => 'blue'
               }
             }
           }

@@ -4,7 +4,7 @@ response = client.search(
   body: {
     query: {
       span_term: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

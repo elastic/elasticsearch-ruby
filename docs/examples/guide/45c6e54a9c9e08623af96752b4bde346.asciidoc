@@ -11,7 +11,7 @@ response = client.search(
         filter: {
           geo_distance: {
             distance: '12km',
-            "pin.location": 'POINT (-70 40)'
+            'pin.location' => 'POINT (-70 40)'
           }
         }
       }

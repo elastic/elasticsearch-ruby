@@ -6,7 +6,7 @@ response = client.search(
       bool: {
         must: {
           term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         },
         filter: {

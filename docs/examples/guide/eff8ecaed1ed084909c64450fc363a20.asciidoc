@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     transient: {
-      "indices.recovery.max_bytes_per_sec": nil
+      'indices.recovery.max_bytes_per_sec' => nil
     }
   }
 )

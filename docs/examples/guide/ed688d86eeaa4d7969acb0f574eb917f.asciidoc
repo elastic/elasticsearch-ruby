@@ -7,7 +7,7 @@ response = client.index(
   body: {
     query: {
       term: {
-        "my_field.prefix": 'abc'
+        'my_field.prefix' => 'abc'
       }
     }
   }

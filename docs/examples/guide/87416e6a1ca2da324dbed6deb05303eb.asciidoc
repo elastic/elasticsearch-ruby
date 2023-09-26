@@ -5,7 +5,7 @@ response = client.index(
   id: 1,
   refresh: true,
   body: {
-    "user.id": 'kimchy'
+    'user.id' => 'kimchy'
   }
 )
 puts response
@@ -21,7 +21,7 @@ response = client.count(
   body: {
     query: {
       term: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

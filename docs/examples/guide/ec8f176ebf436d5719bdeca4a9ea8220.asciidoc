@@ -4,7 +4,7 @@ response = client.search(
   index: 'products',
   body: {
     runtime_mappings: {
-      "genre.length": {
+      'genre.length' => {
         type: 'long',
         script: "emit(doc['genre'].value.length())"
       }

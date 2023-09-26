@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       term: {
-        "labels.release": 'v1.3.0'
+        'labels.release' => 'v1.3.0'
       }
     }
   }

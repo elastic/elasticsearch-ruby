@@ -4,8 +4,8 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.lifecycle.name": 'my_policy',
-      "index.lifecycle.rollover_alias": 'my_data'
+      'index.lifecycle.name' => 'my_policy',
+      'index.lifecycle.rollover_alias' => 'my_data'
     },
     aliases: {
       my_data: {

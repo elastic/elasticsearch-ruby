@@ -5,7 +5,7 @@ response = client.render_search_template(
     source: {
       query: {
         term: {
-          "url.full": '{{#url}}{{host}}/{{page}}{{/url}}'
+          'url.full' => '{{#url}}{{host}}/{{page}}{{/url}}'
         }
       }
     },

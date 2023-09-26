@@ -3,14 +3,14 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "cluster.routing.allocation.disk.watermark.low": nil,
-      "cluster.routing.allocation.disk.watermark.low.max_headroom": nil,
-      "cluster.routing.allocation.disk.watermark.high": nil,
-      "cluster.routing.allocation.disk.watermark.high.max_headroom": nil,
-      "cluster.routing.allocation.disk.watermark.flood_stage": nil,
-      "cluster.routing.allocation.disk.watermark.flood_stage.max_headroom": nil,
-      "cluster.routing.allocation.disk.watermark.flood_stage.frozen": nil,
-      "cluster.routing.allocation.disk.watermark.flood_stage.frozen.max_headroom": nil
+      'cluster.routing.allocation.disk.watermark.low' => nil,
+      'cluster.routing.allocation.disk.watermark.low.max_headroom' => nil,
+      'cluster.routing.allocation.disk.watermark.high' => nil,
+      'cluster.routing.allocation.disk.watermark.high.max_headroom' => nil,
+      'cluster.routing.allocation.disk.watermark.flood_stage' => nil,
+      'cluster.routing.allocation.disk.watermark.flood_stage.max_headroom' => nil,
+      'cluster.routing.allocation.disk.watermark.flood_stage.frozen' => nil,
+      'cluster.routing.allocation.disk.watermark.flood_stage.frozen.max_headroom' => nil
     }
   }
 )

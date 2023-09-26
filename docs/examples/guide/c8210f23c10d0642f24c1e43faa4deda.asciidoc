@@ -29,7 +29,7 @@ response = client.cluster.put_component_template(
   body: {
     template: {
       settings: {
-        "index.lifecycle.name": 'my-lifecycle-policy'
+        'index.lifecycle.name' => 'my-lifecycle-policy'
       }
     },
     _meta: {

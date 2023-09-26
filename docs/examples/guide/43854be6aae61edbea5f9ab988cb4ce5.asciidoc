@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "xpack.security.transport.filter.allow": '172.16.0.0/24'
+      'xpack.security.transport.filter.allow' => '172.16.0.0/24'
     }
   }
 )

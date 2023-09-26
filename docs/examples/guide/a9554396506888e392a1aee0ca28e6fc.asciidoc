@@ -20,7 +20,7 @@ response = client.indices.update_aliases(
                 },
                 {
                   term: {
-                    "user.id": 'kimchy'
+                    'user.id' => 'kimchy'
                   }
                 }
               ]

@@ -8,12 +8,12 @@ response = client.search(
         must: [
           {
             match: {
-              "user.first": 'Alice'
+              'user.first' => 'Alice'
             }
           },
           {
             match: {
-              "user.last": 'Smith'
+              'user.last' => 'Smith'
             }
           }
         ]

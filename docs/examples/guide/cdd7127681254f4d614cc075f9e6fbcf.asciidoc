@@ -5,7 +5,7 @@ response = client.delete_by_query(
   body: {
     query: {
       term: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     },
     max_docs: 1

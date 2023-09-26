@@ -5,7 +5,7 @@ response = client.indices.split(
   target: 'split-my-index-000001',
   body: {
     settings: {
-      "index.number_of_shards": 2
+      'index.number_of_shards' => 2
     }
   }
 )

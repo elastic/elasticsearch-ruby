@@ -8,7 +8,7 @@ response = client.indices.create(
       "alias_2": {
         filter: {
           term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         },
         routing: 'shard-1'

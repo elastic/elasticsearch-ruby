@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "xpack.profiling.templates.enabled": true
+      'xpack.profiling.templates.enabled' => true
     }
   }
 )

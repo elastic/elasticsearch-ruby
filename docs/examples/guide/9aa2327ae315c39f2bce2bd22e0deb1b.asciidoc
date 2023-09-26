@@ -9,12 +9,12 @@ response = client.search(
         must: [
           {
             match: {
-              "result.condition.met": true
+              'result.condition.met' => true
             }
           },
           {
             range: {
-              "result.execution_time": {
+              'result.execution_time' => {
                 from: 'now-10s'
               }
             }

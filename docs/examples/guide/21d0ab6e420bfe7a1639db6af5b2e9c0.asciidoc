@@ -6,7 +6,7 @@ response = client.search(
   body: {
     size: 0,
     runtime_mappings: {
-      "rating.out_of_ten": {
+      'rating.out_of_ten' => {
         type: 'long',
         script: {
           source: "emit(doc['rating'].value * params.scaleFactor)",

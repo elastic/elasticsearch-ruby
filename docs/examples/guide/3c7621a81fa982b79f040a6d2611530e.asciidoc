@@ -5,7 +5,7 @@ response = client.cluster.put_component_template(
   body: {
     template: {
       settings: {
-        "index.number_of_shards": 2
+        'index.number_of_shards' => 2
       }
     }
   }
@@ -17,7 +17,7 @@ response = client.cluster.put_component_template(
   body: {
     template: {
       settings: {
-        "index.number_of_replicas": 0
+        'index.number_of_replicas' => 0
       },
       mappings: {
         properties: {

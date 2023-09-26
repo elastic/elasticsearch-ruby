@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       match: {
-        "http.clientip": '40.135.0.0'
+        'http.clientip' => '40.135.0.0'
       }
     },
     fields: [

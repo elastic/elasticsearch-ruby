@@ -4,7 +4,7 @@ response = client.indices.rollover(
   alias: 'my-alias',
   body: {
     settings: {
-      "index.number_of_shards": 2
+      'index.number_of_shards' => 2
     }
   }
 )

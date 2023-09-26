@@ -6,7 +6,7 @@ response = client.cluster.put_component_template(
     template: {
       mappings: {
         properties: {
-          "host.name": {
+          'host.name' => {
             type: 'keyword'
           }
         }

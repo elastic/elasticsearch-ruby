@@ -4,7 +4,7 @@ response = client.search(
   body: {
     query: {
       term: {
-        "user.id": {
+        'user.id' => {
           value: 'kimchy',
           boost: 1
         }

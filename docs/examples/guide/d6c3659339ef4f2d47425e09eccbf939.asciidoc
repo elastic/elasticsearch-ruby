@@ -5,9 +5,9 @@ response = client.cluster.put_component_template(
   body: {
     template: {
       settings: {
-        "index.lifecycle.name": 'my-lifecycle-policy',
-        "index.look_ahead_time": '3h',
-        "index.codec": 'best_compression'
+        'index.lifecycle.name' => 'my-lifecycle-policy',
+        'index.look_ahead_time' => '3h',
+        'index.codec' => 'best_compression'
       }
     },
     _meta: {

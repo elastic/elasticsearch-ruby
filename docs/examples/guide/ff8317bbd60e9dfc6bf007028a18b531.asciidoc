@@ -5,7 +5,7 @@ response = client.indices.create(
   body: {
     mappings: {
       properties: {
-        "ml.tokens": {
+        'ml.tokens' => {
           type: 'rank_features'
         },
         text_field: {

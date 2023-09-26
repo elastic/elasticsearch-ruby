@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       text_expansion: {
-        "ml.tokens": {
+        'ml.tokens' => {
           model_id: '.elser_model_1',
           model_text: 'How to avoid muscle soreness after running?'
         }

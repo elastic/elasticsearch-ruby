@@ -5,7 +5,7 @@ response = client.search(
   size: 0,
   body: {
     runtime_mappings: {
-      "grade.corrected": {
+      'grade.corrected' => {
         type: 'double',
         script: {
           source: "emit(Math.min(100, doc['grade'].value * params.correction))",

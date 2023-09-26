@@ -4,7 +4,7 @@ response = client.search(
   body: {
     query: {
       fuzzy: {
-        "user.id": {
+        'user.id' => {
           value: 'ki',
           fuzziness: 'AUTO',
           max_expansions: 50,

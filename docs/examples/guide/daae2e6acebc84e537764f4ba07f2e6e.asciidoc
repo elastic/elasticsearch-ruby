@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "cluster.routing.allocation.exclude._name": nil
+      'cluster.routing.allocation.exclude._name' => nil
     }
   }
 )

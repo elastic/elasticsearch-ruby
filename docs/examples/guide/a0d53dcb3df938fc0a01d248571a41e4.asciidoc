@@ -3,7 +3,7 @@
 response = client.search(
   body: {
     runtime_mappings: {
-      "price.discounted": {
+      'price.discounted' => {
         type: 'double',
         script: "\n        double price = doc['price'].value;\n        if (doc['product'].value == 'mad max') {\n          price *= 0.8;\n        }\n        emit(price);\n      "
       }

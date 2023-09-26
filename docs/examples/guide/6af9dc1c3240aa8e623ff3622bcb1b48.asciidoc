@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "cluster.routing.allocation.exclude._ip": '192.168.2.*'
+      'cluster.routing.allocation.exclude._ip' => '192.168.2.*'
     }
   }
 )

@@ -14,7 +14,7 @@ response = client.indices.put_index_template(
           number_of_replicas: 0,
           number_of_shards: 2
         },
-        "index.lifecycle.name": 'datastream_policy'
+        'index.lifecycle.name' => 'datastream_policy'
       },
       mappings: {
         properties: {

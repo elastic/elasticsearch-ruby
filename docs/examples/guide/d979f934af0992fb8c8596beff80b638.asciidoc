@@ -8,7 +8,7 @@ response = client.search(
     ],
     query: {
       match: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

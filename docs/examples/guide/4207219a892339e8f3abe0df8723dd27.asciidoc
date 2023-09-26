@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "cluster.metadata.administrator": 'sysadmin@example.com'
+      'cluster.metadata.administrator' => 'sysadmin@example.com'
     }
   }
 )

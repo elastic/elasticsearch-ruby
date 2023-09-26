@@ -4,7 +4,7 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.mapping.ignore_malformed": true
+      'index.mapping.ignore_malformed' => true
     },
     mappings: {
       properties: {

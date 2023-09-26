@@ -3,7 +3,7 @@
 response = client.indices.put_settings(
   index: '.watches',
   body: {
-    "index.routing.allocation.include.role": 'watcher'
+    'index.routing.allocation.include.role' => 'watcher'
   }
 )
 puts response

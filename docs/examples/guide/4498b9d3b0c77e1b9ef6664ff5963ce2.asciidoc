@@ -4,7 +4,7 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.requests.cache.enable": false
+      'index.requests.cache.enable' => false
     }
   }
 )

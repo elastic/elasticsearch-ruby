@@ -3,7 +3,7 @@
 response = client.indices.put_settings(
   index: 'test',
   body: {
-    "index.routing.allocation.include._ip": '192.168.2.*'
+    'index.routing.allocation.include._ip' => '192.168.2.*'
   }
 )
 puts response

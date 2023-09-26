@@ -6,7 +6,7 @@ response = client.search(
   body: {
     sort: [
       {
-        "result.execution_time": 'desc'
+        'result.execution_time' => 'desc'
       }
     ]
   }

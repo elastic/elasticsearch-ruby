@@ -17,10 +17,10 @@ response = client.indices.put_index_template(
         }
       },
       settings: {
-        "sort.field": [
+        'sort.field' => [
           '@timestamp'
         ],
-        "sort.order": [
+        'sort.order' => [
           'desc'
         ]
       }

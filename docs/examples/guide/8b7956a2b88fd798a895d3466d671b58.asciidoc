@@ -3,8 +3,8 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "http.tracer.include": '*',
-      "http.tracer.exclude": ''
+      'http.tracer.include' => '*',
+      'http.tracer.exclude' => ''
     }
   }
 )

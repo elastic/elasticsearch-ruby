@@ -3,7 +3,7 @@
 response = client.search(
   body: {
     runtime_mappings: {
-      "amount.signed": {
+      'amount.signed' => {
         type: 'double',
         script: "\n        double amount = doc['amount'].value;\n        if (doc['type'].value == 'expense') {\n          amount *= -1;\n        }\n        emit(amount);\n      "
       }
@@ -12,7 +12,7 @@ response = client.search(
       bool: {
         filter: {
           range: {
-            "amount.signed": {
+            'amount.signed' => {
               lt: 10
             }
           }

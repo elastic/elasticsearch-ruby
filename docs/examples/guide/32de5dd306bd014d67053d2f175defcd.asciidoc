@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "logger.org.elasticsearch.xpack.security.authc.saml": 'debug'
+      'logger.org.elasticsearch.xpack.security.authc.saml' => 'debug'
     }
   }
 )

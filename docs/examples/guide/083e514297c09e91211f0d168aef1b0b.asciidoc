@@ -5,7 +5,7 @@ response = client.update_by_query(
   body: {
     query: {
       match: {
-        "event.sequence": '97'
+        'event.sequence' => '97'
       }
     },
     script: {

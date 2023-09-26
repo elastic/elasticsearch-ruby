@@ -6,7 +6,7 @@ response = client.search(
       span_multi: {
         match: {
           prefix: {
-            "user.id": {
+            'user.id' => {
               value: 'ki'
             }
           }

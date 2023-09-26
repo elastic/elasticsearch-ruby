@@ -7,7 +7,7 @@ response = client.index(
   body: {
     query: {
       match: {
-        "my_field.suffix": 'xyz'
+        'my_field.suffix' => 'xyz'
       }
     }
   }

@@ -46,7 +46,7 @@ response = client.search(
       }
     },
     sort: {
-      "city.raw": 'asc'
+      'city.raw' => 'asc'
     },
     aggregations: {
       "Cities": {

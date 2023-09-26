@@ -6,7 +6,7 @@ response = client.search(
   body: {
     query: {
       match: {
-        "event.sequence": '97'
+        'event.sequence' => '97'
       }
     }
   }

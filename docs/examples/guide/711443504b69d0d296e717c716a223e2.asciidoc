@@ -14,12 +14,12 @@ response = client.search(
                 must: [
                   {
                     match: {
-                      "driver.vehicle.make": 'Powell Motors'
+                      'driver.vehicle.make' => 'Powell Motors'
                     }
                   },
                   {
                     match: {
-                      "driver.vehicle.model": 'Canyonero'
+                      'driver.vehicle.model' => 'Canyonero'
                     }
                   }
                 ]

@@ -44,7 +44,7 @@ response = client.search(
   body: {
     query: {
       match: {
-        "meta.other.foo": 'one'
+        'meta.other.foo' => 'one'
       }
     }
   }

@@ -58,7 +58,7 @@ response = client.search(
         path: 'comments.votes',
         query: {
           match: {
-            "comments.votes.voter": 'kimchy'
+            'comments.votes.voter' => 'kimchy'
           }
         },
         inner_hits: {}

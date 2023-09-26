@@ -5,7 +5,7 @@ response = client.indices.create(
   body: {
     mappings: {
       properties: {
-        "total_quantity.sum": {
+        'total_quantity.sum' => {
           type: 'double'
         },
         total_quantity: {
@@ -14,16 +14,16 @@ response = client.indices.create(
         taxless_total_price: {
           type: 'object'
         },
-        "taxless_total_price.sum": {
+        'taxless_total_price.sum' => {
           type: 'double'
         },
-        "order_id.cardinality": {
+        'order_id.cardinality' => {
           type: 'long'
         },
         customer_id: {
           type: 'keyword'
         },
-        "total_quantity.max": {
+        'total_quantity.max' => {
           type: 'integer'
         },
         order_id: {

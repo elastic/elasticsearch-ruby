@@ -9,7 +9,7 @@ response = client.update_by_query(
     },
     query: {
       term: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

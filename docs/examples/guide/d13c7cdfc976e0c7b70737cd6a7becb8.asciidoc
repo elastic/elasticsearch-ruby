@@ -5,7 +5,7 @@ response = client.search(
   body: {
     size: 0,
     runtime_mappings: {
-      "price.adjusted": {
+      'price.adjusted' => {
         type: 'double',
         script: {
           source: "emit(doc['price'].value * params.adjustment)",
