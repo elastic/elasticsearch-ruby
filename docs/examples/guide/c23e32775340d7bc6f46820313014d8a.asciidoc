@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my_test_scores_2',
+  pipeline: 'my_test_scores_pipeline',
+  body: {
+    student: 'kimchy',
+    grad_year: '2099',
+    math_score: 1200,
+    verbal_score: 800
+  }
+)
+puts response
+----

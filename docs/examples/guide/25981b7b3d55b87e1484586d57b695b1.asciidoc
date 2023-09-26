@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'products',
+  id: 1567,
+  body: {
+    product: 'r2d2',
+    details: 'A resourceful astromech droid'
+  }
+)
+puts response
+----

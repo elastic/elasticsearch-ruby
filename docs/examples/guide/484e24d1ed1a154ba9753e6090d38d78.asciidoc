@@ -1,0 +1,16 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: {
+      type: 'point',
+      coordinates: [
+        -377.03653,
+        389.897676
+      ]
+    }
+  }
+)
+puts response
+----

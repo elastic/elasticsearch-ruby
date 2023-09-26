@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: 'POLYGON ((1000.0 -1001.0, 1001.0 -1001.0, 1001.0 -1000.0, 1000.0 -1000.0, 1000.0 -1001.0))'
+  }
+)
+puts response
+----

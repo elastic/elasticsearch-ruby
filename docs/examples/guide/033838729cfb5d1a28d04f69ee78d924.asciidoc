@@ -1,0 +1,41 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: {
+      type: 'Polygon',
+      orientation: 'LEFT',
+      coordinates: [
+        [
+          [
+            -177,
+            10
+          ],
+          [
+            176,
+            15
+          ],
+          [
+            172,
+            0
+          ],
+          [
+            176,
+            -15
+          ],
+          [
+            -177,
+            -10
+          ],
+          [
+            -177,
+            10
+          ]
+        ]
+      ]
+    }
+  }
+)
+puts response
+----

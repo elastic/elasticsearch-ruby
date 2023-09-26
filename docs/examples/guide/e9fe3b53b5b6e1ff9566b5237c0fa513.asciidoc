@@ -1,0 +1,43 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'child_example',
+  id: 2,
+  routing: 1,
+  body: {
+    join: {
+      name: 'answer',
+      parent: '1'
+    },
+    owner: {
+      location: 'Norfolk, United Kingdom',
+      display_name: 'Sam',
+      id: 48
+    },
+    body: "Unfortunately you're pretty much limited to FTP...",
+    creation_date: '2009-05-04T13:45:37.030'
+  }
+)
+puts response
+
+response = client.index(
+  index: 'child_example',
+  id: 3,
+  routing: 1,
+  refresh: true,
+  body: {
+    join: {
+      name: 'answer',
+      parent: '1'
+    },
+    owner: {
+      location: 'Norfolk, United Kingdom',
+      display_name: 'Troll',
+      id: 49
+    },
+    body: 'Use Linux...',
+    creation_date: '2009-05-05T13:45:37.030'
+  }
+)
+puts response
+----

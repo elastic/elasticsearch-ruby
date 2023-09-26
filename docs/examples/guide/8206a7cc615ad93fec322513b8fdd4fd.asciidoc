@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'job-candidates',
+  id: 2,
+  refresh: true,
+  body: {
+    name: 'Jason Response',
+    programming_languages: [
+      'java',
+      'php'
+    ],
+    required_matches: 2
+  }
+)
+puts response
+----

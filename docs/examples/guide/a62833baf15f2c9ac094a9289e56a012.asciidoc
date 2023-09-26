@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'timeseries',
+  body: {
+    message: 'logged the request',
+    "@timestamp": '1591890611'
+  }
+)
+puts response
+----

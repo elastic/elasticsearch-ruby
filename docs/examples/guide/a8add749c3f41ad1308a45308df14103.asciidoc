@@ -1,0 +1,29 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'sales',
+  id: 1,
+  refresh: true,
+  body: {
+    tags: [
+      'car',
+      'auto'
+    ],
+    comments: [
+      {
+        username: 'baddriver007',
+        comment: 'This car could have better brakes'
+      },
+      {
+        username: 'dr_who',
+        comment: "Where's the autopilot? Can't find it"
+      },
+      {
+        username: 'ilovemotorbikes',
+        comment: 'This car has two extra wheels'
+      }
+    ]
+  }
+)
+puts response
+----

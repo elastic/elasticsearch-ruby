@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: 'MULTIPOINT (102.0 2.0, 103.0 2.0)'
+  }
+)
+puts response
+----
