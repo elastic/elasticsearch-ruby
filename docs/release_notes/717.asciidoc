@@ -2,6 +2,12 @@
 === 7.17 Release notes
 
 [discrete]
+[[release_notes_7179]]
+=== 7.17.9 Release notes
+
+-  Backports fix from `elastic-transport`, fixes https://github.com/elastic/elastic-transport-ruby/issues/66[#66]: Manticore transport unable to send custom headers with `perform_request` https://github.com/elastic/elastic-transport-ruby/pull/69[Pull Request].
+
+[discrete]
 [[release_notes_7178]]
 === 7.17.8 Release notes
 
