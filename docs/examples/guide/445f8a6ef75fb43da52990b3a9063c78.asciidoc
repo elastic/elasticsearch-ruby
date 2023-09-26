@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       match: {
-        "http.responses": '304'
+        'http.responses' => '304'
       }
     },
     fields: [

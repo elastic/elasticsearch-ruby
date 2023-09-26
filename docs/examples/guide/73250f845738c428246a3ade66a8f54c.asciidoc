@@ -29,7 +29,7 @@ response = client.search(
   body: {
     size: 0,
     runtime_mappings: {
-      "weight.combined": {
+      'weight.combined' => {
         type: 'double',
         script: "\n        double s = 0;\n        for (double w : doc['weight']) {\n          s += w;\n        }\n        emit(s);\n      "
       }

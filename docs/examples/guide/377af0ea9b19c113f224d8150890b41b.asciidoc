@@ -7,7 +7,7 @@ response = client.search(
         filter: [
           {
             term: {
-              "event.outcome": 'failure'
+              'event.outcome' => 'failure'
             }
           },
           {
@@ -20,7 +20,7 @@ response = client.search(
           },
           {
             term: {
-              "service.name": {
+              'service.name' => {
                 value: 'frontend-node'
               }
             }
@@ -37,7 +37,7 @@ response = client.search(
               must_not: [
                 {
                   term: {
-                    "event.outcome": 'failure'
+                    'event.outcome' => 'failure'
                   }
                 }
               ],
@@ -52,7 +52,7 @@ response = client.search(
                 },
                 {
                   term: {
-                    "service.name": {
+                    'service.name' => {
                       value: 'frontend-node'
                     }
                   }

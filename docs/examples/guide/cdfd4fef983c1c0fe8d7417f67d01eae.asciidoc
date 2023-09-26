@@ -2,7 +2,7 @@
 ----
 response = client.indices.put_settings(
   body: {
-    "index.number_of_replicas": 1
+    'index.number_of_replicas' => 1
   }
 )
 puts response

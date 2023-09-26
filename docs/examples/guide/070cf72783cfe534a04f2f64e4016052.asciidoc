@@ -15,8 +15,8 @@ response = client.index(
   id: 'metric_1',
   body: {
     time: '100ms',
-    "time.min": '10ms',
-    "time.max": '900ms'
+    'time.min' => '10ms',
+    'time.max' => '900ms'
   }
 )
 puts response

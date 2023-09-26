@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       geo_bounding_box: {
-        "pin.location": {
+        'pin.location' => {
           top_left: 'dr',
           bottom_right: 'dr'
         }

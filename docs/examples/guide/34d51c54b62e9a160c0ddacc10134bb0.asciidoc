@@ -6,7 +6,7 @@ response = client.search(
       span_first: {
         match: {
           span_term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         },
         end: 3

@@ -6,7 +6,7 @@ response = client.search(
     timeout: '2s',
     query: {
       match: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

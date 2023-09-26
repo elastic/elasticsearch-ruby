@@ -42,7 +42,7 @@ response = client.search(
         path: 'comments',
         query: {
           match: {
-            "comments.text": 'words'
+            'comments.text' => 'words'
           }
         },
         inner_hits: {

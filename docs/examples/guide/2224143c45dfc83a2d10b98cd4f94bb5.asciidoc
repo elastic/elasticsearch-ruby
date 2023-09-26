@@ -11,7 +11,7 @@ response = client.search(
               path: 'comments',
               query: {
                 term: {
-                  "comments.author": 'nik9000'
+                  'comments.author' => 'nik9000'
                 }
               }
             }

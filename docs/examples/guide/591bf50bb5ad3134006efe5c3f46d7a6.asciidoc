@@ -15,7 +15,7 @@ response = client.cluster.put_settings(
             seeds: [
               '127.0.0.1:9301'
             ],
-            "transport.compress": true,
+            'transport.compress' => true,
             skip_unavailable: true
           },
           cluster_three: {

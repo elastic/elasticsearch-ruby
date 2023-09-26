@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "action.destructive_requires_name": false
+      'action.destructive_requires_name' => false
     }
   }
 )

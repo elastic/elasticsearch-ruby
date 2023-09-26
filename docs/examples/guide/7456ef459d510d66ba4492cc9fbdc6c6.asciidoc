@@ -9,7 +9,7 @@ response = client.cluster.put_settings(
             mode: nil,
             seeds: nil,
             skip_unavailable: nil,
-            "transport.compress": nil
+            'transport.compress' => nil
           }
         }
       }

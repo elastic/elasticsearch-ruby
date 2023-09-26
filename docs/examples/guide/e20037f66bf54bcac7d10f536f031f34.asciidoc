@@ -3,7 +3,7 @@
 response = client.indices.put_settings(
   index: 'my-index-000001',
   body: {
-    "index.blocks.read_only_allow_delete": nil
+    'index.blocks.read_only_allow_delete' => nil
   }
 )
 puts response

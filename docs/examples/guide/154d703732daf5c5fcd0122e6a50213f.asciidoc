@@ -4,10 +4,10 @@ response = client.indices.put_mapping(
   index: 'my-index-000001',
   body: {
     runtime: {
-      "measures.start": {
+      'measures.start' => {
         type: 'long'
       },
-      "measures.end": {
+      'measures.end' => {
         type: 'long'
       }
     }

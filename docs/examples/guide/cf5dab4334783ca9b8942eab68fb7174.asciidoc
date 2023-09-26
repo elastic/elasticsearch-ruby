@@ -21,7 +21,7 @@ response = client.search(
                 filter: [
                   {
                     term: {
-                      "resellers.reseller": 'companyB'
+                      'resellers.reseller' => 'companyB'
                     }
                   }
                 ]

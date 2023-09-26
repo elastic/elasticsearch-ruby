@@ -8,7 +8,7 @@ response = client.search(
         should: [
           {
             match: {
-              "name.first": {
+              'name.first' => {
                 query: 'shay',
                 _name: 'first'
               }
@@ -16,7 +16,7 @@ response = client.search(
           },
           {
             match: {
-              "name.last": {
+              'name.last' => {
                 query: 'banon',
                 _name: 'last'
               }
@@ -25,7 +25,7 @@ response = client.search(
         ],
         filter: {
           terms: {
-            "name.last": [
+            'name.last' => [
               'banon',
               'kimchy'
             ],

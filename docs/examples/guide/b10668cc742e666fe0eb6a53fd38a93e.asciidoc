@@ -4,7 +4,7 @@ response = client.search(
   body: {
     query: {
       wildcard: {
-        "user.id": {
+        'user.id' => {
           value: 'ki*y',
           boost: 1,
           rewrite: 'constant_score'

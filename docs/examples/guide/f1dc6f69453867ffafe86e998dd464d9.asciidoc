@@ -5,7 +5,7 @@ response = client.search(
   body: {
     query: {
       term: {
-        "file_path.tree_reversed": {
+        'file_path.tree_reversed' => {
           value: 'my_photo1.jpg'
         }
       }

@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "xpack.monitoring.collection.enabled": true
+      'xpack.monitoring.collection.enabled' => true
     }
   }
 )

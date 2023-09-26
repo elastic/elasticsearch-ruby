@@ -7,12 +7,12 @@ response = client.render_search_template(
       clauses: [
         {
           term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         },
         {
           term: {
-            "url.domain": 'example.com'
+            'url.domain' => 'example.com'
           }
         }
       ]

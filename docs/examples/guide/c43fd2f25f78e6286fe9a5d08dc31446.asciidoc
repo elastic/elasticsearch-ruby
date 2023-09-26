@@ -8,7 +8,7 @@ response = client.search(
         should: [
           {
             text_expansion: {
-              "ml.token": {
+              'ml.token' => {
                 model_text: 'How to avoid muscle soreness after running?',
                 model_id: '.elser_model_1',
                 boost: 1

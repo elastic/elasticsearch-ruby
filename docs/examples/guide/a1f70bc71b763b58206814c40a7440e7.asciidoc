@@ -2,7 +2,7 @@
 ----
 response = client.watcher.update_settings(
   body: {
-    "index.auto_expand_replicas": '0-4'
+    'index.auto_expand_replicas' => '0-4'
   }
 )
 puts response

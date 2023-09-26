@@ -6,7 +6,7 @@ response = client.snapshot.restore(
   body: {
     indices: 'my-index,logs-my_app-default',
     index_settings: {
-      "index.number_of_replicas": 1
+      'index.number_of_replicas' => 1
     }
   }
 )

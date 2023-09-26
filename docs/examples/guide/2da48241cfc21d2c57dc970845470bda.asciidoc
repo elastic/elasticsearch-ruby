@@ -19,9 +19,9 @@ response = client.index(
   index: 'my-index-000001',
   id: 'metric_1',
   body: {
-    "metrics.time": 100,
-    "metrics.time.min": 10,
-    "metrics.time.max": 900
+    'metrics.time' => 100,
+    'metrics.time.min' => 10,
+    'metrics.time.max' => 900
   }
 )
 puts response
@@ -32,8 +32,8 @@ response = client.index(
   body: {
     metrics: {
       time: 100,
-      "time.min": 10,
-      "time.max": 900
+      'time.min' => 10,
+      'time.max' => 900
     }
   }
 )

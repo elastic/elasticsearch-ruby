@@ -5,7 +5,7 @@ response = client.render_search_template(
     source: {
       query: {
         range: {
-          "user.effective.date": {
+          'user.effective.date' => {
             gte: '{{date.min}}',
             lte: '{{date.max}}',
             format: "{{#join delimiter='||'}}date.formats{{/join delimiter='||'}}"

@@ -5,7 +5,7 @@ response = client.index(
   id: 1,
   refresh: true,
   body: {
-    "system.cpu.idle.pct": 0.908
+    'system.cpu.idle.pct' => 0.908
   }
 )
 puts response
@@ -15,7 +15,7 @@ response = client.index(
   id: 1,
   refresh: true,
   body: {
-    "system.cpu.idle.pct": 0.105
+    'system.cpu.idle.pct' => 0.105
   }
 )
 puts response

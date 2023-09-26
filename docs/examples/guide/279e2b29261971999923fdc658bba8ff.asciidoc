@@ -13,7 +13,7 @@ response = client.search(
     },
     query: {
       term: {
-        "user.id": 'kimchy'
+        'user.id' => 'kimchy'
       }
     }
   }

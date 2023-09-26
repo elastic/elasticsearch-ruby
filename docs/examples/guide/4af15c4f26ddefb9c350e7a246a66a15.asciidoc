@@ -9,7 +9,7 @@ response = client.search(
         terms: {
           field: 'ip',
           order: {
-            "tm.m": 'desc'
+            'tm.m' => 'desc'
           }
         },
         aggregations: {

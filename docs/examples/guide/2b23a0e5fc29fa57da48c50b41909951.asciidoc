@@ -14,7 +14,7 @@ response = client.search(
             span_field_masking: {
               query: {
                 span_term: {
-                  "text.stems": 'fox'
+                  'text.stems' => 'fox'
                 }
               },
               field: 'text'

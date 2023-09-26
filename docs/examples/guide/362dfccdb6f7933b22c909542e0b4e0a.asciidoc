@@ -5,7 +5,7 @@ response = client.update_by_query(
   body: {
     query: {
       match: {
-        "user.id": 'l7gk7f82'
+        'user.id' => 'l7gk7f82'
       }
     },
     script: {

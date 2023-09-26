@@ -7,7 +7,7 @@ response = client.search(
   body: {
     query: {
       range: {
-        "http.response.bytes": {
+        'http.response.bytes' => {
           lt: 2_000_000
         }
       }

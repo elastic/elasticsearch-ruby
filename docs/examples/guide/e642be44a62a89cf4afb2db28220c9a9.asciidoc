@@ -3,8 +3,8 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "ingest.geoip.downloader.enabled": true,
-      "indices.lifecycle.history_index_enabled": true
+      'ingest.geoip.downloader.enabled' => true,
+      'indices.lifecycle.history_index_enabled' => true
     }
   }
 )

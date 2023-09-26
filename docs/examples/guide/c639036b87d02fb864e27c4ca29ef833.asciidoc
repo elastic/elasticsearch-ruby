@@ -10,7 +10,7 @@ response = client.search(
       }
     },
     runtime_mappings: {
-      "tags.hash": {
+      'tags.hash' => {
         type: 'long',
         script: "emit(doc['tags'].hashCode())"
       }

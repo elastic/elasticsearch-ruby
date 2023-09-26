@@ -12,7 +12,7 @@ response = client.search(
         },
         filter: {
           term: {
-            "file_path.tree": '/User/alice'
+            'file_path.tree' => '/User/alice'
           }
         }
       }

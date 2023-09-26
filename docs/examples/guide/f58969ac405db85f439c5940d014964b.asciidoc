@@ -10,7 +10,7 @@ response = client.search(
         },
         filter: {
           geo_bounding_box: {
-            "pin.location": {
+            'pin.location' => {
               wkt: 'BBOX (-74.1, -71.12, 40.73, 40.01)'
             }
           }

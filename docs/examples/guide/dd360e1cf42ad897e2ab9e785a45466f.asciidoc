@@ -9,8 +9,8 @@ response = client.indices.put_index_template(
     data_stream: {},
     template: {
       settings: {
-        "index.mode": 'time_series',
-        "index.routing_path": [
+        'index.mode' => 'time_series',
+        'index.routing_path' => [
           'sensor_id',
           'location'
         ]

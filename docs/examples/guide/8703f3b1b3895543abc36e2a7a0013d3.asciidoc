@@ -14,7 +14,7 @@ response = client.indices.create(
   index: 'index_3',
   body: {
     settings: {
-      "index.priority": 10
+      'index.priority' => 10
     }
   }
 )
@@ -24,7 +24,7 @@ response = client.indices.create(
   index: 'index_4',
   body: {
     settings: {
-      "index.priority": 5
+      'index.priority' => 5
     }
   }
 )

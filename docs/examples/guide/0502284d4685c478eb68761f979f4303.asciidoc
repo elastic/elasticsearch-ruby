@@ -8,7 +8,7 @@ response = client.ml.evaluate_data_frame(
         filter: [
           {
             term: {
-              "ml.is_training": false
+              'ml.is_training' => false
             }
           }
         ]

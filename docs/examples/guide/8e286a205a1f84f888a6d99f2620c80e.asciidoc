@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "logger.org.elasticsearch.deprecation": 'OFF'
+      'logger.org.elasticsearch.deprecation' => 'OFF'
     }
   }
 )

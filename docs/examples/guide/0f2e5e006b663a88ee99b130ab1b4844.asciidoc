@@ -5,7 +5,7 @@ response = client.search(
     sort: [
       {
         _geo_distance: {
-          "pin.location": [
+          'pin.location' => [
             [
               -70,
               40

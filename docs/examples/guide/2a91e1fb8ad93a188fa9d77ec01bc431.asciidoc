@@ -42,7 +42,7 @@ response = client.search(
         path: 'comments',
         query: {
           match: {
-            "comments.number": 2
+            'comments.number' => 2
           }
         },
         inner_hits: {}

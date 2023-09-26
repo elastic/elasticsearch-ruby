@@ -3,8 +3,8 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "transport.tracer.include": '*',
-      "transport.tracer.exclude": 'internal:coordination/fault_detection/*'
+      'transport.tracer.include' => '*',
+      'transport.tracer.exclude' => 'internal:coordination/fault_detection/*'
     }
   }
 )

@@ -5,11 +5,11 @@ response = client.indices.create(
   body: {
     settings: {
       index: {
-        "sort.field": [
+        'sort.field' => [
           'username',
           'date'
         ],
-        "sort.order": [
+        'sort.order' => [
           'asc',
           'desc'
         ]

@@ -4,7 +4,7 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.mapping.coerce": false
+      'index.mapping.coerce' => false
     },
     mappings: {
       properties: {

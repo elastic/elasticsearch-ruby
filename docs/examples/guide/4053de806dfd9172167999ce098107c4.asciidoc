@@ -6,7 +6,7 @@ response = client.search(
       constant_score: {
         filter: {
           term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         },
         boost: 1.2

@@ -4,7 +4,7 @@ response = client.indices.create(
   index: 'my-index-000001',
   body: {
     settings: {
-      "index.store.preload": [
+      'index.store.preload' => [
         'nvd',
         'dvd'
       ]

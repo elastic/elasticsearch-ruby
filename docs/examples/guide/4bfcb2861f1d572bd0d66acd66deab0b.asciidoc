@@ -5,7 +5,7 @@ response = client.ml.update_datafeed(
   body: {
     query: {
       term: {
-        "geo.src": 'US'
+        'geo.src' => 'US'
       }
     }
   }

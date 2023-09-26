@@ -5,7 +5,7 @@ response = client.ml.evaluate_data_frame(
     index: 'student_performance_mathematics_reg',
     query: {
       term: {
-        "ml.is_training": {
+        'ml.is_training' => {
           value: false
         }
       }

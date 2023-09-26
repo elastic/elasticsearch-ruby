@@ -5,7 +5,7 @@ response = client.search(
   body: {
     size: 0,
     runtime_mappings: {
-      "grade.weighted": {
+      'grade.weighted' => {
         type: 'double',
         script: "\n        emit(doc['grade'].value * doc['weight'].value)\n      "
       }

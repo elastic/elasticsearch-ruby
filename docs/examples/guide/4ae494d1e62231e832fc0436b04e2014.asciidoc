@@ -12,7 +12,7 @@ response = client.indices.validate_query(
         },
         filter: {
           term: {
-            "user.id": 'kimchy'
+            'user.id' => 'kimchy'
           }
         }
       }

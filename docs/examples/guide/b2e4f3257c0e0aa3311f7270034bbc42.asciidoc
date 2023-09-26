@@ -3,8 +3,8 @@
 response = client.indices.put_settings(
   index: 'my-index',
   body: {
-    "index.routing.allocation.require.data": nil,
-    "index.routing.allocation.include._tier_preference": 'data_hot'
+    'index.routing.allocation.require.data' => nil,
+    'index.routing.allocation.include._tier_preference' => 'data_hot'
   }
 )
 puts response

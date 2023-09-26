@@ -11,7 +11,7 @@ response = client.indices.simulate_template(
     priority: 10,
     template: {
       settings: {
-        "index.number_of_replicas": 1
+        'index.number_of_replicas' => 1
       }
     }
   }

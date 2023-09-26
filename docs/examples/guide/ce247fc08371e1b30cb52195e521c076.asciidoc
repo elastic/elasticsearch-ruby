@@ -10,7 +10,7 @@ response = client.search(
         },
         filter: {
           geo_bounding_box: {
-            "pin.location": {
+            'pin.location' => {
               top_left: [
                 -74.1,
                 40.73

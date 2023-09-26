@@ -4,7 +4,7 @@ response = client.search(
   index: 'sales',
   body: {
     runtime_mappings: {
-      "price.euros": {
+      'price.euros' => {
         type: 'double',
         script: {
           source: "\n          emit(doc['price'].value * params.conversion_rate)\n        ",

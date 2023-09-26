@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "logger.org.elasticsearch.discovery": 'DEBUG'
+      'logger.org.elasticsearch.discovery' => 'DEBUG'
     }
   }
 )

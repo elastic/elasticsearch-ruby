@@ -6,7 +6,7 @@ response = client.indices.validate_query(
   body: {
     query: {
       match: {
-        "user.id": {
+        'user.id' => {
           query: 'kimchy',
           fuzziness: 'auto'
         }

@@ -5,7 +5,7 @@ response = client.search(
   body: {
     size: 0,
     runtime_mappings: {
-      "startup_time_before.adjusted": {
+      'startup_time_before.adjusted' => {
         type: 'long',
         script: {
           source: "emit(doc['startup_time_before'].value - params.adjustment)",

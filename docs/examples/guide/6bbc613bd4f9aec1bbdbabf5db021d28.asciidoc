@@ -12,12 +12,12 @@ response = client.search(
           },
           {
             match: {
-              "title.original": 'quick brown fox'
+              'title.original' => 'quick brown fox'
             }
           },
           {
             match: {
-              "title.shingles": 'quick brown fox'
+              'title.shingles' => 'quick brown fox'
             }
           }
         ]

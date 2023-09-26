@@ -3,8 +3,8 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      "cluster.indices.close.enable": false,
-      "indices.recovery.max_bytes_per_sec": '50mb'
+      'cluster.indices.close.enable' => false,
+      'indices.recovery.max_bytes_per_sec' => '50mb'
     },
     transient: {
       "*": nil

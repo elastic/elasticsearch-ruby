@@ -4,9 +4,9 @@ response = client.indices.put_settings(
   index: 'my_source_index',
   body: {
     settings: {
-      "index.number_of_replicas": 0,
-      "index.routing.allocation.require._name": 'shrink_node_name',
-      "index.blocks.write": true
+      'index.number_of_replicas' => 0,
+      'index.routing.allocation.require._name' => 'shrink_node_name',
+      'index.blocks.write' => true
     }
   }
 )

@@ -6,7 +6,7 @@ response = client.search(
     seq_no_primary_term: true,
     query: {
       match: {
-        "user.id": 'yWIumJd7'
+        'user.id' => 'yWIumJd7'
       }
     }
   }

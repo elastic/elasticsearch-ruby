@@ -6,7 +6,7 @@ response = client.search(
   body: {
     query: {
       match: {
-        "result.condition.met": true
+        'result.condition.met' => true
       }
     }
   }

@@ -5,9 +5,9 @@ response = client.indices.shrink(
   target: 'my_target_index',
   body: {
     settings: {
-      "index.number_of_replicas": 1,
-      "index.number_of_shards": 1,
-      "index.codec": 'best_compression'
+      'index.number_of_replicas' => 1,
+      'index.number_of_shards' => 1,
+      'index.codec' => 'best_compression'
     },
     aliases: {
       my_search_indices: {}

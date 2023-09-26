@@ -5,8 +5,8 @@ response = client.indices.shrink(
   target: 'my_target_index',
   body: {
     settings: {
-      "index.routing.allocation.require._name": nil,
-      "index.blocks.write": nil
+      'index.routing.allocation.require._name' => nil,
+      'index.blocks.write' => nil
     }
   }
 )

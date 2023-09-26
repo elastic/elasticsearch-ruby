@@ -6,11 +6,11 @@ response = client.cluster.put_settings(
       cluster: {
         remote: {
           cluster_two: {
-            "transport.compress": false
+            'transport.compress' => false
           },
           cluster_three: {
-            "transport.compress": true,
-            "transport.ping_schedule": '60s'
+            'transport.compress' => true,
+            'transport.ping_schedule' => '60s'
           }
         }
       }

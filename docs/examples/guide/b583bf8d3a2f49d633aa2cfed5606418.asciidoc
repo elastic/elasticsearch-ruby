@@ -12,7 +12,7 @@ response = client.cluster.put_component_template(
         "alias2": {
           filter: {
             term: {
-              "user.id": 'kimchy'
+              'user.id' => 'kimchy'
             }
           },
           routing: 'shard-1'

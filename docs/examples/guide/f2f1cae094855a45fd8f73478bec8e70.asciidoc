@@ -5,7 +5,7 @@ response = client.indices.split(
   target: 'my_target_index',
   body: {
     settings: {
-      "index.number_of_shards": 5
+      'index.number_of_shards' => 5
     },
     aliases: {
       my_search_indices: {}

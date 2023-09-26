@@ -70,7 +70,7 @@ response = client.search(
             must_not: [
               {
                 term: {
-                  "comments.author": 'nik9000'
+                  'comments.author' => 'nik9000'
                 }
               }
             ]
