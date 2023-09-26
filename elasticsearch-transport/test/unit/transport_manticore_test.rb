@@ -111,7 +111,7 @@ if JRUBY
                     {
                       body: '{"foo":"bar"}',
                       headers: {
-                        'Content-Type' => 'application/json',
+                        'Content-Type' => 'application/x-ndjson',
                         'User-Agent' => @transport.send(:user_agent_header)
                       }
                     }
