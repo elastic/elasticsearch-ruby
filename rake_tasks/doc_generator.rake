@@ -203,6 +203,9 @@ module TestDocs
 
   def self.response_successful(response)
     [true, false].include?(response) ||
-                           (response.is_a?(Elasticsearch::API::Response) && response.status == 200)
+                           (
+                             response.is_a?(Elasticsearch::API::Response) &&
+                             [200, 201].include?(response.status)
+                           )
   end
 end
