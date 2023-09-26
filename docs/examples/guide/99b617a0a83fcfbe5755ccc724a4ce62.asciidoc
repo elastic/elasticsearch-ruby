@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'place_path_category',
+  id: 1,
+  body: {
+    suggest: [
+      "timmy's",
+      'starbucks',
+      'dunkin donuts'
+    ],
+    cat: [
+      'cafe',
+      'food'
+    ]
+  }
+)
+puts response
+----

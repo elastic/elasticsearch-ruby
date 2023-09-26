@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: {
+      type: 'MultiPoint',
+      coordinates: [
+        [
+          102,
+          2
+        ],
+        [
+          103,
+          2
+        ]
+      ]
+    }
+  }
+)
+puts response
+----

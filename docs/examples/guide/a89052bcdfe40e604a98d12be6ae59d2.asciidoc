@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'example',
+  body: {
+    location: 'BBOX (100.0, 102.0, 2.0, 0.0)'
+  }
+)
+puts response
+----

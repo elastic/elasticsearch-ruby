@@ -1,0 +1,22 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'products',
+  id: 0,
+  refresh: true,
+  body: {
+    name: 'LED TV',
+    resellers: [
+      {
+        reseller: 'companyA',
+        price: 350
+      },
+      {
+        reseller: 'companyB',
+        price: 500
+      }
+    ]
+  }
+)
+puts response
+----

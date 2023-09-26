@@ -1,0 +1,47 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'items',
+  id: 1,
+  refresh: true,
+  body: {
+    name: 'chocolate',
+    production_date: '2018-02-01',
+    location: [
+      -71.34,
+      41.12
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'items',
+  id: 2,
+  refresh: true,
+  body: {
+    name: 'chocolate',
+    production_date: '2018-01-01',
+    location: [
+      -71.3,
+      41.15
+    ]
+  }
+)
+puts response
+
+response = client.index(
+  index: 'items',
+  id: 3,
+  refresh: true,
+  body: {
+    name: 'chocolate',
+    production_date: '2017-12-01',
+    location: [
+      -71.3,
+      41.12
+    ]
+  }
+)
+puts response
+----

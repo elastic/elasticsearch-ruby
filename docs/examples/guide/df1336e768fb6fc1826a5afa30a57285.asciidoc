@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-data-stream',
+  body: {
+    "@timestamp": '2099-03-08T11:06:07.000Z',
+    user: {
+      id: '8a4f500d'
+    },
+    message: 'Login successful'
+  }
+)
+puts response
+----
