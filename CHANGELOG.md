@@ -1,3 +1,7 @@
+## 7.17.9
+
+-  Backports fix from `elastic-transport`: [#66](https://github.com/elastic/elastic-transport-ruby/issues/66) - Manticore transport unable to send custom headers with `perform_request` [Pull Request](https://github.com/elastic/elastic-transport-ruby/pull/69).
+
 ## 7.17.8
 
 - Patch releases back to being detached from Elastic stack releases.
