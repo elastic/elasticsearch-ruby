@@ -23,7 +23,7 @@ describe 'client#create_document' do
     [
         'PUT',
         'foo/_doc/123',
-        { endpoint: 'create', op_type: 'create' },
+        { op_type: 'create' },
         { foo: 'bar' },
         {},
         { defined_params: { id: '123', index: 'foo' }, endpoint: 'index' }
@@ -40,7 +40,7 @@ describe 'client#create_document' do
       [
           'PUT',
           'foo/_doc/123',
-          { endpoint: 'create', op_type: 'create' },
+          { op_type: 'create' },
           {},
           {}
       ]
@@ -50,7 +50,7 @@ describe 'client#create_document' do
       [
         'PUT',
         'foo/_doc/123',
-        { endpoint: 'create', op_type: 'create' },
+        { op_type: 'create' },
         {},
         {},
         { defined_params: { id: '123', index: 'foo' }, endpoint: 'index' }
@@ -68,7 +68,7 @@ describe 'client#create_document' do
       [
           'PUT',
           'foo/_doc/1',
-          { endpoint: 'create', op_type: 'create' },
+          { op_type: 'create' },
           { foo: 'bar' },
           {}
       ]
@@ -78,7 +78,7 @@ describe 'client#create_document' do
       [
         'PUT',
         'foo/_doc/1',
-        { endpoint: 'create', op_type: 'create' },
+        { op_type: 'create' },
         { foo: 'bar' },
         {},
         { defined_params: { id: 1, index: 'foo' }, endpoint: 'index' }
@@ -106,7 +106,7 @@ describe 'client#create_document' do
       [
         'POST',
         'foo/_doc',
-        { endpoint: 'create' },
+        { },
         { foo: 'bar' },
         {},
         { defined_params: { index: 'foo' }, endpoint: 'index' }
