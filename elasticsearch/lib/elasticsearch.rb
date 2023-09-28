@@ -62,7 +62,7 @@ module Elasticsearch
         # method, path, params, body, headers, opts
         # The last arg is opts, which shouldn't be sent when `perform_request` is called
         # directly.
-        args.pop
+        args.pop if args[-1][:endpoint]
         if (opaque_id = args[2]&.delete(:opaque_id))
           headers = args[4] || {}
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
@@ -74,9 +74,6 @@ module Elasticsearch
           @transport.perform_request(*args, &block)
         end
       else
-        # The last arg is opts, which shouldn't be sent when `perform_request` is called
-        # directly.
-        args.pop
         @transport.send(name, *args, &block)
       end
     end
