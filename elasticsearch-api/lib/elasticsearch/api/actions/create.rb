@@ -48,7 +48,6 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-        arguments.update endpoint: 'create'
         if arguments[:id]
           index arguments.update op_type: 'create'
         else

@@ -38,6 +38,10 @@ describe 'Perform request args' do
     let(:client_double) do
       Class.new { include Elasticsearch::API }.new.tap do |client|
         expect(client).to receive(:perform_request) do |_, _, _, _, _, request_params|
+          # The create method ends up becoming an 'index' request
+          if expected_perform_request_params[:endpoint] == 'create'
+            expected_perform_request_params[:endpoint] = 'index'
+          end
           # Check that the expected hash is passed to the perform_request method
           expect(request_params).to eq(expected_perform_request_params)
         end.and_return(response_double)

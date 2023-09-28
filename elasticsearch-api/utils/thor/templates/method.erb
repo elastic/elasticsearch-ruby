@@ -34,7 +34,6 @@ module Elasticsearch
 <%- end %>
 <%-    %>
 <%- if @spec.endpoint_name == 'create' -%>
-  <%= '  '*(@spec.namespace_depth+3) %>arguments.update endpoint: 'create'
   <%= '  '*(@spec.namespace_depth+3) %>if arguments[:id]
   <%= '  '*(@spec.namespace_depth+3) %>  index arguments.update op_type: 'create'
   <%= '  '*(@spec.namespace_depth+3) %>else
