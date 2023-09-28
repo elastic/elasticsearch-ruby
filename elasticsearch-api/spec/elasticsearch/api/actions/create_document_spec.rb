@@ -26,7 +26,7 @@ describe 'client#create_document' do
         { endpoint: 'create', op_type: 'create' },
         { foo: 'bar' },
         {},
-        { defined_params: { id: '123', index: 'foo' }, endpoint: 'create' }
+        { defined_params: { id: '123', index: 'foo' }, endpoint: 'index' }
     ]
   end
 
@@ -53,7 +53,7 @@ describe 'client#create_document' do
         { endpoint: 'create', op_type: 'create' },
         {},
         {},
-        { defined_params: { id: '123', index: 'foo' }, endpoint: 'create' }
+        { defined_params: { id: '123', index: 'foo' }, endpoint: 'index' }
       ]
     end
 
@@ -81,7 +81,7 @@ describe 'client#create_document' do
         { endpoint: 'create', op_type: 'create' },
         { foo: 'bar' },
         {},
-        { defined_params: { id: 1, index: 'foo' }, endpoint: 'create' }
+        { defined_params: { id: 1, index: 'foo' }, endpoint: 'index' }
       ]
     end
 
@@ -109,7 +109,7 @@ describe 'client#create_document' do
         { endpoint: 'create' },
         { foo: 'bar' },
         {},
-        { defined_params: { index: 'foo' }, endpoint: 'create' }
+        { defined_params: { index: 'foo' }, endpoint: 'index' }
       ]
     end
 
