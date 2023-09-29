@@ -27,6 +27,15 @@ The first node is unavailable and results in an HTTP error, while the retry to t
 
 When using the https://opentelemetry.io/docs/instrumentation/ruby/manual[OpenTelemetry Ruby SDK manually] or using the https://opentelemetry.io/docs/instrumentation/ruby/automatic/[OpenTelemetry Ruby Auto-Instrumentations], the Ruby Client's OpenTelemetry instrumentation is enabled by default and uses the global OpenTelemetry SDK with the global tracer provider. You can provide a tracer provider via the Ruby Client configuration option `opentelemetry_tracer_provider` when instantiating the client. This is sometimes useful for testing or other specific use cases.
 
+[source,ruby]
+------------------------------------
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
+  api_key: '<ApiKey>',
+  opentelemetry_tracer_provider: tracer_provider
+)
+------------------------------------
+
 [discrete]
 ==== Configuring the OpenTelemetry instrumentation
 
