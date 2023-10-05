@@ -97,4 +97,4 @@ REST_API_YAML_FILES = if ENV['RUN_SKIPPED_TESTS'] # only run the skipped tests i
                       end
 
 # The features to skip
-REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector'].freeze
+REST_API_YAML_SKIP_FEATURES = ['warnings', 'node_selector', 'close_to'].freeze
