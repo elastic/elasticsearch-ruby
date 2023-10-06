@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The SAML response to authenticate (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-authenticate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/security-api-saml-authenticate.html
         #
         def saml_authenticate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "security.saml_authenticate" }

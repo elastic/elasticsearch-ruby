@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :filter_id The ID of the filter to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/ml-delete-filter.html
         #
         def delete_filter(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.delete_filter" }

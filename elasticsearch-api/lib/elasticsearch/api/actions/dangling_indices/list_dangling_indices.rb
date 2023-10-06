@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/modules-gateway-dangling-indices.html
         #
         def list_dangling_indices(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "dangling_indices.list_dangling_indices" }

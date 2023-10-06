@@ -23,6 +23,10 @@ module Elasticsearch
     module Indices
       module Actions
         # Updates the data stream lifecycle of the selected data streams.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [List] :name A comma-separated list of data streams whose lifecycle will be updated; use `*` to set the lifecycle to all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
@@ -31,7 +35,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream lifecycle configuration that consist of the data retention
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-put-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/data-streams-put-lifecycle.html
         #
         def put_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.put_data_lifecycle" }

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/watcher-api-get-settings.html
         #
         def get_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "watcher.get_settings" }

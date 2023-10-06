@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The privilege(s) to add (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-privileges.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/security-api-put-privileges.html
         #
         def put_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "security.put_privileges" }

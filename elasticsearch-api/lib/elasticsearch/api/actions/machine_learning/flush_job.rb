@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Flush parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-flush-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/ml-flush-job.html
         #
         def flush_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.flush_job" }

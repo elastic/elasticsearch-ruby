@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-contexts.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/painless/8.11/painless-contexts.html
       #
       def get_script_context(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || "get_script_context" }

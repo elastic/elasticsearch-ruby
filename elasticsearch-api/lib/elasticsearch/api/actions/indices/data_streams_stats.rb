@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/data-streams.html
         #
         def data_streams_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.data_streams_stats" }
