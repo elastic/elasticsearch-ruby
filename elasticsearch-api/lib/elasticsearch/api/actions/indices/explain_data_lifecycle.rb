@@ -23,13 +23,17 @@ module Elasticsearch
     module Indices
       module Actions
         # Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [String] :index The name of the index to explain
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-explain-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/data-streams-explain-lifecycle.html
         #
         def explain_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.explain_data_lifecycle" }

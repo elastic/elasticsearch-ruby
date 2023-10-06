@@ -39,7 +39,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/docs-index_.html
       #
       def index(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || "index" }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-usage.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/cluster-nodes-usage.html
         #
         def usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "nodes.usage" }

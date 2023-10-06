@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Eql request body. Use the `query` to limit the query scope. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/eql-search-api.html
         #
         def search(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "eql.search" }

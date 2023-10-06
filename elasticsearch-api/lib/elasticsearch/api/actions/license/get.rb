@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-license.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/get-license.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "license.get" }

@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/ilm-get-status.html
         #
         def get_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ilm.get_status" }

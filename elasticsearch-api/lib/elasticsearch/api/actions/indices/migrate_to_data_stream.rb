@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the alias to migrate
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/data-streams.html
         #
         def migrate_to_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.migrate_to_data_stream" }

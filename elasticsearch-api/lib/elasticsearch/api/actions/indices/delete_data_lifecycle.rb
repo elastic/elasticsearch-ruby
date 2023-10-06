@@ -23,6 +23,10 @@ module Elasticsearch
     module Indices
       module Actions
         # Deletes the data stream lifecycle of the selected data streams.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
         # @option arguments [List] :name A comma-separated list of data streams of which the data stream lifecycle will be deleted; use `*` to get all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
@@ -30,7 +34,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-delete-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/data-streams-delete-lifecycle.html
         #
         def delete_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.delete_data_lifecycle" }

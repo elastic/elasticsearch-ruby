@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/docs-delete-by-query.html
       #
       def delete_by_query_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || "delete_by_query_rethrottle" }

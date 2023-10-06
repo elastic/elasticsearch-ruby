@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body A list of events (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar-event.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/ml-post-calendar-event.html
         #
         def post_calendar_events(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.post_calendar_events" }
