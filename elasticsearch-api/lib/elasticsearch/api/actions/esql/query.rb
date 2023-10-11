@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Use the `query` element to start a query. Use `time_zone` to specify an execution time zone and 'columnar' to format the answer. (*Required*)
+        # @option arguments [Hash] :body Use the `query` element to start a query. Use `time_zone` to specify an execution time zone and `columnar` to format the answer. (*Required*)
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.11/esql-query-api.html
         #
