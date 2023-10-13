@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/inference.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/post-inference-api.html
         #
         def inference(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "inference.inference" }
