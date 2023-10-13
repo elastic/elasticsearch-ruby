@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :model_id The model Id
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/inference_get_model.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-api.html
         #
         def get_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "inference.get_model" }
