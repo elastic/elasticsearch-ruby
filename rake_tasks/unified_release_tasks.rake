@@ -122,7 +122,6 @@ namespace :unified_release do
 
     files = [
       '.github/workflows/main.yml',
-      '.github/workflows/unified-release.yml',
       '.buildkite/pipeline.yml'
     ]
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
