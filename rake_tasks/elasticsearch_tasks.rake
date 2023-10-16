@@ -88,7 +88,7 @@ namespace :elasticsearch do
 
     build_hash_artifact = artifacts['version']['builds'].find do |build|
       build.dig('projects', 'elasticsearch', 'commit_hash') == @build_hash
-    end
+    end || artifacts['version']['builds'].first
     zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k, _| k =~ /rest-resources-zip/ }.map { |_, v| v['url'] }.first
 
     # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
