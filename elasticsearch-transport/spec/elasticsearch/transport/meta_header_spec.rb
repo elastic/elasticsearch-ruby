@@ -172,7 +172,7 @@ describe Elasticsearch::Transport::Client do
           expect(headers).to include('x-elastic-client-meta' => meta)
 
           Typhoeus = @klass if was_required
-        end unless jruby?
+        end
 
         it 'sets adapter in the meta header' do
           require 'typhoeus'
@@ -180,7 +180,7 @@ describe Elasticsearch::Transport::Client do
           meta = "#{meta_header},ty=#{Typhoeus::VERSION}"
           expect(headers).to include('x-elastic-client-meta' => meta)
         end
-      end
+      end unless jruby?
 
       unless jruby?
         let(:adapter) { :patron }

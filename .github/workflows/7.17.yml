@@ -39,7 +39,11 @@ jobs:
         rake bundle:install
     - name: elasticsearch
       run: cd elasticsearch && bundle exec rake test:all
-    - name: elasticsearch-transport
+    - name: elasticsearch-transport faraday1
+      run: cd elasticsearch-transport && bundle install && bundle exec rake test:all
+      env:
+        BUNDLE_GEMFILE: 'Gemfile-faraday1.gemfile'
+    - name: elasticsearch-transport faraday2
       run: cd elasticsearch-transport && bundle exec rake test:all
     - name: elasticsearch-api
       run: cd elasticsearch-api && bundle exec rake test:spec
