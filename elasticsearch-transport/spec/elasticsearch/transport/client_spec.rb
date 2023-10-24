@@ -234,8 +234,8 @@ describe Elasticsearch::Transport::Client do
         it 'uses Faraday NetHttp' do
           expect(adapter).to eq Faraday::Adapter::NetHttp
         end
-      end unless jruby?
-    end
+      end
+    end unless jruby?
 
     context 'when the adapter is patron' do
       let(:adapter) do
@@ -247,9 +247,10 @@ describe Elasticsearch::Transport::Client do
       end
 
       it 'uses Faraday with the adapter' do
+        require 'faraday/patron'
         expect(adapter).to eq Faraday::Adapter::Patron
       end
-    end
+    end unless jruby?
 
     context 'when the adapter is typhoeus' do
       let(:adapter) do
@@ -257,6 +258,8 @@ describe Elasticsearch::Transport::Client do
       end
 
       let(:client) do
+        require 'faraday/typhoeus' if is_faraday_v2?
+
         described_class.new(adapter: :typhoeus, enable_meta_header: false)
       end
 
@@ -277,7 +280,7 @@ describe Elasticsearch::Transport::Client do
       it 'uses Faraday with the adapter' do
         expect(adapter).to eq Faraday::Adapter::Patron
       end
-    end
+    end unless jruby?
 
     context 'when the adapter can be detected', unless: jruby? do
 
@@ -319,7 +322,7 @@ describe Elasticsearch::Transport::Client do
       it 'sets the logger' do
         expect(handlers).to include(Faraday::Response::Logger)
       end
-    end
+    end unless jruby?
   end
 
   context 'when cloud credentials are provided' do
@@ -1587,6 +1590,8 @@ describe Elasticsearch::Transport::Client do
         end
 
         context 'when the Faraday adapter is set in the block' do
+          require 'faraday/net_http_persistent' if is_faraday_v2?
+
           let(:client) do
             described_class.new(host: ELASTICSEARCH_HOSTS.first, logger: logger) do |client|
               client.adapter(:net_http_persistent)
@@ -1747,6 +1752,7 @@ describe Elasticsearch::Transport::Client do
           end
 
           context 'when using the HTTPClient adapter' do
+            require 'faraday/httpclient'
 
             let(:client) do
               described_class.new(hosts: ELASTICSEARCH_HOSTS, compression: true, adapter: :httpclient, enable_meta_header: false)

@@ -75,6 +75,10 @@ def default_client
   $client ||= Elasticsearch::Client.new(hosts: ELASTICSEARCH_HOSTS)
 end
 
+def is_faraday_v2?
+  Gem::Version.new(Faraday::VERSION) >= Gem::Version.new(2)
+end
+
 module Config
   def self.included(context)
     # Get the hosts to use to connect an elasticsearch client.

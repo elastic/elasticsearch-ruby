@@ -45,21 +45,20 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.4'
 
   s.add_dependency 'multi_json'
-  s.add_dependency 'faraday', '~> 1'
+  s.add_dependency 'faraday', '>= 1', '< 3'
 
+  # Faraday Adapters
+  s.add_development_dependency 'manticore' if defined? JRUBY_VERSION
+  s.add_development_dependency 'curb' unless defined? JRUBY_VERSION
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'cane'
-  s.add_development_dependency 'curb' unless defined? JRUBY_VERSION
   s.add_development_dependency 'elasticsearch', ['>= 7', '< 8.0.0']
   s.add_development_dependency 'elasticsearch-extensions'
   s.add_development_dependency 'hashie'
-  s.add_development_dependency 'httpclient'
-  s.add_development_dependency 'manticore' if defined? JRUBY_VERSION
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters'
   s.add_development_dependency 'mocha'
-  s.add_development_dependency 'net-http-persistent'
   s.add_development_dependency 'patron' unless defined? JRUBY_VERSION
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake', '~> 13'
@@ -68,7 +67,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'test-unit', '~> 2'
-  s.add_development_dependency 'typhoeus', '~> 1.4'
   s.add_development_dependency 'yard'
 
   s.description = <<-DESC.gsub(/^    /, '')

@@ -17,8 +17,13 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in elasticsearch-transport.gemspec
-gemspec
+# Usage:
+#
+# $ BUNDLE_GEMFILE=./Gemfile-faraday1.gemfile bundle install
+# $ BUNDLE_GEMFILE=./Gemfile-faraday1.gemfile bundle exec rake test:faraday1:unit
+
+gem 'faraday', '~> 1'
+gemspec path: './'
 
 if File.exist? File.expand_path('../elasticsearch-api/elasticsearch-api.gemspec', __dir__)
   gem 'elasticsearch-api', path: File.expand_path('../elasticsearch-api', __dir__), require: false
@@ -29,14 +34,14 @@ if File.exist? File.expand_path('../elasticsearch/elasticsearch.gemspec', __dir_
 end
 
 group :development, :test do
-  gem 'faraday-httpclient'
-  gem 'faraday-net_http_persistent'
-  gem 'faraday-patron' unless defined? JRUBY_VERSION
-  gem 'faraday-typhoeus'
+  gem 'httpclient'
+  gem 'net-http-persistent'
+  gem 'patron' unless defined? JRUBY_VERSION
+  gem 'typhoeus'
   gem 'rspec'
   if defined?(JRUBY_VERSION)
     gem 'pry-nav'
   else
-    gem 'pry-byebug', '~> 3.9'
+    gem 'pry-byebug'
   end
 end
