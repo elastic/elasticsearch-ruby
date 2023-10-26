@@ -99,7 +99,7 @@ module Elasticsearch
 
         def check_for_unexpectedly_recreated_objects(client)
           unexpected_ilm_policies = client.index_lifecycle_management.get_lifecycle
-          unexpected_ilm_policies.reject! { |k, _| PRESERVE_ILM_POLICY_IDS.include? k }
+          unexpected_ilm_policies.reject! { |k, _| preserve_policy?(k) }
           unless unexpected_ilm_policies.empty?
             logger.info(
               "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
@@ -265,6 +265,10 @@ module Elasticsearch
           PLATINUM_TEMPLATES.include? template
         end
 
+        def preserve_policy?(policy)
+          PRESERVE_ILM_POLICY_IDS.include?(policy) || policy.include?('@')
+        end
+
         def wait_for_cluster_tasks(client)
           start_time = Time.now.to_i
           count = 0
@@ -293,7 +297,7 @@ module Elasticsearch
         def delete_all_ilm_policies(client)
           policies = client.ilm.get_lifecycle
           policies.each do |policy|
-            client.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+            client.ilm.delete_lifecycle(policy: policy[0]) unless preserve_policy?(policy[0])
           end
         end
 
