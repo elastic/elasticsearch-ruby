@@ -22,6 +22,38 @@ When working with multiple hosts, you might want to enable the `retry_on_failure
 For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections, such as https://github.com/toland/patron[patron] or https://github.com/typhoeus/typhoeus[Typhoeus]. Require the library (`require 'patron'`) in your code for Faraday 1.x or the adapter (`require 'faraday/patron'`) for Faraday 2.x, and it will be automatically used.
 
 [discrete]
+=== Adapter is not registered on Faraday
+
+If you see a message like:
+```
+:adapter is not registered on Faraday::Adapter (Faraday::Error)
+```
+
+Then you probably need to include the adapter library in your Gemfile and require it. You might get this error when migrating from Faraday v1 to Faraday v2. The main change when using Faraday v2 is all adapters, except for the default `net_http` one, have been moved out into separate gems. This means if you're not using the default adapter and you migrate to Faraday v2, you'll need to add the adapter gems to your Gemfile.
+
+These are the gems required for the different adapters with Faraday 2, instead of the libraries on which they were based:
+
+[source,ruby]
+------------------------------------
+# HTTPCLient
+gem 'faraday-httpclient'
+
+# NetHTTPPersistent
+gem 'faraday-net_http_persistent'
+
+# Patron
+gem 'faraday-patron'
+
+# Typhoeus
+gem 'faraday-typhoeus'
+------------------------------------
+
+Things should work fine if you migrate to Faraday 2 as long as you include the adapter (unless you're using the default one `net-http`), but worst case scenario, you can always lock the version of Faraday in your project to 1.x:
+`gem 'faraday', '~> 1'`
+
+Be aware if migrating to Faraday v2 that it requires at least Ruby `2.6`, unlike Faraday v1 which requires `2.4`.
+
+[discrete]
 === More Help
 
 If you need more help, you can hop on our https://discuss.elastic.co/[Elastic community forums] and get answers from the experts in the community, including people from Elastic.
