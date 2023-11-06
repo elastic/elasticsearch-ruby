@@ -1,3 +1,37 @@
+## 7.17.10
+
+Backports support for Faraday 2 from `elastic-transport`. ¡Gracias [santiagorodriguez96](https://github.com/santiagorodriguez96)!
+
+This version of the gem now supports Faraday v2. If you don't have a locked version of Faraday in your project, when you upgrade your gems, Faraday v2 will be installed. The main change on dependencies when using Faraday v2 is all adapters, except for the default `net_http` one, have been moved out of Faraday into separate gems. This means if you're not using the default adapter and you migrate to Faraday v2, you'll need to add the adapter gems to your Gemfile.
+
+These are the gems required for the different adapters with Faraday 2, instead of the libraries on which they were based:
+```ruby
+# HTTPCLient
+gem 'faraday-httpclient'
+
+# NetHTTPPersistent
+gem 'faraday-net_http_persistent'
+
+# Patron
+gem 'faraday-patron'
+
+# Typhoeus
+gem 'faraday-typhoeus'
+```
+
+Things should work fine if you migrate to Faraday 2 as long as you include the adapter (unless you're using the default one `net-http`), but worst case scenario, you can always lock the version of Faraday in your project to 1.x:
+`gem 'faraday', '~> 1'`
+
+Be aware if migrating to Faraday v2 that it requires at least Ruby `2.6`, unlike Faraday v1 which requires `2.4`.
+
+*Troubleshooting*
+
+If you see a message like:
+`:adapter is not registered on Faraday::Adapter (Faraday::Error)`
+Then you probably need to include the adapter library in your gemfile and require it.
+
+Please [submit an issue](https://github.com/elastic/elasticsearch-ruby/issues) if you encounter any problems.
+
 ## 7.17.9
 
 -  Backports fix from `elastic-transport`: [#66](https://github.com/elastic/elastic-transport-ruby/issues/66) - Manticore transport unable to send custom headers with `perform_request` [Pull Request](https://github.com/elastic/elastic-transport-ruby/pull/69).
