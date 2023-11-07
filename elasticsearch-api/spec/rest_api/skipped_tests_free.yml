@@ -35,3 +35,9 @@
 -
   :file: 'cluster.desired_balance/10_basic.yml'
   :description: 'Test cluster_balance_stats'
+-
+  :file: 'search.vectors/40_knn_search.yml'
+  :description: 'Direct kNN queries are disallowed'
+-
+  :file: 'search.vectors/45_knn_search_byte.yml'
+  :description: 'Direct kNN queries are disallowed'
