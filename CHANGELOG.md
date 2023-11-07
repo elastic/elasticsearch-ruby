@@ -1,5 +1,22 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.11.0 Release notes
+
+### Client
+
+* Tested versions of Ruby for 8.11.0: Ruby (MRI) 3.0, 3.1 and 3.2. JRuby 9.3 and JRuby 9.4.
+* Adds native support for *Open Telemetry*. See Open Telemetry for documentation.
+* Improved documentation, now you can find more examples in Ruby in the [REST API reference](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/rest-apis.html).
+
+### API
+
+New Experimental APIs:
+- `esql.query` - Executes an ESQL request.
+- `inference.delete_model` - Delete model in the Inference API.
+- `inference.get_model` - Get a model in the Inference API.
+- `inference.inference` - Perform inference on a model.
+- `inference.put_model` - Configure a model for use in the Inference API.
+
 ## 8.10.0 Release notes
 
 ### Client
