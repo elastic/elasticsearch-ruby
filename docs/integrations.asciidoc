@@ -6,6 +6,7 @@ the Ruby client.
 
 * <<transport>>
 * <<api>>
+* <<opentelemetry>>
 * <<ecs>>
 * <<activemodel_activerecord>>
 * <<ruby_on_rails>>
@@ -15,6 +16,8 @@ the Ruby client.
 include::transport.asciidoc[]
 
 include::api.asciidoc[]
+
+include::open-telemetry.asciidoc[]
 
 include::ecs.asciidoc[]
 
