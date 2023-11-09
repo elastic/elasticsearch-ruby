@@ -83,12 +83,12 @@ namespace :elasticsearch do
       exit 1
     end
 
-    # Get the build hash if it hasn't been set from a running cluster
-    @build_hash ||= artifacts['version']['builds'].first.dig('projects', 'elasticsearch', 'commit_hash')
-
+    # Either find the artifacts for the exact same build hash from the current running cluster or
+    # use the first one from the list of builds:
     build_hash_artifact = artifacts['version']['builds'].find do |build|
       build.dig('projects', 'elasticsearch', 'commit_hash') == @build_hash
-    end
+    end || artifacts['version']['builds'].first if build_hash_artifact.nil?
+
     zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k, _| k =~ /rest-resources-zip/ }.map { |_, v| v['url'] }.first
 
     # Dig into the elasticsearch packages, search for the rest-resources-zip package and return the URL:
