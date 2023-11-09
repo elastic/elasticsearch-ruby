@@ -315,7 +315,10 @@ module Elasticsearch
               set_definition['set'].each do |response_key, variable_name|
                 nested_key_chain = response_key.split('.').map do |key|
                   # If there's a variable in the set key, get the value:
-                  key.gsub!(key, @test.cached_values[key.gsub('$', '')]) if key.match?(/\$.+/)
+                  if key.match?(/\$.+/)
+                    value = @test.cached_values[key.gsub('$', '')]
+                    key.gsub!(key, value) if value
+                  end
 
                   (key =~ /\A[-+]?[0-9]+\z/) ? key.to_i: key
                 end
