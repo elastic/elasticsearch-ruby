@@ -85,7 +85,8 @@ module Elasticsearch
                 Elasticsearch::API::QueryRuleset,
                 Elasticsearch::API::Esql,
                 Elasticsearch::API::Inference,
-                Elasticsearch::API::Profiling
+                Elasticsearch::API::Profiling,
+                Elasticsearch::API::Simulate
     end
 
     # The serializer class
