@@ -1,6 +1,11 @@
 # Elasticsearch
 [![7.17](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml/badge.svg?branch=7.17)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/7.17.yml) [![8.9](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.9.yml/badge.svg?branch=8.9)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.9.yml) [![8.10](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.10.yml/badge.svg?branch=8.10)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/8.10.yml) [![main](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/elastic/elasticsearch-ruby/actions/workflows/main.yml) [![Build status](https://badge.buildkite.com/e50e66eb71bf6566a6479c8a29b25458f6781ee8e52cee8d96.svg)](https://buildkite.com/elastic/elasticsearch-ruby)
 
+**[Download the latest version of Elasticsearch](https://www.elastic.co/downloads/elasticsearch)**
+or
+**[sign-up](https://cloud.elastic.co/registration?elektra=en-ess-sign-up-page)**
+**for a free trial of Elastic Cloud**.
+
 This repository contains the official [Elasticsearch](https://www.elastic.co/products/elasticsearch) Ruby client. The [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby/tree/main/elasticsearch) gem is a complete Elasticsearch client which uses two separate libraries:
 
 * [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby) - provides the low-level code for connecting to an Elasticsearch cluster.
