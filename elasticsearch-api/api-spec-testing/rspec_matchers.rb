@@ -245,6 +245,8 @@ RSpec::Matchers.define :match_response do |pairs, test|
         unless compare_string(expected_value, actual_value, test, actual_hash)
           @mismatched_pairs.merge!(expected_key => expected_value)
         end
+      when Time
+        compare_string(expected_value.to_s, Time.new(actual_value).to_s, test, actual_hash)
       else
         unless expected_value == actual_value
           @mismatched_pairs.merge!(expected_key => expected_value)
