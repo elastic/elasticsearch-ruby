@@ -30,6 +30,7 @@ module Elasticsearch
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [String] :keep_alive Specific the time to live for the point in time (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
+      # @option arguments [Hash] :body An index_filter specified with the Query DSL
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
       #
@@ -47,7 +48,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = nil
+        body   = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
