@@ -87,7 +87,8 @@ module Elasticsearch
                 Elasticsearch::API::Inference,
                 Elasticsearch::API::Profiling,
                 Elasticsearch::API::Simulate,
-                Elasticsearch::API::Connector
+                Elasticsearch::API::Connector,
+                Elasticsearch::API::ConnectorSyncJob
     end
 
     # The serializer class
