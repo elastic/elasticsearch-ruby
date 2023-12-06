@@ -109,3 +109,6 @@
 -
   :file: 'spatial/70_script_doc_values.yml'
   :description: '*'
+-
+  :file: 'esql/60_usage.yml'
+  :description: 'Basic ESQL usage output (telemetry)'
