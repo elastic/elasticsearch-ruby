@@ -18,7 +18,7 @@
 require 'fileutils'
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
-namespace :unified_release do
+namespace :automation do
   desc 'Build gem releases and snapshots'
   task :build_gems do |_, args|
     output_dir = File.expand_path(__dir__ + '/../build')
@@ -53,7 +53,7 @@ namespace :unified_release do
 
   Example:
 
-      $ rake unified_release:bump[42.0.0]
+      $ rake automation:bump[42.0.0]
   DESC
   task :bump, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
@@ -96,7 +96,7 @@ namespace :unified_release do
 
   Example:
 
-      $ rake unified_release:bump_matrix[42.0.0]
+      $ rake automation:bump_matrix[42.0.0]
   DESC
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])

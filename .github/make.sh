@@ -132,7 +132,7 @@ docker run \
        --volume "${repo}:/usr/src/app" \
        --rm \
        "${product}" \
-       bundle exec rake unified_release:${TASK}["${args_string}"]
+       bundle exec rake automation:${TASK}["${args_string}"]
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
