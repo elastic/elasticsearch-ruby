@@ -34,34 +34,23 @@ STACK_VERSION=$VERSION
 set -euo pipefail
 
 product="elastic/elasticsearch-ruby"
-output_folder=".ci/output"
-codegen_folder=".ci/output"
-OUTPUT_DIR="$repo/${output_folder}"
-REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
 RUBY_VERSION=${RUBY_VERSION-3.1}
 WORKFLOW=${WORKFLOW-staging}
-mkdir -p "$OUTPUT_DIR"
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m VERSION ${STACK_VERSION}\033[0m"
-echo -e "\033[34;1mINFO:\033[0m OUTPUT_DIR ${OUTPUT_DIR}\033[0m"
 echo -e "\033[34;1mINFO:\033[0m RUBY_VERSION ${RUBY_VERSION}\033[0m"
 
 case $CMD in
     clean)
         echo -e "\033[36;1mTARGET: clean workspace $output_folder\033[0m"
-        rm -rf "$output_folder"
+        rm -rf "/build"
         echo -e "\033[32;1mdone.\033[0m"
         exit 0
         ;;
     assemble)
-        if [ -v $VERSION ]; then
-            echo -e "\033[31;1mTARGET: assemble -> missing version parameter\033[0m"
-            exit 1
-        fi
-        echo -e "\033[36;1mTARGET: assemble artefact $VERSION\033[0m"
-        TASK=assemble
-        TASK_ARGS=("$VERSION" "$output_folder")
+        echo -e "\033[36;1mTARGET: assemble\033[0m"
+        TASK=build_gems
         ;;
     codegen)
         TASK=codegen
@@ -74,13 +63,10 @@ case $CMD in
         fi
         echo -e "\033[36;1mTARGET: generate docs for $VERSION\033[0m"
         TASK=codegen
-        # VERSION is BRANCH here for now
-        TASK_ARGS=("$VERSION" "$codegen_folder")
         ;;
     examplesgen)
         echo -e "\033[36;1mTARGET: generate docs examples\033[0m"
         TASK='docs:generate'
-        # VERSION is BRANCH here for now
         TASK_ARGS=()
         ;;
     bump)
@@ -134,8 +120,6 @@ docker build --no-cache --build-arg BUILDER_UID="$(id -u)" --file .buildkite/Doc
 
 echo -e "\033[34;1mINFO: running $product container\033[0m"
 
-mkdir -p "$OUTPUT_DIR"
-
 # Convert ARGS to comma separated string for Rake:
 args_string="${TASK_ARGS[*]}"
 args_string="${args_string// /,}"
@@ -145,7 +129,6 @@ docker run \
        --env "RUBY_VERSION=${RUBY_VERSION}" \
        --env "WORKFLOW=${WORKFLOW}" \
        --name test-runner \
-       --volume "${REPO_BINDING}" \
        --volume "${repo}:/usr/src/app" \
        --rm \
        "${product}" \
@@ -154,16 +137,6 @@ docker run \
 # ------------------------------------------------------- #
 # Post Command tasks & checks
 # ------------------------------------------------------- #
-
-if [[ "$CMD" == "assemble" ]]; then
-	  if compgen -G ".ci/output" > /dev/null; then
-		    echo -e "\033[32;1mTARGET: successfully assembled client v$VERSION\033[0m"
-	  else
-		    echo -e "\033[31;1mTARGET: assemble failed, empty workspace!\033[0m"
-		    exit 1
-	  fi
-fi
-
 if [[ "$CMD" == "docsgen" ]]; then
     echo "TODO"
 fi
