@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-text-embeddings-pipeline',
+  body: {
+    description: 'Text embedding pipeline',
+    processors: [
+      {
+        inference: {
+          model_id: '.elser_model_2',
+          input_output: [
+            {
+              input_field: 'my_text_field',
+              output_field: 'my_tokens'
+            }
+          ]
+        }
+      }
+    ]
+  }
+)
+puts response
+----

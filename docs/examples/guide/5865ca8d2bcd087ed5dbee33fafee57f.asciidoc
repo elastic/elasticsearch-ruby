@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.explain_data_lifecycle(
+  index: '.ds-my-data-stream-*'
+)
+puts response
+----

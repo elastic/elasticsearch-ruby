@@ -1,0 +1,72 @@
+[source, ruby]
+----
+response = client.synonyms.put_synonym(
+  id: 'my-synonyms-set',
+  body: {
+    synonyms_set: [
+      {
+        id: 'test-1',
+        synonyms: 'hello, hi'
+      }
+    ]
+  }
+)
+puts response
+
+response = client.indices.create(
+  index: 'test-index',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          synonyms_filter: {
+            type: 'synonym_graph',
+            synonyms_set: 'my-synonyms-set',
+            updateable: true
+          }
+        },
+        analyzer: {
+          my_index_analyzer: {
+            type: 'custom',
+            tokenizer: 'standard',
+            filter: [
+              'lowercase'
+            ]
+          },
+          my_search_analyzer: {
+            type: 'custom',
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'synonyms_filter'
+            ]
+          }
+        }
+      }
+    },
+    mappings: {
+      properties: {
+        title: {
+          type: 'text',
+          analyzer: 'my_index_analyzer',
+          search_analyzer: 'my_search_analyzer'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.synonyms.put_synonym(
+  id: 'my-synonyms-set',
+  body: {
+    synonyms_set: [
+      {
+        id: 'test-1',
+        synonyms: 'hello, hi, howdy'
+      }
+    ]
+  }
+)
+puts response
+----

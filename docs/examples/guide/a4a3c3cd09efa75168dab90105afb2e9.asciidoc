@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.inference.get_model(
+  task_type: 'sparse_embedding',
+  model_id: 'my-elser-model'
+)
+puts response
+----

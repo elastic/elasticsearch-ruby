@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.cluster.info(
+  target: '_all'
+)
+puts response
+
+response = client.cluster.info(
+  target: 'http'
+)
+puts response
+
+response = client.cluster.info(
+  target: 'ingest'
+)
+puts response
+
+response = client.cluster.info(
+  target: 'thread_pool'
+)
+puts response
+
+response = client.cluster.info(
+  target: 'script'
+)
+puts response
+
+response = client.cluster.info(
+  target: 'http,ingest'
+)
+puts response
+----

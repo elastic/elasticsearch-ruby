@@ -1,0 +1,27 @@
+[source, ruby]
+----
+response = client.bulk(
+  index: 'mv',
+  refresh: true,
+  body: [
+    {
+      index: {}
+    },
+    {
+      a: 1,
+      b: [
+        2,
+        1
+      ]
+    },
+    {
+      index: {}
+    },
+    {
+      a: 2,
+      b: 3
+    }
+  ]
+)
+puts response
+----

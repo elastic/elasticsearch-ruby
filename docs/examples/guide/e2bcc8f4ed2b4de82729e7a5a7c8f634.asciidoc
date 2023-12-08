@@ -1,0 +1,5 @@
+[source, ruby]
+----
+response = client.synonyms.get_synonyms_sets
+puts response
+----

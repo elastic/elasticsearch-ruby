@@ -1,0 +1,17 @@
+[source, ruby]
+----
+response = client.indices.close(
+  index: 'index_1'
+)
+puts response
+
+response = client.snapshot.restore(
+  repository: 'my_repository',
+  snapshot: 'snapshot_2',
+  wait_for_completion: true,
+  body: {
+    indices: 'index_1'
+  }
+)
+puts response
+----

@@ -1,0 +1,30 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-image-index',
+  body: {
+    size: 10,
+    query: {
+      bool: {
+        must: {
+          knn: {
+            field: 'image-vector',
+            query_vector: [
+              -5,
+              9,
+              -12
+            ],
+            num_candidates: 3
+          }
+        },
+        filter: {
+          term: {
+            "file-type": 'png'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

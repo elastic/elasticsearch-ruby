@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'my-aliases',
+  body: {
+    template: {
+      aliases: {
+        "my-alias": {}
+      }
+    }
+  }
+)
+puts response
+
+response = client.indices.put_index_template(
+  name: 'my-index-template',
+  body: {
+    index_patterns: [
+      'my-index-*'
+    ],
+    composed_of: [
+      'my-aliases',
+      'my-mappings',
+      'my-settings'
+    ],
+    template: {
+      aliases: {
+        "yet-another-alias": {}
+      }
+    }
+  }
+)
+puts response
+----
