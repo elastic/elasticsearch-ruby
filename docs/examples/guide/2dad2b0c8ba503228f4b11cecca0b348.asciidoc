@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.indices.put_data_lifecycle(
+  name: 'dsl-data-stream',
+  body: {
+    data_retention: '7d'
+  }
+)
+puts response
+----

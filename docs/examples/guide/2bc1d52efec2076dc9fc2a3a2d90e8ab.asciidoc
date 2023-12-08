@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'latency',
+  body: {
+    size: 0,
+    aggregations: {
+      load_time_boxplot: {
+        boxplot: {
+          field: 'load_time',
+          execution_hint: 'high_accuracy'
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'quantized-image-index',
+  body: {
+    mappings: {
+      properties: {
+        "image-vector": {
+          type: 'dense_vector',
+          element_type: 'float',
+          dims: 2,
+          index: true,
+          index_options: {
+            type: 'int8_hnsw'
+          }
+        },
+        title: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

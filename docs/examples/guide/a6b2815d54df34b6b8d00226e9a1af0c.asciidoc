@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      properties: {
+        'my_embeddings.predicted_value' => {
+          type: 'dense_vector',
+          dims: 384
+        },
+        my_text_field: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

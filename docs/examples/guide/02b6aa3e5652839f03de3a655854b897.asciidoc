@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'my-data-stream'
+)
+puts response
+----

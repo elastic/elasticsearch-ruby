@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.search(
-  index: 'sample-01*'
-)
-puts response
-----

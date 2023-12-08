@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index-2',
+  body: {
+    mappings: {
+      properties: {
+        my_vector: {
+          type: 'dense_vector',
+          dims: 3,
+          similarity: 'dot_product'
+        }
+      }
+    }
+  }
+)
+puts response
+----

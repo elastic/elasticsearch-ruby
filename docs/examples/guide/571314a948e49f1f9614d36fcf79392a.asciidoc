@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.async_search.get(
+  id: 'FjktRGJ1Y2w1U0phLTRhZnVyeUZ2MVEbWEJyeVBPQldTV3FGZGdIeUVabXBldzo5NzA4'
+)
+puts response
+----

@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.indices.downsample(
+  index: '.ds-my-data-stream-2023.07.26-000001',
+  target_index: '.ds-my-data-stream-2023.07.26-000001-downsample',
+  body: {
+    fixed_interval: '1h'
+  }
+)
+puts response
+----
