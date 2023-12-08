@@ -20,41 +20,22 @@ require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :unified_release do
   desc 'Build gem releases and snapshots'
-  task :assemble, [:version, :output_dir] do |_, args|
-    if ENV['WORKFLOW'] == 'snapshot'
-      @zip_filename = "elasticsearch-ruby-#{args[:version]}-SNAPSHOT"
-      @version = "#{args[:version]}.#{Time.now.strftime('%Y%m%d%H%M%S')}-SNAPSHOT"
-    else
-      @version = args[:version]
-      @zip_filename = "elasticsearch-ruby-#{@version}"
-    end
+  task :build_gems do |_, args|
+    output_dir = File.expand_path(__dir__ + '/../build')
+    require 'byebug'; byebug
 
-    Rake::Task['unified_release:bump'].invoke(@version) unless @version == Elasticsearch::VERSION
 
-    build_gems(args[:output_dir])
-    create_zip_file(args[:output_dir])
-  end
-
-  def build_gems(output_dir)
-    raise ArgumentError, 'You must specify an output dir' unless output_dir
-
-    # Create dir if it doesn't exist
     dir = CURRENT_PATH.join(output_dir).to_s
     FileUtils.mkdir_p(dir) unless File.exist?(dir)
-
+    version = Elasticsearch::VERSION
     RELEASE_TOGETHER.each do |gem|
       puts '-' * 80
-      puts "Building #{gem} v#{@version} to #{output_dir}"
+      puts "Building #{gem} v#{version} to #{output_dir}"
       sh "cd #{CURRENT_PATH.join(gem)} " \
-         "&& gem build --silent -o #{gem}-#{@version}.gem && " \
+         "&& gem build --silent -o #{gem}-#{version}.gem && " \
          "mv *.gem #{CURRENT_PATH.join(output_dir)}"
     end
     puts '-' * 80
-  end
-
-  def create_zip_file(output_dir)
-    sh "cd #{CURRENT_PATH.join(output_dir)} && " \
-       "zip -r #{@zip_filename}.zip * " \
   end
 
   desc 'Generate API code'
