@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.tasks.list(
+  pretty: true,
+  detailed: true,
+  group_by: 'parents',
+  human: true,
+  actions: '*data/read/esql'
+)
+puts response
+----

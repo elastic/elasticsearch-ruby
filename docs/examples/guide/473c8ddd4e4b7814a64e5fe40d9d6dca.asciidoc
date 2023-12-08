@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.tasks.cancel(
+  task_id: '2j8UKw1bRO283PMwDugNNg:5326'
+)
+puts response
+----

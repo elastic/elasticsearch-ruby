@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.reindex(
+  body: {
+    source: {
+      index: 'k8s'
+    },
+    dest: {
+      index: 'k9s',
+      op_type: 'create'
+    }
+  }
+)
+puts response
+----

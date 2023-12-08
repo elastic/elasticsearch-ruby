@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.cluster.put_component_template(
+  name: 'my-weather-sensor-settings',
+  body: {
+    template: {
+      settings: {
+        'index.lifecycle.name' => 'my-lifecycle-policy',
+        'index.look_ahead_time' => '3h'
+      }
+    },
+    _meta: {
+      description: 'Index settings for weather sensor data'
+    }
+  }
+)
+puts response
+----

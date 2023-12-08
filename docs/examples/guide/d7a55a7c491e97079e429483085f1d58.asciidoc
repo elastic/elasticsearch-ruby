@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.put_index_template(
+  name: 'dsl-data-stream-template',
+  body: {
+    index_patterns: [
+      'dsl-data-stream*'
+    ],
+    data_stream: {},
+    priority: 500,
+    template: {
+      settings: {
+        'index.lifecycle.name' => 'pre-dsl-ilm-policy'
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.add_block(
+  index: '.ds-my-data-stream-2023.07.26-000001',
+  block: 'write'
+)
+puts response
+----

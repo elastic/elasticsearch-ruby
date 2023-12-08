@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.async_search.submit(
+  index: 'my-index-000001,cluster_one:my-index-000001,cluster_two:my-index-000001',
+  ccs_minimize_roundtrips: true,
+  body: {
+    query: {
+      match: {
+        'user.id' => 'kimchy'
+      }
+    },
+    _source: [
+      'user.id',
+      'message',
+      'http.response.status_code'
+    ]
+  }
+)
+puts response
+----
