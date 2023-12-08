@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'my-text-embeddings-pipeline',
+  body: {
+    description: 'Text embedding pipeline',
+    processors: [
+      {
+        inference: {
+          model_id: 'sentence-transformers__msmarco-minilm-l-12-v3',
+          target_field: 'my_embeddings',
+          field_map: {
+            my_text_field: 'text_field'
+          }
+        }
+      }
+    ]
+  }
+)
+puts response
+----

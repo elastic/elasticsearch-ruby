@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      _source: {
+        excludes: [
+          'content_embedding'
+        ]
+      },
+      properties: {
+        content_embedding: {
+          type: 'sparse_vector'
+        },
+        content: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

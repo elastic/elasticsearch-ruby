@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.synonyms.put_synonym_rule(
+  set_id: 'my-synonyms-set',
+  rule_id: 'test-1',
+  body: {
+    synonyms: 'hello, hi, howdy'
+  }
+)
+puts response
+----

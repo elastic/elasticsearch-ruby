@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'passage_vectors',
+  body: {
+    fields: [
+      'full_text',
+      'creation_time'
+    ],
+    _source: false,
+    knn: {
+      query_vector: [
+        0.45,
+        45
+      ],
+      field: 'paragraph.vector',
+      k: 2,
+      num_candidates: 2
+    }
+  }
+)
+puts response
+----

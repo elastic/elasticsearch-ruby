@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.indices.rollover(
+  alias: 'k9s'
+)
+puts response
+----

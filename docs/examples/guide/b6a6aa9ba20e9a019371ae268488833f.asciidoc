@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.cluster.get_settings(
+  filter_path: 'persistent.cluster.remote'
+)
+puts response
+----

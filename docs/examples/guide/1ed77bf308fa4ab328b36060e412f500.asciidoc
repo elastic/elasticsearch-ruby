@@ -1,0 +1,91 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'metrics_index',
+  body: {
+    mappings: {
+      properties: {
+        network: {
+          properties: {
+            name: {
+              type: 'keyword'
+            }
+          }
+        },
+        latency_histo: {
+          type: 'histogram'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'metrics_index',
+  id: 1,
+  refresh: true,
+  body: {
+    'network.name' => 'net-1',
+    latency_histo: {
+      values: [
+        1,
+        3,
+        8,
+        12,
+        15
+      ],
+      counts: [
+        3,
+        7,
+        23,
+        12,
+        6
+      ]
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'metrics_index',
+  id: 2,
+  refresh: true,
+  body: {
+    'network.name' => 'net-2',
+    latency_histo: {
+      values: [
+        1,
+        6,
+        8,
+        12,
+        14
+      ],
+      counts: [
+        8,
+        17,
+        8,
+        7,
+        6
+      ]
+    }
+  }
+)
+puts response
+
+response = client.search(
+  index: 'metrics_index',
+  size: 0,
+  body: {
+    aggregations: {
+      latency_buckets: {
+        histogram: {
+          field: 'latency_histo',
+          interval: 5
+        }
+      }
+    }
+  }
+)
+puts response
+----

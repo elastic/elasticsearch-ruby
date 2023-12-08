@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.indices.delete(
-  index: 'sample-01'
-)
-puts response
-----

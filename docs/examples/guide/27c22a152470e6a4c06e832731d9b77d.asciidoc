@@ -1,8 +1,0 @@
-[source, ruby]
-----
-response = client.indices.add_block(
-  index: 'sample-01',
-  block: 'write'
-)
-puts response
-----

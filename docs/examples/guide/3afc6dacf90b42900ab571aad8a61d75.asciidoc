@@ -1,0 +1,41 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'serbian_example',
+  body: {
+    settings: {
+      analysis: {
+        filter: {
+          serbian_stop: {
+            type: 'stop',
+            stopwords: '_serbian_'
+          },
+          serbian_keywords: {
+            type: 'keyword_marker',
+            keywords: [
+              'пример'
+            ]
+          },
+          serbian_stemmer: {
+            type: 'stemmer',
+            language: 'serbian'
+          }
+        },
+        analyzer: {
+          rebuilt_serbian: {
+            tokenizer: 'standard',
+            filter: [
+              'lowercase',
+              'serbian_stop',
+              'serbian_keywords',
+              'serbian_stemmer',
+              'serbian_normalization'
+            ]
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-byte-quantized-index',
+  body: {
+    mappings: {
+      properties: {
+        my_vector: {
+          type: 'dense_vector',
+          dims: 3,
+          index: true,
+          index_options: {
+            type: 'int8_hnsw'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

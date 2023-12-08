@@ -1,0 +1,75 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-index',
+  body: {
+    mappings: {
+      properties: {
+        nr: {
+          type: 'integer'
+        },
+        state: {
+          type: 'keyword'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.bulk(
+  index: 'my-index',
+  refresh: true,
+  body: [
+    {
+      index: {}
+    },
+    {
+      nr: 1,
+      state: 'started'
+    },
+    {
+      index: {}
+    },
+    {
+      nr: 2,
+      state: 'stopped'
+    },
+    {
+      index: {}
+    },
+    {
+      nr: 3,
+      state: 'N/A'
+    },
+    {
+      index: {}
+    },
+    {
+      nr: 4
+    }
+  ]
+)
+puts response
+
+response = client.search(
+  index: 'my-index',
+  filter_path: 'aggregations',
+  body: {
+    aggregations: {
+      my_top_metrics: {
+        top_metrics: {
+          metrics: {
+            field: 'state',
+            missing: 'N/A'
+          },
+          sort: {
+            nr: 'desc'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

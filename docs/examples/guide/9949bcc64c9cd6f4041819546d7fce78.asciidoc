@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      'cluster.remote.cluster_two.skip_unavailable' => true
+    }
+  }
+)
+puts response
+----

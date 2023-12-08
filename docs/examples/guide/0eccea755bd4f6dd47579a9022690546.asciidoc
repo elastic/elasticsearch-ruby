@@ -1,0 +1,18 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      cluster: {
+        remote: {
+          my_remote: {
+            mode: 'proxy',
+            proxy_address: 'my.remote.cluster.com:9443'
+          }
+        }
+      }
+    }
+  }
+)
+puts response
+----

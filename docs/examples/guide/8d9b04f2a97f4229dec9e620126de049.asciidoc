@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.cluster.put_settings(
+  body: {
+    persistent: {
+      'logger.com.amazonaws.request' => 'DEBUG'
+    }
+  }
+)
+puts response
+----
