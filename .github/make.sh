@@ -3,7 +3,7 @@
 #
 # Build entry script for elasticsearch-ruby
 #
-# Must be called: ./.ci/make.sh <target> <params>
+# Must be called: ./.github/make.sh <target> <params>
 #
 # Version: 1.1.0
 #
