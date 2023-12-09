@@ -60,10 +60,6 @@ module Elasticsearch
       elsif name == :perform_request
         # The signature for perform_request is:
         # method, path, params, body, headers, opts
-        # The last arg is opts, which shouldn't be sent when `perform_request` is called
-        # directly. Check if :endpoint is a key, which means it's the extra identifier
-        # used for OpenTelemetry.
-        args.pop if args[-1].is_a?(Hash) && args[-1][:endpoint]
         if (opaque_id = args[2]&.delete(:opaque_id))
           headers = args[4] || {}
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
