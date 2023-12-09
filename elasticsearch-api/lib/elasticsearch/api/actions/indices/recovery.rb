@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :active_only Display only those recoveries that are currently on-going
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/indices-recovery.html
         #
         def recovery(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.recovery" }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-memory.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-ml-memory.html
         #
         def get_memory_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.get_memory_stats" }

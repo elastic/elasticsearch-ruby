@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-start.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/slm-api-start.html
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "slm.start" }

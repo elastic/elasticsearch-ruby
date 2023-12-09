@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed update settings (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ml-update-datafeed.html
         #
         def update_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.update_datafeed" }

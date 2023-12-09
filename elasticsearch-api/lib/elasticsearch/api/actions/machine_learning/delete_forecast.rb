@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ml-delete-forecast.html
         #
         def delete_forecast(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.delete_forecast" }

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :index The name of the follower index that should be turned into a regular index.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-unfollow.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ccr-post-unfollow.html
         #
         def unfollow(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ccr.unfollow" }

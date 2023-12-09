@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
         #
         def list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.list" }

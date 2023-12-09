@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the job to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-delete-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/rollup-delete-job.html
         #
         def delete_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "rollup.delete_job" }

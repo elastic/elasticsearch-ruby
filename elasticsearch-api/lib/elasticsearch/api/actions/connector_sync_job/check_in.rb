@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
         #
         def check_in(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.check_in" }

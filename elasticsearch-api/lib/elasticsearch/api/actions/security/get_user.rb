@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/security-api-get-user.html
         #
         def get_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "security.get_user" }

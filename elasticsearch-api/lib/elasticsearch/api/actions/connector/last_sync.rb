@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Object with stats related to the last connector sync run. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
         #
         def last_sync(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.last_sync" }

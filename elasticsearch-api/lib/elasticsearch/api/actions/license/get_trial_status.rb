@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trial-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-trial-status.html
         #
         def get_trial_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "license.get_trial_status" }

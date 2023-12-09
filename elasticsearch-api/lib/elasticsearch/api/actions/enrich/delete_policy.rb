@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-policy-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-enrich-policy-api.html
         #
         def delete_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "enrich.delete_policy" }

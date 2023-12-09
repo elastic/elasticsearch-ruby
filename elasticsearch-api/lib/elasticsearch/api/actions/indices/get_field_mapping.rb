@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.get_field_mapping" }

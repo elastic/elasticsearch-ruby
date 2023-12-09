@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/put-dfanalytics.html
         #
         def put_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.put_data_frame_analytics" }

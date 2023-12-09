@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The enrich policy to register (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-enrich-policy-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/put-enrich-policy-api.html
         #
         def put_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "enrich.put_policy" }
