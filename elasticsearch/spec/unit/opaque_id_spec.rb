@@ -29,7 +29,7 @@ describe Elasticsearch::Client do
     it 'uses x-opaque-id on a request' do
       client.search(opaque_id: '12345')
       expect(transport).to have_received(:perform_request)
-        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => '12345' })
+        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => '12345' }, {:endpoint=>"search"})
     end
   end
 
@@ -42,7 +42,7 @@ describe Elasticsearch::Client do
     it 'uses x-opaque-id on a request' do
       expect { client.search(opaque_id: '12345') }.not_to raise_error
       expect(transport).to have_received(:perform_request)
-        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => 'elastic_cloud12345' })
+        .with('GET', '_search', {}, nil, { 'X-Opaque-Id' => 'elastic_cloud12345' }, {:endpoint=>"search"})
     end
   end
 end
