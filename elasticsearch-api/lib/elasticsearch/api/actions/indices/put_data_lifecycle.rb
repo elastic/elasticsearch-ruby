@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream lifecycle configuration that consist of the data retention
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-put-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/data-streams-put-lifecycle.html
         #
         def put_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.put_data_lifecycle" }

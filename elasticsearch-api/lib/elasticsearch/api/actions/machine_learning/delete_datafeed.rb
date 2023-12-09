@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force True if the datafeed should be forcefully deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ml-delete-datafeed.html
         #
         def delete_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.delete_datafeed" }

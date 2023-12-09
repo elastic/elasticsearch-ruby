@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ml-apis.html
         #
         def estimate_model_memory(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.estimate_model_memory" }

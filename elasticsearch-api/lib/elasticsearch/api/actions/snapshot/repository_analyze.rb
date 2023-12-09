@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :rarely_abort_writes Whether to rarely abort writes before they complete. Defaults to 'true'.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/modules-snapshots.html
         #
         def repository_analyze(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "snapshot.repository_analyze" }

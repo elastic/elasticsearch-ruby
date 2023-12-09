@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/search-search.html
       #
       def knn_search(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || "knn_search" }

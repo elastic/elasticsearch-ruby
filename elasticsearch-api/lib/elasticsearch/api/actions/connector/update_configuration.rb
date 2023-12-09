@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Mapping between field names to configuration. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
         #
         def update_configuration(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.update_configuration" }

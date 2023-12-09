@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The template definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates-v1.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/indices-templates-v1.html
         #
         def put_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "indices.put_template" }

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name the name of the autoscaling policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-delete-autoscaling-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/autoscaling-delete-autoscaling-policy.html
         #
         def delete_autoscaling_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "autoscaling.delete_autoscaling_policy" }

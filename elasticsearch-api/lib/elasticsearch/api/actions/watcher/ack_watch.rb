@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/watcher-api-ack-watch.html
         #
         def ack_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "watcher.ack_watch" }

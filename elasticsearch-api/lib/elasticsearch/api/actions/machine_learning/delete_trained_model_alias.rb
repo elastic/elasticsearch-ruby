@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :model_id The trained model where the model alias is assigned
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-trained-models-aliases.html
         #
         def delete_trained_model_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.delete_trained_model_alias" }

@@ -34,7 +34,7 @@ module Elasticsearch
         # Deprecated since version 8.3.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-trained-model.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/infer-trained-model.html
         #
         def infer_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.infer_trained_model" }

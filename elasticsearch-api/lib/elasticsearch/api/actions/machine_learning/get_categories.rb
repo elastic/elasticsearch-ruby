@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Category selection details if not provided in URI
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/ml-get-category.html
         #
         def get_categories(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "ml.get_categories" }
