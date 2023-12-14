@@ -23,13 +23,13 @@ describe 'client.connector#post' do
       'POST',
       '_connector',
       {},
-      nil,
+      {},
       {},
       { endpoint: 'connector.post' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector.post(connector_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.post(connector_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end
