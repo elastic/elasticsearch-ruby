@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_id The unique identifier of the connector to be returned.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-connector-api.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.get" }

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The stats to update for the connector sync job. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/set-connector-sync-job-stats-api.html
         #
         def update_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.update_stats" }
