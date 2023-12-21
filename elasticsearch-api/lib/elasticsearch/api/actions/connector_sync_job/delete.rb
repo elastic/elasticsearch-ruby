@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/8.12/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-connector-sync-job-api.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.delete" }
