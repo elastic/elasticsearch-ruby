@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be canceled
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cancel-connector-sync-job-api.html
         #
         def cancel(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.cancel" }

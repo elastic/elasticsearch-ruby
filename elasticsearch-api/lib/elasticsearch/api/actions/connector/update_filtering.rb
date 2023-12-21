@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body A list of connector filtering configurations. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-api.html
         #
         def update_filtering(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.update_filtering" }

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object with connector ingest pipeline configuration. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-pipeline-api.html
         #
         def update_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.update_pipeline" }

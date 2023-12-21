@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's error. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-error-api.html
         #
         def update_error(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.update_error" }

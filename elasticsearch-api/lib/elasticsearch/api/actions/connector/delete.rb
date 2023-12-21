@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_id The unique identifier of the connector to be deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-connector-api.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.delete" }
