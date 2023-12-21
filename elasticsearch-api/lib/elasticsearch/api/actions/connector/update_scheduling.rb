@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's scheduling configuration. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/enterprise-search/current/connectors.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-scheduling-api.html
         #
         def update_scheduling(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || "connector.update_scheduling" }
