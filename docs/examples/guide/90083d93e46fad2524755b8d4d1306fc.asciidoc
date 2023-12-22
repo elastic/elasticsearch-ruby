@@ -1,0 +1,14 @@
+[source, ruby]
+----
+response = client.connector_sync_job.update_stats(
+  connector_sync_job_id: 'my-connector-sync-job',
+  body: {
+    deleted_document_count: 10,
+    indexed_document_count: 20,
+    indexed_document_volume: 1000,
+    total_document_count: 2000,
+    last_seen: '2023-01-02T10:00:00Z'
+  }
+)
+puts response
+----

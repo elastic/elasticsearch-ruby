@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.connector_sync_job.cancel(
+  connector_sync_job_id: 'my-connector-sync-job-id'
+)
+puts response
+----

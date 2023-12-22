@@ -1,0 +1,60 @@
+[source, ruby]
+----
+response = client.connector.update_filtering(
+  connector_id: 'my-connector',
+  body: {
+    filtering: [
+      {
+        active: {
+          advanced_snippet: {
+            created_at: '2023-11-09T15:13:08.231Z',
+            updated_at: '2023-11-09T15:13:08.231Z',
+            value: {}
+          },
+          rules: [
+            {
+              created_at: '2023-11-09T15:13:08.231Z',
+              field: '_',
+              id: 'DEFAULT',
+              order: 0,
+              policy: 'include',
+              rule: 'regex',
+              updated_at: '2023-11-09T15:13:08.231Z',
+              value: '.*'
+            }
+          ],
+          validation: {
+            errors: [],
+            state: 'valid'
+          }
+        },
+        domain: 'DEFAULT',
+        draft: {
+          advanced_snippet: {
+            created_at: '2023-11-09T15:13:08.231Z',
+            updated_at: '2023-11-09T15:13:08.231Z',
+            value: {}
+          },
+          rules: [
+            {
+              created_at: '2023-11-09T15:13:08.231Z',
+              field: '_',
+              id: 'DEFAULT',
+              order: 0,
+              policy: 'include',
+              rule: 'regex',
+              updated_at: '2023-11-09T15:13:08.231Z',
+              value: '.*'
+            }
+          ],
+          validation: {
+            errors: [],
+            state: 'valid'
+          }
+        }
+      }
+    ]
+  }
+)
+puts response
+----

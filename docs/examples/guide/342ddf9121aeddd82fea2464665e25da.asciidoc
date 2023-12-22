@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.connector.put(
+  connector_id: 'my-connector',
+  body: {
+    index_name: 'search-google-drive',
+    name: 'My Connector',
+    service_type: 'google_drive'
+  }
+)
+puts response
+----
