@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.connector_sync_job.post(
+  body: {
+    id: 'connector-id',
+    job_type: 'full',
+    trigger_method: 'on_demand'
+  }
+)
+puts response
+----

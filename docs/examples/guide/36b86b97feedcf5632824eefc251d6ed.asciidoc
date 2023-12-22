@@ -2,7 +2,13 @@
 ----
 response = client.search(
   index: 'books',
-  body: { query: { match: { name: 'brave' } } }
+  body: {
+    query: {
+      match: {
+        name: 'brave'
+      }
+    }
+  }
 )
 puts response
 ----

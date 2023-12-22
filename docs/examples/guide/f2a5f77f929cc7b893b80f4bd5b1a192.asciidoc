@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.connector.get(
+  connector_id: 'my-connector'
+)
+puts response
+----
