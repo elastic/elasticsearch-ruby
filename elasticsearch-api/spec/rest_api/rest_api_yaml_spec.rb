@@ -29,7 +29,6 @@ describe 'Rest API YAML tests' do
     LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
     exit 1
   end
-
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
     begin
