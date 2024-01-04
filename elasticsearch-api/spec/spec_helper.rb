@@ -59,8 +59,12 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.add_formatter('documentation')
-  config.add_formatter('RspecJunitFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}-junit.xml")
-  config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
+  if defined?(JRUBY_VERSION)
+    config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-jruby-#{JRUBY_VERSION}.html")
+  else
+    config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
+  end
+  config.example_status_persistence_file_path  = "tmp/#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.txt"
   config.color_mode = :on
 end
 
