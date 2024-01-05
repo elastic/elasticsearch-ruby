@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.connector.update_error(
+  connector_id: 'my-connector',
+  body: {
+    error: 'Houston, we have a problem!'
+  }
+)
+puts response
+----

@@ -1,0 +1,23 @@
+[source, ruby]
+----
+response = client.connector.update_scheduling(
+  connector_id: 'my-connector',
+  body: {
+    scheduling: {
+      access_control: {
+        enabled: true,
+        interval: '0 10 0 * * ?'
+      },
+      full: {
+        enabled: true,
+        interval: '0 20 0 * * ?'
+      },
+      incremental: {
+        enabled: false,
+        interval: '0 30 0 * * ?'
+      }
+    }
+  }
+)
+puts response
+----

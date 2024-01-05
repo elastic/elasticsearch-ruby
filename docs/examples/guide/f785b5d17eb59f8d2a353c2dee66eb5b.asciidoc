@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.connector_sync_job.get(
+  connector_sync_job_id: 'my-connector-sync-job'
+)
+puts response
+----

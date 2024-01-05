@@ -1,0 +1,33 @@
+[source, ruby]
+----
+response = client.index(
+  index: 'my-index-000001',
+  id: 5,
+  refresh: true,
+  body: {
+    query: {
+      bool: {
+        should: [
+          {
+            match: {
+              message: {
+                query: 'Japanese art',
+                _name: 'query1'
+              }
+            }
+          },
+          {
+            match: {
+              message: {
+                query: 'Holand culture',
+                _name: 'query2'
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+)
+puts response
+----

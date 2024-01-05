@@ -5,8 +5,7 @@ response = client.cluster.put_component_template(
   body: {
     template: {
       settings: {
-        'index.lifecycle.name' => 'my-lifecycle-policy',
-        'index.look_ahead_time' => '3h'
+        'index.lifecycle.name' => 'my-lifecycle-policy'
       }
     },
     _meta: {
