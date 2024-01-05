@@ -68,6 +68,11 @@ namespace :docs do
     puts "Downloaded report for #{args[:branch] ? args[:branch] : 'main' } branch"
   end
 
+  desc 'Add files from 200-ok log'
+  task :add_files do
+    `cat log/200-ok.log | xargs git add`
+  end
+
   def json_data
     JSON.parse(File.read(SRC_FILE))
   end
