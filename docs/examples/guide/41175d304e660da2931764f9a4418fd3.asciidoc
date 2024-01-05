@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.connector.update_pipeline(
+  connector_id: 'my-connector',
+  body: {
+    pipeline: {
+      extract_binary_content: true,
+      name: 'my-connector-pipeline',
+      reduce_whitespace: true,
+      run_ml_inference: true
+    }
+  }
+)
+puts response
+----

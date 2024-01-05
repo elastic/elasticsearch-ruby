@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.indices.put_mapping(
+  index: 'my-data-stream',
+  write_index_only: true,
+  body: {
+    properties: {
+      message: {
+        type: 'text'
+      }
+    }
+  }
+)
+puts response
+----

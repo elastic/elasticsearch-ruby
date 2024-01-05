@@ -1,0 +1,19 @@
+[source, ruby]
+----
+response = client.indices.put_data_lifecycle(
+  name: 'my-weather-sensor-data-stream',
+  body: {
+    downsampling: [
+      {
+        after: '1d',
+        fixed_interval: '10m'
+      },
+      {
+        after: '7d',
+        fixed_interval: '1d'
+      }
+    ]
+  }
+)
+puts response
+----

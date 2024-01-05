@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.connector.update_name(
+  connector_id: 'my-connector',
+  body: {
+    name: 'Custom connector',
+    description: 'This is my customized connector'
+  }
+)
+puts response
+----

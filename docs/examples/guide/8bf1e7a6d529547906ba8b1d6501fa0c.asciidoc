@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.connector_sync_job.error(
+  connector_sync_job_id: 'my-connector-sync-job',
+  body: {
+    error: 'some-error'
+  }
+)
+puts response
+----
