@@ -46,7 +46,7 @@ namespace :docs do
   end
 
   desc 'Update report'
-  task :update do
+  task :update, [:branch] do |_, args|
     require 'elastic-transport'
     github_token = File.read(File.expand_path("~/.elastic/github.token"))
     transport_options = {
@@ -60,9 +60,11 @@ namespace :docs do
       transport_options:transport_options
     )
     path = '/repos/elastic/clients-flight-recorder/contents/recordings/docs/parsed-alternative-report.json'
+    path = "#{path}?ref=#{args[:branch]}" if args[:branch]
     params = {}
     response = client.perform_request('GET', path, params)
     File.write(File.expand_path('./docs/parsed_alternative_report.json', __dir__), response.body)
+    puts "Downloaded report for #{args[:branch] ? args[:branch] : 'main' } branch"
   end
 
   def json_data
