@@ -37,6 +37,6 @@ ADMIN_CLIENT = Elasticsearch::Client.new(host: HOST, transport_options: TRANSPOR
 
 RSpec.configure do |config|
   config.add_formatter('documentation')
-  config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/platinum-integration.html")
+  config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/platinum-#{ENV['RUBY_VERSION']}-manual-integration.html")
   config.color_mode = :on
 end
