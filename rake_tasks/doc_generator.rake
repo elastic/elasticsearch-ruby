@@ -43,6 +43,7 @@ namespace :docs do
       generate_docs(entry)
     end
     puts "Finished generating #{entries.length} files in #{Time.now.to_i - start_time} seconds"
+    delete_first_log_line
   end
 
   desc 'Update report'
@@ -123,7 +124,7 @@ namespace :docs do
     template.gsub(/\s+$/, '')
   end
 
-  def self.show_parameters(params)
+  def show_parameters(params)
     param_string = []
     params.each do |k, v|
       value = (is_number?(v) || is_boolean?(v)) ? v : "'#{v}'"
@@ -132,7 +133,7 @@ namespace :docs do
     param_string.join(",\n\s\s")
   end
 
-  def self.show_body(body)
+  def show_body(body)
     'body: ' +
       JSON.pretty_generate(body)
         .gsub(/\"([a-z_]+)\":/,'\\1: ') # Use Ruby 2 hash syntax
@@ -140,11 +141,11 @@ namespace :docs do
         .gsub('aggs', 'aggregations')   # Replace 'aggs' with 'aggregations' for consistency
   end
 
-  def self.is_number?(value)
+  def is_number?(value)
     Float(value) || Integer(value) rescue false
   end
 
-  def self.is_boolean?(value)
+  def is_boolean?(value)
     (['false', 'true'].include? value) ||
       value.is_a?(TrueClass) ||
       value.is_a?(FalseClass)
@@ -159,6 +160,13 @@ namespace :docs do
         ----
       SRC
     end
+  end
+
+  def delete_first_log_line
+    logfile = File.expand_path(__dir__ + '/../log/200-ok.log')
+    content = IO.readlines(logfile, chomp: true)
+    puts content.shift
+    File.write(logfile, content.first)
   end
 end
 
