@@ -1,0 +1,65 @@
+[[release_notes_8_12]]
+=== 8.12 Release notes
+
+[discrete]
+[[release_notes_8_12_0]]
+=== 8.12.0 Release notes
+
+[discrete]
+==== Client
+* Tested versions of Ruby for 8.12.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+
+[discrete]
+==== API
+
+API Changes:
+
+* `bulk` - Adds boolean `:list_executed_pipelines` parameter: Sets `list_executed_pipelines` for all incoming documents. Defaults to unset (false).
+* `indices.put_settings` - Adds boolean `:reopen` parameter: Whether to close and reopen the index to apply non-dynamic settings. If set to `true` the indices to which the settings are being applied will be closed temporarily and then reopened in order to apply the changes. The default is `false`.
+* `open_point_in_time` - Adds Hash `:body` parameter: an index_filter specified with the Query DSL.
+* `security.get_api_key` - Adds boolean `:active_only` parameter: flag to limit response to only active (not invalidated or expired) API keys.
+
+[discrete]
+===== Connectors
+
+Version 8.12 introduces the experimental https://www.elastic.co/guide/en/elasticsearch/reference/8.12/connector-apis.html[Connectors API].
+
+Use the following APIs to manage connectors:
+
+* `connector.post` - Creates a connector. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-api.html[documentation].
+* `connector.put` - Creates or updates a connector. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-api.html[documentation].
+* `connector.delete` - Deletes a connector. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-connector-api.html[documentation].
+* `connector.get` - Returns the details about a connector. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-connector-api.html[documentation].
+* `connector.list` - Lists all connectors. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/list-connector-api.html[documentation].
+* `connector.check_in` - Updates the last_seen timestamp in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/check-in-connector-api.html[documentation].
+* `connector.update_configuration` - Updates the connector configuration. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-configuration-api.html[documentation].
+* `connector.update_error` - Updates the error field in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-error-api.html[documentation].
+* `connector.update_filtering` - Updates the filtering field in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-filtering-api.html[documentation].
+* `connector.last_sync` - Updates the stats of last sync in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-last-sync-api.html[documentation].
+* `connector.update_name` - Updates the name and/or description fields in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-name-description-api.html[documentation].
+* `connector.update_pipeline` - Updates the pipeline field in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-pipeline-api.html[documentation].
+* `connector.update_scheduling` - Updates the scheduling field in the connector document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-scheduling-api.html[documentation].
+
+Use the following APIs to manage sync jobs:
+
+* `connector_sync_job.cancel` - Cancels a connector sync job. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cancel-connector-sync-job-api.html[documentation].
+* `connector_sync_job.check_in` - Checks in a connector sync job (refreshes 'last_seen'). See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/check-in-connector-sync-job-api.html[documentation].
+* `connector_sync_job.delete` - Deletes a connector sync job. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-connector-sync-job-api.html[documentation].
+* `connector_sync_job.error` - Sets an error for a connector sync job. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/set-connector-sync-job-error-api.html[documentation].
+* `connector_sync_job.get` - Returns the details about a connector sync job. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-connector-sync-job-api.html[documentation].
+* `connector_sync_job.list` - Lists all connector sync jobs. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/list-connector-sync-jobs-api.html[documentation].
+* `connector_sync_job.post` - Creates a connector sync job. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-sync-job-api.html[documentation].
+* `connector_sync_job.update_stats` - Updates the stats fields in the connector sync job document. See https://www.elastic.co/guide/en/elasticsearch/reference/8.12/set-connector-sync-job-stats-api.html[documentation].
+
+[discrete]
+===== Profiling
+New API for https://www.elastic.co/guide/en/observability/8.12/universal-profiling.html[Universal profiling].
+
+* `profiling.status` - Returns basic information about the status of Universal Profiling.
+
+
+[discrete]
+===== Simulate
+New experimental API:
+
+* `simulate.ingest` - Simulates running ingest with example documents. See: https://www.elastic.co/guide/en/elasticsearch/reference/8.12/simulate-ingest-api.html
