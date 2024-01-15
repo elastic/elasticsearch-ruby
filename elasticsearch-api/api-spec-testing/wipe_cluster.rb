@@ -258,7 +258,7 @@ module Elasticsearch
           platinum_prefixes = [
             '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-',
             '.transform', '.deprecation', 'data-streams-mappings', '.fleet',
-            'behavioral_analytics-', 'profiling', 'elastic-connectors'
+            'behavioral_analytics-', 'profiling', 'elastic-connectors', 'ilm-history', '.slm-history'
           ].freeze
           return true if template.start_with?(*platinum_prefixes)
 
