@@ -23,10 +23,6 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Creates or updates a synonyms set
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :id The id of the synonyms set to be created or updated
         # @option arguments [Hash] :headers Custom HTTP headers

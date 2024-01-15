@@ -23,10 +23,6 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Retrieves a synonym set
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :id The name of the synonyms set to be retrieved
         # @option arguments [Integer] :from Starting offset
