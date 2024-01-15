@@ -23,10 +23,6 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Creates or updates a synonym rule in a synonym set
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :set_id The id of the synonym set to be updated with the synonym rule
         # @option arguments [String] :rule_id The id of the synonym rule to be updated or created
