@@ -27,6 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The async query ID
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
+        # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-get-api.html
