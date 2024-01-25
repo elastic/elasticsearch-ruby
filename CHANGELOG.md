@@ -1,4 +1,13 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
+
+## 8.12.1 Release notes
+
+Adds `base64` dependency
+
+base64 was added to the gemspec, since starting in Ruby 3.4.0, base64 will no longer be part of the default gems and will no longer be in the standard library.
+
+base64 is used forAPI key and Cloud ID. The dependency used to be declared in transport, but it's not needed there since the implementation using it is in this codebase.
+
 ## 8.12.0 Release notes
 
 ### Client
