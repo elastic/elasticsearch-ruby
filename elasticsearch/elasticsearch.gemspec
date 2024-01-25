@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'elastic-transport', '~> 8.3'
 
-  s.add_dependency 'elasticsearch-api', '8.12.0'
+  s.add_dependency 'elasticsearch-api', '8.12.1'
   s.add_dependency 'base64'
 
   s.add_development_dependency 'bundler'
