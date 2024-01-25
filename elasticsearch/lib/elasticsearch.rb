@@ -18,6 +18,7 @@
 require 'elasticsearch/version'
 require 'elastic/transport'
 require 'elasticsearch/api'
+require 'base64'
 
 module Elasticsearch
   NOT_ELASTICSEARCH_WARNING = 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.'.freeze
