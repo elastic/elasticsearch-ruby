@@ -15,26 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'test_helper'
+require 'spec_helper'
 
-module Elasticsearch
-  module Test
-    class XPackTextStructureFindStructureTest < Minitest::Test
-      context "XPack Text Structure: Find structure" do
-        subject { FakeClient.new }
+describe 'client.text_structure#test_grok_pattern' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_text_structure/find_structure',
+      {},
+      {},
+      {"Content-Type"=>"application/x-ndjson"},
+      { endpoint: 'text_structure.find_structure' }
+    ]
+  end
 
-        should "perform correct request" do
-          subject.expects(:perform_request).with do |method, url, params, body|
-            assert_equal('POST', method)
-            assert_equal('_text_structure/find_structure', url)
-            assert_equal(params, {})
-            assert_equal(body, {})
-            true
-          end.returns(FakeResponse.new)
-
-          subject.text_structure.find_structure(body: {})
-        end
-      end
-    end
+  it 'performs the request' do
+    expect(client_double.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response
   end
 end
