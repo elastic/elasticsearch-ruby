@@ -23,10 +23,13 @@ module Elasticsearch
     module WipeCluster8
       PRESERVE_ILM_POLICY_IDS = [
         'ilm-history-ilm-policy', 'slm-history-ilm-policy', 'watch-history-ilm-policy',
-        'ml-size-based-ilm-policy', 'logs', 'metrics', 'synthetics', '7-days-default',
-        '30-days-default', '90-days-default', '180-days-default', '365-days-default',
-        '.fleet-actions-results-ilm-policy', '.deprecation-indexing-ilm-policy',
-        'watch-history-ilm-policy-16', '.monitoring-8-ilm-policy'
+        'watch-history-ilm-policy-16', 'ml-size-based-ilm-policy', 'logs', 'metrics', 'profiling',
+        'synthetics', '7-days-default', '30-days-default', '90-days-default', '180-days-default',
+        '365-days-default', '.fleet-files-ilm-policy', '.fleet-file-data-ilm-policy',
+        '.fleet-actions-results-ilm-policy', '.fleet-file-fromhost-data-ilm-policy',
+        '.fleet-file-fromhost-meta-ilm-policy', '.fleet-file-tohost-data-ilm-policy',
+        '.fleet-file-tohost-meta-ilm-policy', '.deprecation-indexing-ilm-policy',
+        '.monitoring-8-ilm-policy', 'behavioral_analytics-events-default_policy'
       ].freeze
 
       PLATINUM_TEMPLATES = [
@@ -37,9 +40,7 @@ module Elasticsearch
         'synthetics', 'synthetics-settings', 'synthetics-mappings',
         '.snapshot-blob-cache', '.deprecation-indexing-template',
         '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-        'behavioral_analytics-events-mappings', 'behavioral_analytics-events-settings',
-        'security-index-template', 'data-streams-mappings', 'ecs@dynamic_templates',
-        'search-acl-filter'
+        'security-index-template', 'data-streams-mappings', 'search-acl-filter'
       ].freeze
 
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
@@ -51,6 +52,13 @@ module Elasticsearch
         check_for_unexpectedly_recreated_objects(client)
       end
 
+      def self.create_xpack_rest_user(client)
+        client.security.put_user(
+          username: 'x_pack_rest_user',
+          body: { password: 'x-pack-test-password', roles: ['superuser'] }
+        )
+      end
+
       class << self
         private
 
@@ -58,7 +66,7 @@ module Elasticsearch
           read_plugins(client)
           if @has_rollups
             wipe_rollup_jobs(client)
-            wait_for_pending_rollup_tasks(client)
+            # wait_for_pending_rollup_tasks(client)
           end
           delete_all_slm_policies(client)
           wipe_searchable_snapshot_indices(client) if @has_xpack
@@ -71,12 +79,13 @@ module Elasticsearch
             clear_ml_jobs(client)
             clear_datafeeds(client)
             delete_data_frame_analytics(client)
-            delete_filters(client)
-            clear_transforms(client)
+            clear_ml_filters(client)
           end
           delete_all_ilm_policies(client) if @has_ilm
           delete_all_follow_patterns(client) if @has_ccr
           delete_all_node_shutdown_metadata(client)
+          clear_tasks(client)
+          clear_transforms(client)
           wipe_calendars(client)
         end
 
@@ -86,7 +95,7 @@ module Elasticsearch
 
         def check_for_unexpectedly_recreated_objects(client)
           unexpected_ilm_policies = client.ilm.get_lifecycle
-          unexpected_ilm_policies.reject! { |k, _| PRESERVE_ILM_POLICY_IDS.include? k }
+          unexpected_ilm_policies.reject! { |k, _| preserve_policy?(k) }
           unless unexpected_ilm_policies.empty?
             logger.info(
               "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
@@ -97,12 +106,12 @@ module Elasticsearch
           templates = client.indices.get_index_template
           unexpected_templates = templates['index_templates'].reject do |t|
             # reject platinum templates
-            PLATINUM_TEMPLATES.include? t['name']
+            platinum_template?(t['name'])
           end.map { |t| t['name'] } # only keep the names
           legacy_templates = client.indices.get_template
-          unexpected_templates << legacy_templates.keys.reject { |t| PLATINUM_TEMPLATES.include? t }
+          unexpected_templates << legacy_templates.keys.reject { |t| platinum_template?(t) }
 
-          unless unexpected_templates.empty?
+          unless unexpected_templates.reject(&:empty?).empty?
             logger.info(
               "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
             )
@@ -136,19 +145,19 @@ module Elasticsearch
 
         def wait_for_pending_rollup_tasks(client)
           filter = 'xpack/rollup/job'
+          start_time = Time.now.to_i
+          count = 0
           loop do
             results = client.cat.tasks(detailed: true).split("\n")
-            count = 0
 
-            time = Time.now.to_i
             results.each do |task|
-              next if task.empty?
+              next if task.empty? || skippable_task?(task) || task.include?(filter)
 
-              logger.debug("Pending task: #{task}")
-              count += 1 if task.include?(filter)
+              count += 1
             end
-            break unless count.positive? && Time.now.to_i < (time + 30)
+            break unless count.positive? && Time.now.to_i < (start_time + 1)
           end
+          logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def delete_all_slm_policies(client)
@@ -229,7 +238,7 @@ module Elasticsearch
           # Always check for legacy templates
           templates = client.indices.get_template
           templates.each do |name, _|
-            next if platinum_template? name
+            next if platinum_template?(name)
 
             begin
               client.indices.delete_template(name: name)
@@ -240,35 +249,51 @@ module Elasticsearch
         end
 
         def platinum_template?(template)
+          return true if template.include?('@')
+
           platinum_prefixes = [
-            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
-            'data-streams-mappings', 'elastic-connectors'
+            '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-',
+            '.transform', '.deprecation', 'data-streams-mappings', '.fleet',
+            'behavioral_analytics-', 'profiling', 'elastic-connectors', 'ilm-history', '.slm-history'
           ].freeze
-          platinum_prefixes.map { |a| return true if (a.include?(template) || template.start_with?(a)) }
+          return true if template.start_with?(*platinum_prefixes)
 
           PLATINUM_TEMPLATES.include? template
         end
 
-        def wait_for_cluster_tasks(client)
-          time = Time.now.to_i
-          count = 0
+        def preserve_policy?(policy)
+          PRESERVE_ILM_POLICY_IDS.include?(policy) || policy.include?('@')
+        end
 
+        def wait_for_cluster_tasks(client)
+          start_time = Time.now.to_i
+          count = 0
           loop do
             results = client.cluster.pending_tasks
             results['tasks'].each do |task|
-              next if task.empty?
+              next if task.empty? || skippable_task?(task)
 
-              logger.debug "Pending cluster task: #{task}"
               count += 1
             end
-            break unless count.positive? && Time.now.to_i < (time + 10)
+            break unless count.positive? && Time.now.to_i < (start_time + 5)
+          end
+          logger.debug("Waited for #{count} pending cluster tasks for #{Time.now.to_i - start_time}s.") if count.positive?
+        end
+
+        def skippable_task?(task)
+          names = ['health-node', 'cluster:monitor/tasks/lists', 'create-index-template-v2',
+                   'remove-component-template']
+          if task.is_a?(String)
+            names.select { |n| task.match? n }.any?
+          elsif task.is_a?(Hash)
+            names.select { |n| task['source'].match? n }.any?
           end
         end
 
         def delete_all_ilm_policies(client)
           policies = client.ilm.get_lifecycle
           policies.each do |policy|
-            client.ilm.delete_lifecycle(policy: policy[0]) unless PRESERVE_ILM_POLICY_IDS.include? policy[0]
+            client.ilm.delete_lifecycle(policy: policy[0]) unless preserve_policy?(policy[0])
           end
         end
 
@@ -292,13 +317,6 @@ module Elasticsearch
           patterns['patterns'].each do |pattern|
             client.cross_cluster_replication.delete_auto_follow_pattern(name: pattern)
           end
-        end
-
-        def create_xpack_rest_user(client)
-          client.security.put_user(
-            username: 'x_pack_rest_user',
-            body: { password: 'x-pack-test-password', roles: ['superuser'] }
-          )
         end
 
         def clear_roles(client)
@@ -376,13 +394,6 @@ module Elasticsearch
           end
         end
 
-        def wipe_calendars(client)
-          calendars = client.ml.get_calendars(calendar_id: '_all')['calendars']
-          calendars.each do |calendar|
-            client.ml.delete_calendar(calendar_id: calendar['calendar_id'])
-          end
-        end
-
         def delete_data_frame_analytics(client)
           dfs = client.ml.get_data_frame_analytics
           return unless dfs['data_frame_analytics']
@@ -392,10 +403,10 @@ module Elasticsearch
           end
         end
 
-        def delete_filters(client)
-          filters = client.ml.get_filters
-          filters['filters'].each do |filter|
-            client.ml.delete_filter(filter_id: filter['filter_id'])
+        def wipe_calendars(client)
+          calendars = client.ml.get_calendars(calendar_id: '_all')['calendars']
+          calendars.each do |calendar|
+            client.ml.delete_calendar(calendar_id: calendar['calendar_id'])
           end
         end
       end
