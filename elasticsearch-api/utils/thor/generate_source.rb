@@ -23,7 +23,7 @@ require 'multi_json'
 require 'coderay'
 require 'pry'
 require_relative 'generator/files_helper'
-require_relative '../endpoint_spec'
+require_relative './endpoint_spec'
 
 module Elasticsearch
   module API
