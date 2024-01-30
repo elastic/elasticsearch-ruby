@@ -29,11 +29,11 @@ steps:
           skip: true
         # Compatibility tests for 8.x:
         - with:
-            stack_version: "8.10-SNAPSHOT"
+            stack_version: "8.12-SNAPSHOT"
             suite: "free"
             ruby: "3.2"
         - with:
-            stack_version: "8.10-SNAPSHOT"
+            stack_version: "8.12-SNAPSHOT"
             suite: "platinum"
             ruby: "3.2"
     command: ./.buildkite/run-tests.sh
