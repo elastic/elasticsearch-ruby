@@ -175,6 +175,8 @@ module Elasticsearch
         ].freeze
 
         def xpack_template?(template)
+          return true if template.include?('@')
+
           xpack_prefixes = [
             '.monitoring', '.watch', '.triggered-watches', '.data-frame', '.ml-', '.transform',
             'data-streams-mappings', 'elastic-connectors'
