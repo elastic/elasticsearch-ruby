@@ -88,15 +88,6 @@ module Elasticsearch
         BuildHashHelper.add_hash(@build_hash)
       end
 
-      # Create the hierarchy of directories based on API namespaces
-      #
-      def create_directories(key, value)
-        return if value['documentation']
-
-        empty_directory @output.join(key)
-        create_directory_hierarchy * value.to_a.first
-      end
-
       def docs_helper(name, info)
         info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
         info['type'] = 'Integer' if info['type'] == 'int' # Rename 'int' to 'Integer'
