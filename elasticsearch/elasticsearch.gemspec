@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'base64'
 
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'byebug' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
+  s.add_development_dependency 'debug' unless defined?(JRUBY_VERSION)
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
