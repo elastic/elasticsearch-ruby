@@ -23,6 +23,7 @@ require 'multi_json'
 require 'coderay'
 require 'pry'
 require_relative 'generator/build_hash_helper'
+require_relative 'generator/docs_helper'
 require_relative 'generator/files_helper'
 require_relative './endpoint_spec'
 
@@ -42,6 +43,7 @@ module Elasticsearch
       namespace 'code'
       include Thor::Actions
       include EndpointSpecifics
+      include DocsHelper
 
       desc 'generate', 'Generate source code and tests from the REST API JSON specification'
       method_option :verbose, type: :boolean, default: false,  desc: 'Output more information'
@@ -65,66 +67,22 @@ module Elasticsearch
         FilesHelper.files.each do |filepath|
           @spec = EndpointSpec.new(filepath)
           say_status 'json', @spec.path, :yellow
-
           # Don't generate code for internal APIs:
           next if @spec.module_namespace.flatten.first == '_internal'
 
           path_to_file = output.join(@spec.module_namespace.join('/')).join("#{@spec.method_name}.rb")
           dir = output.join(@spec.module_namespace.join('/'))
-
           empty_directory(dir, verbose: false)
 
           # Write the file with the ERB template:
           template('templates/method.erb', path_to_file, force: true)
 
+          # Optionals:
           print_source_code(path_to_file) if options[:verbose]
-
           generate_tests if options[:tests]
-
-          puts
         end
-
         run_rubocop
         BuildHashHelper.add_hash(@build_hash)
-      end
-
-      def docs_helper(name, info)
-        info['type'] = 'String' if info['type'] == 'enum' # Rename 'enums' to 'strings'
-        info['type'] = 'Integer' if info['type'] == 'int' # Rename 'int' to 'Integer'
-        tipo = info['type'] ? info['type'].capitalize : 'String'
-        description = info['description'] ? info['description'].strip : '[TODO]'
-        options = info['options'] ? "(options: #{info['options'].join(', ').strip})" : nil
-        required = info['required'] ? '(*Required*)' : ''
-        deprecated = info['deprecated'] ? '*Deprecated*' : ''
-        optionals = [required, deprecated, options].join(' ').strip
-
-        "# @option arguments [#{tipo}] :#{name} #{description} #{optionals}\n"
-      end
-
-      def stability_doc_helper(stability)
-        return if stability == 'stable'
-
-        if stability == 'experimental'
-          <<~MSG
-            # This functionality is Experimental and may be changed or removed
-            # completely in a future release. Elastic will take a best effort approach
-            # to fix any issues, but experimental features are not subject to the
-            # support SLA of official GA features.
-          MSG
-        elsif stability == 'beta'
-          <<~MSG
-            # This functionality is in Beta and is subject to change. The design and
-            # code is less mature than official GA features and is being provided
-            # as-is with no warranties. Beta features are not subject to the support
-            # SLA of official GA features.
-          MSG
-        else
-          <<~MSG
-            # This functionality is subject to potential breaking changes within a
-            # minor version, meaning that your referencing code may break when this
-            # library is upgraded.
-          MSG
-        end
       end
 
       def generate_tests

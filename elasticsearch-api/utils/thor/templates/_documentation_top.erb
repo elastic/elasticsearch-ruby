@@ -25,12 +25,12 @@
 <%= '  '*(@spec.namespace_depth+3) %>#
 <%- unless @spec.path_parts.nil? || @spec.path_parts.empty? %><%# URL parts -%>
   <%- @spec.path_parts.each do |name, info| -%>
-    <%= docs_helper(name, info) -%>
+    <%= docs(name, info) -%>
   <%- end -%>
 <%- end -%><%# Body -%>
 <%# URL parameters -%>
 <%- @spec.params.each do |name, info| -%>
-  <%= docs_helper(name, info) unless (!@spec.path_parts.empty? && @spec.path_parts.keys.include?(name)) -%>
+  <%= docs(name, info) unless (!@spec.path_parts.empty? && @spec.path_parts.keys.include?(name)) -%>
 <%- end -%>
 # @option arguments [Hash] :headers Custom HTTP headers
 <%- if @spec.body -%>
