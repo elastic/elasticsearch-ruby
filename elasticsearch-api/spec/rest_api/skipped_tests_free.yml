@@ -32,6 +32,12 @@
   :file: 'cluster.desired_nodes/10_basic.yml'
   :description: 'Test update desired nodes is idempotent with different order'
 -
+  :file: 'cluster.desired_nodes/10_basic.yml'
+  :description: 'Test node version must be at least the current master version'
+-
+  :file: 'cluster.desired_nodes/10_basic.yml'
+  :description: 'Test node version must have content'
+-
   :file: 'search.vectors/40_knn_search.yml'
   :description: 'Direct kNN queries are disallowed'
 -
