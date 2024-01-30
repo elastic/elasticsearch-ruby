@@ -22,37 +22,40 @@ module Elasticsearch
   module API
     # Helper with file related methods for code generation
     module FilesHelper
+
       PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
       SRC_PATH   = File.join(PROJECT_PATH, '..', '..', '..', 'tmp/rest-api-spec/api/')
       OUTPUT_DIR = '../../elasticsearch-api/lib/elasticsearch/api/actions'.freeze
       TESTS_DIRECTORY = "#{PROJECT_PATH}/../../../tmp/rest-api-spec/test/free".freeze
 
-      # Only get JSON files and remove hidden files
-      def self.files
-        json_files = Dir.entries(SRC_PATH)
+      class << self
+        # Only get JSON files and remove hidden files
+        def files
+          json_files = Dir.entries(SRC_PATH)
 
-        json_files.reject do |file|
-          File.extname(file) != '.json' ||
-            File.basename(file) == '_common.json'
-        end.map { |file| "#{SRC_PATH}#{file}" }
-      end
+          json_files.reject do |file|
+            File.extname(file) != '.json' ||
+              File.basename(file) == '_common.json'
+          end.map { |file| "#{SRC_PATH}#{file}" }
+        end
 
-      # Path to directory to copy generated files
-      def self.output_dir
-        Pathname(OUTPUT_DIR)
-      end
+        # Path to directory to copy generated files
+        def output_dir
+          Pathname(OUTPUT_DIR)
+        end
 
-      def self.documentation_url(documentation_url)
-        branch = `git rev-parse --abbrev-ref HEAD`
-        return documentation_url.gsub(/\/(master|main)\//, "/current/") if branch == "main\n"
+        def documentation_url(documentation_url)
+          branch = `git rev-parse --abbrev-ref HEAD`
+          return documentation_url.gsub(/\/(master|main)\//, "/current/") if branch == "main\n"
 
-        regex = /([0-9]{1,2}\.[0-9x]{1,2})/
-        version = Elasticsearch::API::VERSION.match(regex)[0]
-        # TODO - How do we fix this so it doesn't depend on which branch we're running from
-        if ENV['IGNORE_VERSION']
-          documentation_url.gsub(/\/(master|main)\//, "/current/")
-        else
-          documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
+          regex = /([0-9]{1,2}\.[0-9x]{1,2})/
+          version = Elasticsearch::API::VERSION.match(regex)[0]
+          # TODO - How do we fix this so it doesn't depend on which branch we're running from
+          if ENV['IGNORE_VERSION']
+            documentation_url.gsub(/\/(master|main)\//, "/current/")
+          else
+            documentation_url.gsub(/\/(current|master|main)\//, "/#{version}/")
+          end
         end
       end
 
