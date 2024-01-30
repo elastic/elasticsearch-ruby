@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 require 'elastic-transport'
-require_relative '../../../utils/endpoint_spec'
+require_relative '../../../utils/thor/endpoint_spec'
 require_relative '../../../utils/thor/generator/files_helper'
 
 describe 'Perform request args' do
