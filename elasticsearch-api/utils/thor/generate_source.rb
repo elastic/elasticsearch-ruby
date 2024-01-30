@@ -22,6 +22,7 @@ require 'pathname'
 require 'multi_json'
 require 'coderay'
 require 'pry'
+require_relative 'generator/build_hash_helper'
 require_relative 'generator/files_helper'
 require_relative './endpoint_spec'
 
@@ -47,14 +48,10 @@ module Elasticsearch
       method_option :tests,   type: :boolean, default: false,  desc: 'Generate test files'
 
       def generate
-        @build_hash = if ENV['BUILD_HASH']
-                        File.read(File.expand_path('../../../tmp/rest-api-spec/build_hash',__dir__))
-                      else
-                        original_build_hash
-                      end
-
+        @build_hash = BuildHashHelper.build_hash
         self.class.source_root File.expand_path(__dir__)
         generate_source
+
         # -- Tree output
         print_tree if options[:verbose]
       end
@@ -88,33 +85,7 @@ module Elasticsearch
         end
 
         run_rubocop
-        add_hash
-      end
-
-      def add_hash
-        Dir.glob("#{FilesHelper.output_dir}/**/*.rb").each do |file|
-          content = File.read(file)
-          new_content = content.gsub(/(^#\sunder\sthe\sLicense.\n#)/) do |_|
-            match = Regexp.last_match
-            "#{match[1]}\n#{build_hash_comment}"
-          end
-          File.open(file, 'w') { |f| f.puts new_content }
-        end
-      end
-
-      def build_hash_comment
-        [
-          "Auto generated from build hash #{@build_hash}",
-          '@see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec',
-          ''
-        ].map { |b| "# #{b}" }.join("\n").strip
-      end
-
-      def original_build_hash
-        content = File.read("#{FilesHelper.output_dir}/info.rb")
-        return unless (match = content.match(/Auto generated from build hash ([a-f0-9]+)/))
-
-        match[1]
+        BuildHashHelper.add_hash(@build_hash)
       end
 
       # Create the hierarchy of directories based on API namespaces
