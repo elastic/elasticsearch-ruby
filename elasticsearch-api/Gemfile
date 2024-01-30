@@ -30,6 +30,6 @@ group :development do
   if defined?(JRUBY_VERSION)
     gem 'pry-nav'
   else
-    gem 'pry-byebug'
+    gem 'debug'
   end
 end

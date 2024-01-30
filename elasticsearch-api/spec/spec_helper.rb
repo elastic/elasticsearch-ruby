@@ -22,7 +22,7 @@ end
 if defined?(JRUBY_VERSION)
   require 'pry-nav'
 else
-  require 'pry-byebug'
+  require 'debug'
 end
 require 'yaml'
 require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
