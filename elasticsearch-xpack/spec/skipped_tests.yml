@@ -37,3 +37,6 @@
 -
   :file: 'ml/categorization_agg.yml'
   :description: 'Test categorization aggregation with poor settings'
+-
+  :file: 'data_stream/80_resolve_index_data_streams.yml'
+  :description: 'Resolve index with hidden and closed indices'
