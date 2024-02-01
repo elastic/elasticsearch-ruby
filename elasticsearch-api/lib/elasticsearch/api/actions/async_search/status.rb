@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves the status of a previously submitted async search request given its ID.
         #
         # @option arguments [String] :id The async search ID
+        # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
@@ -49,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "_async_search/status/#{Utils.__listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
