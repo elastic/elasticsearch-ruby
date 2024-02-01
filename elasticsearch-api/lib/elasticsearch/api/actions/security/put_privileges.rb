@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-privileges.html
         #
         def put_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.put_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.put_privileges' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -41,7 +41,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_security/privilege"
+          path   = '_security/privilege'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

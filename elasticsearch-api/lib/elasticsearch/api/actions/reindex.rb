@@ -39,7 +39,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html
       #
       def reindex(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "reindex" }
+        request_opts = { endpoint: arguments[:endpoint] || 'reindex' }
 
         raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -49,7 +49,7 @@ module Elasticsearch
         body   = arguments.delete(:body)
 
         method = Elasticsearch::API::HTTP_POST
-        path   = "_reindex"
+        path   = '_reindex'
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

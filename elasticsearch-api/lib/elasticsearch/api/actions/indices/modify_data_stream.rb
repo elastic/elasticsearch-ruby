@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
         #
         def modify_data_stream(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.modify_data_stream" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.modify_data_stream' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_data_stream/_modify"
+          path   = '_data_stream/_modify'
           params = {}
 
           Elasticsearch::API::Response.new(

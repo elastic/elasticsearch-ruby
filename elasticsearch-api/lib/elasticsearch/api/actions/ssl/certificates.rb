@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-ssl.html
         #
         def certificates(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ssl.certificates" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ssl.certificates' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ssl/certificates"
+          path   = '_ssl/certificates'
           params = {}
 
           Elasticsearch::API::Response.new(

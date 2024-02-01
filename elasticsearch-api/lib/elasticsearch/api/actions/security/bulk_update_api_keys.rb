@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-bulk-update-api-keys.html
         #
         def bulk_update_api_keys(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.bulk_update_api_keys" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.bulk_update_api_keys' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/api_key/_bulk_update"
+          path   = '_security/api_key/_bulk_update'
           params = {}
 
           Elasticsearch::API::Response.new(

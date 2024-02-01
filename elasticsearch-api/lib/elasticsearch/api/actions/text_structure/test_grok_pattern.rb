@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/test-grok-pattern-api.html
         #
         def test_grok_pattern(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "text_structure.test_grok_pattern" }
+          request_opts = { endpoint: arguments[:endpoint] || 'text_structure.test_grok_pattern' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -41,7 +41,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_text_structure/test_grok_pattern"
+          path   = '_text_structure/test_grok_pattern'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

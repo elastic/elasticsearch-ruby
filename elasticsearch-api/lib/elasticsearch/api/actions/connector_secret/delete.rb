@@ -34,11 +34,10 @@ module Elasticsearch
         # @see [TODO]
         #
         def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector_secret.delete" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector_secret.delete' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

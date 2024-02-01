@@ -39,11 +39,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html
         #
         def recovery(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.recovery" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.recovery' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -58,7 +57,7 @@ module Elasticsearch
           path   = if _index
                      "_cat/recovery/#{Utils.__listify(_index)}"
                    else
-                     "_cat/recovery"
+                     '_cat/recovery'
                    end
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]

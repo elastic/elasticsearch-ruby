@@ -28,7 +28,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-contexts.html
       #
       def get_script_context(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "get_script_context" }
+        request_opts = { endpoint: arguments[:endpoint] || 'get_script_context' }
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
@@ -36,7 +36,7 @@ module Elasticsearch
         body   = nil
 
         method = Elasticsearch::API::HTTP_GET
-        path   = "_script_context"
+        path   = '_script_context'
         params = {}
 
         Elasticsearch::API::Response.new(

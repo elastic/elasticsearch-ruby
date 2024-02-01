@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def clone(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "snapshot.clone" }
+          request_opts = { endpoint: arguments[:endpoint] || 'snapshot.clone' }
 
-          defined_params = [:repository, :snapshot, :target_snapshot].inject({}) do |set_variables, variable|
+          defined_params = %i[repository snapshot target_snapshot].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

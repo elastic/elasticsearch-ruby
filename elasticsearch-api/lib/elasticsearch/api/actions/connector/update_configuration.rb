@@ -35,11 +35,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-configuration-api.html
         #
         def update_configuration(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector.update_configuration" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.update_configuration' }
 
-          defined_params = [:connector_id].inject({}) do |set_variables, variable|
+          defined_params = [:connector_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

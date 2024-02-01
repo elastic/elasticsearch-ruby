@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-prepare-authentication.html
         #
         def saml_prepare_authentication(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.saml_prepare_authentication" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.saml_prepare_authentication' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/saml/prepare"
+          path   = '_security/saml/prepare'
           params = {}
 
           Elasticsearch::API::Response.new(

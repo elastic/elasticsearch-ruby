@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
         #
         def put_role_mapping(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.put_role_mapping" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.put_role_mapping' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

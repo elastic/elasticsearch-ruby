@@ -33,7 +33,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-get-settings.html
         #
         def get_settings(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.get_settings" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.get_settings' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -41,7 +41,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cluster/settings"
+          path   = '_cluster/settings'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

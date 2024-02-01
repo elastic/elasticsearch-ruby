@@ -34,7 +34,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/create-connector-api.html
         #
         def post(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector.post" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.post' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_connector"
+          path   = '_connector'
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-logout.html
         #
         def oidc_logout(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.oidc_logout" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.oidc_logout' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/oidc/logout"
+          path   = '_security/oidc/logout'
           params = {}
 
           Elasticsearch::API::Response.new(

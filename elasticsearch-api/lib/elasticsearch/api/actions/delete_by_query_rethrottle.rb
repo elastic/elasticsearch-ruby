@@ -30,11 +30,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html
       #
       def delete_by_query_rethrottle(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "delete_by_query_rethrottle" }
+        request_opts = { endpoint: arguments[:endpoint] || 'delete_by_query_rethrottle' }
 
-        defined_params = [:task_id].inject({}) do |set_variables, variable|
+        defined_params = [:task_id].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 

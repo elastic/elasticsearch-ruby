@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-status.html
         #
         def get_status(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ilm.get_status" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ilm.get_status' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ilm/status"
+          path   = '_ilm/status'
           params = {}
 
           Elasticsearch::API::Response.new(

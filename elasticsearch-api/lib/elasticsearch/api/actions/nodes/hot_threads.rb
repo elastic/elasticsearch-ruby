@@ -37,11 +37,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
         #
         def hot_threads(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "nodes.hot_threads" }
+          request_opts = { endpoint: arguments[:endpoint] || 'nodes.hot_threads' }
 
-          defined_params = [:node_id].inject({}) do |set_variables, variable|
+          defined_params = [:node_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -56,7 +55,7 @@ module Elasticsearch
           path   = if _node_id
                      "_nodes/#{Utils.__listify(_node_id)}/hot_threads"
                    else
-                     "_nodes/hot_threads"
+                     '_nodes/hot_threads'
                    end
           params = Utils.process_params(arguments)
 

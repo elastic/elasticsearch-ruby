@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-invalidate.html
         #
         def saml_invalidate(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.saml_invalidate" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.saml_invalidate' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/saml/invalidate"
+          path   = '_security/saml/invalidate'
           params = {}
 
           Elasticsearch::API::Response.new(

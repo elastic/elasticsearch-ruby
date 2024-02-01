@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-start.html
         #
         def start(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.start" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.start' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_watcher/_start"
+          path   = '_watcher/_start'
           params = {}
 
           Elasticsearch::API::Response.new(

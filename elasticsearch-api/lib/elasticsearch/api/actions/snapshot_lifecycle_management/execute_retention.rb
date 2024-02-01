@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
         #
         def execute_retention(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "slm.execute_retention" }
+          request_opts = { endpoint: arguments[:endpoint] || 'slm.execute_retention' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_slm/_execute_retention"
+          path   = '_slm/_execute_retention'
           params = {}
 
           Elasticsearch::API::Response.new(

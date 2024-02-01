@@ -37,11 +37,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html
         #
         def aliases(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.aliases" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.aliases' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -56,7 +55,7 @@ module Elasticsearch
           path   = if _name
                      "_cat/aliases/#{Utils.__listify(_name)}"
                    else
-                     "_cat/aliases"
+                     '_cat/aliases'
                    end
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]

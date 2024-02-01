@@ -38,11 +38,10 @@ module Elasticsearch
         # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/cat-dfanalytics.html
         #
         def ml_data_frame_analytics(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.ml_data_frame_analytics" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_data_frame_analytics' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
           path   = if _id
                      "_cat/ml/data_frame/analytics/#{Utils.__listify(_id)}"
                    else
-                     "_cat/ml/data_frame/analytics"
+                     '_cat/ml/data_frame/analytics'
                    end
           params = Utils.process_params(arguments)
 

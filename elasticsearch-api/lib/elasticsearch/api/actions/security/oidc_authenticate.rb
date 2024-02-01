@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-authenticate.html
         #
         def oidc_authenticate(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.oidc_authenticate" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.oidc_authenticate' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/oidc/authenticate"
+          path   = '_security/oidc/authenticate'
           params = {}
 
           Elasticsearch::API::Response.new(

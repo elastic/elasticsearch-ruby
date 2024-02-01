@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-policy.html
         #
         def get_autoscaling_policy(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "autoscaling.get_autoscaling_policy" }
+          request_opts = { endpoint: arguments[:endpoint] || 'autoscaling.get_autoscaling_policy' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

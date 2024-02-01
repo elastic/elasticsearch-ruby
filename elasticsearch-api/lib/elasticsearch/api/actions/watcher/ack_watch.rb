@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
         #
         def ack_watch(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.ack_watch" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.ack_watch' }
 
-          defined_params = [:watch_id, :action_id].inject({}) do |set_variables, variable|
+          defined_params = %i[watch_id action_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

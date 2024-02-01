@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html#grok-processor-rest-get
         #
         def processor_grok(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ingest.processor_grok" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ingest.processor_grok' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ingest/processor/grok"
+          path   = '_ingest/processor/grok'
           params = {}
 
           Elasticsearch::API::Response.new(

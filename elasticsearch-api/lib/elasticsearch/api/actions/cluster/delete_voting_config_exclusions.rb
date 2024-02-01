@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
         #
         def delete_voting_config_exclusions(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.delete_voting_config_exclusions" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.delete_voting_config_exclusions' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_cluster/voting_config_exclusions"
+          path   = '_cluster/voting_config_exclusions'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

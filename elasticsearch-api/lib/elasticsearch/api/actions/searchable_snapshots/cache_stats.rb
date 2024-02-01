@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
         #
         def cache_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "searchable_snapshots.cache_stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.cache_stats' }
 
-          defined_params = [:node_id].inject({}) do |set_variables, variable|
+          defined_params = [:node_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -53,7 +52,7 @@ module Elasticsearch
           path   = if _node_id
                      "_searchable_snapshots/#{Utils.__listify(_node_id)}/cache/stats"
                    else
-                     "_searchable_snapshots/cache/stats"
+                     '_searchable_snapshots/cache/stats'
                    end
           params = {}
 

@@ -45,11 +45,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-vector-tile-api.html
       #
       def search_mvt(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "search_mvt" }
+        request_opts = { endpoint: arguments[:endpoint] || 'search_mvt' }
 
-        defined_params = [:index, :field, :zoom, :x, :y].inject({}) do |set_variables, variable|
+        defined_params = %i[index field zoom x y].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 

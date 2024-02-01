@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-synonyms-sets.html
         #
         def get_synonyms_sets(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "synonyms.get_synonyms_sets" }
+          request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonyms_sets' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_synonyms"
+          path   = '_synonyms'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

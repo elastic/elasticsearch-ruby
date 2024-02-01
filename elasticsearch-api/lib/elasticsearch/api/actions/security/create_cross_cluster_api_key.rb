@@ -34,7 +34,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-cross-cluster-api-key.html
         #
         def create_cross_cluster_api_key(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.create_cross_cluster_api_key" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.create_cross_cluster_api_key' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/cross_cluster/api_key"
+          path   = '_security/cross_cluster/api_key'
           params = {}
 
           Elasticsearch::API::Response.new(

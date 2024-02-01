@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
         #
         def change_password(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.change_password" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.change_password' }
 
-          defined_params = [:username].inject({}) do |set_variables, variable|
+          defined_params = [:username].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -53,7 +52,7 @@ module Elasticsearch
           path   = if _username
                      "_security/user/#{Utils.__listify(_username)}/_password"
                    else
-                     "_security/user/_password"
+                     '_security/user/_password'
                    end
           params = Utils.process_params(arguments)
 

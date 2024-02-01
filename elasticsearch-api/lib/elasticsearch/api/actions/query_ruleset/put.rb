@@ -35,11 +35,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-ruleset.html
         #
         def put(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "query_ruleset.put" }
+          request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.put' }
 
-          defined_params = [:ruleset_id].inject({}) do |set_variables, variable|
+          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

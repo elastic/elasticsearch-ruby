@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
         #
         def validate_detector(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.validate_detector" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.validate_detector' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/_validate/detector"
+          path   = '_ml/anomaly_detectors/_validate/detector'
           params = {}
 
           Elasticsearch::API::Response.new(

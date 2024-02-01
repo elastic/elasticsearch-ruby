@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
         #
         def usage(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "xpack.usage" }
+          request_opts = { endpoint: arguments[:endpoint] || 'xpack.usage' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -38,7 +38,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_xpack/usage"
+          path   = '_xpack/usage'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

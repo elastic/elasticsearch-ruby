@@ -35,7 +35,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-query-rulesets.html
         #
         def list(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "query_ruleset.list" }
+          request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.list' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -43,7 +43,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_query_rules"
+          path   = '_query_rules'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

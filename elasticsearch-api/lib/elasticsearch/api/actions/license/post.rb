@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-license.html
         #
         def post(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "license.post" }
+          request_opts = { endpoint: arguments[:endpoint] || 'license.post' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_license"
+          path   = '_license'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

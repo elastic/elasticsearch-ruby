@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-accounts.html
         #
         def get_service_accounts(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_service_accounts" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_service_accounts' }
 
-          defined_params = [:namespace, :service].inject({}) do |set_variables, variable|
+          defined_params = %i[namespace service].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -54,7 +53,7 @@ module Elasticsearch
                    elsif _namespace
                      "_security/service/#{Utils.__listify(_namespace)}"
                    else
-                     "_security/service"
+                     '_security/service'
                    end
           params = {}
 

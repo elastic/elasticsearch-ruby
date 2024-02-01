@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
         #
         def stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ccr.stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ccr.stats' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ccr/stats"
+          path   = '_ccr/stats'
           params = {}
 
           Elasticsearch::API::Response.new(

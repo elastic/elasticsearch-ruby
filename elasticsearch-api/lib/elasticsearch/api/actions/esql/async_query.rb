@@ -37,7 +37,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-api.html
         #
         def async_query(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "esql.async_query" }
+          request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -47,7 +47,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_query/async"
+          path   = '_query/async'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

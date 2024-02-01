@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-license.html
         #
         def get(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "license.get" }
+          request_opts = { endpoint: arguments[:endpoint] || 'license.get' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_license"
+          path   = '_license'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

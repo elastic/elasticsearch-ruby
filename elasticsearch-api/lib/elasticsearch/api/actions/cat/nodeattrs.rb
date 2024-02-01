@@ -36,7 +36,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodeattrs.html
         #
         def nodeattrs(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.nodeattrs" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.nodeattrs' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/nodeattrs"
+          path   = '_cat/nodeattrs'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

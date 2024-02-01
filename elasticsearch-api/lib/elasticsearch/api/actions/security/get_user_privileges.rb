@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
         #
         def get_user_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_user_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_user_privileges' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/user/_privileges"
+          path   = '_security/user/_privileges'
           params = {}
 
           Elasticsearch::API::Response.new(

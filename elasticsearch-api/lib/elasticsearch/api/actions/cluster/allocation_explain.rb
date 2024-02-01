@@ -32,7 +32,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-allocation-explain.html
         #
         def allocation_explain(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.allocation_explain" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.allocation_explain' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -45,7 +45,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_cluster/allocation/explain"
+          path = '_cluster/allocation/explain'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

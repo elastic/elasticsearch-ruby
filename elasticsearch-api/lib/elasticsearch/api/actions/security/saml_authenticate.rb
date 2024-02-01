@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-authenticate.html
         #
         def saml_authenticate(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.saml_authenticate" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.saml_authenticate' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/saml/authenticate"
+          path   = '_security/saml/authenticate'
           params = {}
 
           Elasticsearch::API::Response.new(

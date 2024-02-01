@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-job.html
         #
         def delete_calendar_job(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.delete_calendar_job" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_calendar_job' }
 
-          defined_params = [:calendar_id, :job_id].inject({}) do |set_variables, variable|
+          defined_params = %i[calendar_id job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

@@ -34,16 +34,17 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cancel-connector-sync-job-api.html
         #
         def cancel(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.cancel" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.cancel' }
 
-          defined_params = [:connector_sync_job_id].inject({}) do |set_variables, variable|
+          defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError,
-                "Required argument 'connector_sync_job_id' missing" unless arguments[:connector_sync_job_id]
+          unless arguments[:connector_sync_job_id]
+            raise ArgumentError,
+                  "Required argument 'connector_sync_job_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}

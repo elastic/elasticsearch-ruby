@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
         #
         def help(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.help" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.help' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat"
+          path   = '_cat'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

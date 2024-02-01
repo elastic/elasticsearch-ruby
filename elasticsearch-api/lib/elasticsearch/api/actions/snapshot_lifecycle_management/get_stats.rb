@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-stats.html
         #
         def get_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "slm.get_stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'slm.get_stats' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_slm/stats"
+          path   = '_slm/stats'
           params = {}
 
           Elasticsearch::API::Response.new(

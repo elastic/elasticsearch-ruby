@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-grant-api-key.html
         #
         def grant_api_key(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.grant_api_key" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.grant_api_key' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -41,7 +41,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/api_key/grant"
+          path   = '_security/api_key/grant'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

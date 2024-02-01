@@ -37,7 +37,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html
         #
         def plugins(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.plugins" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.plugins' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -45,7 +45,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/plugins"
+          path   = '_cat/plugins'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

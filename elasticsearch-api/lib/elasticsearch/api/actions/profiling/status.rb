@@ -32,7 +32,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/observability/current/universal-profiling.html
         #
         def status(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "profiling.status" }
+          request_opts = { endpoint: arguments[:endpoint] || 'profiling.status' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_profiling/status"
+          path   = '_profiling/status'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

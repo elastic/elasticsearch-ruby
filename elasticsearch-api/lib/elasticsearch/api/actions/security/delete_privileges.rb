@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
         #
         def delete_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.delete_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.delete_privileges' }
 
-          defined_params = [:application, :name].inject({}) do |set_variables, variable|
+          defined_params = %i[application name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

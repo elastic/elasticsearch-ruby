@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-get-rollup-caps.html
         #
         def get_rollup_caps(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "rollup.get_rollup_caps" }
+          request_opts = { endpoint: arguments[:endpoint] || 'rollup.get_rollup_caps' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -53,7 +52,7 @@ module Elasticsearch
           path   = if _id
                      "_rollup/data/#{Utils.__listify(_id)}"
                    else
-                     "_rollup/data"
+                     '_rollup/data'
                    end
           params = {}
 

@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-template.html
         #
         def put_index_template(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.put_index_template" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.put_index_template' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

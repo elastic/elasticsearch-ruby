@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-update-settings.html
         #
         def update_settings(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.update_settings" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.update_settings' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_watcher/settings"
+          path   = '_watcher/settings'
           params = {}
 
           Elasticsearch::API::Response.new(

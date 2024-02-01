@@ -36,7 +36,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-search-applications.html
         #
         def list(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "search_application.list" }
+          request_opts = { endpoint: arguments[:endpoint] || 'search_application.list' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_application/search_application"
+          path   = '_application/search_application'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

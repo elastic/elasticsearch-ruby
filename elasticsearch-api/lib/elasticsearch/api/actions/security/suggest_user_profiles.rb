@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-suggest-user-profile.html
         #
         def suggest_user_profiles(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.suggest_user_profiles" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.suggest_user_profiles' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_security/profile/_suggest"
+          path = '_security/profile/_suggest'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

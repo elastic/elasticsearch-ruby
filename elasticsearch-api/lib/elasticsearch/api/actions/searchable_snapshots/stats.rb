@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
         #
         def stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "searchable_snapshots.stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.stats' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -50,7 +49,7 @@ module Elasticsearch
           path   = if _index
                      "#{Utils.__listify(_index)}/_searchable_snapshots/stats"
                    else
-                     "_searchable_snapshots/stats"
+                     '_searchable_snapshots/stats'
                    end
           params = Utils.process_params(arguments)
 

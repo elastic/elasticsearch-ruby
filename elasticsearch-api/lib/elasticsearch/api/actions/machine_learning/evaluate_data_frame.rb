@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
         #
         def evaluate_data_frame(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.evaluate_data_frame" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.evaluate_data_frame' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/data_frame/_evaluate"
+          path   = '_ml/data_frame/_evaluate'
           params = {}
 
           Elasticsearch::API::Response.new(

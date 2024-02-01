@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
         #
         def estimate_model_memory(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.estimate_model_memory" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.estimate_model_memory' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/_estimate_model_memory"
+          path   = '_ml/anomaly_detectors/_estimate_model_memory'
           params = {}
 
           Elasticsearch::API::Response.new(

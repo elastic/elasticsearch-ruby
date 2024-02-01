@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-service-token-caches.html
         #
         def clear_cached_service_tokens(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.clear_cached_service_tokens" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_service_tokens' }
 
-          defined_params = [:namespace, :service, :name].inject({}) do |set_variables, variable|
+          defined_params = %i[namespace service name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

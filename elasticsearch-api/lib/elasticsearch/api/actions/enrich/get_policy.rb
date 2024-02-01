@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
         #
         def get_policy(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "enrich.get_policy" }
+          request_opts = { endpoint: arguments[:endpoint] || 'enrich.get_policy' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,7 +48,7 @@ module Elasticsearch
           path   = if _name
                      "_enrich/policy/#{Utils.__listify(_name)}"
                    else
-                     "_enrich/policy"
+                     '_enrich/policy'
                    end
           params = {}
 

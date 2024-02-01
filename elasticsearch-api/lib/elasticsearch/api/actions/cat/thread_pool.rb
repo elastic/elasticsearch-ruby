@@ -39,11 +39,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html
         #
         def thread_pool(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.thread_pool" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.thread_pool' }
 
-          defined_params = [:thread_pool_patterns].inject({}) do |set_variables, variable|
+          defined_params = [:thread_pool_patterns].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -58,7 +57,7 @@ module Elasticsearch
           path   = if _thread_pool_patterns
                      "_cat/thread_pool/#{Utils.__listify(_thread_pool_patterns)}"
                    else
-                     "_cat/thread_pool"
+                     '_cat/thread_pool'
                    end
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]

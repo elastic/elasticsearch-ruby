@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-api-key-cache.html
         #
         def clear_api_key_cache(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.clear_api_key_cache" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.clear_api_key_cache' }
 
-          defined_params = [:ids].inject({}) do |set_variables, variable|
+          defined_params = [:ids].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

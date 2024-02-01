@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html
         #
         def post_feature_upgrade(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "migration.post_feature_upgrade" }
+          request_opts = { endpoint: arguments[:endpoint] || 'migration.post_feature_upgrade' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_migration/system_features"
+          path   = '_migration/system_features'
           params = {}
 
           Elasticsearch::API::Response.new(

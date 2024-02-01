@@ -34,7 +34,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/create-connector-sync-job-api.html
         #
         def post(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.post" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.post' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_connector/_sync_job"
+          path   = '_connector/_sync_job'
           params = {}
 
           Elasticsearch::API::Response.new(

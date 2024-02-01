@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html
         #
         def get_builtin_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_builtin_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_builtin_privileges' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/privilege/_builtin"
+          path   = '_security/privilege/_builtin'
           params = {}
 
           Elasticsearch::API::Response.new(

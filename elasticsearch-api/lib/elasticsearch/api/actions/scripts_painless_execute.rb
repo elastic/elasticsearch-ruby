@@ -33,7 +33,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html
       #
       def scripts_painless_execute(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "scripts_painless_execute" }
+        request_opts = { endpoint: arguments[:endpoint] || 'scripts_painless_execute' }
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
@@ -46,7 +46,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = "_scripts/painless/_execute"
+        path = '_scripts/painless/_execute'
         params = {}
 
         Elasticsearch::API::Response.new(

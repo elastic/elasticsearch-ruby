@@ -32,11 +32,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/health-api.html
       #
       def health_report(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "health_report" }
+        request_opts = { endpoint: arguments[:endpoint] || 'health_report' }
 
-        defined_params = [:feature].inject({}) do |set_variables, variable|
+        defined_params = [:feature].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -51,7 +50,7 @@ module Elasticsearch
         path   = if _feature
                    "_health_report/#{Utils.__listify(_feature)}"
                  else
-                   "_health_report"
+                   '_health_report'
                  end
         params = Utils.process_params(arguments)
 

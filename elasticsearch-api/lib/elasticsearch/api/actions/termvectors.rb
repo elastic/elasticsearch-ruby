@@ -42,11 +42,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-termvectors.html
       #
       def termvectors(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "termvectors" }
+        request_opts = { endpoint: arguments[:endpoint] || 'termvectors' }
 
-        defined_params = [:index, :id].inject({}) do |set_variables, variable|
+        defined_params = %i[index id].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -55,7 +54,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
@@ -68,11 +67,11 @@ module Elasticsearch
                  end
 
         endpoint = arguments.delete(:endpoint) || '_termvectors'
-        path   = if _index && _id
-                   "#{Utils.__listify(_index)}/_termvectors/#{Utils.__listify(_id)}"
-                 else
-                   "#{Utils.__listify(_index)}/_termvectors"
-                 end
+        path = if _index && _id
+                 "#{Utils.__listify(_index)}/_termvectors/#{Utils.__listify(_id)}"
+               else
+                 "#{Utils.__listify(_index)}/_termvectors"
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(
@@ -83,7 +82,7 @@ module Elasticsearch
       # Deprecated: Use the plural version, {#termvectors}
       #
       def termvector(arguments = {})
-        termvectors(arguments.merge endpoint: '_termvector')
+        termvectors(arguments.merge(endpoint: '_termvector'))
       end
     end
   end

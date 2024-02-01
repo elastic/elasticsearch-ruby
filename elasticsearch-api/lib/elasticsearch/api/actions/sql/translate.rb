@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html
         #
         def translate(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "sql.translate" }
+          request_opts = { endpoint: arguments[:endpoint] || 'sql.translate' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_sql/translate"
+          path   = '_sql/translate'
           params = {}
 
           Elasticsearch::API::Response.new(

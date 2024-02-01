@@ -37,11 +37,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-delete-lifecycle.html
         #
         def delete_data_lifecycle(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.delete_data_lifecycle" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_lifecycle' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
