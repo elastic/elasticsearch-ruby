@@ -36,7 +36,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-repositories.html
         #
         def repositories(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.repositories" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.repositories' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/repositories"
+          path   = '_cat/repositories'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
         #
         def get_auto_follow_pattern(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ccr.get_auto_follow_pattern" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ccr.get_auto_follow_pattern' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,7 +48,7 @@ module Elasticsearch
           path   = if _name
                      "_ccr/auto_follow/#{Utils.__listify(_name)}"
                    else
-                     "_ccr/auto_follow"
+                     '_ccr/auto_follow'
                    end
           params = {}
 

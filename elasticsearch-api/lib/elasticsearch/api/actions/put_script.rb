@@ -33,11 +33,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
       #
       def put_script(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "put_script" }
+        request_opts = { endpoint: arguments[:endpoint] || 'put_script' }
 
-        defined_params = [:id, :context].inject({}) do |set_variables, variable|
+        defined_params = %i[id context].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 

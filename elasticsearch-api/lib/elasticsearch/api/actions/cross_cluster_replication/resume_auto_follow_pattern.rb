@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-resume-auto-follow-pattern.html
         #
         def resume_auto_follow_pattern(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ccr.resume_auto_follow_pattern" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ccr.resume_auto_follow_pattern' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

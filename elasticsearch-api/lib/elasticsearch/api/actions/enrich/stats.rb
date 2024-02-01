@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api.html
         #
         def stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "enrich.stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'enrich.stats' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_enrich/_stats"
+          path   = '_enrich/_stats'
           params = {}
 
           Elasticsearch::API::Response.new(

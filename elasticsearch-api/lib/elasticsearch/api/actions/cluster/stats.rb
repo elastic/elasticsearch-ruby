@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
         #
         def stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.stats' }
 
-          defined_params = [:node_id].inject({}) do |set_variables, variable|
+          defined_params = [:node_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -51,7 +50,7 @@ module Elasticsearch
           path   = if _node_id
                      "_cluster/stats/nodes/#{Utils.__listify(_node_id)}"
                    else
-                     "_cluster/stats"
+                     '_cluster/stats'
                    end
           params = Utils.process_params(arguments)
 

@@ -36,11 +36,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html
         #
         def fielddata(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.fielddata" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.fielddata' }
 
-          defined_params = [:fields].inject({}) do |set_variables, variable|
+          defined_params = [:fields].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -55,7 +54,7 @@ module Elasticsearch
           path   = if _fields
                      "_cat/fielddata/#{Utils.__listify(_fields)}"
                    else
-                     "_cat/fielddata"
+                     '_cat/fielddata'
                    end
           params = Utils.process_params(arguments)
 

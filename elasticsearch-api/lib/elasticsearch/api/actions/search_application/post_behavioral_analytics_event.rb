@@ -37,11 +37,10 @@ module Elasticsearch
         # @see http://todo.com/tbd
         #
         def post_behavioral_analytics_event(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "search_application.post_behavioral_analytics_event" }
+          request_opts = { endpoint: arguments[:endpoint] || 'search_application.post_behavioral_analytics_event' }
 
-          defined_params = [:collection_name, :event_type].inject({}) do |set_variables, variable|
+          defined_params = %i[collection_name event_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

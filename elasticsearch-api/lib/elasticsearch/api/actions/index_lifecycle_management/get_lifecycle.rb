@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
         #
         def get_lifecycle(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ilm.get_lifecycle" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ilm.get_lifecycle' }
 
-          defined_params = [:policy].inject({}) do |set_variables, variable|
+          defined_params = [:policy].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,7 +48,7 @@ module Elasticsearch
           path   = if _policy
                      "_ilm/policy/#{Utils.__listify(_policy)}"
                    else
-                     "_ilm/policy"
+                     '_ilm/policy'
                    end
           params = {}
 

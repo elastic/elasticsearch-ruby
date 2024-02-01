@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-disable-user.html
         #
         def disable_user(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.disable_user" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.disable_user' }
 
-          defined_params = [:username].inject({}) do |set_variables, variable|
+          defined_params = [:username].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

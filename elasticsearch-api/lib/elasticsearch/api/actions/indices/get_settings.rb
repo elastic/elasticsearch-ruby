@@ -38,11 +38,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html
         #
         def get_settings(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.get_settings" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_settings' }
 
-          defined_params = [:index, :name].inject({}) do |set_variables, variable|
+          defined_params = %i[index name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -63,7 +62,7 @@ module Elasticsearch
                    elsif _name
                      "_settings/#{Utils.__listify(_name)}"
                    else
-                     "_settings"
+                     '_settings'
                    end
           params = Utils.process_params(arguments)
 

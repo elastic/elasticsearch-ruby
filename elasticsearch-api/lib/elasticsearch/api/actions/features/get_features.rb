@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-features-api.html
         #
         def get_features(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "features.get_features" }
+          request_opts = { endpoint: arguments[:endpoint] || 'features.get_features' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -38,7 +38,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_features"
+          path   = '_features'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

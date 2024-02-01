@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get-pipeline.html
         #
         def get_pipeline(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "logstash.get_pipeline" }
+          request_opts = { endpoint: arguments[:endpoint] || 'logstash.get_pipeline' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,7 +48,7 @@ module Elasticsearch
           path   = if _id
                      "_logstash/pipeline/#{Utils.__listify(_id)}"
                    else
-                     "_logstash/pipeline"
+                     '_logstash/pipeline'
                    end
           params = {}
 

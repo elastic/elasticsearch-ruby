@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
         #
         def activate_watch(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.activate_watch" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.activate_watch' }
 
-          defined_params = [:watch_id].inject({}) do |set_variables, variable|
+          defined_params = [:watch_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

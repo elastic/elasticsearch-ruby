@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
         #
         def get_data_stream(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.get_data_stream" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_stream' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -51,7 +50,7 @@ module Elasticsearch
           path   = if _name
                      "_data_stream/#{Utils.__listify(_name)}"
                    else
-                     "_data_stream"
+                     '_data_stream'
                    end
           params = Utils.process_params(arguments)
 

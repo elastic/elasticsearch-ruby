@@ -38,11 +38,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html
         #
         def allocation(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.allocation" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.allocation' }
 
-          defined_params = [:node_id].inject({}) do |set_variables, variable|
+          defined_params = [:node_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
           path   = if _node_id
                      "_cat/allocation/#{Utils.__listify(_node_id)}"
                    else
-                     "_cat/allocation"
+                     '_cat/allocation'
                    end
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]

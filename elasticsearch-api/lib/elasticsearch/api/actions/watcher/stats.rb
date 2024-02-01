@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
         #
         def stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.stats' }
 
-          defined_params = [:metric].inject({}) do |set_variables, variable|
+          defined_params = [:metric].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -50,7 +49,7 @@ module Elasticsearch
           path   = if _metric
                      "_watcher/stats/#{Utils.__listify(_metric)}"
                    else
-                     "_watcher/stats"
+                     '_watcher/stats'
                    end
           params = Utils.process_params(arguments)
 

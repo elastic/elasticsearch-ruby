@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
         #
         def info(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.info" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.info' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ml/info"
+          path   = '_ml/info'
           params = {}
 
           Elasticsearch::API::Response.new(

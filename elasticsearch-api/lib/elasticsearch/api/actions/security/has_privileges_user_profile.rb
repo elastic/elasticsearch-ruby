@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges-user-profile.html
         #
         def has_privileges_user_profile(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.has_privileges_user_profile" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.has_privileges_user_profile' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/profile/_has_privileges"
+          path   = '_security/profile/_has_privileges'
           params = {}
 
           Elasticsearch::API::Response.new(

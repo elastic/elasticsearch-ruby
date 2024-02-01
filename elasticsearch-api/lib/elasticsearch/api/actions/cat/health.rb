@@ -36,7 +36,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-health.html
         #
         def health(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.health" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.health' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/health"
+          path   = '_cat/health'
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]
 

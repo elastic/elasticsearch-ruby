@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-settings.html
         #
         def get_settings(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "watcher.get_settings" }
+          request_opts = { endpoint: arguments[:endpoint] || 'watcher.get_settings' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_watcher/settings"
+          path   = '_watcher/settings'
           params = {}
 
           Elasticsearch::API::Response.new(

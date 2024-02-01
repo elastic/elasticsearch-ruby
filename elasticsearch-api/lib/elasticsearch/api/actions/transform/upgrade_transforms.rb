@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/upgrade-transforms.html
         #
         def upgrade_transforms(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "transform.upgrade_transforms" }
+          request_opts = { endpoint: arguments[:endpoint] || 'transform.upgrade_transforms' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_transform/_upgrade"
+          path   = '_transform/_upgrade'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

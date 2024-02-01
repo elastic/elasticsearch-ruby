@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
         #
         def verify_repository(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "snapshot.verify_repository" }
+          request_opts = { endpoint: arguments[:endpoint] || 'snapshot.verify_repository' }
 
-          defined_params = [:repository].inject({}) do |set_variables, variable|
+          defined_params = [:repository].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

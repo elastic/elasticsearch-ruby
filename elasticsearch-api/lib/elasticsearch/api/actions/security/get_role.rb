@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
         #
         def get_role(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_role" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_role' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,16 +48,16 @@ module Elasticsearch
           path   = if _name
                      "_security/role/#{Utils.__listify(_name)}"
                    else
-                     "_security/role"
+                     '_security/role'
                    end
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found {
+            Utils.__rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )
-            }
+            end
           else
             Elasticsearch::API::Response.new(
               perform_request(method, path, params, body, headers, request_opts)

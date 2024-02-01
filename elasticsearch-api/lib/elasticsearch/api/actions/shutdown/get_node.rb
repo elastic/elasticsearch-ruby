@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current
         #
         def get_node(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "shutdown.get_node" }
+          request_opts = { endpoint: arguments[:endpoint] || 'shutdown.get_node' }
 
-          defined_params = [:node_id].inject({}) do |set_variables, variable|
+          defined_params = [:node_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -49,7 +48,7 @@ module Elasticsearch
           path   = if _node_id
                      "_nodes/#{Utils.__listify(_node_id)}/shutdown"
                    else
-                     "_nodes/shutdown"
+                     '_nodes/shutdown'
                    end
           params = {}
 

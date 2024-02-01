@@ -36,11 +36,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/simulate-ingest-api.html
         #
         def ingest(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "simulate.ingest" }
+          request_opts = { endpoint: arguments[:endpoint] || 'simulate.ingest' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
           path   = if _index
                      "_ingest/#{Utils.__listify(_index)}/_simulate"
                    else
-                     "_ingest/_simulate"
+                     '_ingest/_simulate'
                    end
           params = Utils.process_params(arguments)
 

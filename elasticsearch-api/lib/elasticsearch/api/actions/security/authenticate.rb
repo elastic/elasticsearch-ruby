@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
         #
         def authenticate(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.authenticate" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.authenticate' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/_authenticate"
+          path   = '_security/_authenticate'
           params = {}
 
           Elasticsearch::API::Response.new(

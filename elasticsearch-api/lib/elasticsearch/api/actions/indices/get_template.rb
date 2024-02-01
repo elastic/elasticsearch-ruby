@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-template-v1.html
         #
         def get_template(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.get_template" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_template' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -52,7 +51,7 @@ module Elasticsearch
           path   = if _name
                      "_template/#{Utils.__listify(_name)}"
                    else
-                     "_template"
+                     '_template'
                    end
           params = Utils.process_params(arguments)
 

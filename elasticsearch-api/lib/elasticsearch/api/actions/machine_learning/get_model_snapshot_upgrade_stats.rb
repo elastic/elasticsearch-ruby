@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-model-snapshot-upgrade-stats.html
         #
         def get_model_snapshot_upgrade_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.get_model_snapshot_upgrade_stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.get_model_snapshot_upgrade_stats' }
 
-          defined_params = [:job_id, :snapshot_id].inject({}) do |set_variables, variable|
+          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

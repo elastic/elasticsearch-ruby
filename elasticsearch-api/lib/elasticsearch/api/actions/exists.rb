@@ -40,11 +40,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-get.html
       #
       def exists(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "exists" }
+        request_opts = { endpoint: arguments[:endpoint] || 'exists' }
 
-        defined_params = [:index, :id].inject({}) do |set_variables, variable|
+        defined_params = %i[index id].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -65,11 +64,11 @@ module Elasticsearch
         params = Utils.process_params(arguments)
 
         Utils.__rescue_from_not_found do
-          perform_request(method, path, params, body, headers, request_opts).status == 200 ? true : false
+          perform_request(method, path, params, body, headers, request_opts).status == 200
         end
       end
 
-      alias_method :exists?, :exists
+      alias exists? exists
     end
   end
 end

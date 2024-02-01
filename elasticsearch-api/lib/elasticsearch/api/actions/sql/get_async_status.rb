@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-async-sql-search-status-api.html
         #
         def get_async_status(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "sql.get_async_status" }
+          request_opts = { endpoint: arguments[:endpoint] || 'sql.get_async_status' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

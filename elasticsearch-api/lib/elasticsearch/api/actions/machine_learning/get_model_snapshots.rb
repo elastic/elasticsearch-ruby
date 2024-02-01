@@ -38,11 +38,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
         #
         def get_model_snapshots(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.get_model_snapshots" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.get_model_snapshots' }
 
-          defined_params = [:job_id, :snapshot_id].inject({}) do |set_variables, variable|
+          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -63,11 +62,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = if _job_id && _snapshot_id
-                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}"
-                   else
-                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots"
-                   end
+          path = if _job_id && _snapshot_id
+                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}"
+                 else
+                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots"
+                 end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

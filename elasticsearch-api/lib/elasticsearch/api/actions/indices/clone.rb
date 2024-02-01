@@ -35,11 +35,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clone-index.html
         #
         def clone(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.clone" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.clone' }
 
-          defined_params = [:index, :target].inject({}) do |set_variables, variable|
+          defined_params = %i[index target].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

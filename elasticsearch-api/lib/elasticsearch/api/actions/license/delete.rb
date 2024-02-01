@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-license.html
         #
         def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "license.delete" }
+          request_opts = { endpoint: arguments[:endpoint] || 'license.delete' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_license"
+          path   = '_license'
           params = {}
 
           Elasticsearch::API::Response.new(

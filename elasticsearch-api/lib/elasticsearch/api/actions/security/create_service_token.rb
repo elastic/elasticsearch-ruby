@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-service-token.html
         #
         def create_service_token(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.create_service_token" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.create_service_token' }
 
-          defined_params = [:namespace, :service, :name].inject({}) do |set_variables, variable|
+          defined_params = %i[namespace service name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

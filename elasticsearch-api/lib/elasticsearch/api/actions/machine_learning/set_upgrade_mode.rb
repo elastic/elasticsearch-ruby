@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-set-upgrade-mode.html
         #
         def set_upgrade_mode(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.set_upgrade_mode" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.set_upgrade_mode' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/set_upgrade_mode"
+          path   = '_ml/set_upgrade_mode'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

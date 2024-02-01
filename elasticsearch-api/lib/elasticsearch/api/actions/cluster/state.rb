@@ -39,11 +39,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-state.html
         #
         def state(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.state" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.state' }
 
-          defined_params = [:metric, :index].inject({}) do |set_variables, variable|
+          defined_params = %i[metric index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -62,7 +61,7 @@ module Elasticsearch
                    elsif _metric
                      "_cluster/state/#{Utils.__listify(_metric)}"
                    else
-                     "_cluster/state"
+                     '_cluster/state'
                    end
           params = Utils.process_params(arguments)
 

@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/observability/current/universal-profiling.html
         #
         def stacktraces(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "profiling.stacktraces" }
+          request_opts = { endpoint: arguments[:endpoint] || 'profiling.stacktraces' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_profiling/stacktraces"
+          path   = '_profiling/stacktraces'
           params = {}
 
           Elasticsearch::API::Response.new(

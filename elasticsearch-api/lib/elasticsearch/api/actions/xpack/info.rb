@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
         #
         def info(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "xpack.info" }
+          request_opts = { endpoint: arguments[:endpoint] || 'xpack.info' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_xpack"
+          path   = '_xpack'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

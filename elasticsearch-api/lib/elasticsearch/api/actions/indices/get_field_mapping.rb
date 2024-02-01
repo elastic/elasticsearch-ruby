@@ -36,11 +36,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html
         #
         def get_field_mapping(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.get_field_mapping" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.get_field_mapping' }
 
-          defined_params = [:fields, :index].inject({}) do |set_variables, variable|
+          defined_params = %i[fields index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

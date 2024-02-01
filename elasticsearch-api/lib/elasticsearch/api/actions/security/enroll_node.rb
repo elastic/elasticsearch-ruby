@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-node-enrollment.html
         #
         def enroll_node(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.enroll_node" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.enroll_node' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/enroll/node"
+          path   = '_security/enroll/node'
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -40,11 +40,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
         #
         def ml_trained_models(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.ml_trained_models" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_trained_models' }
 
-          defined_params = [:model_id].inject({}) do |set_variables, variable|
+          defined_params = [:model_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -59,7 +58,7 @@ module Elasticsearch
           path   = if _model_id
                      "_cat/ml/trained_models/#{Utils.__listify(_model_id)}"
                    else
-                     "_cat/ml/trained_models"
+                     '_cat/ml/trained_models'
                    end
           params = Utils.process_params(arguments)
 

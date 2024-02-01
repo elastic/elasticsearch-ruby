@@ -28,7 +28,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
       #
       def get_script_languages(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "get_script_languages" }
+        request_opts = { endpoint: arguments[:endpoint] || 'get_script_languages' }
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
@@ -36,7 +36,7 @@ module Elasticsearch
         body   = nil
 
         method = Elasticsearch::API::HTTP_GET
-        path   = "_script_language"
+        path   = '_script_language'
         params = {}
 
         Elasticsearch::API::Response.new(

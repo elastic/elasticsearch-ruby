@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-kibana-enrollment.html
         #
         def enroll_kibana(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.enroll_kibana" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.enroll_kibana' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/enroll/kibana"
+          path   = '_security/enroll/kibana'
           params = {}
 
           Elasticsearch::API::Response.new(

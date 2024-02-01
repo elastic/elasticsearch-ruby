@@ -30,11 +30,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-trained-model-deployment-cache.html
         #
         def clear_trained_model_deployment_cache(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.clear_trained_model_deployment_cache" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.clear_trained_model_deployment_cache' }
 
-          defined_params = [:model_id].inject({}) do |set_variables, variable|
+          defined_params = [:model_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

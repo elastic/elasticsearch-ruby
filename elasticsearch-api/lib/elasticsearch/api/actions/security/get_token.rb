@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-token.html
         #
         def get_token(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_token" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_token' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/oauth2/token"
+          path   = '_security/oauth2/token'
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-revert-snapshot.html
         #
         def revert_model_snapshot(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.revert_model_snapshot" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.revert_model_snapshot' }
 
-          defined_params = [:job_id, :snapshot_id].inject({}) do |set_variables, variable|
+          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

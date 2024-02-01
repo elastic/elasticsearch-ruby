@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/graph-explore-api.html
         #
         def explore(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "graph.explore" }
+          request_opts = { endpoint: arguments[:endpoint] || 'graph.explore' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -46,7 +45,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
@@ -56,7 +55,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "#{Utils.__listify(_index)}/_graph/explore"
+          path = "#{Utils.__listify(_index)}/_graph/explore"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
         #
         def start(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ilm.start" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ilm.start' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ilm/start"
+          path   = '_ilm/start'
           params = {}
 
           Elasticsearch::API::Response.new(

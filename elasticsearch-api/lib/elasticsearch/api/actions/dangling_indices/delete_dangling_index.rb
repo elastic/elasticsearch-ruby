@@ -33,11 +33,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
         #
         def delete_dangling_index(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "dangling_indices.delete_dangling_index" }
+          request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.delete_dangling_index' }
 
-          defined_params = [:index_uuid].inject({}) do |set_variables, variable|
+          defined_params = [:index_uuid].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

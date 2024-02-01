@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-basic-status.html
         #
         def get_basic_status(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "license.get_basic_status" }
+          request_opts = { endpoint: arguments[:endpoint] || 'license.get_basic_status' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_license/basic_status"
+          path   = '_license/basic_status'
           params = {}
 
           Elasticsearch::API::Response.new(

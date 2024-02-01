@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-api-key.html
         #
         def invalidate_api_key(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.invalidate_api_key" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.invalidate_api_key' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_security/api_key"
+          path   = '_security/api_key'
           params = {}
 
           Elasticsearch::API::Response.new(

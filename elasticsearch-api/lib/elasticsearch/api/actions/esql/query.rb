@@ -37,7 +37,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-query-api.html
         #
         def query(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "esql.query" }
+          request_opts = { endpoint: arguments[:endpoint] || 'esql.query' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -47,7 +47,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_query"
+          path   = '_query'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

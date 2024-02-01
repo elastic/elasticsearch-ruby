@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-stats-api.html
         #
         def geo_ip_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ingest.geo_ip_stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ingest.geo_ip_stats' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ingest/geoip/stats"
+          path   = '_ingest/geoip/stats'
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
         #
         def has_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.has_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.has_privileges' }
 
-          defined_params = [:user].inject({}) do |set_variables, variable|
+          defined_params = [:user].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -52,7 +51,7 @@ module Elasticsearch
           path   = if _user
                      "_security/user/#{Utils.__listify(_user)}/_has_privileges"
                    else
-                     "_security/user/_has_privileges"
+                     '_security/user/_has_privileges'
                    end
           params = {}
 

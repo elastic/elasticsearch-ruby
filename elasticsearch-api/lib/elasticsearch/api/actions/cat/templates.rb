@@ -37,11 +37,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-templates.html
         #
         def templates(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.templates" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.templates' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -56,7 +55,7 @@ module Elasticsearch
           path   = if _name
                      "_cat/templates/#{Utils.__listify(_name)}"
                    else
-                     "_cat/templates"
+                     '_cat/templates'
                    end
           params = Utils.process_params(arguments)
 

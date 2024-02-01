@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonym-rule.html
         #
         def put_synonym_rule(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "synonyms.put_synonym_rule" }
+          request_opts = { endpoint: arguments[:endpoint] || 'synonyms.put_synonym_rule' }
 
-          defined_params = [:set_id, :rule_id].inject({}) do |set_variables, variable|
+          defined_params = %i[set_id rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

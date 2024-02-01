@@ -38,11 +38,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html
         #
         def shards(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.shards" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.shards' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
           path   = if _index
                      "_cat/shards/#{Utils.__listify(_index)}"
                    else
-                     "_cat/shards"
+                     '_cat/shards'
                    end
           params = Utils.process_params(arguments)
           params[:h] = Utils.__listify(params[:h]) if params[:h]

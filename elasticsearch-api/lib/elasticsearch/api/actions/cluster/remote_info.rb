@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-remote-info.html
         #
         def remote_info(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cluster.remote_info" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cluster.remote_info' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_remote/info"
+          path   = '_remote/info'
           params = {}
 
           Elasticsearch::API::Response.new(

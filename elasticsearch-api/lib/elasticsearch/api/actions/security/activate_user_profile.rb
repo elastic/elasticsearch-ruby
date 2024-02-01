@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-activate-user-profile.html
         #
         def activate_user_profile(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.activate_user_profile" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.activate_user_profile' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/profile/_activate"
+          path   = '_security/profile/_activate'
           params = {}
 
           Elasticsearch::API::Response.new(

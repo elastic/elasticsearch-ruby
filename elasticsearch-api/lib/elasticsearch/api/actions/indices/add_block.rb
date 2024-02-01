@@ -36,11 +36,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-blocks.html
         #
         def add_block(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.add_block" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.add_block' }
 
-          defined_params = [:index, :block].inject({}) do |set_variables, variable|
+          defined_params = %i[index block].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

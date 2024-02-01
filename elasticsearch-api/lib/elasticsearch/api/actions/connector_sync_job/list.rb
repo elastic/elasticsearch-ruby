@@ -38,7 +38,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-sync-jobs-api.html
         #
         def list(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "connector_sync_job.list" }
+          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.list' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -46,7 +46,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_connector/_sync_job"
+          path   = '_connector/_sync_job'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

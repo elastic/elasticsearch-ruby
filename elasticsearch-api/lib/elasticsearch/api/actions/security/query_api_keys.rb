@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-api-key.html
         #
         def query_api_keys(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.query_api_keys" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.query_api_keys' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_security/_query/api_key"
+          path = '_security/_query/api_key'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

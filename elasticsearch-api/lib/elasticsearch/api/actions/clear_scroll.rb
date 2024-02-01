@@ -35,11 +35,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
       #
       def clear_scroll(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "clear_scroll" }
+        request_opts = { endpoint: arguments[:endpoint] || 'clear_scroll' }
 
-        defined_params = [:scroll_id].inject({}) do |set_variables, variable|
+        defined_params = [:scroll_id].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -54,16 +53,16 @@ module Elasticsearch
         path   = if _scroll_id
                    "_search/scroll/#{Utils.__listify(_scroll_id)}"
                  else
-                   "_search/scroll"
+                   '_search/scroll'
                  end
         params = Utils.process_params(arguments)
 
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found {
+          Utils.__rescue_from_not_found do
             Elasticsearch::API::Response.new(
               perform_request(method, path, params, body, headers, request_opts)
             )
-          }
+          end
         else
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

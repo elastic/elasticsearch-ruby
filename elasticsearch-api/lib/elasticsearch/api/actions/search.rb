@@ -75,18 +75,17 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
       #
       def search(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "search" }
+        request_opts = { endpoint: arguments[:endpoint] || 'search' }
 
-        defined_params = [:index].inject({}) do |set_variables, variable|
+        defined_params = [:index].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
@@ -96,11 +95,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path   = if _index
-                   "#{Utils.__listify(_index)}/_search"
-                 else
-                   "_search"
-                 end
+        path = if _index
+                 "#{Utils.__listify(_index)}/_search"
+               else
+                 '_search'
+               end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

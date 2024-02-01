@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
         #
         def stop(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ilm.stop" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ilm.stop' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ilm/stop"
+          path   = '_ilm/stop'
           params = {}
 
           Elasticsearch::API::Response.new(

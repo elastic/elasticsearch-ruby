@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-complete-logout.html
         #
         def saml_complete_logout(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.saml_complete_logout" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.saml_complete_logout' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/saml/complete_logout"
+          path   = '_security/saml/complete_logout'
           params = {}
 
           Elasticsearch::API::Response.new(

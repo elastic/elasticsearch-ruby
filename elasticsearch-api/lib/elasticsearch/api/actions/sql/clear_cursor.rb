@@ -30,7 +30,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html
         #
         def clear_cursor(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "sql.clear_cursor" }
+          request_opts = { endpoint: arguments[:endpoint] || 'sql.clear_cursor' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -40,7 +40,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_sql/close"
+          path   = '_sql/close'
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -40,11 +40,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/monitor-elasticsearch-cluster.html
         #
         def bulk(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "monitoring.bulk" }
+          request_opts = { endpoint: arguments[:endpoint] || 'monitoring.bulk' }
 
-          defined_params = [:type].inject({}) do |set_variables, variable|
+          defined_params = [:type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -61,17 +60,17 @@ module Elasticsearch
           path   = if _type
                      "_monitoring/#{Utils.__listify(_type)}/bulk"
                    else
-                     "_monitoring/bulk"
+                     '_monitoring/bulk'
                    end
           params = Utils.process_params(arguments)
 
-          if body.is_a? Array
-            payload = Elasticsearch::API::Utils.__bulkify(body)
-          else
-            payload = body
-          end
+          payload = if body.is_a? Array
+                      Elasticsearch::API::Utils.__bulkify(body)
+                    else
+                      body
+                    end
 
-          headers.merge!("Content-Type" => "application/x-ndjson")
+          headers.merge!('Content-Type' => 'application/x-ndjson')
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, payload, headers, request_opts)
           )

@@ -29,7 +29,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/autoscaling-get-autoscaling-capacity.html
         #
         def get_autoscaling_capacity(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "autoscaling.get_autoscaling_capacity" }
+          request_opts = { endpoint: arguments[:endpoint] || 'autoscaling.get_autoscaling_capacity' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -37,7 +37,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_autoscaling/capacity"
+          path   = '_autoscaling/capacity'
           params = {}
 
           Elasticsearch::API::Response.new(

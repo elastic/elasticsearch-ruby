@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-start-datafeed.html
         #
         def start_datafeed(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.start_datafeed" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.start_datafeed' }
 
-          defined_params = [:datafeed_id].inject({}) do |set_variables, variable|
+          defined_params = [:datafeed_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 

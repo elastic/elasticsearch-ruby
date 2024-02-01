@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
         #
         def get_privileges(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "security.get_privileges" }
+          request_opts = { endpoint: arguments[:endpoint] || 'security.get_privileges' }
 
-          defined_params = [:application, :name].inject({}) do |set_variables, variable|
+          defined_params = %i[application name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -54,7 +53,7 @@ module Elasticsearch
                    elsif _application
                      "_security/privilege/#{Utils.__listify(_application)}"
                    else
-                     "_security/privilege"
+                     '_security/privilege'
                    end
           params = {}
 

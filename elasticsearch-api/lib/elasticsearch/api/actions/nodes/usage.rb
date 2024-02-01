@@ -32,11 +32,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-usage.html
         #
         def usage(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "nodes.usage" }
+          request_opts = { endpoint: arguments[:endpoint] || 'nodes.usage' }
 
-          defined_params = [:node_id, :metric].inject({}) do |set_variables, variable|
+          defined_params = %i[node_id metric].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
                    elsif _metric
                      "_nodes/usage/#{Utils.__listify(_metric)}"
                    else
-                     "_nodes/usage"
+                     '_nodes/usage'
                    end
           params = Utils.process_params(arguments)
 

@@ -36,7 +36,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html
         #
         def master(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.master" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.master' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/master"
+          path   = '_cat/master'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

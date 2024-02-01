@@ -31,7 +31,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-trial.html
         #
         def post_start_trial(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "license.post_start_trial" }
+          request_opts = { endpoint: arguments[:endpoint] || 'license.post_start_trial' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -39,7 +39,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_license/start_trial"
+          path   = '_license/start_trial'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

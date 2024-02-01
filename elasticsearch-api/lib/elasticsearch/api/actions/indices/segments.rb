@@ -34,11 +34,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html
         #
         def segments(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.segments" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.segments' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -53,7 +52,7 @@ module Elasticsearch
           path   = if _index
                      "#{Utils.__listify(_index)}/_segments"
                    else
-                     "_segments"
+                     '_segments'
                    end
           params = Utils.process_params(arguments)
 

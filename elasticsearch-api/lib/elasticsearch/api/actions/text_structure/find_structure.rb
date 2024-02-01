@@ -45,7 +45,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/find-structure.html
         #
         def find_structure(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "text_structure.find_structure" }
+          request_opts = { endpoint: arguments[:endpoint] || 'text_structure.find_structure' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -55,16 +55,16 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_text_structure/find_structure"
+          path   = '_text_structure/find_structure'
           params = Utils.process_params(arguments)
 
-          if body.is_a? Array
-            payload = Elasticsearch::API::Utils.__bulkify(body)
-          else
-            payload = body
-          end
+          payload = if body.is_a? Array
+                      Elasticsearch::API::Utils.__bulkify(body)
+                    else
+                      body
+                    end
 
-          headers.merge!("Content-Type" => "application/x-ndjson")
+          headers.merge!('Content-Type' => 'application/x-ndjson')
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, payload, headers, request_opts)
           )

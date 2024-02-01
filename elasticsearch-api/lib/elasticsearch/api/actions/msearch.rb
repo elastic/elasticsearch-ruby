@@ -37,11 +37,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
       #
       def msearch(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "msearch" }
+        request_opts = { endpoint: arguments[:endpoint] || 'msearch' }
 
-        defined_params = [:index].inject({}) do |set_variables, variable|
+        defined_params = [:index].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -58,33 +57,31 @@ module Elasticsearch
         path   = if _index
                    "#{Utils.__listify(_index)}/_msearch"
                  else
-                   "_msearch"
+                   '_msearch'
                  end
         params = Utils.process_params(arguments)
 
-        case
-        when body.is_a?(Array) && body.any? { |d| d.has_key? :search }
+        if body.is_a?(Array) && body.any? { |d| d.has_key? :search }
           payload = body
-                    .inject([]) do |sum, item|
+                    .each_with_object([]) do |item, sum|
                       meta = item
                       data = meta.delete(:search)
 
                       sum << meta
                       sum << data
-                      sum
                     end
                     .map { |item| Elasticsearch::API.serializer.dump(item) }
-          payload << "" unless payload.empty?
+          payload << '' unless payload.empty?
           payload = payload.join("\n")
-        when body.is_a?(Array)
+        elsif body.is_a?(Array)
           payload = body.map { |d| d.is_a?(String) ? d : Elasticsearch::API.serializer.dump(d) }
-          payload << "" unless payload.empty?
+          payload << '' unless payload.empty?
           payload = payload.join("\n")
         else
           payload = body
         end
 
-        headers.merge!("Content-Type" => "application/x-ndjson")
+        headers.merge!('Content-Type' => 'application/x-ndjson')
         Elasticsearch::API::Response.new(
           perform_request(method, path, params, payload, headers, request_opts)
         )

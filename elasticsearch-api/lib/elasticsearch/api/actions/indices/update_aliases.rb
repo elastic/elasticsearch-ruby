@@ -32,7 +32,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
         #
         def update_aliases(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "indices.update_aliases" }
+          request_opts = { endpoint: arguments[:endpoint] || 'indices.update_aliases' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -42,7 +42,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_aliases"
+          path   = '_aliases'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

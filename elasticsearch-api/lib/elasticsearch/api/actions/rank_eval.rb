@@ -34,11 +34,10 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-rank-eval.html
       #
       def rank_eval(arguments = {})
-        request_opts = { endpoint: arguments[:endpoint] || "rank_eval" }
+        request_opts = { endpoint: arguments[:endpoint] || 'rank_eval' }
 
-        defined_params = [:index].inject({}) do |set_variables, variable|
+        defined_params = [:index].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          set_variables
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -55,7 +54,7 @@ module Elasticsearch
         path   = if _index
                    "#{Utils.__listify(_index)}/_rank_eval"
                  else
-                   "_rank_eval"
+                   '_rank_eval'
                  end
         params = Utils.process_params(arguments)
 

@@ -35,18 +35,15 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-repositories-metering-archive-api.html
         #
         def clear_repositories_metering_archive(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "nodes.clear_repositories_metering_archive" }
+          request_opts = { endpoint: arguments[:endpoint] || 'nodes.clear_repositories_metering_archive' }
 
-          defined_params = [:node_id, :max_archive_version].inject({}) do |set_variables, variable|
+          defined_params = %i[node_id max_archive_version].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'node_id' missing" unless arguments[:node_id]
-
-          raise ArgumentError,
-                "Required argument 'max_archive_version' missing" unless arguments[:max_archive_version]
+          raise ArgumentError, "Required argument 'max_archive_version' missing" unless arguments[:max_archive_version]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}

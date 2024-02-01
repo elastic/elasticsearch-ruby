@@ -39,11 +39,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-influencer.html
         #
         def get_influencers(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.get_influencers" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.get_influencers' }
 
-          defined_params = [:job_id].inject({}) do |set_variables, variable|
+          defined_params = [:job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -62,7 +61,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/influencers"
+          path = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/influencers"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

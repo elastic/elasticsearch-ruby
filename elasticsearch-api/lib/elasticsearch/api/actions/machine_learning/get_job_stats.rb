@@ -31,11 +31,10 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-stats.html
         #
         def get_job_stats(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "ml.get_job_stats" }
+          request_opts = { endpoint: arguments[:endpoint] || 'ml.get_job_stats' }
 
-          defined_params = [:job_id].inject({}) do |set_variables, variable|
+          defined_params = [:job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -50,7 +49,7 @@ module Elasticsearch
           path   = if _job_id
                      "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_stats"
                    else
-                     "_ml/anomaly_detectors/_stats"
+                     '_ml/anomaly_detectors/_stats'
                    end
           params = Utils.process_params(arguments)
 

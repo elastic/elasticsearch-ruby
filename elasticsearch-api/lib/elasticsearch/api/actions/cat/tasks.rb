@@ -43,7 +43,7 @@ module Elasticsearch
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
         #
         def tasks(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || "cat.tasks" }
+          request_opts = { endpoint: arguments[:endpoint] || 'cat.tasks' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -51,7 +51,7 @@ module Elasticsearch
           body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat/tasks"
+          path   = '_cat/tasks'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
