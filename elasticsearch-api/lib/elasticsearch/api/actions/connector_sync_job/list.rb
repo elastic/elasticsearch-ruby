@@ -32,6 +32,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
         # @option arguments [String] :status Sync job status, which sync jobs are fetched for
         # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
+        # @option arguments [List] :job_type A comma-separated list of job types
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-sync-jobs-api.html
