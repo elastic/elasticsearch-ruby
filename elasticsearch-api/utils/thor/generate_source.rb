@@ -120,7 +120,7 @@ module Elasticsearch
       end
 
       def run_rubocop
-        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -x #{FilesHelper::output_dir}")
+        system("rubocop -c ./thor/.rubocop.yml --format autogenconf -a #{FilesHelper::output_dir}")
       end
     end
   end
