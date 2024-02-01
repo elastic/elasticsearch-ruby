@@ -17,12 +17,12 @@
 # under the License.
 %>
 <%- if @spec.documentation['description'] -%>
-  <%= '  '*(@spec.namespace_depth+3) %># <%= @spec.documentation['description'] .gsub("\n", "\n#{'  '*(@spec.namespace_depth+3)}# ") -%>
+  # <%= @spec.documentation['description'].gsub("\n", "\n  # ") -%>
 <%- else %>
-  <%= '  '*(@spec.namespace_depth+3) %># TODO: Description
+  # TODO: Description
 <%- end %>
 <%= stability_doc_helper(@spec.stability) -%>
-<%= '  '*(@spec.namespace_depth+3) %>#
+#
 <%- unless @spec.path_parts.nil? || @spec.path_parts.empty? %><%# URL parts -%>
   <%- @spec.path_parts.each do |name, info| -%>
     <%= docs(name, info) -%>
@@ -37,10 +37,9 @@
   <%- if @spec.method_name == 'bulk' -%>
     <%= bulk_doc_helper(@spec.body['description']) -%>
   <%- else -%>
-    <%= '  '*(@spec.namespace_depth+1) +
-    '# @option arguments [Hash] :body ' + (@spec.body['description'] ?
-                                           @spec.body['description'].strip : 'TODO: Description') +
-                                           (@spec.body['required'] ? ' (*Required*)' : '') + "\n"
+    <%= '# @option arguments [Hash] :body ' + (@spec.body['description'] ?
+                                               @spec.body['description'].strip : 'TODO: Description') +
+                                              (@spec.body['required'] ? ' (*Required*)' : '') + "\n"
     -%>
   <%- end -%>
 <%- end -%>
@@ -51,7 +50,7 @@
   # Deprecated since version <%=  @spec.deprecation_note['version'] %>
   #
 <% end -%>
-<%= '  '*(@spec.namespace_depth+3) -%>#
+#
 <%# Documentation link -%>
-<%=  '  '*(@spec.namespace_depth+3) %># @see <%= @spec.documentation['url'] ? Elasticsearch::API::FilesHelper.documentation_url(@spec.documentation['url']) : "[TODO]" %>
-<%= '  '*(@spec.namespace_depth+3) %>#
+# @see <%= @spec.documentation['url'] ? Elasticsearch::API::FilesHelper.documentation_url(@spec.documentation['url']) : "[TODO]" %>
+#
