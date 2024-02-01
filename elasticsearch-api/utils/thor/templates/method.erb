@@ -16,14 +16,14 @@
 # under the License.
 #
 module Elasticsearch
-<%= '  '*(@spec.namespace_depth) %>module API
+module API
 <%- @spec.module_namespace.each_with_index do |name, i| -%>
   <%= '  '*i %>module <%= module_name_helper(name) %>
 <%- end -%>
-<%= '  '*(@spec.namespace_depth+2) %>module Actions
+module Actions
 <%= ERB.new(File.new("./thor/templates/_documentation_top.erb").read, trim_mode: '-').result(binding) -%>
 <%# Method definition -%>
-<%= '  '*(@spec.namespace_depth+3) -%>def <%= @spec.method_name %>(arguments = {})
+def <%= @spec.method_name %>(arguments = {})
   request_opts = { endpoint: arguments[:endpoint] || "<%= @spec.endpoint_name %>" }
 <%- unless @spec.path_params.empty? %>
   defined_params =<%=  @spec.path_params %>.inject({}) do |set_variables, variable|
@@ -34,12 +34,12 @@ module Elasticsearch
 <%- end %>
 <%-    %>
 <%- if @spec.endpoint_name == 'create' -%>
-  <%= '  '*(@spec.namespace_depth+3) %>if arguments[:id]
-  <%= '  '*(@spec.namespace_depth+3) %>  index arguments.update op_type: 'create'
-  <%= '  '*(@spec.namespace_depth+3) %>else
-  <%= '  '*(@spec.namespace_depth+3) %>  index arguments
-  <%= '  '*(@spec.namespace_depth+3) %>end
-  <%= '  '*(@spec.namespace_depth+2) %>end
+if arguments[:id]
+  index arguments.update op_type: 'create'
+else
+  index arguments
+end
+end
 <%- else -%>
   <%- if @spec.method_name == 'get_field_mapping' %>
     arguments = arguments.clone
@@ -47,7 +47,7 @@ module Elasticsearch
     raise ArgumentError, "Required argument 'field' missing" unless _fields
   <%- else -%>
     <%- @spec.required_parts.each do |required| %><%# Arguments -%>
-      <%= '  '*(@spec.namespace_depth+3) + "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
+      <%= "raise ArgumentError, \"Required argument '#{required}' missing\" unless arguments[:#{required}]" + "\n" -%>
     <%- end -%>
     arguments = arguments.clone
     <%- end -%>
@@ -70,10 +70,10 @@ module Elasticsearch
     termvectors(arguments.merge endpoint: '_termvector')
   end
 <%- end -%>
-
 <%- @spec.namespace_depth.downto(1) do |i| -%>
-<%= '  '*(i-1) %>end
+  <%= '  '*(i-1) %>end
 <%- end if @spec.namespace_depth > 0 -%>
+
     end
   end
 end

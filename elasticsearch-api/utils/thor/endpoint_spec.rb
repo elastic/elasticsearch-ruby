@@ -32,7 +32,7 @@ module Elasticsearch
 
         full_namespace = parse_full_namespace
         @namespace_depth = full_namespace.size > 0 ? full_namespace.size - 1 : 0
-        @module_namespace = full_namespace[0, namespace_depth]
+        @module_namespace = full_namespace[0, @namespace_depth]
         @method_name = full_namespace.last
 
         @path_parts = parse_endpoint_parts(@spec)
@@ -56,7 +56,6 @@ module Elasticsearch
                   :http_path,
                   :required_parts,
                   :http_method,
-                  :namespace_depth,
                   :path_params,
                   :perform_request_opts
 

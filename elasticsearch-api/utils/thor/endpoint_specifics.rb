@@ -136,11 +136,11 @@ module Elasticsearch
 
       def bulk_body_helper
         <<~SRC
-          if body.is_a? Array
-            payload = Elasticsearch::API::Utils.__bulkify(body)
-          else
-            payload = body
-          end
+          payload = if body.is_a? Array
+                      Elasticsearch::API::Utils.__bulkify(body)
+                    else
+                      body
+                    end
         SRC
       end
 
