@@ -15,6 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'base64'
 require_relative '../platinum_helper'
 
 describe 'API keys API invalidation' do
