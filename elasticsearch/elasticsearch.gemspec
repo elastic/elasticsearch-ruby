@@ -47,8 +47,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'elastic-transport', '~> 8.3'
   s.add_dependency 'elasticsearch-api', '8.13.0'
-  s.add_dependency 'base64'
-
+  
+  s.add_development_dependency 'base64'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'debug' unless defined?(JRUBY_VERSION)
   s.add_development_dependency 'pry'

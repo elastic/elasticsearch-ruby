@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 
+require 'base64'
+
 module Elasticsearch
   module RestAPIYAMLTests
     class TestFile
