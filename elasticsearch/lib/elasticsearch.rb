@@ -18,7 +18,6 @@
 require 'elasticsearch/version'
 require 'elastic/transport'
 require 'elasticsearch/api'
-require 'base64'
 
 module Elasticsearch
   NOT_ELASTICSEARCH_WARNING = 'The client noticed that the server is not Elasticsearch and we do not support this unknown product.'.freeze
@@ -112,7 +111,8 @@ module Elasticsearch
 
     def setup_cloud_host(cloud_id, user, password, port)
       name = cloud_id.split(':')[0]
-      cloud_url, elasticsearch_instance = Base64.decode64(cloud_id.gsub("#{name}:", '')).split('$')
+      base64_decoded = cloud_id.gsub("#{name}:", '').unpack1('m')
+      cloud_url, elasticsearch_instance = base64_decoded.split('$')
 
       if cloud_url.include?(':')
         url, port = cloud_url.split(':')
@@ -154,7 +154,8 @@ module Elasticsearch
     # Credentials is the base64 encoding of id and api_key joined by a colon
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-api-key.html
     def encode(api_key)
-      Base64.strict_encode64([api_key[:id], api_key[:api_key]].join(':'))
+      credentials = [api_key[:id], api_key[:api_key]].join(':')
+      [credentials].pack('m0')
     end
 
     def elasticsearch_validation_request
