@@ -16,6 +16,7 @@
 # under the License.
 
 require 'spec_helper'
+require 'base64'
 
 describe Elasticsearch::Client do
   context 'when using API Key' do
