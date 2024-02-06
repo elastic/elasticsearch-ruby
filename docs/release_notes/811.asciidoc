@@ -2,6 +2,12 @@
 === 8.11 Release notes
 
 [discrete]
+[[release_notes_8_11_2]]
+=== 8.11.2 Release notes
+
+Drops runtime dependency on `base64`. Thanks https://github.com/Earlopain[Earlopain]! Pull Request: https://github.com/elastic/elasticsearch-ruby/pull/2295[#2295]).
+
+[discrete]
 [[release_notes_8_11_1]]
 === 8.11.1 Release notes
 

@@ -1,5 +1,9 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
 
+## 8.11.2 Release notes
+
+Drops runtime dependency on `base64`. Thanks [Earlopain](https://github.com/Earlopain)! Pull Request: [#2295](https://github.com/elastic/elasticsearch-ruby/pull/2295).
+
 ## 8.11.1 Release notes
 
 Adds `base64` dependency
