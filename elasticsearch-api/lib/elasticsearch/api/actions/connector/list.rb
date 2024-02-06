@@ -30,6 +30,8 @@ module Elasticsearch
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
+        # @option arguments [String] :index_name connector index name(s) to fetch connector documents for
+        # @option arguments [String] :connector_name connector name(s) to fetch connector documents for
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-api.html
