@@ -66,7 +66,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        endpoint = arguments.delete(:endpoint) || '_termvectors'
+        arguments.delete(:endpoint)
         path = if _index && _id
                  "#{Utils.__listify(_index)}/_termvectors/#{Utils.__listify(_id)}"
                else
@@ -82,6 +82,7 @@ module Elasticsearch
       # Deprecated: Use the plural version, {#termvectors}
       #
       def termvector(arguments = {})
+        warn '[DEPRECATION] `termvector` is deprecated. Please use the plural version, `termvectors` instead.'
         termvectors(arguments.merge(endpoint: '_termvector'))
       end
     end
