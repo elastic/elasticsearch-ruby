@@ -43,3 +43,6 @@
 -
   :file: 'search.vectors/45_knn_search_byte.yml'
   :description: 'Direct kNN queries are disallowed'
+-
+  :file: 'tsdb/25_id_generation.yml'
+  :description: 'generates a consistent id'
