@@ -24,7 +24,7 @@
 
 method = <%= @spec.http_method %>
 <%- if @spec.method_name == 'termvectors' %>
-  endpoint = arguments.delete(:endpoint) || '_termvectors'
+  arguments.delete(:endpoint)
 <%- end -%>
 path   = <%= @spec.http_path %>
 <%- if !@spec.params.empty? || needs_ignore_404?(@spec.endpoint_name) || needs_complex_ignore_404?(@spec.endpoint_name)-%>

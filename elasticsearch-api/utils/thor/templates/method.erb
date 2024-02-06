@@ -63,11 +63,11 @@ end
   alias_method :<%= @spec.method_name %>?, :<%= @spec.method_name %>
 <%- end -%>
 <%- if @spec.method_name == 'termvectors' %>
-
   # Deprecated: Use the plural version, {#termvectors}
   #
   def termvector(arguments={})
-    termvectors(arguments.merge endpoint: '_termvector')
+    warn "[DEPRECATION] `termvector` is deprecated. Please use the plural version, `termvectors` instead."
+    termvectors(arguments.merge(endpoint: '_termvector'))
   end
 <%- end -%>
 <%- @spec.namespace_depth.downto(1) do |i| -%>
