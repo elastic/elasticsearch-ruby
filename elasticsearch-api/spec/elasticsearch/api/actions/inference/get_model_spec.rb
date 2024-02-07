@@ -25,12 +25,12 @@ describe 'client#inference.get_model' do
       {},
       nil,
       {},
-      { defined_params: { model_id: 'bar', task_type: 'foo' },
+      { defined_params: { inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.get_model' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.get_model(task_type: 'foo', model_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.get_model(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
