@@ -29,9 +29,11 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
-        # @option arguments [String] :index_name connector index name(s) to fetch connector documents for
-        # @option arguments [String] :connector_name connector name(s) to fetch connector documents for
+        # @option arguments [Integer] :size Specifies a max number of results to get (default: 100)
+        # @option arguments [List] :index_name A comma-separated list of connector index names to fetch connector documents for
+        # @option arguments [List] :connector_name A comma-separated list of connector names to fetch connector documents for
+        # @option arguments [List] :service_type A comma-separated list of connector service types to fetch connector documents for
+        # @option arguments [String] :query A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-api.html
