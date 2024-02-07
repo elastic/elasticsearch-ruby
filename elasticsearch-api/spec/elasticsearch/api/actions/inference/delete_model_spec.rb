@@ -25,12 +25,12 @@ describe 'client#inference.delete_model' do
       {},
       nil,
       {},
-      { defined_params: { model_id: 'bar', task_type: 'foo' },
+      { defined_params: { inference_id: 'bar', task_type: 'foo' },
         endpoint: 'inference.delete_model' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.delete_model(task_type: 'foo', model_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.delete_model(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

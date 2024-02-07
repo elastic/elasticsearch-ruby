@@ -28,8 +28,8 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :task_type The model task type
-        # @option arguments [String] :model_id The model Id
+        # @option arguments [String] :inference_id The model Id
+        # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference-api.html
@@ -37,25 +37,28 @@ module Elasticsearch
         def delete_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete_model' }
 
-          defined_params = %i[task_type model_id].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
-          raise ArgumentError, "Required argument 'model_id' missing" unless arguments[:model_id]
+          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
+          _inference_id = arguments.delete(:inference_id)
+
           _task_type = arguments.delete(:task_type)
 
-          _model_id = arguments.delete(:model_id)
-
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_model_id)}"
+          path   = if _task_type && _inference_id
+                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
+                   else
+                     "_inference/#{Utils.__listify(_inference_id)}"
+                   end
           params = {}
 
           Elasticsearch::API::Response.new(
