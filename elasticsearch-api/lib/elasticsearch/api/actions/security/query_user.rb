@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Retrieves information for Users using a subset of query DSL
         #
+        # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated with the user
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
@@ -44,7 +45,7 @@ module Elasticsearch
                    end
 
           path = '_security/_query/user'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
