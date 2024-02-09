@@ -46,3 +46,6 @@
 -
   :file: 'tsdb/25_id_generation.yml'
   :description: 'generates a consistent id'
+-
+  :file: 'indices.resolve_cluster/10_basic_resolve_cluster.yml'
+  :description: 'Resolve cluster using alias and index that does not exist'
