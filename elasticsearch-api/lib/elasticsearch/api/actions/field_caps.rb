@@ -31,6 +31,7 @@ module Elasticsearch
       # @option arguments [Boolean] :include_unmapped Indicates whether unmapped fields should be included in the response.
       # @option arguments [List] :filters An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent
       # @option arguments [List] :types Only return results for fields that have one of the types in the list
+      # @option arguments [Boolean] :include_empty_fields Include empty fields in result
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body An index filter specified with the Query DSL
       #
