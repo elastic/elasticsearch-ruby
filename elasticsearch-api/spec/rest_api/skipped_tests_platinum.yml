@@ -115,3 +115,6 @@
 -
   :file: 'users/40_query.yml'
   :description: 'Test query user'
+-
+  :file: 'api_key/21_query_with_aggs.yml'
+  :description: 'Test composite aggs api key'
