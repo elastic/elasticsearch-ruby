@@ -64,13 +64,15 @@ Per default, the built-in OpenTelemetry instrumentation does not capture request
 **Valid Options:** `omit`, `sanitize`, `raw`
 
 |============
-| Environment Variable | `OTEL_INSTRUMENTATION_ELASTICSEARCH_CAPTURE_SEARCH_QUERY`
+| Environment Variable | `OTEL_RUBY_INSTRUMENTATION_ELASTICSEARCH_CAPTURE_SEARCH_QUERY`
 |============
 
 [discrete]
 ===== Sanitize the {es} search request body
 
 You can configure the list of keys whose values are redacted when the search query is captured. Values must be comma-separated.
+Note in v8.3.0 and v8.3.1, the environment variable `OTEL_INSTRUMENTATION_ELASTICSEARCH_CAPTURE_SEARCH_QUERY` was available
+but is now deprecated in favor of the environment variable including `RUBY`.
 
 **Default:** `nil`
 
