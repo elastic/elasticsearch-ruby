@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's status. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/connector-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-status-api.html
         #
         def update_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_status' }
