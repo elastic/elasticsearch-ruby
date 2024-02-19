@@ -32,7 +32,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body An index_filter specified with the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/point-in-time-api.html
       #
       def open_point_in_time(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'open_point_in_time' }

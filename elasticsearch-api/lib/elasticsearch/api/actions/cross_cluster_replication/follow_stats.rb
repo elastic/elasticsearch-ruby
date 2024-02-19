@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/ccr-get-follow-stats.html
         #
         def follow_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_stats' }

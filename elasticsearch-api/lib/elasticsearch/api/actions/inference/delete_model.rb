@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/delete-inference-api.html
         #
         def delete_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete_model' }

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-synonyms-sets.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/list-synonyms-sets.html
         #
         def get_synonyms_sets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonyms_sets' }

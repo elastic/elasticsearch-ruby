@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body New index template definition, which will be included in the simulation, as if it already exists in the system
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-simulate-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/indices-simulate-index.html
         #
         def simulate_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.simulate_index_template' }
