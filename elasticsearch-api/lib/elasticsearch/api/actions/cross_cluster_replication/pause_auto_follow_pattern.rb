@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the auto follow pattern that should pause discovering new indices to follow.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-pause-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/ccr-pause-auto-follow-pattern.html
         #
         def pause_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.pause_auto_follow_pattern' }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :reassign If the model_alias already exists and points to a separate model_id, this parameter must be true. Defaults to false.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/put-trained-models-aliases.html
         #
         def put_trained_model_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_trained_model_alias' }

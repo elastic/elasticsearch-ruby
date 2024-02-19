@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/searchable-snapshots-apis.html
         #
         def cache_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.cache_stats' }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/modules-snapshots.html
         #
         def delete_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete_repository' }

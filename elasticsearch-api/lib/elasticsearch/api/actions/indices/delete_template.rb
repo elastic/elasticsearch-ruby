@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-template-v1.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/indices-delete-template-v1.html
         #
         def delete_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_template' }

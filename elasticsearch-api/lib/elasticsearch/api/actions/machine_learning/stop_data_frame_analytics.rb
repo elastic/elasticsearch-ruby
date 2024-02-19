@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The stop data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/stop-dfanalytics.html
         #
         def stop_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.stop_data_frame_analytics' }

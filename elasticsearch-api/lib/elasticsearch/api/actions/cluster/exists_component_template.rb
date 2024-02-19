@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/indices-component-template.html
         #
         def exists_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.exists_component_template' }

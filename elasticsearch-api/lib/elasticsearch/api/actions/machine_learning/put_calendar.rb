@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The calendar details
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/ml-put-calendar.html
         #
         def put_calendar(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_calendar' }

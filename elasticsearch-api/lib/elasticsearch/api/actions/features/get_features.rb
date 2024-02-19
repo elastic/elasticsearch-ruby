@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-features-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/get-features-api.html
         #
         def get_features(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'features.get_features' }

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The transform definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/put-transform.html
         #
         def put_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.put_transform' }

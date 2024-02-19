@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Search parameters, including template parameters that override defaults
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.13/search-application-search.html
         #
         def search(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.search' }
