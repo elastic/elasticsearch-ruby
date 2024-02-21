@@ -77,13 +77,11 @@ It does not mean that the client automatically supports new features of newer El
 For example, a 8.12 client version won't automatically support the new features of the 8.13 version of Elasticsearch, the 8.13 client version is required for that.
 Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
 
-|===
-| Gem Version   |   | {es} Version | Supported
-
-| 7.x           | → | 7.x          | 7.17
-| 8.x           | → | 8.x          | 8.x
-| main          | → | main         |
-|===
+| Gem Version |   | Elasticsearch  Version | Supported |
+|-------------|---|------------------------|-----------|
+| 7.x         | → | 7.x                    | 7.17      |
+| 8.x         | → | 8.x                    | 8.x       |
+| main        | → | main                   |           |
 
 ## Development
 
