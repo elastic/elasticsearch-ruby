@@ -72,7 +72,16 @@ Please see their respective READMEs for information and documentation.
 
 We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
-Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch. Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
+Language clients are forward compatible; meaning that clients support communicating with greater or equal minor versions of Elasticsearch without breaking.
+It does not mean that the client automatically supports new features of newer Elasticsearch versions; it is only possible after a release of a new client version.
+For example, a 8.12 client version won't automatically support the new features of the 8.13 version of Elasticsearch, the 8.13 client version is required for that.
+Elasticsearch language clients are only backwards compatible with default distributions and without guarantees made.
+
+| Gem Version |   | Elasticsearch  Version | Supported |
+|-------------|---|------------------------|-----------|
+| 7.x         | → | 7.x                    | 7.17      |
+| 8.x         | → | 8.x                    | 8.x       |
+| main        | → | main                   |           |
 
 ## Development
 
