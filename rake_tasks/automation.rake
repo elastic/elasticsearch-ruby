@@ -103,6 +103,7 @@ namespace :automation do
 
     files = [
       '.github/workflows/main.yml',
+      '.github/workflows/otel.yml',
       '.buildkite/pipeline.yml'
     ]
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
