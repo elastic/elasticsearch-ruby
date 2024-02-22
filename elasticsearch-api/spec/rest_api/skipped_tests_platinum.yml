@@ -73,6 +73,9 @@
 -
   :file: 'ml/3rd_party_deployment.yml'
   :description: 'Test clear deployment cache'
+-
+  :file: 'ml/3rd_party_deployment.yml'
+  :description: 'Test start deployment fails while model download in progress'
 - # Wrong error matching
   :file: 'ml/3rd_party_deployment.yml'
   :description: 'Test getting and putting Fill Mask with two mask tokens, as well as exceptions caused by requests with the wrong token'
