@@ -21,15 +21,15 @@ describe 'client.text_structure#test_grok_pattern' do
   let(:expected_args) do
     [
       'POST',
-      '_text_structure/find_structure',
+      '_text_structure/find_message_structure',
       {},
       {},
-      { 'Content-Type' => 'application/x-ndjson' },
-      { endpoint: 'text_structure.find_structure' }
+      {},
+      { endpoint: 'text_structure.find_message_structure' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.text_structure.find_message_structure(body: {})).to be_a Elasticsearch::API::Response
   end
 end
