@@ -64,7 +64,6 @@ RSpec.configure do |config|
   else
     config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
   end
-  config.example_status_persistence_file_path  = "tmp/#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.txt"
   config.color_mode = :on
 end
 
