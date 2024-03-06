@@ -286,7 +286,8 @@ module Elasticsearch
 
         def skippable_task?(task)
           names = ['health-node', 'cluster:monitor/tasks/lists', 'create-index-template-v2',
-                   'remove-component-template']
+                   'remove-component-template', 'create persistent task',
+                   'finish persistent task']
           if task.is_a?(String)
             names.select { |n| task.match? n }.any?
           elsif task.is_a?(Hash)
