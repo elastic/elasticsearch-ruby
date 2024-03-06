@@ -41,7 +41,8 @@ module Elasticsearch
         'synthetics', 'synthetics-settings', 'synthetics-mappings',
         '.snapshot-blob-cache', '.deprecation-indexing-template',
         '.deprecation-indexing-mappings', '.deprecation-indexing-settings',
-        'security-index-template', 'data-streams-mappings', 'search-acl-filter'
+        'security-index-template', 'data-streams-mappings', 'search-acl-filter',
+        '.kibana-reporting'
       ].freeze
 
       # Wipe Cluster, based on PHP's implementation of ESRestTestCase.java:wipeCluster()
