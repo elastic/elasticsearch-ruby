@@ -54,7 +54,7 @@ steps:
             transport: "main"
         - with:
             suite: "free"
-            ruby: "9.3"
+            ruby: "9.4"
             ruby_source: "jruby"
             transport: "8.2"
     command: ./.buildkite/run-tests.sh
