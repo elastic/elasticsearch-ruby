@@ -49,3 +49,6 @@
 -
   :file: 'indices.resolve_cluster/10_basic_resolve_cluster.yml'
   :description: 'Resolve cluster using alias and index that does not exist'
+-
+  :file: 'health/10_basic.yml' # Migrated to written manually
+  :description: 'cluster health basic test'

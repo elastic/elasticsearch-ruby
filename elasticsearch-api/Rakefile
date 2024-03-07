@@ -67,9 +67,11 @@ namespace :test do
 
     desc 'Run Platinum Integration Specs'
     RSpec::Core::RakeTask.new(:integration) do |t|
-      exit(0) unless ENV['TEST_SUITE'] == 'platinum'
-
-      t.pattern = 'spec/platinum/integration/**/*_spec.rb'
+      t.pattern = if ENV['TEST_SUITE'] == 'platinum'
+                    'spec/platinum/integration/**/*_spec.rb'
+                  else
+                    'spec/free/integration/**/*_spec.rb'
+                  end
       t.ruby_opts = '-W0'
     end
   end
