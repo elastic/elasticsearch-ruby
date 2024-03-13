@@ -52,3 +52,18 @@
 -
   :file: 'health/10_basic.yml' # Migrated to written manually
   :description: 'cluster health basic test'
+-
+  :file: 'cat.allocation/10_basic.yml'
+  :description: 'One index'
+-
+  :file: 'cat.allocation/10_basic.yml'
+  :description: 'Node ID'
+-
+  :file: 'cat.allocation/10_basic.yml'
+  :description: 'All Nodes'
+-
+  :file: 'cat.allocation/10_basic.yml'
+  :description: 'Column headers'
+-
+  :file: 'cat.allocation/10_basic.yml'
+  :description: 'Bytes'
