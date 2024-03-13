@@ -30,6 +30,8 @@ describe 'Rest API YAML tests' do
     exit 1
   end
 
+  CLUSTER_FEATURES = ADMIN_CLIENT.features.get_features['features'].map { |f| f['name'] }
+
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
     begin
@@ -46,6 +48,10 @@ describe 'Rest API YAML tests' do
       let(:client) { DEFAULT_CLIENT }
 
       test_file.tests.each do |test|
+        # To support new features skipping in YAML tests. This will go away with new YAML tests:
+        if (feature_to_skip = test.skip&.first&.[]('skip')&.[]('cluster_features'))
+          next unless CLUSTER_FEATURES.include? feature_to_skip
+        end
         context test.description do
           if test.skip_test?(ADMIN_CLIENT)
             skip 'Test contains feature(s) not yet supported or version is not satisfied'
