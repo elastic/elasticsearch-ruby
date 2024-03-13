@@ -71,7 +71,7 @@ module Elasticsearch
           end
         end
 
-        attr_reader :description, :test_file, :cached_values, :file_basename
+        attr_reader :description, :test_file, :cached_values, :file_basename, :skip
 
         # Actions that if followed by a 'do' action, indicate that they complete their task group.
         # For example, consider this sequence of actions:
