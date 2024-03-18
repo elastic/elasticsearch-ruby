@@ -54,7 +54,7 @@ context 'Elasticsearch client' do
   end
 
   context 'Reports the right meta header' do
-    it 'Reports es service name and gem versio' do
+    it 'Reports es service name and gem version' do
       headers = client.transport.connections.first.connection.headers
       version = Class.new.extend(Elastic::Transport::MetaHeader).send(:client_meta_version, Elasticsearch::VERSION)
       expect(headers['x-elastic-client-meta']).to match /^es=#{version}/
