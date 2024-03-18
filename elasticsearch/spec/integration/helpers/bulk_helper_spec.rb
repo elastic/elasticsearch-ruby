@@ -14,22 +14,12 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
-raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
-
+require_relative 'helpers_spec_helper'
 require 'elasticsearch/helpers/bulk_helper'
-require 'spec_helper'
 require 'tempfile'
 
 context 'Elasticsearch client helpers' do
   context 'Bulk helper' do
-    let(:client) do
-      Elasticsearch::Client.new(
-        host: ELASTICSEARCH_URL,
-        user: 'elastic',
-        password: 'changeme'
-      )
-    end
     let(:index) { 'bulk_animals' }
     let(:params) { { refresh: 'wait_for' } }
     let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(client, index, params) }
