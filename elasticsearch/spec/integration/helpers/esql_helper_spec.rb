@@ -21,6 +21,12 @@ context 'Elasticsearch client helpers' do
   let(:index) { 'esql_helper_test' }
   let(:body) { { size: 12, query: { match_all: {} } } }
   let(:esql_helper) { Elasticsearch::Helpers::ESQLHelper }
+  let(:query) do
+    <<~ESQL
+        FROM #{index}
+        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+    ESQL
+  end
 
   before do
     client.indices.create(
@@ -58,13 +64,31 @@ context 'Elasticsearch client helpers' do
   end
 
   it 'returns an ESQL response as a relational key/value object' do
-    query = <<~ESQL
-        FROM #{index}
-        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
-    ESQL
     response = esql_helper.query(client, query)
-
     expect(response.count).to eq 7
     expect(response.first.keys).to eq ['duration_ms', 'message', 'event.duration', 'client.ip', '@timestamp']
+    response.each do |r|
+      expect(r['@timestamp']).to be_a String
+      expect(r['client.ip']).to be_a String
+      expect(r['message']).to be_a String
+      expect(r['event.duration']).to be_a Integer
+    end
+  end
+
+  it 'parses iterated objects when procs are passed in' do
+    require 'ipaddr'
+
+    parser = {
+      '@timestamp' => Proc.new { |t| DateTime.parse(t) },
+      'client.ip' => Proc.new { |i| IPAddr.new(i) },
+      'event.duration' => Proc.new { |d| d.to_s }
+    }
+    response = esql_helper.query(client, query, parser: parser)
+    response.each do |r|
+      expect(r['@timestamp']).to be_a DateTime
+      expect(r['client.ip']).to be_a IPAddr
+      expect(r['message']).to be_a String
+      expect(r['event.duration']).to be_a String
+    end
   end
 end
