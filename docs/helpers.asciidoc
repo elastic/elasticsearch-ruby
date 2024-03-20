@@ -211,11 +211,28 @@ require 'elasticsearch/helpers/esql_helper'
 response = Elasticsearch::Helpers::ESQLHelper.query(client, query)
 
 puts response
-{"duration_ms"=>3.5, "message"=>"Connected to 10.1.0.3", "event.duration"=>3450233, "client.ip"=>"172.21.2.162", "@timestamp"=>"2023-10-23T12:15:03.360Z"}
-{"duration_ms"=>2.8, "message"=>"Connected to 10.1.0.2", "event.duration"=>2764889, "client.ip"=>"172.21.2.113", "@timestamp"=>"2023-10-23T12:27:28.948Z"}
-{"duration_ms"=>1.2, "message"=>"Disconnected", "event.duration"=>1232382, "client.ip"=>"172.21.0.5", "@timestamp"=>"2023-10-23T13:33:34.937Z"}
-{"duration_ms"=>0.7, "message"=>"Connection error", "event.duration"=>725448, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:51:54.732Z"}
-{"duration_ms"=>8.3, "message"=>"Connection error", "event.duration"=>8268153, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:52:55.015Z"}
-{"duration_ms"=>5.0, "message"=>"Connection error", "event.duration"=>5033755, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:53:55.832Z"}
-{"duration_ms"=>1.8, "message"=>"Connected to 10.1.0.1", "event.duration"=>1756467, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:55:01.543Z"}
+[
+  {"duration_ms"=>3.5, "message"=>"Connected to 10.1.0.3", "event.duration"=>3450233, "client.ip"=>"172.21.2.162", "@timestamp"=>"2023-10-23T12:15:03.360Z"}
+  {"duration_ms"=>2.8, "message"=>"Connected to 10.1.0.2", "event.duration"=>2764889, "client.ip"=>"172.21.2.113", "@timestamp"=>"2023-10-23T12:27:28.948Z"}
+  {"duration_ms"=>1.2, "message"=>"Disconnected", "event.duration"=>1232382, "client.ip"=>"172.21.0.5", "@timestamp"=>"2023-10-23T13:33:34.937Z"}
+  {"duration_ms"=>0.7, "message"=>"Connection error", "event.duration"=>725448, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:51:54.732Z"}
+  {"duration_ms"=>8.3, "message"=>"Connection error", "event.duration"=>8268153, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:52:55.015Z"}
+  {"duration_ms"=>5.0, "message"=>"Connection error", "event.duration"=>5033755, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:53:55.832Z"}
+  {"duration_ms"=>1.8, "message"=>"Connected to 10.1.0.1", "event.duration"=>1756467, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:55:01.543Z"}
+]
+----
+
+Additionally, a block can be specified to work on the response data. Pass in a block to `query` and it will yield each item in the Array of responses.
+
+You could use this for example to convert '@timestamp' into a DateTime object:
+[source,ruby]
+----
+require 'elasticsearch/helpers/esql_helper'
+
+response = esql_helper.query(client, query).each do |r|
+             r['@timestamp'] = DateTime.parse(r['@timestamp'])
+           end
+
+response.first['@timestamp']
+# <DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)>
 ----
