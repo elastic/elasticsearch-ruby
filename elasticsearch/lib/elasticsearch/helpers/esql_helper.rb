@@ -22,19 +22,37 @@ module Elasticsearch
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-query-api.html
     #
     module ESQLHelper
-      # By default, the `query` API returns a Hash response with a `columns` key whose value is an
-      # Array of { name: type } Hashes for each column and a `values` key whose value is an Array of
-      # Arrays with the values for each row.
-      # This helper function returns an Array of hashes with the columns as keys and the respective
-      # values: { column['name'] => value }
+      # Query helper for ES|QL
       #
-      def self.query(client, query, params = {})
+      # By default, the `esql.query` API returns a Hash response with the following keys:
+      # - `columns` with the value being an Array of { name: type } Hashes for each column
+      # - `values` with the value being an Array of Arrays with the values for each row.
+      # This helper function returns an Array of hashes with the columns as keys and the respective
+      # values: { column['name'] => value }.
+      #
+      # @param client [Elasticsearch::Client] an instance of the Client to use for the query.
+      # @param query [Hash, String] The query to be passed to the ES|QL query API.
+      # @param params [Hash] options to pass to the ES|QL query API.
+      # @param convert_datetime [Boolean] Converts datetime values from the response into DateTime
+      # objects in Ruby. Default: true.
+      #
+      # @example Using the ES|QL helper with a parser
+      #     response = Elasticsearch::Helpers::ESQLHelper.query(
+      #                  client,
+      #                  query,
+      #                  parser: { '@timestamp' => Proc.new { |t| DateTime.parse(t) } }
+      #                )
+      #
+      # @see https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#_esql_helper
+      #
+      def self.query(client, query, params = {}, parser: {})
         response = client.esql.query({ body: { query: query }, format: 'json' }.merge(params))
-
         columns = response['columns']
         response['values'].map do |value|
           (value.length - 1).downto(0).map do |index|
-            { columns[index]['name'] => value[index] }
+            key = columns[index]['name']
+            value[index] = parser[key].call value[index] if parser[key]
+            { key => value[index] }
           end.reduce({}, :merge)
         end
       end
