@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's API key id and/or Connector Secret document id for that API key. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/connector-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-api-key-id-api.html
         #
         def update_api_key_id(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_api_key_id' }
