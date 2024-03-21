@@ -162,9 +162,10 @@ scroll_helper.clear
 --
 
 [discrete]
+[[esql-helper]]
 === ES|QL Helper
 
-This helpers provides an Object response from the ESQL `query` API instead of the default JSON value.
+This helper provides an object response from the ESQL `query` API instead of the default JSON value.
 
 To use the ES|QL helper, require it in your code:
 
@@ -203,7 +204,7 @@ puts response
 ]}
 ----
 
-The helper returns an Array of hashes with the columns as keys and the respective values. So for the previous example, it would return the following:
+The helper returns an array of hashes with the columns as keys and the respective values. So for the previous example, it would return the following:
 
 [source,ruby]
 ----
@@ -222,7 +223,7 @@ puts response
 ]
 ----
 
-Additionally, a block can be specified to work on the response data. Pass in a block to `query` and it will yield each item in the Array of responses.
+Additionally, a block can be specified to transform the response data. Pass in a block to `query` and it will yield each item in the array of responses.
 
 You could use this for example to convert '@timestamp' into a DateTime object:
 [source,ruby]
