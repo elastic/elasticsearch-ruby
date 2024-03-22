@@ -160,3 +160,98 @@ end
 scroll_helper.clear
 ----
 --
+
+[discrete]
+[[esql-helper]]
+=== ES|QL Helper
+
+This functionality is Experimental and may be changed or removed completely in a future release. If you have any feedback on this helper, please https://github.com/elastic/elasticsearch-ruby/issues/new/choose[let us know].
+
+The helper provides an object response from the ESQL `query` API instead of the default JSON value.
+
+To use the ES|QL helper, require it in your code:
+
+[source,ruby]
+----
+require 'elasticsearch/helpers/esql_helper'
+----
+
+By default, the `query` API returns a Hash response with `columns` and `values` like so:
+
+[source,ruby]
+----
+query = <<ESQL
+        FROM sample_data
+        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+ESQL
+
+response = client.esql.query(body: { query: query})
+puts response
+
+{"columns"=>[
+  {"name"=>"@timestamp", "type"=>"date"},
+  {"name"=>"client.ip", "type"=>"ip"},
+  {"name"=>"event.duration", "type"=>"long"},
+  {"name"=>"message", "type"=>"keyword"},
+  {"name"=>"duration_ms", "type"=>"double"}
+],
+"values"=>[
+  ["2023-10-23T12:15:03.360Z", "172.21.2.162", 3450233, "Connected to 10.1.0.3", 3.5],
+  ["2023-10-23T12:27:28.948Z", "172.21.2.113", 2764889, "Connected to 10.1.0.2", 2.8],
+  ["2023-10-23T13:33:34.937Z", "172.21.0.5", 1232382, "Disconnected", 1.2],
+  ["2023-10-23T13:51:54.732Z", "172.21.3.15", 725448, "Connection error", 0.7],
+  ["2023-10-23T13:52:55.015Z", "172.21.3.15", 8268153, "Connection error", 8.3],
+  ["2023-10-23T13:53:55.832Z", "172.21.3.15", 5033755, "Connection error", 5.0],
+  ["2023-10-23T13:55:01.543Z", "172.21.3.15", 1756467, "Connected to 10.1.0.1", 1.8]
+]}
+----
+
+The helper returns an array of hashes with the columns as keys and the respective values. So for the previous example, it would return the following:
+
+[source,ruby]
+----
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query)
+
+puts response
+
+{"duration_ms"=>3.5, "message"=>"Connected to 10.1.0.3", "event.duration"=>3450233, "client.ip"=>"172.21.2.162", "@timestamp"=>"2023-10-23T12:15:03.360Z"}
+{"duration_ms"=>2.8, "message"=>"Connected to 10.1.0.2", "event.duration"=>2764889, "client.ip"=>"172.21.2.113", "@timestamp"=>"2023-10-23T12:27:28.948Z"}
+{"duration_ms"=>1.2, "message"=>"Disconnected", "event.duration"=>1232382, "client.ip"=>"172.21.0.5", "@timestamp"=>"2023-10-23T13:33:34.937Z"}
+{"duration_ms"=>0.7, "message"=>"Connection error", "event.duration"=>725448, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:51:54.732Z"}
+{"duration_ms"=>8.3, "message"=>"Connection error", "event.duration"=>8268153, "client.ip"=>"172.21.3.15", "@timestamp"=>"2023-10-23T13:52:55.015Z"}
+----
+
+Additionally, you can transform the data in the response by passing in a Hash of `column => Proc` values. You could use this for example to convert '@timestamp' into a DateTime object. Pass in a Hash to `query` as a `parser` defining a `Proc` for each value you'd like to parse:
+
+[source,ruby]
+----
+require 'elasticsearch/helpers/esql_helper'
+
+parser = {
+  '@timestamp' => Proc.new { |t| DateTime.parse(t) }
+}
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+response.first['@timestamp']
+# <DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)>
+----
+
+You can pass in as many Procs as there are columns in the response. For example:
+
+[source,ruby]
+----
+parser = {
+  '@timestamp' => Proc.new { |t| DateTime.parse(t) },
+  'client.ip' => Proc.new { |i| IPAddr.new(i) },
+  'event.duration' => Proc.new { |d| d.to_s }
+}
+
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+
+puts response
+
+{"duration_ms"=>3.5, "message"=>"Connected to 10.1.0.3", "event.duration"=>"3450233", "client.ip"=>#<IPAddr: IPv4:172.21.2.162/255.255.255.255>, "@timestamp"=>#<DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)>}
+{"duration_ms"=>2.8, "message"=>"Connected to 10.1.0.2", "event.duration"=>"2764889", "client.ip"=>#<IPAddr: IPv4:172.21.2.113/255.255.255.255>, "@timestamp"=>#<DateTime: 2023-10-23T12:27:28+00:00 ((2460241j,44848s,948000000n),+0s,2299161j)>}
+{"duration_ms"=>1.2, "message"=>"Disconnected", "event.duration"=>"1232382", "client.ip"=>#<IPAddr: IPv4:172.21.0.5/255.255.255.255>, "@timestamp"=>#<DateTime: 2023-10-23T13:33:34+00:00 ((2460241j,48814s,937000000n),+0s,2299161j)>}
+{"duration_ms"=>0.7, "message"=>"Connection error", "event.duration"=>"725448", "client.ip"=>#<IPAddr: IPv4:172.21.3.15/255.255.255.255>, "@timestamp"=>#<DateTime: 2023-10-23T13:51:54+00:00 ((2460241j,49914s,732000000n),+0s,2299161j)>}
+{"duration_ms"=>8.3, "message"=>"Connection error", "event.duration"=>"8268153", "client.ip"=>#<IPAddr: IPv4:172.21.3.15/255.255.255.255>, "@timestamp"=>#<DateTime: 2023-10-23T13:52:55+00:00 ((2460241j,49975s,15000000n),+0s,2299161j)>}
+----

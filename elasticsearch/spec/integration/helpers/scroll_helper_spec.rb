@@ -14,20 +14,10 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-ELASTICSEARCH_URL = ENV['TEST_ES_SERVER'] || "http://localhost:#{(ENV['PORT'] || 9200)}"
-raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
-
-require 'spec_helper'
+require_relative 'helpers_spec_helper'
 require 'elasticsearch/helpers/scroll_helper'
 
 context 'Elasticsearch client helpers' do
-  let(:client) do
-    Elasticsearch::Client.new(
-      host: ELASTICSEARCH_URL,
-      user: 'elastic',
-      password: 'changeme'
-    )
-  end
   let(:index) { 'books' }
   let(:body) { { size: 12, query: { match_all: {} } } }
   let(:scroll_helper) { Elasticsearch::Helpers::ScrollHelper.new(client, index, body) }
