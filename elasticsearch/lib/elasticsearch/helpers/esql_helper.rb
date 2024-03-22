@@ -25,16 +25,26 @@ module Elasticsearch
       # Query helper for ES|QL
       #
       # By default, the `esql.query` API returns a Hash response with the following keys:
-      # - `columns` with the value being an Array of { name: type } Hashes for each column
-      # - `values` with the value being an Array of Arrays with the values for each row.
+      #
+      # * `columns` with the value being an Array of `{ name: type }` Hashes for each column.
+      #
+      # * `values` with the value being an Array of Arrays with the values for each row.
+      #
       # This helper function returns an Array of hashes with the columns as keys and the respective
-      # values: { column['name'] => value }.
+      # values: `{ column['name'] => value }`.
       #
       # @param client [Elasticsearch::Client] an instance of the Client to use for the query.
       # @param query [Hash, String] The query to be passed to the ES|QL query API.
       # @param params [Hash] options to pass to the ES|QL query API.
-      # @param convert_datetime [Boolean] Converts datetime values from the response into DateTime
-      # objects in Ruby. Default: true.
+      # @param parser [Hash] Hash of column name keys and Proc values to transform the value of
+      #   a given column.
+      # @example Using the ES|QL helper
+      #   require 'elasticsearch/helpers/esql_helper'
+      #   query = <<~ESQL
+      #             FROM sample_data
+      #             | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+      #           ESQL
+      #   response = Elasticsearch::Helpers::ESQLHelper.query(client, query)
       #
       # @example Using the ES|QL helper with a parser
       #     response = Elasticsearch::Helpers::ESQLHelper.query(
