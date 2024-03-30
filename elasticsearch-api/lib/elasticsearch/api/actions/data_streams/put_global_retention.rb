@@ -20,33 +20,33 @@
 #
 module Elasticsearch
   module API
-    module Security
+    module DataStreams
       module Actions
-        # Retrieves information for API keys using a subset of query DSL
+        # Updates the global retention configuration that applies to all data streams managed by the data stream lifecycle.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
         #
-        # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
-        # @option arguments [Boolean] :with_profile_uid flag to also retrieve the API Key's owner profile uid, if it exists
-        # @option arguments [Boolean] :typed_keys flag to prefix aggregation names by their respective types in the response
+        # @option arguments [Boolean] :dry_run Determines whether the global retention provided should be applied or only the impact should be determined.
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body From, size, query, sort and search_after
+        # @option arguments [Hash] :body The global retention configuration including optional values for default and max retention. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-put-global-retention.html
         #
-        def query_api_keys(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.query_api_keys' }
+        def put_global_retention(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'data_streams.put_global_retention' }
+
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body   = arguments.delete(:body)
 
-          method = if body
-                     Elasticsearch::API::HTTP_POST
-                   else
-                     Elasticsearch::API::HTTP_GET
-                   end
-
-          path = '_security/_query/api_key'
+          method = Elasticsearch::API::HTTP_PUT
+          path   = '_data_stream/_global_retention'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
