@@ -70,3 +70,6 @@
 -
   :file: 'search.vectors/120_knn_query_multiple_shards.yml'
   :description: 'Search for 2 knn queries combines scores from them'
+-
+  :file: 'search.vectors/140_knn_query_with_other_queries.yml'
+  :description: 'Function score query with knn query'
