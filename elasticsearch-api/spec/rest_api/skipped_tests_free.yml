@@ -73,3 +73,6 @@
 -
   :file: 'search.vectors/140_knn_query_with_other_queries.yml'
   :description: 'Function score query with knn query'
+-
+  :file: 'search.vectors/60_knn_search_filter_alias.yml'
+  :description: 'kNN filter alias'
