@@ -67,3 +67,6 @@
 -
   :file: 'cat.allocation/10_basic.yml'
   :description: 'Bytes'
+-
+  :file: 'search.vectors/120_knn_query_multiple_shards.yml'
+  :description: 'Search for 2 knn queries combines scores from them'
