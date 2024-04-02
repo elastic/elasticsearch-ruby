@@ -284,6 +284,7 @@ module Elasticsearch
           ACTIONS = (Test::GROUP_TERMINATORS + ['do']).freeze
 
           def do_actions
+            return [] if @actions.empty?
             @do_actions ||= @actions.group_by { |a| a.keys.first }['do'].map { |definition| Action.new(definition['do']) }
           end
 
