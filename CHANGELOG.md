@@ -1,4 +1,73 @@
 *To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
+
+## 8.13.0 Release notes
+
+### Client
+* Tested versions of Ruby for 8.13.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+
+### Experimental ES|QL Helper
+
+This version provides a new experimental Helper for the ES|QL `query` API. Please check out [the documentation](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#esql-helper) and [open an issue](https://github.com/elastic/elasticsearch-ruby/issues/new/choose) if you encounter any problems or have any feedback.
+
+### API
+
+API Changes:
+
+* `async_search.status` - adds Time `:keep_alive` parameter: Specify the time interval in which the results (partial or final) for this search will be available.
+* `bulk` - adds boolean `:require_data_stream` parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+* `connector.list` - Adds the following parameters:
+  * `:index_name` (List): A comma-separated list of connector index names to fetch connector documents for.
+  * `:connector_name` (List): A comma-separated list of connector names to fetch connector documents for.
+  * `:service_type` (List):  A comma-separated list of connector service types to fetch connector documents for.
+  * `:query` (String): A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names.
+* `esql.query` - adds boolean `:drop_null_columns` parameter: Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
+* `field_caps` - Adds `:include_empty_fields` boolean parameter: Include empty fields in result.
+* `index` - adds boolean `:require_data_stream` parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+* `indices.rollover` - adds boolean `:lazy` parameter: If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write. Only allowed on data streams.
+* connector_sync_job.list - adds List `:job_type` parameter: A comma-separated list of job types.
+* `inference.delete_model`, `inference.get_model`, `inference.inference`, `inference.put_model`: renames `:model_id` parameter to `:inference_id`.
+* `termvector` will show a warning since it's been deprecated. Please use the plural version, `termvectors`.
+
+New APIs:
+
+* `indices.resolve_cluster` - Resolves the specified index expressions to return information about each cluster, including the local cluster, if included.
+* `profiling.flamegraph` - Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
+* `profiling.stacktraces` - Extracts raw stacktrace information from Universal Profiling.
+* `security.query_user` - Retrieves information for Users using a subset of query DSL
+* `text_structure.test_grok_pattern` - Tests a Grok pattern on some text.
+
+APIs Migrated from experimental to stable:
+
+* `synonyms.delete_synonym`
+* `synonyms.delete_synonym_rule`
+* `synonyms.get_synonym`
+* `synonyms.get_synonym_rule`
+* `synonyms.get_synonyms_sets`
+* `synonyms.put_synonym`
+* `synonyms.put_synonym_rule`
+
+New Experimental APIs:
+
+* `connector.update_api_key_id` - Updates the API key id and/or API key secret id fields in the connector document.
+* `connector.update_index_name` - Updates the index name of the connector.
+* `connector.update_native` - Updates the is_native flag of the connector.
+* `connector.update_service_type` - Updates the service type of the connector.
+* `connector.update_status` - Updates the status of the connector.
+* `esql.async_query` - Executes an ESQL request asynchronously
+* `esql.async_query_get` - Retrieves the results of a previously submitted async query request given its ID.
+
+New Experimental namespace `connector_secret`:
+
+* `connector_secret.delete` - Deletes a connector secret.
+* `connector_secret.get` - Retrieves a secret stored by Connectors.
+* `connector_secret.post` - Creates a secret for a Connector.
+* `connector_secret.put` - Creates or updates a secret for a Connector.
+
+### Development
+
+* Migrated from `byebug` to `debug`.
+* Added extra testing for OpenTelemetry.
+
 ## 8.12.0 Release notes
 
 ### Client
