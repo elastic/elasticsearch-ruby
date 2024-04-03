@@ -2,10 +2,10 @@ name: opentelemetry
 on:
   push:
     branches:
-      - main
+      - 8.13
   pull_request:
     branches:
-      - main
+      - 8.13
 jobs:
   test-otel:
     name: 'Test Open Telemetry'
@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.2', 'jruby-9.4' ]
+        ruby: [ '3.3', 'jruby-9.4' ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
