@@ -25,6 +25,7 @@ module Elasticsearch
         # Removes the follower retention leases from the leader.
         #
         # @option arguments [String] :index the name of the leader index for which specified follower retention leases should be removed
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body the name and UUID of the follower index, the name of the cluster containing the follower index, and the alias from the perspective of that cluster for the remote cluster containing the leader index (*Required*)
         #
@@ -50,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "#{Utils.__listify(_index)}/_ccr/forget_follower"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

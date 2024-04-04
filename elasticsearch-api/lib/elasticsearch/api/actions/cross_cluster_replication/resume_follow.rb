@@ -25,6 +25,7 @@ module Elasticsearch
         # Resumes a follower index that has been paused
         #
         # @option arguments [String] :index The name of the follow index to resume following.
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
         #
@@ -49,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "#{Utils.__listify(_index)}/_ccr/resume_follow"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

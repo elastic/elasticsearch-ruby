@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves information about all follower indices, including parameters and status for each follower index
         #
         # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "#{Utils.__listify(_index)}/_ccr/info"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

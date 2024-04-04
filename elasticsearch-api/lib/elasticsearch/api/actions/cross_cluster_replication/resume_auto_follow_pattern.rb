@@ -25,6 +25,7 @@ module Elasticsearch
         # Resumes an auto-follow pattern that has been paused
         #
         # @option arguments [String] :name The name of the auto follow pattern to resume discovering new indices to follow.
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-resume-auto-follow-pattern.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_ccr/auto_follow/#{Utils.__listify(_name)}/resume"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
