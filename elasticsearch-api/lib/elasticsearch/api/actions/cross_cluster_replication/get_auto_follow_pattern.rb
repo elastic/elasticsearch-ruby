@@ -25,6 +25,7 @@ module Elasticsearch
         # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
         #
         # @option arguments [String] :name The name of the auto follow pattern.
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
@@ -50,7 +51,7 @@ module Elasticsearch
                    else
                      '_ccr/auto_follow'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

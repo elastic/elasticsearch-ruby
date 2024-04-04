@@ -25,6 +25,7 @@ module Elasticsearch
         # Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
         #
         # @option arguments [String] :name The name of the auto follow pattern.
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The specification of the auto follow pattern (*Required*)
         #
@@ -50,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_ccr/auto_follow/#{Utils.__listify(_name)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

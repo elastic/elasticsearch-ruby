@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
         #
         # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = "#{Utils.__listify(_index)}/_ccr/stats"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

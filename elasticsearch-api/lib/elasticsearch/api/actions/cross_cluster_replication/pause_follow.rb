@@ -25,6 +25,7 @@ module Elasticsearch
         # Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
         #
         # @option arguments [String] :index The name of the follower index that should pause following its leader index.
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "#{Utils.__listify(_index)}/_ccr/pause_follow"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

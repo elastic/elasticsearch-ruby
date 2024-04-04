@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Gets all stats related to cross-cluster replication.
         #
+        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-stats.html
@@ -38,7 +40,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_ccr/stats'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
