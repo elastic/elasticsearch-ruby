@@ -242,7 +242,7 @@ use the `transport_options` option:
 Elasticsearch::Client.new(
   url: 'https://username:password@localhost:9200',
   transport_options: {
-	ssl: { ca_file: '/path/to/cacert.pem' }
+	ssl: { ca_file: '/path/to/http_ca.crt' }
   }
 )
 ------------------------------------
