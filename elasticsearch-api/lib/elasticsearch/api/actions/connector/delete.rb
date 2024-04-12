@@ -29,6 +29,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be deleted.
+        # @option arguments [Boolean] :delete_sync_jobs Determines whether associated sync jobs are also deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-connector-api.html
@@ -52,7 +53,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_connector/#{Utils.__listify(_connector_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
