@@ -76,3 +76,9 @@
 -
   :file: 'search.vectors/60_knn_search_filter_alias.yml'
   :description: 'kNN filter alias'
+-
+  :file: 'cluster.desired_nodes/11_old_format.yml'
+  :description: 'Test node version must be at least the current master version'
+-
+  :file: 'cluster.desired_nodes/11_old_format.yml'
+  :description: 'Test node version must have content'
