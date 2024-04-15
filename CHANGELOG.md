@@ -1,4 +1,4 @@
-*To see release notes for the `7.x` branch and older releases, see [CHANGELOG on the 7.17 branch](https://github.com/elastic/elasticsearch-ruby/blob/7.17/CHANGELOG.md).*
+*See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
 ## 8.13.0 Release notes
 
