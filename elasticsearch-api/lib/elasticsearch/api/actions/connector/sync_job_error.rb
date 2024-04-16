@@ -20,34 +20,45 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSyncJob
+    module Connector
       module Actions
-        # Lists all connector sync jobs.
+        # Sets an error for a connector sync job.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
-        # @option arguments [String] :status Sync job status, which sync jobs are fetched for
-        # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
-        # @option arguments [List] :job_type A comma-separated list of job types
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to set an error for.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The error to set in the connector sync job. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-sync-jobs-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/set-connector-sync-job-error-api.html
         #
-        def list(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.list' }
+        def sync_job_error(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_error' }
+
+          defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+
+          unless arguments[:connector_sync_job_id]
+            raise ArgumentError,
+                  "Required argument 'connector_sync_job_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = arguments.delete(:body)
 
-          method = Elasticsearch::API::HTTP_GET
-          path   = '_connector/_sync_job'
-          params = Utils.process_params(arguments)
+          _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_error"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

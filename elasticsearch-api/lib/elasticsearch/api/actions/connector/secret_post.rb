@@ -20,21 +20,21 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSyncJob
+    module Connector
       module Actions
-        # Creates a connector sync job.
+        # Creates a secret for a Connector.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The connector sync job data. (*Required*)
+        # @option arguments [Hash] :body The secret value to store (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/create-connector-sync-job-api.html
+        # @see [TODO]
         #
-        def post(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.post' }
+        def secret_post(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.secret_post' }
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
@@ -44,7 +44,7 @@ module Elasticsearch
           body   = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = '_connector/_sync_job'
+          path   = '_connector/_secret'
           params = {}
 
           Elasticsearch::API::Response.new(

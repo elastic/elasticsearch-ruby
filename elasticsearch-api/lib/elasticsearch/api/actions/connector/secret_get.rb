@@ -20,31 +20,38 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSecret
+    module Connector
       module Actions
-        # Creates a secret for a Connector.
+        # Retrieves a secret stored by Connectors.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
+        # @option arguments [String] :id The ID of the secret
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The secret value to store (*Required*)
         #
         # @see [TODO]
         #
-        def post(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_secret.post' }
+        def secret_get(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.secret_get' }
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = nil
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = '_connector/_secret'
+          _id = arguments.delete(:id)
+
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_connector/_secret/#{Utils.__listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_sync_job#post' do
+describe 'client.connector.sync_job_post' do
   let(:expected_args) do
     [
       'POST',
@@ -25,11 +25,11 @@ describe 'client.connector_sync_job#post' do
       {},
       {},
       {},
-      { endpoint: 'connector_sync_job.post' }
+      { endpoint: 'connector.sync_job_post' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_sync_job.post(body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.sync_job_post(body: {})).to be_a Elasticsearch::API::Response
   end
 end

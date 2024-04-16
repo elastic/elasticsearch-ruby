@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_sync_job#delete' do
+describe 'client.connector.sync_job_delete' do
   let(:expected_args) do
     [
       'DELETE',
@@ -27,12 +27,12 @@ describe 'client.connector_sync_job#delete' do
       {},
       {
         defined_params: {connector_sync_job_id: 'foo'},
-        endpoint: 'connector_sync_job.delete'
+        endpoint: 'connector.sync_job_delete'
       }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_sync_job.delete(connector_sync_job_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.sync_job_delete(connector_sync_job_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

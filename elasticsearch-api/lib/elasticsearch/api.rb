@@ -88,8 +88,6 @@ module Elasticsearch
                 Elasticsearch::API::Profiling,
                 Elasticsearch::API::Simulate,
                 Elasticsearch::API::Connector,
-                Elasticsearch::API::ConnectorSyncJob,
-                Elasticsearch::API::ConnectorSecret,
                 Elasticsearch::API::DataStreams
     end
 

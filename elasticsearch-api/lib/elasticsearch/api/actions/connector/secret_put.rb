@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSecret
+    module Connector
       module Actions
         # Creates or updates a secret for a Connector.
         # This functionality is Experimental and may be changed or removed
@@ -34,8 +34,8 @@ module Elasticsearch
         #
         # @see [TODO]
         #
-        def put(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_secret.put' }
+        def secret_put(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.secret_put' }
 
           defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)

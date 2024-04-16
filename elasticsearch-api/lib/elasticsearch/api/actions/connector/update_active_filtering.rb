@@ -20,41 +20,38 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSyncJob
+    module Connector
       module Actions
-        # Deletes a connector sync job.
+        # Activates the draft filtering rules if they are in a validated state.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be deleted.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-connector-sync-job-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-api.html
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.delete' }
+        def update_active_filtering(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.update_active_filtering' }
 
-          defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:connector_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          unless arguments[:connector_sync_job_id]
-            raise ArgumentError,
-                  "Required argument 'connector_sync_job_id' missing"
-          end
+          raise ArgumentError, "Required argument 'connector_id' missing" unless arguments[:connector_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
-          _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
+          _connector_id = arguments.delete(:connector_id)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}"
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_connector/#{Utils.__listify(_connector_id)}/_filtering/_activate"
           params = {}
 
           Elasticsearch::API::Response.new(
