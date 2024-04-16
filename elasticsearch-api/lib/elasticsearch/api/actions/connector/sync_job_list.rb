@@ -20,39 +20,34 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSecret
+    module Connector
       module Actions
-        # Retrieves a secret stored by Connectors.
+        # Lists all connector sync jobs.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :id The ID of the secret
+        # @option arguments [Integer] :from Starting offset (default: 0)
+        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
+        # @option arguments [String] :status Sync job status, which sync jobs are fetched for
+        # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
+        # @option arguments [List] :job_type A comma-separated list of job types
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see [TODO]
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-sync-jobs-api.html
         #
-        def get(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_secret.get' }
-
-          defined_params = [:id].each_with_object({}) do |variable, set_variables|
-            set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          end
-          request_opts[:defined_params] = defined_params unless defined_params.empty?
-
-          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+        def sync_job_list(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_list' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          _id = arguments.delete(:id)
+          body   = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_connector/_secret/#{Utils.__listify(_id)}"
-          params = {}
+          path   = '_connector/_sync_job'
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

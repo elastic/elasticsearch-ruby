@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_sync_job#update_stats' do
+describe 'client.connector.sync_job_update_stats' do
   let(:expected_args) do
     [
       'PUT',
@@ -27,12 +27,12 @@ describe 'client.connector_sync_job#update_stats' do
       {},
       {
         defined_params: {connector_sync_job_id: "foo"},
-        endpoint: 'connector_sync_job.update_stats'
+        endpoint: 'connector.sync_job_update_stats'
       }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_sync_job.update_stats(connector_sync_job_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.sync_job_update_stats(connector_sync_job_id: 'foo', body: {})).to be_a Elasticsearch::API::Response
   end
 end

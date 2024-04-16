@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_secret#get' do
+describe 'client.connector#secret_delete' do
   let(:expected_args) do
     [
       'DELETE',
@@ -25,11 +25,11 @@ describe 'client.connector_secret#get' do
       {},
       nil,
       {},
-      { :defined_params=>{ id: 'foo' }, endpoint: 'connector_secret.delete' }
+      { :defined_params=>{ id: 'foo' }, endpoint: 'connector.secret_delete' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_secret.delete(id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.secret_delete(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

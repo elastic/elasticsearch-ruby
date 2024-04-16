@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_secret#get' do
+describe 'client.connector.secret_get' do
   let(:expected_args) do
     [
       'GET',
@@ -25,11 +25,11 @@ describe 'client.connector_secret#get' do
       {},
       nil,
       {},
-      { :defined_params=>{ id: 'foo' }, endpoint: 'connector_secret.get' }
+      { :defined_params=>{ id: 'foo' }, endpoint: 'connector.secret_get' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_secret.get(id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.secret_get(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

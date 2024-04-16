@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_sync_job#cancel' do
+describe 'client.connector.sync_job_cancel' do
   let(:expected_args) do
     [
       'PUT',
@@ -27,12 +27,12 @@ describe 'client.connector_sync_job#cancel' do
       {},
       {
         defined_params: {connector_sync_job_id: "foo"},
-        endpoint: 'connector_sync_job.cancel'
+        endpoint: 'connector.sync_job_cancel'
       }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_sync_job.cancel(connector_sync_job_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.sync_job_cancel(connector_sync_job_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

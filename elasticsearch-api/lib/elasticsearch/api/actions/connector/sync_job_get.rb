@@ -20,38 +20,41 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSecret
+    module Connector
       module Actions
-        # Deletes a connector secret.
+        # Returns the details about a connector sync job.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :id The ID of the secret
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be returned.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see [TODO]
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-connector-sync-job-api.html
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_secret.delete' }
+        def sync_job_get(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_get' }
 
-          defined_params = [:id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+          unless arguments[:connector_sync_job_id]
+            raise ArgumentError,
+                  "Required argument 'connector_sync_job_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = nil
 
-          _id = arguments.delete(:id)
+          _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_connector/_secret/#{Utils.__listify(_id)}"
+          method = Elasticsearch::API::HTTP_GET
+          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

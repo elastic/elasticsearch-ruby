@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_secret#post' do
+describe 'client.connector.secret_post' do
   let(:expected_args) do
     [
       'POST',
@@ -25,11 +25,11 @@ describe 'client.connector_secret#post' do
       {},
       {},
       {},
-      { endpoint: 'connector_secret.post' }
+      { endpoint: 'connector.secret_post' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_secret.post(body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.secret_post(body: {})).to be_a Elasticsearch::API::Response
   end
 end

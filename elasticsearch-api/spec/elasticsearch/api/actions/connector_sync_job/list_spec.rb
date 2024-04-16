@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.connector_sync_job#list' do
+describe 'client.connector.sync_job_list' do
   let(:expected_args) do
     [
       'GET',
@@ -25,11 +25,11 @@ describe 'client.connector_sync_job#list' do
       {},
       nil,
       {},
-      { endpoint: 'connector_sync_job.list' }
+      { endpoint: 'connector.sync_job_list' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.connector_sync_job.list).to be_a Elasticsearch::API::Response
+    expect(client_double.connector.sync_job_list).to be_a Elasticsearch::API::Response
   end
 end

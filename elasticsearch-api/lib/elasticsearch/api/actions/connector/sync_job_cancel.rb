@@ -20,21 +20,21 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSyncJob
+    module Connector
       module Actions
-        # Checks in a connector sync job (refreshes 'last_seen').
+        # Cancels a connector sync job.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be canceled
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/check-in-connector-sync-job-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cancel-connector-sync-job-api.html
         #
-        def check_in(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.check_in' }
+        def sync_job_cancel(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_cancel' }
 
           defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
@@ -54,7 +54,7 @@ module Elasticsearch
           _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_check_in"
+          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_cancel"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -20,29 +20,26 @@
 #
 module Elasticsearch
   module API
-    module ConnectorSyncJob
+    module Connector
       module Actions
-        # Sets an error for a connector sync job.
+        # Checks in a connector sync job (refreshes 'last_seen').
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to set an error for.
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The error to set in the connector sync job. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/set-connector-sync-job-error-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/check-in-connector-sync-job-api.html
         #
-        def error(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'connector_sync_job.error' }
+        def sync_job_check_in(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_check_in' }
 
           defined_params = [:connector_sync_job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
-
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           unless arguments[:connector_sync_job_id]
             raise ArgumentError,
@@ -52,12 +49,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_error"
+          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_check_in"
           params = {}
 
           Elasticsearch::API::Response.new(
