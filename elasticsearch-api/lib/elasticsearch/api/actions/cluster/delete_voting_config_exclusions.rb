@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for submitting request to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/voting-config-exclusions.html
         #
         def delete_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.delete_voting_config_exclusions' }

@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The global retention configuration including optional values for default and max retention. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-put-global-retention.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams-put-global-retention.html
         #
         def put_global_retention(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'data_streams.put_global_retention' }

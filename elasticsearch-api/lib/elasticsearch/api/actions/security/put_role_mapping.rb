@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The role mapping to add (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role-mapping.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-put-role-mapping.html
         #
         def put_role_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.put_role_mapping' }

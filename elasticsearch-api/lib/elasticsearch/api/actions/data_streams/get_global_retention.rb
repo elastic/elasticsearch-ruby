@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return the global retention retrieved from the node that received the request.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-get-global-retention.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams-get-global-retention.html
         #
         def get_global_retention(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'data_streams.get_global_retention' }

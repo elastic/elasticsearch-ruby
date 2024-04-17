@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-component-template.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-component-template.html
         #
         def get_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.get_component_template' }

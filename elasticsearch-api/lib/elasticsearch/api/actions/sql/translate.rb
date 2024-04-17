@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Specify the query in the `query` element. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/sql-translate-api.html
         #
         def translate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.translate' }

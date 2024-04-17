@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :active_only flag to limit response to only active (not invalidated or expired) API keys
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-get-api-key.html
         #
         def get_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_api_key' }

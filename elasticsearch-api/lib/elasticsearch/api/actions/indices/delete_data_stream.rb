@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams.html
         #
         def delete_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_stream' }
