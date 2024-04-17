@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-query-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/esql-query-api.html
         #
         def query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.query' }

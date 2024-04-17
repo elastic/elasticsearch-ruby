@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The OpenID Connect response to authenticate (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-authenticate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-oidc-authenticate.html
         #
         def oidc_authenticate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.oidc_authenticate' }

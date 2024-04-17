@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Validation info for the draft filtering rules (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/update-connector-filtering-api.html
         #
         def update_filtering_validation(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_filtering_validation' }

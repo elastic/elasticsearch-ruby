@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-delete-global-retention.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams-delete-global-retention.html
         #
         def delete_global_retention(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'data_streams.delete_global_retention' }

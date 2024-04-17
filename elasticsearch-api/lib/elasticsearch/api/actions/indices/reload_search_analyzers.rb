@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :resource changed resource to reload analyzers from if applicable
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-reload-analyzers.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-reload-analyzers.html
         #
         def reload_search_analyzers(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.reload_search_analyzers' }

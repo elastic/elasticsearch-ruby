@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query ruleset configuration, including `rules` (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/put-query-ruleset.html
         #
         def put(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.put' }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :delete_user_annotations Should annotations added by the user be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-reset-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-reset-job.html
         #
         def reset_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.reset_job' }

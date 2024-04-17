@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-activate-watch.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/watcher-api-activate-watch.html
         #
         def activate_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.activate_watch' }

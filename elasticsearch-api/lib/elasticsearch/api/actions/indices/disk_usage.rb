@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-disk-usage.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-disk-usage.html
         #
         def disk_usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.disk_usage' }
