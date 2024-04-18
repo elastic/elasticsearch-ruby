@@ -18,6 +18,10 @@
 module Elasticsearch
   module Helpers
     # Elasticsearch Client Helper for the ES|QL API
+    # This functionality is Experimental and may be changed or removed
+    # completely in a future release. Elastic will take a best effort approach
+    # to fix any issues, but experimental features are not subject to the
+    # support SLA of official GA features.
     #
     # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-query-api.html
     #
@@ -56,7 +60,9 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#_esql_helper
       #
       def self.query(client, query, params = {}, parser: {})
-        response = client.esql.query({ body: { query: query }, format: 'json' }.merge(params))
+        request = build_request(query, params)
+        response = client.esql.query(request)
+
         columns = response['columns']
         response['values'].map do |value|
           (value.length - 1).downto(0).map do |index|
@@ -65,6 +71,15 @@ module Elasticsearch
             { key => value[index] }
           end.reduce({}, :merge)
         end
+      end
+
+      def self.build_request(query, params)
+        {
+          body: {
+            query: query,
+            version: params.delete(:version) || '2024.04.01' },
+          format: 'json'
+        }.merge(params)
       end
     end
   end
