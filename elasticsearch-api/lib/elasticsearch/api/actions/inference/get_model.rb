@@ -42,8 +42,6 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
-
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -56,8 +54,10 @@ module Elasticsearch
           method = Elasticsearch::API::HTTP_GET
           path   = if _task_type && _inference_id
                      "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
+                   elsif _inference_id
                      "_inference/#{Utils.__listify(_inference_id)}"
+                   else
+                     '_inference'
                    end
           params = {}
 
