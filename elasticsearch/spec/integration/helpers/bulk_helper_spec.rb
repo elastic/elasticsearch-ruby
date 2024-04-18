@@ -21,6 +21,7 @@ require 'tempfile'
 context 'Elasticsearch client helpers' do
   context 'Bulk helper' do
     let(:index) { 'bulk_animals' }
+    let(:index_slice) { 'bulk_animals_slice' }
     let(:params) { { refresh: 'wait_for' } }
     let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(client, index, params) }
     let(:docs) do
@@ -40,6 +41,7 @@ context 'Elasticsearch client helpers' do
 
     after do
       client.indices.delete(index: index, ignore: 404)
+      client.indices.delete(index: index_slice, ignore: 404)
     end
 
     it 'Ingests documents' do
@@ -76,10 +78,13 @@ context 'Elasticsearch client helpers' do
 
     it 'Ingests documents and yields response and docs' do
       slice = 2
+      bulk_helper = Elasticsearch::Helpers::BulkHelper.new(client, index_slice, params)
       response = bulk_helper.ingest(docs, {slice: slice}) do |response, docs|
         expect(response).to be_an_instance_of Elasticsearch::API::Response
         expect(docs.count).to eq slice
       end
+      response = client.search(index: index_slice, size: 200)
+      expect(response['hits']['hits'].map { |a| a['_source'].transform_keys(&:to_sym) }).to eq docs
     end
 
     context 'JSON File helper' do
