@@ -16,6 +16,7 @@
 # under the License.
 require_relative 'helpers_spec_helper'
 require 'elasticsearch/helpers/esql_helper'
+require 'ipaddr'
 
 context 'Elasticsearch client helpers' do
   let(:index) { 'esql_helper_test' }
@@ -76,8 +77,6 @@ context 'Elasticsearch client helpers' do
   end
 
   it 'parses iterated objects when procs are passed in' do
-    require 'ipaddr'
-
     parser = {
       '@timestamp' => Proc.new { |t| DateTime.parse(t) },
       'client.ip' => Proc.new { |i| IPAddr.new(i) },
@@ -87,6 +86,31 @@ context 'Elasticsearch client helpers' do
     response.each do |r|
       expect(r['@timestamp']).to be_a DateTime
       expect(r['client.ip']).to be_a IPAddr
+      expect(r['message']).to be_a String
+      expect(r['event.duration']).to be_a String
+    end
+  end
+
+  it 'parser does not error when value is nil, leaves nil' do
+    client.index(
+      index: index,
+      body: {
+        '@timestamp' => nil,
+        'client.ip' => nil,
+        message: 'Connected to 10.1.0.1',
+        'event.duration' => 1756465
+      },
+      refresh: true
+    )
+    parser = {
+      '@timestamp' => Proc.new { |t| DateTime.parse(t) },
+      'client.ip' => Proc.new { |i| IPAddr.new(i) },
+      'event.duration' => Proc.new { |d| d.to_s }
+    }
+    response = esql_helper.query(client, query, parser: parser)
+    response.each do |r|
+      expect [DateTime, NilClass].include?(r['@timestamp'].class)
+      expect [IPAddr, NilClass].include?(r['client.ip'].class)
       expect(r['message']).to be_a String
       expect(r['event.duration']).to be_a String
     end
