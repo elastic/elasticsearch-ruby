@@ -61,7 +61,7 @@ module Elasticsearch
         response['values'].map do |value|
           (value.length - 1).downto(0).map do |index|
             key = columns[index]['name']
-            value[index] = parser[key].call value[index] if parser[key]
+            value[index] = parser[key].call(value[index]) if value[index] && parser[key]
             { key => value[index] }
           end.reduce({}, :merge)
         end
