@@ -48,7 +48,9 @@ module Elasticsearch
       def ingest(docs, params = {}, body = {}, &block)
         ingest_docs = docs.map { |doc| { index: { _index: @index, data: doc} } }
         if (slice = params.delete(:slice))
-          ingest_docs.each_slice(slice) { |items| ingest(items, params, &block) }
+          ingest_docs.each_slice(slice) do |items|
+            ingest(items.map { |item| item[:index][:data] }, params, &block)
+          end
         else
           bulk_request(ingest_docs, params, &block)
         end
