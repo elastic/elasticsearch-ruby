@@ -29,6 +29,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :name The name of the search application to be searched
+        # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Search parameters, including template parameters that override defaults
         #
@@ -58,7 +59,7 @@ module Elasticsearch
                    end
 
           path = "_application/search_application/#{Utils.__listify(_name)}/_search"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
