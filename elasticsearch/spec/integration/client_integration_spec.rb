@@ -19,6 +19,7 @@ raise URI::InvalidURIError unless ELASTICSEARCH_URL =~ /\A#{URI::DEFAULT_PARSER.
 
 require 'spec_helper'
 require 'logger'
+require 'uri'
 
 context 'Elasticsearch client' do
   let(:logger) { Logger.new($stderr) }
