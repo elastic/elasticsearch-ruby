@@ -17,20 +17,20 @@
 
 require 'spec_helper'
 
-describe 'client#inference.delete_model' do
+describe 'client#inference.get' do
   let(:expected_args) do
     [
-      'DELETE',
+      'GET',
       '_inference/foo/bar',
       {},
       nil,
       {},
       { defined_params: { inference_id: 'bar', task_type: 'foo' },
-        endpoint: 'inference.delete_model' }
+        endpoint: 'inference.get' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.delete_model(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.get(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

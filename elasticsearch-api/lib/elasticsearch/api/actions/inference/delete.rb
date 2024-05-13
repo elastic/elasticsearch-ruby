@@ -22,20 +22,20 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete model in the Inference API
+        # Delete an inference endpoint
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :inference_id The model Id
+        # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference-api.html
         #
-        def delete_model(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.delete_model' }
+        def delete(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
 
           defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
