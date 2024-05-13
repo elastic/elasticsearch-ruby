@@ -118,3 +118,8 @@
 -
   :file: 'api_key/21_query_with_aggs.yml'
   :description: 'Test composite aggs api key'
+
+# Issue: key_as_string should not be parsed to date:
+-
+  :file: 'analytics/empty_field_metric.yml'
+  :description: 'Rate test'
