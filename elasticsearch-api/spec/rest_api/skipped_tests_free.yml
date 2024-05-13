@@ -82,3 +82,6 @@
 -
   :file: 'cluster.desired_nodes/11_old_format.yml'
   :description: 'Test node version must have content'
+-
+  :file: 'aggregations/stats_metric_fail_formatting.yml'
+  :description: 'fail formatting'
