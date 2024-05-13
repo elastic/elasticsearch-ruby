@@ -23,10 +23,6 @@ module Elasticsearch
     module Esql
       module Actions
         # Executes an ESQL request
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
