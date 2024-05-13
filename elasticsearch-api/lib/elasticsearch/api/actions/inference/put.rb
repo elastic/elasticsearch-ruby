@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Get a model in the Inference API
+        # Configure an inference endpoint for use in the Inference API
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
@@ -31,33 +31,34 @@ module Elasticsearch
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-inference-api.html
         #
-        def get_model(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.get_model' }
+        def put(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put' }
 
           defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           _inference_id = arguments.delete(:inference_id)
 
           _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_GET
+          method = Elasticsearch::API::HTTP_PUT
           path   = if _task_type && _inference_id
                      "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   elsif _inference_id
-                     "_inference/#{Utils.__listify(_inference_id)}"
                    else
-                     '_inference'
+                     "_inference/#{Utils.__listify(_inference_id)}"
                    end
           params = {}
 
