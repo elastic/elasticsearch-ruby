@@ -43,8 +43,8 @@ namespace :elasticsearch do
 
   def download_file!(url, filename)
     puts "Downloading #{filename} from #{url}"
-    File.open(filename, "w") do |downloaded_file|
-      URI.open(url, "rb") do |artifact_file|
+    File.open(filename, 'w') do |downloaded_file|
+      URI.open(url, 'rb') do |artifact_file|
         downloaded_file.write(artifact_file.read)
       end
     end
@@ -54,8 +54,11 @@ namespace :elasticsearch do
       warn "[!] Couldn't download #{filename}"
       exit 1
     end
+  rescue OpenURI::HTTPError => e
+    abort e.message
   rescue StandardError => e
-    abort e
+    puts e.backtrace.join("\n\t")
+    abort e.message
   end
 
   desc 'Download artifacts (tests and REST spec) for currently running cluster'
