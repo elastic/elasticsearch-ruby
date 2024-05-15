@@ -41,6 +41,9 @@
   :file: 'search.vectors/40_knn_search.yml'
   :description: 'Direct kNN queries are disallowed'
 -
+  :file: 'search.vectors/40_knn_search.yml'
+  :description: 'Knn search with mip'
+-
   :file: 'search.vectors/45_knn_search_byte.yml'
   :description: 'Direct kNN queries are disallowed'
 -
