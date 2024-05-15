@@ -20,6 +20,17 @@ require_relative 'rest_api_tests_helper'
 require_relative './run_rspec_matchers'
 
 LOGGER = Logger.new($stdout)
+CLUSTER_FEATURES = ADMIN_CLIENT.features.get_features['features'].map { |f| f['name'] }
+
+def skip_test?(test)
+  # To support new features skipping in YAML tests. This will go away with new YAML tests:
+  if (feature_to_skip = test.skip&.first&.[]('skip')&.[]('cluster_features'))
+    return true unless CLUSTER_FEATURES.include?(feature_to_skip)
+  end
+  # Support skipping 'awaits_fix'
+  !!test.test_file.instance_variable_get('@skip')&.first&.[]('skip')&.[]('awaits_fix') ||
+    !!test.skip&.first&.[]('skip')&.[]('awaits_fix')
+end
 
 describe 'Rest API YAML tests' do
   LOGGER.info "Elastic Transport version: #{Elastic::Transport::VERSION}"
@@ -29,8 +40,6 @@ describe 'Rest API YAML tests' do
     LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
     exit 1
   end
-
-  CLUSTER_FEATURES = ADMIN_CLIENT.features.get_features['features'].map { |f| f['name'] }
 
   # Traverse YAML files and create TestFile object:
   REST_API_YAML_FILES.each do |file|
@@ -48,10 +57,8 @@ describe 'Rest API YAML tests' do
       let(:client) { DEFAULT_CLIENT }
 
       test_file.tests.each do |test|
-        # To support new features skipping in YAML tests. This will go away with new YAML tests:
-        if (feature_to_skip = test.skip&.first&.[]('skip')&.[]('cluster_features'))
-          next unless CLUSTER_FEATURES.include? feature_to_skip
-        end
+        next if skip_test?(test)
+
         context test.description do
           if test.skip_test?(ADMIN_CLIENT)
             skip 'Test contains feature(s) not yet supported or version is not satisfied'
