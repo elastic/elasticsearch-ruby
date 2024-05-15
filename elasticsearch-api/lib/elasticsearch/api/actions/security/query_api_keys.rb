@@ -25,6 +25,7 @@ module Elasticsearch
         # Retrieves information for API keys using a subset of query DSL
         #
         # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
+        # @option arguments [Boolean] :typed_keys flag to prefix aggregation names by their respective types in the response
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
