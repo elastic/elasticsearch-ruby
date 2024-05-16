@@ -19,11 +19,11 @@ require 'json'
 require 'fileutils'
 require 'logger'
 
-namespace :docs do
-  SRC_FILE          = "#{__dir__}/docs/parsed_alternative_report.json".freeze
-  EXAMPLES_TO_PARSE = JSON.parse(File.read("#{__dir__}/docs/examples_to_parse.json")).freeze
-  TARGET_DIR        = "#{__dir__}/../docs/examples/guide".freeze
+SRC_FILE          = "#{__dir__}/docs/parsed_alternative_report.json".freeze
+EXAMPLES_TO_PARSE = JSON.parse(File.read("#{__dir__}/docs/examples_to_parse.json")).freeze
+TARGET_DIR        = "#{__dir__}/../docs/examples/guide".freeze
 
+namespace :docs do
   desc 'Generate doc examples'
   task :generate do
     # Remove existing documents to avoid having outdated files
@@ -206,7 +206,8 @@ module TestDocs
   end
 
   def self.log_successful_code(filename)
-    logger = Logger.new('log/200-ok.log')
+    FileUtils.mkdir_p('./log') unless File.directory?('./log')
+    logger = Logger.new('./log/200-ok.log')
     logger.formatter = -> (_, _, _, msg) { "#{msg} " }
     logger.info(filename)
   end
