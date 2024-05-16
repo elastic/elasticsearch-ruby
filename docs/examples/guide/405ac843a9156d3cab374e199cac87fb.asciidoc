@@ -1,6 +1,6 @@
 [source, ruby]
 ----
-response = client.connector_sync_job.post(
+response = client.connector.sync_job_post(
   body: {
     id: 'connector-id',
     job_type: 'full',

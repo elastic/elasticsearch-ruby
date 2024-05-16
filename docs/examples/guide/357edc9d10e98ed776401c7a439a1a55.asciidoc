@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.resolve_cluster(
+  name: 'not-present,clust*:my-index*,oldcluster:*',
+  ignore_unavailable: false
+)
+puts response
+----

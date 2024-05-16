@@ -1,0 +1,8 @@
+[source, ruby]
+----
+response = client.indices.rollover(
+  alias: 'my-data-stream',
+  lazy: true
+)
+puts response
+----

@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.inference.inference(
+  task_type: 'completion',
+  inference_id: 'openai_chat_completions',
+  body: {
+    input: 'What is Elastic?'
+  }
+)
+puts response
+----

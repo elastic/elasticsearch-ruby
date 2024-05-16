@@ -1,0 +1,24 @@
+[source, ruby]
+----
+response = client.search(
+  index: 'cohere-embeddings',
+  body: {
+    knn: {
+      field: 'content_embedding',
+      query_vector_builder: {
+        text_embedding: {
+          model_id: 'cohere_embeddings',
+          model_text: 'Muscles in human body'
+        }
+      },
+      k: 10,
+      num_candidates: 100
+    },
+    _source: [
+      'id',
+      'content'
+    ]
+  }
+)
+puts response
+----

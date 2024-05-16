@@ -1,0 +1,10 @@
+[source, ruby]
+----
+response = client.connector.update_status(
+  connector_id: 'my-connector',
+  body: {
+    status: 'needs_configuration'
+  }
+)
+puts response
+----

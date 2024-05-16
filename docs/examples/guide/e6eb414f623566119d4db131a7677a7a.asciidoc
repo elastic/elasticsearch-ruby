@@ -1,0 +1,12 @@
+[source, ruby]
+----
+response = client.connector.update_configuration(
+  connector_id: 'my-spo-connector',
+  body: {
+    values: {
+      secret_value: 'new-super-secret-value'
+    }
+  }
+)
+puts response
+----
