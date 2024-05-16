@@ -1,0 +1,11 @@
+[source, ruby]
+----
+response = client.connector.update_api_key_id(
+  connector_id: 'my-connector',
+  body: {
+    api_key_id: 'my-api-key-id',
+    api_key_secret_id: 'my-connector-secret-id'
+  }
+)
+puts response
+----

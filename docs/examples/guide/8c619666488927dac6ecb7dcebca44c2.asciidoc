@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'cohere-embeddings',
+  body: {
+    mappings: {
+      properties: {
+        content_embedding: {
+          type: 'dense_vector',
+          dims: 1024,
+          element_type: 'byte'
+        },
+        content: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

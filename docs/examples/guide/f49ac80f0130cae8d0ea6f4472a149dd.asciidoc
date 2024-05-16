@@ -1,0 +1,25 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'my-image-index',
+  body: {
+    mappings: {
+      properties: {
+        "image-vector": {
+          type: 'dense_vector',
+          dims: 3,
+          index: true,
+          similarity: 'l2_norm'
+        },
+        "file-type": {
+          type: 'keyword'
+        },
+        title: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

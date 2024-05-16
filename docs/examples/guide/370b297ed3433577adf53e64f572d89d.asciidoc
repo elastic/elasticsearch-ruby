@@ -1,6 +1,6 @@
 [source, ruby]
 ----
-response = client.connector_sync_job.delete(
+response = client.connector.sync_job_delete(
   connector_sync_job_id: 'my-connector-sync-job-id'
 )
 puts response

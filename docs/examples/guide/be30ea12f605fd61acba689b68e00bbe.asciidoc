@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.ingest.put_pipeline(
+  id: 'hugging_face_embeddings',
+  body: {
+    processors: [
+      {
+        inference: {
+          model_id: 'hugging_face_embeddings',
+          input_output: {
+            input_field: 'content',
+            output_field: 'content_embedding'
+          }
+        }
+      }
+    ]
+  }
+)
+puts response
+----

@@ -1,0 +1,7 @@
+[source, ruby]
+----
+response = client.connector.list(
+  index_name: 'search-google-drive'
+)
+puts response
+----

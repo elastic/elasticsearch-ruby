@@ -1,0 +1,20 @@
+[source, ruby]
+----
+response = client.inference.inference(
+  task_type: 'rerank',
+  inference_id: 'cohere_rerank',
+  body: {
+    input: [
+      'luke',
+      'like',
+      'leia',
+      'chewy',
+      'r2d2',
+      'star',
+      'wars'
+    ],
+    query: 'star wars main character'
+  }
+)
+puts response
+----

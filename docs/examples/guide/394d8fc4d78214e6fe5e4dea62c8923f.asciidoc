@@ -1,0 +1,41 @@
+[source, ruby]
+----
+response = client.connector.update_configuration(
+  connector_id: 'my-spo-connector',
+  body: {
+    configuration: {
+      client_id: {
+        default_value: nil,
+        depends_on: [],
+        display: 'text',
+        label: 'Client ID',
+        options: [],
+        order: 3,
+        required: true,
+        sensitive: false,
+        tooltip: nil,
+        type: 'str',
+        ui_restrictions: [],
+        validations: [],
+        value: nil
+      },
+      secret_value: {
+        default_value: nil,
+        depends_on: [],
+        display: 'text',
+        label: 'Secret value',
+        options: [],
+        order: 4,
+        required: true,
+        sensitive: true,
+        tooltip: nil,
+        type: 'str',
+        ui_restrictions: [],
+        validations: [],
+        value: nil
+      }
+    }
+  }
+)
+puts response
+----

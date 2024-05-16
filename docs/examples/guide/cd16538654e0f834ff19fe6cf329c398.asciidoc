@@ -1,0 +1,21 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'hugging-face-embeddings',
+  body: {
+    mappings: {
+      properties: {
+        content_embedding: {
+          type: 'dense_vector',
+          dims: 768,
+          element_type: 'float'
+        },
+        content: {
+          type: 'text'
+        }
+      }
+    }
+  }
+)
+puts response
+----

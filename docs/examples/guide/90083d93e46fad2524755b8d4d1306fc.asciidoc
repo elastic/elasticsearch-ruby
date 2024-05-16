@@ -1,6 +1,6 @@
 [source, ruby]
 ----
-response = client.connector_sync_job.update_stats(
+response = client.connector.sync_job_update_stats(
   connector_sync_job_id: 'my-connector-sync-job',
   body: {
     deleted_document_count: 10,
