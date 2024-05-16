@@ -30,7 +30,7 @@ describe 'API keys API' do
       username: user,
       body: {
         password: password,
-        roles: [ 'admin_role' ],
+        roles: ['admin_role'],
         full_name: 'Admin user'
       }
     )
@@ -45,31 +45,22 @@ describe 'API keys API' do
     it 'updates api key' do
       response = ADMIN_CLIENT.security.create_cross_cluster_api_key(
         body: {
-          name: "my-cc-api-key",
-          expiration: "1d",
+          name: 'my-cc-api-key',
+          expiration: '1d',
           access: {
             search: [
-              {
-                names: ["logs*"],
-                query: {
-                  term: { "category": "shared" }
-                },
-                field_security: {
-                  grant: ["*"],
-                  except: ["private"]
-                }
-              }
+              { names: ['logs*'] }
             ],
             replication: [
               {
-                names: ["archive"],
+                names: ['archive'],
                 allow_restricted_indices: false
               }
             ]
           },
           metadata: {
             answer: 42,
-            tag: "dev"
+            tag: 'dev'
           }
         }
       )
