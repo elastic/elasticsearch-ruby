@@ -88,3 +88,7 @@
 -
   :file: 'aggregations/stats_metric_fail_formatting.yml'
   :description: 'fail formatting'
+# TODO: Test failing due to implementation
+-
+  :file: 'capabilities/10_basic.yml'
+  :description: '*'
