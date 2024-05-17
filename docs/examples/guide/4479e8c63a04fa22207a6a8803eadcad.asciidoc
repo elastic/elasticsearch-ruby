@@ -3,7 +3,7 @@
 response = client.cluster.put_settings(
   body: {
     persistent: {
-      'cluster.remote.cluster_two.skip_unavailable' => true
+      'cluster.routing.allocation.awareness.attributes' => 'rack_id'
     }
   }
 )

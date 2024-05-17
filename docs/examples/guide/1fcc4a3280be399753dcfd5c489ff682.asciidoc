@@ -1,0 +1,34 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        my_range: {
+          type: 'ip_range'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    my_range: [
+      '10.0.0.0/24',
+      {
+        gte: '10.0.0.0',
+        lte: '10.0.0.255'
+      }
+    ]
+  }
+)
+puts response
+----

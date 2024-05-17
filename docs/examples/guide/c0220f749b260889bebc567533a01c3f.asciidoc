@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.connector.list(
-  service_type: 'sharepoint_online,google_drive'
-)
-puts response
-----
