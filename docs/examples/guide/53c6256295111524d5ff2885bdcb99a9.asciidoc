@@ -1,7 +1,7 @@
 [source, ruby]
 ----
-response = client.indices.get(
-  index: '_transform',
+response = client.transform.get_transform(
+  transform_id: '_stats',
   from: 5,
   size: 10
 )

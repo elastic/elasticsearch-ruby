@@ -1,11 +1,9 @@
 [source, ruby]
 ----
 response = client.indices.put_settings(
-  index: 'my_source_index',
+  index: 'my-index-000001',
   body: {
-    settings: {
-      'index.blocks.write' => true
-    }
+    'index.search.slowlog.include.user' => true
   }
 )
 puts response

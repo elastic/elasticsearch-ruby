@@ -6,6 +6,19 @@ response = client.indices.create(
     mappings: {
       dynamic_templates: [
         {
+          numeric_counts: {
+            match_mapping_type: [
+              'long',
+              'double'
+            ],
+            match: 'count',
+            mapping: {
+              type: '{dynamic_type}',
+              index: false
+            }
+          }
+        },
+        {
           integers: {
             match_mapping_type: 'long',
             mapping: {
@@ -26,6 +39,15 @@ response = client.indices.create(
               }
             }
           }
+        },
+        {
+          non_objects_keyword: {
+            match_mapping_type: '*',
+            unmatch_mapping_type: 'object',
+            mapping: {
+              type: 'keyword'
+            }
+          }
         }
       ]
     }
@@ -38,7 +60,11 @@ response = client.index(
   id: 1,
   body: {
     my_integer: 5,
-    my_string: 'Some string'
+    my_string: 'Some string',
+    my_boolean: 'false',
+    field: {
+      count: 4
+    }
   }
 )
 puts response

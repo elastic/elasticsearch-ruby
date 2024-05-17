@@ -2,7 +2,7 @@
 ----
 response = client.inference.delete_model(
   task_type: 'sparse_embedding',
-  model_id: 'my-elser-model'
+  inference_id: 'my-elser-model'
 )
 puts response
 ----
