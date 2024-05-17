@@ -1,0 +1,32 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        binary: {
+          type: 'binary',
+          doc_values: true
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    binary: [
+      'IAA=',
+      'EAA='
+    ]
+  }
+)
+puts response
+----

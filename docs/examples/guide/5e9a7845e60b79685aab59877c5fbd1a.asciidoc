@@ -1,0 +1,15 @@
+[source, ruby]
+----
+response = client.search(
+  body: {
+    aggregations: {
+      ignored_fields: {
+        terms: {
+          field: '_ignored'
+        }
+      }
+    }
+  }
+)
+puts response
+----

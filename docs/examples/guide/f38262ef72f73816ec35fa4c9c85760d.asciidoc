@@ -1,0 +1,45 @@
+[source, ruby]
+----
+response = client.indices.create(
+  index: 'idx',
+  body: {
+    mappings: {
+      _source: {
+        mode: 'synthetic'
+      },
+      properties: {
+        my_range: {
+          type: 'long_range'
+        }
+      }
+    }
+  }
+)
+puts response
+
+response = client.index(
+  index: 'idx',
+  id: 1,
+  body: {
+    my_range: [
+      {
+        gte: 200,
+        lte: 300
+      },
+      {
+        gte: 1,
+        lte: 100
+      },
+      {
+        gte: 200,
+        lte: 300
+      },
+      {
+        gte: 200,
+        lte: 500
+      }
+    ]
+  }
+)
+puts response
+----
