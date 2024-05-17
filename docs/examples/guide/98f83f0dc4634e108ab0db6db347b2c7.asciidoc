@@ -1,7 +1,0 @@
-[source, ruby]
-----
-response = client.connector.delete(
-  connector_id: 'my-connector'
-)
-puts response
-----
