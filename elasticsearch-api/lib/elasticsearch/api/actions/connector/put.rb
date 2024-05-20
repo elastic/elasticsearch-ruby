@@ -30,7 +30,7 @@ module Elasticsearch
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be created or updated.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The connector configuration. (*Required*)
+        # @option arguments [Hash] :body The connector configuration.
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/create-connector-api.html
         #
@@ -42,9 +42,6 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'connector_id' missing" unless arguments[:connector_id]
-
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
@@ -53,7 +50,11 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}"
+          path   = if _connector_id
+                     "_connector/#{Utils.__listify(_connector_id)}"
+                   else
+                     '_connector'
+                   end
           params = {}
 
           Elasticsearch::API::Response.new(

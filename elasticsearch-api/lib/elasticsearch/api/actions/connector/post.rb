@@ -29,14 +29,12 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The connector configuration. (*Required*)
+        # @option arguments [Hash] :body The connector configuration.
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/create-connector-api.html
         #
         def post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.post' }
-
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
