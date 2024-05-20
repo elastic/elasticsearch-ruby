@@ -25,7 +25,6 @@ gem 'cane'
 gem 'mocha'
 gem 'pry'
 gem 'rake'
-gem 'rubocop'
 gem 'shoulda-context'
 gem 'simplecov'
 gem 'test-unit', '~> 2'
@@ -39,4 +38,5 @@ end
 group :development, :test do
   gem 'debug' unless defined?(JRUBY_VERSION)
   gem 'rspec'
+  gem 'rubocop', '>= 1.51' unless defined?(JRUBY_VERSION) && Gem::Version.new(JRUBY_VERSION) <= Gem::Version.new('9.4')
 end
