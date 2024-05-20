@@ -25,6 +25,8 @@ module Elasticsearch
         # Starts an indefinite basic license.
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-basic.html
