@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Turns off snapshot lifecycle management (SLM).
         #
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.html
@@ -38,7 +40,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_slm/stop'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
