@@ -19,7 +19,7 @@ jobs:
         ruby: [ '3.3', 'jruby-9.4' ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Increase system limits
         run: |
           sudo swapoff -a
