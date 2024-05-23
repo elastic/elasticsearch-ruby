@@ -92,3 +92,9 @@
 -
   :file: 'capabilities/10_basic.yml'
   :description: '*'
+-
+  :file: 'indices.simulate_index_template/10_basic.yml'
+  :description: 'Simulate index matches overlapping legacy and composable templates'
+-
+  :file: 'indices.simulate_template/10_basic.yml'
+  :description: 'Simulate template matches overlapping legacy and composable templates'
