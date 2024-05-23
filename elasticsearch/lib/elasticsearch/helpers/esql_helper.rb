@@ -60,8 +60,7 @@ module Elasticsearch
       # @see https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#_esql_helper
       #
       def self.query(client, query, params = {}, parser: {})
-        request = build_request(query, params)
-        response = client.esql.query(request)
+        response = client.esql.query({ body: { query: query }, format: 'json' }.merge(params))
 
         columns = response['columns']
         response['values'].map do |value|
@@ -71,15 +70,6 @@ module Elasticsearch
             { key => value[index] }
           end.reduce({}, :merge)
         end
-      end
-
-      def self.build_request(query, params)
-        {
-          body: {
-            query: query,
-            version: params.delete(:version) || '2024.04.01' },
-          format: 'json'
-        }.merge(params)
       end
     end
   end
