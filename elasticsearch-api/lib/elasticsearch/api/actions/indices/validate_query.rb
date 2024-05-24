@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Allows a user to validate a potentially expensive query without executing it.
-        #
         # @option arguments [List] :index A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :explain Return detailed information about the error
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

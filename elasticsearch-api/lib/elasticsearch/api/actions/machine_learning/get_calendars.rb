@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves configuration information for calendars.
-        #
         # @option arguments [String] :calendar_id The ID of the calendar to fetch
         # @option arguments [Integer] :from skips a number of calendars
         # @option arguments [Integer] :size specifies a max number of calendars to get

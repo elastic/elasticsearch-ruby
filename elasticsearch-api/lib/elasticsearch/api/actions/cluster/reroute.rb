@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Allows to manually change the allocation of individual shards in the cluster.
-        #
         # @option arguments [Boolean] :dry_run Simulate the operation only and return the resulting state
         # @option arguments [Boolean] :explain Return an explanation of why the commands can or cannot be executed
         # @option arguments [Boolean] :retry_failed Retries allocation of shards that are blocked due to too many subsequent allocation failures

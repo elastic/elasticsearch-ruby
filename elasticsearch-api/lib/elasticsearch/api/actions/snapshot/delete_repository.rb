@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Deletes a repository.
-        #
         # @option arguments [List] :repository Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

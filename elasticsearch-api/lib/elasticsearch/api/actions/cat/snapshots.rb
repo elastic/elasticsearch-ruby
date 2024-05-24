@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Returns all snapshots in a specific repository.
-        #
         # @option arguments [List] :repository Name of repository from which to fetch the snapshot information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :ignore_unavailable Set to true to ignore unavailable snapshots

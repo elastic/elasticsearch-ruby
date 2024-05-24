@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Provides statistics on operations happening in a data stream.
-        #
         # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
         # @option arguments [Hash] :headers Custom HTTP headers
         #
