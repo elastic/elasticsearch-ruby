@@ -23,7 +23,6 @@ module Elasticsearch
     module Monitoring
       module Actions
         # Used by the monitoring features to send monitoring data.
-        #
         # @option arguments [String] :type Default document type for items which don't provide one *Deprecated*
         # @option arguments [String] :system_id Identifier of the monitored system
         # @option arguments [String] :system_api_version API Version of the monitored system

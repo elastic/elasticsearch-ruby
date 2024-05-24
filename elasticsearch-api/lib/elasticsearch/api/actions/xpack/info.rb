@@ -23,7 +23,6 @@ module Elasticsearch
     module XPack
       module Actions
         # Retrieves information about the installed X-Pack features.
-        #
         # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
         # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers

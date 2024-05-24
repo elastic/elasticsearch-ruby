@@ -23,7 +23,6 @@ module Elasticsearch
     module Esql
       module Actions
         # Executes an ESQL request asynchronously
-        #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
         # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.

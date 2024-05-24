@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Resets an existing anomaly detection job.
-        #
         # @option arguments [String] :job_id The ID of the job to reset
         # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         # @option arguments [Boolean] :delete_user_annotations Should annotations added by the user be deleted

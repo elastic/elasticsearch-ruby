@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Returns basic statistics about performance of cluster nodes.
-        #
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :full_id Return the full node ID instead of the shortened version (default: false)

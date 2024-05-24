@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Clones indices from one snapshot into another snapshot in the same repository.
-        #
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot The name of the snapshot to clone from
         # @option arguments [String] :target_snapshot The name of the cloned snapshot to create
