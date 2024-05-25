@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns information about why a specific matches (or doesn't match) a query.
-      #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)

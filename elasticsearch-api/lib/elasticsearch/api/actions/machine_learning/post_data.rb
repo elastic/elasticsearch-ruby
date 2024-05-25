@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Sends data to an anomaly detection job for analysis.
-        #
         # @option arguments [String] :job_id The name of the job receiving the data
         # @option arguments [String] :reset_start Optional parameter to specify the start of the bucket resetting range
         # @option arguments [String] :reset_end Optional parameter to specify the end of the bucket resetting range

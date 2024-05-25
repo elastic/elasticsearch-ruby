@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Updates the cluster settings.
-        #
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout

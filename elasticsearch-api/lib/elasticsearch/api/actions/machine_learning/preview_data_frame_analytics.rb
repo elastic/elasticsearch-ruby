@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Previews that will be analyzed given a data frame analytics config.
-        #
         # @option arguments [String] :id The ID of the data frame analytics to preview
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to preview

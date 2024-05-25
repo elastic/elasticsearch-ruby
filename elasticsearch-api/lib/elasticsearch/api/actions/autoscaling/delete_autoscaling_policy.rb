@@ -23,7 +23,6 @@ module Elasticsearch
     module Autoscaling
       module Actions
         # Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
-        #
         # @option arguments [String] :name the name of the autoscaling policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #

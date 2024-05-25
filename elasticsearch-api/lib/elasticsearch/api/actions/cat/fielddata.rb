@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
-        #
         # @option arguments [List] :fields A comma-separated list of fields to return the fielddata size
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)

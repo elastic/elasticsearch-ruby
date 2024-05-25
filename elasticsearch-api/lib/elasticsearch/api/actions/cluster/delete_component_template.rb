@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Deletes a component template
-        #
         # @option arguments [String] :name The name of the template
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master

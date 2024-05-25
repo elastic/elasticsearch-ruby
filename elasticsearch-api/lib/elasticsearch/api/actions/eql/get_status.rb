@@ -23,7 +23,6 @@ module Elasticsearch
     module Eql
       module Actions
         # Returns the status of a previously submitted async or stored Event Query Language (EQL) search
-        #
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #

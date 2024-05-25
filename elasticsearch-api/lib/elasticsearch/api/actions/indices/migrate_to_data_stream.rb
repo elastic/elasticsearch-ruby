@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Migrates an alias to a data stream
-        #
         # @option arguments [String] :name The name of the alias to migrate
         # @option arguments [Hash] :headers Custom HTTP headers
         #

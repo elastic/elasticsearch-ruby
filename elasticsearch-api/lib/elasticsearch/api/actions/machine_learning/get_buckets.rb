@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves anomaly detection job results for one or more buckets.
-        #
         # @option arguments [String] :job_id ID of the job to get bucket results from
         # @option arguments [String] :timestamp The timestamp of the desired single bucket result
         # @option arguments [Boolean] :expand Include anomaly records

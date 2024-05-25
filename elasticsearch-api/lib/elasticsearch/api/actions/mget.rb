@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Allows to get multiple documents in one request.
-      #
       # @option arguments [String] :index The name of the index
       # @option arguments [Boolean] :force_synthetic_source Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
       # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response

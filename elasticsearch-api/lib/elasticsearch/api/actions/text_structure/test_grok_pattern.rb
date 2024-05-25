@@ -23,7 +23,6 @@ module Elasticsearch
     module TextStructure
       module Actions
         # Tests a Grok pattern on some text.
-        #
         # @option arguments [String] :ecs_compatibility Optional parameter to specify the compatibility mode with ECS Grok patterns - may be either 'v1' or 'disabled'
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The Grok pattern and text. (*Required*)
