@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Forces the execution of a stored watch.
-        #
         # @option arguments [String] :id Watch ID
         # @option arguments [Boolean] :debug indicates whether the watch should execute in debug mode
         # @option arguments [Hash] :headers Custom HTTP headers

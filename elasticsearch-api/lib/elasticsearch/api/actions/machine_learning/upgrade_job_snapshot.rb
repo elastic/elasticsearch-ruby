@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Upgrades a given job snapshot to the current major version.
-        #
         # @option arguments [String] :job_id The ID of the job
         # @option arguments [String] :snapshot_id The ID of the snapshot
         # @option arguments [Time] :timeout How long should the API wait for the job to be opened and the old snapshot to be loaded.

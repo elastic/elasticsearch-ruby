@@ -23,7 +23,6 @@ module Elasticsearch
     module Nodes
       module Actions
         # Returns low-level information about REST actions usage on nodes.
-        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [List] :metric Limit the information returned to the specified metrics (options: _all, rest_actions)
         # @option arguments [Time] :timeout Explicit operation timeout

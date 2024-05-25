@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves configuration information for anomaly detection jobs.
-        #
         # @option arguments [String] :job_id The ID of the jobs to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs. (This includes `_all` string or when no jobs have been specified)
         # @option arguments [Boolean] :exclude_generated Omits fields that are illegal to set on job PUT

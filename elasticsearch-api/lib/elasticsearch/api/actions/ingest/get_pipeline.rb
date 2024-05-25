@@ -23,7 +23,6 @@ module Elasticsearch
     module Ingest
       module Actions
         # Returns a pipeline.
-        #
         # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported
         # @option arguments [Boolean] :summary Return pipelines without their definitions (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
