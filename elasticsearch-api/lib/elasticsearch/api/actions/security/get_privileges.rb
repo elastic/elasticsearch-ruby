@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Retrieves application privileges.
-        #
         # @option arguments [String] :application Application name
         # @option arguments [String] :name Privilege name
         # @option arguments [Hash] :headers Custom HTTP headers

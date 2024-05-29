@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns mapping for one or more fields.
-        #
         # @option arguments [List] :fields A comma-separated list of fields
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [Boolean] :include_defaults Whether the default mapping values should be returned as well

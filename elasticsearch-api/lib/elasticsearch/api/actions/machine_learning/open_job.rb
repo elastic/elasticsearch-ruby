@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Opens one or more anomaly detection jobs.
-        #
         # @option arguments [String] :job_id The ID of the job to open
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Query parameters can be specified in the body

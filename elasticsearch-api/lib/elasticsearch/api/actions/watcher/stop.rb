@@ -23,7 +23,7 @@ module Elasticsearch
     module Watcher
       module Actions
         # Stops Watcher if it is running.
-        #
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stop.html
@@ -38,7 +38,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_watcher/_stop'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

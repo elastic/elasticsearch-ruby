@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Creates a new model alias (or reassigns an existing one) to refer to the trained model
-        #
         # @option arguments [String] :model_alias The trained model alias to update
         # @option arguments [String] :model_id The trained model where the model alias should be assigned
         # @option arguments [Boolean] :reassign If the model_alias already exists and points to a separate model_id, this parameter must be true. Defaults to false.

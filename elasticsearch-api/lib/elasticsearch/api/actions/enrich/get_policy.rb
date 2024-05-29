@@ -23,7 +23,6 @@ module Elasticsearch
     module Enrich
       module Actions
         # Gets information about an enrich policy.
-        #
         # @option arguments [List] :name A comma-separated list of enrich policy names
         # @option arguments [Hash] :headers Custom HTTP headers
         #

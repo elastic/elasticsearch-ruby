@@ -23,7 +23,6 @@ module Elasticsearch
     module Transform
       module Actions
         # Upgrades all transforms.
-        #
         # @option arguments [Boolean] :dry_run Whether to only check for updates but don't execute
         # @option arguments [Time] :timeout Controls the time to wait for the upgrade
         # @option arguments [Hash] :headers Custom HTTP headers

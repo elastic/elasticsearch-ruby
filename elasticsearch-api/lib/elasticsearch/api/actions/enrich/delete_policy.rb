@@ -23,7 +23,6 @@ module Elasticsearch
     module Enrich
       module Actions
         # Deletes an existing enrich policy and its enrich index.
-        #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #

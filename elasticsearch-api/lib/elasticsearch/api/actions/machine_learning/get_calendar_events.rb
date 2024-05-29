@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves information about the scheduled events in calendars.
-        #
         # @option arguments [String] :calendar_id The ID of the calendar containing the events
         # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
         # @option arguments [String] :start Get events after this time

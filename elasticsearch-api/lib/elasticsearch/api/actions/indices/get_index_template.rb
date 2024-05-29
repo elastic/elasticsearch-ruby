@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns an index template.
-        #
         # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

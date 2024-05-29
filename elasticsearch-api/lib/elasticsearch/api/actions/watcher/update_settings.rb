@@ -23,7 +23,8 @@ module Elasticsearch
     module Watcher
       module Actions
         # Update settings for the watcher system index
-        #
+        # @option arguments [Time] :timeout Specify timeout for waiting for acknowledgement from all nodes
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object with the new index settings (*Required*)
         #
@@ -41,7 +42,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = '_watcher/settings'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

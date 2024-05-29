@@ -23,7 +23,6 @@ module Elasticsearch
     module Ingest
       module Actions
         # Creates or updates a pipeline.
-        #
         # @option arguments [String] :id Pipeline ID
         # @option arguments [Integer] :if_version Required version for optimistic concurrency control for pipeline updates
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

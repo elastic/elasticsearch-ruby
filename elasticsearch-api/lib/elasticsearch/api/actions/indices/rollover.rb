@@ -24,7 +24,6 @@ module Elasticsearch
       module Actions
         # Updates an alias to point to a new index when the existing index
         # is considered to be too large or too old.
-        #
         # @option arguments [String] :alias The name of the alias to rollover
         # @option arguments [String] :new_index The name of the rollover index
         # @option arguments [Time] :timeout Explicit operation timeout

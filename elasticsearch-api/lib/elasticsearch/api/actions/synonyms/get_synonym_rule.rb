@@ -23,7 +23,6 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Retrieves a synonym rule from a synonym set
-        #
         # @option arguments [String] :set_id The id of the synonym set to retrieve the synonym rule from
         # @option arguments [String] :rule_id The id of the synonym rule to retrieve
         # @option arguments [Hash] :headers Custom HTTP headers

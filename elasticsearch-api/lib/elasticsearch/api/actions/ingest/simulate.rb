@@ -23,7 +23,6 @@ module Elasticsearch
     module Ingest
       module Actions
         # Allows to simulate a pipeline with example documents.
-        #
         # @option arguments [String] :id Pipeline ID
         # @option arguments [Boolean] :verbose Verbose mode. Display data output for each processor in executed pipeline
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module SnapshotLifecycleManagement
       module Actions
         # Turns off snapshot lifecycle management (SLM).
-        #
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Predicts the future behavior of a time series by using its historical behavior.
-        #
         # @option arguments [String] :job_id The ID of the job to forecast for
         # @option arguments [Time] :duration The duration of the forecast
         # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.

@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns information about the indices and shards that a search request would be executed against.
-      #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [String] :routing Specific routing value
