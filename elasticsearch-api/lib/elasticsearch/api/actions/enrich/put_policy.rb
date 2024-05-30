@@ -25,6 +25,7 @@ module Elasticsearch
         # Creates a new enrich policy.
         #
         # @option arguments [String] :name The name of the enrich policy
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The enrich policy to register (*Required*)
         #
@@ -50,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_enrich/policy/#{Utils.__listify(_name)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
