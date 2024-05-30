@@ -23,7 +23,6 @@ module Elasticsearch
     module License
       module Actions
         # Starts an indefinite basic license.
-        #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #

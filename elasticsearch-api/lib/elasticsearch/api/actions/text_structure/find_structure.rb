@@ -23,7 +23,6 @@ module Elasticsearch
     module TextStructure
       module Actions
         # Finds the structure of a text file. The text file must contain data that is suitable to be ingested into Elasticsearch.
-        #
         # @option arguments [Integer] :lines_to_sample How many lines of the file should be included in the analysis
         # @option arguments [Integer] :line_merge_size_limit Maximum number of characters permitted in a single message when lines are merged to create messages.
         # @option arguments [Time] :timeout Timeout after which the analysis will be aborted

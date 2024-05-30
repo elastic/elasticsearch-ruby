@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Retrieves information about users in the native realm and built-in users.
-        #
         # @option arguments [List] :username A comma-separated list of usernames
         # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Gets configuration and usage information about datafeeds.
-        #
         # @option arguments [String] :datafeed_id The ID of the datafeeds stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml

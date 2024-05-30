@@ -23,7 +23,6 @@ module Elasticsearch
     module IndexLifecycleManagement
       module Actions
         # Creates a lifecycle policy
-        #
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The lifecycle policy definition to register

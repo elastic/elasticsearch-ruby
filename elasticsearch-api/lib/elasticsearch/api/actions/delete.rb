@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Removes a document from the index.
-      #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the delete operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)

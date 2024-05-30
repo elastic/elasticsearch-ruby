@@ -23,7 +23,6 @@ module Elasticsearch
     module Transform
       module Actions
         # Previews a transform.
-        #
         # @option arguments [String] :transform_id The id of the transform to preview.
         # @option arguments [Time] :timeout Controls the time to wait for the preview
         # @option arguments [Hash] :headers Custom HTTP headers
