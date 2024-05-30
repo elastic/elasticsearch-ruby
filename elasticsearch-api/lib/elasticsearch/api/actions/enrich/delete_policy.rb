@@ -25,6 +25,7 @@ module Elasticsearch
         # Deletes an existing enrich policy and its enrich index.
         #
         # @option arguments [String] :name The name of the enrich policy
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-policy-api.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_enrich/policy/#{Utils.__listify(_name)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
