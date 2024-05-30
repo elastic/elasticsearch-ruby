@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns the information about the capabilities of fields among multiple indices.
-      #
       # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
       # @option arguments [List] :fields A comma-separated list of field names
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

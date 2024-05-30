@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Deletes an existing data frame analytics job.
-        #
         # @option arguments [String] :id The ID of the data frame analytics to delete
         # @option arguments [Boolean] :force True if the job should be forcefully deleted
         # @option arguments [Time] :timeout Controls the time to wait until a job is deleted. Defaults to 1 minute

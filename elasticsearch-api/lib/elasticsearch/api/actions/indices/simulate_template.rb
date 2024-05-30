@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Simulate resolving the given template name or body
-        #
         # @option arguments [String] :name The name of the index template
         # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
         # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
