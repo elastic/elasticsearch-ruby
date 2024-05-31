@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Creates a new follower index configured to follow the referenced leader index.
-        #
         # @option arguments [String] :index The name of the follower index
         # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Evicts users from the user cache. Can completely clear the cache or evict specific users.
-        #
         # @option arguments [List] :realms Comma-separated list of realms to clear
         # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
         # @option arguments [Hash] :headers Custom HTTP headers

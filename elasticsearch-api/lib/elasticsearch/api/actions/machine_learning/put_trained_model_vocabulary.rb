@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Creates a trained model vocabulary
-        #
         # @option arguments [String] :model_id The ID of the trained model for this vocabulary
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The trained model vocabulary (*Required*)

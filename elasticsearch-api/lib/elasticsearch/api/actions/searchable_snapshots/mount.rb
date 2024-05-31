@@ -23,7 +23,6 @@ module Elasticsearch
     module SearchableSnapshots
       module Actions
         # Mount a snapshot as a searchable index.
-        #
         # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount
         # @option arguments [String] :snapshot The name of the snapshot of the index to mount
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

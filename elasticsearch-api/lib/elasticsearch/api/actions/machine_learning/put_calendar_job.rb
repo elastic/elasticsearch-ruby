@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Adds an anomaly detection job to a calendar.
-        #
         # @option arguments [String] :calendar_id The ID of the calendar to modify
         # @option arguments [String] :job_id The ID of the job to add to the calendar
         # @option arguments [Hash] :headers Custom HTTP headers

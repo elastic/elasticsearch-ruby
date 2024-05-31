@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Deletes a data stream.
-        #
         # @option arguments [List] :name A comma-separated list of data streams to delete; use `*` to delete all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module Transform
       module Actions
         # Resets an existing transform.
-        #
         # @option arguments [String] :transform_id The id of the transform to reset
         # @option arguments [Boolean] :force When `true`, the transform is reset regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be reset.
         # @option arguments [Time] :timeout Controls the time to wait for the transform to reset

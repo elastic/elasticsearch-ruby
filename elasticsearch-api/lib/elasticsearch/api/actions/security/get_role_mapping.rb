@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Retrieves role mappings.
-        #
         # @option arguments [List] :name A comma-separated list of role-mapping names
         # @option arguments [Hash] :headers Custom HTTP headers
         #

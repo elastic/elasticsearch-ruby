@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Sets a cluster wide upgrade_mode setting that prepares machine learning indices for an upgrade.
-        #
         # @option arguments [Boolean] :enabled Whether to enable upgrade_mode ML setting or not. Defaults to false.
         # @option arguments [Time] :timeout Controls the time to wait before action times out. Defaults to 30 seconds
         # @option arguments [Hash] :headers Custom HTTP headers

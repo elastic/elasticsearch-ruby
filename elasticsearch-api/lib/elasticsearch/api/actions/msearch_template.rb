@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Allows to execute several search template operations in one request.
-      #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response

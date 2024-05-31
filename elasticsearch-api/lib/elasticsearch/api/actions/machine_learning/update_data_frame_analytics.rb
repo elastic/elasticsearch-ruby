@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Updates certain properties of a data frame analytics job.
-        #
         # @option arguments [String] :id The ID of the data frame analytics to update
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics settings to update (*Required*)

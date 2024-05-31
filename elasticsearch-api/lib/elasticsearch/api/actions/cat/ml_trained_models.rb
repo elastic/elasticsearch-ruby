@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Gets configuration and usage information about inference trained models.
-        #
         # @option arguments [String] :model_id The ID of the trained models stats to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
         # @option arguments [Integer] :from skips a number of trained models

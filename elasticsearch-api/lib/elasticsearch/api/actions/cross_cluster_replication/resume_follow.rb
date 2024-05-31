@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Resumes a follower index that has been paused
-        #
         # @option arguments [String] :index The name of the follow index to resume following.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers

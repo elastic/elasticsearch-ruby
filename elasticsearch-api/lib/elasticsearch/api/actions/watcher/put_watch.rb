@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Creates a new watch, or updates an existing one.
-        #
         # @option arguments [String] :id Watch ID
         # @option arguments [Boolean] :active Specify whether the watch is in/active by default
         # @option arguments [Number] :version Explicit version number for concurrency control

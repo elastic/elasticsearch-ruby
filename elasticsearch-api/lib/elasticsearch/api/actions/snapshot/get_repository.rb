@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Returns information about a repository.
-        #
         # @option arguments [List] :repository A comma-separated list of repository names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)

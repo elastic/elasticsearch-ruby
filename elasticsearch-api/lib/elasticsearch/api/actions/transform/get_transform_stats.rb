@@ -23,7 +23,6 @@ module Elasticsearch
     module Transform
       module Actions
         # Retrieves usage information for transforms.
-        #
         # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
         # @option arguments [Number] :from skips a number of transform stats, defaults to 0
         # @option arguments [Number] :size specifies a max number of transform stats to get, defaults to 100

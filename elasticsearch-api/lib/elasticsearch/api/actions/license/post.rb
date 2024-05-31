@@ -23,7 +23,6 @@ module Elasticsearch
     module License
       module Actions
         # Updates the license for the cluster.
-        #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster

@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves anomaly detection job results for one or more influencers.
-        #
         # @option arguments [String] :job_id Identifier for the anomaly detection job
         # @option arguments [Boolean] :exclude_interim Exclude interim results
         # @option arguments [Integer] :from skips a number of influencers

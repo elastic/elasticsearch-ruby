@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves information about model snapshots.
-        #
         # @option arguments [String] :job_id The ID of the job to fetch
         # @option arguments [String] :snapshot_id The ID of the snapshot to fetch
         # @option arguments [Integer] :from Skips a number of documents
