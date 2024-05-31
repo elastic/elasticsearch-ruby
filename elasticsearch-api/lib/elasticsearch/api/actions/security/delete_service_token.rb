@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Deletes a service account token.
-        #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [String] :name An identifier for the token name

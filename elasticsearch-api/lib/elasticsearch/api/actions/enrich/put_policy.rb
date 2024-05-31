@@ -23,7 +23,6 @@ module Elasticsearch
     module Enrich
       module Actions
         # Creates a new enrich policy.
-        #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The enrich policy to register (*Required*)

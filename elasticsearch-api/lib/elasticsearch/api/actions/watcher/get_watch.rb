@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Retrieves a watch by its ID.
-        #
         # @option arguments [String] :id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #

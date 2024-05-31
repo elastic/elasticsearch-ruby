@@ -23,7 +23,6 @@ module Elasticsearch
     module SQL
       module Actions
         # Executes a SQL request
-        #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Use the `query` element to start a query. Use the `cursor` element to continue a query. (*Required*)

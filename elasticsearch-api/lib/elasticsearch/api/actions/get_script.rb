@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns a script.
-      #
       # @option arguments [String] :id Script ID
       # @option arguments [Time] :master_timeout Specify timeout for connection to master
       # @option arguments [Hash] :headers Custom HTTP headers

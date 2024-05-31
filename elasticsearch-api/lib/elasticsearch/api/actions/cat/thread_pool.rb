@@ -24,7 +24,6 @@ module Elasticsearch
       module Actions
         # Returns cluster-wide thread pool statistics per node.
         # By default the active, queue and rejected statistics are returned for all thread pools.
-        #
         # @option arguments [List] :thread_pool_patterns A comma-separated list of regular-expressions to filter the thread pools in the output
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)

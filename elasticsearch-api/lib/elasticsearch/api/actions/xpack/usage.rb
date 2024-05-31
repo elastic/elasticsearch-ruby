@@ -23,7 +23,6 @@ module Elasticsearch
     module XPack
       module Actions
         # Retrieves usage information about the installed X-Pack features.
-        #
         # @option arguments [Time] :master_timeout Specify timeout for watch write operation
         # @option arguments [Hash] :headers Custom HTTP headers
         #

@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Open a point in time that can be used in subsequent searches
-      #
       # @option arguments [List] :index A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
       # @option arguments [String] :routing Specific routing value

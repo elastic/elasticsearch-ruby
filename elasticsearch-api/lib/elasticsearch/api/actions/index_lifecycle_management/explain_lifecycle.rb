@@ -23,7 +23,6 @@ module Elasticsearch
     module IndexLifecycleManagement
       module Actions
         # Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
-        #
         # @option arguments [String] :index The name of the index to explain
         # @option arguments [Boolean] :only_managed filters the indices included in the response to ones managed by ILM
         # @option arguments [Boolean] :only_errors filters the indices included in the response to ones in an ILM error state, implies only_managed

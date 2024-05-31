@@ -23,7 +23,6 @@ module Elasticsearch
     module SnapshotLifecycleManagement
       module Actions
         # Deletes an existing snapshot lifecycle policy.
-        #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
         # @option arguments [Hash] :headers Custom HTTP headers
         #
