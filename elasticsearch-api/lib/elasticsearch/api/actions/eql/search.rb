@@ -23,7 +23,6 @@ module Elasticsearch
     module Eql
       module Actions
         # Returns results matching a query expressed in Event Query Language (EQL)
-        #
         # @option arguments [String] :index The name of the index to scope the operation
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)

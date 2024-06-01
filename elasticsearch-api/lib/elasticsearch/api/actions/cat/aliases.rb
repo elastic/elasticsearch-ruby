@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Shows information about currently configured aliases to indices including filter and routing infos.
-        #
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)

@@ -23,7 +23,6 @@ module Elasticsearch
     module Nodes
       module Actions
         # Reloads secure settings.
-        #
         # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers

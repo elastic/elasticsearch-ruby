@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Clear the cached results from a trained model deployment
-        #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #

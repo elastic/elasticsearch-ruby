@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Gets configuration and usage information about data frame analytics jobs.
-        #
         # @option arguments [String] :id The ID of the data frame analytics to fetch
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no configs. (This includes `_all` string or when no configs have been specified)
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)

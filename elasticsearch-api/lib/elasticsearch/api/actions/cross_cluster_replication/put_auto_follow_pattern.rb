@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Creates a new named collection of auto-follow patterns against a specified remote cluster. Newly created indices on the remote cluster matching any of the specified patterns will be automatically configured as follower indices.
-        #
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The specification of the auto follow pattern (*Required*)

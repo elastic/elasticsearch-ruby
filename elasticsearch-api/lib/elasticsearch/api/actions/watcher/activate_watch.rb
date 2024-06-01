@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Activates a currently inactive watch.
-        #
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
