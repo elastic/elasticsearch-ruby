@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Removes the follower retention leases from the leader.
-        #
         # @option arguments [String] :index the name of the leader index for which specified follower retention leases should be removed
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers

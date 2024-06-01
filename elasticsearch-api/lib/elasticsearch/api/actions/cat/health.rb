@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Returns a concise representation of the cluster health.
-        #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information

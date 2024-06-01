@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Updates index aliases.
-        #
         # @option arguments [Time] :timeout Request timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers

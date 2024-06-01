@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns information about one or more indices.
-        #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)

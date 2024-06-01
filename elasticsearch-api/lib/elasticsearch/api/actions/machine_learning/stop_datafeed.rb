@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Stops one or more datafeeds.
-        #
         # @option arguments [String] :datafeed_id The ID of the datafeed to stop
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
         # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) *Deprecated*
