@@ -2,7 +2,10 @@
 
 :doctype:           book
 
+include::{docs-root}/shared/versions/stack/{source_branch}.asciidoc[]
 include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
+
+:es-docs: https://www.elastic.co/guide/en/elasticsearch/reference/{branch} 
 
 include::overview.asciidoc[]
 
@@ -24,6 +27,6 @@ include::examples.asciidoc[]
 
 include::troubleshooting.asciidoc[]
 
-include::helpers.asciidoc[]
+include::helpers/index.asciidoc[]
 
 include::release_notes/index.asciidoc[]

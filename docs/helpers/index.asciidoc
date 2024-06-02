@@ -1,0 +1,10 @@
+[[client-helpers]]
+== Client helpers
+
+The Ruby client includes the following helpers:
+
+* <<Helpers>>
+* <<esql>>
+
+include::bulk-scroll.asciidoc[]
+include::esql.asciidoc[]
