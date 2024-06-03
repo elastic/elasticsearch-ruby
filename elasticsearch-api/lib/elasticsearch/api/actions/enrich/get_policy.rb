@@ -25,6 +25,7 @@ module Elasticsearch
         # Gets information about an enrich policy.
         #
         # @option arguments [List] :name A comma-separated list of enrich policy names
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
@@ -50,7 +51,7 @@ module Elasticsearch
                    else
                      '_enrich/policy'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

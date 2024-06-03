@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Gets enrich coordinator statistics and information about enrich policies that are currently executing.
         #
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api.html
@@ -38,7 +39,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_enrich/_stats'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
