@@ -17,6 +17,8 @@
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/test_file"
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/rspec_matchers"
 require "#{File.expand_path(File.dirname('..'))}/api-spec-testing/wipe_cluster"
+require 'faraday/typhoeus'
+
 include Elasticsearch::RestAPIYAMLTests
 
 PROJECT_PATH = File.join(File.dirname(__FILE__), '..')
@@ -38,6 +40,7 @@ if test_suite == 'platinum'
   transport_options = {
     ssl: {
       client_cert: certificate,
+      sslcert: certificate,
       client_key: key,
       ca_file: ca_file,
       verify: false
@@ -48,15 +51,14 @@ else
   transport_options = {}
 end
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
-
+adapter = :typhoeus
+client_options = { host: host, transport_options: transport_options, adapter: adapter }
+ADMIN_CLIENT = Elasticsearch::Client.new(client_options)
 DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
-                   Elasticsearch::Client.new(host: host, transport_options: transport_options)
+                   Elasticsearch::Client.new(client_options)
                  else
                    Elasticsearch::Client.new(
-                     host: host,
-                     tracer: Logger.new($stdout),
-                     transport_options: transport_options
+                     client_options.merge({ tracer: Logger.new($stdout) })
                    )
                  end
 
