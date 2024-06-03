@@ -12,6 +12,7 @@ steps:
           - "free"
           - "platinum"
         ruby:
+          - "3.3"
           - "3.2"
           - "3.1"
           - "3.0"
@@ -31,11 +32,11 @@ steps:
         - with:
             stack_version: "8.14.0-SNAPSHOT"
             suite: "free"
-            ruby: "3.2"
+            ruby: "3.3"
         - with:
             stack_version: "8.14.0-SNAPSHOT"
             suite: "platinum"
-            ruby: "3.2"
+            ruby: "3.3"
     command: ./.buildkite/run-tests.sh
     artifact_paths: "elasticsearch-api/tmp/*"
   - wait: ~
