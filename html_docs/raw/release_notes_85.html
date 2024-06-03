@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.5 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.5 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_86.html" title="8.6 Release notes"/>
+<link rel="next" href="release_notes_84.html" title="8.4 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_86.html">« 8.6 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_84.html">8.4 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_85"></a>8.5 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_852"></a>8.5.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h3>
+<h4><a id="_api_bugfix_2"></a>API Bugfix<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h4>
+<p>Fixes <code class="literal">security.create_service_token</code> API, uses <code class="literal">POST</code> when token name isn&#8217;t present.
+Thanks <a href="https://github.com/carlosdelest" class="ulink" target="_top">@carlosdelest</a> for reporting in <a href="https://github.com/elastic/elasticsearch-ruby/pull/1961" class="ulink" target="_top">#1961</a>.</p>
+<h3><a id="release_notes_851"></a>8.5.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h3>
+<h4><a id="_bugfixes"></a>Bugfixes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h4>
+<p>Fixes bug when instantiating client with <code class="literal">api_key</code>: When passing in <code class="literal">api_key</code> and <code class="literal">transport_options</code> that don&#8217;t include headers to the client, the <code class="literal">api_key</code> code would overwrite the arguments passed in for <code class="literal">transport_options</code>. This was fixed in <a href="https://github.com/elastic/elasticsearch-ruby/pull/1941/files" class="ulink" target="_top">this Pull Request</a>.
+Thanks @svdasein for reporting in <a href="https://github.com/elastic/elasticsearch-ruby/issues/1940" class="ulink" target="_top">#1940</a>.</p>
+<h3><a id="release_notes_850"></a>8.5.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.5.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
+</li>
+</ul>
+</div>
+<h4><a id="_client_6"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h4>
+<p>With the latest release of <code class="literal">elastic-transport</code> - <code class="literal">v8.1.0</code> - this gem now supports Faraday v2. Elasticsearch Ruby has an open dependency on <code class="literal">elastic-transport</code> (<code class="literal">'elastic-transport', '~&gt; 8'</code>), so when you upgrade your gems, <code class="literal">8.1.0</code> will be installed. This supports both Faraday v1 and Faraday v2. The main change on dependencies when using Faraday v2 is all adapters, except for the default <code class="literal">net_http</code> one, have been moved out of Faraday into separate gems. This means if you&#8217;re not using the default adapter and you migrate to Faraday v2, you&#8217;ll need to add the adapter gems to your Gemfile.</p>
+<p>These are the gems required for the different adapters with Faraday 2, instead of the libraries on which they were based:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby"># HTTPCLient
+gem 'faraday-httpclient'
+
+# NetHTTPPersistent
+gem 'faraday-net_http_persistent'
+
+# Patron
+gem 'faraday-patron'
+
+# Typhoeus
+gem 'faraday-typhoeus'</pre>
+</div>
+<p>Things should work fine if you migrate to Faraday 2 as long as you include the adapter (unless you&#8217;re using the default one <code class="literal">net-http</code>), but worst case scenario, you can always lock the version of Faraday in your project to 1.x:
+gem <em>faraday</em>, <em>~&gt; 1</em></p>
+<p>Be aware if migrating to Faraday v2 that it requires at least Ruby <code class="literal">2.6</code>, unlike Faraday v1 which requires <code class="literal">2.4</code>.</p>
+<p><span class="strong strong"><strong>Troubleshooting</strong></span></p>
+<p>If you see a message like:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">:adapter is not registered on Faraday::Adapter (Faraday::Error)</pre>
+</div>
+<p>Then you probably need to include the adapter library in your gemfile and require it.</p>
+<p>Please <a href="https://github.com/elastic/elasticsearch-ruby/issues" class="ulink" target="_top">submit an issue</a> if you encounter any problems.</p>
+<h4><a id="_api_9"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h4>
+<h5><a id="_new_apis_5"></a>New APIs<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">machine_learning.clear_trained_model_deployment_cache</code> - Clear the cached results from a trained model deployment (Beta).
+</li>
+<li class="listitem">
+<code class="literal">security.bulk_update_api_keys</code> - Updates the attributes of multiple existing API keys.
+</li>
+</ul>
+</div>
+<h5><a id="_api_changes_5"></a>API Changes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/85.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">rollup.rollup</code> renamed to <code class="literal">indices.downsample</code>. The method now receives the <code class="literal">index</code> to downsample (Required) and instead of <code class="literal">rollup_index</code>, use target_index as the index to store downsampled data.
+</li>
+<li class="listitem">
+<code class="literal">security.get_api_key</code> and <code class="literal">security.query_api_keys</code> add <code class="literal">:with_limited_by</code> flag to show the limited-by role descriptors of API Keys.
+</li>
+<li class="listitem">
+<code class="literal">security.get_user</code> adds <code class="literal">:with_profile_uid</code> flag to retrieve profile uid (if exists) associated to the user.
+</li>
+<li class="listitem">
+<code class="literal">security.get_user_profile</code> now retrieves user profiles for given unique ID(s). <code class="literal">:uid</code> is now a list of comma-separated list of unique identifier for user profiles.
+</li>
+<li class="listitem">
+<code class="literal">text_structure.find_structure</code> adds <code class="literal">:ecs_compatibility</code>, optional parameter to specify the compatibility mode with ECS Grok patterns - may be either <em>v1</em> or <em>disabled</em>.
+</li>
+</ul>
+</div>
+<p>Machine learning APIs promoted from <span class="strong strong"><strong>Experimental</strong></span> to <span class="strong strong"><strong>Beta</strong></span>:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">machine_learning.clear_trained_model_deployment_cache.rb</code>
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.infer_trained_model.rb</code>
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.put_trained_model_definition_part.rb</code>
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.put_trained_model_vocabulary.rb</code>
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.start_trained_model_deployment.rb</code>
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.stop_trained_model_deployment.rb</code>
+</li>
+</ul>
+</div>
+<p>Security usef profile APIs promoted from <span class="strong strong"><strong>Experimental</strong></span> to <span class="strong strong"><strong>Stable</strong></span>:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">security/activate_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/disable_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/enable_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/get_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/has_privileges_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/suggest_user_profile</code>
+</li>
+<li class="listitem">
+<code class="literal">security/update_user_profile_data</code>
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_86.html">« 8.6 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_84.html">8.4 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.12 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.12 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_713.html" title="7.13 Release notes"/>
+<link rel="next" href="release_notes_711.html" title="7.11 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_713.html">« 7.13 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_711.html">7.11 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_712"></a>7.12 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/712.asciidoc">edit</a></h2>
+</div></div></div>
+<h4><a id="_client_15"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/712.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch version 7.12.0
+</li>
+<li class="listitem">
+Ruby 3 is now tested, it was added to the entire test suite.
+</li>
+<li class="listitem">
+New official documentation pages for configuration: <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/basic-config.html" class="ulink" target="_top">Basic Configuration</a> and <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/advanced-config.html" class="ulink" target="_top">Advanced Configuration</a>.
+</li>
+<li class="listitem">
+Integration tests runner refactored to keep skipped tests in a yaml file.
+</li>
+</ul>
+</div>
+<h4><a id="_api_21"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/712.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New API namespace: <code class="literal">features</code> and endpoints <code class="literal">features.get_features</code> and <code class="literal">snapshot.get_features</code>.
+</li>
+<li class="listitem">
+<code class="literal">cat.plugins</code> adds parameter <code class="literal">include_bootstrap</code>: Include bootstrap plugins in the response.
+</li>
+<li class="listitem">
+Update in <code class="literal">indices.close</code> parameter <code class="literal">wait_for_active_shards</code>: Sets the number of active shards to wait for before the operation returns. Set to <code class="literal">index-setting</code> to wait according to the index setting <code class="literal">index.write.wait_for_active_shards</code>, or <code class="literal">all</code> to wait for all shards, or an integer. Defaults to <code class="literal">0</code>.
+</li>
+<li class="listitem">
+<code class="literal">actions.search</code> adds parameter <code class="literal">min_compatible_shard_node</code>: The minimum compatible version that all shards involved in search should have for this request to be successful.
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_4"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/712.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New API namespace: <code class="literal">text_structure</code> and endpoints <code class="literal">text_structure.find_structure</code>.
+</li>
+<li class="listitem">
+New API namespace: <code class="literal">logstash</code> and endpoints <code class="literal">logstash.delete_pipeline</code>, <code class="literal">logstash.get_pipeline</code>, <code class="literal">logstash.put_pipeline</code>.
+</li>
+<li class="listitem">
+New API: <code class="literal">eql.get_status</code>.
+</li>
+<li class="listitem">
+APIs migrated from experimental to stable: <code class="literal">autoscaling.delete_autoscaling_policy</code>, <code class="literal">autoscaling.get_autoscaling_capacity</code>, <code class="literal">autoscaling.get_autoscaling_policy</code>, <code class="literal">autoscaling.put_autoscaling_policy</code>.
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.mount</code> adds parameter <code class="literal">storage</code>: Selects the kind of local storage used to accelerate searches. Experimental, and defaults to <code class="literal">full_copy</code>.
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.stats</code> adds parameter <code class="literal">level</code>: Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards).
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_713.html">« 7.13 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_711.html">7.11 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

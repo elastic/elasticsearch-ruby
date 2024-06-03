@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.6 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.6 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_77.html" title="7.7 Release notes"/>
+<link rel="next" href="release_notes_75.html" title="7.5 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_77.html">« 7.7 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_75.html">7.5 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_76"></a>7.6 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h2>
+</div></div></div>
+<h4><a id="_client_25"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch version 7.6.
+</li>
+<li class="listitem">
+Last release supporting Ruby 2.4. Ruby 2.4 has reached it&#8217;s end of life and no more security updates will be provided, users are suggested to update to a newer version of Ruby.
+</li>
+</ul>
+</div>
+<h5><a id="_api_key_support"></a>API Key Support<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<p>The client now supports API Key Authentication, check "Authentication" on the <a href="https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#authentication" class="ulink" target="_top">transport README</a> for information on how to use it.</p>
+<h5><a id="_x_opaque_id_support"></a>X-Opaque-Id Support<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<p>The client now supports identifying running tasks with X-Opaque-Id. Check <a href="https://github.com/elastic/elasticsearch-ruby/tree/7.x/elasticsearch-transport#identifying-running-tasks-with-x-opaque-id" class="ulink" target="_top">transport README</a> for information on how to use X-Opaque-Id.</p>
+<h5><a id="_faraday_migrated_to_1_0"></a>Faraday migrated to 1.0<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<p>We&#8217;re now using version 1.0 of Faraday:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+The client initializer was modified but this should not disrupt final users at all, check this commit for more information.
+</li>
+<li class="listitem">
+Migrated error checking to remove the deprecated Faraday::Error namespace.
+</li>
+<li class="listitem">
+<span class="strong strong"><strong>This change is not compatible with <a href="https://github.com/typhoeus/typhoeus" class="ulink" target="_top">Typhoeus</a></strong></span>. The latest release is 1.3.1, but it&#8217;s <a href="https://github.com/typhoeus/typhoeus/blob/v1.3.1/lib/typhoeus/adapters/faraday.rb#L100" class="ulink" target="_top">still using the deprecated <code class="literal">Faraday::Error</code> namespace</a>. This has been fixed on master, but the last release was November 6, 2018. Version 1.4.0 should be ok once it&#8217;s released.
+</li>
+<li class="listitem">
+Note: Faraday 1.0 drops official support for JRuby. It installs fine on the tests we run with JRuby in this repo, but it&#8217;s something we should pay attention to.
+</li>
+</ul>
+</div>
+<p>Reference: <a href="https://github.com/lostisland/faraday/blob/master/UPGRADING.md" class="ulink" target="_top">Upgrading - Faraday 1.0</a></p>
+<p><a href="https://github.com/elastic/elasticsearch-ruby/pull/808" class="ulink" target="_top">Pull Request</a></p>
+<h4><a id="_api_27"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h4>
+<h5><a id="_api_changes_17"></a>API Changes:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">cat.indices</code>: argument <code class="literal">bytes</code> options were: <code class="literal">b,k,m,g</code> and are now <code class="literal">b,k,kb,m,mb,g,gb,t,tb,p,pb</code>.
+</li>
+<li class="listitem">
+<code class="literal">delete_by_query</code>: New parameter <code class="literal">analyzer</code> - The analyzer to use for the query string.
+</li>
+<li class="listitem">
+<code class="literal">indices.put_template</code>: Removed parameters: <code class="literal">timeout</code>, <code class="literal">flat_settings</code>.
+</li>
+<li class="listitem">
+<code class="literal">msearch_template</code>: New Parameter <code class="literal">ccs_minimize_roundtrips</code> - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+</li>
+<li class="listitem">
+<code class="literal">rank_eval</code>: New parameter <code class="literal">search_type</code> - Search operation type (options: <code class="literal">query_then_fetch,dfs_query_then_fetch</code>).
+</li>
+<li class="listitem">
+<code class="literal">search_template</code>: New parameter <code class="literal">ccs_minimize_roundtrips</code> - Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution.
+</li>
+</ul>
+</div>
+<h5><a id="_new_api_endpoints_9"></a>New API endpoints:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">get_script_context</code>
+</li>
+<li class="listitem">
+<code class="literal">get_script_languages</code>
+</li>
+</ul>
+</div>
+<h5><a id="_warnings"></a>Warnings:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<p>Synced flush is deprecated and will be removed in 8.0.</p>
+<h4><a id="_x_pack_11"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h4>
+<h5><a id="_new_api_endpoints_10"></a>New API endpoints:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">ml/delete_trained_model</code>
+</li>
+<li class="listitem">
+<code class="literal">ml/explain_data_frame_analytics</code>
+</li>
+<li class="listitem">
+<code class="literal">ml/get_trained_models</code>
+</li>
+<li class="listitem">
+<code class="literal">ml/get_trained_models_stats</code>
+</li>
+<li class="listitem">
+<code class="literal">ml/put_trained_model</code>
+</li>
+</ul>
+</div>
+<h5><a id="_api_changes_18"></a>API changes:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/76.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">license/get</code>: Added parameter <code class="literal">accept_enterprise</code>.
+</li>
+<li class="listitem">
+<code class="literal">ml/delete_data_frame_analytics</code> Added parameter <code class="literal">force</code>.
+</li>
+<li class="listitem">
+<code class="literal">monitoring/bulk</code> - Removed parameter <code class="literal">system_version</code>.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_77.html">« 7.7 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_75.html">7.5 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

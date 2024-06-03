@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>Examples | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Examples | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="prev" href="dsl.html" title="Elasticsearch DSL"/>
+<link rel="next" href="troubleshooting.html" title="Troubleshooting"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="dsl.html">« Elasticsearch DSL</a>
+</span>
+<span class="next">
+<a href="troubleshooting.html">Troubleshooting »</a>
+</span>
+</div>
+<div class="chapter">
+<div class="titlepage"><div><div>
+<h1 class="title"><a id="examples"></a>Examples<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h1>
+</div></div></div>
+<p>Below you can find examples of how to use the most frequently called APIs with
+the Ruby client.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<a class="xref" href="examples.html#ex-index" title="Indexing a document">Indexing a document</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-get" title="Getting a document">Getting a document</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-update" title="Updating a document">Updating a document</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-delete" title="Deleting a document">Deleting a document</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-bulk" title="Bulk requests">Bulk requests</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-search" title="Searching for a document">Searching for a document</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-multisearch" title="Multi search">Multi search</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-scroll" title="Scrolling">Scrolling</a>
+</li>
+<li class="listitem">
+<a class="xref" href="examples.html#ex-reindex" title="Reindexing">Reindexing</a>
+</li>
+</ul>
+</div>
+<h3><a id="ex-index"></a>Indexing a document<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>Let&#8217;s index a document with the following fields: <code class="literal">name</code>, <code class="literal">author</code>,
+<code class="literal">release_date</code>, and <code class="literal">page_count</code>:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = {
+  name: "The Hitchhiker's Guide to the Galaxy",
+  author: "Douglas Adams",
+  release_date: "1979-10-12",
+  page_count: 180
+}
+
+client.index(index: 'books', body: body)</pre>
+</div>
+<h3><a id="ex-get"></a>Getting a document<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>You can get a document by ID:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">id = 'l7LRjXgB2_ry9btNEv_V'
+client.get(index: 'books', id: id)</pre>
+</div>
+<h3><a id="ex-update"></a>Updating a document<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>Assume you have the following document:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">book = {"name": "Foundation", "author": "Isaac Asimov", "release_date": "1951-06-01", "page_count": 224}</pre>
+</div>
+<p>You can update the document by using the following script:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">response = client.index(index: 'books', body: book)
+id = response['_id']
+client.update(index: 'books', id: id, body: { doc: { page_count: 225 } })</pre>
+</div>
+<h3><a id="ex-delete"></a>Deleting a document<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>You can delete a document by ID:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">id = 'l7LRjXgB2_ry9btNEv_V'
+client.delete(index: 'books', id: id)</pre>
+</div>
+<h3><a id="ex-bulk"></a>Bulk requests<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>The <code class="literal">bulk</code> operation of the client supports various different formats of the
+payload: array of strings, header/data pairs, or the combined format where data
+is passed along with the header in a single item in a custom <code class="literal">:data</code> key.</p>
+<p>Index several documents in one request:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = [
+  { index: { _index: 'books', _id: '42' } },
+  { name: "The Hitchhiker's Guide to the Galaxy", author: 'Douglas Adams', release_date: '1979-10-12', page_count: 180},
+  { index: { _index: 'books', _id: '43' } },
+  { name: 'Snow Crash', author: 'Neal Stephenson', release_date: '1992-06-01', page_count: 470 },
+  { index: { _index: 'books', _id: '44' } },
+  { name: 'Starship Troopers', author: 'Robert A. Heinlein', release_date: '1959-12-01', page_count: 335}
+]
+client.bulk(body: body)</pre>
+</div>
+<p>Delete several documents:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = [
+  { delete: { _index: 'books', _id: '42' } },
+  { delete: { _index: 'books', _id: '43' } },
+]
+client.bulk(body: body)</pre>
+</div>
+<p>As mentioned, you can perform several operations in a single request with the
+combined format passing data in the <code class="literal">:data</code> option:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = [
+  { index:  { _index: 'books', _id: 45, data: { name: '1984', author: 'George Orwell', release_date: '1985-06-01', page_count: 328 } } },
+  { update: { _index: 'books', _id: 43, data: { doc: { page_count: 471 } } } },
+  { delete: { _index: 'books', _id: 44  } }
+]
+client.bulk(body: body)</pre>
+</div>
+<h3><a id="ex-search"></a>Searching for a document<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>This example uses the same data that is used in the
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/find-structure.html#find-structure-example-nld-json" class="ulink" target="_top">Find structure API documentation</a>.</p>
+<p>First, bulk index it:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = [
+  { index: { _index: 'books', data: {name: "Leviathan Wakes", "author": "James S.A. Corey", "release_date": "2011-06-02", "page_count": 561} } },
+  { index: { _index: 'books', data: {name: "Hyperion", "author": "Dan Simmons", "release_date": "1989-05-26", "page_count": 482} } },
+  { index: { _index: 'books', data: {name: "Dune", "author": "Frank Herbert", "release_date": "1965-06-01", "page_count": 604} } },
+  { index: { _index: 'books', data: {name: "Dune Messiah", "author": "Frank Herbert", "release_date": "1969-10-15", "page_count": 331} } },
+  { index: { _index: 'books', data: {name: "Children of Dune", "author": "Frank Herbert", "release_date": "1976-04-21", "page_count": 408} } },
+  { index: { _index: 'books', data: {name: "God Emperor of Dune", "author": "Frank Herbert", "release_date": "1981-05-28", "page_count": 454} } },
+  { index: { _index: 'books', data: {name: "Consider Phlebas", "author": "Iain M. Banks", "release_date": "1987-04-23", "page_count": 471} } },
+  { index: { _index: 'books', data: {name: "Pandora's Star", "author": "Peter F. Hamilton", "release_date": "2004-03-02", "page_count": 768} } },
+  { index: { _index: 'books', data: {name: "Revelation Space", "author": "Alastair Reynolds", "release_date": "2000-03-15", "page_count": 585} } },
+  { index: { _index: 'books', data: {name: "A Fire Upon the Deep", "author": "Vernor Vinge", "release_date": "1992-06-01", "page_count": 613} } },
+  { index: { _index: 'books', data: {name: "Ender's Game", "author": "Orson Scott Card", "release_date": "1985-06-01", "page_count": 324} } },
+  { index: { _index: 'books', data: {name: "1984", "author": "George Orwell", "release_date": "1985-06-01", "page_count": 328} } },
+  { index: { _index: 'books', data: {name: "Fahrenheit 451", "author": "Ray Bradbury", "release_date": "1953-10-15", "page_count": 227} } },
+  { index: { _index: 'books', data: {name: "Brave New World", "author": "Aldous Huxley", "release_date": "1932-06-01", "page_count": 268} } },
+  { index: { _index: 'books', data: {name: "Foundation", "author": "Isaac Asimov", "release_date": "1951-06-01", "page_count": 224} } },
+  { index: { _index: 'books', data: {name: "The Giver", "author": "Lois Lowry", "release_date": "1993-04-26", "page_count": 208} } },
+  { index: { _index: 'books', data: {name: "Slaughterhouse-Five", "author": "Kurt Vonnegut", "release_date": "1969-06-01", "page_count": 275} } },
+  { index: { _index: 'books', data: {name: "The Hitchhiker's Guide to the Galaxy", "author": "Douglas Adams", "release_date": "1979-10-12", "page_count": 180} } },
+  { index: { _index: 'books', data: {name: "Snow Crash", "author": "Neal Stephenson", "release_date": "1992-06-01", "page_count": 470} } },
+  { index: { _index: 'books', data: {name: "Neuromancer", "author": "William Gibson", "release_date": "1984-07-01", "page_count": 271} } },
+  { index: { _index: 'books', data: {name: "The Handmaid's Tale", "author": "Margaret Atwood", "release_date": "1985-06-01", "page_count": 311} } },
+  { index: { _index: 'books', data: {name: "Starship Troopers", "author": "Robert A. Heinlein", "release_date": "1959-12-01", "page_count": 335} } },
+  { index: { _index: 'books', data: {name: "The Left Hand of Darkness", "author": "Ursula K. Le Guin", "release_date": "1969-06-01", "page_count": 304} } },
+  { index: { _index: 'books', data: {name: "The Moon is a Harsh Mistress", "author": "Robert A. Heinlein", "release_date": "1966-04-01", "page_count": 288 } } }
+]
+client.bulk(body: body)</pre>
+</div>
+<p>The <code class="literal">field</code> parameter is a common parameter, so it can be passed in directly in
+the following way:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client.search(index: 'books', q: 'dune')</pre>
+</div>
+<p>You can do the same by using body request parameters:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client.search(index: 'books', q: 'dune', body: { fields: [{ field: 'name' }] })
+response = client.search(index: 'books', body: { size: 15 })
+response['hits']['hits'].count # =&gt; 15</pre>
+</div>
+<h3><a id="ex-multisearch"></a>Multi search<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>The following example shows how to perform a multisearch API call on <code class="literal">books</code> index:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">body = [
+  {},
+  {query: {range: {page_count: {gte: 100}}}},
+  {},
+  {query: {range: {page_count: {lte: 100}}}}
+]
+client.msearch(index:'books', body: body)</pre>
+</div>
+<h3><a id="ex-scroll"></a>Scrolling<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>Submit a search API request that includes an argument for the scroll query
+parameter, save the search ID, then print out the book names you found:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby"># Search request with a scroll argument:
+response = client.search(index: 'books', scroll: '10m')
+
+# Save the scroll id:
+scroll_id = response['_scroll_id']
+
+# Print out the names of all the books we find:
+while response['hits']['hits'].size.positive?
+  response = client.scroll(scroll: '5m', body: { scroll_id: scroll_id })
+  puts(response['hits']['hits'].map { |r| r['_source']['name'] })
+end</pre>
+</div>
+<h3><a id="ex-reindex"></a>Reindexing<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/examples.asciidoc">edit</a></h3>
+<p>The following example shows how to reindex the <code class="literal">books</code> index into a new index
+called <code class="literal">books-reindexed</code>:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client.reindex(body: {source: { index: 'books'}, dest: {index: 'books-reindexed' } })</pre>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="dsl.html">« Elasticsearch DSL</a>
+</span>
+<span class="next">
+<a href="troubleshooting.html">Troubleshooting »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

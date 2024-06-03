@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.11 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.11 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_712.html" title="7.12 Release notes"/>
+<link rel="next" href="release_notes_710.html" title="7.10 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_712.html">« 7.12 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_710.html">7.10 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_711"></a>7.11 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7112"></a>7.11.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h3>
+<h4><a id="_client_16"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Bug fix in meta header, fixes fail when http adapter library hasn&#8217;t been loaded yet: <a href="https://github.com/elastic/elasticsearch-ruby/issues/1224" class="ulink" target="_top">Issue</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7111"></a>7.11.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h3>
+<h4><a id="_client_17"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Bug fix in meta header, adds support for unknown Faraday adapters. <a href="https://github.com/elastic/elasticsearch-ruby/pull/1204" class="ulink" target="_top">Pull Request</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7110"></a>7.11.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h3>
+<h4><a id="_client_18"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch version <code class="literal">7.11.0</code>.
+</li>
+<li class="listitem">
+Fixes a bug with headers in our default Faraday class. <a href="https://github.com/elastic/elasticsearch-ruby/commit/9c4afc452467cc6344359b54b98bbe5af1469219" class="ulink" target="_top">Commit</a>.
+</li>
+<li class="listitem">
+Adds the <code class="literal">X-Elastic-Client-Meta</code> HTTP header which is used by Elastic Cloud and can be disabled with the <code class="literal">enable_meta_header</code> parameter set to <code class="literal">false</code>.
+</li>
+</ul>
+</div>
+<h4><a id="_api_22"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">cat.tasks</code> - Parameter <code class="literal">node_id</code> changes name to <code class="literal">nodes</code>, a comma-separated list of node IDS or names. Parameter <code class="literal">parent_task</code> changes name to <code class="literal">parent_task_id</code>.
+</li>
+<li class="listitem">
+APIs that are no longer experimental: <code class="literal">cluster.delete_component_template</code>, <code class="literal">cluster.exists_component_template</code>, <code class="literal">cluster.get_component_template</code>, <code class="literal">cluster.put_component_template</code>, <code class="literal">indices.delete_index_template</code>, <code class="literal">indices.exists_index_template</code>, <code class="literal">indices.get_index_template</code>, <code class="literal">indices.put_index_template</code>, <code class="literal">indices.simulate_index_template</code>, <code class="literal">indices.simulate_template</code>.
+</li>
+<li class="listitem">
+Deprecation notice: The _upgrade API is no longer useful and will be removed. Instead, see <code class="literal">_reindex API</code>. Deprecated since version 8.0.0. Endpoints: <code class="literal">indices.get_upgrade</code>, <code class="literal">indices.upgrade</code>
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_5"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/711.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New endpoints:<code class="literal">async_search.status</code>, <code class="literal">autoscaling.get_autoscaling_capacity</code> (experimental), <code class="literal">indices.migrate_to_data_stream</code>, <code class="literal">indices.promote_data_stream</code>, <code class="literal">machine_learning.upgrade_job_snapshot</code>, <code class="literal">rollup.rollup</code>, <code class="literal">watcher.query_watches</code>.
+</li>
+<li class="listitem">
+APIs that are no longer experimental: <code class="literal">eql.delete</code>, <code class="literal">eql.get</code>, <code class="literal">eql.search</code>,
+</li>
+<li class="listitem">
+APIs promoted from experimental to beta: <code class="literal">machine_learning.delete_data_frame_analytics</code>, <code class="literal">ml.delete_trained_model</code>, <code class="literal">machine_learning.evaluate_data_frame</code>, <code class="literal">machine_learning.explain_data_frame_analytics</code>, <code class="literal">machine_learning.get_data_frame_analytics</code>, <code class="literal">machine_learning.get_datafeed_stats</code>, <code class="literal">machine_learning.get_trained_models</code>, <code class="literal">machine_learning.get_trained_models_stats</code>, <code class="literal">machine_learning.put_data_frame_analytics</code>, <code class="literal">machine_learning.put_trained_model</code>, <code class="literal">machine_learning.start_data_frame_analytics</code>, <code class="literal">machine_learning.stop_data_frame_analytics</code>, <code class="literal">machine_learning.update_data_frame_analytics</code>
+</li>
+<li class="listitem">
+<code class="literal">indices.delete_data_stream</code>, <code class="literal">indices.get_data_stream</code> add parameter <code class="literal">expand_wildcards</code>, wether wildcard expressions should get expanded to open or closed indices (default: open). Options: open, closed, hidden, none, all.
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.get_data_frame_analytics</code>, <code class="literal">machine_learning.get_datafeeds</code>, <code class="literal">machine_learning.get_jobs</code>, <code class="literal">machine_learning.get_trained_models</code>, <code class="literal">transform.get_transform</code> add parameter <code class="literal">exclude_generated</code> - omits fields that are illegal to set on PUT.
+</li>
+<li class="listitem">
+<code class="literal">data_frame_transform_deprecated.get_transform</code> (_data_frame/transforms/ is deprecated, use _transform/ in the future) adds parameter <code class="literal">exclude_generated</code> - omits generated files.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_712.html">« 7.12 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_710.html">7.10 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

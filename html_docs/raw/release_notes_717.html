@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.17 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.17 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_80.html" title="8.0 Release notes"/>
+<link rel="next" href="release_notes_716.html" title="7.16 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_80.html">« 8.0 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_716.html">7.16 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_717"></a>7.17 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/717.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7177"></a>7.17.7 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/717.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Compatibility with Elasticsearch v7.17.7 APIs.
+</li>
+<li class="listitem">
+Tested versions of Ruby for 7.17.7: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7172"></a>7.17.2, 7.17.3, 7.17.4, 7.17.5, 7.17.6 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/717.asciidoc">edit</a></h3>
+<p>No release.</p>
+<h3><a id="release_notes_7171"></a>7.17.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/717.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Improves handling of YAML parsing, uses <code class="literal">safe_load</code> instead of <code class="literal">load</code> when doing the product verification (should only affect Ruby &lt; 3.0).
+</li>
+<li class="listitem">
+Updates headers setup when using the Manticore adapter. This fixes an issue where the user-agent header was being foverridden even when it was being set on initialization via the transport options. <a href="https://github.com/elastic/elasticsearch-ruby/pull/1685" class="ulink" target="_top">Pull Request</a>, <a href="https://github.com/elastic/elasticsearch-ruby/issues/1684" class="ulink" target="_top">issue</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7170"></a>7.17.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/717.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Drops Ruby 2.5 from the test matrix. Support for Ruby 2.5 was dropped March 2021.
+</li>
+<li class="listitem">
+Updates the product verification when the response is a <code class="literal">413</code> error.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_80.html">« 8.0 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_716.html">7.16 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

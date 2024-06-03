@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Basic configuration | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Basic configuration | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="ruby-config.html" title="Configuration"/>
+<link rel="prev" href="ruby-config.html" title="Configuration"/>
+<link rel="next" href="advanced-config.html" title="Advanced configuration"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="ruby-config.html">Configuration</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="ruby-config.html">« Configuration</a>
+</span>
+<span class="next">
+<a href="advanced-config.html">Advanced configuration »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="basic-config"></a>Basic configuration<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/basic-config.asciidoc">edit</a></h2>
+</div></div></div>
+<p>The table below contains the most important initialization parameters that you
+can use.</p>
+<div class="informaltable">
+<table border="1" cellpadding="4px">
+<colgroup>
+<col class="col_1"/>
+<col class="col_2"/>
+<col class="col_3"/>
+</colgroup>
+<tbody>
+<tr>
+<td align="left" valign="top"><p><span class="strong strong"><strong>Parameter</strong></span></p></td>
+<td align="left" valign="top"><p><span class="strong strong"><strong>Data type</strong></span></p></td>
+<td align="left" valign="top"><p><span class="strong strong"><strong>Description</strong></span></p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">adapter</code></p></td>
+<td align="left" valign="top"><p>Symbol</p></td>
+<td align="left" valign="top"><p>A specific adapter for Faraday (for example, <code class="literal">:patron</code>).</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">api_key</code></p></td>
+<td align="left" valign="top"><p>String, Hash</p></td>
+<td align="left" valign="top"><p>For API key Authentication. Either the base64 encoding of <code class="literal">id</code> and <code class="literal">api_key</code> joined by a colon as a string, or a hash with the <code class="literal">id</code> and <code class="literal">api_key</code> values.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">compression</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to compress requests. Gzip compression is used. Defaults to <code class="literal">false</code>. Responses are automatically inflated if they are compressed. If a custom transport object is used, it must handle the request compression and response inflation.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">enable_meta_header</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to enable sending the meta data header to Cloud. Defaults to <code class="literal">true</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">hosts</code></p></td>
+<td align="left" valign="top"><p>String, Array</p></td>
+<td align="left" valign="top"><p>Single host passed as a string or hash, or multiple hosts passed as an array; <code class="literal">host</code> or <code class="literal">url</code> keys are also valid.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">log</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to use the default logger. Disabled by default.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">logger</code></p></td>
+<td align="left" valign="top"><p>Object</p></td>
+<td align="left" valign="top"><p>An instance of a Logger-compatible object.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">opaque_id_prefix</code></p></td>
+<td align="left" valign="top"><p>String</p></td>
+<td align="left" valign="top"><p>Sets a prefix for X-Opaque-Id when initializing the client. This is prepended to the id you set before each request if you&#8217;re using X-Opaque-Id.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">opentelemetry_tracer_provider</code></p></td>
+<td align="left" valign="top"><p><code class="literal">OpenTelemetry::Trace::TracerProvider</code></p></td>
+<td align="left" valign="top"><p>An explicit TracerProvider to use instead of the global one with OpenTelemetry. This enables better dependency injection and simplifies testing.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">randomize_hosts</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to shuffle connections on initialization and reload. Defaults to <code class="literal">false</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">reload_connections</code></p></td>
+<td align="left" valign="top"><p>Boolean, Number</p></td>
+<td align="left" valign="top"><p>Whether to reload connections after X requests. Defaults to <code class="literal">false</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">reload_on_failure</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to reload connections after failure. Defaults to <code class="literal">false</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">request_timeout</code></p></td>
+<td align="left" valign="top"><p>Integer</p></td>
+<td align="left" valign="top"><p>The request timeout to be passed to transport in options.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">resurrect_after</code></p></td>
+<td align="left" valign="top"><p>Integer</p></td>
+<td align="left" valign="top"><p>Specifies after how many seconds a dead connection should be tried again.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">retry_on_failure</code></p></td>
+<td align="left" valign="top"><p>Boolean, Number</p></td>
+<td align="left" valign="top"><p>Whether to retry X times when request fails before raising and exception. Defaults to <code class="literal">false</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">retry_on_status</code></p></td>
+<td align="left" valign="top"><p>Array, Number</p></td>
+<td align="left" valign="top"><p>Specifies which status code needs to be returned to retry.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">selector</code></p></td>
+<td align="left" valign="top"><p>Constant</p></td>
+<td align="left" valign="top"><p>An instance of selector strategy implemented with {Elastic::Transport::Transport::Connections::Selector::Base}.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">send_get_body_as</code></p></td>
+<td align="left" valign="top"><p>String</p></td>
+<td align="left" valign="top"><p>Specifies the HTTP method to use for GET requests with a body. Defaults to <code class="literal">GET</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">serializer_class</code></p></td>
+<td align="left" valign="top"><p>Constant</p></td>
+<td align="left" valign="top"><p>Specifies a serializer class to use. It is initialized by the transport and passed the transport instance.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">sniffer_timeout</code></p></td>
+<td align="left" valign="top"><p>Integer</p></td>
+<td align="left" valign="top"><p>Specifies the timeout for reloading connections in seconds. Defaults to <code class="literal">1</code>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">trace</code></p></td>
+<td align="left" valign="top"><p>Boolean</p></td>
+<td align="left" valign="top"><p>Whether to use the default tracer. Disabled by default.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">tracer</code></p></td>
+<td align="left" valign="top"><p>Object</p></td>
+<td align="left" valign="top"><p>Specifies an instance of a Logger-compatible object.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">transport</code></p></td>
+<td align="left" valign="top"><p>Object</p></td>
+<td align="left" valign="top"><p>Specifies a transport instance.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">transport_class</code></p></td>
+<td align="left" valign="top"><p>Constant</p></td>
+<td align="left" valign="top"><p>Specifies a transport class to use. It is initialized by the client and passed hosts and all arguments.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p><code class="literal">transport_options</code></p></td>
+<td align="left" valign="top"><p>Hash</p></td>
+<td align="left" valign="top"><p>Specifies the options to be passed to the <code class="literal">Faraday::Connection</code> constructor.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="ruby-config.html">« Configuration</a>
+</span>
+<span class="next">
+<a href="advanced-config.html">Advanced configuration »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

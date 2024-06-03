@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>Transport | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Transport | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="integrations.html" title="Integrations"/>
+<link rel="prev" href="integrations.html" title="Integrations"/>
+<link rel="next" href="api.html" title="Elasticsearch API"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="integrations.html">Integrations</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="integrations.html">« Integrations</a>
+</span>
+<span class="next">
+<a href="api.html">Elasticsearch API »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="transport"></a>Transport<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/transport.asciidoc">edit</a></h2>
+</div></div></div>
+<p>The <code class="literal">elastic-transport</code> library provides a low-level Ruby client for connecting to an Elasticsearch cluster. It currently powers the <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html" class="ulink" target="_top">Elasticsearch Ruby</a> and the <a href="https://www.elastic.co/guide/en/enterprise-search-clients/ruby/current/index.html" class="ulink" target="_top">Enterprise Search Ruby</a> clients.</p>
+<p>When available, it handles connecting to multiple nodes in the cluster, rotating across connections, logging and tracing requests and responses, maintaining failed connections, discovering nodes in the cluster, and provides an abstraction for data serialization and transport.</p>
+<p>It does not handle calling the Elasticsearch or Enterprise Search APIs.</p>
+<p>This library uses <a href="https://github.com/lostisland/faraday" class="ulink" target="_top">Faraday</a> by default as the HTTP transport implementation. We test it with Faraday versions 1.x and 2.x.</p>
+<p>For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections, such as <a href="https://github.com/toland/patron" class="ulink" target="_top">patron</a> or <a href="https://github.com/typhoeus/typhoeus" class="ulink" target="_top">Typhoeus</a>. Require the library (<code class="literal">require 'patron'</code>) in your code for Faraday 1.x or the adapter (<code class="literal">require 'faraday/patron'</code>) for Faraday 2.x, and it will be automatically used.</p>
+<p>Currently these libraries are supported:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<a href="https://github.com/toland/patron" class="ulink" target="_top">Patron</a>
+</li>
+<li class="listitem">
+<a href="https://github.com/typhoeus/typhoeus" class="ulink" target="_top">Typhoeus</a>
+</li>
+<li class="listitem">
+<a href="https://rubygems.org/gems/httpclient" class="ulink" target="_top">HTTPClient</a>
+</li>
+<li class="listitem">
+<a href="https://rubygems.org/gems/net-http-persistent" class="ulink" target="_top">Net::HTTP::Persistent</a>
+</li>
+</ul>
+</div>
+<div class="note admon">
+<div class="icon"></div>
+<div class="admon_content">
+<p>Use <a href="https://github.com/typhoeus/typhoeus" class="ulink" target="_top">Typhoeus</a> v1.4.0 or up since older versions are not compatible with Faraday 1.0.</p>
+</div>
+</div>
+<p>You can customize Faraday and implement your own HTTP transport. For detailed information, see the example configurations and more information <a class="xref" href="transport.html#transport-implementations" title="Transport implementations">below</a>.</p>
+<p>Features overview:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Pluggable logging and tracing
+</li>
+<li class="listitem">
+Pluggable connection selection strategies (round-robin, random, custom)
+</li>
+<li class="listitem">
+Pluggable transport implementation, customizable and extendable
+</li>
+<li class="listitem">
+Pluggable serializer implementation
+</li>
+<li class="listitem">
+Request retries and dead connections handling
+</li>
+<li class="listitem">
+Node reloading (based on cluster state) on errors or on demand
+</li>
+</ul>
+</div>
+<p>Refer to <a class="xref" href="advanced-config.html" title="Advanced configuration">Advanced Configuration</a> to read about more configuration options.</p>
+<h4><a id="transport-install"></a>Installation<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/transport.asciidoc">edit</a></h4>
+<p>Install the package from <a href="https://rubygems.org/" class="ulink" target="_top">Rubygems</a>:</p>
+<div class="pre_wrapper lang-bash">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-bash">gem install elastic-transport</pre>
+</div>
+<p>To use an unreleased version, either add it to your <code class="literal">Gemfile</code> for
+<a href="http://gembundler.com/" class="ulink" target="_top">Bundler</a>:</p>
+<div class="pre_wrapper lang-bash">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-bash">gem 'elastic-transport', git: 'git@github.com:elastic/elastic-transport-ruby.git'</pre>
+</div>
+<p>or install it from a source code checkout:</p>
+<div class="pre_wrapper lang-bash">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-bash">git clone https://github.com/elastic/elastic-transport-ruby.git
+cd elastic-transport
+bundle install
+rake install</pre>
+</div>
+<h4><a id="transport-example-usage"></a>Example usage<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/transport.asciidoc">edit</a></h4>
+<p>In the simplest form, connect to Elasticsearch running on <a href="http://localhost:9200" class="ulink" target="_top">http://localhost:9200</a> without any configuration:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">require 'elastic/transport'
+
+client = Elastic::Transport::Client.new
+response = client.perform_request('GET', '_cluster/health')
+# =&gt; #&lt;Elastic::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } &gt;</pre>
+</div>
+<p>Documentation is included as RDoc annotations in the source code and available online at <a href="http://rubydoc.info/gems/elastic-transport" class="ulink" target="_top">RubyDoc</a>.</p>
+<h4><a id="transport-implementations"></a>Transport implementations<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/transport.asciidoc">edit</a></h4>
+<p>By default, the client uses the <a href="https://rubygems.org/gems/faraday" class="ulink" target="_top">Faraday</a> HTTP library as a transport implementation.</p>
+<p>The Client auto-detects and uses an <em>adapter</em> for <em>Faraday</em> based on gems loaded in your code, preferring HTTP clients with support for persistent connections. Faraday 2 changed the way adapters are used (<a href="https://github.com/lostisland/faraday/blob/main/UPGRADING.md#adapters-have-moved" class="ulink" target="_top">read more here</a>). If you&#8217;re using Faraday 1.x, you can require the HTTP library. To use the <a href="https://github.com/toland/patron" class="ulink" target="_top"><em>Patron</em></a> HTTP, for example, require it:</p>
+<p>To use the <a href="https://github.com/toland/patron" class="ulink" target="_top">Patron</a> HTTP, for example, require it:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">require 'patron'</pre>
+</div>
+<p>If you&#8217;re using Faraday 2.x, you need to add the corresponding adapter gem to your Gemfile and require it after you require <code class="literal">faraday</code>:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb"># Gemfile
+gem 'faraday-patron'
+
+# Code
+require 'faraday'
+require 'faraday/patron'</pre>
+</div>
+<p>Then, create a new client, and the Patron gem will be used as the "driver":</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">client = Elastic::Transport::Client.new
+
+client.transport.connections.first.connection.builder.adapter
+# =&gt; Faraday::Adapter::Patron
+
+10.times do
+  client.nodes.stats(metric: 'http')['nodes'].values.each do |n|
+    puts "#{n['name']} : #{n['http']['total_opened']}"
+  end
+end
+
+# =&gt; Stiletoo : 24
+# =&gt; Stiletoo : 24
+# =&gt; Stiletoo : 24
+# =&gt; ...</pre>
+</div>
+<p>To use a specific adapter for Faraday, pass it as the <code class="literal">adapter</code> argument:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">client = Elastic::Client.new(adapter: :net_http_persistent)
+
+client.transport.connections.first.connection.builder.handlers
+# =&gt; [Faraday::Adapter::NetHttpPersistent]</pre>
+</div>
+<p>If you see this error:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">Faraday::Error: :net_http_persistent is not registered on Faraday::Adapter</pre>
+</div>
+<p>When you&#8217;re using Faraday 2, you need to require the adapter before instantiating the client:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">&gt; client = Elasticsearch::Client.new(adapter: :net_http_persistent)
+Faraday::Error: :net_http_persistent is not registered on Faraday::Adapter
+&gt; require 'faraday/net_http_persistent'
+=&gt; true
+&gt; client = Elasticsearch::Client.new(adapter: :net_http_persistent)
+=&gt; #&lt;Elasticsearch::Client:0x00007eff2e7728e0</pre>
+</div>
+<p>When using the Elasticsearch or Enterprise Search clients, you can pass the <code class="literal">adapter</code> parameter when initializing the clients.</p>
+<p>To pass options to the <a href="https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb" class="ulink" target="_top"><code class="literal">Faraday::Connection</code></a> constructor, use the <code class="literal">transport_options</code> key:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">client = Elastic::Client.new(
+  transport_options: {
+    request: { open_timeout: 1 },
+    headers: { user_agent:   'MyApp' },
+    params:  { :format =&gt; 'yaml' },
+    ssl:     { verify: false }
+  }
+)</pre>
+</div>
+<p>To configure the Faraday instance directly, use a block:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">require 'patron'
+
+client = Elastic::Client.new(host: 'localhost', port: '9200') do |f|
+  f.response :logger
+  f.adapter  :patron
+end</pre>
+</div>
+<p>You can use any standard Faraday middleware and plugins in the configuration block.</p>
+<p>You can also initialize the transport class yourself, and pass it to the client constructor as the <code class="literal">transport</code> argument. The Elasticsearch and Enterprise Search clients accept <code class="literal">:transport</code> as parameter when initializing a client. So you can pass in a transport you&#8217;ve initialized with the following options:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">require 'patron'
+
+transport_configuration = lambda do |f|
+  f.response :logger
+  f.adapter  :patron
+end
+
+transport = Elastic::Transport::Transport::HTTP::Faraday.new(
+  hosts: [ { host: 'localhost', port: '9200' } ],
+  &amp;transport_configuration
+)
+
+# Pass the transport to the client
+#
+client = Elastic::Client.new(transport: transport)</pre>
+</div>
+<p>Instead of passing the transport to the constructor, you can inject it at run time:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb"># Set up the transport
+#
+faraday_configuration = lambda do |f|
+  f.instance_variable_set :@ssl, { verify: false }
+  f.adapter :excon
+end
+
+faraday_client = Elastic::Transport::Transport::HTTP::Faraday.new(
+  hosts: [
+    {
+      host: 'my-protected-host',
+      port: '443',
+      user: 'USERNAME',
+      password: 'PASSWORD',
+      scheme: 'https'
+    }
+  ],
+  &amp;faraday_configuration
+)
+
+# Create a default client
+#
+client = Elastic::Client.new
+
+# Inject the transport to the client
+#
+client.transport = faraday_client</pre>
+</div>
+<p>You can also use a bundled <a href="https://rubygems.org/gems/curb" class="ulink" target="_top">Curb</a> based transport implementation:</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">require 'curb'
+require 'elastic/transport/transport/http/curb'
+
+client = Elastic::Client.new(transport_class: Elastic::Transport::Transport::HTTP::Curb)
+
+client.transport.connections.first.connection
+# =&gt; #&lt;Curl::Easy http://localhost:9200/&gt;</pre>
+</div>
+<p>It&#8217;s possible to customize the Curb instance by passing a block to the constructor as well (in this case, as an inline block):</p>
+<div class="pre_wrapper lang-rb">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-rb">transport = Elastic::Transport::Transport::HTTP::Curb.new(
+  hosts: [ { host: 'localhost', port: '9200' } ],
+  &amp; lambda { |c| c.verbose = true }
+)
+
+client = Elastic::Client.new(transport: transport)</pre>
+</div>
+<p>You can write your own transport implementation by including the {Elastic::Transport::Transport::Base} module, implementing the required contract, and passing it to the client as the <code class="literal">transport_class</code> parameter – or by injecting it directly.</p>
+<h4><a id="transport-architecture"></a>Transport architecture<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/transport.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">Elastic::Transport::Client</code> is composed of <code class="literal">Elastic::Transport::Transport</code>.
+</li>
+<li class="listitem">
+<code class="literal">Elastic::Transport::Transport</code> is composed of <code class="literal">Elastic::Transport::Transport::Connections</code>, and an instance of logger, tracer, serializer and sniffer.
+</li>
+<li class="listitem">
+Logger and tracer can be any object conforming to Ruby logging interface, for example, an instance of <a href="https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html" class="ulink" target="_top"><code class="literal">Logger</code></a>, <a href="https://rubygems.org/gems/log4r" class="ulink" target="_top">log4r</a>, <a href="https://github.com/TwP/logging/" class="ulink" target="_top">logging</a>, and so on.
+</li>
+<li class="listitem">
+The <code class="literal">Elastic::Transport::Transport::Serializer::Base</code> implementations handle converting data for Elasticsearch (for example, to JSON). You can implement your own serializer.
+</li>
+<li class="listitem">
+<code class="literal">Elastic::Transport::Transport::Sniffer</code> allows to discover nodes in the cluster and use them as connections.
+</li>
+<li class="listitem">
+<code class="literal">Elastic::Transport::Transport::Connections::Collection</code> is composed of <code class="literal">Elastic::Transport::Transport::Connections::Connection</code> instances and a selector instance.
+</li>
+<li class="listitem">
+<code class="literal">Elastic::Transport::Transport::Connections::Connection</code> contains the connection attributes such as hostname and port, as well as the concrete persistent "session" connected to a specific node.
+</li>
+<li class="listitem">
+The <code class="literal">Elastic::Transport::Transport::Connections::Selector::Base</code> implementations allow to choose connections from the pool, for example, in a round-robin or random fashion. You can implement your own selector strategy.
+</li>
+<li class="listitem">
+The <code class="literal">Elastic::Transport::Transport::Response</code> object wraps the Elasticsearch JSON response. It provides <code class="literal">body</code>, <code class="literal">status</code>, and <code class="literal">headers</code> methods but you can treat it as a hash and access the keys directly.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="integrations.html">« Integrations</a>
+</span>
+<span class="next">
+<a href="api.html">Elasticsearch API »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

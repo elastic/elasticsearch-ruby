@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.10 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.10 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_711.html" title="7.11 Release notes"/>
+<link rel="next" href="release_notes_79.html" title="7.9 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_711.html">« 7.11 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_79.html">7.9 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_710"></a>7.10 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7101"></a>7.10.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h3>
+<h4><a id="_client_19"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Updates for connecting with Cloud.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7100"></a>7.10 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h3>
+<h4><a id="_client_20"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch version <code class="literal">7.10.0</code>.
+</li>
+<li class="listitem">
+Fixes a bug when building the complete endpoint URL could end with duplicate slashes <code class="literal">//</code>.
+</li>
+<li class="listitem">
+Fixes a bug when building the complete endpoint URL with cloud id could end with duplicate ports <a href="https://github.com/elastic/elasticsearch-ruby/issues/1081" class="ulink" target="_top">#1081</a>.
+</li>
+</ul>
+</div>
+<h4><a id="_api_23"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fix in RubyDoc comments, some parameters were being duplicated.
+</li>
+<li class="listitem">
+Deprecation notice: Synced flush (<code class="literal">indices.flush_synced</code>) is deprecated and will be removed in 8.0. Use flush instead.
+</li>
+</ul>
+</div>
+<h5><a id="_new_api_endpoints"></a>New API Endpoints<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">snapshot.clone</code>
+</li>
+</ul>
+</div>
+<h5><a id="_api_changes_8"></a>API Changes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">bulk</code>, <code class="literal">index</code>, <code class="literal">update</code>: new parameter <code class="literal">require_alias</code> (boolean):  When true, requires destination to be an alias (default: false) for <code class="literal">index</code> and <code class="literal">update</code>. For <code class="literal">bulk</code> it sets <code class="literal">require_alias</code> for all incoming documents. Defaults to unset (false).
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_6"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h4>
+<p>Deprecation notice: <code class="literal">searchable_snapshots.repository_stats</code> is deprecated and is replaced by the Repositories Metering API.</p>
+<h5><a id="_new_api_endpoints_2"></a>New API Endpoints<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">close_point_in_time</code>
+</li>
+<li class="listitem">
+<code class="literal">open_point_in_time</code>
+</li>
+<li class="listitem">
+<code class="literal">security.clear_api_key_cache</code>
+</li>
+<li class="listitem">
+<code class="literal">security.grant_api_key</code>
+</li>
+</ul>
+</div>
+<h5><a id="_api_changes_9"></a>API Changes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/710.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">cat.ml_datafeeds</code>, <code class="literal">cat.ml_jobs</code>, <code class="literal">machine_learning.close_job</code>, <code class="literal">machine_learning.get_datafeed_stats</code>, <code class="literal">machine_learning.get_datafeeds</code>, <code class="literal">machine_learning.get_job_stats</code>, <code class="literal">machine_learning.get_jobs</code>, <code class="literal">machine_learning.get_overall_buckets</code>, <code class="literal">machine_learning.stop_datafeed</code>: new parameter <code class="literal">allow_no_match</code> (boolean): Whether to ignore if a wildcard expression matches no datafeeds (this includes <code class="literal">_all</code> string or when no datafeeds have been specified).
+-<code class="literal">machine_learning.get_data_frame_analytics</code>: new parameter <code class="literal">verbose</code> (boolean), whether the stats response should be verbose.
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.get_trained_models</code>: new parameter <code class="literal">include</code> (string), a comma-separate list of fields to optionally include. Valid options are <em>definition</em> and <em>total_feature_importance</em>. Default is none.
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.stop_datafeed</code>: endpoint now accepts a <code class="literal">body</code>: the URL params optionally sent in the body.
+</li>
+<li class="listitem">
+<code class="literal">security.get_role</code>, <code class="literal">security/get_role_mapping</code>: The name parameter is now a comma-separated list of role-mapping names.
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.delete_trained_model</code>, <code class="literal">machine_learning.get_trained_models</code>, <code class="literal">machine_learning.get_trained_models_stats</code>, <code class="literal">machine_learning.put_trained_model</code>: Internal change, url changed from <code class="literal">_ml/inference</code> to <code class="literal">_ml/trained_models</code>.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_711.html">« 7.11 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_79.html">7.9 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

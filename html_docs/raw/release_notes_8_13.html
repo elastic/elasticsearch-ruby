@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.13 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.13 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes.html" title="Release Notes"/>
+<link rel="next" href="release_notes_8_12.html" title="8.12 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes.html">« Release Notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8_12.html">8.12 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_8_13"></a>8.13 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_8_13_0"></a>8.13.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h3>
+<h4><a id="_client"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.13.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+</li>
+</ul>
+</div>
+<h4><a id="_experimental_esql_helper"></a>Experimental ES|QL Helper<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<p>This version provides a new experimental Helper for the ES|QL <code class="literal">query</code> API. Please check out <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#esql-helper" class="ulink" target="_top">the documentation</a> and <a href="https://github.com/elastic/elasticsearch-ruby/issues/new/choose" class="ulink" target="_top">open an issue</a> if you encounter any problems or have any feedback.</p>
+<h4><a id="_api"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<p>API Changes:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">async_search.status</code> - adds Time <code class="literal">:keep_alive</code> parameter: Specify the time interval in which the results (partial or final) for this search will be available.
+</li>
+<li class="listitem">
+<code class="literal">bulk</code> - adds boolean <code class="literal">:require_data_stream</code> parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+</li>
+<li class="listitem">
+<code class="literal">connector.list</code> - Adds the following parameters:
+</li>
+<li class="listitem">
+<code class="literal">:index_name</code> (List): A comma-separated list of connector index names to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:connector_name</code> (List): A comma-separated list of connector names to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:service_type</code> (List):  A comma-separated list of connector service types to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:query</code> (String): A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names.
+</li>
+<li class="listitem">
+<code class="literal">esql.query</code> - adds boolean <code class="literal">:drop_null_columns</code> parameter: Should entirely null columns be removed from the results? Their name and type will be returning in a new <code class="literal">all_columns</code> section.
+</li>
+<li class="listitem">
+<code class="literal">field_caps</code> - Adds <code class="literal">:include_empty_fields</code> boolean parameter: Include empty fields in result.
+</li>
+<li class="listitem">
+<code class="literal">index</code> - adds boolean <code class="literal">:require_data_stream</code> parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+</li>
+<li class="listitem">
+<code class="literal">indices.rollover</code> - adds boolean <code class="literal">:lazy</code> parameter: If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write. Only allowed on data streams.
+</li>
+<li class="listitem">
+connector_sync_job.list - adds List <code class="literal">:job_type</code> parameter: A comma-separated list of job types.
+</li>
+<li class="listitem">
+<code class="literal">inference.delete_model</code>, <code class="literal">inference.get_model</code>, <code class="literal">inference.inference</code>, <code class="literal">inference.put_model</code>: renames <code class="literal">:model_id</code> parameter to <code class="literal">:inference_id</code>.
+</li>
+<li class="listitem">
+<code class="literal">termvector</code> will show a warning since it&#8217;s been deprecated. Please use the plural version, <code class="literal">termvectors</code>.
+</li>
+</ul>
+</div>
+<p>New APIs:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">indices.resolve_cluster</code> - Resolves the specified index expressions to return information about each cluster, including the local cluster, if included.
+</li>
+<li class="listitem">
+<code class="literal">profiling.flamegraph</code> - Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
+</li>
+<li class="listitem">
+<code class="literal">profiling.stacktraces</code> - Extracts raw stacktrace information from Universal Profiling.
+</li>
+<li class="listitem">
+<code class="literal">security.query_user</code> - Retrieves information for Users using a subset of query DSL
+</li>
+<li class="listitem">
+<code class="literal">text_structure.test_grok_pattern</code> - Tests a Grok pattern on some text.
+</li>
+</ul>
+</div>
+<p>APIs Migrated from experimental to stable:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">synonyms.delete_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.delete_synonym_rule</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonym_rule</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonyms_sets</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.put_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.put_synonym_rule</code>
+</li>
+</ul>
+</div>
+<p>New Experimental APIs</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector.update_api_key_id</code> - Updates the API key id and/or API key secret id fields in the connector document.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_index_name</code> - Updates the index name of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_native</code> - Updates the is_native flag of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_service_type</code> - Updates the service type of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_status</code> - Updates the status of the connector.
+</li>
+<li class="listitem">
+<code class="literal">esql.async_query</code> - Executes an ESQL request asynchronously
+</li>
+<li class="listitem">
+<code class="literal">esql.async_query_get</code> - Retrieves the results of a previously submitted async query request given its ID.
+</li>
+</ul>
+</div>
+<p>New Experimental namespace <code class="literal">connector_secret</code>:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector_secret.delete</code> - Deletes a connector secret.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.get</code> - Retrieves a secret stored by Connectors.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.post</code> - Creates a secret for a Connector.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.put</code> - Creates or updates a secret for a Connector.
+</li>
+</ul>
+</div>
+<h4><a id="_development"></a>Development<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Migrated from <code class="literal">byebug</code> to <code class="literal">debug</code>.
+</li>
+<li class="listitem">
+Added extra testing for OpenTelemetry.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes.html">« Release Notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8_12.html">8.12 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>7.16 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.16 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_717.html" title="7.17 Release notes"/>
+<link rel="next" href="release_notes_715.html" title="7.15 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_717.html">« 7.17 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_715.html">7.15 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_716"></a>7.16 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7163"></a>7.16.3 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<div class="section">
+<div class="titlepage"><div><div>
+<h3 class="title"><a id="_api_16"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+</div></div></div>
+<p>Bugfix for <a href="https://github.com/elastic/elasticsearch-ruby/issues/1475" class="ulink" target="_top">#1475</a>, an issue where if you indexed a document with an id such as <code class="literal">an id</code>, it would get escaped to <code class="literal">an+id</code> instead of <code class="literal">an%20id</code> when using <code class="literal">index</code> or <code class="literal">create</code>. This would result in the document id being <code class="literal">an+id</code> instead of the intended value <code class="literal">an id</code>.</p>
+<h3><a id="release_notes_7162"></a>7.16.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<p>No release.</p>
+<h3><a id="release_notes_7161"></a>7.16.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<p>Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, <a href="https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476" class="ulink" target="_top">more information</a>.</p>
+</div>
+
+<div class="section">
+<div class="titlepage"><div><div>
+<h3 class="title"><a id="_client_8"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+</div></div></div>
+<p>The only changes in the client since 7.16.0 are a few minor updates for the <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-comp" class="ulink" target="_top">Compatibility mode with 8.0</a>. We added the compatibility header in <code class="literal">7.13.0</code>,  but now we have integration tests and compatibility tests for version <code class="literal">7.x</code> of the client with Elasticsearch <code class="literal">8.0</code>.</p>
+<h3><a id="release_notes_7160"></a>7.16.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<h4><a id="_client_9"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Adds the <code class="literal">delay_on_retry</code> parameter, a value in milliseconds to wait between each failed connection, thanks <a href="https://github.com/DinoPullerUqido" class="ulink" target="_top">DinoPullerUqido</a>! <a href="https://github.com/elastic/elasticsearch-ruby/pull/1521" class="ulink" target="_top">Pull Request</a> and <a href="https://github.com/elastic/elasticsearch-ruby/pull/1523" class="ulink" target="_top">backport</a>.
+</li>
+<li class="listitem">
+Adds <span class="strong strong"><strong>CA fingerprinting</strong></span>. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a <code class="literal">ca_fingerprint</code> option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. The verification will be run once per connection. Code example:
+</li>
+</ul>
+</div>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">ca_fingerprint = '64F2593F...'
+client = Elasticsearch::Client.new(
+  host: 'https://elastic:changeme@localhost:9200',
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: ca_fingerprint
+)</pre>
+</div>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixes compression. When <code class="literal">compression</code> is set to <code class="literal">true</code>, the client will now gzip the request body properly and use the appropiate headers. Thanks <a href="https://github.com/johnnyshields" class="ulink" target="_top">johnnyshields</a>! <a href="https://github.com/elastic/elasticsearch-ruby/pull/1478" class="ulink" target="_top">Pull Request</a> and <a href="https://github.com/elastic/elasticsearch-ruby/pull/1526" class="ulink" target="_top">backport</a>.
+</li>
+<li class="listitem">
+Warnings emitted by Elasticsearch are now logged via <code class="literal">log_warn</code> through the Loggable interface in the client, instead of using <code class="literal">Kernel.warn</code>. <a href="https://github.com/elastic/elasticsearch-ruby/pull/1517" class="ulink" target="_top">Pull Request</a>.
+</li>
+</ul>
+</div>
+<h4><a id="_api_17"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Cleaned up some deprecated code.
+</li>
+<li class="listitem">
+<code class="literal">count</code> - The API is documented as using <code class="literal">GET</code>, but it supports both GET and POST on the Elasticsearch side. So it was updated to only use <code class="literal">POST</code> when there&#8217;s a body present, or else use <code class="literal">GET</code>. Elasticsearch would still accept a body with <code class="literal">GET</code>, but to be more semantically correct in the clients we use <code class="literal">POST</code> when there&#8217;s a body.
+</li>
+<li class="listitem">
+<code class="literal">delete_index_template</code> was updated to support the <code class="literal">ignore_404</code> parameter to ignore 404 errors when attempting to delete a non-existing template.
+</li>
+<li class="listitem">
+<code class="literal">ingest.put_pipeline</code> adds new parameter <code class="literal">if_version</code>: Required version for optimistic concurrency control for pipeline updates.
+</li>
+<li class="listitem">
+<code class="literal">ml.put_trained_model</code>: adds new parameter <code class="literal">defer_definition_decompression</code>: If set to <code class="literal">true</code> and a <code class="literal">compressed_definition</code> is provided, the request defers definition decompression and skips relevant validations.
+</li>
+<li class="listitem">
+<code class="literal">nodes.hot_threads</code> adds new parameter <code class="literal">sort</code>: The sort order for <em>cpu</em> type (default: total) (options: cpu, total).
+</li>
+<li class="listitem">
+<code class="literal">open_point_in_time</code>: <code class="literal">keep_alive</code> is now a required parameter.
+</li>
+<li class="listitem">
+<code class="literal">search_mvt</code>: adds new parameter <code class="literal">track_total_hits</code>: Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+</li>
+<li class="listitem">
+<code class="literal">transform.preview_transform</code>: adds new parameter <code class="literal">transform_id</code>. Body is now optional and the API will use <code class="literal">GET</code> or <code class="literal">POST</code> depending on the presence of a body.
+</li>
+</ul>
+</div>
+<p><span class="strong strong"><strong>APIs promoted from experimental to stable since last version:</strong></span></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">fleet.global_checkpoints</code>
+</li>
+<li class="listitem">
+<code class="literal">get_script_context</code>
+</li>
+<li class="listitem">
+<code class="literal">get_script_language</code>
+</li>
+<li class="listitem">
+<code class="literal">indices.resolve_index</code>
+</li>
+<li class="listitem">
+<code class="literal">monitoring.bulk</code>
+</li>
+<li class="listitem">
+<code class="literal">rank_eval</code>
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.mount</code>
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.stats</code>
+</li>
+<li class="listitem">
+<code class="literal">security.clear_cached_service_tokens</code>
+</li>
+<li class="listitem">
+<code class="literal">security.create_service_token</code>
+</li>
+<li class="listitem">
+<code class="literal">security.delete_service_token</code>
+</li>
+<li class="listitem">
+<code class="literal">security.get_service_accounts</code>
+</li>
+<li class="listitem">
+<code class="literal">security.get_service_credentials</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.delete_node</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.get_node</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.put_node</code>
+</li>
+<li class="listitem">
+<code class="literal">terms_enum</code>
+</li>
+</ul>
+</div>
+<p><span class="strong strong"><strong>New APIs</strong></span></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">fleet.mseach</code>
+</li>
+<li class="listitem">
+<code class="literal">fleet.search</code>
+</li>
+<li class="listitem">
+<code class="literal">indices.modify_data_stream</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.infer_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.start_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.stop_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">migration.get_feature_upgrade_status</code>
+</li>
+<li class="listitem">
+<code class="literal">migration.post_feature_upgrade_status</code>
+</li>
+<li class="listitem">
+<code class="literal">security.enroll_kibana</code>
+</li>
+<li class="listitem">
+<code class="literal">security.enroll_node</code>
+</li>
+<li class="listitem">
+<code class="literal">transform.updgrade_transforms</code>
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_717.html">« 7.17 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_715.html">7.15 Release notes »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

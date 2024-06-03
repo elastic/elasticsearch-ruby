@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.1 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.1 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_82.html" title="8.2 Release notes"/>
+<link rel="next" href="release_notes_80.html" title="8.0 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_82.html">« 8.2 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_80.html">8.0 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_81"></a>8.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_812"></a>8.1.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h3>
+<h4><a id="_api_13"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixes an issue with the generated API code. When updating the code generator for 8.x, the order of <code class="literal">arguments.clone</code> in the generated code was changed. This would make it so that we would modify the parameters passed in before cloning them, which is undesired. Issue: <a href="https://github.com/elastic/elasticsearch-ruby/issues/1727" class="ulink" target="_top">#1727</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_811"></a>8.1.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h3>
+<p>No release, no changes on the client.</p>
+<h3><a id="release_notes_810"></a>8.1.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.1.0: Ruby (MRI) 2.6, 2.7, 3.0 and 3.1, JRuby 9.3.
+</li>
+</ul>
+</div>
+<h4><a id="_api_14"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h4>
+<p>Updated for compatibility with Elasticsearch 8.1&#8217;s API.</p>
+<h5><a id="_new_parameters_2"></a>New parameters:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">indices.forcemerge</code> - <code class="literal">wait_for_completion</code> Should the request wait until the force merge is completed.
+</li>
+<li class="listitem">
+<code class="literal">indices.get</code> - <code class="literal">features</code> Return only information on specified index features (options: aliases, mappings, settings).
+</li>
+<li class="listitem">
+<code class="literal">ingest.put_pipeline</code> <code class="literal">if_version</code> (Integer), required version for optimistic concurrency control for pipeline updates.
+</li>
+<li class="listitem">
+<code class="literal">ml.delete_trained_model</code> - <code class="literal">timeout</code> controls the amount of time to wait for the model to be deleted. <code class="literal">force</code> (Boolean) true if the model should be forcefully deleted.
+</li>
+<li class="listitem">
+<code class="literal">ml.stop_trained_model_deployment</code> -  <code class="literal">allow_no_match</code> whether to ignore if a wildcard expression matches no deployments. (This includes <code class="literal">_all</code> string or when no deployments have been specified). <code class="literal">force</code> true if the deployment should be forcefully stopped. Adds <code class="literal">body</code> parameter, the stop deployment parameters.
+</li>
+<li class="listitem">
+<code class="literal">nodes.hot_threads</code> - <code class="literal">sort</code> the sort order for <em>cpu</em> type (default: total) (options: cpu, total)
+</li>
+</ul>
+</div>
+<h5><a id="_updated_parameters"></a>Updated parameters:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">indices.get_index_template</code> - <code class="literal">name</code> is now a String, a pattern that returned template names must match.
+</li>
+<li class="listitem">
+<code class="literal">knn_search</code> - <code class="literal">index</code> removes option to use empty string to perform the operation on all indices.
+</li>
+<li class="listitem">
+<code class="literal">ml.close_job</code>, <code class="literal">ml.get_job_stats</code>, <code class="literal">ml.get_jobs</code>, <code class="literal">ml.get_overall_buckets</code> - Remove <code class="literal">allow_no_jobs</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">ml.get_datafeed_stats</code>, <code class="literal">ml.get_datafeeds</code> - Remove <code class="literal">allow_no_datafeeds</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">nodes.hot_threads</code> - <code class="literal">type</code> parameter adds <code class="literal">mem</code> option.
+</li>
+<li class="listitem">
+<code class="literal">nodes.info</code> - <code class="literal">metric</code> updated to use <code class="literal">_all</code> to retrieve all metrics and <code class="literal">_none</code> to retrieve the node identity without any additional metrics. (options: settings, os, process, jvm, thread_pool, transport, http, plugins, ingest, indices, aggregations, _all, _none). <code class="literal">index_metric</code> option <code class="literal">shards</code> changes to <code class="literal">shard_stats</code>.
+</li>
+<li class="listitem">
+<code class="literal">open_point_in_time</code> - <code class="literal">keep_alive</code> is now a required parameter.
+</li>
+<li class="listitem">
+<code class="literal">search_mvt</code> - <code class="literal">grid_type</code> parameter adds <code class="literal">centroid</code> option in addition to <code class="literal">grid</code> and <code class="literal">point</code>.
+</li>
+<li class="listitem">
+New experimental APIs, designed for internal use by the fleet server project: <code class="literal">fleet.search</code>, <code class="literal">fleet.msearch</code>.
+</li>
+</ul>
+</div>
+<h5><a id="_new_apis_8"></a>New APIs<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/81.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+OpenID Connect Authentication: <code class="literal">security.oidc_authenticate</code>, <code class="literal">security.oidc_logout</code>, <code class="literal">security.oidc_prepare_authentication</code>.
+</li>
+<li class="listitem">
+<code class="literal">transform.reset_transform</code>.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_82.html">« 8.2 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_80.html">8.0 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

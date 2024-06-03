@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.12 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.12 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_8_13.html" title="8.13 Release notes"/>
+<link rel="next" href="release_notes_8110.html" title="8.11 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_8_13.html">« 8.13 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8110.html">8.11 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_8_12"></a>8.12 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_8_12_0"></a>8.12.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h3>
+<h4><a id="_client_2"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.12.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+</li>
+</ul>
+</div>
+<h4><a id="_api_2"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h4>
+<p>API Changes:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">bulk</code> - Adds boolean <code class="literal">:list_executed_pipelines</code> parameter: Sets <code class="literal">list_executed_pipelines</code> for all incoming documents. Defaults to unset (false).
+</li>
+<li class="listitem">
+<code class="literal">indices.put_settings</code> - Adds boolean <code class="literal">:reopen</code> parameter: Whether to close and reopen the index to apply non-dynamic settings. If set to <code class="literal">true</code> the indices to which the settings are being applied will be closed temporarily and then reopened in order to apply the changes. The default is <code class="literal">false</code>.
+</li>
+<li class="listitem">
+<code class="literal">open_point_in_time</code> - Adds Hash <code class="literal">:body</code> parameter: an index_filter specified with the Query DSL.
+</li>
+<li class="listitem">
+<code class="literal">security.get_api_key</code> - Adds boolean <code class="literal">:active_only</code> parameter: flag to limit response to only active (not invalidated or expired) API keys.
+</li>
+</ul>
+</div>
+<h5><a id="_connectors"></a>Connectors<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h5>
+<p>Version 8.12 introduces the experimental <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/connector-apis.html" class="ulink" target="_top">Connectors API</a>.</p>
+<p>Use the following APIs to manage connectors:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector.post</code> - Creates a connector. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.put</code> - Creates or updates a connector. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.delete</code> - Deletes a connector. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.get</code> - Returns the details about a connector. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.list</code> - Lists all connectors. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/list-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.check_in</code> - Updates the last_seen timestamp in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/check-in-connector-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_configuration</code> - Updates the connector configuration. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-configuration-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_error</code> - Updates the error field in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-error-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_filtering</code> - Updates the filtering field in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-filtering-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.last_sync</code> - Updates the stats of last sync in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-last-sync-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_name</code> - Updates the name and/or description fields in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-name-description-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_pipeline</code> - Updates the pipeline field in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-pipeline-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_scheduling</code> - Updates the scheduling field in the connector document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/update-connector-scheduling-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+</ul>
+</div>
+<p>Use the following APIs to manage sync jobs:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector_sync_job.cancel</code> - Cancels a connector sync job. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/cancel-connector-sync-job-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.check_in</code> - Checks in a connector sync job (refreshes <em>last_seen</em>). See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/check-in-connector-sync-job-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.delete</code> - Deletes a connector sync job. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/delete-connector-sync-job-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.error</code> - Sets an error for a connector sync job. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/set-connector-sync-job-error-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.get</code> - Returns the details about a connector sync job. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/get-connector-sync-job-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.list</code> - Lists all connector sync jobs. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/list-connector-sync-jobs-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.post</code> - Creates a connector sync job. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/create-connector-sync-job-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+<li class="listitem">
+<code class="literal">connector_sync_job.update_stats</code> - Updates the stats fields in the connector sync job document. See <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/set-connector-sync-job-stats-api.html" class="ulink" target="_top">documentation</a>.
+</li>
+</ul>
+</div>
+<h5><a id="_profiling"></a>Profiling<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h5>
+<p>New API for <a href="https://www.elastic.co/guide/en/observability/8.12/universal-profiling.html" class="ulink" target="_top">Universal profiling</a>.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">profiling.status</code> - Returns basic information about the status of Universal Profiling.
+</li>
+</ul>
+</div>
+<h5><a id="_simulate"></a>Simulate<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/812.asciidoc">edit</a></h5>
+<p>New experimental API:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">simulate.ingest</code> - Simulates running ingest with example documents. See: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.12/simulate-ingest-api.html" class="ulink" target="_top">https://www.elastic.co/guide/en/elasticsearch/reference/8.12/simulate-ingest-api.html</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_8_13.html">« 8.13 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8110.html">8.11 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

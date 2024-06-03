@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>7.5 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.5 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_76.html" title="7.6 Release notes"/>
+<link rel="next" href="release_notes_70.html" title="7.0 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_76.html">« 7.6 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_70.html">7.0 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_75"></a>7.5 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/75.asciidoc">edit</a></h2>
+</div></div></div>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch 7.5.
+</li>
+<li class="listitem">
+Update API spec generator: The code for Elasticsearch OSS and X-Pack APIs is being generated from the rest api spec.
+</li>
+<li class="listitem">
+Specs have been updated to address new/deprecated parameters.
+</li>
+<li class="listitem">
+Ruby versions tested: 2.3.8, 2.4.9, 2.5.7, 2.6.5 and 2.7.0 (new).
+</li>
+</ul>
+</div>
+<h4><a id="_api_28"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/75.asciidoc">edit</a></h4>
+<p>Endpoints that changed:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">_bulk</code>: body is now required as an argument.
+</li>
+<li class="listitem">
+<code class="literal">cat</code>: <code class="literal">local</code> and <code class="literal">master_timeout</code> parameters are gone.
+</li>
+<li class="listitem">
+<code class="literal">health</code>: New parameter <code class="literal">health</code>.
+</li>
+<li class="listitem">
+<code class="literal">indices</code>: Adds <code class="literal">time</code> and <code class="literal">include_unload_segments</code> parameters.
+</li>
+<li class="listitem">
+<code class="literal">nodes</code>: Adds <code class="literal">bytes</code>, <code class="literal">time</code> parameters.
+</li>
+<li class="listitem">
+<code class="literal">pending_tasks</code>: Adds <code class="literal">time</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">recovery</code>: Adds <code class="literal">active_only</code>, <code class="literal">detailed</code>, <code class="literal">index</code>, <code class="literal">time</code> parameters.
+</li>
+<li class="listitem">
+<code class="literal">segments</code>: Removes <code class="literal">index</code> parameter and it&#8217;s now a url part.
+</li>
+<li class="listitem">
+<code class="literal">shards</code>: Adds <code class="literal">time</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">snapshots</code>: Adds <code class="literal">time</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">tasks</code>: Adds <code class="literal">time</code> parameter.
+</li>
+<li class="listitem">
+<code class="literal">templates</code>: The <code class="literal">name</code> parameter is now passed in as a part but not a parameter.
+</li>
+<li class="listitem">
+<code class="literal">thread_pool</code>: The <code class="literal">thread_pool_patterns</code> parameter is now passed in as a part but not as a parameter.
+</li>
+<li class="listitem">
+<code class="literal">cluster</code>
+</li>
+<li class="listitem">
+<code class="literal">put_settings</code>: body is required.
+</li>
+<li class="listitem">
+<code class="literal">state</code>: <code class="literal">index_templates</code> is gone.
+</li>
+<li class="listitem">
+<code class="literal">node_id</code> is now a url part.
+</li>
+<li class="listitem">
+<code class="literal">delete</code> - <code class="literal">parent</code> parameter is gone.
+</li>
+<li class="listitem">
+<code class="literal">delete_by_query</code>: <code class="literal">analyzer</code>  parameters are gone, <code class="literal">max_docs</code> is a new parameter, <code class="literal">body</code> is now a required parameter.
+</li>
+<li class="listitem">
+<code class="literal">delete_by_query_rethrottle</code> new endpoint.
+</li>
+<li class="listitem">
+<code class="literal">delete_by_rethrottle</code> - uses <code class="literal">delete_by_query_rethrottle</code> and hasn&#8217;t changed.
+</li>
+<li class="listitem">
+<code class="literal">exists</code>, <code class="literal">exists_source</code>, <code class="literal">explain</code>: <code class="literal">parent</code> parameter is gone.
+</li>
+<li class="listitem">
+<code class="literal">field_caps</code>: <code class="literal">fields</code> param is no longer required.
+</li>
+<li class="listitem">
+<code class="literal">get</code>: <code class="literal">parent</code> parameter is gone
+</li>
+<li class="listitem">
+<code class="literal">get_source</code>: <code class="literal">parent</code> parameter is gone
+</li>
+<li class="listitem">
+<code class="literal">index</code>: <code class="literal">body</code> parameter is required, <code class="literal">wait_for_shard</code> is a new parameter, <code class="literal">consistency</code>, <code class="literal">include_type_name</code>, <code class="literal">parent</code>, <code class="literal">percolate</code>, <code class="literal">replication</code>, <code class="literal">timestamp</code>, <code class="literal">ttl</code> parameters are gone
+</li>
+<li class="listitem">
+<code class="literal">indices</code>
+</li>
+<li class="listitem">
+<code class="literal">get</code>: <code class="literal">feature</code> paramatere was deprecated and is gone.
+</li>
+<li class="listitem">
+<code class="literal">delete_aliases</code>, <code class="literal">put_alias</code>: URL changed internally to <em>aliases</em> instead of <em>alias</em> but shouldn&#8217;t affect the client&#8217;s API.
+</li>
+<li class="listitem">
+<code class="literal">render_search_template</code>: <code class="literal">id</code> is now a part not a parameter
+</li>
+<li class="listitem">
+<code class="literal">search</code>: <code class="literal">fielddata_fields</code>, <code class="literal">include_type_name</code>, <code class="literal">fields</code>, <code class="literal">ignore_indices</code>, <code class="literal">lowercase_expanded_terms</code>, <code class="literal">query_cache</code>, <code class="literal">source</code> parameters are gone, <code class="literal">ccs_minimize_roundtrips</code>, <code class="literal">track_scores</code> are new parameters.
+</li>
+<li class="listitem">
+<code class="literal">tasks</code> - <code class="literal">list</code>: task_id is not supported anymore, it&#8217;s in get now.
+</li>
+<li class="listitem">
+<code class="literal">termvectors</code>: <code class="literal">parent</code> parameter is gone.
+</li>
+<li class="listitem">
+<code class="literal">update</code>: <code class="literal">version</code> parameter is not supported anymore.
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_12"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/75.asciidoc">edit</a></h4>
+<p>Some urls changed internally to remove <code class="literal">_xpack</code>, but it shouldn&#8217;t affect the client&#8217;s API.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">explore</code>: <code class="literal">index</code> is now required.
+</li>
+<li class="listitem">
+<code class="literal">info</code>: <code class="literal">human</code> parameter is gone.
+</li>
+<li class="listitem">
+<code class="literal">migration</code>: some endpoints are gone: <code class="literal">get_assistance</code>, <code class="literal">get_assistance_test</code> and <code class="literal">upgrade_test</code>.
+</li>
+<li class="listitem">
+<code class="literal">watcher</code>: <code class="literal">restart</code> endpoint is gone.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_76.html">« 7.6 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_70.html">7.0 Release notes »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ActiveModel / ActiveRecord | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="ActiveModel / ActiveRecord | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="integrations.html" title="Integrations"/>
+<link rel="prev" href="ecs.html" title="Elastic Common Schema (ECS)"/>
+<link rel="next" href="ruby_on_rails.html" title="Ruby On Rails"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="integrations.html">Integrations</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="ecs.html">« Elastic Common Schema (ECS)</a>
+</span>
+<span class="next">
+<a href="ruby_on_rails.html">Ruby On Rails »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="activemodel_activerecord"></a>ActiveModel / ActiveRecord<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/model.asciidoc">edit</a></h2>
+</div></div></div>
+<p>The <code class="literal">elasticsearch-model</code> <a href="http://rubygems.org/gems/elasticsearch-model" class="ulink" target="_top">Rubygem</a>
+provides integration with Ruby domain objects ("models"), commonly found for
+example, in Ruby on Rails applications.</p>
+<p>It uses the <code class="literal">elasticsearch</code> Rubygem as the client communicating with the Elasticsearch
+cluster.</p>
+<h4><a id="_features_2"></a>Features<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/model.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+ActiveModel integration with adapters for ActiveRecord and Mongoid
+</li>
+<li class="listitem">
+Enumerable-based wrapper for search results
+</li>
+<li class="listitem">
+ActiveRecord::Relation-based wrapper for returning search results as records
+</li>
+<li class="listitem">
+Convenience model methods such as <code class="literal">search</code>, <code class="literal">mapping</code>, <code class="literal">import</code>, etc
+</li>
+<li class="listitem">
+Support for Kaminari and WillPaginate pagination
+</li>
+<li class="listitem">
+Extension implemented via proxy object to shield model namespace from collisions
+</li>
+<li class="listitem">
+Convenience methods for (re)creating the index, setting up mappings, indexing documents, &#8230;&#8203;
+</li>
+</ul>
+</div>
+<h4><a id="_usage"></a>Usage<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/model.asciidoc">edit</a></h4>
+<p>Add the library to your Gemfile:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">gem 'elasticsearch-rails'</pre>
+</div>
+<p>Include the extension module in your model class:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">class Article &lt; ActiveRecord::Base
+  include Elasticsearch::Model
+end</pre>
+</div>
+<p>Import some data and perform a search:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Article.import
+
+response = Article.search 'fox dog'
+response.took
+# =&gt; 3</pre>
+</div>
+<p>It is possible to either return results as model instances, or decorated
+documents from Elasticsearch, with the <code class="literal">records</code> and <code class="literal">results</code> methods, respectively:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">response.records.first
+# Article Load (0.4ms)  SELECT "articles".* FROM "articles"  WHERE ...
+=&gt; #&lt;Article id: 3, title: "Foo " ...&gt;
+
+response.results.first._score
+# =&gt; 0.02250402
+
+response.results.first._source.title
+# =&gt; "Quick brown fox"</pre>
+</div>
+<p>Consult the
+<a href="https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model" class="ulink" target="_top">documentation</a>
+for more information.</p>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="ecs.html">« Elastic Common Schema (ECS)</a>
+</span>
+<span class="next">
+<a href="ruby_on_rails.html">Ruby On Rails »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

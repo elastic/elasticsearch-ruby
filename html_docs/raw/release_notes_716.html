@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.16 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.16 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_717.html" title="7.17 Release notes"/>
+<link rel="next" href="release_notes_715.html" title="7.15 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_717.html">« 7.17 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_715.html">7.15 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_716"></a>7.16 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7163"></a>7.16.3 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<div class="section">
+<div class="titlepage"><div><div>
+<h3 class="title"><a id="_api_16"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+</div></div></div>
+<p>Bugfix for <a href="https://github.com/elastic/elasticsearch-ruby/issues/1475" class="ulink" target="_top">#1475</a>, an issue where if you indexed a document with an id such as <code class="literal">an id</code>, it would get escaped to <code class="literal">an+id</code> instead of <code class="literal">an%20id</code> when using <code class="literal">index</code> or <code class="literal">create</code>. This would result in the document id being <code class="literal">an+id</code> instead of the intended value <code class="literal">an id</code>.</p>
+<h3><a id="release_notes_7162"></a>7.16.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<p>No release.</p>
+<h3><a id="release_notes_7161"></a>7.16.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<p>Patch release corresponding with Elastic Stack version 7.16.1 that addresses the Apache Log4j2 vulnerability, <a href="https://discuss.elastic.co/t/apache-log4j2-remote-code-execution-rce-vulnerability-cve-2021-44228-esa-2021-31/291476" class="ulink" target="_top">more information</a>.</p>
+</div>
+
+<div class="section">
+<div class="titlepage"><div><div>
+<h3 class="title"><a id="_client_8"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+</div></div></div>
+<p>The only changes in the client since 7.16.0 are a few minor updates for the <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-comp" class="ulink" target="_top">Compatibility mode with 8.0</a>. We added the compatibility header in <code class="literal">7.13.0</code>,  but now we have integration tests and compatibility tests for version <code class="literal">7.x</code> of the client with Elasticsearch <code class="literal">8.0</code>.</p>
+<h3><a id="release_notes_7160"></a>7.16.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h3>
+<h4><a id="_client_9"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Adds the <code class="literal">delay_on_retry</code> parameter, a value in milliseconds to wait between each failed connection, thanks <a href="https://github.com/DinoPullerUqido" class="ulink" target="_top">DinoPullerUqido</a>! <a href="https://github.com/elastic/elasticsearch-ruby/pull/1521" class="ulink" target="_top">Pull Request</a> and <a href="https://github.com/elastic/elasticsearch-ruby/pull/1523" class="ulink" target="_top">backport</a>.
+</li>
+<li class="listitem">
+Adds <span class="strong strong"><strong>CA fingerprinting</strong></span>. You can configure the client to only trust certificates that are signed by a specific CA certificate (CA certificate pinning) by providing a <code class="literal">ca_fingerprint</code> option. This will verify that the fingerprint of the CA certificate that has signed the certificate of the server matches the supplied value. The verification will be run once per connection. Code example:
+</li>
+</ul>
+</div>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">ca_fingerprint = '64F2593F...'
+client = Elasticsearch::Client.new(
+  host: 'https://elastic:changeme@localhost:9200',
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: ca_fingerprint
+)</pre>
+</div>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixes compression. When <code class="literal">compression</code> is set to <code class="literal">true</code>, the client will now gzip the request body properly and use the appropiate headers. Thanks <a href="https://github.com/johnnyshields" class="ulink" target="_top">johnnyshields</a>! <a href="https://github.com/elastic/elasticsearch-ruby/pull/1478" class="ulink" target="_top">Pull Request</a> and <a href="https://github.com/elastic/elasticsearch-ruby/pull/1526" class="ulink" target="_top">backport</a>.
+</li>
+<li class="listitem">
+Warnings emitted by Elasticsearch are now logged via <code class="literal">log_warn</code> through the Loggable interface in the client, instead of using <code class="literal">Kernel.warn</code>. <a href="https://github.com/elastic/elasticsearch-ruby/pull/1517" class="ulink" target="_top">Pull Request</a>.
+</li>
+</ul>
+</div>
+<h4><a id="_api_17"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/716.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Cleaned up some deprecated code.
+</li>
+<li class="listitem">
+<code class="literal">count</code> - The API is documented as using <code class="literal">GET</code>, but it supports both GET and POST on the Elasticsearch side. So it was updated to only use <code class="literal">POST</code> when there&#8217;s a body present, or else use <code class="literal">GET</code>. Elasticsearch would still accept a body with <code class="literal">GET</code>, but to be more semantically correct in the clients we use <code class="literal">POST</code> when there&#8217;s a body.
+</li>
+<li class="listitem">
+<code class="literal">delete_index_template</code> was updated to support the <code class="literal">ignore_404</code> parameter to ignore 404 errors when attempting to delete a non-existing template.
+</li>
+<li class="listitem">
+<code class="literal">ingest.put_pipeline</code> adds new parameter <code class="literal">if_version</code>: Required version for optimistic concurrency control for pipeline updates.
+</li>
+<li class="listitem">
+<code class="literal">ml.put_trained_model</code>: adds new parameter <code class="literal">defer_definition_decompression</code>: If set to <code class="literal">true</code> and a <code class="literal">compressed_definition</code> is provided, the request defers definition decompression and skips relevant validations.
+</li>
+<li class="listitem">
+<code class="literal">nodes.hot_threads</code> adds new parameter <code class="literal">sort</code>: The sort order for <em>cpu</em> type (default: total) (options: cpu, total).
+</li>
+<li class="listitem">
+<code class="literal">open_point_in_time</code>: <code class="literal">keep_alive</code> is now a required parameter.
+</li>
+<li class="listitem">
+<code class="literal">search_mvt</code>: adds new parameter <code class="literal">track_total_hits</code>: Indicate if the number of documents that match the query should be tracked. A number can also be specified, to accurately track the total hit count up to the number.
+</li>
+<li class="listitem">
+<code class="literal">transform.preview_transform</code>: adds new parameter <code class="literal">transform_id</code>. Body is now optional and the API will use <code class="literal">GET</code> or <code class="literal">POST</code> depending on the presence of a body.
+</li>
+</ul>
+</div>
+<p><span class="strong strong"><strong>APIs promoted from experimental to stable since last version:</strong></span></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">fleet.global_checkpoints</code>
+</li>
+<li class="listitem">
+<code class="literal">get_script_context</code>
+</li>
+<li class="listitem">
+<code class="literal">get_script_language</code>
+</li>
+<li class="listitem">
+<code class="literal">indices.resolve_index</code>
+</li>
+<li class="listitem">
+<code class="literal">monitoring.bulk</code>
+</li>
+<li class="listitem">
+<code class="literal">rank_eval</code>
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.mount</code>
+</li>
+<li class="listitem">
+<code class="literal">searchable_snapshots.stats</code>
+</li>
+<li class="listitem">
+<code class="literal">security.clear_cached_service_tokens</code>
+</li>
+<li class="listitem">
+<code class="literal">security.create_service_token</code>
+</li>
+<li class="listitem">
+<code class="literal">security.delete_service_token</code>
+</li>
+<li class="listitem">
+<code class="literal">security.get_service_accounts</code>
+</li>
+<li class="listitem">
+<code class="literal">security.get_service_credentials</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.delete_node</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.get_node</code>
+</li>
+<li class="listitem">
+<code class="literal">shutdown.put_node</code>
+</li>
+<li class="listitem">
+<code class="literal">terms_enum</code>
+</li>
+</ul>
+</div>
+<p><span class="strong strong"><strong>New APIs</strong></span></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">fleet.mseach</code>
+</li>
+<li class="listitem">
+<code class="literal">fleet.search</code>
+</li>
+<li class="listitem">
+<code class="literal">indices.modify_data_stream</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.infer_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.start_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">ml.stop_trained_model_deployment</code>
+</li>
+<li class="listitem">
+<code class="literal">migration.get_feature_upgrade_status</code>
+</li>
+<li class="listitem">
+<code class="literal">migration.post_feature_upgrade_status</code>
+</li>
+<li class="listitem">
+<code class="literal">security.enroll_kibana</code>
+</li>
+<li class="listitem">
+<code class="literal">security.enroll_node</code>
+</li>
+<li class="listitem">
+<code class="literal">transform.updgrade_transforms</code>
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_717.html">« 7.17 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_715.html">7.15 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

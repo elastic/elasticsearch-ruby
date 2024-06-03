@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>7.0 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.0 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_75.html" title="7.5 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_75.html">« 7.5 Release notes</a>
+</span>
+<span class="next">
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_70"></a>7.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/70.asciidoc">edit</a></h2>
+</div></div></div>
+<p>This version contains the following changes:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Added <code class="literal">elastic_ruby_console</code> executable. It opens a console with the elasticsearch gems you have installed required.
+</li>
+<li class="listitem">
+Added macro benchmarking framework, available when developing. Use <code class="literal">rake -T</code> to view all available benchmarking tasks.
+</li>
+</ul>
+</div>
+<h4><a id="_client_26"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/70.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixed failing integration test
+</li>
+<li class="listitem">
+Updated the Manticore development dependency
+</li>
+<li class="listitem">
+Fixed a failing Manticore unit test
+</li>
+<li class="listitem">
+Removed "turn" and switched the tests to Minitest
+</li>
+<li class="listitem">
+Fixed integration tests for Patron
+</li>
+<li class="listitem">
+Allow passing request headers in <code class="literal">perform_request</code>
+</li>
+<li class="listitem">
+Added integration test for passing request headers in <code class="literal">perform_request</code>
+</li>
+<li class="listitem">
+Added, that request headers are printed in trace output, if set
+</li>
+<li class="listitem">
+Fix typos in elasticsearch-transport/README.md
+</li>
+<li class="listitem">
+Assert that connection count is at least previous count when reloaded
+</li>
+<li class="listitem">
+Adjust test for change in default number of shards on ES 7
+</li>
+<li class="listitem">
+Abstract logging functionality into a Loggable Module (#556)
+</li>
+<li class="listitem">
+Convert client integration tests to rspec
+</li>
+<li class="listitem">
+Add flexible configuration in spec helper
+</li>
+<li class="listitem">
+Use helper methods in spec_helper
+</li>
+<li class="listitem">
+Remove minitest client integration tests in favor of rspec test
+</li>
+<li class="listitem">
+Convert tests to rspec and refactor client
+</li>
+<li class="listitem">
+minor changes to the client specs
+</li>
+<li class="listitem">
+Use pry-nav in development for JRuby
+</li>
+<li class="listitem">
+Keep arguments variable name for now
+</li>
+<li class="listitem">
+Skip round-robin test for now
+</li>
+<li class="listitem">
+Mark test as pending until there is a better way to detect rotating nodes
+</li>
+<li class="listitem">
+Remove client unit test in favor of rspec test
+</li>
+<li class="listitem">
+Comment-out round-robin test as it occasionally passes and pending is ineffective
+</li>
+<li class="listitem">
+Document the default host and port constant
+</li>
+<li class="listitem">
+Add documentation to spec_helper methods
+</li>
+<li class="listitem">
+Redacted password if host info is printed in error message
+</li>
+<li class="listitem">
+Adds tests for not including password in logged error message
+</li>
+<li class="listitem">
+The redacted string change will be in 6.1.1
+</li>
+<li class="listitem">
+Add more tests for different ways to specify client host argument
+</li>
+<li class="listitem">
+Do not duplicate connections in connection pool after rebuild (#591)
+</li>
+<li class="listitem">
+Ensure that the spec rake task is run as part of integration tests
+</li>
+<li class="listitem">
+Use constant to define Elasticsearch hosts and avoid yellow status when number of nodes is 1
+</li>
+<li class="listitem">
+Update handling of publish_address in _nodes/http response
+</li>
+<li class="listitem">
+Add another test for hostname/ipv6:port format
+</li>
+</ul>
+</div>
+<h4><a id="_api_29"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/70.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Added the <code class="literal">wait_for_active_shards</code> parameter to the "Indices Open" API
+</li>
+<li class="listitem">
+Added the "Indices Split" API
+</li>
+<li class="listitem">
+Added the <code class="literal">wait_for_no_initializing_shards</code> argument to the "Cluster Health" API
+</li>
+<li class="listitem">
+Added the "Cluster Remote Info" API
+</li>
+<li class="listitem">
+Remove the dependency on "turn"
+</li>
+<li class="listitem">
+Clear cluster transient settings in test setups
+</li>
+<li class="listitem">
+Use <code class="literal">YAML.load_documents</code> in the REST tests runner
+</li>
+<li class="listitem">
+Removed pinning dependency for Minitest
+</li>
+<li class="listitem">
+Replaced the testing framework from Test::Unit to Minites and improved test output
+</li>
+<li class="listitem">
+Added, that trace logs are printed when the <code class="literal">TRACE</code> environment variable is set
+</li>
+<li class="listitem">
+Removed the "turn" dependency from generated test_helper.rb
+</li>
+<li class="listitem">
+Update the "Delete By Query" API to support :slices
+</li>
+<li class="listitem">
+Speed up <code class="literal">Elasticsearch::API::Utils.__listify</code>
+</li>
+<li class="listitem">
+Speed up <code class="literal">Elasticsearch::API::Utils.__pathify</code>
+</li>
+<li class="listitem">
+Use "String#strip" and "String.empty?" in <code class="literal">Utils.__pathify</code>
+</li>
+<li class="listitem">
+Updated the inline documentation for using scripts in the "Update" API
+</li>
+<li class="listitem">
+Updated the "Scroll" API inline example with passing the scroll ID in the body
+</li>
+<li class="listitem">
+Marked the <code class="literal">percolate</code> method as deprecated and added an example for current percolator
+</li>
+<li class="listitem">
+Fixed, that <code class="literal">Utils.__report_unsupported_parameters</code> and <code class="literal">Utils.__report_unsupported_method</code> use <code class="literal">Kernel.warn</code> so they can be suppressed
+</li>
+<li class="listitem">
+Fixed the "greedy" regex in the <code class="literal">Utils.__rescue_from_not_found</code> method
+</li>
+<li class="listitem">
+Fixed the incorrect <code class="literal">create</code> method
+</li>
+<li class="listitem">
+Allow passing headers in <code class="literal">perform_request</code>
+</li>
+<li class="listitem">
+Set application/x-ndjson content type on Bulk and Msearch requests
+</li>
+<li class="listitem">
+Update the Reindex API to support :slices
+</li>
+<li class="listitem">
+Fixed and improved the YAML tests runner
+</li>
+<li class="listitem">
+Added the <code class="literal">include_type_name</code> parameter to APIs
+</li>
+<li class="listitem">
+Fixed the helper for unit tests
+</li>
+<li class="listitem">
+Removed the requirement for passing the <code class="literal">type</code> parameter to APIs
+</li>
+<li class="listitem">
+Removed dead code from the YAML tests runner
+</li>
+<li class="listitem">
+Fixed the <code class="literal">api:code:generate</code> Thor task
+</li>
+<li class="listitem">
+Add copy_settings as valid param to split API
+</li>
+<li class="listitem">
+Port api/actions tests to rspec (#543)
+</li>
+<li class="listitem">
+Update tests to not require type
+</li>
+<li class="listitem">
+Account for escape_utils not being available for JRuby
+</li>
+<li class="listitem">
+Add nodes/reload_secure_settings endpoint support (#546)
+</li>
+<li class="listitem">
+Add new params for search and msearch API
+</li>
+<li class="listitem">
+Retrieve stashed variable if referenced in test
+</li>
+<li class="listitem">
+Convert cat API tests to rspec
+</li>
+<li class="listitem">
+Convert cluster API tests to rspec
+</li>
+<li class="listitem">
+Convert indices tests to rspec
+</li>
+<li class="listitem">
+Fix documentation of #indices.analyze
+</li>
+<li class="listitem">
+Avoid instantiating an array of valid params for each request, each time it is called (#550)
+</li>
+<li class="listitem">
+Add headers to custom client documentation (#527)
+</li>
+<li class="listitem">
+Fix typos in README
+</li>
+<li class="listitem">
+Minor update to scroll documentation example
+</li>
+<li class="listitem">
+Convert snapshot, ingest, tasks, nodes api tests to rspec
+</li>
+<li class="listitem">
+Update source_includes and source_excludes params names for mget
+</li>
+<li class="listitem">
+Update source_includes and source_excludes params names for get, search, bulk, explain
+</li>
+<li class="listitem">
+Update source_includes and source_excludes params names for get_source
+</li>
+<li class="listitem">
+Mark _search endpoint as deprecated
+</li>
+<li class="listitem">
+Link to 6.0 documentation explicitly for _suggest deprecation
+</li>
+<li class="listitem">
+Update documentation for msearch
+</li>
+<li class="listitem">
+Update documentation for scroll_id to be in body of scroll endpoint
+</li>
+<li class="listitem">
+Remove reference to deprecated format option for _analyze endpoint
+</li>
+<li class="listitem">
+Correct endpoints used for get and put search template
+</li>
+<li class="listitem">
+Fix minor typo
+</li>
+<li class="listitem">
+Note that a non-empty body argument is required for the bulk api
+</li>
+<li class="listitem">
+Add note about empty body in yard documentation
+</li>
+<li class="listitem">
+Support if_primary_term param on index API
+</li>
+<li class="listitem">
+Delete test2 template in between tests in case a test is not cleanup up properly
+</li>
+<li class="listitem">
+Support ignore_throttled option on search API
+</li>
+<li class="listitem">
+Updates for types removal changes
+</li>
+<li class="listitem">
+Add missing update param
+</li>
+<li class="listitem">
+Add missing params to methods
+</li>
+<li class="listitem">
+Support if_primary_term param for delete
+</li>
+<li class="listitem">
+Delete an index and index template not cleaned up after in rest api tests
+</li>
+<li class="listitem">
+Update supported params for cat API endpoints
+</li>
+<li class="listitem">
+Update supported params for cluster API endpoints
+</li>
+<li class="listitem">
+Update supported params for indices API endpoints
+</li>
+<li class="listitem">
+Update supported params for ingest API endpoints
+</li>
+<li class="listitem">
+Update supported params for nodes API endpoints
+</li>
+<li class="listitem">
+Update supported params for snapshot API endpoints
+</li>
+<li class="listitem">
+Update missed node API endpoints
+</li>
+<li class="listitem">
+Update missed tasks API endpoints
+</li>
+<li class="listitem">
+Update top-level api endpoints
+</li>
+<li class="listitem">
+Adjust specs and code after test failures
+</li>
+<li class="listitem">
+Fix accidental overwrite of index code
+</li>
+<li class="listitem">
+Add missing param in cat/thread_pool
+</li>
+<li class="listitem">
+The type argument is not required in the index method
+</li>
+<li class="listitem">
+Delete <em>nomatch</em> template to account for lack of test cleanup
+</li>
+<li class="listitem">
+Ensure that the :index param is supported for cat.segments
+</li>
+<li class="listitem">
+Ensure that the :name param is passed to the templates API
+</li>
+</ul>
+</div>
+<h4><a id="_dsl"></a>DSL<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/70.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Add inner_hits option support for has_parent query
+</li>
+<li class="listitem">
+Add inner_hits option support for has_child query
+</li>
+<li class="listitem">
+Add inner_hits option support for has_parent filter
+</li>
+<li class="listitem">
+Add inner_hits option support for has_child filter
+</li>
+<li class="listitem">
+adds query support for nested queries in filter context (#531)
+</li>
+<li class="listitem">
+Convert aggregations/pipeline tests to rspec (#564)
+</li>
+<li class="listitem">
+Convert aggregations tests to rspec (#566)
+</li>
+<li class="listitem">
+Convert filters tests to rspec (#567)
+</li>
+<li class="listitem">
+Fix bug in applying no_match_filter to indices filter
+</li>
+<li class="listitem">
+Update test for current elasticsearch version
+</li>
+<li class="listitem">
+Fix integration tests for join field syntax
+</li>
+<li class="listitem">
+Update agg scripted metric test for deprecation in ES issue #29328
+</li>
+<li class="listitem">
+Fix script in update for #29328
+</li>
+<li class="listitem">
+minor: fix spacing
+</li>
+<li class="listitem">
+Convert queries tests to rspec (#569)
+</li>
+<li class="listitem">
+Add inner_hits test after cherry-picking rspec conversion
+</li>
+<li class="listitem">
+Remove tests already converted to rspec
+</li>
+<li class="listitem">
+spec directory structure should mirror code directory structure
+</li>
+<li class="listitem">
+Support query_string type option
+</li>
+<li class="listitem">
+Ensure that filters are registered when called on bool queries (#609)
+</li>
+<li class="listitem">
+Don&#8217;t specify a type when creating mappings in tests
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_13"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/70.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Embedded the source code for the <code class="literal">elasticsearch-xpack</code> Rubygem
+</li>
+<li class="listitem">
+Fixed the <code class="literal">setup</code> for YAML integration tests
+</li>
+<li class="listitem">
+Added missing X-Pack APIs
+</li>
+<li class="listitem">
+Improved the YAML integration test runner
+</li>
+<li class="listitem">
+Updated the Rakefile for running integration tests
+</li>
+<li class="listitem">
+Added, that password for Elasticsearch is generated
+</li>
+<li class="listitem">
+Fixed the Watcher example
+</li>
+<li class="listitem">
+Updated the README
+</li>
+<li class="listitem">
+Added gitignore for the <code class="literal">elasticsearch-xpack</code> Rubygem
+</li>
+<li class="listitem">
+Add ruby-prof as a development dependency
+</li>
+<li class="listitem">
+Handle multiple roles passed to get_role_mapping
+</li>
+<li class="listitem">
+Minor updates to xpack api methods (#586)
+</li>
+<li class="listitem">
+Support freeze and unfreeze APIs
+</li>
+<li class="listitem">
+Rewrite xpack rest api yaml test handler (#585)
+</li>
+<li class="listitem">
+Updates to take into account SSL settings
+</li>
+<li class="listitem">
+Fix mistake in testing version range so test can be skipped
+</li>
+<li class="listitem">
+Support set_upgrade_mode machine learning API
+</li>
+<li class="listitem">
+Support typed_keys and rest_total_hits_as_int params for rollup_search
+</li>
+<li class="listitem">
+Improve string output for xpack rest api tests
+</li>
+<li class="listitem">
+Fix logic in version checking
+</li>
+<li class="listitem">
+Support if_seq_no and if_primary_term in put_watch
+</li>
+<li class="listitem">
+Don&#8217;t test execute_watch/60_http_input because of possible Docker issue
+</li>
+<li class="listitem">
+Support api key methods
+</li>
+<li class="listitem">
+Fix minor typo in test description
+</li>
+<li class="listitem">
+Fix issue with replacing argument value with an Integer value
+</li>
+<li class="listitem">
+Support transform_and_set in yaml tests
+</li>
+<li class="listitem">
+Skip two more tests
+</li>
+<li class="listitem">
+Run security tests against elasticsearch 7.0.0-rc2
+</li>
+<li class="listitem">
+Account for error when forecast_id is not provided and legacy path is used
+</li>
+<li class="listitem">
+Blacklist specific tests, not the whole file
+</li>
+<li class="listitem">
+Fix version check for skipping test
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_75.html">« 7.5 Release notes</a>
+</span>
+<span class="next">
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

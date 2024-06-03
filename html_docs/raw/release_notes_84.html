@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.4 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.4 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_85.html" title="8.5 Release notes"/>
+<link rel="next" href="release_notes_83.html" title="8.3 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_85.html">« 8.5 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_83.html">8.3 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_84"></a>8.4 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/84.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_840"></a>8.4.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/84.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.4.0: Ruby (MRI) 2.7, 3.0 and 3.1, JRuby 9.3.
+</li>
+</ul>
+</div>
+<h4><a id="_api_10"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/84.asciidoc">edit</a></h4>
+<h5><a id="_new_apis_6"></a>New APIs<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/84.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">security.update_api_key</code> - Updates attributes of an existing API key. <a href="https://www.elastic.co/guide/en/elasticsearch/reference/8.4/security-api-update-api-key.html" class="ulink" target="_top">Documentation</a>.
+</li>
+</ul>
+</div>
+<h5><a id="_api_changes_6"></a>API Changes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/84.asciidoc">edit</a></h5>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">get</code> - Adds new parameter <code class="literal">force_synthetic_source</code> (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+</li>
+<li class="listitem">
+<code class="literal">machine_learning.start_trained_model_deployment</code> - Adds new parameter <code class="literal">cache_size</code> (String) A byte-size value for configuring the inference cache size. For example, 20mb.
+</li>
+<li class="listitem">
+<code class="literal">mget</code> - Adds new parameter <code class="literal">force_synthetic_source</code> (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+</li>
+<li class="listitem">
+<code class="literal">search</code> - Adds new parameter <code class="literal">force_synthetic_source</code> (Boolean) Should this request force synthetic _source? Use this to test if the mapping supports synthetic _source and to get a sense of the worst case performance. Fetches with this enabled will be slower the enabling synthetic source natively in the index.
+</li>
+<li class="listitem">
+<p><code class="literal">snapshot.get</code> - Adds new parameters:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">sort</code> (String) Allows setting a sort order for the result. Defaults to start_time (options: start_time, duration, name, repository, index_count, shard_count, failed_shard_count).
+</li>
+<li class="listitem">
+<code class="literal">size</code> (Integer) Maximum number of snapshots to return. Defaults to 0 which means return all that match without limit.
+</li>
+<li class="listitem">
+<code class="literal">order</code> (String) Sort order (options: asc, desc).
+</li>
+<li class="listitem">
+<code class="literal">from_sort_value</code> (String) Value of the current sort column at which to start retrieval.
+</li>
+<li class="listitem">
+<code class="literal">after</code> (String) Offset identifier to start pagination from as returned by the <em>next</em> field in the response body.
+</li>
+<li class="listitem">
+<code class="literal">offset</code> (Integer) Numeric offset to start pagination based on the snapshots matching the request. Defaults to 0.
+</li>
+<li class="listitem">
+<code class="literal">slm_policy_filter</code> (String) Filter snapshots by a comma-separated list of SLM policy names that snapshots belong to. Accepts wildcards. Use the special pattern <em>_none</em> to match snapshots without an SLM policy.
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_85.html">« 8.5 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_83.html">8.3 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

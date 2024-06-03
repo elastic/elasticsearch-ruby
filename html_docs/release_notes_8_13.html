@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>8.13 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.13 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes.html" title="Release Notes"/>
+<link rel="next" href="release_notes_8_12.html" title="8.12 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes.html">« Release Notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8_12.html">8.12 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_8_13"></a>8.13 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_8_13_0"></a>8.13.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h3>
+<h4><a id="_client"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.13.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+</li>
+</ul>
+</div>
+<h4><a id="_experimental_esql_helper"></a>Experimental ES|QL Helper<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<p>This version provides a new experimental Helper for the ES|QL <code class="literal">query</code> API. Please check out <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#esql-helper" class="ulink" target="_top">the documentation</a> and <a href="https://github.com/elastic/elasticsearch-ruby/issues/new/choose" class="ulink" target="_top">open an issue</a> if you encounter any problems or have any feedback.</p>
+<h4><a id="_api"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<p>API Changes:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">async_search.status</code> - adds Time <code class="literal">:keep_alive</code> parameter: Specify the time interval in which the results (partial or final) for this search will be available.
+</li>
+<li class="listitem">
+<code class="literal">bulk</code> - adds boolean <code class="literal">:require_data_stream</code> parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+</li>
+<li class="listitem">
+<code class="literal">connector.list</code> - Adds the following parameters:
+</li>
+<li class="listitem">
+<code class="literal">:index_name</code> (List): A comma-separated list of connector index names to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:connector_name</code> (List): A comma-separated list of connector names to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:service_type</code> (List):  A comma-separated list of connector service types to fetch connector documents for.
+</li>
+<li class="listitem">
+<code class="literal">:query</code> (String): A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names.
+</li>
+<li class="listitem">
+<code class="literal">esql.query</code> - adds boolean <code class="literal">:drop_null_columns</code> parameter: Should entirely null columns be removed from the results? Their name and type will be returning in a new <code class="literal">all_columns</code> section.
+</li>
+<li class="listitem">
+<code class="literal">field_caps</code> - Adds <code class="literal">:include_empty_fields</code> boolean parameter: Include empty fields in result.
+</li>
+<li class="listitem">
+<code class="literal">index</code> - adds boolean <code class="literal">:require_data_stream</code> parameter: When true, requires the destination to be a data stream (existing or to-be-created). Default is false.
+</li>
+<li class="listitem">
+<code class="literal">indices.rollover</code> - adds boolean <code class="literal">:lazy</code> parameter: If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write. Only allowed on data streams.
+</li>
+<li class="listitem">
+connector_sync_job.list - adds List <code class="literal">:job_type</code> parameter: A comma-separated list of job types.
+</li>
+<li class="listitem">
+<code class="literal">inference.delete_model</code>, <code class="literal">inference.get_model</code>, <code class="literal">inference.inference</code>, <code class="literal">inference.put_model</code>: renames <code class="literal">:model_id</code> parameter to <code class="literal">:inference_id</code>.
+</li>
+<li class="listitem">
+<code class="literal">termvector</code> will show a warning since it&#8217;s been deprecated. Please use the plural version, <code class="literal">termvectors</code>.
+</li>
+</ul>
+</div>
+<p>New APIs:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">indices.resolve_cluster</code> - Resolves the specified index expressions to return information about each cluster, including the local cluster, if included.
+</li>
+<li class="listitem">
+<code class="literal">profiling.flamegraph</code> - Extracts a UI-optimized structure to render flamegraphs from Universal Profiling.
+</li>
+<li class="listitem">
+<code class="literal">profiling.stacktraces</code> - Extracts raw stacktrace information from Universal Profiling.
+</li>
+<li class="listitem">
+<code class="literal">security.query_user</code> - Retrieves information for Users using a subset of query DSL
+</li>
+<li class="listitem">
+<code class="literal">text_structure.test_grok_pattern</code> - Tests a Grok pattern on some text.
+</li>
+</ul>
+</div>
+<p>APIs Migrated from experimental to stable:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">synonyms.delete_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.delete_synonym_rule</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonym_rule</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get_synonyms_sets</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.put_synonym</code>
+</li>
+<li class="listitem">
+<code class="literal">synonyms.put_synonym_rule</code>
+</li>
+</ul>
+</div>
+<p>New Experimental APIs</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector.update_api_key_id</code> - Updates the API key id and/or API key secret id fields in the connector document.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_index_name</code> - Updates the index name of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_native</code> - Updates the is_native flag of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_service_type</code> - Updates the service type of the connector.
+</li>
+<li class="listitem">
+<code class="literal">connector.update_status</code> - Updates the status of the connector.
+</li>
+<li class="listitem">
+<code class="literal">esql.async_query</code> - Executes an ESQL request asynchronously
+</li>
+<li class="listitem">
+<code class="literal">esql.async_query_get</code> - Retrieves the results of a previously submitted async query request given its ID.
+</li>
+</ul>
+</div>
+<p>New Experimental namespace <code class="literal">connector_secret</code>:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">connector_secret.delete</code> - Deletes a connector secret.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.get</code> - Retrieves a secret stored by Connectors.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.post</code> - Creates a secret for a Connector.
+</li>
+<li class="listitem">
+<code class="literal">connector_secret.put</code> - Creates or updates a secret for a Connector.
+</li>
+</ul>
+</div>
+<h4><a id="_development"></a>Development<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/813.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Migrated from <code class="literal">byebug</code> to <code class="literal">debug</code>.
+</li>
+<li class="listitem">
+Added extra testing for OpenTelemetry.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes.html">« Release Notes</a>
+</span>
+<span class="next">
+<a href="release_notes_8_12.html">8.12 Release notes »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

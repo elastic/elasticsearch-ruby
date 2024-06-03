@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.13 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.13 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_714.html" title="7.14 Release notes"/>
+<link rel="next" href="release_notes_712.html" title="7.12 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_714.html">« 7.14 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_712.html">7.12 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_713"></a>7.13 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7133"></a>7.13.3 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+API Support for Elasticsearch version 7.13.3
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7132"></a>7.13.2 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Mute release, yanked from RubyGems.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7131"></a>7.13.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h3>
+<h4><a id="_client_13"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixes thread safety issue in <code class="literal">get_connection</code> - <a href="https://github.com/elastic/elasticsearch-ruby/pull/1325" class="ulink" target="_top">Pull Request</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7130"></a>7.13.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h3>
+<h4><a id="_client_14"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch version 7.13.0
+</li>
+<li class="listitem">
+Adds support for compatibility header for Elasticsearch. If the environment variable <em>ELASTIC_CLIENT_APIVERSIONING</em> is set to <code class="literal">true</code> or <code class="literal">1</code>, the client will send the headers <code class="literal">Accept</code> and <code class="literal">Content-Type</code> with the following value: <code class="literal">application/vnd.elasticsearch+json;compatible-with=7</code>.
+</li>
+<li class="listitem">
+Better detection of Elasticsearch and Enterprise Search clients in the meta header used by cloud.
+</li>
+</ul>
+</div>
+<h4><a id="_api_20"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+The REST API tests now use an artifact downloaded from the Elastic servers instead of depending of cloning <code class="literal">elasticsearch</code> locally. Check the README for more information.
+</li>
+<li class="listitem">
+New parameter <code class="literal">include_unloaded_segments</code> in <code class="literal">cat.nodes</code>, <code class="literal">nodes.stats</code>: If set to true segment stats will include stats for segments that are not currently loaded into memory
+</li>
+<li class="listitem">
+New parameter <code class="literal">summary</code> in <code class="literal">ingest.get_pipeline</code>: Return pipelines without their definitions (default: false)
+</li>
+<li class="listitem">
+New parameter <code class="literal">index_details</code> in <code class="literal">snapshot.get</code>: Whether to include details of each index in the snapshot, if those details are available. Defaults to false.
+</li>
+<li class="listitem">
+New endpoint <code class="literal">features.reset_features</code>, <code class="literal">ingest/geo_ip_stats</code>
+</li>
+<li class="listitem">
+New experimental endpoints: <code class="literal">shutdown.delete_node</code>, <code class="literal">shutdown.get_node</code>, <code class="literal">shutdown.put_node</code>.
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_3"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/713.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Refactored test tasks, made it easier to run the tests by default.
+</li>
+<li class="listitem">
+New experimental endpoints: <code class="literal">fleet.global_checkpoints</code>, <code class="literal">searchable_snapshots.cache_stats</code>.
+</li>
+<li class="listitem">
+New beta endpoints: <code class="literal">security.clear_cached_service_tokens</code>, <code class="literal">security.create_service_token</code>, <code class="literal">security.delete_service_token</code>, <code class="literal">security.get_service_accounts</code>, <code class="literal">security.get_service_credentials</code>
+</li>
+<li class="listitem">
+New endpoints: <code class="literal">machine_learning.delete_trained_model_alias</code>, <code class="literal">machine_learning.preview_data_frame_analytics</code>, <code class="literal">machine_learning.put_trained_model_alias</code>.
+</li>
+<li class="listitem">
+APIs migrated from experimental or beta to stable: <code class="literal">machine_learning.delete_data_frame_analytics</code>, <code class="literal">machine_learning.delete_trained_model</code>, <code class="literal">machine_learning.estimate_model_memory</code>, <code class="literal">machine_learning.explain_data_frame_analytics</code>, <code class="literal">machine_learning.get_data_frame_analytics</code>, <code class="literal">machine_learning.get_data_frame_analytics_stats</code>, <code class="literal">machine_learning.get_trained_models</code>, <code class="literal">machine_learning.get_trained_models_stats</code>, <code class="literal">machine_learning.put_data_frame_analytics</code>, <code class="literal">machine_learning.put_trained_model</code>, <code class="literal">machine_learning.start_data_frame_analytics</code>, <code class="literal">machine_learning.stop_data_frame_analytics</code>, <code class="literal">machine_learning.update_data_frame_analytics</code>
+</li>
+<li class="listitem">
+New parameter <code class="literal">body</code> in <code class="literal">machine_learning.preview_datafeed</code>: The datafeed config and job config with which to execute the preview.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_714.html">« 7.14 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_712.html">7.12 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

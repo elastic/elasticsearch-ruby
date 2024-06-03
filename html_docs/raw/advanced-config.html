@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Advanced configuration | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Advanced configuration | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="ruby-config.html" title="Configuration"/>
+<link rel="prev" href="basic-config.html" title="Basic configuration"/>
+<link rel="next" href="integrations.html" title="Integrations"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="ruby-config.html">Configuration</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="basic-config.html">« Basic configuration</a>
+</span>
+<span class="next">
+<a href="integrations.html">Integrations »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="advanced-config"></a>Advanced configuration<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h2>
+</div></div></div>
+<p>The client supports many configurations options for setting up and managing
+connections, configuring logging, customizing the transport library, and so on.</p>
+<h4><a id="setting-hosts"></a>Setting hosts<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>To connect to a specific Elasticsearch host:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(host: 'search.myserver.com')</pre>
+</div>
+<p>To connect to a host with specific port:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(host: 'myhost:8080')</pre>
+</div>
+<p>To connect to multiple hosts:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['myhost1', 'myhost2'])</pre>
+</div>
+<p>Instead of strings, you can pass host information as an array of Hashes:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ])</pre>
+</div>
+<div class="note admon">
+<div class="icon"></div>
+<div class="admon_content">
+<p>When specifying multiple hosts, you might want to enable the
+<code class="literal">retry_on_failure</code> or <code class="literal">retry_on_status</code> options to perform a failed request on
+another node (refer to <a class="xref" href="advanced-config.html#retry-failures" title="Retrying on Failures">Retrying on Failures</a>).</p>
+</div>
+</div>
+<p>Common URL parts – scheme, HTTP authentication credentials, URL prefixes, and so
+on – are handled automatically:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(url: 'https://username:password@api.server.org:4430/search')</pre>
+</div>
+<p>You can pass multiple URLs separated by a comma:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(urls: 'http://localhost:9200,http://localhost:9201')</pre>
+</div>
+<p>Another way to configure URLs is to export the <code class="literal">ELASTICSEARCH_URL</code> variable.</p>
+<p>The client is automatically going to use a round-robin algorithm across the
+hosts (unless you select or implement a different <a class="xref" href="advanced-config.html#connection-selector" title="Connection Selector">Connection Selector</a>).</p>
+<h4><a id="default-port"></a>Default port<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>The default port is <code class="literal">9200</code>. Specify a port for your host(s) if they differ from
+this default.</p>
+<p>If you are using Elastic Cloud, the default port is port <code class="literal">9243</code>. You must supply
+your username and password separately, and optionally a port. Refer to
+<a class="xref" href="connecting.html#auth-ec" title="Elastic Cloud">Elastic Cloud</a>.</p>
+<h4><a id="logging"></a>Logging<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>To log requests and responses to standard output with the default logger (an
+instance of Ruby&#8217;s <code class="literal">::Logger</code> class), set the log argument to true:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(log: true)</pre>
+</div>
+<p>You can also use <a href="https://github.com/elastic/ecs-logging-ruby" class="ulink" target="_top"><code class="literal">ecs-logging</code></a>
+which is a set of libraries that enables you to transform your application logs
+to structured logs that comply with the
+<a href="https://www.elastic.co/guide/en/ecs/current/ecs-reference.html" class="ulink" target="_top">Elastic Common Schema</a>. See <a class="xref" href="ecs.html" title="Elastic Common Schema (ECS)">Elastic Common Schema (ECS)</a>.</p>
+<p>To trace requests and responses in the Curl format, set the <code class="literal">trace</code> argument:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(trace: true)</pre>
+</div>
+<p>You can customize the default logger or tracer:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client.transport.logger.formatter = proc { |s, d, p, m| "#{s}: #{m}\n" }
+client.transport.logger.level = Logger::INFO</pre>
+</div>
+<p>Or, you can use a custom <code class="literal">::Logger</code> instance:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(logger: Logger.new(STDERR))</pre>
+</div>
+<p>You can pass the client any conforming logger implementation:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'logging' # https://github.com/TwP/logging/
+
+log = Logging.logger['elasticsearch']
+log.add_appenders Logging.appenders.stdout
+log.level = :info
+
+client = Elasticsearch::Client.new(logger: log)</pre>
+</div>
+<h4><a id="apm-integration"></a>APM integration<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>This client integrates seamlessly with Elastic APM via the Elastic APM Agent. It
+automatically captures client requests if you are using the agent on your code.
+If you&#8217;re using <code class="literal">elastic-apm</code> v3.8.0 or up, you can set
+<code class="literal">capture_elasticsearch_queries</code> to <code class="literal">true</code> in <code class="literal">config/elastic_apm.yml</code> to also
+capture the body from requests in Elasticsearch. Refer to
+<a href="https://github.com/elastic/elasticsearch-ruby/tree/main/docs/examples/apm" class="ulink" target="_top">this example</a>.</p>
+<h4><a id="custom-http-headers"></a>Custom HTTP Headers<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>You can set a custom HTTP header on the client&#8217;s initializer:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client = Elasticsearch::Client.new(
+  transport_options: {
+    headers:
+      {user_agent: "My App"}
+  }
+)</pre>
+</div>
+<p>You can also pass in <code class="literal">headers</code> as a parameter to any of the API Endpoints to set
+custom headers for the request:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client.search(index: 'myindex', q: 'title:test', headers: {user_agent: "My App"})</pre>
+</div>
+<h4><a id="x-opaque-id"></a>Identifying running tasks with X-Opaque-Id<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>The X-Opaque-Id header allows to track certain calls, or associate certain tasks
+with the client that started them (refer to
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html#_identifying_running_tasks" class="ulink" target="_top">the documentation</a>).
+To use this feature, you need to set an id for <code class="literal">opaque_id</code> on the client on each
+request. Example:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client = Elasticsearch::Client.new
+client.search(index: 'myindex', q: 'title:test', opaque_id: '123456')</pre>
+</div>
+<p>The search request includes the following HTTP Header:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">X-Opaque-Id: 123456</pre>
+</div>
+<p>You can also set a prefix for X-Opaque-Id when initializing the client. This is
+prepended to the id you set before each request if you&#8217;re using X-Opaque-Id.
+Example:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">client = Elasticsearch::Client.new(opaque_id_prefix: 'eu-west1_')
+client.search(index: 'myindex', q: 'title:test', opaque_id: '123456')</pre>
+</div>
+<p>The request includes the following HTTP Header:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">X-Opaque-Id: eu-west1_123456</pre>
+</div>
+<h4><a id="setting-timeouts"></a>Setting Timeouts<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>For many operations in Elasticsearch, the default timeouts of HTTP libraries are too low.
+To increase the timeout, you can use the <code class="literal">request_timeout</code> parameter:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(request_timeout: 5*60)</pre>
+</div>
+<p>You can also use the <code class="literal">transport_options</code> argument documented below.</p>
+<h4><a id="randomizing-hosts"></a>Randomizing Hosts<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>If you pass multiple hosts to the client, it rotates across them in a
+round-robin fashion by default. When the same client would be running in
+multiple processes (for example, in a Ruby web server such as Thin), it might
+keep connecting to the same nodes "at once". To prevent this, you can randomize
+the hosts collection on initialization and reloading:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true)</pre>
+</div>
+<h4><a id="retry-failures"></a>Retrying on Failures<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>When the client is initialized with multiple hosts, it makes sense to retry a
+failed request on a different host:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true)</pre>
+</div>
+<p>By default, the client does not retry the request. You can specify how many
+times to retry before it raises an exception by passing a number to
+<code class="literal">retry_on_failure</code>:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby"> Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5)</pre>
+</div>
+<p>You can also use <code class="literal">retry_on_status</code> to retry when specific status codes are
+returned:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503])</pre>
+</div>
+<p>These two parameters can also be used together:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_status: [502, 503], retry_on_failure: 10)</pre>
+</div>
+<p>You can also set a <code class="literal">delay_on_retry</code> value in milliseconds. This will add a delay to wait between retries:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby"> Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5, delay_on_retry: 1000)</pre>
+</div>
+<h4><a id="reload-hosts"></a>Reloading Hosts<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>Elasticsearch dynamically discovers new nodes in the cluster by default. You can leverage
+this in the client, and periodically check for new nodes to spread the load.</p>
+<p>To retrieve and use the information from the
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html" class="ulink" target="_top">Nodes Info API</a>
+on every 10,000th request:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true)</pre>
+</div>
+<p>You can pass a specific number of requests after which reloading should be
+performed:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000)</pre>
+</div>
+<p>To reload connections on failures, use:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true)</pre>
+</div>
+<p>The reloading timeouts if not finished under 1 second by default. To change the
+setting:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3)</pre>
+</div>
+<div class="note admon">
+<div class="icon"></div>
+<div class="admon_content">
+<p>When using reloading hosts ("sniffing") together with authentication, pass
+the scheme, user and password with the host info – or, for more clarity, in the
+<code class="literal">http</code> options:</p>
+</div>
+</div>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">Elasticsearch::Client.new(
+  host: 'localhost:9200',
+  http: { scheme: 'https', user: 'U', password: 'P' },
+  reload_connections: true,
+  reload_on_failure: true
+)</pre>
+</div>
+<h4><a id="connection-selector"></a>Connection Selector<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>By default, the client rotates the connections in a round-robin fashion, using the <code class="literal">Elastic::Transport::Transport::Connections::Selector::RoundRobin</code> strategy.</p>
+<p>You can implement your own strategy to customize the behaviour. For example, let&#8217;s have a "rack aware" strategy, which prefers the nodes with a specific attribute. The strategy uses the other nodes, only when these are unavailable:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">class RackIdSelector
+  include Elastic::Transport::Transport::Connections::Selector::Base
+
+  def select(options={})
+    connections.select do |c|
+      # Try selecting the nodes with a `rack_id:x1` attribute first
+      c.host[:attributes] &amp;&amp; c.host[:attributes][:rack_id] == 'x1'
+    end.sample || connections.to_a.sample
+  end
+end
+
+Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_class: RackIdSelector</pre>
+</div>
+<h4><a id="serializer-implementations"></a>Serializer Implementations<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>By default, the <a href="https://rubygems.org/gems/multi_json" class="ulink" target="_top">MultiJSON</a> library is used as the serializer implementation, and it picks up the "right" adapter based on gems available.</p>
+<p>The serialization component is pluggable, though, so you can write your own by including the <code class="literal">Elastic::Transport::Transport::Serializer::Base</code> module, implementing the required contract, and passing it to the client as the <code class="literal">serializer_class</code> or <code class="literal">serializer</code> parameter.</p>
+<h4><a id="exception-handling"></a>Exception Handling<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/advanced-config.asciidoc">edit</a></h4>
+<p>The library defines a
+<a href="https://github.com/elastic/elastic-transport-ruby/blob/main/lib/elastic/transport/transport/errors.rb" class="ulink" target="_top">number of exception classes</a> for various client and server errors, as well as unsuccessful HTTP responses, making it possible to rescue specific exceptions with desired granularity.</p>
+<p>The highest-level exception is <code class="literal">Elastic::Transport::Transport::Error</code> and is raised for any generic client or server errors.</p>
+<p><code class="literal">Elastic::Transport::Transport::ServerError</code> is raised for server errors only.</p>
+<p>As an example for response-specific errors, a 404 response status raises an <code class="literal">Elastic::Transport::Transport::Errors::NotFound</code> exception.</p>
+<p>Finally, <code class="literal">Elastic::Transport::Transport::SnifferTimeoutError</code> is raised when connection reloading ("sniffing") times out.</p>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="basic-config.html">« Basic configuration</a>
+</span>
+<span class="next">
+<a href="integrations.html">Integrations »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

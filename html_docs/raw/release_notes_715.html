@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>7.15 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.15 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_716.html" title="7.16 Release notes"/>
+<link rel="next" href="release_notes_714.html" title="7.14 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_716.html">« 7.16 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_714.html">7.14 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_715"></a>7.15 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/715.asciidoc">edit</a></h2>
+</div></div></div>
+<h4><a id="_client_10"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/715.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Support for Elasticsearch v7.15.0 APIs.
+</li>
+<li class="listitem">
+We&#8217;ve tested and added documentation on best practices for leveraging the client in a Function-as-a-Service (FaaS) environment to the <a href="https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html#client-faas" class="ulink" target="_top">official docs</a>.
+</li>
+</ul>
+</div>
+<h4><a id="_api_18"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/715.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New experimental endpoints: <code class="literal">indices.disk_usage</code>. <code class="literal">indices.field_usage_stats</code>, <code class="literal">nodes.clear_repositories_metering_archive</code>, <code class="literal">get_repositories_metering_info</code>, <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.15/search-vector-tile-api.html" class="ulink" target="_top"><code class="literal">search_mvt</code></a>
+</li>
+<li class="listitem">
+The <code class="literal">index</code> parameter is now required for <code class="literal">open_point_in_time</code>.
+</li>
+<li class="listitem">
+The <code class="literal">index_metric</code> parameter in <code class="literal">nodes.stats</code> adds the <code class="literal">shards</code> option.
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/715.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New parameters for <code class="literal">ml.put_job</code>: <code class="literal">ignore_unavailable</code>, <code class="literal">allow_no_indices</code>, <code class="literal">ignore_throttled</code>, <code class="literal">expand_wildcards</code>.
+</li>
+<li class="listitem">
+New endpoint: <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.15/security-api-query-api-key.html" class="ulink" target="_top"><code class="literal">security.query_api_keys</code></a>.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_716.html">« 7.16 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_714.html">7.14 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

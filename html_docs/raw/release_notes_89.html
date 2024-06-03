@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>8.9 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="8.9 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_8100.html" title="8.10 Release notes"/>
+<link rel="next" href="release_notes_88.html" title="8.8 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_8100.html">« 8.10 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_88.html">8.8 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_89"></a>8.9 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_890"></a>8.9.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h3>
+<h3><a id="_client_5"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h3>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Tested versions of Ruby for 8.9.0: Ruby (MRI) 3.0, 3.1 and 3.2. JRuby 9.3 and JRuby 9.4.
+</li>
+<li class="listitem">
+<p>Updated product validation. The code for the product validation was refactored in a few ways:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Just check header, does not check the version of the server.
+</li>
+<li class="listitem">
+Warns only once when there&#8217;s a general server error.
+</li>
+<li class="listitem">
+Removes the call to <em>/</em> (client.info) when doing the first request, checking on the first actual request from the client.
+</li>
+</ul>
+</div>
+</li>
+<li class="listitem">
+Fixes User-Agent code. In the migration to 8.x, the user agent code was extracted into transport, since we&#8217;re now using that library in other projects. So for the Elasticsearch Client, the user-agent would be reported as the one defined in elastic-transport. This release fixes the issue and brings back the user agent in the format that was being used in 7.x
+</li>
+</ul>
+</div>
+<h3><a id="_helpers"></a>Helpers<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h3>
+<p>This release introduces two new Helpers in the client:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+BulkHelper - This helper provides a better developer experience when using the Bulk API. At its simplest, you can send it a collection of hashes in an array, and it will bulk ingest them into Elasticsearch.
+</li>
+<li class="listitem">
+ScrollHelper - This helper provides an easy way to get results from a Scroll.
+</li>
+</ul>
+</div>
+<p>See <a class="xref" href="Helpers.html" title="Bulk and Scroll helpers">Bulk and Scroll helpers</a> to read more about them.</p>
+<h3><a id="_api_5"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h3>
+<h4><a id="_new_apis"></a>New APIs<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">cluster.info</code> - Returns different information about the cluster.
+</li>
+</ul>
+</div>
+<h4><a id="_new_experimental_apis_and_namespaces"></a>New Experimental APIs and namespaces:<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/89.asciidoc">edit</a></h4>
+<p>This functionality is Experimental and may be changed or removed completely in a future release. Elastic will take a best effort approach to fix any issues, but experimental features are not subject to the support SLA of official GA features.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<p>New namespace: <code class="literal">query_ruleset</code></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">query_ruleset.delete</code> - Deletes a query ruleset.
+</li>
+<li class="listitem">
+<code class="literal">query_ruleset.get</code> - Returns the details about a query ruleset.
+</li>
+<li class="listitem">
+<code class="literal">query_ruleset.put</code> - Creates or updates a query ruleset.
+</li>
+</ul>
+</div>
+</li>
+<li class="listitem">
+New API: <code class="literal">search_application.render_query</code> Renders a query for given search application search parameters.
+</li>
+<li class="listitem">
+New API: <code class="literal">security.create_cross_cluster_api_key</code> -  Creates a cross-cluster API key for API key based remote cluster access.
+</li>
+<li class="listitem">
+New API: <code class="literal">security.upate_cross_cluster_api_key</code> - Updates attributes of an existing cross-cluster API key.
+</li>
+<li class="listitem">
+<p>New namespace: <code class="literal">synonyms</code></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">synonyms.delete</code>- Deletes a synonym set
+</li>
+<li class="listitem">
+<code class="literal">synonyms.get</code> - Retrieves a synonym set
+</li>
+<li class="listitem">
+<code class="literal">synonyms.put</code> - Creates or updates a synonyms set
+</li>
+</ul>
+</div>
+</li>
+<li class="listitem">
+<p>New namespace: <code class="literal">synonym_rule</code></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">synonym_rule.put</code> - Creates or updates a synonym rule in a synonym set
+</li>
+</ul>
+</div>
+</li>
+<li class="listitem">
+<p>New namespace: <code class="literal">synonyms</code></p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+<code class="literal">synonyms_set.get</code> - Retrieves a summary of all defined synonym sets
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_8100.html">« 8.10 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_88.html">8.8 Release notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>7.14 Release notes | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="7.14 Release notes | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="release_notes.html" title="Release Notes"/>
+<link rel="prev" href="release_notes_715.html" title="7.15 Release notes"/>
+<link rel="next" href="release_notes_713.html" title="7.13 Release notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="release_notes.html">Release Notes</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="release_notes_715.html">« 7.15 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_713.html">7.13 Release notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="release_notes_714"></a>7.14 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h2>
+</div></div></div>
+<h3><a id="release_notes_7141"></a>7.14.1 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h3>
+<h4><a id="_client_11"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h4>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Fixes for Manticore Implementation: Addresses custom headers on initialization (<a href="https://github.com/elastic/elasticsearch-ruby/commit/3732dd4f6de75365460fa99c1cd89668b107ef1c" class="ulink" target="_top">3732dd4</a>) and fixes tracing (<a href="https://github.com/elastic/elasticsearch-ruby/commit/3c48ebd9a783988d1f71bfb9940459832ccd63e4" class="ulink" target="_top">3c48ebd</a>). Related to <a href="https://github.com/elastic/elasticsearch-ruby/issues/1426" class="ulink" target="_top">#1426</a> and <a href="https://github.com/elastic/elasticsearch-ruby/issues/1428" class="ulink" target="_top">#1428</a>.
+</li>
+</ul>
+</div>
+<h3><a id="release_notes_7140"></a>7.14.0 Release notes<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h3>
+<h4><a id="_client_12"></a>Client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h4>
+<p>Added check that client is connected to an Elasticsearch cluster. If the client isn&#8217;t connected to a supported Elasticsearch cluster the <code class="literal">UnsupportedProductError</code> exception will be raised.</p>
+<p>This release changes the way in which the transport layer and the client interact. Previously, when using <code class="literal">elasticsearch-transport</code>, <code class="literal">Elasticsearch::Transport::Client</code> had a convenient wrapper, so it could be used as <code class="literal">Elasticsearch::Client</code>. Now, we are decoupling the transport layer from the Elasticsearch client. If you&#8217;re using the <code class="literal">elasticsearch</code> gem, not much will change. It will instantiate a new <code class="literal">Elasticsearch::Transport::Client</code> when you instantiate <code class="literal">Elasticsearch::Client</code> and the endpoints from <code class="literal">elasticsearch-api</code> will be available.</p>
+<p><code class="literal">Elasticsearch::Client</code> has an <code class="literal">attr_accessor</code> for the transport instance:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">&gt; client = Elasticsearch::Client.new
+&gt; client.transport.class
+=&gt; Elasticsearch::Transport::Client
+&gt; client.transport.transport.class
+=&gt; Elasticsearch::Transport::Transport::HTTP::Faraday</pre>
+</div>
+<p>The interaction with <code class="literal">elasticsearch-api</code> remains unchanged. You can use the API endpoints just like before:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">&gt; client.info
+=&gt; {"name"=&gt;"instance",
+ "cluster_name"=&gt;"elasticsearch",
+ "cluster_uuid"=&gt;"id",
+ "version"=&gt;
+  {"number"=&gt;"7.14.0",
+  ...
+},
+ "tagline"=&gt;"You Know, for Search"}</pre>
+</div>
+<p>Or perform request directly from the client which will return an <code class="literal">Elasticsearch::Transport::Response</code> object:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">&gt; client.perform_request('GET', '/')
+# This is the same as doing client.transport.perform_request('GET', '/')
+=&gt; #&lt;Elasticsearch::Transport::Transport::Response:0x000055c80bf94bc8
+ @body=
+  {"name"=&gt;"instance",
+   "cluster_name"=&gt;"elasticsearch",
+   "cluster_uuid"=&gt;"id",
+   "version"=&gt;
+    {"number"=&gt;"7.14.0-SNAPSHOT",
+    ...
+    },
+   "tagline"=&gt;"You Know, for Search"},
+ @headers=
+  {"content-type"=&gt;"application/json; charset=UTF-8",
+   "content-length"=&gt;"571",
+   ...
+   },
+ @status=200&gt;</pre>
+</div>
+<p>If you have any problems, please report them in <a href="https://github.com/elastic/elasticsearch-ruby/issues/1344" class="ulink" target="_top">this issue</a>.</p>
+<h4><a id="_api_19"></a>API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h4>
+<p>Code is now generated from Elastic artifacts instead of checked out code of Elasticsearch. See <a href="https://github.com/elastic/elasticsearch-ruby/blob/7.14/elasticsearch-api/utils/README.md#generate" class="ulink" target="_top">the Generator README</a> for more info.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Endpoints <code class="literal">msearch</code>, <code class="literal">msearch_template</code> and <code class="literal">search_template</code> remove <code class="literal">query_and_fetch</code> and <code class="literal">dfs_query_and_fetch</code> options from the <code class="literal">search_type</code> parameter.
+</li>
+<li class="listitem">
+New parameter <code class="literal">include_repository</code> in <code class="literal">snapshot.get</code>: (boolean) Whether to include the repository name in the snapshot info. Defaults to true.
+</li>
+</ul>
+</div>
+<h4><a id="_x_pack_2"></a>X-Pack<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/release_notes/714.asciidoc">edit</a></h4>
+<p>X-Pack is being deprecated. The first time using <code class="literal">xpack</code> on the client, a warning will be triggered. Please check <a href="https://github.com/elastic/elasticsearch-ruby/issues/1274" class="ulink" target="_top">this issue</a> for more information.</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+New endpoints: <code class="literal">index_lifecycle_management.migrate_to_data_tiers</code>, <code class="literal">machine_learning.reset_job</code>, <code class="literal">security.saml_authenticate</code>, <code class="literal">security.saml_complete_logout</code>, <code class="literal">security.saml_invalidate</code>, <code class="literal">security.saml_logout</code>, <code class="literal">security.saml_prepare_authentication</code>, <code class="literal">security.saml_service_provider_metadata</code>, <code class="literal">sql.delete_async</code>, <code class="literal">sql.get_async</code>, <code class="literal">sql.get_async_status</code>, <code class="literal">terms_enum</code>.
+</li>
+<li class="listitem">
+New experimental endpoints: <code class="literal">machine_learning.infer_trained_model_deployment</code>, <code class="literal">machine_learning.start_trained_model_deployment</code>, <code class="literal">machine_learning.stop_trained_model_deployment</code>.
+</li>
+<li class="listitem">
+Deprecation: <code class="literal">indices.freeze</code> and <code class="literal">indices.unfreeze</code>: Frozen indices are deprecated because they provide no benefit given improvements in heap memory utilization. They will be removed in a future release.
+</li>
+</ul>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="release_notes_715.html">« 7.15 Release notes</a>
+</span>
+<span class="next">
+<a href="release_notes_713.html">7.13 Release notes »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

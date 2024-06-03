@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Installation | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Installation | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="prev" href="getting-started-ruby.html" title="Getting started"/>
+<link rel="next" href="connecting.html" title="Connecting"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="getting-started-ruby.html">« Getting started</a>
+</span>
+<span class="next">
+<a href="connecting.html">Connecting »</a>
+</span>
+</div>
+<div class="chapter">
+<div class="titlepage"><div><div>
+<h1 class="title"><a id="ruby-install"></a>Installation<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/installation.asciidoc">edit</a></h1>
+</div></div></div>
+<p>Install the Rubygem for the latest Elasticsearch version by using the following command:</p>
+<div class="pre_wrapper lang-sh">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-sh">gem install elasticsearch</pre>
+</div>
+<p>Or add the <code class="literal">elasticsearch</code> Ruby gem to your Gemfile:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">gem 'elasticsearch'</pre>
+</div>
+<p>You can install the Ruby gem for a specific Elasticsearch version by using the following
+command:</p>
+<div class="pre_wrapper lang-sh">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-sh">gem install elasticsearch -v 7.0.0</pre>
+</div>
+<p>Or you can add a specific version of Elasticsearch to your Gemfile:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">gem 'elasticsearch', '~&gt; 7.0'</pre>
+</div>
+<h3><a id="_elasticsearch_and_ruby_version_compatibility"></a>Elasticsearch and Ruby Version Compatibility<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/installation.asciidoc">edit</a></h3>
+<p>The Elasticsearch client is compatible with currently maintained Ruby versions. We follow
+Ruby’s own maintenance policy and officially support all currently maintained
+versions per
+<a href="https://www.ruby-lang.org/en/downloads/branches/" class="ulink" target="_top">Ruby Maintenance Branches</a>.</p>
+<p>Language clients are forward compatible; meaning that clients support
+communicating with greater or equal minor versions of Elasticsearch without breaking. It
+does not mean that the client automatically supports new features of newer Elasticsearch
+versions; it is only possible after a release of a new client version. For
+example, a 8.12 client version won&#8217;t automatically support the new features of
+the 8.13 version of Elasticsearch, the 8.13 client version is required for that.
+Elasticsearch language clients are only backwards compatible with default distributions
+and without guarantees made.</p>
+<div class="informaltable">
+<table border="1" cellpadding="4px">
+<colgroup>
+<col class="col_1"/>
+<col class="col_2"/>
+<col class="col_3"/>
+<col class="col_4"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" valign="top">Gem Version</th>
+<th align="left" valign="top"></th>
+<th align="left" valign="top">Elasticsearch Version</th>
+<th align="left" valign="top">Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p>7.x</p></td>
+<td align="left" valign="top"><p>→</p></td>
+<td align="left" valign="top"><p>7.x</p></td>
+<td align="left" valign="top"><p>7.17</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p>8.x</p></td>
+<td align="left" valign="top"><p>→</p></td>
+<td align="left" valign="top"><p>8.x</p></td>
+<td align="left" valign="top"><p>8.x</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p>main</p></td>
+<td align="left" valign="top"><p>→</p></td>
+<td align="left" valign="top"><p>main</p></td>
+<td align="left" valign="top"><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="getting-started-ruby.html">« Getting started</a>
+</span>
+<span class="next">
+<a href="connecting.html">Connecting »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

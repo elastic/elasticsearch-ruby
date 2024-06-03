@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+<meta charset="UTF-8">
+<title>ES|QL in the Ruby client | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="ES|QL in the Ruby client | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="client-helpers.html" title="Client helpers"/>
+<link rel="prev" href="Helpers.html" title="Bulk and Scroll helpers"/>
+<link rel="next" href="release_notes.html" title="Release Notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.optimizely.com/js/18132920325.js"></script>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-title" content="Elastic">
+    <meta name="application-name" content="Elastic">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="naver-site-verification" content="936882c1853b701b3cef3721758d80535413dbfd" />
+    <meta name="yandex-verification" content="d8a47e95d0972434" />
+    <meta name="localized" content="true" />
+    <meta name="st:robots" content="follow,index" />
+    <meta property="og:image" content="https://static-www.elastic.co/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/6202d3378b1f312528798412/elastic-logo.svg" />
+    <meta property="og:image:width" content="500" />
+    <meta property="og:image:height" content="172" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon-precomposed" sizes="64x64" href="/favicon_64x64_16bit.png">
+    <link rel="apple-touch-icon-precomposed" sizes="32x32" href="/favicon_32x32.png">
+    <link rel="apple-touch-icon-precomposed" sizes="16x16" href="/favicon_16x16.png">
+    <!-- Give IE8 a fighting chance -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/guide/static/styles.css" />
+  </head>
+
+  <!--© 2015-2022 Elasticsearch B.V. -->
+  <!-- All Elastic documentation is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. -->
+  <!-- http://creativecommons.org/licenses/by-nc-nd/4.0/ -->
+
+  <body>
+    <!-- Google Tag Manager -->
+    <script>dataLayer = [];</script><noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-58RLH5');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-12395217-16"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-12395217-16');
+    </script>
+
+    <!-- Google Tag Manager for GA4 -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KNJMG2M');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNJMG2M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager for GA4-->
+
+    <div id='elastic-nav' style="display:none;"></div>
+    <script src='https://www.elastic.co/elastic-nav.js'></script>
+
+    <div class="main-container">
+      <section id="content" >
+        <div class="content-wrapper">
+
+          <section id="guide" lang="en">
+            <div class="container-fluid">
+              <div class="row pb-3">
+                <div class="col-12 order-2 col-md-4 order-md-1 col-lg-3 h-almost-full-md sticky-top-md" id="left_col">
+                  <!-- The TOC is appended here -->
+                </div>
+
+                <div class="col-12 order-1 col-md-8 order-md-2 col-lg-7 order-lg-2 guide-section" id="middle_col">
+                  <!-- start body -->
+                  
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="client-helpers.html">Client helpers</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="Helpers.html">« Bulk and Scroll helpers</a>
+</span>
+<span class="next">
+<a href="release_notes.html">Release Notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="esql"></a>ES|QL in the Ruby client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h2>
+</div></div></div>
+
+<p>This page helps you understand and use <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql.html" class="ulink" target="_top">ES|QL</a> in the
+Ruby client.</p>
+<p>There are two ways to use ES|QL in the Ruby client:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Use the Elasticsearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-apis.html" class="ulink" target="_top">ES|QL API</a> directly: This
+is the most flexible approach, but it&#8217;s also the most complex because you must handle
+results in their raw form. You can choose the precise format of results,
+such as JSON, CSV, or text.
+</li>
+<li class="listitem">
+Use the Ruby ES|QL helper: The helper maps the raw response to an object that&#8217;s
+more readily usable by your application.
+</li>
+</ul>
+</div>
+<h4><a id="esql-how-to"></a>ES|QL API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h4>
+<p>The <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-query-api.html" class="ulink" target="_top">ES|QL query API</a> allows you to specify how
+results should be returned. You can choose a
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-rest.html#esql-rest-format" class="ulink" target="_top">response format</a> such as CSV, text, or
+JSON, then fine-tune it with parameters like column separators and locale.</p>
+<p>By default, the <code class="literal">query</code> API returns a Hash response with <code class="literal">columns</code> and <code class="literal">values</code>:</p>
+<a id="esql-query"></a><div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">query = &lt;&lt;ESQL
+        FROM sample_data
+        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+ESQL
+
+response = client.esql.query(body: { query: query})
+puts response
+
+{"columns"=&gt;[
+  {"name"=&gt;"@timestamp", "type"=&gt;"date"},
+  {"name"=&gt;"client.ip", "type"=&gt;"ip"},
+  {"name"=&gt;"event.duration", "type"=&gt;"long"},
+  {"name"=&gt;"message", "type"=&gt;"keyword"},
+  {"name"=&gt;"duration_ms", "type"=&gt;"double"}
+],
+"values"=&gt;[
+  ["2023-10-23T12:15:03.360Z", "172.21.2.162", 3450233, "Connected to 10.1.0.3", 3.5],
+  ["2023-10-23T12:27:28.948Z", "172.21.2.113", 2764889, "Connected to 10.1.0.2", 2.8],
+  ["2023-10-23T13:33:34.937Z", "172.21.0.5", 1232382, "Disconnected", 1.2],
+  ["2023-10-23T13:51:54.732Z", "172.21.3.15", 725448, "Connection error", 0.7],
+  ["2023-10-23T13:52:55.015Z", "172.21.3.15", 8268153, "Connection error", 8.3],
+  ["2023-10-23T13:53:55.832Z", "172.21.3.15", 5033755, "Connection error", 5.0],
+  ["2023-10-23T13:55:01.543Z", "172.21.3.15", 1756467, "Connected to 10.1.0.1", 1.8]
+]}</pre>
+</div>
+<h4><a id="esql-helper"></a>ES|QL helper<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h4>
+<p>The ES|QL helper in the Ruby client provides an object response from the ES|QL
+query API, instead of the default JSON value.</p>
+<p>To use the ES|QL helper, require it in your code:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'elasticsearch/helpers/esql_helper'</pre>
+</div>
+<p>The helper returns an array of hashes with the columns as keys and the
+respective values. Using the <a class="xref" href="esql.html#esql-query">preceding example</a>, the helper returns
+the following:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">response = Elasticsearch::Helpers::ESQLHelper.query(client, query)
+
+puts response
+
+{"duration_ms"=&gt;3.5, "message"=&gt;"Connected to 10.1.0.3", "event.duration"=&gt;3450233, "client.ip"=&gt;"172.21.2.162", "@timestamp"=&gt;"2023-10-23T12:15:03.360Z"}
+{"duration_ms"=&gt;2.8, "message"=&gt;"Connected to 10.1.0.2", "event.duration"=&gt;2764889, "client.ip"=&gt;"172.21.2.113", "@timestamp"=&gt;"2023-10-23T12:27:28.948Z"}
+{"duration_ms"=&gt;1.2, "message"=&gt;"Disconnected", "event.duration"=&gt;1232382, "client.ip"=&gt;"172.21.0.5", "@timestamp"=&gt;"2023-10-23T13:33:34.937Z"}
+{"duration_ms"=&gt;0.7, "message"=&gt;"Connection error", "event.duration"=&gt;725448, "client.ip"=&gt;"172.21.3.15", "@timestamp"=&gt;"2023-10-23T13:51:54.732Z"}
+{"duration_ms"=&gt;8.3, "message"=&gt;"Connection error", "event.duration"=&gt;8268153, "client.ip"=&gt;"172.21.3.15", "@timestamp"=&gt;"2023-10-23T13:52:55.015Z"}</pre>
+</div>
+<p>Additionally, you can transform the data in the response by passing in a Hash
+of <code class="literal">column =&gt; Proc</code> values. You could use this for example to convert
+<em>@timestamp</em> into a DateTime object. Pass in a Hash to <code class="literal">query</code> as a <code class="literal">parser</code>
+defining a <code class="literal">Proc</code> for each value you&#8217;d like to parse:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'elasticsearch/helpers/esql_helper'
+
+parser = {
+  '@timestamp' =&gt; Proc.new { |t| DateTime.parse(t) }
+}
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+response.first['@timestamp']
+# &lt;DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)&gt;</pre>
+</div>
+<p>You can pass in as many Procs as there are columns in the response. For example:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">parser = {
+  '@timestamp' =&gt; Proc.new { |t| DateTime.parse(t) },
+  'client.ip' =&gt; Proc.new { |i| IPAddr.new(i) },
+  'event.duration' =&gt; Proc.new { |d| d.to_s }
+}
+
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+
+puts response
+
+{"duration_ms"=&gt;3.5, "message"=&gt;"Connected to 10.1.0.3", "event.duration"=&gt;"3450233", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.2.162/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;2.8, "message"=&gt;"Connected to 10.1.0.2", "event.duration"=&gt;"2764889", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.2.113/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T12:27:28+00:00 ((2460241j,44848s,948000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;1.2, "message"=&gt;"Disconnected", "event.duration"=&gt;"1232382", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.0.5/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:33:34+00:00 ((2460241j,48814s,937000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;0.7, "message"=&gt;"Connection error", "event.duration"=&gt;"725448", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.3.15/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:51:54+00:00 ((2460241j,49914s,732000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;8.3, "message"=&gt;"Connection error", "event.duration"=&gt;"8268153", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.3.15/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:52:55+00:00 ((2460241j,49975s,15000000n),+0s,2299161j)&gt;}</pre>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="Helpers.html">« Bulk and Scroll helpers</a>
+</span>
+<span class="next">
+<a href="release_notes.html">Release Notes »</a>
+</span>
+</div>
+</div>
+
+                  <!-- end body -->
+                </div>
+
+                <div class="col-12 order-3 col-lg-2 order-lg-3 h-almost-full-lg sticky-top-lg" id="right_col">
+                  <div id="sticky_content">
+                    <!-- The OTP is appended here -->
+                    <div class="row">
+                      <div class="col-0 col-md-4 col-lg-0" id="bottom_left_col"></div>
+                      <div class="col-12 col-md-8 col-lg-12">
+                        <div id="rtpcontainer">
+                          <div class="mktg-promo" id="most-popular">
+                            <p class="aside-heading">Most Popular</p>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-elasticsearch?page=docs&placement=top-video">
+                                <p class="mb-0">Get Started with Elasticsearch</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/getting-started-kibana?page=docs&placement=top-video">
+                                <p class="mb-0">Intro to Kibana</p>
+                              </a>
+                            </div>
+                            <div class="pb-2">
+                              <p class="media-type">Video</p>
+                              <a href="https://www.elastic.co/webinars/introduction-elk-stack?page=docs&placement=top-video">
+                                <p class="mb-0">ELK for Logs & Metrics</p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Feedback widget -->
+                        <div id="feedbackWidgetContainer"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+
+        <div id='elastic-footer'></div>
+        <script src='https://www.elastic.co/elastic-footer.js'></script>
+        <!-- Footer Section end-->
+
+      </section>
+    </div>
+
+    <!-- Feedback modal -->
+    <div id="feedbackModalContainer"></div>
+
+    <script src="/guide/static/jquery.js"></script>
+    <script type="text/javascript" src="/guide/static/docs.js"></script>
+    <script type="text/javascript">
+  window.initial_state = {}</script>
+  </body>
+</html>

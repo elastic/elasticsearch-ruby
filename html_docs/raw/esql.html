@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ES|QL in the Ruby client | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="ES|QL in the Ruby client | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="client-helpers.html" title="Client helpers"/>
+<link rel="prev" href="Helpers.html" title="Bulk and Scroll helpers"/>
+<link rel="next" href="release_notes.html" title="Release Notes"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="client-helpers.html">Client helpers</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="Helpers.html">« Bulk and Scroll helpers</a>
+</span>
+<span class="next">
+<a href="release_notes.html">Release Notes »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="esql"></a>ES|QL in the Ruby client<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h2>
+</div></div></div>
+
+<p>This page helps you understand and use <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql.html" class="ulink" target="_top">ES|QL</a> in the
+Ruby client.</p>
+<p>There are two ways to use ES|QL in the Ruby client:</p>
+<div class="ulist itemizedlist">
+<ul class="itemizedlist">
+<li class="listitem">
+Use the Elasticsearch <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-apis.html" class="ulink" target="_top">ES|QL API</a> directly: This
+is the most flexible approach, but it&#8217;s also the most complex because you must handle
+results in their raw form. You can choose the precise format of results,
+such as JSON, CSV, or text.
+</li>
+<li class="listitem">
+Use the Ruby ES|QL helper: The helper maps the raw response to an object that&#8217;s
+more readily usable by your application.
+</li>
+</ul>
+</div>
+<h4><a id="esql-how-to"></a>ES|QL API<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h4>
+<p>The <a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-query-api.html" class="ulink" target="_top">ES|QL query API</a> allows you to specify how
+results should be returned. You can choose a
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/esql-rest.html#esql-rest-format" class="ulink" target="_top">response format</a> such as CSV, text, or
+JSON, then fine-tune it with parameters like column separators and locale.</p>
+<p>By default, the <code class="literal">query</code> API returns a Hash response with <code class="literal">columns</code> and <code class="literal">values</code>:</p>
+<a id="esql-query"></a><div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">query = &lt;&lt;ESQL
+        FROM sample_data
+        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+ESQL
+
+response = client.esql.query(body: { query: query})
+puts response
+
+{"columns"=&gt;[
+  {"name"=&gt;"@timestamp", "type"=&gt;"date"},
+  {"name"=&gt;"client.ip", "type"=&gt;"ip"},
+  {"name"=&gt;"event.duration", "type"=&gt;"long"},
+  {"name"=&gt;"message", "type"=&gt;"keyword"},
+  {"name"=&gt;"duration_ms", "type"=&gt;"double"}
+],
+"values"=&gt;[
+  ["2023-10-23T12:15:03.360Z", "172.21.2.162", 3450233, "Connected to 10.1.0.3", 3.5],
+  ["2023-10-23T12:27:28.948Z", "172.21.2.113", 2764889, "Connected to 10.1.0.2", 2.8],
+  ["2023-10-23T13:33:34.937Z", "172.21.0.5", 1232382, "Disconnected", 1.2],
+  ["2023-10-23T13:51:54.732Z", "172.21.3.15", 725448, "Connection error", 0.7],
+  ["2023-10-23T13:52:55.015Z", "172.21.3.15", 8268153, "Connection error", 8.3],
+  ["2023-10-23T13:53:55.832Z", "172.21.3.15", 5033755, "Connection error", 5.0],
+  ["2023-10-23T13:55:01.543Z", "172.21.3.15", 1756467, "Connected to 10.1.0.1", 1.8]
+]}</pre>
+</div>
+<h4><a id="esql-helper"></a>ES|QL helper<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/helpers/esql.asciidoc">edit</a></h4>
+<p>The ES|QL helper in the Ruby client provides an object response from the ES|QL
+query API, instead of the default JSON value.</p>
+<p>To use the ES|QL helper, require it in your code:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'elasticsearch/helpers/esql_helper'</pre>
+</div>
+<p>The helper returns an array of hashes with the columns as keys and the
+respective values. Using the <a class="xref" href="esql.html#esql-query">preceding example</a>, the helper returns
+the following:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">response = Elasticsearch::Helpers::ESQLHelper.query(client, query)
+
+puts response
+
+{"duration_ms"=&gt;3.5, "message"=&gt;"Connected to 10.1.0.3", "event.duration"=&gt;3450233, "client.ip"=&gt;"172.21.2.162", "@timestamp"=&gt;"2023-10-23T12:15:03.360Z"}
+{"duration_ms"=&gt;2.8, "message"=&gt;"Connected to 10.1.0.2", "event.duration"=&gt;2764889, "client.ip"=&gt;"172.21.2.113", "@timestamp"=&gt;"2023-10-23T12:27:28.948Z"}
+{"duration_ms"=&gt;1.2, "message"=&gt;"Disconnected", "event.duration"=&gt;1232382, "client.ip"=&gt;"172.21.0.5", "@timestamp"=&gt;"2023-10-23T13:33:34.937Z"}
+{"duration_ms"=&gt;0.7, "message"=&gt;"Connection error", "event.duration"=&gt;725448, "client.ip"=&gt;"172.21.3.15", "@timestamp"=&gt;"2023-10-23T13:51:54.732Z"}
+{"duration_ms"=&gt;8.3, "message"=&gt;"Connection error", "event.duration"=&gt;8268153, "client.ip"=&gt;"172.21.3.15", "@timestamp"=&gt;"2023-10-23T13:52:55.015Z"}</pre>
+</div>
+<p>Additionally, you can transform the data in the response by passing in a Hash
+of <code class="literal">column =&gt; Proc</code> values. You could use this for example to convert
+<em>@timestamp</em> into a DateTime object. Pass in a Hash to <code class="literal">query</code> as a <code class="literal">parser</code>
+defining a <code class="literal">Proc</code> for each value you&#8217;d like to parse:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'elasticsearch/helpers/esql_helper'
+
+parser = {
+  '@timestamp' =&gt; Proc.new { |t| DateTime.parse(t) }
+}
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+response.first['@timestamp']
+# &lt;DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)&gt;</pre>
+</div>
+<p>You can pass in as many Procs as there are columns in the response. For example:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">parser = {
+  '@timestamp' =&gt; Proc.new { |t| DateTime.parse(t) },
+  'client.ip' =&gt; Proc.new { |i| IPAddr.new(i) },
+  'event.duration' =&gt; Proc.new { |d| d.to_s }
+}
+
+response = Elasticsearch::Helpers::ESQLHelper.query(client, query, parser: parser)
+
+puts response
+
+{"duration_ms"=&gt;3.5, "message"=&gt;"Connected to 10.1.0.3", "event.duration"=&gt;"3450233", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.2.162/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T12:15:03+00:00 ((2460241j,44103s,360000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;2.8, "message"=&gt;"Connected to 10.1.0.2", "event.duration"=&gt;"2764889", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.2.113/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T12:27:28+00:00 ((2460241j,44848s,948000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;1.2, "message"=&gt;"Disconnected", "event.duration"=&gt;"1232382", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.0.5/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:33:34+00:00 ((2460241j,48814s,937000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;0.7, "message"=&gt;"Connection error", "event.duration"=&gt;"725448", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.3.15/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:51:54+00:00 ((2460241j,49914s,732000000n),+0s,2299161j)&gt;}
+{"duration_ms"=&gt;8.3, "message"=&gt;"Connection error", "event.duration"=&gt;"8268153", "client.ip"=&gt;#&lt;IPAddr: IPv4:172.21.3.15/255.255.255.255&gt;, "@timestamp"=&gt;#&lt;DateTime: 2023-10-23T13:52:55+00:00 ((2460241j,49975s,15000000n),+0s,2299161j)&gt;}</pre>
+</div>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="Helpers.html">« Bulk and Scroll helpers</a>
+</span>
+<span class="next">
+<a href="release_notes.html">Release Notes »</a>
+</span>
+</div>
+</div>
+</body>
+</html>

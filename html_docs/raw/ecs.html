@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Elastic Common Schema (ECS) | Elasticsearch Ruby Client | Elastic</title>
+<meta class="elastic" name="content" content="Elastic Common Schema (ECS) | Elasticsearch Ruby Client">
+
+<link rel="home" href="index.html" title="Elasticsearch Ruby Client"/>
+<link rel="up" href="integrations.html" title="Integrations"/>
+<link rel="prev" href="opentelemetry.html" title="Using OpenTelemetry"/>
+<link rel="next" href="activemodel_activerecord.html" title="ActiveModel / ActiveRecord"/>
+<meta class="elastic" name="product_version" content=""/>
+<meta class="elastic" name="product_name" content=""/>
+<meta class="elastic" name="website_area" content="documentation"/>
+<meta name="DC.type" content="Learn/Docs/"/>
+<meta name="DC.subject" content=""/>
+<meta name="DC.identifier" content=""/>
+</head>
+<body>
+<div id="content">
+<div class="breadcrumbs">
+<span class="breadcrumb-link"><a href="/guide/">Elastic Docs</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="index.html">Elasticsearch Ruby Client</a></span>
+<span class="chevron-right">›</span><span class="breadcrumb-link"><a href="integrations.html">Integrations</a></span>
+</div>
+<div class="navheader">
+<span class="prev">
+<a href="opentelemetry.html">« Using OpenTelemetry</a>
+</span>
+<span class="next">
+<a href="activemodel_activerecord.html">ActiveModel / ActiveRecord »</a>
+</span>
+</div>
+<div class="section">
+<div class="titlepage"><div><div>
+<h2 class="title"><a id="ecs"></a>Elastic Common Schema (ECS)<a class="edit_me" rel="nofollow" title="Edit this page on GitHub" href="https://github.com/elastic/elasticsearch-ruby/edit/master/docs/ecs.asciidoc">edit</a></h2>
+</div></div></div>
+<p>The <a href="https://www.elastic.co/guide/en/ecs/current/ecs-reference.html" class="ulink" target="_top">Elastic Common Schema (ECS)</a> is an open source format that defines a common set of fields to be used when storing event data like logs in Elasticsearch.</p>
+<p>You can use the library <a href="https://github.com/elastic/ecs-logging-ruby" class="ulink" target="_top">ecs-logging</a> which is a set of libraries that enables you to transform your application logs to structured logs that comply with the ECS format.</p>
+<p>Add this line to your application&#8217;s Gemfile:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">gem 'ecs-logging'</pre>
+</div>
+<p>Then execute <code class="literal">bundle install</code>. Or install from the command line yourself:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">$ gem install ecs-logging</pre>
+</div>
+<p>Then configure the client to use the logger:</p>
+<div class="pre_wrapper lang-ruby">
+<div class="console_code_copy" title="Copy to clipboard"></div>
+<pre class="programlisting prettyprint lang-ruby">require 'ecs_logging/logger'
+require 'elasticsearch'
+
+logger = EcsLogging::Logger.new($stdout)
+client = Elasticsearch::Client.new(logger: logger)
+&gt; client.info
+{"@timestamp":"2022-07-12T05:31:18.590Z","log.level":"INFO","message":"GET http://localhost:9200/ [status:200, request:0.009s, query:n/a]","ecs.version":"1.4.0"}...</pre>
+</div>
+<p>See <a href="https://www.elastic.co/guide/en/ecs-logging/ruby/current/index.html" class="ulink" target="_top">ECS Logging Ruby Reference</a> for more information on how to configure the logger.</p>
+</div>
+<div class="navfooter">
+<span class="prev">
+<a href="opentelemetry.html">« Using OpenTelemetry</a>
+</span>
+<span class="next">
+<a href="activemodel_activerecord.html">ActiveModel / ActiveRecord »</a>
+</span>
+</div>
+</div>
+</body>
+</html>
