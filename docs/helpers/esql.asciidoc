@@ -19,7 +19,7 @@ more readily usable by your application.
 
 [discrete]
 [[esql-how-to]]
-==== How to use the ES|QL API
+==== ES|QL API
 
 The {es-docs}/esql-query-api.html[ES|QL query API] allows you to specify how
 results should be returned. You can choose a
