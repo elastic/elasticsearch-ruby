@@ -26,6 +26,7 @@ module Elasticsearch
         #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Boolean] :wait_for_completion Should the request should block until the execution is complete.
+        # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-policy-api.html
