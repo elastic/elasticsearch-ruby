@@ -1,3 +1,8 @@
+## 7.17.11
+
+- Ruby 3.3 added to the test matrix. Tested versions of Ruby for 7.17.11: Ruby (MRI) 3.0, 3.1, 3.2, 3.3, JRuby 9.3, JRuby 9.4.
+- Adds `base64` dependency to `elasticsearch-transport`: base64 was added to the gemspec, since starting in Ruby 3.4.0, base64 will no longer be part of the default gems and will no longer be in the standard library, [#2400](https://github.com/elastic/elasticsearch-ruby/pull/2400)
+
 ## 7.17.10
 
 Backports support for Faraday 2 from `elastic-transport`. ¡Gracias [santiagorodriguez96](https://github.com/santiagorodriguez96)!
