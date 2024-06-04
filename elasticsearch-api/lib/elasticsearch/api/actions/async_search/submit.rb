@@ -23,7 +23,6 @@ module Elasticsearch
     module AsyncSearch
       module Actions
         # Executes a search request asynchronously.
-        #
         # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)

@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Acknowledges a watch, manually throttling the execution of the watch's actions.
-        #
         # @option arguments [String] :watch_id Watch ID
         # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
         # @option arguments [Hash] :headers Custom HTTP headers

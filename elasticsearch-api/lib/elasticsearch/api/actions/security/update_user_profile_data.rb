@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Update application specific data for the user profile of the given unique ID.
-        #
         # @option arguments [String] :uid An unique identifier of the user profile
         # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
         # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term

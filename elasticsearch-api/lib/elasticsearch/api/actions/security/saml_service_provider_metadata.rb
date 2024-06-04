@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
-        #
         # @option arguments [String] :realm_name The name of the SAML realm to get the metadata for
         # @option arguments [Hash] :headers Custom HTTP headers
         #

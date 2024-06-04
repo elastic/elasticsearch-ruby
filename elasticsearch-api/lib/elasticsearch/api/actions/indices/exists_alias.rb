@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns information about whether a particular alias exists.
-        #
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [List] :index A comma-separated list of index names to filter aliases
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)

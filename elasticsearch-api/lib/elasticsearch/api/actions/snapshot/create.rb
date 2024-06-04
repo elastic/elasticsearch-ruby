@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Creates a snapshot in a repository.
-        #
         # @option arguments [String] :repository A repository name
         # @option arguments [String] :snapshot A snapshot name
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
