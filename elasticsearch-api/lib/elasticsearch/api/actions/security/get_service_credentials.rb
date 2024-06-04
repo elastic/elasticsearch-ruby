@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Retrieves information of all service credentials for a service account.
-        #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [Hash] :headers Custom HTTP headers

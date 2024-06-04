@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Explains a data frame analytics config.
-        #
         # @option arguments [String] :id The ID of the data frame analytics to explain
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data frame analytics config to explain

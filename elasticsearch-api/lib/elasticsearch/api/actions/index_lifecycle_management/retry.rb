@@ -23,7 +23,6 @@ module Elasticsearch
     module IndexLifecycleManagement
       module Actions
         # Retries executing the policy for an index that is in the ERROR step.
-        #
         # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
         # @option arguments [Hash] :headers Custom HTTP headers
         #

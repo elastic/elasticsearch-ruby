@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Returns information about index shard recoveries, both on-going completed.
-        #
         # @option arguments [List] :index Comma-separated list or wildcard expression of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :active_only If `true`, the response only includes ongoing shard recoveries

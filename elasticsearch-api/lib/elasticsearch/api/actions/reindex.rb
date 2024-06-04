@@ -24,7 +24,6 @@ module Elasticsearch
       # Allows to copy documents from one index to another, optionally filtering the source
       # documents by a query, changing the destination index settings, or fetching the
       # documents from a remote cluster.
-      #
       # @option arguments [Boolean] :refresh Should the affected indexes be refreshed?
       # @option arguments [Time] :timeout Time each individual bulk request should wait for shards that are unavailable.
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the reindex operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)

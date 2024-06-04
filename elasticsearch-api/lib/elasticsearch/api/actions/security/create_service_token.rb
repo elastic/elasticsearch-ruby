@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Creates a service account token for access without requiring basic authentication.
-        #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [String] :name An identifier for the token name

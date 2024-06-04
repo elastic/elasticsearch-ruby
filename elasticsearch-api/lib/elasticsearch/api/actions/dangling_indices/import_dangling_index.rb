@@ -23,7 +23,6 @@ module Elasticsearch
     module DanglingIndices
       module Actions
         # Imports the specified dangling index
-        #
         # @option arguments [String] :index_uuid The UUID of the dangling index
         # @option arguments [Boolean] :accept_data_loss Must be set to true in order to import the dangling index
         # @option arguments [Time] :timeout Explicit operation timeout

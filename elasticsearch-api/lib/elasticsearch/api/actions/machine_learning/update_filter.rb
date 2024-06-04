@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Updates the description of a filter, adds items, or removes items.
-        #
         # @option arguments [String] :filter_id The ID of the filter to update
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter update (*Required*)

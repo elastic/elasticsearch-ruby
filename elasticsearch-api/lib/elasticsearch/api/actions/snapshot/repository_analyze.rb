@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Analyzes a repository for correctness and performance
-        #
         # @option arguments [String] :repository A repository name
         # @option arguments [Number] :blob_count Number of blobs to create during the test. Defaults to 100.
         # @option arguments [Number] :concurrency Number of operations to run concurrently during the test. Defaults to 10.

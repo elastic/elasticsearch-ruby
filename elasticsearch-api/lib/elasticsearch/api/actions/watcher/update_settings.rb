@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Update settings for the watcher system index
-        #
         # @option arguments [Time] :timeout Specify timeout for waiting for acknowledgement from all nodes
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
-        #
         # @option arguments [String] :model_id The ID of the trained model to delete
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to be deleted.
         # @option arguments [Boolean] :force True if the model should be forcefully deleted

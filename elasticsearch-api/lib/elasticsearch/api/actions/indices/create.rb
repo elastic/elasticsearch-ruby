@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Creates an index with optional settings and mappings.
-        #
         # @option arguments [String] :index The name of the index
         # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for before the operation returns.
         # @option arguments [Time] :timeout Explicit operation timeout

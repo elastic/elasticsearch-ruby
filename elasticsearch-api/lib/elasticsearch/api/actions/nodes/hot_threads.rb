@@ -23,7 +23,6 @@ module Elasticsearch
     module Nodes
       module Actions
         # Returns information about hot threads on each node in the cluster.
-        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [Time] :interval The interval for the second sampling of threads
         # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)

@@ -23,7 +23,6 @@ module Elasticsearch
     module SnapshotLifecycleManagement
       module Actions
         # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
-        #
         # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
         # @option arguments [Hash] :headers Custom HTTP headers
         #

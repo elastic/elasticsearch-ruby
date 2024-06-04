@@ -23,7 +23,6 @@ module Elasticsearch
     module License
       module Actions
         # starts a limited time trial license.
-        #
         # @option arguments [String] :type The type of trial license to generate (default: "trial")
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Time] :master_timeout Timeout for processing on master node

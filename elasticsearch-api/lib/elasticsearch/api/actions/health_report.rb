@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns the health of the cluster.
-      #
       # @option arguments [String] :feature A feature of the cluster, as returned by the top-level health API
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Boolean] :verbose Opt in for more information about the health of the system

@@ -23,7 +23,6 @@ module Elasticsearch
     module Snapshot
       module Actions
         # Deletes one or more snapshots.
-        #
         # @option arguments [String] :repository A repository name
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Updates certain properties of trained model deployment.
-        #
         # @option arguments [String] :model_id The unique identifier of the trained model.
         # @option arguments [Integer] :number_of_allocations Update the model deployment to this number of allocations.
         # @option arguments [Hash] :headers Custom HTTP headers

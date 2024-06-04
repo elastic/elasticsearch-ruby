@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Pauses an auto-follow pattern
-        #
         # @option arguments [String] :name The name of the auto follow pattern that should pause discovering new indices to follow.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers

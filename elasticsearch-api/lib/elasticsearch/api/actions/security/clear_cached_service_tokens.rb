@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Evicts tokens from the service account token caches.
-        #
         # @option arguments [String] :namespace An identifier for the namespace
         # @option arguments [String] :service An identifier for the service name
         # @option arguments [List] :name A comma-separated list of service token names
