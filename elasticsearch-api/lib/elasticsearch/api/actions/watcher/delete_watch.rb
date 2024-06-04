@@ -23,7 +23,6 @@ module Elasticsearch
     module Watcher
       module Actions
         # Removes a watch from Watcher.
-        #
         # @option arguments [String] :id Watch ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #

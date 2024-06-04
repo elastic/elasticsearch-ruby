@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Reverts to a specific snapshot.
-        #
         # @option arguments [String] :job_id The ID of the job to fetch
         # @option arguments [String] :snapshot_id The ID of the snapshot to revert to
         # @option arguments [Boolean] :delete_intervening_results Should we reset the results back to the time of the snapshot?

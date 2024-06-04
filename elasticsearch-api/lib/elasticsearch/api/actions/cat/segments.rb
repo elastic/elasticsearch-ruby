@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Provides low-level information about the segments in the shards of an index.
-        #
         # @option arguments [List] :index A comma-separated list of index names to limit the returned information
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)

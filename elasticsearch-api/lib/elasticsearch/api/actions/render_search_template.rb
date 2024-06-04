@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Allows to use the Mustache language to pre-render a search definition.
-      #
       # @option arguments [String] :id The id of the stored search template
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition template and its params

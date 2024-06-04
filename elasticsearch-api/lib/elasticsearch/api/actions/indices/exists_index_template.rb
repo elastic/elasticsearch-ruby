@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Returns information about whether a particular index template exists.
-        #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

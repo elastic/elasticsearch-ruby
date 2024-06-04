@@ -23,7 +23,6 @@ module Elasticsearch
     module Synonyms
       module Actions
         # Retrieves a summary of all defined synonym sets
-        #
         # @option arguments [Integer] :from Starting offset
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
-        #
         # @option arguments [String] :index The name of the follower index that should be turned into a regular index.
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers

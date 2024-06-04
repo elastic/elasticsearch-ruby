@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Creates part of a trained model definition
-        #
         # @option arguments [String] :model_id The ID of the trained model for this definition part
         # @option arguments [Integer] :part The part number
         # @option arguments [Hash] :headers Custom HTTP headers
