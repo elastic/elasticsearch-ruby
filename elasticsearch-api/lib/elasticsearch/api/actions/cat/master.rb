@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Returns information about the master node.
-        #
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node

@@ -23,7 +23,6 @@ module Elasticsearch
     module Cat
       module Actions
         # Gets configuration and usage information about transforms.
-        #
         # @option arguments [String] :transform_id The id of the transform for which to get stats. '_all' or '*' implies all transforms
         # @option arguments [Integer] :from skips a number of transform configs, defaults to 0
         # @option arguments [Integer] :size specifies a max number of transforms to get, defaults to 100

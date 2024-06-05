@@ -23,7 +23,6 @@ module Elasticsearch
     module SearchableSnapshots
       module Actions
         # Retrieve shard-level statistics about searchable snapshots.
-        #
         # @option arguments [List] :index A comma-separated list of index names
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
         # @option arguments [Hash] :headers Custom HTTP headers

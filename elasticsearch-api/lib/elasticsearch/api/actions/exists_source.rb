@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns information about whether a document source exists in an index.
-      #
       # @option arguments [String] :id The document ID
       # @option arguments [String] :index The name of the index
       # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)

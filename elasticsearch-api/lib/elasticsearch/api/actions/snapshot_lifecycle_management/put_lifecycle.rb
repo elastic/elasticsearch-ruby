@@ -23,7 +23,6 @@ module Elasticsearch
     module SnapshotLifecycleManagement
       module Actions
         # Creates or updates a snapshot lifecycle policy.
-        #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot lifecycle policy definition to register

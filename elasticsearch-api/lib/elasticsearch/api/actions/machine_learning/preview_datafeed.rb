@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Previews a datafeed.
-        #
         # @option arguments [String] :datafeed_id The ID of the datafeed to preview
         # @option arguments [String] :start The start time from where the datafeed preview should begin
         # @option arguments [String] :end The end time when the datafeed preview should stop

@@ -23,7 +23,6 @@ module Elasticsearch
     module Migration
       module Actions
         # Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
-        #
         # @option arguments [String] :index Index pattern
         # @option arguments [Hash] :headers Custom HTTP headers
         #

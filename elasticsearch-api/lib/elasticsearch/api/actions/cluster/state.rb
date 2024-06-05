@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Returns a comprehensive information about the state of the cluster.
-        #
         # @option arguments [List] :metric Limit the information returned to the specified metrics (options: _all, blocks, metadata, nodes, routing_table, routing_nodes, master_node, version)
         # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)

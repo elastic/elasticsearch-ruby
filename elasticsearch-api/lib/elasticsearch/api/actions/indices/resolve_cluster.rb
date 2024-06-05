@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Resolves the specified index expressions to return information about each cluster, including the local cluster, if included.
-        #
         # @option arguments [List] :name A comma-separated list of cluster:index names or wildcard expressions
         # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
         # @option arguments [Boolean] :ignore_throttled Whether specified concrete, expanded or aliased indices should be ignored when throttled

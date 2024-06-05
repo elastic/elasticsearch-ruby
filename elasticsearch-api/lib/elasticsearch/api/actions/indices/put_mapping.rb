@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Updates the index mappings.
-        #
         # @option arguments [List] :index A comma-separated list of index names the mapping should be added to (supports wildcards); use `_all` or omit to add the mapping on all indices.
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
