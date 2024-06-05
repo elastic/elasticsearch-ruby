@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Forces any buffered data to be processed by the job.
-        #
         # @option arguments [String] :job_id The name of the job to flush
         # @option arguments [Boolean] :calc_interim Calculates interim results for the most recent bucket or all buckets within the latency period
         # @option arguments [String] :start When used in conjunction with calc_interim, specifies the range of buckets on which to calculate interim results

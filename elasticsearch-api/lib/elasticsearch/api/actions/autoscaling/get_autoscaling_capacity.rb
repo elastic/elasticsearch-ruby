@@ -23,7 +23,6 @@ module Elasticsearch
     module Autoscaling
       module Actions
         # Gets the current autoscaling capacity based on the configured autoscaling policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
-        #
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #

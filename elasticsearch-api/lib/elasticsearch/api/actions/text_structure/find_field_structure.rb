@@ -23,7 +23,6 @@ module Elasticsearch
     module TextStructure
       module Actions
         # Finds the structure of a text field in an index.
-        #
         # @option arguments [String] :index The index containing the analyzed field (*Required*)
         # @option arguments [String] :field The field that should be analyzed (*Required*)
         # @option arguments [Integer] :documents_to_sample How many documents should be included in the analysis

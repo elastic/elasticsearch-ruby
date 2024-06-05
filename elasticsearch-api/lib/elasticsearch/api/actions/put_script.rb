@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Creates or updates a script.
-      #
       # @option arguments [String] :id Script ID
       # @option arguments [String] :context Script context
       # @option arguments [Time] :timeout Explicit operation timeout

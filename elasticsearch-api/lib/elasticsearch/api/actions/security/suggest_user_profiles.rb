@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Get suggestions for user profiles that match specified search criteria.
-        #
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The suggestion definition for user profiles

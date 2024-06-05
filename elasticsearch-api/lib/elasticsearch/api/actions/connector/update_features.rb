@@ -20,35 +20,41 @@
 #
 module Elasticsearch
   module API
-    module Security
+    module Connector
       module Actions
-        # Evicts users from the user cache. Can completely clear the cache or evict specific users.
-        # @option arguments [List] :realms Comma-separated list of realms to clear
-        # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
+        # Updates the connector features in the connector document.
+        # This functionality is Experimental and may be changed or removed
+        # completely in a future release. Elastic will take a best effort approach
+        # to fix any issues, but experimental features are not subject to the
+        # support SLA of official GA features.
+        #
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body An object containing the connector's features definition. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-features-api.html
         #
-        def clear_cached_realms(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_realms' }
+        def update_features(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'connector.update_features' }
 
-          defined_params = [:realms].each_with_object({}) do |variable, set_variables|
+          defined_params = [:connector_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'realms' missing" unless arguments[:realms]
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'connector_id' missing" unless arguments[:connector_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _realms = arguments.delete(:realms)
+          _connector_id = arguments.delete(:connector_id)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = "_security/realm/#{Utils.__listify(_realms)}/_clear_cache"
-          params = Utils.process_params(arguments)
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_connector/#{Utils.__listify(_connector_id)}/_features"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

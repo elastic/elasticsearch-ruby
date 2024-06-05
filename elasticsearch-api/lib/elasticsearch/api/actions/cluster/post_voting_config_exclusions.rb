@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Updates the cluster voting config exclusions by node ids or node names.
-        #
         # @option arguments [String] :node_ids A comma-separated list of the persistent ids of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_names.
         # @option arguments [String] :node_names A comma-separated list of the names of the nodes to exclude from the voting configuration. If specified, you may not also specify ?node_ids.
         # @option arguments [Time] :timeout Explicit operation timeout

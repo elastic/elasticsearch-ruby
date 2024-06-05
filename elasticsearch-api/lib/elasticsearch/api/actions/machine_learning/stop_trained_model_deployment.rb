@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Stop a trained model deployment.
-        #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no deployments. (This includes `_all` string or when no deployments have been specified)
         # @option arguments [Boolean] :force True if the deployment should be forcefully stopped

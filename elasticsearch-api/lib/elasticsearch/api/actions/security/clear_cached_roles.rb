@@ -23,7 +23,6 @@ module Elasticsearch
     module Security
       module Actions
         # Evicts roles from the native role cache.
-        #
         # @option arguments [List] :name Role name
         # @option arguments [Hash] :headers Custom HTTP headers
         #

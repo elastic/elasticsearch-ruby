@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Adds a block to an index.
-        #
         # @option arguments [List] :index A comma separated list of indices to add a block to
         # @option arguments [String] :block The block to add (one of read, write, read_only or metadata)
         # @option arguments [Time] :timeout Explicit operation timeout

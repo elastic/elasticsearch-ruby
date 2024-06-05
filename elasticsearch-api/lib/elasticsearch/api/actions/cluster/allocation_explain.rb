@@ -23,7 +23,6 @@ module Elasticsearch
     module Cluster
       module Actions
         # Provides explanations for shard allocations in the cluster.
-        #
         # @option arguments [Time] :master_timeout Timeout for connection to master node
         # @option arguments [Boolean] :include_yes_decisions Return 'YES' decisions in explanation (default: false)
         # @option arguments [Boolean] :include_disk_info Return information about disk usage and shard sizes (default: false)

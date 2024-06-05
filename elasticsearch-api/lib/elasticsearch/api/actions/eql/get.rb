@@ -23,7 +23,6 @@ module Elasticsearch
     module Eql
       module Actions
         # Returns async results from previously executed Event Query Language (EQL) search
-        #
         # @option arguments [String] :id The async search ID
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available

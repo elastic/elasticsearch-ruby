@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Creates or updates an index template.
-        #
         # @option arguments [String] :name The name of the template
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
         # @option arguments [String] :cause User defined reason for creating/updating the index template

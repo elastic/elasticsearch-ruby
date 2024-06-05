@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Allows to execute several search operations in one request.
-      #
       # @option arguments [List] :index A comma-separated list of index names to use as default
       # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
       # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute

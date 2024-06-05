@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Deletes an existing datafeed.
-        #
         # @option arguments [String] :datafeed_id The ID of the datafeed to delete
         # @option arguments [Boolean] :force True if the datafeed should be forcefully deleted
         # @option arguments [Hash] :headers Custom HTTP headers

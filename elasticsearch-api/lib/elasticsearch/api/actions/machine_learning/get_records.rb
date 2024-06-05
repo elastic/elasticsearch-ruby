@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves anomaly records for an anomaly detection job.
-        #
         # @option arguments [String] :job_id The ID of the job
         # @option arguments [Boolean] :exclude_interim Exclude interim results
         # @option arguments [Integer] :from skips a number of records

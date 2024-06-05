@@ -23,7 +23,6 @@ module Elasticsearch
     module AsyncSearch
       module Actions
         # Retrieves the status of a previously submitted async search request given its ID.
-        #
         # @option arguments [String] :id The async search ID
         # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Hash] :headers Custom HTTP headers

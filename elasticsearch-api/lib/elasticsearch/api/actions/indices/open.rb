@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Opens an index.
-        #
         # @option arguments [List] :index A comma separated list of indices to open
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Time] :master_timeout Specify timeout for connection to master

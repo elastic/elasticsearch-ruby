@@ -23,7 +23,6 @@ module Elasticsearch
     module Enrich
       module Actions
         # Creates a new enrich policy.
-        #
         # @option arguments [String] :name The name of the enrich policy
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
