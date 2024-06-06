@@ -12,7 +12,7 @@
 [discrete]
 ==== Experimental ES|QL Helper
 
-This version provides a new experimental Helper for the ES|QL `query` API. Please check out https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/Helpers.html#esql-helper[the documentation] and https://github.com/elastic/elasticsearch-ruby/issues/new/choose[open an issue] if you encounter any problems or have any feedback.
+This version provides a new experimental Helper for the ES|QL `query` API. Please check out https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/8.13/Helpers.html#esql-helper[the documentation] and https://github.com/elastic/elasticsearch-ruby/issues/new/choose[open an issue] if you encounter any problems or have any feedback.
 
 [discrete]
 ==== API
