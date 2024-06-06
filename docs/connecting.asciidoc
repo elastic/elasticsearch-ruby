@@ -23,7 +23,7 @@ This document contains code snippets to show you how to connect to various {es} 
 
 If you are using https://www.elastic.co/cloud[Elastic Cloud], the client offers an easy way to connect to it. You need the Cloud ID that you can find in the cloud console, then your username and password.
 
-image::docs/images/cloud_id.png["Cloud ID"]
+image::images/cloud_id.png["Cloud ID"]
 
 Once you have collected the Cloud ID you can use the client to connect to your Elastic Cloud instance, as follows:
 
@@ -40,15 +40,15 @@ client = Elasticsearch::Client.new(
 
 You can also connect to the Cloud by using API Key authentication. You can generate an `API key` in the `Management` page under the section `Security`.
 
-image::docs/images/cloud_api_key.png["API key"]
+image::images/cloud_api_key.png["API key"]
 
 When you click on `Create API key` you can choose a name and set the other options (eg. restrict privileges, expire after time, etc).
 
-image::docs/images/api_key_name.png["Choose an API name"]
+image::images/api_key_name.png["Choose an API name"]
 
 After this step you will get the `API key` in the API keys page. 
 
-image::docs/images/cloud_api_key.png["API key"]
+image::images/cloud_api_key.png["API key"]
 
 **IMPORTANT**: you need to copy and store the `API key` in a secure place, since you will not be able to view it again in Elastic Cloud.
 
