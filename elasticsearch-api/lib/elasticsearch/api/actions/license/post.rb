@@ -23,7 +23,6 @@ module Elasticsearch
     module License
       module Actions
         # Updates the license for the cluster.
-        #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body licenses to be installed

@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns information and statistics about terms in the fields of a particular document.
-      #
       # @option arguments [String] :index The index in which the document resides.
       # @option arguments [String] :id The id of the document, when not specified a doc param should be supplied.
       # @option arguments [Boolean] :term_statistics Specifies if total term frequency and document frequency should be returned.

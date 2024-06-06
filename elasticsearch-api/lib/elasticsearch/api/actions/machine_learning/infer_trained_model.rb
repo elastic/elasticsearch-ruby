@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Evaluate a trained model.
-        #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Time] :timeout Controls the amount of time to wait for inference results.
         # @option arguments [Hash] :headers Custom HTTP headers

@@ -23,7 +23,6 @@ module Elasticsearch
     module Logstash
       module Actions
         # Adds and updates Logstash Pipelines used for Central Management
-        #
         # @option arguments [String] :id The ID of the Pipeline
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The Pipeline to add or update (*Required*)

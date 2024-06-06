@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns results matching a query.
-      #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :analyzer The analyzer to use for the query string
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)

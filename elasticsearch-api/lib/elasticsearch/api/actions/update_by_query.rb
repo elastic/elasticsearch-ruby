@@ -23,7 +23,6 @@ module Elasticsearch
     module Actions
       # Performs an update on every document in the index without changing the source,
       # for example to pick up a mapping change.
-      #
       # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
       # @option arguments [String] :analyzer The analyzer to use for the query string
       # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)

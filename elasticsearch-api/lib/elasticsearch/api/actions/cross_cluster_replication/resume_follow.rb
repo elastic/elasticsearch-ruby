@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Resumes a follower index that has been paused
-        #
         # @option arguments [String] :index The name of the follow index to resume following.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters

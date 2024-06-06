@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Resumes an auto-follow pattern that has been paused
-        #
         # @option arguments [String] :name The name of the auto follow pattern to resume discovering new indices to follow.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

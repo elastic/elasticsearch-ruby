@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Retrieves filters.
-        #
         # @option arguments [String] :filter_id The ID of the filter to fetch
         # @option arguments [Integer] :from skips a number of filters
         # @option arguments [Integer] :size specifies a max number of filters to get

@@ -23,7 +23,6 @@ module Elasticsearch
     module Logstash
       module Actions
         # Retrieves Logstash Pipelines used by Central Management
-        #
         # @option arguments [String] :id A comma-separated list of Pipeline IDs
         # @option arguments [Hash] :headers Custom HTTP headers
         #

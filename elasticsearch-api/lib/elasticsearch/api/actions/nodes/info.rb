@@ -23,7 +23,6 @@ module Elasticsearch
     module Nodes
       module Actions
         # Returns information about nodes in the cluster.
-        #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
         # @option arguments [List] :metric A comma-separated list of metrics you wish returned. Use `_all` to retrieve all metrics and `_none` to retrieve the node identity without any additional metrics. (options: settings, os, process, jvm, thread_pool, transport, http, plugins, ingest, indices, aggregations, _all, _none)
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)

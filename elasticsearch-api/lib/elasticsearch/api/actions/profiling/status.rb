@@ -23,7 +23,6 @@ module Elasticsearch
     module Profiling
       module Actions
         # Returns basic information about the status of Universal Profiling.
-        #
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :wait_for_resources_created Whether to return immediately or wait until resources have been created

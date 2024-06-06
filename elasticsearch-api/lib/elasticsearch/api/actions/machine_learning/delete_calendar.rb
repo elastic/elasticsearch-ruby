@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Deletes a calendar.
-        #
         # @option arguments [String] :calendar_id The ID of the calendar to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
