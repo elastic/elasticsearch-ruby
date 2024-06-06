@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Instantiates a filter.
-        #
         # @option arguments [String] :filter_id The ID of the filter to create
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter details (*Required*)

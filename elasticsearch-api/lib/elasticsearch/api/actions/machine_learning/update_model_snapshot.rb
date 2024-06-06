@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Updates certain properties of a snapshot.
-        #
         # @option arguments [String] :job_id The ID of the job to fetch
         # @option arguments [String] :snapshot_id The ID of the snapshot to update
         # @option arguments [Hash] :headers Custom HTTP headers

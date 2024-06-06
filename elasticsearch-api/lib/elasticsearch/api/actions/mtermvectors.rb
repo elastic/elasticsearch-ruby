@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Returns multiple termvectors in one request.
-      #
       # @option arguments [String] :index The index in which the document resides.
       # @option arguments [List] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
       # @option arguments [Boolean] :term_statistics Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".

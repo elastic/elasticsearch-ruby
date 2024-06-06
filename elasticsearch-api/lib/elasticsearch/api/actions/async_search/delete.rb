@@ -23,7 +23,6 @@ module Elasticsearch
     module AsyncSearch
       module Actions
         # Deletes an async search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
-        #
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #

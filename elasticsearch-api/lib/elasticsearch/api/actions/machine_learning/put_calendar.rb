@@ -23,7 +23,6 @@ module Elasticsearch
     module MachineLearning
       module Actions
         # Instantiates a calendar.
-        #
         # @option arguments [String] :calendar_id The ID of the calendar to create
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The calendar details
