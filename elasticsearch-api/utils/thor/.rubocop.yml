@@ -1,2 +1,4 @@
 Layout/EndAlignment:
   AutoCorrect: true
+Layout/EmptyComment:
+  Enabled: false
