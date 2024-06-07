@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
-        #
         # @option arguments [String] :name The name of the auto follow pattern.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

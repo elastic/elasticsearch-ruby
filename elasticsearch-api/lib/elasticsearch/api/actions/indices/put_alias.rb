@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Creates or updates an alias.
-        #
         # @option arguments [List] :index A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
         # @option arguments [String] :name The name of the alias to be created or updated
         # @option arguments [Time] :timeout Explicit timestamp for the document

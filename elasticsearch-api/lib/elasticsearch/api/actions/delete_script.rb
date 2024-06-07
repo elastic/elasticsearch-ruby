@@ -22,7 +22,6 @@ module Elasticsearch
   module API
     module Actions
       # Deletes a script.
-      #
       # @option arguments [String] :id Script ID
       # @option arguments [Time] :timeout Explicit operation timeout
       # @option arguments [Time] :master_timeout Specify timeout for connection to master

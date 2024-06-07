@@ -23,7 +23,6 @@ module Elasticsearch
     module SnapshotLifecycleManagement
       module Actions
         # Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
-        #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
         # @option arguments [Hash] :headers Custom HTTP headers
         #

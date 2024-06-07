@@ -24,7 +24,6 @@ module Elasticsearch
       # Creates a new document in the index.
       #
       # Returns a 409 response when a document with a same ID already exists in the index.
-      #
       # @option arguments [String] :id Document ID
       # @option arguments [String] :index The name of the index
       # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before proceeding with the index operation. Defaults to 1, meaning the primary shard only. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)

@@ -23,7 +23,6 @@ module Elasticsearch
     module CrossClusterReplication
       module Actions
         # Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
-        #
         # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
         # @option arguments [Hash] :headers Custom HTTP headers
         #
