@@ -23,7 +23,6 @@ module Elasticsearch
     module Indices
       module Actions
         # Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
-        #
         # @option arguments [String] :name The name of the data stream
         # @option arguments [Hash] :headers Custom HTTP headers
         #

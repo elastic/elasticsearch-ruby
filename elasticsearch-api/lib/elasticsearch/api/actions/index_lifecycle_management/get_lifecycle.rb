@@ -23,7 +23,6 @@ module Elasticsearch
     module IndexLifecycleManagement
       module Actions
         # Returns the specified policy definition. Includes the policy version and last modified date.
-        #
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #

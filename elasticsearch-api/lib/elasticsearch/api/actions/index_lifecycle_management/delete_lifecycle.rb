@@ -23,7 +23,6 @@ module Elasticsearch
     module IndexLifecycleManagement
       module Actions
         # Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
-        #
         # @option arguments [String] :policy The name of the index lifecycle policy
         # @option arguments [Hash] :headers Custom HTTP headers
         #

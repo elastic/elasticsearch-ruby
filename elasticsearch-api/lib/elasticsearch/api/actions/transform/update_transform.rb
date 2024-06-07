@@ -23,7 +23,6 @@ module Elasticsearch
     module Transform
       module Actions
         # Updates certain properties of a transform.
-        #
         # @option arguments [String] :transform_id The id of the transform. (*Required*)
         # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.
         # @option arguments [Time] :timeout Controls the time to wait for the update
