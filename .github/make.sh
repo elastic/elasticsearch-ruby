@@ -34,7 +34,7 @@ STACK_VERSION=$VERSION
 set -euo pipefail
 
 product="elastic/elasticsearch-ruby"
-RUBY_VERSION=${RUBY_VERSION-3.1}
+RUBY_VERSION=${RUBY_VERSION-3.3}
 WORKFLOW=${WORKFLOW-staging}
 
 echo -e "\033[34;1mINFO:\033[0m PRODUCT ${product}\033[0m"
