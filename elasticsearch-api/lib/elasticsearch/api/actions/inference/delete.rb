@@ -30,6 +30,8 @@ module Elasticsearch
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
+        # @option arguments [Boolean] :dry_run If true the endpoint will not be deleted and a list of ingest processors which reference this endpoint will be returned.
+        # @option arguments [Boolean] :force If true the endpoint will be forcefully stopped (regardless of whether or not it is referenced by any ingest processors or semantic text fields).
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference-api.html
@@ -59,7 +61,7 @@ module Elasticsearch
                    else
                      "_inference/#{Utils.__listify(_inference_id)}"
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
