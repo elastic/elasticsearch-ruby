@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Retrieve settings for the security system indices
         #
+        # @option arguments [Time] :master_timeout Timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-settings.html
@@ -38,7 +39,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/settings'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

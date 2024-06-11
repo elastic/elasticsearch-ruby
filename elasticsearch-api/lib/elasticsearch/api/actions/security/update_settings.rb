@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Update settings for the security system index
         #
+        # @option arguments [Time] :master_timeout Timeout for connection to master
+        # @option arguments [Time] :timeout Timeout for acknowledgements from all nodes
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object with the new settings for each index, if any (*Required*)
         #
@@ -41,7 +43,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = '_security/settings'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
