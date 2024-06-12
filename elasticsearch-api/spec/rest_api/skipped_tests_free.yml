@@ -98,3 +98,12 @@
 -
   :file: 'indices.simulate_template/10_basic.yml'
   :description: 'Simulate template matches overlapping legacy and composable templates'
+-
+  :file: 'search.vectors/180_update_dense_vector_type.yml'
+  :description: 'Test create and update dense vector mapping with per-doc indexing and flush'
+-
+  :file: 'search.vectors/180_update_dense_vector_type.yml'
+  :description: 'Test create and update dense vector mapping with bulk indexing'
+-
+  :file: 'search.vectors/180_update_dense_vector_type.yml'
+  :description: 'Index, update and merge'
