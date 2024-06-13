@@ -57,7 +57,7 @@ module Elasticsearch
           _rule_id = arguments.delete(:rule_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/#{Utils.__listify(_rule_id)}"
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_rule/#{Utils.__listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

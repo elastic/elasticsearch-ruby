@@ -21,7 +21,7 @@ describe 'client.query_rule#put' do
   let(:expected_args) do
     [
       'PUT',
-      '_query_rules/foo/bar',
+      '_query_rules/foo/_rule/bar',
       {},
       {},
       {},
