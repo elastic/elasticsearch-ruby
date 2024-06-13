@@ -108,6 +108,9 @@
   :file: 'search.vectors/180_update_dense_vector_type.yml'
   :description: 'Index, update and merge'
 -
+  :file: 'search.vectors/90_sparse_vector.yml'
+  :description: 'Indexing and searching multi-value sparse vectors in >=8.15'
+-
   :file: 'search/330_disallow_scripted_metrics.yml'
   :description: 'all scripts allowed by default'
 -
