@@ -106,7 +106,6 @@ end
 RSpec::Matchers.define :match_gt_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-
       split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
         test.get_cached_value(k)
       end
@@ -128,7 +127,6 @@ end
 RSpec::Matchers.define :match_lte_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-
       split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
         test.get_cached_value(k)
       end
@@ -150,7 +148,6 @@ end
 RSpec::Matchers.define :match_lt_field do |expected_pairs, test|
   match do |response|
     expected_pairs.all? do |expected_key, expected_value|
-
       split_key = TestFile::Test.split_and_parse_key(expected_key).collect do |k|
         test.get_cached_value(k)
       end
@@ -302,7 +299,8 @@ RSpec::Matchers.define :match_error do |expected_error|
     # Remove surrounding '/' in string representing Regex
     expected_error = expected_error.chomp("/")
     expected_error = expected_error[1..-1] if expected_error =~ /^\//
-    message = actual_error.message.tr("\\","")
+
+    message = actual_error.message.tr('\\', '')
 
     case expected_error
     when 'request_timeout'
@@ -317,12 +315,12 @@ RSpec::Matchers.define :match_error do |expected_error|
       message =~ /\[400\]/
     when 'param'
       message =~ /\[400\]/ ||
-          actual_error.is_a?(ArgumentError)
+        actual_error.is_a?(ArgumentError)
     when 'unauthorized'
       actual_error.is_a?(Elastic::Transport::Transport::Errors::Unauthorized)
     when 'forbidden'
       actual_error.is_a?(Elastic::Transport::Transport::Errors::Forbidden)
-    when /error parsing field/
+    when /error parsing field/, /illegal_argument_exception/
       message =~ /\[400\]/ ||
         actual_error.is_a?(Elastic::Transport::Transport::Errors::BadRequest)
     when /NullPointerException/
