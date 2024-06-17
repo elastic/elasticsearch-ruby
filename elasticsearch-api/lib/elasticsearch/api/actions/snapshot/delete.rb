@@ -27,6 +27,7 @@ module Elasticsearch
         # @option arguments [String] :repository A repository name
         # @option arguments [List] :snapshot A comma-separated list of snapshot names
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
