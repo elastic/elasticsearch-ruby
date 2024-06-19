@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
+  s.add_development_dependency 'elasticsearch-test-runner'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters', '>= 1.6'
   s.add_development_dependency 'mocha'
