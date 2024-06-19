@@ -20,8 +20,8 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in elasticsearch-api.gemspec
 gemspec
 
-if File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
-  gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __FILE__), require: false
+if File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __dir__)
+  gem 'elasticsearch', path: File.expand_path('../../elasticsearch', __dir__), require: false
 end
 
 group :development do

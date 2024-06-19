@@ -50,6 +50,11 @@ namespace :test do
     Rake::Task['test:integration'].invoke
   end
 
+  desc 'Run tests with yaml runner'
+  task :yaml do
+    ruby './spec/yaml-test-runner/run.rb'
+  end
+
   namespace :platinum do
     desc 'Run Platinum Rest API Spec tests'
     RSpec::Core::RakeTask.new(:api) do
