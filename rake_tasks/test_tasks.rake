@@ -61,6 +61,11 @@ namespace :test do
     puts "\n"
   end
 
+  desc 'Run YAML test runner tests'
+  task :yaml do
+    sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:yaml"
+  end
+
   namespace :platinum do
     desc 'Run platinum integration tests'
     task :integration do

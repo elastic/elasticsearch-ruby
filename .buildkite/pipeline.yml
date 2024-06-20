@@ -61,6 +61,16 @@ steps:
     # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
     # available in the Artifacts tab of a build in Buildkite.
     artifact_paths: "elasticsearch-api/tmp/*"
+  - label: ":ruby: :yaml: Test suite"
+    agents:
+      provider: "gcp"
+    env:
+      RUBY_VERSION: "3.3"
+      STACK_VERSION: 8.15.0-SNAPSHOT
+      TRANSPORT_VERSION: "8.3"
+      RUBY_SOURCE: "ruby"
+      TEST_SUITE: "platinum"
+    command: ./.buildkite/run-yaml-tests.sh
   - wait: ~
     continue_on_failure: true
   - label: "Log Results"
