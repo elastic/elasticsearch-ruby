@@ -23,10 +23,6 @@ module Elasticsearch
     module QueryRule
       module Actions
         # Deletes an individual query rule within a ruleset.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset this rule exists in
         # @option arguments [String] :rule_id The unique identifier of the rule to delete.

@@ -23,10 +23,6 @@ module Elasticsearch
     module QueryRuleset
       module Actions
         # Returns the details about a query ruleset.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
         # @option arguments [Hash] :headers Custom HTTP headers

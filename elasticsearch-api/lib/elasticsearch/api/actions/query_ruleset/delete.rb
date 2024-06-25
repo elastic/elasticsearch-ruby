@@ -23,10 +23,6 @@ module Elasticsearch
     module QueryRuleset
       module Actions
         # Deletes a query ruleset.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete
         # @option arguments [Hash] :headers Custom HTTP headers
