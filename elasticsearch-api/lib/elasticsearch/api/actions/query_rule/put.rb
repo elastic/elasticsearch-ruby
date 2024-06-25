@@ -23,10 +23,6 @@ module Elasticsearch
     module QueryRule
       module Actions
         # Creates or updates a query rule within a ruleset.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :ruleset_id The unique identifier of the ruleset this rule should be added to. The ruleset will be created if it does not exist.
         # @option arguments [String] :rule_id The unique identifier of the rule to be created or updated.

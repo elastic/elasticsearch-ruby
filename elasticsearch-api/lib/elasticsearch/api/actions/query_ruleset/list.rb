@@ -23,10 +23,6 @@ module Elasticsearch
     module QueryRuleset
       module Actions
         # Lists query rulesets.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
