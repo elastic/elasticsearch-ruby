@@ -20,26 +20,24 @@
 #
 module Elasticsearch
   module API
-    module QueryRule
+    module QueryRules
       module Actions
-        # Deletes an individual query rule within a ruleset.
+        # Deletes a query ruleset.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset this rule exists in
-        # @option arguments [String] :rule_id The unique identifier of the rule to delete.
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-rule.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-ruleset.html
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_rule.delete' }
+        def delete_ruleset(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.delete_ruleset' }
 
-          defined_params = %i[ruleset_id rule_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
-          raise ArgumentError, "Required argument 'rule_id' missing" unless arguments[:rule_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -48,10 +46,8 @@ module Elasticsearch
 
           _ruleset_id = arguments.delete(:ruleset_id)
 
-          _rule_id = arguments.delete(:rule_id)
-
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_rule/#{Utils.__listify(_rule_id)}"
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

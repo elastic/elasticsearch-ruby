@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.query_ruleset#get' do
+describe 'client.query_rules#get_ruleset' do
   let(:expected_args) do
     [
       'GET',
@@ -25,11 +25,11 @@ describe 'client.query_ruleset#get' do
       {},
       nil,
       {},
-      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.get' }
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_rules.get_ruleset' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.query_ruleset.get(ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.query_rules.get_ruleset(ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

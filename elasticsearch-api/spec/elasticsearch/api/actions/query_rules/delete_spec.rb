@@ -15,22 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module QueryRule
-      module Actions; end
+require 'spec_helper'
 
-      # Client for the "query_rule" namespace (includes the {QueryRule::Actions} methods)
-      #
-      class QueryRuleClient
-        include Common::Client, Common::Client::Base, QueryRule::Actions
-      end
+describe 'client.query_rules#delete_rule' do
+  let(:expected_args) do
+    [
+      'DELETE',
+      '_query_rules/foo/_rule/bar',
+      {},
+      nil,
+      {},
+      { defined_params: { rule_id: 'bar', ruleset_id: 'foo' }, endpoint: 'query_rules.delete_rule' }
+    ]
+  end
 
-      # Proxy method for {QueryRuleClient}, available in the receiving object
-      #
-      def query_rule
-        @query_rule ||= QueryRuleClient.new(self)
-      end
-    end
+  it 'performs the request' do
+    expect(client_double.query_rules.delete_rule(ruleset_id: 'foo', rule_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

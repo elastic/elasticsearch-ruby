@@ -82,13 +82,12 @@ module Elasticsearch
                 Elasticsearch::API::XPack,
                 Elasticsearch::API::SearchApplication,
                 Elasticsearch::API::Synonyms,
-                Elasticsearch::API::QueryRuleset,
                 Elasticsearch::API::Esql,
                 Elasticsearch::API::Inference,
                 Elasticsearch::API::Profiling,
                 Elasticsearch::API::Simulate,
                 Elasticsearch::API::Connector,
-                Elasticsearch::API::QueryRule
+                Elasticsearch::API::QueryRules
     end
 
     # The serializer class

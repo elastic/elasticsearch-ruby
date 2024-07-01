@@ -20,7 +20,7 @@
 #
 module Elasticsearch
   module API
-    module QueryRule
+    module QueryRules
       module Actions
         # Returns the details about an individual query rule within a ruleset.
         #
@@ -30,8 +30,8 @@ module Elasticsearch
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-rule.html
         #
-        def get(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_rule.get' }
+        def get_rule(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.get_rule' }
 
           defined_params = %i[ruleset_id rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)

@@ -20,35 +20,27 @@
 #
 module Elasticsearch
   module API
-    module QueryRuleset
+    module QueryRules
       module Actions
-        # Deletes a query ruleset.
+        # Lists query rulesets.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete
+        # @option arguments [Integer] :from Starting offset (default: 0)
+        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-query-rulesets.html
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.delete' }
-
-          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
-            set_variables[variable] = arguments[variable] if arguments.key?(variable)
-          end
-          request_opts[:defined_params] = defined_params unless defined_params.empty?
-
-          raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
+        def list_rulesets(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.list_rulesets' }
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body   = nil
 
-          _ruleset_id = arguments.delete(:ruleset_id)
-
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
-          params = {}
+          method = Elasticsearch::API::HTTP_GET
+          path   = '_query_rules'
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
