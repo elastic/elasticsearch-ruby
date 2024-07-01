@@ -20,27 +20,35 @@
 #
 module Elasticsearch
   module API
-    module QueryRuleset
+    module QueryRules
       module Actions
-        # Lists query rulesets.
+        # Returns the details about a query ruleset.
         #
-        # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-query-rulesets.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-ruleset.html
         #
-        def list(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.list' }
+        def get_ruleset(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.get_ruleset' }
+
+          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
+            set_variables[variable] = arguments[variable] if arguments.key?(variable)
+          end
+          request_opts[:defined_params] = defined_params unless defined_params.empty?
+
+          raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
+
+          _ruleset_id = arguments.delete(:ruleset_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = '_query_rules'
-          params = Utils.process_params(arguments)
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

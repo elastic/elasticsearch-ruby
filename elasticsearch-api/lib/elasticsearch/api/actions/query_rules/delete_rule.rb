@@ -20,36 +20,38 @@
 #
 module Elasticsearch
   module API
-    module QueryRuleset
+    module QueryRules
       module Actions
-        # Creates or updates a query ruleset.
+        # Deletes an individual query rule within a ruleset.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the ruleset to be created or updated.
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset this rule exists in
+        # @option arguments [String] :rule_id The unique identifier of the rule to delete.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The query ruleset configuration, including `rules` (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-rule.html
         #
-        def put(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_ruleset.put' }
+        def delete_rule(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.delete_rule' }
 
-          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[ruleset_id rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
+          raise ArgumentError, "Required argument 'rule_id' missing" unless arguments[:rule_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _ruleset_id = arguments.delete(:ruleset_id)
 
-          method = Elasticsearch::API::HTTP_PUT
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
+          _rule_id = arguments.delete(:rule_id)
+
+          method = Elasticsearch::API::HTTP_DELETE
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_rule/#{Utils.__listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(
