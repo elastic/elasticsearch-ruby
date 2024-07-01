@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client.query_rule#delete' do
+describe 'client.query_rule#put_rule' do
   let(:expected_args) do
     [
-      'DELETE',
+      'PUT',
       '_query_rules/foo/_rule/bar',
       {},
-      nil,
       {},
-      { defined_params: { rule_id: 'bar', ruleset_id: 'foo' }, endpoint: 'query_rule.delete' }
+      {},
+      { defined_params: { rule_id: 'bar', ruleset_id: 'foo' }, endpoint: 'query_rules.put_rule' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.query_rule.delete(ruleset_id: 'foo', rule_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.query_rules.put_rule(body: {}, ruleset_id: 'foo', rule_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

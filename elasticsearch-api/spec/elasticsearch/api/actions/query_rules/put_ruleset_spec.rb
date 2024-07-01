@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client.query_rule#put' do
+describe 'client.query_rules#put_ruleset' do
   let(:expected_args) do
     [
       'PUT',
-      '_query_rules/foo/_rule/bar',
+      '_query_rules/foo',
       {},
       {},
       {},
-      { defined_params: { rule_id: 'bar', ruleset_id: 'foo' }, endpoint: 'query_rule.put' }
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_rules.put_ruleset' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.query_rule.put(body: {}, ruleset_id: 'foo', rule_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.query_rules.put_ruleset(body: {}, ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

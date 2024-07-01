@@ -20,28 +20,26 @@
 #
 module Elasticsearch
   module API
-    module QueryRule
+    module QueryRules
       module Actions
-        # Creates or updates a query rule within a ruleset.
+        # Creates or updates a query ruleset.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the ruleset this rule should be added to. The ruleset will be created if it does not exist.
-        # @option arguments [String] :rule_id The unique identifier of the rule to be created or updated.
+        # @option arguments [String] :ruleset_id The unique identifier of the ruleset to be created or updated.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The query rule configuration, including the type of rule, the criteria to match the rule, and the action that should be taken if the rule matches. (*Required*)
+        # @option arguments [Hash] :body The query ruleset configuration, including `rules` (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-rule.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-ruleset.html
         #
-        def put(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'query_rule.put' }
+        def put_ruleset(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'query_rules.put_ruleset' }
 
-          defined_params = %i[ruleset_id rule_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:ruleset_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'ruleset_id' missing" unless arguments[:ruleset_id]
-          raise ArgumentError, "Required argument 'rule_id' missing" unless arguments[:rule_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -50,10 +48,8 @@ module Elasticsearch
 
           _ruleset_id = arguments.delete(:ruleset_id)
 
-          _rule_id = arguments.delete(:rule_id)
-
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_rule/#{Utils.__listify(_rule_id)}"
+          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

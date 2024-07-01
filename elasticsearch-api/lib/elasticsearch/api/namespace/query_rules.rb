@@ -15,22 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require 'spec_helper'
+module Elasticsearch
+  module API
+    module QueryRules
+      module Actions; end
 
-describe 'client.query_ruleset#put' do
+      # Client for the "query_rules" namespace (includes the {QueryRules::Actions} methods)
+      #
+      class QueryRulesClient
+        include Common::Client, Common::Client::Base, QueryRules::Actions
+      end
 
-  let(:expected_args) do
-    [
-      'PUT',
-      '_query_rules/foo',
-      {},
-      {},
-      {},
-      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.put' }
-    ]
-  end
-
-  it 'performs the request' do
-    expect(client_double.query_ruleset.put(body: {}, ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
+      # Proxy method for {QueryRulesClient}, available in the receiving object
+      #
+      def query_rules
+        @query_rules ||= QueryRulesClient.new(self)
+      end
+    end
   end
 end

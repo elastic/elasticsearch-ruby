@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.query_ruleset#delete' do
+describe 'client.query_rules#delete_ruleset' do
 
   let(:expected_args) do
     [
@@ -26,11 +26,11 @@ describe 'client.query_ruleset#delete' do
       {},
       nil,
       {},
-      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_ruleset.delete' }
+      { defined_params: { ruleset_id: 'foo' }, endpoint: 'query_rules.delete_ruleset' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.query_ruleset.delete(ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.query_rules.delete_ruleset(ruleset_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
