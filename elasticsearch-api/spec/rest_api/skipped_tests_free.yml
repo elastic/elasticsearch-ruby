@@ -119,3 +119,6 @@
 -
   :file: 'search/330_disallow_scripted_metrics.yml'
   :description: 'allowed stored scripts do not affect allowed inline scripts'
+-
+  :file: 'aggregations/scripted_metric_allow_list.yml'
+  :description: 'allowed stored scripts do not affect allowed inline scripts'
