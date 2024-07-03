@@ -15,28 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    module Common
-      module Actions; end
+require 'spec_helper'
 
-      module Client
-        # Base client wrapper
-        #
-        module Base
-          attr_reader :client
+describe 'client#security.bulk_put_role' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_security/role',
+      {},
+      {},
+      {},
+      { endpoint: 'security.bulk_put_role' }
+    ]
+  end
 
-          def initialize(client)
-            @client = client
-          end
-        end
-
-        # Delegates the `perform_request` method to the wrapped client
-        #
-        def perform_request(method, path, params={}, body=nil, headers=nil, request_opts={})
-          client.perform_request method, path, params, body, headers, request_opts
-        end
-      end
-    end
+  it 'performs the request' do
+    expect(client_double.security.bulk_put_role(body: {})).to be_a Elasticsearch::API::Response
   end
 end
