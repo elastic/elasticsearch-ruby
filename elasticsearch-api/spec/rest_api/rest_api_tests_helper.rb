@@ -65,7 +65,10 @@ unless ADMIN_CLIENT.ping
   exit
 end
 
-Elasticsearch::RestAPIYAMLTests::WipeCluster.create_xpack_rest_user(ADMIN_CLIENT) if test_suite == 'platinum'
+if test_suite == 'platinum'
+  Elasticsearch::RestAPIYAMLTests::WipeCluster.create_xpack_rest_user(ADMIN_CLIENT)
+  Elasticsearch::RestAPIYAMLTests::WipeCluster.create_enterprise_search_users(ADMIN_CLIENT)
+end
 
 YAML_FILES_DIRECTORY = "#{PROJECT_PATH}/../../tmp/rest-api-spec/test/#{test_suite}".freeze
 
