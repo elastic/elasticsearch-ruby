@@ -61,6 +61,55 @@ module Elasticsearch
         )
       end
 
+      def self.create_enterprise_search_users(client)
+        client.security.put_role(
+          name: 'entuser',
+          body: {
+            cluster: [
+              'post_behavioral_analytics_event',
+              'manage_api_key',
+              'read_connector_secrets',
+              'write_connector_secrets'
+            ],
+            indices: [
+              {
+                names: [
+                  'test-index1',
+                  'test-search-application',
+                  'test-search-application-1',
+                  'test-search-application-with-aggs',
+                  'test-search-application-with-list',
+                  'test-search-application-with-list-invalid',
+                  '.elastic-connectors-v1',
+                  '.elastic-connectors-sync-jobs-v1'
+                ],
+                privileges: ['read']
+              }
+            ]
+          }
+        )
+        client.security.put_role(
+          name: 'unprivileged',
+          body: {
+            indices: [
+              {
+                names: ['test-*', 'another-test-search-application'],
+                privileges: ['manage', 'write', 'read']
+              }
+            ]
+          }
+        )
+
+        client.security.put_user(
+          username: 'entsearch-user',
+          body: { password: 'entsearch-user-password', roles: ['entuser'] }
+        )
+        client.security.put_user(
+          username: 'entsearch-unprivileged',
+          body: { password: 'entsearch-unprivileged-password', roles: ['privileged'] }
+        )
+      end
+
       class << self
         private
 
