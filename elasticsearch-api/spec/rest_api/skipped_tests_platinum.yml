@@ -123,3 +123,85 @@
 -
   :file: 'analytics/empty_field_metric.yml'
   :description: 'Rate test'
+# Migrated to yaml tests in elastic/elasticsearch-clients-tests
+-
+  :file: 'roles/10_basic.yml'
+  :description: '*'
+-
+  :file: 'roles/50_remote_only.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/secret/10_connector_secret_post.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/secret/30_connector_secret_get.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/secret/40_connector_secret_delete.yml'
+  :description: '*'
+-
+  :file: 'entsearch/search/20_search_application_put.yml'
+  :description: '*'
+-
+  :file: 'entsearch/search/30_search_application_get.yml'
+  :description: '*'
+-
+  :file: 'entsearch/search/40_search_application_delete.yml'
+  :description: '*'
+-
+  :file: 'entsearch/search/50_search_application_list.yml'
+  :description: '*'
+-
+  :file: 'entsearch/search/56_search_application_search_with_apikey.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/secret/20_connector_secret_put.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/sync_job/50_connector_sync_job_get.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/sync_job/70_connector_sync_job_update_stats.yml'
+  :description: '*'
+-
+  :file: 'entsearch/analytics/40_behavioral_analytics_event_post.yml'
+  :description: '*'
+-
+  :file: 'entsearch/connector/20_connector_list.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/5_query_rulesets_before_setup.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/10_query_ruleset_put.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/20_query_ruleset_list.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/50_query_rule_put.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/10_query_ruleset_put.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/40_rule_query_search.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/60_query_rule_delete.yml'
+  :description: '*'
+-
+  :file: 'entsearch/rules/30_query_ruleset_delete.yml'
+  :description: '*'
+-
+  :file: 'roles/60_bulk_roles.yml'
+  :description: '*'
+-
+  :file: 'entsearch/analytics/30_behavioral_analytics_delete.yml'
+  :description: '*'
+-
+  :file: 'entsearch/analytics/40_behavioral_analytics_event_post.yml'
+  :description: '*'
+-
+  :file: 'entsearch/20_usage.yml'
+  :description: '*'
