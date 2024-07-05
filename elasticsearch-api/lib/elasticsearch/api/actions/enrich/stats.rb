@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/enrich-stats-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/enrich-stats-api.html
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.stats' }

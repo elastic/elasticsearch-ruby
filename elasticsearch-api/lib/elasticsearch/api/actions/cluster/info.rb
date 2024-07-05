@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :target Limit the information returned to the specified target. (options: _all, http, ingest, thread_pool, script)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/cluster-info.html
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.info' }

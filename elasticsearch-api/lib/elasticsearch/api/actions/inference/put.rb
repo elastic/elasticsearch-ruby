@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/put-inference-api.html
         #
         def put(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put' }

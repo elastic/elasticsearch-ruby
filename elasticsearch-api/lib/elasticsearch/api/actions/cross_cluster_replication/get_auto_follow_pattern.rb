@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ccr-get-auto-follow-pattern.html
         #
         def get_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.get_auto_follow_pattern' }

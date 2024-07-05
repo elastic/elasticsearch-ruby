@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-user.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-query-user.html
         #
         def query_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.query_user' }

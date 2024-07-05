@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query rule configuration, including the type of rule, the criteria to match the rule, and the action that should be taken if the rule matches. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-query-rule.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/put-query-rule.html
         #
         def put_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.put_rule' }
