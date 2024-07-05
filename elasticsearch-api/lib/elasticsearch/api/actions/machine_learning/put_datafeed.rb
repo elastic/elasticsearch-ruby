@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The datafeed config (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-put-datafeed.html
         #
         def put_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_datafeed' }

@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The search application configuration, including `indices` (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-search-application.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/put-search-application.html
         #
         def put(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.put' }

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter conditions for stacktraces (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/observability/current/universal-profiling.html
+        # @see https://www.elastic.co/guide/en/observability/8.14/universal-profiling.html
         #
         def topn_functions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'profiling.topn_functions' }

@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The request to update attributes of a cross-cluster API key. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-cross-cluster-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-update-cross-cluster-api-key.html
         #
         def update_cross_cluster_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_cross_cluster_api_key' }

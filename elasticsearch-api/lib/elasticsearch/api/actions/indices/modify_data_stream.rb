@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The data stream modifications (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams.html
         #
         def modify_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.modify_data_stream' }

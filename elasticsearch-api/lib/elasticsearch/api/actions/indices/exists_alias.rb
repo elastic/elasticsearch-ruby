@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-aliases.html
         #
         def exists_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_alias' }
