@@ -20,11 +20,8 @@ require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :automation do
   desc 'Build gem releases and snapshots'
-  task :build_gems do |_, args|
-    output_dir = File.expand_path(__dir__ + '/../build')
-    require 'byebug'; byebug
-
-
+  task :build_gems do
+    output_dir = File.expand_path("#{__dir__}/../build")
     dir = CURRENT_PATH.join(output_dir).to_s
     FileUtils.mkdir_p(dir) unless File.exist?(dir)
     version = Elasticsearch::VERSION
@@ -40,7 +37,7 @@ namespace :automation do
 
   desc 'Generate API code'
   task :codegen do
-    version = YAML.load_file(File.expand_path(__dir__ + '/../.buildkite/pipeline.yml'))['steps'].first['env']['STACK_VERSION']
+    version = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['STACK_VERSION']
 
     Rake::Task['elasticsearch:download_artifacts'].invoke(version)
     sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} \
@@ -100,16 +97,15 @@ namespace :automation do
   DESC
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
+    gh_actions = Dir.glob(File.expand_path('../.github/workflows/*.yml', __dir__))
 
-    files = [
-      '.github/workflows/main.yml',
-      '.github/workflows/otel.yml',
-      '.buildkite/pipeline.yml'
-    ]
+    files = gh_actions + ['.buildkite/pipeline.yml']
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
       content = File.read(file)
       match = content.match(regexp)
+      next if match.nil?
+
       old_version = match[1]
       content.gsub!(old_version, args[:version])
       puts "[#{old_version}] -> [#{version}] in #{file.gsub('./', '')}"
