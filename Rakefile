@@ -38,9 +38,9 @@ def admin_client
                           }
                         )
 
-                        url      = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                        url = "https://#{user}:#{password}@#{uri.host}:#{uri.port}"
                       else
-                        url      = "http://#{user}:#{password}@#{uri.host}:#{uri.port}"
+                        url = "http://#{user}:#{password}@#{uri.host}:#{uri.port}"
                       end
                       puts "Elasticsearch Client url: #{url}"
                       Elasticsearch::Client.new(host: url, transport_options: transport_options)
