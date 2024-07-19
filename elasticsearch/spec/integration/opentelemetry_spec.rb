@@ -36,12 +36,12 @@ if ENV['TEST_WITH_OTEL'] == 'true'
     end
 
     after do
-     client.delete(index: 'myindex', id: 1); rescue
+      client.delete(index: 'myindex', id: 1); rescue
     end
 
     context 'when a request is instrumented' do
       it 'sets the span name to the endpoint id' do
-        client.search(body: { query: { match: {a: 1} } })
+        client.search(body: { query: { match: { a: 1 } } })
         expect(span.name).to eq 'search'
       end
 
