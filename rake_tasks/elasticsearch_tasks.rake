@@ -41,6 +41,19 @@ namespace :elasticsearch do
     end
   end
 
+  desc 'Automatically update to latest version'
+  task :autoupdate_version do
+    require 'tempfile'
+
+    branch = `git branch --show-current`.strip
+    url = "https://snapshots.elastic.co/latest/#{branch}.json"
+    file = Tempfile.new('version')
+    download_file!(url, file)
+    version = JSON.parse(file.read)['version']
+    puts "Latest version is #{version}"
+    Rake::Task['automation:bumpmatrix'].invoke(version)
+  end
+
   def download_file!(url, filename)
     puts "Downloading #{filename} from #{url}"
     File.open(filename, 'w') do |downloaded_file|
