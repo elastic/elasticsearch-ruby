@@ -58,7 +58,7 @@ describe 'Perform request args' do
         if defined_path_parts.empty?
           { endpoint: spec.endpoint_name }
         else
-          { endpoint: spec.endpoint_name, defined_params:  defined_path_parts}
+          { endpoint: spec.endpoint_name, defined_params: defined_path_parts }
         end
       end
 

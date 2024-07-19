@@ -162,6 +162,7 @@ module Elasticsearch
               action.execute(client)
               true
             rescue Elastic::Transport::Transport::Errors::RequestTimeout,
+                   Net::ReadTimeout, # TODO: Replace this if we change adapters
                    Elastic::Transport::Transport::Errors::ServiceUnavailable => e
               # The action sometimes gets the cluster in a recovering state, so we
               # retry a few times and then raise an exception if it's still
