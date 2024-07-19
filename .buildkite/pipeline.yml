@@ -5,7 +5,7 @@ steps:
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
       TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.14.0-SNAPSHOT
+      STACK_VERSION: 8.14.4-SNAPSHOT
       TRANSPORT_VERSION: "{{ matrix.transport }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
     matrix:
