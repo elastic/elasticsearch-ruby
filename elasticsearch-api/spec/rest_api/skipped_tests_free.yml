@@ -125,3 +125,9 @@
 -
   :file: 'logsdb/10_settings.yml'
   :description: '*'
+-
+  :file: 'search.vectors/180_update_dense_vector_type.yml'
+  :description: 'Test create and update dense vector mapping to int4 with per-doc indexing and flush'
+-
+  :file: 'simulate.ingest/10_basic.yml'
+  :description: 'Test mapping validation'
