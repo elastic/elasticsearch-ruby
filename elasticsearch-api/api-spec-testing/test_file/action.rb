@@ -127,8 +127,8 @@ module Elasticsearch
         client
       end
 
-      def perform_action(_method, args, client, test)
-        case _method
+      def perform_action(method, args, client, test)
+        case method
         when 'bulk'
           arguments = prepare_arguments(args, test)
           arguments[:body].map! do |item|
@@ -138,7 +138,7 @@ module Elasticsearch
               symbolize_keys(JSON.parse(item))
             end
           end if arguments[:body].is_a? Array
-          @response = client.send(_method, arguments)
+          @response = client.send(method, arguments)
           client
         when 'headers'
           headers = prepare_arguments(args, test)
@@ -161,11 +161,11 @@ module Elasticsearch
           client
         when 'put_trained_model_alias'
           args.merge!('reassign' => true) unless args['reassign'] === false
-          @response = client.send(_method, prepare_arguments(args, test))
+          @response = client.send(method, prepare_arguments(args, test))
           client
         when 'create'
           begin
-            @response = client.send(_method, prepare_arguments(args, test))
+            @response = client.send(method, prepare_arguments(args, test))
           rescue Elastic::Transport::Transport::Errors::BadRequest => e
             case e.message
             when /resource_already_exists_exception/
@@ -178,17 +178,17 @@ module Elasticsearch
             else
               raise e
             end
-            @response = client.send(_method, prepare_arguments(args, test))
+            @response = client.send(method, prepare_arguments(args, test))
           end
           client
         when 'update_user_profile_data', 'get_user_profile', 'enable_user_profile', 'disable_user_profile'
           args.each do |key, value|
             args[key] = value.gsub(value, test.cached_values[value.gsub('$', '')]) if value.match?(/^\$/)
           end
-          @response = client.send(_method, prepare_arguments(args, test))
+          @response = client.send(method, prepare_arguments(args, test))
           client
         else
-          @response = client.send(_method, prepare_arguments(args, test))
+          @response = client.send(method, prepare_arguments(args, test))
           client
         end
       rescue Elastic::Transport::Transport::Error => e
