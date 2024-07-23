@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The from and size parameters optionally sent in the body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-get-calendar.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ml-get-calendar.html
         #
         def get_calendars(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_calendars' }

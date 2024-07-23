@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :rule_id The unique identifier of the rule to delete.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/delete-query-rule.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-query-rule.html
         #
         def delete_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.delete_rule' }

@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Boolean] :explain Whether to include a commentary on how the structure was derived
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/find-field-structure.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/find-field-structure.html
         #
         def find_field_structure(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'text_structure.find_field_structure' }

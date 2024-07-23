@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The connector sync job data. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/create-connector-sync-job-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/create-connector-sync-job-api.html
         #
         def sync_job_post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_post' }

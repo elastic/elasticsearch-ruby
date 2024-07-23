@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body From, size, query, sort and search_after
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-query-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-query-role.html
         #
         def query_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.query_role' }

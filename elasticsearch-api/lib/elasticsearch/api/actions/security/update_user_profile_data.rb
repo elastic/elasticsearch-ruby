@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The application data to update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-update-user-profile-data.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-update-user-profile-data.html
         #
         def update_user_profile_data(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_user_profile_data' }

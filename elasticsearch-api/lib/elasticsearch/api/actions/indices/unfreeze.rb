@@ -38,7 +38,7 @@ module Elasticsearch
         # Deprecated since version 7.14.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/unfreeze-index-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/unfreeze-index-api.html
         #
         def unfreeze(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.unfreeze' }

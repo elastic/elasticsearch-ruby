@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's is_native flag (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/connector-apis.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/connector-apis.html
         #
         def update_native(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_native' }

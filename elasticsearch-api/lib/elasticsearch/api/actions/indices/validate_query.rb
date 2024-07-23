@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The query definition specified with the Query DSL
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/search-validate.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-validate.html
         #
         def validate_query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.validate_query' }

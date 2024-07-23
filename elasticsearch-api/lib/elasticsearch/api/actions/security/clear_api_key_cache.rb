@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :ids A comma-separated list of IDs of API keys to clear from the cache
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-clear-api-key-cache.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-clear-api-key-cache.html
         #
         def clear_api_key_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_api_key_cache' }

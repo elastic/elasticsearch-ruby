@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The specification of the auto follow pattern (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ccr-put-auto-follow-pattern.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ccr-put-auto-follow-pattern.html
         #
         def put_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.put_auto_follow_pattern' }

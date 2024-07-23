@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :id A comma-separated list of geoip database configurations to get; use `*` to get all geoip database configurations
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/TODO.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/TODO.html
         #
         def get_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_geoip_database' }

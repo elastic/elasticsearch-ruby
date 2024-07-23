@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/schedule-now-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/schedule-now-transform.html
         #
         def schedule_now_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.schedule_now_transform' }

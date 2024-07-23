@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-resolve-index-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/indices-resolve-index-api.html
         #
         def resolve_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.resolve_index' }

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The trained model configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/put-trained-models.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/put-trained-models.html
         #
         def put_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_trained_model' }

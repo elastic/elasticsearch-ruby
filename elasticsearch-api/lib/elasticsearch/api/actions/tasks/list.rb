@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html
         #
         def list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'tasks.list' }

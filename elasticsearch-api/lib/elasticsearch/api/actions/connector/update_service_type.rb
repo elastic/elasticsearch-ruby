@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's service type. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/update-connector-service-type-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/update-connector-service-type-api.html
         #
         def update_service_type(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_service_type' }
