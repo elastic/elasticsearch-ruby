@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :job_id The ID of the job to remove from the calendar
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-delete-calendar-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ml-delete-calendar-job.html
         #
         def delete_calendar_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_calendar_job' }

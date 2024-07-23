@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of trained models to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/get-trained-models-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/get-trained-models-stats.html
         #
         def get_trained_models_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_trained_models_stats' }

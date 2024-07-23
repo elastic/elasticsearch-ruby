@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [List] :data A comma-separated list of keys for which the corresponding application data are retrieved.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-get-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-get-user-profile.html
         #
         def get_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_user_profile' }

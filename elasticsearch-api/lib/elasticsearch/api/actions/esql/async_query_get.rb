@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/esql-async-query-get-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/esql-async-query-get-api.html
         #
         def async_query_get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_get' }

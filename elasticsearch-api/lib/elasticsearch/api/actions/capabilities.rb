@@ -33,7 +33,7 @@ module Elasticsearch
       # @option arguments [String] :capabilities Comma-separated list of arbitrary API capabilities to check
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/capabilities.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/capabilities.html
       #
       def capabilities(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'capabilities' }

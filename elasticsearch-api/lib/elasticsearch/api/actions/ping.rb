@@ -25,7 +25,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/index.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/index.html
       #
       def ping(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'ping' }

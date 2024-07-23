@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The id of the synonyms set to be deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/delete-synonyms-set.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-synonyms-set.html
         #
         def delete_synonym(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.delete_synonym' }

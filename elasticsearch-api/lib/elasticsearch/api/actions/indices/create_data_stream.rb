@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the data stream
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/data-streams.html
         #
         def create_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create_data_stream' }

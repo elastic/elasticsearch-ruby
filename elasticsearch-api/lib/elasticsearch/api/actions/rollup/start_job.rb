@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the job to start
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/rollup-start-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/rollup-start-job.html
         #
         def start_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'rollup.start_job' }

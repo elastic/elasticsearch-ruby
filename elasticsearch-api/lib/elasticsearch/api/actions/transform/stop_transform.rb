@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_checkpoint Whether to wait for the transform to reach a checkpoint before stopping. Default to false
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/stop-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/stop-transform.html
         #
         def stop_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.stop_transform' }

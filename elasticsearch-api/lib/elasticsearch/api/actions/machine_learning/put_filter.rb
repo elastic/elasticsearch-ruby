@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter details (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-put-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ml-put-filter.html
         #
         def put_filter(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_filter' }

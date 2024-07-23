@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The token request to get (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-get-token.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-get-token.html
         #
         def get_token(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_token' }

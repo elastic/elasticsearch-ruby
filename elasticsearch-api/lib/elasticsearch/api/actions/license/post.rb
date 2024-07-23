@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body licenses to be installed
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/update-license.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/update-license.html
         #
         def post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post' }

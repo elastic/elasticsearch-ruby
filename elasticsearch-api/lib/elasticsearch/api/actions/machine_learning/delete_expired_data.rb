@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body deleting expired data parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/ml-delete-expired-data.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ml-delete-expired-data.html
         #
         def delete_expired_data(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_expired_data' }

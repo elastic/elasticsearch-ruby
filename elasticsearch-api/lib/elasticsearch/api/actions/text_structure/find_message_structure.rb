@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body JSON object with one field [messages], containing an array of messages to be analyzed (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/find-message-structure.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/find-message-structure.html
         #
         def find_message_structure(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'text_structure.find_message_structure' }

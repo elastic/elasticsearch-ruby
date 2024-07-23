@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.14/cat-anomaly-detectors.html
+        # @see http://www.elastic.co/guide/en/elasticsearch/reference/8.15/cat-anomaly-detectors.html
         #
         def ml_jobs(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_jobs' }

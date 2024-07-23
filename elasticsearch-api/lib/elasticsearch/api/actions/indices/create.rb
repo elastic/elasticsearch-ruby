@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the index (`settings` and `mappings`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-create-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/indices-create-index.html
         #
         def create(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create' }

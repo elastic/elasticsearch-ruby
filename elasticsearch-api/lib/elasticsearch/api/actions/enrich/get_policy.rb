@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/get-enrich-policy-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/get-enrich-policy-api.html
         #
         def get_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.get_policy' }

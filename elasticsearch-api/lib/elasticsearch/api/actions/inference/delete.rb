@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force If true the endpoint will be forcefully stopped (regardless of whether or not it is referenced by any ingest processors or semantic text fields).
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/delete-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/delete-inference-api.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }

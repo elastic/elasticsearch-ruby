@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/slm-api-put-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/slm-api-put-policy.html
         #
         def put_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.put_lifecycle' }

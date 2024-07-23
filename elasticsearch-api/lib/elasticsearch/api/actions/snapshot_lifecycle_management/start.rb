@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/slm-api-start.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/slm-api-start.html
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.start' }

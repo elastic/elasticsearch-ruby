@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The API key request to update attributes of an API key.
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/security-api-update-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/security-api-update-api-key.html
         #
         def update_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_api_key' }

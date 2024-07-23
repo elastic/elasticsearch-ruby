@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :index The rollup index or index pattern to obtain rollup capabilities from.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/rollup-get-rollup-index-caps.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/rollup-get-rollup-index-caps.html
         #
         def get_rollup_index_caps(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'rollup.get_rollup_index_caps' }

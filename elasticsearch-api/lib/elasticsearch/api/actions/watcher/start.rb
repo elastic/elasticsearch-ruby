@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/watcher-api-start.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/watcher-api-start.html
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.start' }

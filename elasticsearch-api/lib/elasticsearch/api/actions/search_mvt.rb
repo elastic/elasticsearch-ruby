@@ -42,7 +42,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body Search request body.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/search-vector-tile-api.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/search-vector-tile-api.html
       #
       def search_mvt(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search_mvt' }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/start-basic.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/start-basic.html
         #
         def post_start_basic(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post_start_basic' }

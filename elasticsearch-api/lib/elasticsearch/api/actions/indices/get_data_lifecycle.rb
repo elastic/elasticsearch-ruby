@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/data-streams-get-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/data-streams-get-lifecycle.html
         #
         def get_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_lifecycle' }

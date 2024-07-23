@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/list-search-applications.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/list-search-applications.html
         #
         def list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.list' }

@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.14/indices-get-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.15/indices-get-index.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get' }
