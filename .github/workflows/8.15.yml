@@ -1,20 +1,20 @@
-name: main
+name: 8.15
 on:
   push:
     branches:
-      - main
+      - 8.15
   pull_request:
     branches:
-      - main
+      - 8.15
 jobs:
-  test-main:
+  test-8.15:
     env:
       TEST_ES_SERVER: http://localhost:9250
       PORT: 9250
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.0', '3.1', '3.2', '3.3', 'jruby-9.3', 'jruby-9.4' ]
+        ruby: ['3.0', '3.1', '3.2', '3.3', 'jruby-9.3', 'jruby-9.4']
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
