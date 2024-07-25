@@ -131,3 +131,6 @@
 -
   :file: 'simulate.ingest/10_basic.yml'
   :description: 'Test mapping validation'
+-
+  :file: 'nodes.stats/11_indices_metrics.yml'
+  :description: 'Lucene segment level fields stats'
