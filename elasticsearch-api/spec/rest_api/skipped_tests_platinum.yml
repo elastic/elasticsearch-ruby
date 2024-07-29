@@ -205,3 +205,10 @@
 -
   :file: 'entsearch/20_usage.yml'
   :description: '*'
+# TODO: Update test runnner. Error is ok but Regexp shenanigans
+-
+  :file: 'eql/60_no_exact.yml'
+  :description: 'Case insensitive match on text field'
+-
+  :file: 'esql/180_match_operator.yml'
+  :description: '*'
