@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-namespace :elasticsearch do
+namespace :es do
   desc 'Wait for elasticsearch cluster to be in green state'
   task :wait_for_green do
     require 'elasticsearch'
