@@ -35,4 +35,4 @@ docker run \
        --name elasticsearch-ruby \
        --rm \
        elastic/elasticsearch-ruby \
-       bundle exec rake elasticsearch:download_artifacts test:platinum:integration test:rest_api
+       bundle exec rake es:download_artifacts test:platinum:integration test:rest_api
