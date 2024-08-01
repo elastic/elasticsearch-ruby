@@ -23,7 +23,7 @@ The `rest_api` task needs the test files from Elasticsearch. You can run the rak
 
 Or it can get the version from a running cluster to determine which version and build hash of Elasticsearch to use and test against:
 
-`TEST_ES_SERVER=http://localhost:9200 rake elasticsearch:download_artifacts`
+`TEST_ES_SERVER=http://localhost:9200 rake es:download_artifacts`
 
 This will download the necessary files used for the integration tests to `./tmp`.
 

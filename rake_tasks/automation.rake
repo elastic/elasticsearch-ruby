@@ -39,7 +39,7 @@ namespace :automation do
   task :codegen do
     version = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['STACK_VERSION']
 
-    Rake::Task['elasticsearch:download_artifacts'].invoke(version)
+    Rake::Task['es:download_artifacts'].invoke(version)
     sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} \
           && BUNDLE_GEMFILE=`pwd`/Gemfile \
           && bundle exec thor code:generate"
