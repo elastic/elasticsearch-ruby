@@ -37,7 +37,7 @@ describe 'Rest API YAML tests' do
 
   if REST_API_YAML_FILES.empty?
     LOGGER.error 'No test files found!'
-    LOGGER.info 'Use rake rake elasticsearch:download_artifacts in the root directory of the project to download the test artifacts.'
+    LOGGER.info 'Use rake rake es:download_artifacts in the root directory of the project to download the test artifacts.'
     exit 1
   end
 

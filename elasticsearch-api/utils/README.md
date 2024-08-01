@@ -8,7 +8,7 @@ This directory hosts The Generator, a tool that generates the classes for each A
 
 To generate the code, you need to have the Elasticsearch REST API spec files in `tmp/rest-api-spec` in the root of the project. You can run a rake task from the root of the project to download the specs corresponding to the current running cluster:
 ```bash
-$ rake elasticsearch:download_artifacts
+$ rake es:download_artifacts
 ```
 
 Once the JSON files have been downloaded, you need to run (from this folder):
@@ -24,7 +24,7 @@ $ thor code:generate
 $ IGNORE_VERSION=true thor code:generate
 ```
 
-- You can use the environment variable `BUILD_HASH` to update the build hash for the generated code from the `tmp/rest-api-spec/build_hash` file. This file is updated every time you use the `elasticsearch:download_artifacts` Rake task is used in the root of the project to download the latest Elasticsearch specs and tests:
+- You can use the environment variable `BUILD_HASH` to update the build hash for the generated code from the `tmp/rest-api-spec/build_hash` file. This file is updated every time you use the `es:download_artifacts` Rake task is used in the root of the project to download the latest Elasticsearch specs and tests:
 ```bash
 $ BUILD_HASH=true thor code:generate
 ```
