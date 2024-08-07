@@ -8,6 +8,7 @@ steps:
       STACK_VERSION: 8.16.0-SNAPSHOT
       TRANSPORT_VERSION: "{{ matrix.transport }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
+      QUIET: false
     matrix:
       setup:
         suite:
