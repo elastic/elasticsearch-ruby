@@ -31,6 +31,7 @@ module Elasticsearch
         # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
         # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-get-lifecycle.html

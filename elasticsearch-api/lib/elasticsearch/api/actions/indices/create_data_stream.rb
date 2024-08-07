@@ -25,6 +25,8 @@ module Elasticsearch
         # Creates a data stream
         #
         # @option arguments [String] :name The name of the data stream
+        # @option arguments [Time] :timeout Specify timeout for acknowledging the cluster state update
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_data_stream/#{Utils.__listify(_name)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
