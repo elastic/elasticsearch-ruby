@@ -49,11 +49,11 @@ elsif uri.is_a?(URI::HTTP)
   transport_options = {}
 end
 
-if ENV['ES_API_KEY']
-  CLIENT = Elasticsearch::Client.new(host: host, api_key: ENV['ES_API_KEY'], transport_options: transport_options)
-else
-  CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
-end
+CLIENT = if ENV['ES_API_KEY']
+           Elasticsearch::Client.new(host: host, api_key: ENV['ES_API_KEY'], transport_options: transport_options)
+         else
+           Elasticsearch::Client.new(host: host, transport_options: transport_options)
+         end
 
 
 tests_path = File.expand_path('./tmp', __dir__)
