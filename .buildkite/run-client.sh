@@ -29,6 +29,7 @@ docker run \
        --env "TEST_SUITE=${TEST_SUITE}" \
        --env "ELASTIC_USER=elastic" \
        --env "BUILDKITE=true" \
+       --env "QUIET=${QUIET}" \
        --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        --env "STACK_VERSION=${STACK_VERSION}" \
        --volume $repo:/usr/src/app \
