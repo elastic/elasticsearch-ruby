@@ -25,6 +25,7 @@ module Elasticsearch
         # Promotes a data stream from a replicated data stream managed by CCR to a regular data stream
         #
         # @option arguments [String] :name The name of the data stream
+        # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = "_data_stream/_promote/#{Utils.__listify(_name)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
