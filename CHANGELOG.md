@@ -1,5 +1,89 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.15.0 Release notes
+
+### Client
+* Tested versions of Ruby for 8.15.0: Ruby (MRI) 3.0, 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+
+#### API changes
+
+* `snapshot.delete` - Adds `wait_for_completion` Boolean parameter, should this request wait until the operation has completed before returning.
+* `cluster.allocation_explain` - `body` is no longer a required parameter.
+* `connector.put` - (experimental API) `body` and `connector_id` no longer required parameters.
+* `machine_learning.update_trained_model_deployment` has been promoted to stable from Beta. Adds Integer parameter `number_of_allocations`, updates the model deployment to this number of allocations.
+
+##### `master_timeout` and `timeout` parameters
+
+These parameters have been added to several APIs:
+
+* `master_timeout` timeout for processing on master node.
+* `timeout` timeout for acknowledgement of update from all nodes in cluster parameters.
+
+The APIs:
+
+* `autoscaling.delete_autoscaling_policy` - both.
+* `autoscaling.get_autoscaling_capacity`- `master_timeout`.
+* `get_autoscaling_policy` - `master_timeout`.
+* `put_autoscaling_policy` - both.
+* `enrich.delete_policy` - `master_timeout`.
+* `enrich.execute_policy` - `master_timeout`.
+* `enrich.get_policy` - `master_timeout`.
+* `enrich.put_policy` - `master_timeout`.
+* `enrich.stats` - `master_timeout`.
+* `features.reset_features` - `master_timeout`.
+* `license.delete` - both.
+* `license.post` - both.
+* `license.post_start_basic` - both.
+* `license.post_start_trial` - both.
+* `security.get_settings` - `master_timeout`.
+* `security.update_settings` - both.
+* `shutdown.get_node` - `master_timeout`.
+* `snapshot_lifecycle_management.start` - both.
+* `snapshot_lifecycle_management.stop` - both.
+* `watcher.get_settings` - `master_timeout`.
+* `watcher.start` - `master_timeout`.
+* `watcher.stop` - `master_timeout`.
+* `watcher.update_settings` - both.
+
+##### Inference APIs have been renamed:
+
+* `inference.delete_model` => `inference.delete`. Also adds two new parameters:
+  * `dry_run` (Boolean), if true the endpoint will not be deleted and a list of ingest processors which reference this endpoint will be returned.
+  * `force` (Boolean), if true the endpoint will be forcefully stopped (regardless of whether or not it is referenced by any ingest processors or semantic text fields).
+* `inference.get_model` => `inference.get`
+* `inference.put_model` => `inference.put`
+
+##### Query Rules parameters consolidated
+
+Changes in `query_ruleset` and `query_rules` APIs, these have been combined into the `query_rules` namespace:
+
+* `query_rules.delete_ruleset` - Renamed from `query_ruleset.delete`, promoted from experimental to stable.
+* `query_rules.delete_rule` - Deletes an individual query rule within a ruleset.
+* `query_rules.get_rule` - Returns the details about an individual query rule within a ruleset.
+* `query_rules.get_ruleset` - Renamed from `query_ruleset.get`, promoted from experimental to stable.
+* `query_rules.list_rulesets` - Renamed from `query_ruleset.list`, promoted from experimental to stable.
+* `query_rules.put_rule` - Creates or updates a query rule within a ruleset.
+* `query_rules.put_ruleset` - Renamed from `query_ruleset.put_ruleset`, promoted from experimental to stable.
+
+#### New APIs:
+
+* `ingest.delete_geoip_database` - Deletes a geoip database configuration.
+* `ingest.get_geoip_database` - Returns geoip database configuration.
+* `ingest.put_geoip_database` - Puts the configuration for a geoip database to be downloaded.
+* `security.bulk_delete_role` - Bulk delete roles in the native realm.
+* `security.bulk_put_role` - Bulk adds and updates roles in the native realm.
+* `security.query_role` - Retrieves information for Roles using a subset of query DSL.
+* `transform.get_node_stats` - Retrieves transform usage information for transform nodes.
+
+#### New Experimental APIs:
+
+* `connector.sync_job_claim` - Claims a connector sync job.
+* `connector.update_features` - Updates the connector features in the connector document.
+
+### Development
+
+- Added a build using [es-test-runner-ruby](https://github.com/elastic/es-test-runner-ruby) and [Elasticsearch Clients Tests](https://github.com/elastic/elasticsearch-clients-tests) which will replace the Elasticsearch YAML test runner.
+
 ## 8.14.0 Release notes
 
 ### Client
