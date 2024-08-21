@@ -134,3 +134,10 @@
 -
   :file: 'nodes.stats/11_indices_metrics.yml'
   :description: 'Lucene segment level fields stats'
+-
+  :file: 'search.suggest/20_phrase.yml'
+  :description: 'breaks ties by sorting terms'
+# Regexp issues with catching an error
+-
+  :file: 'analysis-common/40_token_filters.yml'
+  :description: 'stemmer_override file access'
