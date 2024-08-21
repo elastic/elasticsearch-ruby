@@ -78,11 +78,7 @@ namespace :es do
   task :download_artifacts, :version do |_, args|
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
-    unless (version_number = args[:version] || ENV['STACK_VERSION'])
-      # Get version number and build hash of running cluster:
-      version_number = cluster_info['number']
-      @build_hash = cluster_info['build_hash'] if cluster_info['build_hash']
-    end
+    version_number = args[:version] || ENV['STACK_VERSION'] || version_from_buildkite || version_from_running_cluster
 
     # Create ./tmp if it doesn't exist
     Dir.mkdir(CURRENT_PATH.join('tmp'), 0700) unless File.directory?(CURRENT_PATH.join('tmp'))
@@ -121,6 +117,18 @@ namespace :es do
     `rm #{filename}`
     puts "Artifacts downloaded in ./tmp, build hash #{@build_hash}"
     File.write(CURRENT_PATH.join('tmp/rest-api-spec/build_hash'), @build_hash)
+  end
+
+  def version_from_buildkite
+    require 'yaml'
+    yaml = YAML.load_file(File.expand_path('../.buildkite/pipeline.yml', __dir__))
+    yaml['steps'].first['env']['STACK_VERSION']
+  end
+
+  def version_from_running_cluster
+    info = cluster_info
+    @build_hash = info['build_hash'] if info['build_hash']
+    info['number']
   end
 
   desc 'Check Elasticsearch health'
