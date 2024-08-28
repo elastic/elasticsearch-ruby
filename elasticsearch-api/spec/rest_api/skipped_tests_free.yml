@@ -141,3 +141,9 @@
 -
   :file: 'analysis-common/40_token_filters.yml'
   :description: 'stemmer_override file access'
+- # Migrated to YAML tests:
+  :file: 'ingest_geoip/30_geoip_stats.yml'
+  :description: '*'
+- # Testing server:
+  :file: 'ingest_geoip/20_geoip_processor.yml'
+  :description: '*'
