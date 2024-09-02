@@ -99,16 +99,14 @@ module Elasticsearch
         <<~SRC
           case
           when body.is_a?(Array) && body.any? { |d| d.has_key? :search }
-            payload = body.
-              inject([]) do |sum, item|
+            payload = body.inject([]) do |sum, item|
                 meta = item
                 data = meta.delete(:search)
 
                 sum << meta
                 sum << data
                 sum
-              end.
-              map { |item| Elasticsearch::API.serializer.dump(item) }
+              end.map { |item| Elasticsearch::API.serializer.dump(item) }
             payload << "" unless payload.empty?
             payload = payload.join("\\n")
           when body.is_a?(Array)
