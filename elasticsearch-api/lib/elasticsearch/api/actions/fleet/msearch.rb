@@ -60,15 +60,13 @@ module Elasticsearch
           params = {}
 
           if body.is_a?(Array) && body.any? { |d| d.has_key? :search }
-            payload = body
-                      .each_with_object([]) do |item, sum|
-                        meta = item
-                        data = meta.delete(:search)
+            payload = body.each_with_object([]) do |item, sum|
+              meta = item
+              data = meta.delete(:search)
 
-                        sum << meta
-                        sum << data
-                      end
-                      .map { |item| Elasticsearch::API.serializer.dump(item) }
+              sum << meta
+              sum << data
+            end.map { |item| Elasticsearch::API.serializer.dump(item) }
             payload << '' unless payload.empty?
             payload = payload.join("\n")
           elsif body.is_a?(Array)
