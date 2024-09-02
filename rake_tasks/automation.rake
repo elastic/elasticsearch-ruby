@@ -103,6 +103,12 @@ namespace :automation do
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
       content = File.read(file)
+      if file == '.buildkite/pipeline.yml'
+        branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
+        old_branch = content.match(/ES_YAML_TESTS_BRANCH: ([0-9.]+)/)[1]
+        content.gsub!(old_branch, branch)
+        puts "[#{old_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+      end
       match = content.match(regexp)
       next if match.nil?
 
