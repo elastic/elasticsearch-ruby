@@ -55,11 +55,13 @@ CLIENT = if ENV['ES_API_KEY']
            Elasticsearch::Client.new(host: host, transport_options: transport_options)
          end
 
-
 tests_path = File.expand_path('./tmp', __dir__)
 
 logger = Logger.new($stdout)
 logger.level = Logger::WARN unless ENV['DEBUG']
 
-Elasticsearch::Tests::Downloader::run(tests_path)
+# If we're running in a release branch, download the corresponding branch for tests
+current_branch = `git rev-parse --abbrev-ref HEAD`.strip
+branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
+Elasticsearch::Tests::Downloader::run(tests_path, branch)
 Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger).run
