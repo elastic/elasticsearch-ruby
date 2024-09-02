@@ -67,6 +67,7 @@ steps:
     env:
       RUBY_VERSION: "3.3"
       STACK_VERSION: 8.15.0-SNAPSHOT
+      ES_YAML_TESTS_BRANCH: 8.15
       TRANSPORT_VERSION: "8.3"
       RUBY_SOURCE: "ruby"
       TEST_SUITE: "platinum"
