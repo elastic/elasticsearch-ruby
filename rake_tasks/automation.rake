@@ -104,10 +104,14 @@ namespace :automation do
     files.each do |file|
       content = File.read(file)
       if file == '.buildkite/pipeline.yml'
+        require 'yaml'
+        yaml = YAML.safe_load(content)
         branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-        old_branch = content.match(/ES_YAML_TESTS_BRANCH: ([0-9.]+)/)[1]
-        content.gsub!(old_branch, branch)
-        puts "[#{old_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+        yaml_tests_branch = yaml['steps'][1]['env']['ES_YAML_TESTS_BRANCH']
+        next if yaml_tests_branch == 'main'
+
+        content.gsub!(yaml_tests_branch, branch)
+        puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
       end
       match = content.match(regexp)
       next if match.nil?
