@@ -147,3 +147,6 @@
 - # Testing server:
   :file: 'ingest_geoip/20_geoip_processor.yml'
   :description: '*'
+-
+  :file: 'simulate.ingest/10_basic.yml'
+  :description: 'Test mapping validation from templates'
