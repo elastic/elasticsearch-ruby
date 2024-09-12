@@ -157,7 +157,7 @@ module Elasticsearch
               transport_options: transport_options.merge(headers: headers)
             )
           end
-        when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex'
+        when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex', 'warnings_regex'
           client
         when 'put_trained_model_alias'
           args.merge!('reassign' => true) unless args['reassign'] === false
