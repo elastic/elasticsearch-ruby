@@ -5,7 +5,7 @@ steps:
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
       TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 8.16.0-SNAPSHOT
+      STACK_VERSION: 9.0.0-SNAPSHOT
       TRANSPORT_VERSION: "{{ matrix.transport }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       QUIET: false
@@ -67,7 +67,7 @@ steps:
       provider: "gcp"
     env:
       RUBY_VERSION: "3.3"
-      STACK_VERSION: 8.16.0-SNAPSHOT
+      STACK_VERSION: 9.0.0-SNAPSHOT
       ES_YAML_TESTS_BRANCH: main
       TRANSPORT_VERSION: "8.3"
       RUBY_SOURCE: "ruby"
