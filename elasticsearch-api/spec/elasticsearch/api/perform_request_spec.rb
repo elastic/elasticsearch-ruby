@@ -23,7 +23,7 @@ require_relative '../../../utils/thor/generator/files_helper'
 describe 'Perform request args' do
   Elasticsearch::API::FilesHelper.files.each do |filepath|
     spec = Elasticsearch::API::EndpointSpec.new(filepath)
-    next if spec.module_namespace.flatten.first == '_internal'
+    next if spec.module_namespace.flatten.first == '_internal' || spec.visibility != 'public'
 
     # These are the path parts defined by the user in the method argument
     defined_path_parts = spec.path_params.inject({}) do |params, part|
