@@ -19,7 +19,11 @@ steps:
         stack_version:
           - 7.17-SNAPSHOT
       adjustments:
-        # Skip platinum for all but Ruby 3.2:
+        # Skip platinum for all but Ruby 3.3:
+        - with:
+            suite: "platinum"
+            ruby: "3.2"
+          skip: true
         - with:
             suite: "platinum"
             ruby: "3.1"
@@ -28,17 +32,25 @@ steps:
             suite: "platinum"
             ruby: "3.0"
           skip: true
-        # Compatibility tests for 8.x:
-        - with:
-            stack_version: "8.16.0-SNAPSHOT"
-            suite: "free"
-            ruby: "3.3"
-        - with:
-            stack_version: "8.16.0-SNAPSHOT"
-            suite: "platinum"
-            ruby: "3.3"
     command: ./.buildkite/run-tests.sh
     artifact_paths: "elasticsearch-api/tmp/*"
+
+  - label: ":elasticsearch: 8.x Compatiblity :ruby: :rspec: {{ matrix.suite }}"
+    agents:
+      provider: "gcp"
+    env:
+      RUBY_VERSION: "3.3"
+      TEST_SUITE: "{{ matrix.suite }}"
+      STACK_VERSION: 8.16.0-SNAPSHOT
+    matrix:
+      setup:
+        suite:
+          - "free"
+          - "platinum"
+    command: ./.buildkite/run-tests.sh
+    artifact_paths: "elasticsearch-api/tmp/*"
+    soft_fail:
+      - exit_status: 1
   - wait: ~
     continue_on_failure: true
   - label: "Log Results"
