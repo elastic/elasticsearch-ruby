@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.5'
 
   s.add_dependency 'elastic-transport', '~> 8.3'
-  s.add_dependency 'elasticsearch-api', '8.14.0'
+  s.add_dependency 'elasticsearch-api', '9.0.0'
 
   s.add_development_dependency 'base64'
   s.add_development_dependency 'bundler'
