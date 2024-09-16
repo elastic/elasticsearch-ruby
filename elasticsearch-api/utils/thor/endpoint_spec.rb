@@ -24,6 +24,23 @@ module Elasticsearch
     class EndpointSpec
       include EndpointSpecifics
 
+      # These APIs are private, but were added in 8.x since the generator didn't consider
+      # visibility. They will be removed in 9.x since we're using a different generator that
+      # considers visibility. But new private APIs code won't be generated for the client.
+      EXCLUDED_8X = [
+        'autoscaling.delete_autoscaling_policy', 'autoscaling.get_autoscaling_capacity',
+        'autoscaling.get_autoscaling_policy', 'autoscaling.put_autoscaling_policy', 'capabilities',
+        'connector.secret_delete', 'connector.secret_get', 'connector.secret_post',
+        'connector.secret_put', 'fleet.delete_secret', 'fleet.get_secret', 'fleet.post_secret',
+        'ml.validate', 'ml.validate_detector', 'monitoring.bulk', 'profiling.flamegraph',
+        'profiling.stacktraces', 'profiling.status', 'profiling.topn_functions',
+        'security.activate_user_profile', 'security.disable_user_profile',
+        'security.enable_user_profile', 'security.get_user_profile',
+        'security.has_privileges_user_profile', 'security.suggest_user_profiles',
+        'security.update_user_profile_data', 'shutdown.delete_node', 'shutdown.get_node',
+        'shutdown.put_node'
+      ].freeze
+
       def initialize(filepath)
         @path = Pathname(filepath)
         json = MultiJson.load(File.read(@path))
@@ -31,14 +48,14 @@ module Elasticsearch
         @endpoint_name = json.keys.first
 
         full_namespace = parse_full_namespace
-        @namespace_depth = full_namespace.size > 0 ? full_namespace.size - 1 : 0
+        @namespace_depth = full_namespace.size.positive? ? full_namespace.size - 1 : 0
         @module_namespace = full_namespace[0, @namespace_depth]
         @method_name = full_namespace.last
 
         @path_parts = parse_endpoint_parts(@spec)
         @params = @spec['params'] || {}
         @paths = @spec['url']['paths'].map { |b| b['path'] } if @spec['url']
-        @path_params   = path_variables.flatten.uniq.collect(&:to_sym)
+        @path_params = path_variables.flatten.uniq.collect(&:to_sym)
         @http_method = parse_http_method(@spec)
         @deprecation_note = @spec['url']['paths'].last&.[]('deprecated')
         @http_path        = parse_http_path(@paths)
@@ -69,6 +86,16 @@ module Elasticsearch
 
       def stability
         @spec['stability']
+      end
+
+      def visibility
+        @spec['visibility']
+      end
+
+      def skippable?
+        return true if module_namespace.flatten.first == '_internal'
+
+        visibility != 'public' && !EXCLUDED_8X.include?(endpoint_name)
       end
 
       # Function that adds the listified h param code

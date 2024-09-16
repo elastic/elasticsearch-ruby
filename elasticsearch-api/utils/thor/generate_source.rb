@@ -68,7 +68,7 @@ module Elasticsearch
           @spec = EndpointSpec.new(filepath)
           say_status 'json', @spec.path, :yellow
           # Don't generate code for internal APIs:
-          next if @spec.module_namespace.flatten.first == '_internal'
+          next if @spec.skippable?
 
           path_to_file = output.join(@spec.module_namespace.join('/')).join("#{@spec.method_name}.rb")
           dir = output.join(@spec.module_namespace.join('/'))
