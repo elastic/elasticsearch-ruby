@@ -59,15 +59,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
 
   # Gems for testing integrations
-  s.add_development_dependency 'jsonify'
+  s.add_development_dependency 'activesupport'
   s.add_development_dependency 'hashie'
-  # Temporary support for Ruby 2.6, since it's EOL March 2022:
-  if RUBY_VERSION < '2.7.0'
-    s.add_development_dependency 'jbuilder', '< 7.0.0'
-  else
-    s.add_development_dependency 'activesupport'
-    s.add_development_dependency 'jbuilder'
-  end
+  s.add_development_dependency 'jbuilder'
+  s.add_development_dependency 'jsonify'
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'escape_utils' unless defined? JRUBY_VERSION
