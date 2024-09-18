@@ -441,11 +441,11 @@ module Elasticsearch
         end
 
         def delete_all_node_shutdown_metadata(client)
-          nodes = client.shutdown.get_node
-          return unless nodes['nodes']
+          nodes = client.perform_request(Elasticsearch::API::HTTP_GET, '_nodes/shutdown')
+          return unless nodes&.body['nodes'].any?
 
-          nodes['nodes'].each do |node|
-            client.shutdown.delete_node(node['node_id'])
+          nodes.body['nodes'].each do |node|
+            client.perform_request(Elasticsearch::API::HTTP_DELETE, "_nodes/#{node['node_id']}/shutdown")
           end
         end
 
