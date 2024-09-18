@@ -24,23 +24,6 @@ module Elasticsearch
     class EndpointSpec
       include EndpointSpecifics
 
-      # These APIs are private, but were added in 8.x since the generator didn't consider
-      # visibility. They will be removed in 9.x since we're using a different generator that
-      # considers visibility. But new private APIs code won't be generated for the client.
-      EXCLUDED_8X = [
-        'autoscaling.delete_autoscaling_policy', 'autoscaling.get_autoscaling_capacity',
-        'autoscaling.get_autoscaling_policy', 'autoscaling.put_autoscaling_policy', 'capabilities',
-        'connector.secret_delete', 'connector.secret_get', 'connector.secret_post',
-        'connector.secret_put', 'fleet.delete_secret', 'fleet.get_secret', 'fleet.post_secret',
-        'ml.validate', 'ml.validate_detector', 'monitoring.bulk', 'profiling.flamegraph',
-        'profiling.stacktraces', 'profiling.status', 'profiling.topn_functions',
-        'security.activate_user_profile', 'security.disable_user_profile',
-        'security.enable_user_profile', 'security.get_user_profile',
-        'security.has_privileges_user_profile', 'security.suggest_user_profiles',
-        'security.update_user_profile_data', 'shutdown.delete_node', 'shutdown.get_node',
-        'shutdown.put_node'
-      ].freeze
-
       def initialize(filepath)
         @path = Pathname(filepath)
         json = MultiJson.load(File.read(@path))
@@ -93,9 +76,7 @@ module Elasticsearch
       end
 
       def skippable?
-        return true if module_namespace.flatten.first == '_internal'
-
-        visibility != 'public' && !EXCLUDED_8X.include?(endpoint_name)
+        module_namespace.flatten.first == '_internal' || visibility != 'public'
       end
 
       # Function that adds the listified h param code
