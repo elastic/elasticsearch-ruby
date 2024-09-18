@@ -212,3 +212,28 @@
 -
   :file: 'esql/180_match_operator.yml'
   :description: '*'
+# Private APIs
+-
+  :file: 'ml/validate.yml'
+  :description: '*'
+-
+  :file: 'ml/validate_detector.yml'
+  :description: '*'
+-
+  :file: 'monitoring/bulk/10_basic.yml'
+  :description: '*'
+-
+  :file: 'monitoring/bulk/20_privileges.yml'
+  :description: '*'
+-
+  :file: 'profiling/10_basic.yml'
+  :description: '*'
+-
+  :file: 'security/settings/10_update_security_settings.yml'
+  :description: '*'
+-
+  :file: 'user_profile/10_basic.yml'
+  :description: '*'
+-
+  :file: 'user_profile/40_has_privileges.yml'
+  :description: '*'
