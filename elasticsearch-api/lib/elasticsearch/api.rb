@@ -55,7 +55,6 @@ module Elasticsearch
                 Elasticsearch::API::Remote,
                 Elasticsearch::API::DanglingIndices,
                 Elasticsearch::API::Features,
-                Elasticsearch::API::Shutdown,
                 Elasticsearch::API::AsyncSearch,
                 Elasticsearch::API::Autoscaling,
                 Elasticsearch::API::CrossClusterReplication,
@@ -69,7 +68,6 @@ module Elasticsearch
                 Elasticsearch::API::Logstash,
                 Elasticsearch::API::Migration,
                 Elasticsearch::API::MachineLearning,
-                Elasticsearch::API::Monitoring,
                 Elasticsearch::API::Rollup,
                 Elasticsearch::API::SearchableSnapshots,
                 Elasticsearch::API::Security,
@@ -84,7 +82,6 @@ module Elasticsearch
                 Elasticsearch::API::Synonyms,
                 Elasticsearch::API::Esql,
                 Elasticsearch::API::Inference,
-                Elasticsearch::API::Profiling,
                 Elasticsearch::API::Simulate,
                 Elasticsearch::API::Connector,
                 Elasticsearch::API::QueryRules
