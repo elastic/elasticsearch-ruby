@@ -205,3 +205,6 @@
 -
   :file: 'entsearch/20_usage.yml'
   :description: '*'
+-
+  :file: 'snapshot/10_basic.yml'
+  :description: 'Failed to snapshot indices with synthetic source'
