@@ -212,6 +212,9 @@
 -
   :file: 'esql/180_match_operator.yml'
   :description: '*'
+-
+  :file: 'snapshot/10_basic.yml'
+  :description: 'Failed to snapshot indices with synthetic source'
 # Private APIs
 -
   :file: 'ml/validate.yml'
