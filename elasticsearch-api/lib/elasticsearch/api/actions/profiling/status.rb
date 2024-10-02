@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_resources_created Whether to return immediately or wait until resources have been created
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/observability/current/universal-profiling.html
+        # @see https://www.elastic.co/guide/en/observability/8.16/universal-profiling.html
         #
         def status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'profiling.status' }

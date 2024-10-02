@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force True if the model should be forcefully deleted
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-trained-models.html
         #
         def delete_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_trained_model' }

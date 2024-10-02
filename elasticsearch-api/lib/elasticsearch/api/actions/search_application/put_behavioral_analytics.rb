@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the analytics collection to be created or updated
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-analytics-collection.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/put-analytics-collection.html
         #
         def put_behavioral_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.put_behavioral_analytics' }

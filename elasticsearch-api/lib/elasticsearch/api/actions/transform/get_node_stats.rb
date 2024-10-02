@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-transform-node-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-transform-node-stats.html
         #
         def get_node_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.get_node_stats' }

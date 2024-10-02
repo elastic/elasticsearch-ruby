@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The roles to add (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-bulk-put-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-bulk-put-role.html
         #
         def bulk_put_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.bulk_put_role' }

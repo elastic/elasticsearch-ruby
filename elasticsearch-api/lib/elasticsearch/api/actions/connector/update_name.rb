@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object containing the connector's name and/or description. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-name-description-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/update-connector-name-description-api.html
         #
         def update_name(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_name' }

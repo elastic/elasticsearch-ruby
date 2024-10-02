@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ccr-get-follow-stats.html
         #
         def follow_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_stats' }

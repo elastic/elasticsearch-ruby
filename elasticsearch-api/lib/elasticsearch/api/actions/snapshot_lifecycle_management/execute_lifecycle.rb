@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/slm-api-execute-lifecycle.html
         #
         def execute_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.execute_lifecycle' }

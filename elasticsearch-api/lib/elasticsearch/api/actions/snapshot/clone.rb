@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot clone definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/modules-snapshots.html
         #
         def clone(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.clone' }

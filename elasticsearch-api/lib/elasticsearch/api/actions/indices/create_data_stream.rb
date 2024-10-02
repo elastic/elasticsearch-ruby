@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/data-streams.html
         #
         def create_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create_data_stream' }

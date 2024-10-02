@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id A comma-separated list of Pipeline IDs
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get-pipeline.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/logstash-api-get-pipeline.html
         #
         def get_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.get_pipeline' }

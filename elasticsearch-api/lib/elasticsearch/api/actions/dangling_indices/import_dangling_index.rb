@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/modules-gateway-dangling-indices.html
         #
         def import_dangling_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.import_dangling_index' }
