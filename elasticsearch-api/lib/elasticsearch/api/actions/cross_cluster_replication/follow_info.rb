@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ccr-get-follow-info.html
         #
         def follow_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_info' }

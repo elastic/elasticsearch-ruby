@@ -34,7 +34,7 @@ module Elasticsearch
       # @option arguments [Boolean] :local_only True if only the node being called should be considered
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://github.com/elastic/elasticsearch/blob/current/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test/README.asciidoc#require-or-skip-api-capabilities
+      # @see https://github.com/elastic/elasticsearch/blob/8.16/rest-api-spec/src/yamlRestTest/resources/rest-api-spec/test/README.asciidoc#require-or-skip-api-capabilities
       #
       def capabilities(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'capabilities' }

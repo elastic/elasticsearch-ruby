@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :snapshot_id The ID of the snapshot to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-delete-snapshot.html
         #
         def delete_model_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_model_snapshot' }

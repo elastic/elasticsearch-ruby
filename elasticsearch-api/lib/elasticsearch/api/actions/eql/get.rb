@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/eql-search-api.html
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'eql.get' }

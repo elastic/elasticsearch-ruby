@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/update-connector-filtering-api.html
         #
         def update_active_filtering(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_active_filtering' }

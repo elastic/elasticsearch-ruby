@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The grant type and user's credential (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-activate-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-activate-user-profile.html
         #
         def activate_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.activate_user_profile' }

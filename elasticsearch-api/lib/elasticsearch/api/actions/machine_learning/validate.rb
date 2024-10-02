@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job config (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/machine-learning/current/ml-jobs.html
+        # @see https://www.elastic.co/guide/en/machine-learning/8.16/ml-jobs.html
         #
         def validate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.validate' }

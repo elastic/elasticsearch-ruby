@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The configuration for the target index (`settings` and `aliases`)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-split-index.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/indices-split-index.html
         #
         def split(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.split' }

@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cat-recovery.html
         #
         def recovery(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.recovery' }

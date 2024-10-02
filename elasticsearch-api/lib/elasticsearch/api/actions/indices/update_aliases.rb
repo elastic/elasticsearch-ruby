@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The definition of `actions` to perform (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/indices-aliases.html
         #
         def update_aliases(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.update_aliases' }

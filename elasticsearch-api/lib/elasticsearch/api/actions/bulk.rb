@@ -40,7 +40,7 @@ module Elasticsearch
       # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
       # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-bulk.html
       #
       def bulk(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'bulk' }

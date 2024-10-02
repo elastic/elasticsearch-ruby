@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/modules-snapshots.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete' }
