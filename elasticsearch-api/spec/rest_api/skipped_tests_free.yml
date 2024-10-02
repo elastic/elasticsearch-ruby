@@ -150,3 +150,6 @@
 -
   :file: 'simulate.ingest/10_basic.yml'
   :description: 'Test mapping validation from templates'
+-
+  :file: 'indices.split/40_routing_partition_size.yml'
+  :description: '*'

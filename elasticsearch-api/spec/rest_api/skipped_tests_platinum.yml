@@ -49,7 +49,9 @@
 -
   :file: 'snapshot/10_basic.yml'
   :description: 'Create a source only snapshot and then restore it'
-
+-
+  :file: 'snapshot/10_basic.yml'
+  :description: 'Failed to snapshot indices with synthetic source'
 -
   :file: 'token/10_basic.yml'
   :description: "Test invalidate user's tokens"
