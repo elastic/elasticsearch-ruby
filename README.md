@@ -83,6 +83,18 @@ Elasticsearch language clients are only backwards compatible with default distri
 | 8.x         | → | 8.x                    | 8.x       |
 | main        | → | main                   |           |
 
+## Try Elasticsearch and Kibana locally
+
+If you want to try Elasticsearch and Kibana locally, you can run the following command:
+
+```bash
+curl -fsSL https://elastic.co/start-local | sh
+```
+
+This will run Elasticsearch at http://localhost:9200 and Kibana at http://localhost:5601 using Docker.
+
+More information is available [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/run-elasticsearch-locally.html).
+
 ## Development
 
 See [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
