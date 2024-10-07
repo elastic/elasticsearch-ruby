@@ -25,7 +25,7 @@ module Elasticsearch
         # Returns high-level overview of cluster statistics.
         #
         # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [Boolean] :include_remotes Include remote cluster data into the response (default: false)
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
