@@ -82,6 +82,9 @@ describe 'Rest API YAML tests' do
             # ./run_task_groups.rb
             run_rspec_matchers_on_task_group(task_group, test)
           end
+        rescue StandardError => e
+          LOGGER.error e
+          raise e
         end
       end
     end
