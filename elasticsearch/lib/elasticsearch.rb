@@ -160,6 +160,7 @@ module Elasticsearch
 
     def sent_user_agent?(arguments)
       return unless (headers = arguments&.[](:transport_options)&.[](:headers))
+
       !!headers.keys.detect { |h| h =~ /user-?_?agent/ }
     end
 
