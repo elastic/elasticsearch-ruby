@@ -59,6 +59,7 @@ end
 RSpec.configure do |config|
   config.include(HelperModule)
   config.add_formatter('documentation')
+  config.filter_run_excluding skip: true
   if defined?(JRUBY_VERSION)
     config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-jruby-#{JRUBY_VERSION}.html")
   else
