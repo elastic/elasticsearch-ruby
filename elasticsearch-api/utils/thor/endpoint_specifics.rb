@@ -39,6 +39,7 @@ module Elasticsearch
         indices.delete
         indices.delete_template
         indices.flush_synced
+        query_rules.delete_ruleset
         security.get_role
         security.get_user
         snapshot.delete
