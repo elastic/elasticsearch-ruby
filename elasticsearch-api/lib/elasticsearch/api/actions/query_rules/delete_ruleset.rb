@@ -48,11 +48,19 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
-          Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, request_opts)
-          )
+          if Array(arguments[:ignore]).include?(404)
+            Utils.__rescue_from_not_found do
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers, request_opts)
+              )
+            end
+          else
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers, request_opts)
+            )
+          end
         end
       end
     end
