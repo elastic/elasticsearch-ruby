@@ -58,12 +58,14 @@ end
 
 RSpec.configure do |config|
   config.include(HelperModule)
-  config.add_formatter('documentation')
   config.filter_run_excluding skip: true
+  config.add_formatter('progress')
   if defined?(JRUBY_VERSION)
     config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-jruby-#{JRUBY_VERSION}.html")
+    config.add_formatter('documentation', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-jruby-#{JRUBY_VERSION}.log")
   else
     config.add_formatter('RSpec::Core::Formatters::HtmlFormatter', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
+    config.add_formatter('documentation', "tmp/elasticsearch-#{ENV['TEST_SUITE']}-#{RUBY_VERSION}.html")
   end
   if ENV['BUILDKITE']
     require_relative "./rspec_formatter.rb"
