@@ -19,6 +19,9 @@ require 'spec_helper'
 require_relative 'rest_api_tests_helper'
 require_relative './run_rspec_matchers'
 
+# LOGGER logs to stdout since we want to see if there are any errors in the running of the tests.
+# The client has a tracer/logger defined in ./rest_api_tests_helper.rb, ENV['LOG_STDOUT'] set to
+# true will log to stdout instead of a log file:
 LOGGER = Logger.new($stdout)
 CLUSTER_FEATURES = ADMIN_CLIENT.features.get_features['features'].map { |f| f['name'] }
 
