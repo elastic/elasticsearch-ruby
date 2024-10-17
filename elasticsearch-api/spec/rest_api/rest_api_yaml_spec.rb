@@ -86,7 +86,7 @@ describe 'Rest API YAML tests' do
             run_rspec_matchers_on_task_group(task_group, test)
           end
         rescue StandardError => e
-          LOGGER.error e
+          LOGGER.error "#{context_name} - #{e}"
           raise e
         end
       end
