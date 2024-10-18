@@ -141,24 +141,12 @@ module Elasticsearch
           @response = client.send(method, arguments)
           client
         when 'headers'
-          headers = prepare_arguments(args, test)
-          host = client.transport.instance_variable_get('@hosts')
           transport_options = client.transport.instance_variable_get('@options')&.dig(:transport_options) || {}
-          if ENV['QUIET'] == 'true'
-            # todo: create a method on Elasticsearch::Client that can clone the client with new options
-            Elasticsearch::Client.new(
-              host: host,
-              transport_options: transport_options.merge(headers: headers)
-            )
-          else
-            Elasticsearch::Client.new(
-              host: host,
-              tracer: Logger.new($stdout),
-              transport_options: transport_options.merge(headers: headers)
-            )
-          end
-        when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex', 'warnings_regex'
-          client
+          Elasticsearch::Client.new(
+            hosts: client.transport.hosts,
+            tracer: client.transport.tracer || nil,
+            transport_options: transport_options.merge(headers: prepare_arguments(args, test))
+          )
         when 'put_trained_model_alias'
           args.merge!('reassign' => true) unless args['reassign'] === false
           @response = client.send(method, prepare_arguments(args, test))
@@ -186,6 +174,8 @@ module Elasticsearch
             args[key] = value.gsub(value, test.cached_values[value.gsub('$', '')]) if value.match?(/^\$/)
           end
           @response = client.send(method, prepare_arguments(args, test))
+          client
+        when 'catch', 'warnings', 'allowed_warnings', 'allowed_warnings_regex', 'warnings_regex'
           client
         else
           @response = client.send(method, prepare_arguments(args, test))

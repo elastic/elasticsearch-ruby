@@ -48,14 +48,21 @@ else
   transport_options = {}
 end
 
-ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options)
+# DEBUG: For easier debugging, set LOG_STDOUT env variable to true
+output = if ENV['LOG_STDOUT'] == 'true'
+           $stdout
+         else
+           File.expand_path("../../tmp/tracer_log-#{ENV['TEST_SUITE']}-#{ENV['RUBY_VERSION']}.log", __dir__)
+         end
+logger = Logger.new(output)
 
+ADMIN_CLIENT = Elasticsearch::Client.new(host: host, transport_options: transport_options, tracer: logger)
 DEFAULT_CLIENT = if ENV['QUIET'] == 'true'
                    Elasticsearch::Client.new(host: host, transport_options: transport_options)
                  else
                    Elasticsearch::Client.new(
                      host: host,
-                     tracer: Logger.new($stdout),
+                     tracer: logger,
                      transport_options: transport_options
                    )
                  end

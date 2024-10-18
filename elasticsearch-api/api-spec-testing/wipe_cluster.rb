@@ -15,9 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require_relative 'logging'
 require_relative 'custom_cleanup'
-include Elasticsearch::RestAPIYAMLTests::Logging
 
 module Elasticsearch
   module RestAPIYAMLTests
@@ -151,7 +149,7 @@ module Elasticsearch
           unexpected_ilm_policies = client.index_lifecycle_management.get_lifecycle
           unexpected_ilm_policies.reject! { |k, _| preserve_policy?(k) }
           unless unexpected_ilm_policies.empty?
-            logger.info(
+            client.logger.info(
               "Expected no ILM policies after deletions, but found #{unexpected_ilm_policies.keys.join(',')}"
             )
           end
@@ -166,7 +164,7 @@ module Elasticsearch
           unexpected_templates << legacy_templates.keys.reject { |t| platinum_template?(t) }
 
           unless unexpected_templates.reject(&:empty?).empty?
-            logger.info(
+            client.logger.info(
               "Expected no templates after deletions, but found #{unexpected_templates.join(',')}"
             )
           end
@@ -211,7 +209,7 @@ module Elasticsearch
             end
             break unless count.positive? && Time.now.to_i < (start_time + 1)
           end
-          logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
+          client.logger.debug("Waited for #{count} pending rollup tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def delete_all_slm_policies(client)
@@ -247,7 +245,7 @@ module Elasticsearch
                 response = client.snapshot.get(repository: repository, snapshot: '_all', ignore_unavailable: true)
                 response['snapshots'].each do |snapshot|
                   if snapshot['state'] != 'SUCCESS'
-                    logger.debug("Found snapshot that did not succeed #{snapshot}")
+                    client.logger.debug("Found snapshot that did not succeed #{snapshot}")
                   end
                   client.snapshot.delete(repository: repository, snapshot: snapshot['snapshot'], ignore: 404)
                 end
@@ -261,7 +259,7 @@ module Elasticsearch
           begin
             client.indices.delete_data_stream(name: '*', expand_wildcards: 'all')
           rescue StandardError => e
-            logger.error "Caught exception attempting to delete data streams: #{e}"
+            client.logger.error "Caught exception attempting to delete data streams: #{e}"
             client.indices.delete_data_stream(name: '*')
           end
         end
@@ -290,14 +288,13 @@ module Elasticsearch
           end
 
           # Always check for legacy templates
-          templates = client.indices.get_template
-          templates.each do |name, _|
+          client.indices.get_template.each_key do |name|
             next if platinum_template?(name)
 
             begin
               client.indices.delete_template(name: name)
             rescue StandardError => e
-              logger.info("Unable to remove index template #{name}")
+              client.logger.info("Unable to remove index template #{name} - #{e}")
             end
           end
         end
@@ -331,7 +328,6 @@ module Elasticsearch
             end
             break unless count.positive? && Time.now.to_i < (start_time + 5)
           end
-          logger.debug("Waited for #{count} pending cluster tasks for #{Time.now.to_i - start_time}s.") if count.positive?
         end
 
         def skippable_task?(task)
