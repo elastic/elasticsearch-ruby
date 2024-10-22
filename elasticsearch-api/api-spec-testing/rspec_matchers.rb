@@ -174,7 +174,7 @@ RSpec::Matchers.define :match_response do |pairs, test|
 
   failure_message do |response|
     "the expected response pair/value(s) #{@mismatched_pairs}" +
-        " does not match the pair/value(s) in the response #{response}"
+      " does not match the pair/value(s) in the response #{response}"
   end
 
   def sanitize_pairs(expected_pairs)
@@ -235,8 +235,14 @@ RSpec::Matchers.define :match_response do |pairs, test|
       when Hash
         compare_hash(expected_value, actual_value, test)
       when Array
-        unless compare_array(expected_value, actual_value, test, actual_hash)
-          @mismatched_pairs.merge!(expected_key => expected_value)
+        begin
+          unless compare_array(expected_value.sort, actual_value.sort, test, actual_hash)
+            @mismatched_pairs.merge!(expected_key => expected_value)
+          end
+        rescue TypeError, ArgumentError
+          unless compare_array(expected_value, actual_value, test, actual_hash)
+            @mismatched_pairs.merge!(expected_key => expected_value)
+          end
         end
       when String
         unless compare_string(expected_value, actual_value, test, actual_hash)
@@ -283,6 +289,8 @@ RSpec::Matchers.define :match_response do |pairs, test|
         return false unless compare_array(value, actual[i], test, response)
       when String
         return false unless compare_string(value, actual[i], test, response)
+      else
+        true
       end
     end
   end
