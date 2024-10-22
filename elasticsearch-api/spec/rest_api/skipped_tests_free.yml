@@ -165,3 +165,45 @@
 -
   :file: 'ingest_geoip/60_ip_location_databases.yml'
   :description: '*'
+-
+  :file: 'get/100_synthetic_source.yml'
+  :description: 'fetch without refresh also produces synthetic source'
+-
+  :file: 'get/100_synthetic_source.yml'
+  :description: 'flattened field'
+-
+  :file: 'get/100_synthetic_source.yml'
+  :description: 'flattened field with ignore_above and arrays'
+-
+  :file: 'index/91_metrics_no_subobjects.yml'
+  :description: 'Metrics object indexing with synthetic source'
+-
+  :file: 'indices.create/20_synthetic_source.yml'
+  :description: '*'
+-
+  :file: 'indices.create/21_synthetic_source_stored.yml'
+  :description: '*'
+-
+  :file: 'indices.put_mapping/10_basic.yml'
+  :description: 'disabling synthetic source fails'
+-
+  :file: 'logsdb/20_source_mapping.yml'
+  :description: 'synthetic _source is default'
+-
+  :file: 'index/92_metrics_auto_subobjects.yml'
+  :description: 'Metrics object indexing with synthetic source'
+-
+  :file: 'tsdb/20_mapping.yml'
+  :description: 'Synthetic source'
+-
+  :file: 'update/100_synthetic_source.yml'
+  :description: 'keyword'
+-
+  :file: 'search.highlight/50_synthetic_source.yml'
+  :description: 'text multi fvh source order'
+-
+  :file: 'search.highlight/50_synthetic_source.yml'
+  :description: 'text multi fvh score order'
+-
+  :file: 'update/100_synthetic_source.yml'
+  :description: 'stored text'
