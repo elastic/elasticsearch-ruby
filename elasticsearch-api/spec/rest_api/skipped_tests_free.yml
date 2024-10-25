@@ -207,3 +207,6 @@
 -
   :file: 'update/100_synthetic_source.yml'
   :description: 'stored text'
+-
+  :file: 'cluster.desired_nodes/11_old_format.yml'
+  :description: '*'
