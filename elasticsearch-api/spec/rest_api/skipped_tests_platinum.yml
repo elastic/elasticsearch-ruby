@@ -240,3 +240,6 @@
 -
   :file: 'user_profile/40_has_privileges.yml'
   :description: '*'
+-
+  :file: 'esql/60_usage.yml'
+  :description: 'Basic ESQL usage output (telemetry) non-snapshot version'
