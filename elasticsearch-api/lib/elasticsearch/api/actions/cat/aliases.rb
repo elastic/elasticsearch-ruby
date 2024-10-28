@@ -26,7 +26,6 @@ module Elasticsearch
         #
         # @option arguments [List] :name A comma-separated list of alias names to return
         # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [List] :h Comma-separated list of column names to display
         # @option arguments [Boolean] :help Return help information
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
