@@ -98,7 +98,6 @@ namespace :automation do
   task :bumpmatrix, :version do |_, args|
     abort('[!] Required argument [version] missing') unless (version = args[:version])
     gh_actions = Dir.glob(File.expand_path('../.github/workflows/*.yml', __dir__))
-
     files = gh_actions + ['.buildkite/pipeline.yml']
     regexp = Regexp.new(/([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}?+(-SNAPSHOT)?)/)
     files.each do |file|
@@ -108,10 +107,10 @@ namespace :automation do
         yaml = YAML.safe_load(content)
         branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
         yaml_tests_branch = yaml['steps'][1]['env']['ES_YAML_TESTS_BRANCH']
-        next if yaml_tests_branch == 'main'
-
-        content.gsub!(yaml_tests_branch, branch)
-        puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+        unless ['main', '8.x'].include? yaml_tests_branch
+          content.gsub!(yaml_tests_branch, branch)
+          puts "[#{yaml_tests_branch}] -> [#{branch}] in #{file.gsub('./', '')}"
+        end
       end
       match = content.match(regexp)
       next if match.nil?
