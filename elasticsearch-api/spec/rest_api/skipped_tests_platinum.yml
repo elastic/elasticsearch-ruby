@@ -214,3 +214,6 @@
 -
   :file: 'esql/180_match_operator.yml'
   :description: '*'
+-
+  :file: 'esql/60_usage.yml'
+  :description: 'Basic ESQL usage output (telemetry) non-snapshot version'
