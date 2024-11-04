@@ -459,7 +459,12 @@ module Elasticsearch
           return unless models['trained_model_configs']
 
           models['trained_model_configs'].each do |model|
-            client.ml.delete_trained_model(model_id: model['model_id'], force: true, ignore: 400)
+            client.ml.delete_trained_model(
+              model_id: model['model_id'],
+              force: true,
+              ignore: 400,
+              timeout: '10s'
+            )
           end
         end
       end
