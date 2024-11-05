@@ -213,3 +213,15 @@
 -
   :file: 'range/20_synthetic_source.yml'
   :description: '*'
+-
+  :file: 'logsdb/20_source_mapping.yml'
+  :description: 'disabled _source is not supported'
+-
+  :file: 'logsdb/20_source_mapping.yml'
+  :description: 'include/exclude is not supported with synthetic _source'
+-
+  :file: 'tsdb/20_mapping.yml'
+  :description: 'disabled source is not supported'
+-
+  :file: 'tsdb/20_mapping.yml'
+  :description: 'source include/exclude'
