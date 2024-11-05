@@ -243,3 +243,6 @@
 -
   :file: 'esql/60_usage.yml'
   :description: 'Basic ESQL usage output (telemetry) non-snapshot version'
+-
+  :file: 'ml/inference_crud.yml'
+  :description: '*' # Being tested in elasticsearch-clients-tests
