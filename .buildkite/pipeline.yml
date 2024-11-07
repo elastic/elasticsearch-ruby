@@ -33,7 +33,9 @@ steps:
       TRANSPORT_VERSION: "{{ matrix.transport }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       TEST_SUITE: "platinum"
+      DEBUG: true
     command: ./.buildkite/run-yaml-tests.sh
+    artifact_paths: "elasticsearch-api/tmp/*"
   - wait: ~
     continue_on_failure: true
   - label: "Log Results"
