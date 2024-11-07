@@ -27,6 +27,8 @@ Dir[ File.expand_path('../api/actions/**/*.rb', __FILE__) ].each   { |f| require
 Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require f }
 
 module Elasticsearch
+  # This is the main module for including all API endpoint functions
+  # It includes the namespace modules from ./api/actions
   module API
     DEFAULT_SERIALIZER = MultiJson
 
