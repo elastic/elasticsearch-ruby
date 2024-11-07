@@ -4,7 +4,7 @@
 
 **Refer to the [official documentation on Elasticsearch API](https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/api.html).**
 
-The `elasticsearch-api` library provides a Ruby implementation of the [Elasticsearch](http://elasticsearch.com) REST API. It does not provide an Elasticsearch client; see the [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby/) library.
+The `elasticsearch-api` library provides a Ruby implementation of the [Elasticsearch](http://elasticsearch.com) REST API. It does not provide an Elasticsearch client. See [elasticsearch](https://github.com/elastic/elasticsearch-ruby) and the [`elastic-transport`](https://github.com/elastic/elastic-transport-ruby/) libraries for a full Elasticsearch client and HTTP transport layer respectively.
 
 We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
@@ -15,17 +15,17 @@ Language clients are forward compatible; meaning that clients support communicat
 
 Refer to [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
 
-We run the test suite for Elasticsearch's Rest API tests. You can read more about this in [the test runner README](https://github.com/elastic/elasticsearch-ruby/tree/main/api-spec-testing#rest-api-yaml-test-runner).
+The integration tests on this project run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) with the [Elasticsearch Tests Runner](https://github.com/elastic/es-test-runner-ruby/) library. This runs in CI against an Elasticsearch cluster in Docker. You can run a docker container with Elasticsearch with a Rake task from the root directory of this project:
 
-The `rest_api` task needs the test files from Elasticsearch. You can run the rake task to download the test artifacts in the root folder of the project. You can pass in a version to the task as a parameter:
+```bash
+$ rake es:up
+```
 
-`rake download_artifacts[8.5.0-SNAPSHOT]`
+This will start whatever version of Elasticsearch is set in the Buildkite pipeline file (`../.buildkite/pipeline.yml`) with security enabled. You can also specify a version and a suite ('free' or 'platinum' for security disabled/enabled):
 
-Or it can get the version from a running cluster to determine which version and build hash of Elasticsearch to use and test against:
-
-`TEST_ES_SERVER=http://localhost:9200 rake es:download_artifacts`
-
-This will download the necessary files used for the integration tests to `./tmp`.
+```bash
+$ rake es:start[version,suite] # e.g. rake es:start[9.0.0-SNAPSHOT, free]
+```
 
 ### Code generation
 
