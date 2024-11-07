@@ -51,7 +51,6 @@ import 'rake_tasks/elasticsearch_tasks.rake'
 import 'rake_tasks/test_tasks.rake'
 import 'rake_tasks/doc_generator.rake'
 import 'rake_tasks/docker_tasks.rake'
-import 'rake_tasks/update_version.rake'
 require 'pathname'
 
 CURRENT_PATH = Pathname(File.expand_path(__dir__))
