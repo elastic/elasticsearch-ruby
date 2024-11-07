@@ -1,29 +1,4 @@
 steps:
-  - label: ":elasticsearch: Elasticsearch :ruby: {{ matrix.ruby_source}}:{{ matrix.ruby }} :phone: Transport {{ matrix.transport }} - {{ matrix.suite }}"
-    agents:
-      provider: "gcp"
-    env:
-      RUBY_VERSION: "{{ matrix.ruby }}"
-      TEST_SUITE: "{{ matrix.suite }}"
-      STACK_VERSION: 9.0.0-SNAPSHOT
-      TRANSPORT_VERSION: "{{ matrix.transport }}"
-      RUBY_SOURCE: "{{ matrix.ruby_source }}"
-      QUIET: false
-    matrix:
-      setup:
-        suite:
-          - "free"
-          - "platinum"
-        ruby:
-          - "3.3"
-        transport:
-          - "8.3"
-        ruby_source:
-          - "ruby"
-    command: ./.buildkite/run-tests.sh
-    # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
-    # available in the Artifacts tab of a build in Buildkite.
-    artifact_paths: "elasticsearch-api/tmp/*"
   - label: ":yaml: YAML test suite :ruby: {{ matrix.ruby_source}}:{{ matrix.ruby }} :phone: Transport {{ matrix.transport }}"
     agents:
       provider: "gcp"
@@ -38,10 +13,19 @@ steps:
         transport:
           - "8.3"
       adjustments:
-        - with:
+        - with: # JRuby tests
             ruby: "9.4"
             ruby_source: "jruby"
             transport: "8.3"
+        # Test for different versions of transport
+        - with:
+            ruby: "3.3"
+            ruby_source: "ruby"
+            transport: "main"
+        - with:
+            ruby: "3.3"
+            ruby_source: "ruby"
+            transport: "8.2"
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
       STACK_VERSION: 9.0.0-SNAPSHOT
