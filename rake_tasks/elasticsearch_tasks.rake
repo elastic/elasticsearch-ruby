@@ -44,9 +44,8 @@ namespace :es do
   desc 'Automatically update to latest version'
   task :autoupdate_version do
     require 'tempfile'
-
     branch = `git branch --show-current`.strip
-    url = "https://snapshots.elastic.co/latest/#{branch}.json"
+    url = "https://artifacts-snapshot.elastic.co/elasticsearch/latest/#{branch}.json"
     file = Tempfile.new('version')
     download_file!(url, file)
     version = JSON.parse(file.read)['version']

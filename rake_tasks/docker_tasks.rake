@@ -16,40 +16,39 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require 'mkmf'
 
-namespace :docker do
+require 'mkmf' # For find_executable
+
+namespace :es do
   desc <<~DOC
     Start Elasticsearch in a Docker container.
 
     Default:
-      rake docker:start[version]
+      rake es:start[version]
     E.g.:
-      rake docker:start[7.x-SNAPSHOT]
+      rake es:start[9.x-SNAPSHOT]
 
     To start the container with Platinum, pass it in as a parameter:
-      rake docker:start[7.x-SNAPSHOT,platinum]
+      rake es:start[9.x-SNAPSHOT,platinum]
   DOC
   task :start, [:version, :suite] do |_, params|
     abort 'Docker not installed' unless find_executable 'docker'
-    abort 'You need to set a version, e.g. rake docker:start[7.x-SNAPSHOT]' unless params[:version]
+    abort 'You need to set a version, e.g. rake docker:start[9.x-SNAPSHOT]' unless params[:version]
 
     test_suite = params[:suite] || 'free'
     system("STACK_VERSION=#{params[:version]} TEST_SUITE=#{test_suite} ./.buildkite/run-elasticsearch.sh")
   end
-end
 
-namespace :es do
   desc <<~DOC
     Start Elasticsearch docker container (shortcut), reads STACK_VERSION from buildkite pipeline
   DOC
   task :up do
-    version = File.read('./.buildkite/pipeline.yml').
-                split("\n").
-                select { |a| a.include? 'STACK_VERSION' }
-                .first
-                .strip
-                .gsub('STACK_VERSION: ','')
-    Rake.application.invoke_task("docker:start[#{version}]")
+    version = File.read('./.buildkite/pipeline.yml')
+                  .split("\n")
+                  .select { |a| a.include? 'STACK_VERSION' }
+                  .first
+                  .strip
+                  .gsub('STACK_VERSION: ', '')
+    Rake.application.invoke_task("es:start[#{version}, platinum]")
   end
 end
