@@ -56,9 +56,9 @@ CLIENT = if ENV['ES_API_KEY']
          end
 
 tests_path = File.expand_path('./tmp', __dir__)
-
-logger = Logger.new($stdout)
-logger.level = Logger::WARN unless ENV['DEBUG']
+logfile = File.expand_path "../../tmp/tests-#{Elasticsearch::VERSION}-transport-#{ENV['TRANSPORT_VERSION']}-ruby-#{ENV['RUBY_VERSION']}.log", __dir__
+logger = Logger.new(File.open(logfile, 'w'))
+logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
 
 # If we're running in a release branch, download the corresponding branch for tests
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
