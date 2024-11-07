@@ -122,4 +122,9 @@ namespace :automation do
       File.open(file, 'w') { |f| f.puts content }
     end
   end
+
+  desc 'Show current client version'
+  task :version do
+    puts Elasticsearch::VERSION
+  end
 end
