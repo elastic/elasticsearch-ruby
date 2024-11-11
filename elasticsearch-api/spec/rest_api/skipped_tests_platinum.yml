@@ -214,3 +214,6 @@
 -
   :file: 'esql/180_match_operator.yml'
   :description: '*'
+-
+  :file: 'wildcard/30_ignore_above_synthetic_source.yml'
+  :description: 'wildcard field type ignore_above'
