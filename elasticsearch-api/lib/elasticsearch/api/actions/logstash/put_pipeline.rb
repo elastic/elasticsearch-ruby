@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The Pipeline to add or update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/logstash-api-put-pipeline.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-put-pipeline.html
         #
         def put_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.put_pipeline' }

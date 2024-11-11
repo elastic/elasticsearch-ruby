@@ -36,7 +36,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL and the prototype for the index request. (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-reindex.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/docs-reindex.html
       #
       def reindex(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'reindex' }

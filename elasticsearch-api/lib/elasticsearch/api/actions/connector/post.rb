@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The connector configuration.
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/create-connector-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/create-connector-api.html
         #
         def post(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.post' }

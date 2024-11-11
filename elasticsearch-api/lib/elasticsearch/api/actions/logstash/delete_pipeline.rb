@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The ID of the Pipeline
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/logstash-api-delete-pipeline.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/logstash-api-delete-pipeline.html
         #
         def delete_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.delete_pipeline' }

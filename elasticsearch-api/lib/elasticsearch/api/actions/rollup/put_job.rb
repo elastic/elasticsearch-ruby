@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The job configuration (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/rollup-put-job.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rollup-put-job.html
         #
         def put_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'rollup.put_job' }

@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :id A comma-separated list of ip location database configurations to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-ip-location-database-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-ip-location-database-api.html
         #
         def delete_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_ip_location_database' }

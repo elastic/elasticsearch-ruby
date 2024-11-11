@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/modules-snapshots.html
         #
         def get_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get_repository' }

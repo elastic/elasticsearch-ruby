@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :id A comma-separated list of ip location database configurations to get; use `*` to get all ip location database configurations
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/get-ip-location-database-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/get-ip-location-database-api.html
         #
         def get_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_ip_location_database' }

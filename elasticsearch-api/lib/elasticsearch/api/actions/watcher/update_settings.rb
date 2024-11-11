@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body An object with the new index settings (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/watcher-api-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/watcher-api-update-settings.html
         #
         def update_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.update_settings' }

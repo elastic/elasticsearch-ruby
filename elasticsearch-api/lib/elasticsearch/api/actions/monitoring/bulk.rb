@@ -37,7 +37,7 @@ module Elasticsearch
         # Deprecated since version 7.0.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/monitor-elasticsearch-cluster.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/monitor-elasticsearch-cluster.html
         #
         def bulk(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'monitoring.bulk' }

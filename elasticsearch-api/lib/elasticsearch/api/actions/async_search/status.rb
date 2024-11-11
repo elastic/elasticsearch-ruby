@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/async-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/async-search.html
         #
         def status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'async_search.status' }

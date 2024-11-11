@@ -36,7 +36,7 @@ module Elasticsearch
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-get.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/docs-get.html
       #
       def get_source(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_source' }

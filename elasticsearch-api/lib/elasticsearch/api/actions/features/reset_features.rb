@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/modules-snapshots.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/modules-snapshots.html
         #
         def reset_features(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'features.reset_features' }

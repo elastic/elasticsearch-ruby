@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v Verbose mode. Display column headers
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/cat-nodeattrs.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/cat-nodeattrs.html
         #
         def nodeattrs(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.nodeattrs' }

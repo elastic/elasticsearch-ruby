@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The request to create a cross-cluster API key (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-create-cross-cluster-api-key.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/security-api-create-cross-cluster-api-key.html
         #
         def create_cross_cluster_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.create_cross_cluster_api_key' }

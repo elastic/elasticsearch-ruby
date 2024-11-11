@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/list-query-rulesets.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/list-query-rulesets.html
         #
         def list_rulesets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.list_rulesets' }

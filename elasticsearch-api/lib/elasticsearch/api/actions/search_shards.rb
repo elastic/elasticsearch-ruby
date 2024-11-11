@@ -33,7 +33,7 @@ module Elasticsearch
       # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/search-shards.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/search-shards.html
       #
       def search_shards(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search_shards' }

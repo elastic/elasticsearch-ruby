@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/post-stream-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-stream-inference-api.html
         #
         def stream_inference(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.stream_inference' }

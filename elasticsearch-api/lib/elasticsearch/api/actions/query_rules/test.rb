@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The match criteria to test against the ruleset (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/test-query-ruleset.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/test-query-ruleset.html
         #
         def test(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.test' }

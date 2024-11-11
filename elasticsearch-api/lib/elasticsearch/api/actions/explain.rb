@@ -40,7 +40,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The query definition using the Query DSL
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/search-explain.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/search-explain.html
       #
       def explain(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'explain' }
