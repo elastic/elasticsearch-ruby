@@ -56,7 +56,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The search definition using the Query DSL (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-delete-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/docs-delete-by-query.html
       #
       def delete_by_query(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete_by_query' }

@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [List] :job_type A comma-separated list of job types
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/list-connector-sync-jobs-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/list-connector-sync-jobs-api.html
         #
         def sync_job_list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_list' }

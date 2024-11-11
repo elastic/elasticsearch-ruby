@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the transform to start
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/start-transform.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/start-transform.html
         #
         def start_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.start_transform' }

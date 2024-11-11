@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The async search ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/eql-search-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-search-api.html
         #
         def get_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'eql.get_status' }

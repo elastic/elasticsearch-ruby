@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The index settings to be updated (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/indices-update-settings.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-update-settings.html
         #
         def put_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_settings' }

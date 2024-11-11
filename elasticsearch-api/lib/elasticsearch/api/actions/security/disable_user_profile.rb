@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-disable-user-profile.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/security-api-disable-user-profile.html
         #
         def disable_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.disable_user_profile' }

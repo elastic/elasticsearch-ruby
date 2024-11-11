@@ -27,7 +27,7 @@ module Elasticsearch
       # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/docs-update-by-query.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/docs-update-by-query.html
       #
       def update_by_query_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'update_by_query_rethrottle' }

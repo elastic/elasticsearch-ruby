@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The filter update (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-update-filter.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/ml-update-filter.html
         #
         def update_filter(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_filter' }

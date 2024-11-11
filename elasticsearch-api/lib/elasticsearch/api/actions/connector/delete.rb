@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :delete_sync_jobs Determines whether associated sync jobs are also deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-connector-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-connector-api.html
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.delete' }

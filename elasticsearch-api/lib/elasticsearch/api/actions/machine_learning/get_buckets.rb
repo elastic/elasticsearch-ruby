@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Bucket selection details if not provided in URI
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-get-bucket.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/ml-get-bucket.html
         #
         def get_buckets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_buckets' }

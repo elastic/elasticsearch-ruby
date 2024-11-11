@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The start datafeed parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ml-start-datafeed.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/ml-start-datafeed.html
         #
         def start_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.start_datafeed' }

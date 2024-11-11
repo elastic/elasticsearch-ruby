@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/autoscaling-get-autoscaling-capacity.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/autoscaling-get-autoscaling-capacity.html
         #
         def get_autoscaling_capacity(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'autoscaling.get_autoscaling_capacity' }

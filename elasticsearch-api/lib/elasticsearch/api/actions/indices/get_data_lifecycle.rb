@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/data-streams-get-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/data-streams-get-lifecycle.html
         #
         def get_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_lifecycle' }

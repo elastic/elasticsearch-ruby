@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The roles to delete (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/security-api-bulk-delete-role.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/security-api-bulk-delete-role.html
         #
         def bulk_delete_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.bulk_delete_role' }

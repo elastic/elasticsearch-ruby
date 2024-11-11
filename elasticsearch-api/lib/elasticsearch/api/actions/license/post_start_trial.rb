@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/start-trial.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/start-trial.html
         #
         def post_start_trial(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post_start_trial' }

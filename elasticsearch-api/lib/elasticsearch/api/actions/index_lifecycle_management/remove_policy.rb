@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :index The name of the index to remove policy on
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ilm-remove-policy.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/ilm-remove-policy.html
         #
         def remove_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.remove_policy' }

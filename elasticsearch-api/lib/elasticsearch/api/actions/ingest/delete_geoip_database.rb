@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [List] :id A comma-separated list of geoip database configurations to delete
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/delete-geoip-database-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-geoip-database-api.html
         #
         def delete_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_geoip_database' }
