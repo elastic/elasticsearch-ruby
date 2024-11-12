@@ -1,5 +1,58 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.16.0 Release notes
+
+### Client
+* Tested versions of Ruby for 8.16.0: Ruby (MRI) 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+
+### API
+
+#### API changes
+
+* `capabilities` - Adds `local_only` boolean parameter: True if only the node being called should be considered.
+* `cluster.stats`- Removes `flat_settings` parameter, adds `include_remotes` boolean parameter: Include remote cluster data into the response (default: false)
+* `indices.get_data_stream` - Adds `verbose` boolean parameter: Whether the maximum timestamp for each data stream should be calculated and returned (default: false). Adds `master_timeout` (see below).
+* `query_rules.delete_ruleset` - Accepts `ignore: 404` common parameter.
+
+##### Timeout parameters:
+
+These parameters have been added to several APIs:
+
+* `master_timeout` timeout for processing on master node.
+* `timeout` timeout for acknowledgement of update from all nodes in cluster parameters.
+
+Added in:
+
+* `indices.create_data_stream` - both.
+* `indices.delete_data_stream` - `master_timeout`.
+* `indices.get_data_lifecycle` - `master_timeout`.
+* `indices.get_data_stream` - `master_timeout`.
+* `indices.migrate_to_data_stream` - both.
+* `indices.promote_data_stream` - `master_timeout`.
+* `search_shards` - `master_timeout`.
+
+#### APIs Promoted from Experimental to Stable:
+
+* `indices.delete_data_lifecycle`
+* `indices.explain_data_lifecycle`
+* `indices.get_data_lifecycle`
+* `indices.put_data_lifecycle`
+* `security.create_cross_cluster_api_key`
+* `security.update_cross_cluster_api_key`
+
+#### New APIs
+
+* `ingest.delete_ip_location_database` - Deletes an ip location database configuration.
+* `ingest.get_ip_location_database` - Returns the specified ip location database configuration.
+* `ingest.put_ip_location_database` - Puts the configuration for a ip location database to be downloaded.
+
+
+#### New Experimental APIs
+
+* `inference.stream_inference` - Perform streaming inference.
+* `query_rules.test` - Tests a query ruleset to identify the rules that would match input criteria.
+
+
 ## 8.15.0 Release notes
 
 ### Client
