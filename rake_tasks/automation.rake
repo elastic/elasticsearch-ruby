@@ -107,7 +107,7 @@ namespace :automation do
         require 'yaml'
         yaml = YAML.safe_load(content)
         branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-        yaml_tests_branch = yaml['steps'][1]['env']['ES_YAML_TESTS_BRANCH']
+        yaml_tests_branch = yaml['steps'][0]['env']['ES_YAML_TESTS_BRANCH']
         next if yaml_tests_branch == 'main'
 
         content.gsub!(yaml_tests_branch, branch)
@@ -117,6 +117,8 @@ namespace :automation do
       next if match.nil?
 
       old_version = match[1]
+      next if old_version == args[:version]
+
       content.gsub!(old_version, args[:version])
       puts "[#{old_version}] -> [#{version}] in #{file.gsub('./', '')}"
       File.open(file, 'w') { |f| f.puts content }
