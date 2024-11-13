@@ -64,4 +64,4 @@ logger.level = Logger::WARN unless ENV['DEBUG']
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
 branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
-Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger).run
+Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger).run(ENV['SINGLE_TEST'] || [])
