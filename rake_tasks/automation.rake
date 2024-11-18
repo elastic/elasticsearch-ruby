@@ -16,6 +16,7 @@
 # under the License.
 
 require 'fileutils'
+require 'yaml'
 require_relative '../elasticsearch/lib/elasticsearch/version'
 
 namespace :automation do
