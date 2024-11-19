@@ -56,7 +56,13 @@ CLIENT = if ENV['ES_API_KEY']
          end
 
 tests_path = File.expand_path('./tmp', __dir__)
-logfile = File.expand_path "../../tmp/tests-#{Elasticsearch::VERSION}-transport-#{ENV['TRANSPORT_VERSION']}-ruby-#{ENV['RUBY_VERSION']}.log", __dir__
+ruby_version = if defined? JRUBY_VERSION
+                 "jruby-#{JRUBY_VERSION}"
+               else
+                 "ruby-#{RUBY_VERSION}"
+               end
+log_filename = "es-#{Elasticsearch::VERSION}-transport-#{ENV['TRANSPORT_VERSION']}-#{ruby_version}.log"
+logfile = File.expand_path "../../tmp/#{log_filename}", __dir__
 logger = Logger.new(File.open(logfile, 'w'))
 logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
 

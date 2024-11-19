@@ -37,6 +37,7 @@ docker run \
        --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        --env "STACK_VERSION=${STACK_VERSION}" \
        --env "ES_YAML_TESTS_BRANCH=${ES_YAML_TESTS_BRANCH}" \
+       --env "DEBUG=${DEBUG}" \
        --volume $repo:/usr/src/app \
        --name elasticsearch-ruby \
        --rm \
