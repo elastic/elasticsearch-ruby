@@ -29,6 +29,7 @@ module Elasticsearch
       # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
       # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
       # @option arguments [String] :keep_alive Specific the time to live for the point in time (*Required*)
+      # @option arguments [Boolean] :allow_partial_search_results Specify whether to tolerate shards missing when creating the point-in-time, or otherwise throw an exception. (default: false)
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body An index_filter specified with the Query DSL
       #
