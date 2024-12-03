@@ -228,3 +228,6 @@
 -
   :file: 'cluster.stats/40_source_modes.yml'
   :description: 'test source modes'
+-
+  :file: 'search/520_fetch_fields.yml'
+  :description: 'fetch _seq_no via fields'
