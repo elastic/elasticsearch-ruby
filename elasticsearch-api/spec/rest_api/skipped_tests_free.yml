@@ -225,3 +225,6 @@
 -
   :file: 'tsdb/20_mapping.yml'
   :description: 'source include/exclude'
+-
+  :file: 'cluster.stats/40_source_modes.yml'
+  :description: 'test source modes'
