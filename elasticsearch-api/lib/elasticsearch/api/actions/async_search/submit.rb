@@ -27,11 +27,11 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
-        # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Number] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available.
         # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to true
         # @option arguments [String] :analyzer The analyzer to use for the query string
         # @option arguments [Boolean] :analyze_wildcard Specify whether wildcard and prefix queries should be analyzed (default: false)
+        # @option arguments [Boolean] :ccs_minimize_roundtrips When doing a cross-cluster search, setting it to true may improve overall search latency, particularly when searching clusters with a large number of shards. However, when set to true, the progress of searches on the remote clusters will not be received until the search finishes on all clusters.
         # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
         # @option arguments [String] :df The field to use as default where no field prefix is given in the query string
         # @option arguments [Boolean] :explain Specify whether to return detailed information about score computation as part of a hit
@@ -44,6 +44,7 @@ module Elasticsearch
         # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
         # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
         # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
+        # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
         # @option arguments [String] :q Query in the Lucene query string syntax
         # @option arguments [List] :routing A comma-separated list of specific routing values
         # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
