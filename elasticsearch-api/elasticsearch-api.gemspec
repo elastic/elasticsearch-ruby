@@ -38,12 +38,10 @@ Gem::Specification.new do |s|
     file.match(/^utils\/|^spec\/|^api-spec-testing\/|^Gemfile|^Rakefile/)
   end
   s.require_paths = ['lib']
-
   s.extra_rdoc_files  = ['README.md', 'LICENSE.txt']
   s.rdoc_options      = ['--charset=UTF-8']
 
-  s.required_ruby_version = '>= 2.5'
-
+  s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
   s.add_dependency 'multi_json'
 
   s.add_development_dependency 'ansi'
@@ -66,13 +64,10 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'cane'
   s.add_development_dependency 'escape_utils' unless defined? JRUBY_VERSION
-
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov'
-
   s.add_development_dependency 'test-unit', '~> 2'
-
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
   DESC
