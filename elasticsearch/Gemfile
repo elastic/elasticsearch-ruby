@@ -30,6 +30,4 @@ if ENV['TRANSPORT_VERSION'] == 'main'
   gem 'elastic-transport', git: 'https://github.com/elastic/elastic-transport-ruby.git', branch: 'main'
 end
 
-if RUBY_VERSION >= '3.0'
-  gem 'opentelemetry-sdk', require: false
-end
+gem 'opentelemetry-sdk', require: false if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0')
