@@ -37,8 +37,9 @@ module Elasticsearch
     #
     # @param [Hash] arguments - initializer arguments
     # @option arguments [String] :cloud_id - The Cloud ID to connect to Elastic Cloud
-    # @option arguments [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and `api_key`
-    #                                           joined by a colon as a String, or a hash with the `id` and `api_key` values.
+    # @option arguments [String, Hash] :api_key Use API Key Authentication, either the base64 encoding of `id` and
+    #                                           `api_key` joined by a colon as a String, or a hash with the `id` and
+    #                                           `api_key` values.
     # @option arguments [String] :opaque_id_prefix set a prefix for X-Opaque-Id when initializing the client.
     #                                              This will be prepended to the id you set before each request
     #                                              if you're using X-Opaque-Id
@@ -65,10 +66,10 @@ module Elasticsearch
           opaque_id = @opaque_id_prefix ? "#{@opaque_id_prefix}#{opaque_id}" : opaque_id
           args[4] = headers.merge('X-Opaque-Id' => opaque_id)
         end
-        unless @verified
-          verify_elasticsearch(*args, &block)
-        else
+        if @verified
           @transport.perform_request(*args, &block)
+        else
+          verify_elasticsearch(*args, &block)
         end
       else
         @transport.send(name, *args, &block)
@@ -101,6 +102,7 @@ module Elasticsearch
         raise e
       end
       raise Elasticsearch::UnsupportedProductError unless response.headers['x-elastic-product'] == 'Elasticsearch'
+
       @verified = true
       response
     end
@@ -175,7 +177,7 @@ module Elasticsearch
       end
       arguments[:transport_options] ||= {}
       arguments[:transport_options][:headers] ||= {}
-      arguments[:transport_options][:headers].merge!({ user_agent: user_agent.join('; ')})
+      arguments[:transport_options][:headers].merge!({ user_agent: user_agent.join('; ') })
     end
   end
 

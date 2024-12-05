@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/version'
 
@@ -45,10 +45,9 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = ['README.md', 'LICENSE.txt']
   s.rdoc_options      = ['--charset=UTF-8']
 
-  s.required_ruby_version = '>= 2.5'
-
-  s.add_dependency 'elastic-transport', '~> 8.3'
+  s.required_ruby_version = '>= 2.6' # For compatibility with JRuby 9.3
   s.add_dependency 'elasticsearch-api', '9.0.0'
+  s.add_dependency 'elastic-transport', '~> 8.3'
 
   s.add_development_dependency 'base64'
   s.add_development_dependency 'bundler'
