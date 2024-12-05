@@ -33,7 +33,10 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
-  s.files = `git ls-files`.split($/)
+  s.files = `git ls-files`.split($/).reject do |file|
+    file.match(/^spec\/|^Gemfile|^Rakefile/)
+  end
+
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.executables << 'elastic_ruby_console'
   s.test_files = s.files.grep(%r{^(test|spec|features)/})

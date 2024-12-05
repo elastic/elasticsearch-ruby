@@ -34,7 +34,9 @@ Gem::Specification.new do |s|
     'source_code_uri' => 'https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api',
     'bug_tracker_uri' => 'https://github.com/elastic/elasticsearch-ruby/issues'
   }
-  s.files         = `git ls-files`.split($/)
+  s.files = `git ls-files`.split($/).reject do |file|
+    file.match(/^utils\/|^spec\/|^api-spec-testing\/|^Gemfile|^Rakefile/)
+  end
   s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
