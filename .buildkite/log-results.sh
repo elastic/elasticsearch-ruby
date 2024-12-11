@@ -14,9 +14,11 @@ for f in $files; do
 
 "
 
-  FAILED_TESTS=`grep "E," $f`
+  FAILED_TESTS=`grep -A1 "E,.*" $f`
   if [[ -n "$FAILED_TESTS" ]]; then
-    buildkite-agent annotate --append "#### Failures in $f "
-    buildkite-agent annotate --append `grep "E," $f | awk -F '-- :' '{print $2}'`
+    buildkite-agent annotate --append "Failures in $f
+
+$FAILED_TESTS
+"
   fi
 done
