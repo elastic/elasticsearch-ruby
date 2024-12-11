@@ -226,3 +226,10 @@
 -
   :file: 'esql/150_lookup.yml'
   :description: '*'
+# TODO: once migrate is available in spec
+-
+  :file: 'migrate/10_reindex.yml'
+  :description: '*'
+-
+  :file: 'migrate/20_reindex_status.yml'
+  :description: '*'
