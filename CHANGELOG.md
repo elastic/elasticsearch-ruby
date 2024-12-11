@@ -1,5 +1,19 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.17.0 Release notes
+
+### Client
+* Tested versions of Ruby for 8.17.0: Ruby (MRI) 3.1, 3.2 and 3.3. JRuby 9.3 and JRuby 9.4.
+
+### API
+
+#### API changes
+* `async_search.submit` - Removes `keep_alive` parameter. Adds:
+  * `ccs_minimize_roundtrips` (Boolean): When doing a cross-cluster search, setting it to true may improve overall search latency, particularly when searching clusters with a large number of shards. However, when set to true, the progress of searches on the remote clusters will not be received until the search finishes on all clusters.
+  * `rest_total_hits_as_int` (Boolean): Indicates whether hits.total should be rendered as an integer or an object in the rest search response.
+* `open_point_in_time` - Adds `allow_partial_search_results` (Boolean) parameter: Specify whether to tolerate shards missing when creating the point-in-time, or otherwise throw an exception (default: false).
+
+
 ## 8.16.0 Release notes
 
 ### Client
