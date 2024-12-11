@@ -3,6 +3,9 @@
 
 [discrete]
 === 8.x
+
+* <<release_notes_8_17, 8.17 Release Notes>>
+* <<release_notes_8_16, 8.16 Release Notes>>
 * <<release_notes_8_15, 8.15 Release Notes>>
 * <<release_notes_8_14, 8.14 Release Notes>>
 * <<release_notes_8_13, 8.13 Release Notes>>
@@ -37,6 +40,8 @@
 * <<release_notes_75, 7.5 Release Notes>>
 * <<release_notes_70, 7.0 Release Notes>>
 
+include::817.asciidoc[]
+include::816.asciidoc[]
 include::815.asciidoc[]
 include::814.asciidoc[]
 include::813.asciidoc[]
