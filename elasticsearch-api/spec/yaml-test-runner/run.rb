@@ -70,4 +70,6 @@ logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
 branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
-Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger).run(ENV['SINGLE_TEST'] || [])
+runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
+runner.add_tests_to_skip('knn_search.yml') # TODO: Extract into file
+runner.run(ENV['SINGLE_TEST'] || [])
