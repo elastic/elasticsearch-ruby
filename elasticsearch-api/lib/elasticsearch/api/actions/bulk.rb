@@ -28,13 +28,12 @@ module Elasticsearch
       # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` (the default) then do nothing with refreshes. (options: true, false, wait_for)
       # @option arguments [String] :routing Specific routing value
       # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [String] :type Default document type for items which don't provide one
       # @option arguments [List] :_source True or false to return the _source field or not, or default list of fields to return, can be overridden on each sub-request
       # @option arguments [List] :_source_excludes Default list of fields to exclude from the returned _source field, can be overridden on each sub-request
       # @option arguments [List] :_source_includes Default list of fields to extract and return from the _source field, can be overridden on each sub-request
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
-      # @option arguments [Boolean] :require_alias Sets require_alias for all incoming documents. Defaults to unset (false)
-      # @option arguments [Boolean] :require_data_stream When true, requires the destination to be a data stream (existing or to-be-created). Default is false
+      # @option arguments [Boolean] :require_alias If true, the request’s actions must target an index alias. Defaults to false.
+      # @option arguments [Boolean] :require_data_stream If true, the request's actions must target a data stream (existing or to-be-created). Default to false
       # @option arguments [Boolean] :list_executed_pipelines Sets list_executed_pipelines for all incoming documents. Defaults to unset (false)
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
