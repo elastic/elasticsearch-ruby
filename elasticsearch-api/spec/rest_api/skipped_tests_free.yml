@@ -231,3 +231,6 @@
 -
   :file: 'search/520_fetch_fields.yml'
   :description: 'fetch _seq_no via fields'
+-
+  :file: 'indices.recovery/20_synthetic_source.yml'
+  :description: 'test recovery empty index with use_synthetic_source'
