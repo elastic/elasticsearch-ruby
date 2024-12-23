@@ -34,6 +34,6 @@ describe 'client.ingest#delete_ip_location_database' do
   end
 
   it 'performs the request' do
-    expect(client_double.ingest.delete_ip_location_database(id: 'foo', body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.ingest.delete_ip_location_database(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
