@@ -106,8 +106,8 @@ namespace :automation do
       if file == '.buildkite/pipeline.yml'
         require 'yaml'
         yaml = YAML.safe_load(content)
-        branch = version.match(/([0-9]+\.[0-9]+)\.[0-9]+.*/)[1]
-        yaml_tests_branch = yaml['steps'][1]['env']['ES_YAML_TESTS_BRANCH']
+        branch = version.match(/([0-9]+\.[0-9]+)[\.0-9]?.*/)&.[](1)
+        yaml_tests_branch = yaml['steps'][1]['env']['ES_YAML_TESTS_BRANCH'].to_s
         next if yaml_tests_branch == 'main'
 
         content.gsub!(yaml_tests_branch, branch)
