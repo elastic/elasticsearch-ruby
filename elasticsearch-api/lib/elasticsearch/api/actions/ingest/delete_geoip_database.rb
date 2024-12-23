@@ -25,6 +25,8 @@ module Elasticsearch
         # Deletes a geoip database configuration
         #
         # @option arguments [List] :id A comma-separated list of geoip database configurations to delete
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-geoip-database-api.html
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_ingest/geoip/database/#{Utils.__listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

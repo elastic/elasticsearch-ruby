@@ -25,6 +25,8 @@ module Elasticsearch
         # Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
         #
         # @option arguments [String] :policy The name of the index lifecycle policy
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_ilm/policy/#{Utils.__listify(_policy)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
