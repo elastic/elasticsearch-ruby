@@ -28,6 +28,8 @@ module Elasticsearch
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
         # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
+        # @option arguments [Boolean] :allow_partial_search_results Control whether the query should keep running in case of shard failures, and return partial results
+        # @option arguments [Boolean] :allow_partial_sequence_results Control whether a sequence query should return partial results or no results at all in case of shard failures. This option has effect only if [allow_partial_search_results] is true.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Eql request body. Use the `query` to limit the query scope. (*Required*)
         #
