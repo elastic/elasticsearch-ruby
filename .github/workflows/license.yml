@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.3'
+        ruby-version: '3.4'
     - name: Check license headers
       run: |
         ruby ./.github/check_license_headers.rb
