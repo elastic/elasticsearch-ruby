@@ -25,8 +25,8 @@ module Elasticsearch
         # Returns information about whether a particular component template exist
         #
         # @option arguments [String] :name The name of the template
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-component-template.html

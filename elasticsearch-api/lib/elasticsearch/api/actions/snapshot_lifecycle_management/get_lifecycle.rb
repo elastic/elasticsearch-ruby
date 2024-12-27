@@ -25,6 +25,8 @@ module Elasticsearch
         # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
         #
         # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html
@@ -50,7 +52,7 @@ module Elasticsearch
                    else
                      '_slm/policy'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
