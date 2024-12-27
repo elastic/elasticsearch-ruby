@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby: [ '3.3', 'jruby-9.4' ]
+        ruby: ['3.4', 'jruby-9.4']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

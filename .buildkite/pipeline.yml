@@ -15,6 +15,7 @@ steps:
           - "free"
           - "platinum"
         ruby:
+          - "3.4"
           - "3.3"
           - "3.2"
           - "3.1"
@@ -66,7 +67,7 @@ steps:
     agents:
       provider: "gcp"
     env:
-      RUBY_VERSION: "3.3"
+      RUBY_VERSION: "3.4"
       STACK_VERSION: 8.18.0-SNAPSHOT
       ES_YAML_TESTS_BRANCH: 8.x
       TRANSPORT_VERSION: "8.3"
