@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Deletes any snapshots that are expired according to the policy's retention rules.
         #
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
@@ -38,7 +40,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_slm/_execute_retention'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

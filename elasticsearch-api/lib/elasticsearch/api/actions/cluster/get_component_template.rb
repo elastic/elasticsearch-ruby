@@ -25,8 +25,8 @@ module Elasticsearch
         # Returns one or more component templates
         #
         # @option arguments [List] :name The comma separated names of the component templates
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
