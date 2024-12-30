@@ -25,6 +25,8 @@ module Elasticsearch
         # Creates or updates a snapshot lifecycle policy.
         #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
         #
@@ -49,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
