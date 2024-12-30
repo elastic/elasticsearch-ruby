@@ -25,6 +25,8 @@ module Elasticsearch
         # Immediately creates a snapshot according to the lifecycle policy, without waiting for the scheduled time.
         #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to be executed
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/slm-api-execute-lifecycle.html
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_slm/policy/#{Utils.__listify(_policy_id)}/_execute"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -24,6 +24,8 @@ module Elasticsearch
       module Actions
         # Halts all lifecycle management operations and stops the index lifecycle management (ILM) plugin
         #
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.16/ilm-stop.html
@@ -38,7 +40,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_ilm/stop'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
