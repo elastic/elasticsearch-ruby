@@ -41,3 +41,24 @@ steps:
     continue_on_failure: true
   - label: "Log Results"
     command: ./.buildkite/log-results.sh
+  - label: ":elasticsearch: Serverless :rspec: API Tests :ruby:"
+    agents:
+      provider: "gcp"
+    env:
+      RUBY_VERSION: "{{ matrix.ruby }}"
+      TEST_SUITE: 'api'
+      RUBY_SOURCE: "{{ matrix.ruby_source }}"
+      QUIET: false
+      EC_PROJECT_PREFIX: 'sl_ruby'
+      CLOUD_CREDENTIALS_PATH: 'secret/ci/elastic-elasticsearch-serverless-ruby/cloud-access'
+    matrix:
+      setup:
+        ruby:
+          - "3.4"
+        ruby_source:
+          - 'ruby'
+      adjustments:
+        - with:
+            ruby_source: 'jruby'
+            ruby: '9.4'
+    command: './.buildkite/run-serverless-tests.sh'
