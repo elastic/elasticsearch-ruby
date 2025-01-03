@@ -20,20 +20,38 @@ docker build \
 
 mkdir -p elasticsearch-api/tmp
 
+# TODO: Use TEST_SUITE for serverless/stack
+
 echo "--- :ruby: Running $TEST_SUITE tests"
-docker run \
-       -u "$(id -u)" \
-       --network="${network_name}" \
-       --env "TEST_ES_SERVER=${elasticsearch_url}" \
-       --env "ELASTIC_PASSWORD=${elastic_password}" \
-       --env "TEST_SUITE=${TEST_SUITE}" \
-       --env "ELASTIC_USER=elastic" \
-       --env "BUILDKITE=true" \
-       --env "QUIET=${QUIET}" \
-       --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
-       --env "STACK_VERSION=${STACK_VERSION}" \
-       --volume $repo:/usr/src/app \
-       --name elasticsearch-ruby \
-       --rm \
-       elastic/elasticsearch-ruby \
-       bundle exec rake es:download_artifacts test:platinum:integration test:rest_api
+
+if [[ "$TEST_SUITE" == "serverless" ]]; then
+  docker run \
+         -e "ELASTIC_USER=elastic" \
+         -e "BUILDKITE=true" \
+         -e "QUIET=${QUIET}" \
+         -e "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
+         -e "ELASTICSEARCH_URL=${ELASTICSEARCH_URL}" \
+         -e "API_KEY=${ES_API_SECRET_KEY}" \
+         --volume $repo:/usr/src/app \
+         --name elasticsearch-ruby \
+         --rm \
+         elastic/elasticsearch-ruby \
+         bundle exec rake info
+else
+  docker run \
+         -u "$(id -u)" \
+         --network="${network_name}" \
+         --env "TEST_ES_SERVER=${elasticsearch_url}" \
+         --env "ELASTIC_PASSWORD=${elastic_password}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
+         --env "ELASTIC_USER=elastic" \
+         --env "BUILDKITE=true" \
+         --env "QUIET=${QUIET}" \
+         --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
+         --env "STACK_VERSION=${STACK_VERSION}" \
+         --volume $repo:/usr/src/app \
+         --name elasticsearch-ruby \
+         --rm \
+         elastic/elasticsearch-ruby \
+         bundle exec rake es:download_artifacts test:platinum:integration test:rest_api
+fi
