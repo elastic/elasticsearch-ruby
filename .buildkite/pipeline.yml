@@ -46,7 +46,7 @@ steps:
       provider: "gcp"
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
-      TEST_SUITE: 'api'
+      TEST_SUITE: 'serverless'
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       QUIET: false
       EC_PROJECT_PREFIX: 'sl_ruby'
