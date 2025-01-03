@@ -37,11 +37,7 @@ steps:
       DEBUG: true
     command: ./.buildkite/run-yaml-tests.sh
     artifact_paths: "elasticsearch-api/tmp/*"
-  - wait: ~
-    continue_on_failure: true
-  - label: "Log Results"
-    command: ./.buildkite/log-results.sh
-  - label: ":elasticsearch: Serverless :rspec: API Tests :ruby:"
+  - label: ":elasticsearch: Serverless :rspec: API Tests :ruby: {{ matrix.ruby_source }} - {{ matrix.ruby }}"
     agents:
       provider: "gcp"
     env:
@@ -61,4 +57,8 @@ steps:
         - with:
             ruby_source: 'jruby'
             ruby: '9.4'
-    command: './.buildkite/run-serverless-tests.sh'
+    command: ./.buildkite/run-serverless-tests.sh
+  - wait: ~
+    continue_on_failure: true
+  - label: "Log Results"
+    command: ./.buildkite/log-results.sh
