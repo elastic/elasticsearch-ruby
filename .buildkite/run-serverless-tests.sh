@@ -35,7 +35,7 @@ docker run \
        -e "QUIET=${QUIET}" \
        -e "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        -e "ELASTICSEARCH_URL=${ELASTICSEARCH_URL}" \
-       -e "API_KEY=${ES_API_SECRET_KEY}" \
+       -e "ES_API_KEY=${ES_API_SECRET_KEY}" \
        --volume $repo:/usr/src/app \
        --name elasticsearch-ruby \
        --rm \
