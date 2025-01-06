@@ -25,6 +25,8 @@ module Elasticsearch
         # Deletes an existing snapshot lifecycle policy.
         #
         # @option arguments [String] :policy_id The id of the snapshot lifecycle policy to remove
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/slm-api-delete-policy.html
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
