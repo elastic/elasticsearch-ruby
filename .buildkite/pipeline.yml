@@ -46,7 +46,7 @@ steps:
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       QUIET: false
       EC_PROJECT_PREFIX: 'sl_ruby'
-      CLOUD_CREDENTIALS_PATH: 'secret/ci/elastic-elasticsearch-serverless-ruby/cloud-access'
+      CLOUD_CREDENTIALS_PATH: 'secret/ci/elastic-elasticsearch-ruby/cloud-access'
     matrix:
       setup:
         ruby:
