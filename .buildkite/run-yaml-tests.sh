@@ -13,6 +13,7 @@ echo "--- :elasticsearch: Starting Elasticsearch"
 DETACH=true bash $script_path/run-elasticsearch.sh
 
 export RUBY_VERSION=${RUBY_VERSION:-3.1}
+export BUILDKITE=${BUILDKITE:-false}
 export TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
 
 echo "--- :ruby: Building Docker image"
@@ -33,7 +34,7 @@ docker run \
        --env "TEST_ES_SERVER=${elasticsearch_url}" \
        --env "ELASTIC_PASSWORD=${elastic_password}" \
        --env "ELASTIC_USER=elastic" \
-       --env "BUILDKITE=true" \
+       --env "BUILDKITE=${BUILDKITE}" \
        --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        --env "STACK_VERSION=${STACK_VERSION}" \
        --env "ES_YAML_TESTS_BRANCH=${ES_YAML_TESTS_BRANCH}" \

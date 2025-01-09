@@ -7,6 +7,7 @@ set -euo pipefail
 repo=`pwd`
 
 export RUBY_VERSION=${RUBY_VERSION:-3.4}
+export BUILDKITE=${BUILDKITE:-false}
 export TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
 
 if [[ -z $EC_PROJECT_PREFIX ]]; then
@@ -31,8 +32,8 @@ docker build \
 echo "--- :ruby: Running $TEST_SUITE tests"
 docker run \
        -e "ELASTIC_USER=elastic" \
-       -e "BUILDKITE=true" \
        -e "QUIET=${QUIET}" \
+       -e "BUILDKITE=${BUILDKITE}" \
        -e "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
        -e "ELASTICSEARCH_URL=${ELASTICSEARCH_URL}" \
        -e "ES_API_KEY=${ES_API_SECRET_KEY}" \
