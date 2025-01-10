@@ -45,7 +45,7 @@ steps:
       TEST_SUITE: 'serverless'
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       QUIET: false
-      EC_PROJECT_PREFIX: 'sl_ruby'
+      EC_PROJECT_PREFIX: 'ruby'
       CLOUD_CREDENTIALS_PATH: 'secret/ci/elastic-elasticsearch-ruby/cloud-access'
     matrix:
       setup:
