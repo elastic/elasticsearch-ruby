@@ -12,6 +12,8 @@ export EC_PROJECT_NAME="$EC_PROJECT_PREFIX-$BUILDKITE_JOB_ID"
 CLOUD_ACCESS_KEY=$(vault read -field="$EC_ENV" $CLOUD_CREDENTIALS_PATH)
 echo "{\"api_key\":{\"$EC_ENV\":\"$CLOUD_ACCESS_KEY\"}}" > "$(pwd)/cloud.json"
 
+echo -e "--- Buildkite: ${BUILDKITE}"
+
 run_qaf() {
   cmd=$1
   docker run --rm \
@@ -20,7 +22,7 @@ run_qaf() {
          -e EC_REGION \
          -e EC_PROJECT_NAME \
          -e VAULT_TOKEN \
-         -e BUILDKITE \
+         -e "BUILDKITE=${BUILDKITE}" \
          -v "$(pwd)/cloud.json:/root/.elastic/cloud.json" \
          docker.elastic.co/appex-qa/qaf:latest \
          bash -c "$cmd"
