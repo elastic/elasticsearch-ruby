@@ -233,3 +233,6 @@
 -
   :file: 'migrate/20_reindex_status.yml'
   :description: '*'
+-
+  :file: 'migrate/30_create_from.yml'
+  :description: '*'
