@@ -40,17 +40,17 @@ steps:
           skip: true
         - with:
             suite: "free"
-            ruby: "3.3"
+            ruby: "3.4"
             ruby_source: "ruby"
             transport: "8.1"
         - with:
             suite: "free"
-            ruby: "3.3"
+            ruby: "3.4"
             ruby_source: "ruby"
             transport: "8.2"
         - with:
             suite: "free"
-            ruby: "3.3"
+            ruby: "3.4"
             ruby_source: "ruby"
             transport: "main"
         - with:
