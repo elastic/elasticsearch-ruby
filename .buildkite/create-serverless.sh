@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-export EC_REGISTER_BACKEND=appex-qa-team-cluster
+export EC_REGISTER_BACKEND=buildkite
 export EC_ENV=qa
 export EC_REGION=aws-eu-west-1
 # Using BUILDKITE_JOB_ID for the name to make it unique:
