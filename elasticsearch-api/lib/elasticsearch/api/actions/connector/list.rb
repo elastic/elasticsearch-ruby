@@ -34,6 +34,7 @@ module Elasticsearch
         # @option arguments [List] :connector_name A comma-separated list of connector names to fetch connector documents for
         # @option arguments [List] :service_type A comma-separated list of connector service types to fetch connector documents for
         # @option arguments [String] :query A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names
+        # @option arguments [Boolean] :include_deleted A flag indicating whether to return connectors that have been soft-deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-api.html

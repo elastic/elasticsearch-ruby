@@ -26,8 +26,8 @@ module Elasticsearch
         #
         # @option arguments [String] :name A pattern that returned template names must match
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
         # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the index template (default: false)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
