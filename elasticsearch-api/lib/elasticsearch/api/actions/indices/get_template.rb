@@ -26,8 +26,8 @@ module Elasticsearch
         #
         # @option arguments [List] :name The comma separated names of the index templates
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-template-v1.html
