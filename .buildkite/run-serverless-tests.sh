@@ -23,6 +23,7 @@ docker build \
 
 echo "--- :ruby: Running $TEST_SUITE tests"
 docker run \
+       -u "$(id -u)" \
        -e "ELASTIC_USER=elastic" \
        -e "QUIET=${QUIET}" \
        -e "BUILDKITE=${BUILDKITE}" \
@@ -33,4 +34,4 @@ docker run \
        --name elasticsearch-ruby \
        --rm \
        elastic/elasticsearch-ruby \
-       bundle exec rake info
+       bundle exec bundle exec rake test:yaml
