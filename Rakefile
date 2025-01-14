@@ -129,3 +129,12 @@ task :release do
     puts '-' * 80
   end
 end
+
+desc 'Server info'
+task :info do
+  require 'elasticsearch'
+
+  client = Elasticsearch::Client.new(url: ENV['TEST_ES_SERVER'], api_key: ENV['ES_API_KEY'])
+  info = client.info
+  puts "Connected to Elasticsearch cluster #{info['cluster_name']}"
+end

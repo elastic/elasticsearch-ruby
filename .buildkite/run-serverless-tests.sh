@@ -6,8 +6,11 @@ script_path=$(dirname $(realpath -s $0))
 set -euo pipefail
 repo=`pwd`
 
-export RUBY_VERSION=${RUBY_VERSION:-3.1}
+export RUBY_VERSION=${RUBY_VERSION:-3.4}
+export BUILDKITE=${BUILDKITE:-false}
 export TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
+ELASTICSEARCH_URL=`buildkite-agent meta-data get "ELASTICSEARCH_URL"`
+ES_API_SECRET_KEY=`buildkite-agent meta-data get "ES_API_SECRET_KEY"`
 
 echo "--- :ruby: Building Docker image"
 docker build \
@@ -18,22 +21,17 @@ docker build \
        --build-arg RUBY_SOURCE=$RUBY_SOURCE \
        .
 
-mkdir -p elasticsearch-api/tmp
-
 echo "--- :ruby: Running $TEST_SUITE tests"
 docker run \
        -u "$(id -u)" \
-       --network="${network_name}" \
-       --env "TEST_ES_SERVER=${elasticsearch_url}" \
-       --env "ELASTIC_PASSWORD=${elastic_password}" \
-       --env "TEST_SUITE=${TEST_SUITE}" \
-       --env "ELASTIC_USER=elastic" \
-       --env "BUILDKITE=true" \
-       --env "QUIET=${QUIET}" \
-       --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
-       --env "STACK_VERSION=${STACK_VERSION}" \
+       -e "ELASTIC_USER=elastic" \
+       -e "QUIET=${QUIET}" \
+       -e "BUILDKITE=${BUILDKITE}" \
+       -e "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
+       -e "ELASTICSEARCH_URL=${ELASTICSEARCH_URL}" \
+       -e "ES_API_KEY=${ES_API_SECRET_KEY}" \
        --volume $repo:/usr/src/app \
        --name elasticsearch-ruby \
        --rm \
        elastic/elasticsearch-ruby \
-       bundle exec rake es:download_artifacts test:platinum:integration test:rest_api
+       bundle exec bundle exec rake test:yaml

@@ -49,18 +49,13 @@ elsif uri.is_a?(URI::HTTP)
   transport_options = {}
 end
 
-CLIENT = if ENV['ES_API_KEY']
-           Elasticsearch::Client.new(host: host, api_key: ENV['ES_API_KEY'], transport_options: transport_options)
-         else
-           Elasticsearch::Client.new(host: host, transport_options: transport_options)
-         end
+options = { host: host, transport_options: transport_options, compression: true }
+options.merge!({ api_key: ENV['ES_API_KEY'] }) if ENV['ES_API_KEY']
+CLIENT = Elasticsearch::Client.new(options)
 
 tests_path = File.expand_path('./tmp', __dir__)
-ruby_version = if defined? JRUBY_VERSION
-                 "jruby-#{JRUBY_VERSION}"
-               else
-                 "ruby-#{RUBY_VERSION}"
-               end
+ruby_version = defined?(JRUBY_VERSION) ? "jruby-#{JRUBY_VERSION}" : "ruby-#{RUBY_VERSION}"
+
 log_filename = "es-#{Elasticsearch::VERSION}-transport-#{ENV['TRANSPORT_VERSION']}-#{ruby_version}.log"
 logfile = File.expand_path "../../tmp/#{log_filename}", __dir__
 logger = Logger.new(File.open(logfile, 'w'))
@@ -70,6 +65,7 @@ logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
 branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
+
 runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
 runner.add_tests_to_skip('knn_search.yml') # TODO: Extract into file
 runner.run(ENV['SINGLE_TEST'] || [])
