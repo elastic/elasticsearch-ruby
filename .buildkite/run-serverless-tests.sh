@@ -9,16 +9,8 @@ repo=`pwd`
 export RUBY_VERSION=${RUBY_VERSION:-3.4}
 export BUILDKITE=${BUILDKITE:-false}
 export TRANSPORT_VERSION=${TRANSPORT_VERSION:-8}
-
-if [[ -z $EC_PROJECT_PREFIX ]]; then
-  echo -e "\033[31;1mERROR:\033[0m Required environment variable [EC_PROJECT_PREFIX] not set\033[0m"
-  exit 1
-fi
-
-# Create a serverless project:
-source $script_path/create-serverless.sh
-# Make sure we remove projects:
-trap cleanup EXIT
+ELASTICSEARCH_URL=`buildkite-agent meta-data get "ELASTICSEARCH_URL"`
+ES_API_SECRET_KEY=`buildkite-agent meta-data get "ES_API_SECRET_KEY"`
 
 echo "--- :ruby: Building Docker image"
 docker build \
