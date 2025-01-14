@@ -51,7 +51,7 @@ steps:
       - touch ~/.elastic/cloud.json
       - echo "{\"api_key\":{\"qa\":\"$(vault read -field=qa secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" > ~/.elastic/cloud.json
       - ./.buildkite/create-serverless.sh
-  - label: "Run :elasticsearch: Serverless :rspec: Tests :ruby:"
+  - label: "Run :elasticsearch: Serverless :rspec: Tests :ruby: {{ matrix.ruby_source }} {{ matrix.ruby }}"
     key: run-serverless-tests
     depends_on:
       - step: create-serverless
@@ -61,6 +61,7 @@ steps:
       RUBY_VERSION: "{{ matrix.ruby }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       TEST_SUITE: serverless
+      ES_YAML_TESTS_BRANCH: main
       QUIET: false
     matrix:
       setup:
@@ -73,6 +74,7 @@ steps:
             ruby_source: 'jruby'
             ruby: '9.4'
     command: ./.buildkite/run-serverless-tests.sh
+    artifact_paths: "elasticsearch-api/tmp/*"
   - label: "Destroy :elasticsearch: Serverless projects"
     depends_on:
       - step: run-serverless-tests
