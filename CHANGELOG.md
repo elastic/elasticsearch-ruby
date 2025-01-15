@@ -1,5 +1,12 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.16.1 Release notes
+
+### Client
+
+* Fixes ScrollHelper issue #2556 - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
+
+
 ## 8.16.0 Release notes
 
 ### Client
