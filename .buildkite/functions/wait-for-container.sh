@@ -14,7 +14,7 @@ function wait_for_container {
     echo ""
     docker inspect -f "{{range .State.Health.Log}}{{.Output}}{{end}}" ${1}
     echo -e "\033[34;1mINFO:\033[0m waiting for node $1 to be up\033[0m"
-    sleep 5;
+    sleep 10;
   done;
 
   # Always show logs if the container is running, this is very useful both on CI as well as while developing
