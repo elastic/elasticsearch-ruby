@@ -35,7 +35,7 @@ if uri.is_a?(URI::HTTPS)
   raw_key = File.read("#{CERTS_PATH}/testnode.key")
   key = OpenSSL::PKey::RSA.new(raw_key)
   ca_file = File.expand_path("#{CERTS_PATH}/ca.crt")
-  host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze
+  host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze unless ENV['TEST_SUITE'] == 'serverless'
   transport_options = {
     ssl: {
       client_cert: certificate,
