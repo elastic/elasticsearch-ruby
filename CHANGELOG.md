@@ -1,5 +1,11 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.17.1 Release notes
+
+### Client
+
+* Fixes ScrollHelper issue #2556 - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
+
 ## 8.17.0 Release notes
 
 ### Client
@@ -13,6 +19,11 @@
   * `rest_total_hits_as_int` (Boolean): Indicates whether hits.total should be rendered as an integer or an object in the rest search response.
 * `open_point_in_time` - Adds `allow_partial_search_results` (Boolean) parameter: Specify whether to tolerate shards missing when creating the point-in-time, or otherwise throw an exception (default: false).
 
+## 8.16.1 Release notes
+
+### Client
+
+* Fixes ScrollHelper issue #2556 - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
 
 ## 8.16.0 Release notes
 

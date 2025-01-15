@@ -2,6 +2,16 @@
 === 8.16 Release notes
 
 [discrete]
+[[release_notes_8_16_1]]
+=== 8.16.1 Release notes
+
+[discrete]
+==== Client
+
+* Fixes ScrollHelper issue https://github.com/elastic/elasticsearch-ruby/issues/2556[#2556] - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
+
+
+[discrete]
 [[release_notes_8_16_0]]
 === 8.16.0 Release notes
 
