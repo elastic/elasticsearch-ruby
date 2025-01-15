@@ -43,12 +43,8 @@ module Elasticsearch
       # @yieldparam document [Hash] yields a document found in the search hits.
       #
       def each(&block)
-        @docs = []
-        @scroll_id = nil
-        refresh_docs
-        for doc in @docs do
-          refresh_docs
-          yield doc
+        until (docs = results).empty?
+          docs.each(&block)
         end
         clear
       end
@@ -70,16 +66,10 @@ module Elasticsearch
       #
       def clear
         @client.clear_scroll(body: { scroll_id: @scroll_id }) if @scroll_id
-        @docs = []
+        @scroll_id = nil
       end
 
       private
-
-      def refresh_docs
-        @docs ||= []
-        @docs << results
-        @docs.flatten!
-      end
 
       def initial_search
         response = @client.search(index: @index, scroll: @scroll, body: @body)
@@ -88,7 +78,7 @@ module Elasticsearch
       end
 
       def scroll_request
-        @client.scroll(body: {scroll: @scroll, scroll_id: @scroll_id})['hits']['hits']
+        @client.scroll(body: { scroll: @scroll, scroll_id: @scroll_id })['hits']['hits']
       end
     end
   end
