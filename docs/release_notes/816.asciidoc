@@ -2,6 +2,15 @@
 === 8.16 Release notes
 
 [discrete]
+[[release_notes_8_16_1]]
+=== 8.16.1 Release notes
+
+[discrete]
+==== Client
+
+* Fixes ScrollHelper issue https://github.com/elastic/elasticsearch-ruby/issues/2556[#2556] - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
+
+[discrete]
 [[release_notes_8_16_0]]
 === 8.16.0 Release notes
 
@@ -35,7 +44,7 @@ Added in:
 * `indices.promote_data_stream` - `master_timeout`.
 * `search_shards` - `master_timeout`.
 
-**APIs Promoted from Exprimental to Stable:**
+**APIs Promoted from Experimental to Stable:**
 
 * `indices.delete_data_lifecycle`
 * `indices.explain_data_lifecycle`
