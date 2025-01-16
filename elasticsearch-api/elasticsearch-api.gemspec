@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ansi'
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
-  s.add_development_dependency 'elasticsearch-test-runner' unless defined?(JRUBY_VERSION) && JRUBY_VERSION <= "9.4"
+  s.add_development_dependency 'elasticsearch-test-runner' unless defined?(JRUBY_VERSION) && JRUBY_VERSION <= '9.4'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'minitest-reporters', '>= 1.6'
   s.add_development_dependency 'mocha'
@@ -57,6 +57,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'yard'
 
   # Gems for testing integrations
+  s.add_development_dependency 'concurrent-ruby', '1.3.4' if defined? JRUBY_VERSION && JRUBY_VERSION < '9.4'
   s.add_development_dependency 'activesupport'
   s.add_development_dependency 'hashie'
   s.add_development_dependency 'jbuilder'
