@@ -234,3 +234,9 @@
 -
   :file: 'indices.recovery/20_synthetic_source.yml'
   :description: 'test recovery empty index with use_synthetic_source'
+-
+  :file: 'indices.create/10_basic.yml'
+  :description: 'Create lookup index'
+-
+  :file: 'indices.create/10_basic.yml'
+  :description: 'Create lookup index with one shard'
