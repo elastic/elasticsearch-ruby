@@ -56,7 +56,7 @@ CLIENT = Elasticsearch::Client.new(options)
 tests_path = File.expand_path('./tmp', __dir__)
 ruby_version = defined?(JRUBY_VERSION) ? "jruby-#{JRUBY_VERSION}" : "ruby-#{RUBY_VERSION}"
 
-log_filename = "es-#{Elasticsearch::VERSION}-transport-#{ENV['TRANSPORT_VERSION']}-#{ruby_version}.log"
+log_filename = "es-#{Elasticsearch::VERSION}-#{ENV['TEST_SUITE']}-transport-#{ENV['TRANSPORT_VERSION']}-#{ruby_version}.log"
 logfile = File.expand_path "../../tmp/#{log_filename}", __dir__
 logger = Logger.new(File.open(logfile, 'w'))
 logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
