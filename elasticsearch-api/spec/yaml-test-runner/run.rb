@@ -29,13 +29,17 @@ raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\
 password = ENV['ELASTIC_PASSWORD'] || 'changeme'
 uri = URI.parse(host)
 
+def serverless?
+  ENV['TEST_SUITE'] == 'serverless'
+end
+
 if uri.is_a?(URI::HTTPS)
   raw_certificate = File.read("#{CERTS_PATH}/testnode.crt")
   certificate = OpenSSL::X509::Certificate.new(raw_certificate)
   raw_key = File.read("#{CERTS_PATH}/testnode.key")
   key = OpenSSL::PKey::RSA.new(raw_key)
   ca_file = File.expand_path("#{CERTS_PATH}/ca.crt")
-  host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze unless ENV['TEST_SUITE'] == 'serverless'
+  host = "https://elastic:#{password}@#{uri.host}:#{uri.port}".freeze unless serverless?
   transport_options = {
     ssl: {
       client_cert: certificate,
@@ -49,8 +53,22 @@ elsif uri.is_a?(URI::HTTP)
   transport_options = {}
 end
 
-options = { host: host, transport_options: transport_options, compression: true }
+options = {
+  host: host,
+  transport_options: transport_options,
+}
 options.merge!({ api_key: ENV['ES_API_KEY'] }) if ENV['ES_API_KEY']
+
+if serverless?
+  options.merge!(
+    {
+      retry_on_status: [409],
+      retry_on_failure: 10,
+      delay_on_retry: 60_000,
+      request_timeout: 120
+    }
+  )
+end
 CLIENT = Elasticsearch::Client.new(options)
 
 tests_path = File.expand_path('./tmp', __dir__)
