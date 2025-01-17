@@ -47,6 +47,7 @@ if [[ "$TEST_SUITE" == "serverless" ]]; then
          --env "BUILDKITE=${BUILDKITE}" \
          --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
          --env "ES_YAML_TESTS_BRANCH=${ES_YAML_TESTS_BRANCH}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
          --env "DEBUG=${DEBUG}" \
          --env "QUIET=${QUIET}" \
          --volume $repo:/usr/src/app \
@@ -66,6 +67,7 @@ else
          --env "BUILDKITE=${BUILDKITE}" \
          --env "TRANSPORT_VERSION=${TRANSPORT_VERSION}" \
          --env "ES_YAML_TESTS_BRANCH=${ES_YAML_TESTS_BRANCH}" \
+         --env "TEST_SUITE=${TEST_SUITE}" \
          --env "DEBUG=${DEBUG}" \
          --env "QUIET=${QUIET}" \
          --volume $repo:/usr/src/app \
