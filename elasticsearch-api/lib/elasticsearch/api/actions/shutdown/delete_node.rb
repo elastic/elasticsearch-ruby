@@ -25,6 +25,8 @@ module Elasticsearch
         # Removes a node from the shutdown list. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
         #
         # @option arguments [String] :node_id The node id of node to be removed from the shutdown state
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current
@@ -48,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_nodes/#{Utils.__listify(_node_id)}/shutdown"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
