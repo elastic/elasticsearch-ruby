@@ -17,7 +17,7 @@ for f in $files; do
   FAILED_TESTS=`grep -A1 "E,.*" $f | sed 's/\#/-/g' | sed 's/^--/\n/g'`
   if [[ -n "$FAILED_TESTS" ]]; then
     buildkite-agent annotate --append "<details>"
-    buildkite-agent annotate --append "<summary>Failures in $f</summary>
+    buildkite-agent annotate --append "<summary>:x: Failures in $f</summary>
 $FAILED_TESTS
 </details>"
   fi
