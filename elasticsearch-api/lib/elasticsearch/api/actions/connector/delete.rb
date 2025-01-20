@@ -29,6 +29,7 @@ module Elasticsearch
         # support SLA of official GA features.
         #
         # @option arguments [String] :connector_id The unique identifier of the connector to be deleted.
+        # @option arguments [Boolean] :hard If true, the connector doc is deleted. If false, connector doc is marked as deleted (soft-deleted).
         # @option arguments [Boolean] :delete_sync_jobs Determines whether associated sync jobs are also deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
