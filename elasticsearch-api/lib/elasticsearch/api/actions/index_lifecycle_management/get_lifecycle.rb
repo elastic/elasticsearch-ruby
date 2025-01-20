@@ -25,6 +25,8 @@ module Elasticsearch
         # Returns the specified policy definition. Includes the policy version and last modified date.
         #
         # @option arguments [String] :policy The name of the index lifecycle policy
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/ilm-get-lifecycle.html
@@ -50,7 +52,7 @@ module Elasticsearch
                    else
                      '_ilm/policy'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
