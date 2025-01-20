@@ -25,7 +25,7 @@ module Elasticsearch
         # Returns cluster settings.
         #
         # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Boolean] :include_defaults Whether to return all default clusters setting.
         # @option arguments [Hash] :headers Custom HTTP headers
