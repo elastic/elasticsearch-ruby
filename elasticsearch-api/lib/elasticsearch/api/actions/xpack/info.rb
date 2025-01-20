@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Retrieves information about the installed X-Pack features.
         #
+        # @option arguments [Boolean] :human Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line. The default value is true.
         # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
         # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers

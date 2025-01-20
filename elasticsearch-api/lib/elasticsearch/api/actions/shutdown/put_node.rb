@@ -25,6 +25,8 @@ module Elasticsearch
         # Adds a node to be shut down. Designed for indirect use by ECE/ESS and ECK. Direct use is not supported.
         #
         # @option arguments [String] :node_id The node id of node to be shut down
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The shutdown type definition to register (*Required*)
         #
@@ -50,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_nodes/#{Utils.__listify(_node_id)}/shutdown"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -25,6 +25,8 @@ module Elasticsearch
         # Puts the configuration for a ip location database to be downloaded
         #
         # @option arguments [String] :id The id of the database configuration
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The database configuration definition (*Required*)
         #
@@ -50,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_ingest/ip_location/database/#{Utils.__listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
