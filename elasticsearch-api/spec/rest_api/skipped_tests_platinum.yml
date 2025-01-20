@@ -236,3 +236,6 @@
 -
   :file: 'migrate/30_create_from.yml'
   :description: '*'
+-
+  :file: 'esql/60_usage.yml'
+  :description: 'Basic ESQL usage output (telemetry) snapshot version'
