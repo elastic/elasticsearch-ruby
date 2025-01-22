@@ -1,6 +1,10 @@
 # Rest API YAML Test Runner
 
-The specs in `elasticsearch-api` automatically run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in the `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
+The integration tests on this project run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) with the [Elasticsearch Tests Runner](https://github.com/elastic/es-test-runner-ruby/) library. This runs in CI against an Elasticsearch cluster in Docker. The [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite) can still be ran following the instructions below:
+
+## Elasticsearch Test Suite
+
+The specs in `elasticsearch-api` can run the tests from [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite). The test runner is defined in the `spec` folder, starting with the `rest_api_yaml_spec.rb` file.
 
 You can run the tests with Rake. The main task is `rake test:rest_api`. This task will evaluate the `TEST_SUITE` environment variable. It will run either the `free` or `platinum` tests suites depending on the value of `TEST_SUITE`. If you don't set this value, the task will run the `free` test suite by default. To run the `platinum` test suite use:
 ```
