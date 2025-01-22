@@ -47,15 +47,15 @@ namespace :test do
     end
   end
 
-  desc 'Run rest api tests'
-  task rest_api: ['es:wait_for_green'] do
+  desc 'Run Elasticsearch test suite free tests.'
+  task es_free: ['es:wait_for_green'] do
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && bundle exec rake test:rest_api"
     puts "\n"
   end
 
-  desc 'Run security (Platinum) rest api yaml tests'
-  task security: 'es:wait_for_green' do
+  desc 'Run Elasticsearch test suite platinum tests.'
+  task es_platinum: 'es:wait_for_green' do
     puts '-' * 80
     sh "cd #{CURRENT_PATH.join('elasticsearch-api')} && unset BUNDLE_GEMFILE && TEST_SUITE=platinum bundle exec rake test:rest_api"
     puts "\n"

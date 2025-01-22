@@ -38,7 +38,7 @@ namespace :test do
     t.exclude_pattern = 'spec/platinum/**/*_spec.rb'
   end
 
-  desc 'Run Rest API Spec tests'
+  desc 'Run Elasticsearch test suite free tests.'
   RSpec::Core::RakeTask.new(:rest_api) do |t|
     test_dir = Rake.application.original_dir
     t.pattern = "#{test_dir}/spec/rest_api/rest_api_yaml_spec.rb"
