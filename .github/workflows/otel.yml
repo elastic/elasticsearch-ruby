@@ -42,4 +42,4 @@ jobs:
       - name: elasticsearch
         run: cd elasticsearch && bundle exec rake test:all
       - name: elasticsearch-api
-        run: rake es:download_artifacts[9.0.0-SNAPSHOT] && cd elasticsearch-api && bundle exec rake test:spec test:platinum:unit
+        run: rake es:download_artifacts[9.0.0-SNAPSHOT] && cd elasticsearch-api && bundle exec rake test:all
