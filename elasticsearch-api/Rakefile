@@ -32,10 +32,10 @@ namespace :test do
   end
 
   desc 'Run unit tests'
-  task unit: :spec
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = 'spec/elasticsearch/api/**/*_spec.rb'
-    t.exclude_pattern = 'spec/platinum/**/*_spec.rb'
+  task :unit
+  RSpec::Core::RakeTask.new(:unit) do |t|
+    t.pattern = 'spec/unit/**/*_spec.rb'
+    t.ruby_opts = '-W0'
   end
 
   desc 'Run Elasticsearch test suite free tests.'
@@ -55,29 +55,17 @@ namespace :test do
     ruby './spec/yaml-test-runner/run.rb'
   end
 
+  desc 'Run Integration tests'
+  RSpec::Core::RakeTask.new(:integration) do |t|
+    t.pattern = 'spec/integration/**/*_spec.rb'
+    t.ruby_opts = '-W0'
+  end
+
   namespace :platinum do
     desc 'Run Platinum Rest API Spec tests'
     RSpec::Core::RakeTask.new(:api) do
       ENV['TEST_SUITE'] = 'platinum'
       Rake::Task['test:rest_api'].invoke
-    end
-
-    desc 'Run Platinum Unit tests - DEPRECATED: Will be migrated to RSpec'
-    Rake::TestTask.new(:unit) do |test|
-      test.libs << 'spec/platinum/unit'
-      test.test_files = FileList['spec/platinum/unit/**/*_test.rb']
-      test.verbose = false
-      test.warning = false
-    end
-
-    desc 'Run Platinum Integration Specs'
-    RSpec::Core::RakeTask.new(:integration) do |t|
-      t.pattern = if ENV['TEST_SUITE'] == 'platinum'
-                    'spec/platinum/integration/**/*_spec.rb'
-                  else
-                    'spec/free/integration/**/*_spec.rb'
-                  end
-      t.ruby_opts = '-W0'
     end
   end
 end
