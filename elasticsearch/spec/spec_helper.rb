@@ -16,6 +16,7 @@
 # under the License.
 
 require 'elasticsearch'
+require 'openssl'
 require 'rspec'
 
 RSpec.configure do |config|
@@ -41,3 +42,18 @@ if ENV['TEST_WITH_OTEL'] == 'true'
     c.add_span_processor span_processor
   end
 end
+
+CERTS_PATH = File.expand_path('../../.buildkite/certs', __dir__)
+host = ENV['TEST_ES_SERVER'] || 'http://localhost:9200'
+raise URI::InvalidURIError unless host =~ /\A#{URI::DEFAULT_PARSER.make_regexp}\z/
+
+password = ENV['ELASTIC_PASSWORD'] || 'changeme'
+HOST_URI = URI.parse(host)
+raw_certificate = File.read("#{CERTS_PATH}/testnode.crt")
+certificate = OpenSSL::X509::Certificate.new(raw_certificate)
+raw_key = File.read("#{CERTS_PATH}/testnode.key")
+key = OpenSSL::PKey::RSA.new(raw_key)
+ca_file = File.expand_path("#{CERTS_PATH}/ca.crt")
+TRANSPORT_OPTIONS = { ssl: { verify: false, client_cert: certificate, client_key: key, ca_file: ca_file } }
+HOST = "https://elastic:#{password}@#{HOST_URI.host}:#{HOST_URI.port}"
+CLIENT = Elasticsearch::Client.new(host: HOST, transport_options: TRANSPORT_OPTIONS)

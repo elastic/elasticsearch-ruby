@@ -27,26 +27,18 @@ if ENV['TEST_WITH_OTEL'] == 'true'
     after { exporter.reset }
     let(:span) { exporter.finished_spans[0] }
 
-    let(:client) do
-      Elasticsearch::Client.new(
-        host: ELASTICSEARCH_URL,
-        user: 'elastic',
-        password: 'changeme'
-      )
-    end
-
     after do
-      client.delete(index: 'myindex', id: 1); rescue
+      CLIENT.delete(index: 'myindex', id: 1); rescue
     end
 
     context 'when a request is instrumented' do
       it 'sets the span name to the endpoint id' do
-        client.search(body: { query: { match: { a: 1 } } })
+        CLIENT.search(body: { query: { match: { a: 1 } } })
         expect(span.name).to eq 'search'
       end
 
       it 'sets the path parts' do
-        client.index(index: 'myindex', id: 1, body: { title: 'Test' })
+        CLIENT.index(index: 'myindex', id: 1, body: { title: 'Test' })
         expect(span.attributes['db.elasticsearch.path_parts.index']).to eq 'myindex'
         expect(span.attributes['db.elasticsearch.path_parts.id']).to eq 1
       end
