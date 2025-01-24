@@ -14,14 +14,14 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require_relative 'helpers_spec_helper'
+require_relative File.expand_path('../../spec_helper', __dir__)
 require 'elasticsearch/helpers/scroll_helper'
 
 context 'Elasticsearch client helpers' do
   context 'ScrollHelper' do
     let(:index) { 'books' }
     let(:body) { { size: 12, query: { match_all: {} } } }
-    let(:scroll_helper) { Elasticsearch::Helpers::ScrollHelper.new(client, index, body) }
+    let(:scroll_helper) { Elasticsearch::Helpers::ScrollHelper.new(CLIENT, index, body) }
 
     before do
       documents = [
@@ -50,11 +50,11 @@ context 'Elasticsearch client helpers' do
         { index: { _index: index, data: {name: "The Left Hand of Darkness", "author": "Ursula K. Le Guin", "release_date": "1969-06-01", "page_count": 304} } },
         { index: { _index: index, data: {name: "The Moon is a Harsh Mistress", "author": "Robert A. Heinlein", "release_date": "1966-04-01", "page_count": 288 } } }
       ]
-      client.bulk(body: documents, refresh: 'wait_for')
+      CLIENT.bulk(body: documents, refresh: 'wait_for')
     end
 
     after do
-      client.indices.delete(index: index)
+      CLIENT.indices.delete(index: index)
     end
 
     it 'instantiates a scroll helper' do
@@ -63,7 +63,7 @@ context 'Elasticsearch client helpers' do
 
     it 'searches an index' do
       my_documents = []
-      while !(documents = scroll_helper.results).empty?
+      until (documents = scroll_helper.results).empty?
         my_documents << documents
       end
 

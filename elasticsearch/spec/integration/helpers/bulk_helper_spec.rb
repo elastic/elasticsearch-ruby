@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require_relative 'helpers_spec_helper'
+require_relative File.expand_path('../../spec_helper', __dir__)
 require 'elasticsearch/helpers/bulk_helper'
 require 'tempfile'
 
@@ -23,25 +23,25 @@ context 'Elasticsearch client helpers' do
     let(:index) { 'bulk_animals' }
     let(:index_slice) { 'bulk_animals_slice' }
     let(:params) { { refresh: 'wait_for' } }
-    let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(client, index, params) }
+    let(:bulk_helper) { Elasticsearch::Helpers::BulkHelper.new(CLIENT, index, params) }
     let(:docs) do
       [
-        { scientific_name: 'Lama guanicoe', name:'Guanaco' },
-        { scientific_name: 'Tayassu pecari', name:'White-lipped peccary' },
-        { scientific_name: 'Snycerus caffer', name:'Buffalo, african' },
-        { scientific_name: 'Coluber constrictor', name:'Snake, racer' },
-        { scientific_name: 'Thalasseus maximus', name:'Royal tern' },
-        { scientific_name: 'Centrocercus urophasianus', name:'Hen, sage' },
-        { scientific_name: 'Sitta canadensis', name:'Nuthatch, red-breasted' },
-        { scientific_name: 'Aegypius tracheliotus', name:'Vulture, lappet-faced' },
-        { scientific_name: 'Bucephala clangula', name:'Common goldeneye' },
-        { scientific_name: 'Felis pardalis', name:'Ocelot' }
+        { scientific_name: 'Lama guanicoe', name: 'Guanaco' },
+        { scientific_name: 'Tayassu pecari', name: 'White-lipped peccary' },
+        { scientific_name: 'Snycerus caffer', name: 'Buffalo, african' },
+        { scientific_name: 'Coluber constrictor', name: 'Snake, racer' },
+        { scientific_name: 'Thalasseus maximus', name: 'Royal tern' },
+        { scientific_name: 'Centrocercus urophasianus', name: 'Hen, sage' },
+        { scientific_name: 'Sitta canadensis', name: 'Nuthatch, red-breasted' },
+        { scientific_name: 'Aegypius tracheliotus', name: 'Vulture, lappet-faced' },
+        { scientific_name: 'Bucephala clangula', name: 'Common goldeneye' },
+        { scientific_name: 'Felis pardalis', name: 'Ocelot' }
       ]
     end
 
     after do
-      client.indices.delete(index: index, ignore: 404)
-      client.indices.delete(index: index_slice, ignore: 404)
+      CLIENT.indices.delete(index: index, ignore: 404)
+      CLIENT.indices.delete(index: index_slice, ignore: 404)
     end
 
     it 'Ingests documents' do
@@ -58,9 +58,9 @@ context 'Elasticsearch client helpers' do
       ]
       bulk_helper.ingest(docs)
       # Get the ingested documents, add id and modify them to update them:
-      animals = client.search(index: index)['hits']['hits']
+      animals = CLIENT.search(index: index)['hits']['hits']
       # Add id to each doc
-      docs = animals.map { |animal| animal['_source'].merge({'id' => animal['_id'] }) }
+      docs = animals.map { |animal| animal['_source'].merge({ 'id' => animal['_id'] }) }
       docs.map { |doc| doc['scientific_name'].upcase! }
       response = bulk_helper.update(docs)
       expect(response.status).to eq(200)
@@ -73,17 +73,17 @@ context 'Elasticsearch client helpers' do
       response = bulk_helper.delete(ids)
       expect(response.status).to eq 200
       expect(response['items'].map { |item| item['delete']['result'] }.uniq.first).to eq('deleted')
-      expect(client.count(index: index)['count']).to eq(0)
+      expect(CLIENT.count(index: index)['count']).to eq(0)
     end
 
     it 'Ingests documents and yields response and docs' do
       slice = 2
-      bulk_helper = Elasticsearch::Helpers::BulkHelper.new(client, index_slice, params)
-      response = bulk_helper.ingest(docs, {slice: slice}) do |response, docs|
+      bulk_helper = Elasticsearch::Helpers::BulkHelper.new(CLIENT, index_slice, params)
+      bulk_helper.ingest(docs, { slice: slice }) do |response, docs|
         expect(response).to be_an_instance_of Elasticsearch::API::Response
         expect(docs.count).to eq slice
       end
-      response = client.search(index: index_slice, size: 200)
+      response = CLIENT.search(index: index_slice, size: 200)
       expect(response['hits']['hits'].map { |a| a['_source'].transform_keys(&:to_sym) }).to eq docs
     end
 
