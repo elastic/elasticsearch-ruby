@@ -24,40 +24,31 @@ require 'uri'
 context 'Elasticsearch client' do
   let(:logger) { Logger.new($stderr) }
 
-  let(:client) do
-    Elasticsearch::Client.new(
-      host: ELASTICSEARCH_URL,
-      logger: logger,
-      user: 'elastic',
-      password: 'changeme'
-    )
-  end
-
   context 'Integrates with elasticsearch API' do
     it 'should perform the API methods' do
       expect do
         # Index a document
-        client.index(index: 'test-index', id: '1', body: { title: 'Test' })
+        CLIENT.index(index: 'test-index', id: '1', body: { title: 'Test' })
 
         # Refresh the index
-        client.indices.refresh(index: 'test-index')
+        CLIENT.indices.refresh(index: 'test-index')
 
         # Search
-        response = client.search(index: 'test-index', body: { query: { match: { title: 'test' } } })
+        response = CLIENT.search(index: 'test-index', body: { query: { match: { title: 'test' } } })
 
         expect(response['hits']['total']['value']).to eq 1
         expect(response['hits']['hits'][0]['_source']['title']).to eq 'Test'
 
         # Delete the index
-        client.indices.delete(index: 'test-index')
+        CLIENT.indices.delete(index: 'test-index')
       end.not_to raise_error
     end
   end
 
   context 'Reports the right meta header' do
     it 'Reports es service name and gem version' do
-      headers = client.transport.connections.first.connection.headers
-      version = Class.new.extend(Elastic::Transport::MetaHeader).send(:client_meta_version, Elasticsearch::VERSION)
+      headers = CLIENT.transport.connections.first.connection.headers
+      version = Class.new.extend(Elastic::Transport::MetaHeader).send(:CLIENT_meta_version, Elasticsearch::VERSION)
       expect(headers['x-elastic-client-meta']).to match /^es=#{version}/
     end
   end
