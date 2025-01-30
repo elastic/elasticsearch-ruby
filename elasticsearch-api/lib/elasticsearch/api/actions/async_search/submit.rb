@@ -27,6 +27,7 @@ module Elasticsearch
         # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
         # @option arguments [Time] :wait_for_completion_timeout Specify the time that the request should block waiting for the final response
         # @option arguments [Boolean] :keep_on_completion Control whether the response should be stored in the cluster if it completed within the provided [wait_for_completion] time (default: false)
+        # @option arguments [Time] :keep_alive Update the time interval in which the results (partial or final) for this search will be available
         # @option arguments [Number] :batched_reduce_size The number of shard results that should be reduced at once on the coordinating node. This value should be used as the granularity at which progress results will be made available.
         # @option arguments [Boolean] :request_cache Specify if request cache should be used for this request or not, defaults to true
         # @option arguments [String] :analyzer The analyzer to use for the query string
