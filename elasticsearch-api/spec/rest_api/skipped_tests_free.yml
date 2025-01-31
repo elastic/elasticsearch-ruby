@@ -240,3 +240,6 @@
 -
   :file: 'indices.create/10_basic.yml'
   :description: 'Create lookup index with one shard'
+-
+  :file: 'nodes.stats/11_indices_metrics.yml'
+  :description: 'indices mappings exact count test for indices level'
