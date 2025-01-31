@@ -25,7 +25,7 @@ else
   require 'debug'
 end
 require 'yaml'
-require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
+# require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
 require 'jbuilder'
 require 'jsonify'
 require 'elasticsearch'

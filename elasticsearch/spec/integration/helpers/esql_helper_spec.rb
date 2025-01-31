@@ -14,7 +14,7 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-require_relative 'helpers_spec_helper'
+require_relative File.expand_path('../../spec_helper', __dir__)
 require 'elasticsearch/helpers/esql_helper'
 require 'ipaddr'
 
@@ -24,13 +24,13 @@ context 'Elasticsearch client helpers' do
   let(:esql_helper) { Elasticsearch::Helpers::ESQLHelper }
   let(:query) do
     <<~ESQL
-        FROM #{index}
-        | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
+      FROM #{index}
+      | EVAL duration_ms = ROUND(event.duration / 1000000.0, 1)
     ESQL
   end
 
   before do
-    client.indices.create(
+    CLIENT.indices.create(
       index: index,
       body: {
         mappings: {
@@ -38,34 +38,41 @@ context 'Elasticsearch client helpers' do
         }
       }
     )
-    client.bulk(
+    CLIENT.bulk(
       index: index,
       body: [
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T12:15:03.360Z', 'client.ip' => '172.21.2.162', message: 'Connected to 10.1.0.3', 'event.duration' => 3450233},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T12:27:28.948Z', 'client.ip' => '172.21.2.113', message: 'Connected to 10.1.0.2', 'event.duration' => 2764889},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T13:33:34.937Z', 'client.ip' => '172.21.0.5', message: 'Disconnected', 'event.duration' => 1232382},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T13:51:54.732Z', 'client.ip' => '172.21.3.15', message: 'Connection error', 'event.duration' => 725448},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T13:52:55.015Z', 'client.ip' => '172.21.3.15', message: 'Connection error', 'event.duration' => 8268153},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T13:53:55.832Z', 'client.ip' => '172.21.3.15', message: 'Connection error', 'event.duration' => 5033755},
-        {'index': {}},
-        {'@timestamp' => '2023-10-23T13:55:01.543Z', 'client.ip' => '172.21.3.15', message: 'Connected to 10.1.0.1', 'event.duration' => 1756467}
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T12:15:03.360Z', 'client.ip' => '172.21.2.162', message: 'Connected to 10.1.0.3',
+          'event.duration' => 3_450_233 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T12:27:28.948Z', 'client.ip' => '172.21.2.113', message: 'Connected to 10.1.0.2',
+          'event.duration' => 2_764_889 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T13:33:34.937Z', 'client.ip' => '172.21.0.5', message: 'Disconnected',
+          'event.duration' => 1_232_382 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T13:51:54.732Z', 'client.ip' => '172.21.3.15', message: 'Connection error',
+          'event.duration' => 725_448 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T13:52:55.015Z', 'client.ip' => '172.21.3.15', message: 'Connection error',
+          'event.duration' => 8_268_153 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T13:53:55.832Z', 'client.ip' => '172.21.3.15', message: 'Connection error',
+          'event.duration' => 5_033_755 },
+        { 'index': {} },
+        { '@timestamp' => '2023-10-23T13:55:01.543Z', 'client.ip' => '172.21.3.15', message: 'Connected to 10.1.0.1',
+          'event.duration' => 1_756_467 }
       ],
       refresh: true
     )
   end
 
   after do
-    client.indices.delete(index: index)
+    CLIENT.indices.delete(index: index)
   end
 
   it 'returns an ESQL response as a relational key/value object' do
-    response = esql_helper.query(client, query)
+    response = esql_helper.query(CLIENT, query)
     expect(response.count).to eq 7
     expect(response.first.keys).to eq ['duration_ms', 'message', 'event.duration', 'client.ip', '@timestamp']
     response.each do |r|
@@ -82,7 +89,7 @@ context 'Elasticsearch client helpers' do
       'client.ip' => Proc.new { |i| IPAddr.new(i) },
       'event.duration' => Proc.new { |d| d.to_s }
     }
-    response = esql_helper.query(client, query, parser: parser)
+    response = esql_helper.query(CLIENT, query, parser: parser)
     response.each do |r|
       expect(r['@timestamp']).to be_a DateTime
       expect(r['client.ip']).to be_a IPAddr
@@ -92,7 +99,7 @@ context 'Elasticsearch client helpers' do
   end
 
   it 'parser does not error when value is nil, leaves nil' do
-    client.index(
+    CLIENT.index(
       index: index,
       body: {
         '@timestamp' => nil,
@@ -107,7 +114,7 @@ context 'Elasticsearch client helpers' do
       'client.ip' => Proc.new { |i| IPAddr.new(i) },
       'event.duration' => Proc.new { |d| d.to_s }
     }
-    response = esql_helper.query(client, query, parser: parser)
+    response = esql_helper.query(CLIENT, query, parser: parser)
     response.each do |r|
       expect [DateTime, NilClass].include?(r['@timestamp'].class)
       expect [IPAddr, NilClass].include?(r['client.ip'].class)
