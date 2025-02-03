@@ -37,6 +37,7 @@ module Elasticsearch
       # @option arguments [Number] :if_seq_no only perform the update operation if the last operation that has changed the document has the specified sequence number
       # @option arguments [Number] :if_primary_term only perform the update operation if the last operation that has changed the document has the specified primary term
       # @option arguments [Boolean] :require_alias When true, requires destination is an alias. Default is false
+      # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #

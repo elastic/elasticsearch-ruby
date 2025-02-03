@@ -50,7 +50,7 @@ module Elasticsearch
 
           _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_POST
+          method = Elasticsearch::API::HTTP_PUT
           path   = if _task_type && _inference_id
                      "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}/_update"
                    else

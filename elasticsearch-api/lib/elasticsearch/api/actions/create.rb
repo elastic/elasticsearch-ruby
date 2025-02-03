@@ -34,6 +34,7 @@ module Elasticsearch
       # @option arguments [Number] :version Explicit version number for concurrency control
       # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
       # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with
+      # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The document (*Required*)
       #
