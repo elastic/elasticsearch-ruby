@@ -25,7 +25,7 @@ module Elasticsearch
         # Gets information about an enrich policy.
         #
         # @option arguments [List] :name A comma-separated list of enrich policy names
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
