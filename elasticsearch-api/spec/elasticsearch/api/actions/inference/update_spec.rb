@@ -20,7 +20,7 @@ require 'spec_helper'
 describe 'client#inference.update' do
   let(:expected_args) do
     [
-      'POST',
+      'PUT',
       '_inference/foo/bar/_update',
       {},
       nil,
