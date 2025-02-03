@@ -24,6 +24,7 @@ module Elasticsearch
       module Actions
         # Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
         #
+        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Boolean] :dry_run If set to true it will simulate the migration, providing a way to retrieve the ILM policies and indices that need to be migrated. The default is false
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body Optionally specify a legacy index template name to delete and optionally specify a node attribute name used for index shard routing (defaults to "data")
