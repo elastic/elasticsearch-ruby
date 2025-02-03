@@ -36,6 +36,7 @@ module Elasticsearch
       # @option arguments [Boolean] :require_alias Sets require_alias for all incoming documents. Defaults to unset (false)
       # @option arguments [Boolean] :require_data_stream When true, requires the destination to be a data stream (existing or to-be-created). Default is false
       # @option arguments [Boolean] :list_executed_pipelines Sets list_executed_pipelines for all incoming documents. Defaults to unset (false)
+      # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Defaults to true.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [String|Array] :body The operation definition and data (action-data pairs), separated by newlines. Array of Strings, Header/Data pairs,
       # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
