@@ -17,16 +17,15 @@
 
 require 'spec_helper'
 
-describe 'client.indices#delete_alias' do
-
+describe 'client.indices#resolve_cluster' do
   let(:expected_args) do
     [
       'GET',
-      '_resolve/cluster/foo',
+      path,
       {},
       nil,
       {},
-      { defined_params: { name: 'foo'}, endpoint: 'indices.resolve_cluster' }
+      otel
     ]
   end
 
@@ -34,16 +33,22 @@ describe 'client.indices#delete_alias' do
     let(:client) do
       Class.new { include Elasticsearch::API }.new
     end
+    let(:path) { '_resolve/cluster' }
+    let(:otel) do
+      { endpoint: 'indices.resolve_cluster' }
+    end
 
-    it 'raises an exception' do
-      expect {
-        client.indices.resolve_cluster
-      }.to raise_exception(ArgumentError)
+    it 'performs the request' do
+      expect(client_double.indices.resolve_cluster).to be_a Elasticsearch::API::Response
     end
   end
 
-
   context 'when name is specified' do
+    let(:path) { '_resolve/cluster/foo' }
+    let(:otel) do
+      { defined_params: { name: 'foo' }, endpoint: 'indices.resolve_cluster' }
+    end
+
     it 'performs the request' do
       expect(client_double.indices.resolve_cluster(name: 'foo')).to be_a Elasticsearch::API::Response
     end
