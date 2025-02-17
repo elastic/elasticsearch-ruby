@@ -17,19 +17,21 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.index_lifecycle_management#move_to_step' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'POST',
+      '_ilm/move/foo',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { defined_params: { index: 'foo' }, endpoint: 'ilm.move_to_step' }
     ]
   end
 
+  let(:index) { 'foo' }
+
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.index_lifecycle_management.move_to_step(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

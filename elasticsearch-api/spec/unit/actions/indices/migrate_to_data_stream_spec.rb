@@ -17,19 +17,21 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.indices.migrate_to_data_stream' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'POST',
+      '_data_stream/_migrate/foo',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'indices.migrate_to_data_stream', defined_params: { name: 'foo' } }
     ]
   end
 
+  let(:index) { 'foo' }
+
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.migrate_to_data_stream(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

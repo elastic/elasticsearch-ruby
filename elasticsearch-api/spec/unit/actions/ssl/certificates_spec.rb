@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#ssl.certificates' do
   let(:expected_args) do
     [
       'GET',
-      '',
-      { },
+      '_ssl/certificates',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'ssl.certificates' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.ssl.certificates(index: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

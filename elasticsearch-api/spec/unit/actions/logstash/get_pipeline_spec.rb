@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#logstash.get_pipeline' do
   let(:expected_args) do
     [
       'GET',
-      '',
-      { },
+      '_logstash/pipeline/foo',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'logstash.get_pipeline', defined_params: { id: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.logstash.get_pipeline(id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

@@ -17,19 +17,21 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.index_lifecycle_management#start' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'POST',
+      '_ilm/start',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'ilm.start' }
     ]
   end
 
+  let(:index) { 'foo' }
+
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.index_lifecycle_management.start).to be_a Elasticsearch::API::Response
   end
 end

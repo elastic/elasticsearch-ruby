@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#usage' do
   let(:expected_args) do
     [
       'GET',
-      '',
-      { },
+      '_xpack/usage',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'xpack.usage' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.xpack.usage).to be_a Elasticsearch::API::Response
   end
 end
