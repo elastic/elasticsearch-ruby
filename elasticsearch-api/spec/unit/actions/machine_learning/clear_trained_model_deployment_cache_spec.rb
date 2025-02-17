@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#ml.clear_trained_model_deployment_cache' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'POST',
+      '_ml/trained_models/foo/deployment/cache/_clear',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'ml.clear_trained_model_deployment_cache', defined_params: { model_id: 'foo' } }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.ml.clear_trained_model_deployment_cache(model_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

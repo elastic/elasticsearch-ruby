@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#license.get' do
   let(:expected_args) do
     [
       'GET',
-      '',
+      '_license',
       { },
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'license.get' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.license.get).to be_a Elasticsearch::API::Response
   end
 end

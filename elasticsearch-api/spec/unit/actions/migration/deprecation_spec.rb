@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#migration.deprecations' do
   let(:expected_args) do
     [
       'GET',
-      '',
-      { },
+      '_migration/deprecations',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'migration.deprecations' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.migration.deprecations).to be_a Elasticsearch::API::Response
   end
 end

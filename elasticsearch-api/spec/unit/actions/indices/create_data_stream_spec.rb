@@ -17,19 +17,21 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.indices.create_data_stream' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'PUT',
+      '_data_stream/foo',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'indices.create_data_stream', defined_params: { name: 'foo' } }
     ]
   end
 
+  let(:index) { 'foo' }
+
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.create_data_stream(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

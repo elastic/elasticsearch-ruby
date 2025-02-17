@@ -17,19 +17,21 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.indices.modify_data_stream' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
-      nil,
+      'POST',
+      '_data_stream/_modify',
       {},
-      { endpoint: 'info' }
+      {},
+      {},
+      { endpoint: 'indices.modify_data_stream' }
     ]
   end
 
+  let(:index) { 'foo' }
+
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.modify_data_stream(body: {})).to be_a Elasticsearch::API::Response
   end
 end

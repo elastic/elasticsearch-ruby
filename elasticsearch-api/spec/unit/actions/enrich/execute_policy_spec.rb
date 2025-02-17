@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client#enrich.delete_policy' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'PUT',
+      '_enrich/policy/foo/_execute',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { defined_params: { name: 'foo' }, endpoint: 'enrich.execute_policy' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.enrich.execute_policy(name: 'foo')).to be_a Elasticsearch::API::Response
   end
 end

@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#info' do
+describe 'client.transform#upgrade_transforms' do
   let(:expected_args) do
     [
-      'GET',
-      '',
-      { },
+      'POST',
+      '_transform/_upgrade',
+      {},
       nil,
       {},
-      { endpoint: 'info' }
+      { endpoint: 'transform.upgrade_transforms' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.info).to be_a Elasticsearch::API::Response
+    expect(client_double.transform.upgrade_transforms).to be_a Elasticsearch::API::Response
   end
 end
