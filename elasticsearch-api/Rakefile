@@ -38,12 +38,6 @@ namespace :test do
     t.ruby_opts = '-W0'
   end
 
-  desc 'Run Elasticsearch test suite free tests.'
-  RSpec::Core::RakeTask.new(:rest_api) do |t|
-    test_dir = Rake.application.original_dir
-    t.pattern = "#{test_dir}/spec/rest_api/rest_api_yaml_spec.rb"
-  end
-
   desc 'Run unit and integration tests'
   task :all do
     Rake::Task['test:unit'].invoke
@@ -61,11 +55,17 @@ namespace :test do
     t.ruby_opts = '-W0'
   end
 
-  namespace :platinum do
-    desc 'Run Platinum Rest API Spec tests'
-    RSpec::Core::RakeTask.new(:api) do
-      ENV['TEST_SUITE'] = 'platinum'
-      Rake::Task['test:rest_api'].invoke
+  # This is the task to run the Elasticsearch REST tests which we stopped using for 9.x.
+  # Use the environment variable TEST_SUITE to choose between 'free' and 'platinum' tests. For
+  # platinum, the test cluster needs to have the license activated and run with security enabled.
+  # For 'free', security must be disabled in the test cluster.
+  #
+  namespace :deprecated do
+    # TODO: TEST_SUITE
+    desc 'Run Elasticsearch test suite free tests.'
+    RSpec::Core::RakeTask.new(:rest_api) do |t|
+      test_dir = Rake.application.original_dir
+      t.pattern = "#{test_dir}/spec/rest_api/rest_api_yaml_spec.rb"
     end
   end
 end
