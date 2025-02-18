@@ -48,12 +48,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'bundler'
   s.add_development_dependency 'elasticsearch'
   s.add_development_dependency 'elasticsearch-test-runner' unless defined?(JRUBY_VERSION) && JRUBY_VERSION <= '9.4'
-  s.add_development_dependency 'minitest'
-  s.add_development_dependency 'minitest-reporters', '>= 1.6'
-  s.add_development_dependency 'mocha'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'yard'
 
   # Gems for testing integrations
@@ -68,7 +64,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'require-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'ruby-prof' unless defined?(JRUBY_VERSION) || defined?(Rubinius)
   s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'test-unit', '~> 2'
   s.description = <<-DESC.gsub(/^    /, '')
     Ruby API for Elasticsearch. See the `elasticsearch` gem for full integration.
   DESC

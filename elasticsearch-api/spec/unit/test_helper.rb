@@ -26,22 +26,6 @@ require 'ansi'
 require 'elasticsearch'
 require 'elasticsearch/api'
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new(print_failure_summary: true)
-
-module Minitest
-  class Test
-    def assert_nothing_raised(*args)
-      begin
-        line = __LINE__
-        yield
-      rescue Exception => e
-        raise MiniTest::Assertion, "Exception raised:\n<#{e.class}>", e.backtrace
-      end
-      true
-    end
-  end
-end
-
 module Elasticsearch
   module Test
     class FakeClient
