@@ -21,4 +21,4 @@ The gem migrated away from the Elasticsearch REST API tests and test runner in C
 #### Rake tasks
 
 * Some old rake tasks that were not being used have been removed. The rest were streamlined, the `es` namespace has been streamlined to make it easier to run Elasticsearch with Docker during development. The `docker` namespace was merged into `es`.
-* Elasticsearch's REST API Spec tests can still be ran with `rake test:es_free` and `rake test:es_platinum`.
+* Elasticsearch's REST API Spec tests can still be ran with `rake test:deprecated:rest_api` and setting the corresponding value for the environment variable `TEST_SUITE` ('platinum' or 'free').
