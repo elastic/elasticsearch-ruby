@@ -17,7 +17,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require_relative './spec_helper'
+require_relative './integration_helper'
 
 describe 'Health basic test' do
   it 'performs the request' do

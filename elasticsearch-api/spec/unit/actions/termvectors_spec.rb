@@ -72,7 +72,11 @@ describe 'client#termvectors' do
     end
 
     it 'performs the request' do
-      expect(client_double.termvector(index: 'foo', id: '123', body: {})).to be_a Elasticsearch::API::Response
+      message = '[DEPRECATION] `termvector` is deprecated. Please use the plural version, `termvectors` instead.
+'
+      expect do
+        client_double.termvector(index: 'foo', id: '123', body: {})
+      end.to output(message).to_stderr
     end
   end
 end
