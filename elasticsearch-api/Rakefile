@@ -35,7 +35,6 @@ namespace :test do
   task :unit
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'spec/unit/**/*_spec.rb'
-    t.ruby_opts = '-W0'
   end
 
   desc 'Run unit and integration tests'
@@ -52,7 +51,6 @@ namespace :test do
   desc 'Run Integration tests'
   RSpec::Core::RakeTask.new(:integration) do |t|
     t.pattern = 'spec/integration/**/*_spec.rb'
-    t.ruby_opts = '-W0'
   end
 
   # This is the task to run the Elasticsearch REST tests which we stopped using for 9.x.

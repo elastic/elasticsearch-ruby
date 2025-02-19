@@ -17,9 +17,10 @@
 
 require 'spec_helper'
 require 'hashie'
+require 'hashie/logger'
+Hashie.logger = Logger.new(nil)
 
 describe 'Hashie' do
-
   let(:json) do
     <<-JSON
             {
@@ -79,7 +80,7 @@ describe 'Hashie' do
   end
 
   let(:response) do
-    Hashie::Mash.new MultiJson.load(json)
+    Hashie::Mash.new(MultiJson.load(json))
   end
 
   it 'wraps the response' do
