@@ -62,4 +62,8 @@ describe Elasticsearch::API::Response do
   it 'returns the body which' do
     expect(response.body).to eq response_body
   end
+
+  it 'returns the body with to_s' do
+    expect(response.to_s).to eq response.body.to_s
+  end
 end

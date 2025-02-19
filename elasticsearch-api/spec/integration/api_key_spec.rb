@@ -18,7 +18,7 @@
 # under the License.
 
 require 'base64'
-require_relative './spec_helper'
+require_relative './integration_helper'
 
 describe 'API keys' do
   before do

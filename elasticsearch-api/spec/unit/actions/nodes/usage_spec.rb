@@ -17,7 +17,7 @@
 
 require 'spec_helper'
 
-describe 'client.nodes#info' do
+describe 'client.nodes#usage' do
   let(:expected_args) do
     [
       'GET',
@@ -25,16 +25,16 @@ describe 'client.nodes#info' do
       params,
       nil,
       {},
-      { endpoint: 'nodes.info' }
+      { endpoint: 'nodes.usage' }
     ]
   end
 
   let(:url) do
-    '_nodes'
+    '_nodes/usage'
   end
 
   it 'performs the request' do
-    expect(client_double.nodes.info).to be_a Elasticsearch::API::Response
+    expect(client_double.nodes.usage).to be_a Elasticsearch::API::Response
   end
 
   let(:params) do
@@ -43,7 +43,7 @@ describe 'client.nodes#info' do
 
   context 'when the node id is specified' do
     let(:url) do
-      '_nodes/foo'
+      '_nodes/foo/usage'
     end
 
     let(:expected_args) do
@@ -53,18 +53,18 @@ describe 'client.nodes#info' do
         params,
         nil,
         {},
-        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.info' }
+        { defined_params: { node_id: 'foo' }, endpoint: 'nodes.usage' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: 'foo')).to be_a Elasticsearch::API::Response
+      expect(client_double.nodes.usage(node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 
-  context 'when multiple node ids are specified as a list' do
+  context 'when the metric is specified' do
     let(:url) do
-      '_nodes/A,B,C'
+      '_nodes/usage/metric'
     end
 
     let(:expected_args) do
@@ -74,18 +74,18 @@ describe 'client.nodes#info' do
         params,
         nil,
         {},
-        { defined_params: { node_id: ['A', 'B', 'C'] }, endpoint: 'nodes.info' }
+        { defined_params: { metric: 'metric' }, endpoint: 'nodes.usage' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: ['A', 'B', 'C'])).to be_a Elasticsearch::API::Response
+      expect(client_double.nodes.usage(metric: 'metric')).to be_a Elasticsearch::API::Response
     end
   end
 
-  context 'when multiple node ids are specified as a String' do
+  context 'when both are specified' do
     let(:url) do
-      '_nodes/A,B,C'
+      '_nodes/foo/usage/metric'
     end
 
     let(:expected_args) do
@@ -95,47 +95,12 @@ describe 'client.nodes#info' do
         params,
         nil,
         {},
-        { defined_params: { node_id: 'A,B,C' }, endpoint: 'nodes.info' }
+        { defined_params: { node_id: 'foo', metric: 'metric' }, endpoint: 'nodes.usage' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.nodes.info(node_id: 'A,B,C')).to be_a Elasticsearch::API::Response
-    end
-  end
-
-  context 'when URL params are specified' do
-    let(:url) do
-      '_nodes'
-    end
-
-    let(:params) do
-      { format: 'yaml' }
-    end
-
-    it 'performs the request' do
-      expect(client_double.nodes.info(format: 'yaml')).to be_a Elasticsearch::API::Response
-    end
-  end
-
-  context 'when metrics are specified' do
-    let(:url) do
-      '_nodes/http,network'
-    end
-
-    let(:expected_args) do
-      [
-        'GET',
-        url,
-        params,
-        nil,
-        {},
-        { defined_params: { metric: ['http', 'network'] }, endpoint: 'nodes.info' }
-      ]
-    end
-
-    it 'performs the request' do
-      expect(client_double.nodes.info(metric: ['http', 'network'])).to be_a Elasticsearch::API::Response
+      expect(client_double.nodes.usage(metric: 'metric', node_id: 'foo')).to be_a Elasticsearch::API::Response
     end
   end
 end
