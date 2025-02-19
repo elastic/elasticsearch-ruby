@@ -14,9 +14,12 @@
 # KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations
 # under the License.
-if ENV['COVERAGE'] && ENV['CI'].nil?
+if ENV['COVERAGE']
   require 'simplecov'
-  SimpleCov.start { add_filter %r{^/test|spec/} }
+  SimpleCov.start do
+    add_filter %r{^/test|spec/}
+    add_filter 'utils/thor'
+  end
 end
 
 if defined?(JRUBY_VERSION)
