@@ -15,7 +15,9 @@ Language clients are forward compatible; meaning that clients support communicat
 
 Refer to [CONTRIBUTING](https://github.com/elastic/elasticsearch-ruby/blob/main/CONTRIBUTING.md).
 
-The integration tests on this project run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) with the [Elasticsearch Tests Runner](https://github.com/elastic/es-test-runner-ruby/) library. This runs in CI against an Elasticsearch cluster in Docker. You can run a docker container with Elasticsearch with a Rake task from the root directory of this project:
+Use `bundle exec rake test:unit` to run Unit tests. Add the environment variable `COVERAGE` to see Simplecov test coverage.
+
+The integration tests on this project run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) with the [Elasticsearch Tests Runner](https://github.com/elastic/es-test-runner-ruby/) library. You can run a docker container with Elasticsearch with a Rake task from the root directory of this project:
 
 ```bash
 $ rake es:up
@@ -26,6 +28,8 @@ This will start whatever version of Elasticsearch is set in the Buildkite pipeli
 ```bash
 $ rake es:start[version,suite] # e.g. rake es:start[9.0.0-SNAPSHOT, free]
 ```
+
+You can run the integration tests with `bundle exec rake test:integration`.
 
 ### Code generation
 
