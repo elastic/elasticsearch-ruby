@@ -28,7 +28,7 @@ jobs:
           sudo sysctl -w vm.max_map_count=262144
       - uses: elastic/elastic-github-actions/elasticsearch@master
         with:
-          stack-version: 9.0.0-SNAPSHOT
+          stack-version: 9.1.0-SNAPSHOT
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -41,4 +41,4 @@ jobs:
       - name: elasticsearch
         run: cd elasticsearch && bundle exec rake test:all
       - name: elasticsearch-api
-        run: rake es:download_artifacts[9.0.0-SNAPSHOT] && cd elasticsearch-api && bundle exec rake test:all
+        run: rake es:download_artifacts[9.1.0-SNAPSHOT] && cd elasticsearch-api && bundle exec rake test:all
