@@ -18,32 +18,35 @@
 require 'spec_helper'
 
 describe 'client.indices#delete_alias' do
-
-  let(:expected_args) do
-    [
-      'GET',
-      '_resolve/cluster/foo',
-      {},
-      nil,
-      {},
-      { defined_params: { name: 'foo'}, endpoint: 'indices.resolve_cluster' }
-    ]
-  end
-
   context 'when there is no name specified' do
-    let(:client) do
-      Class.new { include Elasticsearch::API }.new
+    let(:expected_args) do
+      [
+        'GET',
+        '_resolve/cluster',
+        {},
+        nil,
+        {},
+        { endpoint: 'indices.resolve_cluster' }
+      ]
     end
 
-    it 'raises an exception' do
-      expect {
-        client.indices.resolve_cluster
-      }.to raise_exception(ArgumentError)
+    it 'performs the request' do
+      expect(client_double.indices.resolve_cluster).to be_a Elasticsearch::API::Response
     end
   end
-
 
   context 'when name is specified' do
+    let(:expected_args) do
+      [
+        'GET',
+        '_resolve/cluster/foo',
+        {},
+        nil,
+        {},
+        { defined_params: { name: 'foo' }, endpoint: 'indices.resolve_cluster' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.indices.resolve_cluster(name: 'foo')).to be_a Elasticsearch::API::Response
     end
