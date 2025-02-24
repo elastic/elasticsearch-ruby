@@ -38,6 +38,8 @@ module Elasticsearch
         # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
         # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+        # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/tasks.html
