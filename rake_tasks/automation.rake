@@ -38,12 +38,19 @@ namespace :automation do
 
   desc 'Generate API code'
   task :codegen do
-    version = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['STACK_VERSION']
+    path = File.expand_path('../elasticsearch-api/', __dir__)
+    branch = YAML.load_file(File.expand_path("#{__dir__}/../.buildkite/pipeline.yml"))['steps'].first['env']['ES_YAML_TESTS_BRANCH']
+    unless File.exist?(File.expand_path('elastic-client-generator-ruby', __dir__))
+      sh "git clone https://#{ENV['CLIENTS_GITHUB_TOKEN']}@github.com/elastic/elastic-client-generator-ruby.git "
+    end
 
-    Rake::Task['es:download_artifacts'].invoke(version)
-    sh "cd #{CURRENT_PATH.join('elasticsearch-api/utils')} \
-          && BUNDLE_GEMFILE=`pwd`/Gemfile \
-          && bundle exec thor code:generate"
+    sh "export ES_RUBY_CLIENT_PATH=#{path} " \
+       ' && cd elastic-client-generator-ruby/elasticsearch ' \
+       ' && sudo bundle install ' \
+       " && bundle exec rake update[#{branch}]" \
+       ' && bundle exec rake gen_es' \
+       ' && cd ../../ ' \
+       ' && rm -rf elastic-client-generator-ruby '
   end
 
   desc <<-DESC
