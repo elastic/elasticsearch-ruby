@@ -128,6 +128,7 @@ docker run \
        -u "$(id -u)" \
        --env "RUBY_VERSION=${RUBY_VERSION}" \
        --env "WORKFLOW=${WORKFLOW}" \
+       --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
        --name test-runner \
        --volume "${repo}:/usr/src/app" \
        --rm \
