@@ -17,39 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#security#get_api_key' do
+describe 'client#security#has_privileges_user_profile' do
   let(:expected_args) do
     [
-      'GET',
-      '_security/api_key',
-      params,
-      nil,
+      'POST',
+      '_security/profile/_has_privileges',
       {},
-      { endpoint: 'security.get_api_key' }
+      {},
+      {},
+      { endpoint: 'security.has_privileges_user_profile' }
     ]
   end
 
-  let(:params) do
-    {}
-  end
-
   it 'performs the request' do
-    expect(client_double.security.get_api_key).to be_a Elasticsearch::API::Response
-  end
-
-  context 'when params are specified' do
-    let(:params) do
-      { id: '1',
-        username: 'user',
-        name: 'my-api-key',
-        realm_name: '_es_api_key' }
-    end
-
-    it 'performs the request' do
-      expect(client_double.security.get_api_key(id: '1',
-                                                username: 'user',
-                                                name: 'my-api-key',
-                                                realm_name: '_es_api_key')).to be_a Elasticsearch::API::Response
-    end
+    expect(client_double.security.has_privileges_user_profile(body: {})).to be_a Elasticsearch::API::Response
   end
 end
