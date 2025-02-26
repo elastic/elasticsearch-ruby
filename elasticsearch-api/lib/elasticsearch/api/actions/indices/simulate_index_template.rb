@@ -15,30 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Simulate matching the given index name against the index templates in the system
+        # Simulate an index.
+        # Get the index configuration that would be applied to the specified index from an existing index template.
         #
-        # @option arguments [String] :name The name of the index (it must be a concrete index name)
-        # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
-        # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for this index template simulation (default: false)
+        # @option arguments [String] :name Name of the index to simulate (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body New index template definition, which will be included in the simulation, as if it already exists in the system
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-simulate-index.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-index-template
         #
         def simulate_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.simulate_index_template' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:name].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -47,7 +46,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _name = arguments.delete(:name)
 
