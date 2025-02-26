@@ -1,0 +1,319 @@
+---
+mapped_pages:
+  - https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/connecting.html
+---
+
+# Connecting [connecting]
+
+This page contains the information you need to connect and use the Client with {{es}}.
+
+## Authentication [client-auth]
+
+This document contains code snippets to show you how to connect to various {{es}} providers.
+
+
+### Elastic Cloud [auth-ec]
+
+If you are using [Elastic Cloud](https://www.elastic.co/cloud), the client offers an easy way to connect to it. You need the Cloud ID that you can find in the cloud console, then your username and password.
+
+:::{image} ../images/cloud_id.png
+:alt: Cloud ID
+:::
+
+Once you have collected the Cloud ID you can use the client to connect to your Elastic Cloud instance, as follows:
+
+```ruby
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>'
+  user: '<Username>',
+  password: '<Password>',
+)
+```
+
+You can also connect to the Cloud by using API Key authentication. You can generate an `API key` in the `Management` page under the section `Security`.
+
+:::{image} ../images/cloud_api_key.png
+:alt: API key
+:::
+
+When you click on `Create API key` you can choose a name and set the other options (eg. restrict privileges, expire after time, etc).
+
+:::{image} ../images/api_key_name.png
+:alt: Choose an API name
+:::
+
+After this step you will get the `API key` in the API keys page.
+
+:::{image} ../images/cloud_api_key.png
+:alt: API key
+:::
+
+**IMPORTANT**: you need to copy and store the `API key` in a secure place, since you will not be able to view it again in Elastic Cloud.
+
+Once you have collected the `Cloud ID` and the `API key` you can use the client to connect to your Elastic Cloud instance, as follows:
+
+```ruby
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
+  api_key: '<ApiKey>'
+)
+```
+
+If you create the API Key through the dev console or the REST API, you may get instead a pair of `id` and `APIKey` values. The client also accepts a Hash for the `api_key` parameter, so you can pass in these values and it will encode the API Key internally:
+
+```ruby
+client = Elasticsearch::Client.new(
+  cloud_id: '<CloudID>',
+  api_key: {id: '<Id>', api_key: '<APIKey>'}
+)
+```
+
+
+## Connecting to a self-managed cluster [connect-self-managed]
+
+{{es}} 8.0 offers security by default, that means authentication and TLS are enabled.
+
+To connect to the {{es}} cluster you’ll need to configure the Ruby {{es}} client to use HTTPS with the generated CA certificate in order to make requests successfully.
+
+If you’re just getting started with {{es}} we recommend reading the documentation on configuring and starting {{es}} to ensure your cluster is running as expected.
+
+When you start {{es}} for the first time you’ll see a distinct block like the one below in the output from {{es}} (you may have to scroll up if it’s been a while):
+
+```sh
+----------------------------------------------------------------
+-> Elasticsearch security features have been automatically configured!
+-> Authentication is enabled and cluster connections are encrypted.
+
+->  Password for the elastic user (reset with `bin/elasticsearch-reset-password -u elastic`):
+  lhQpLELkjkrawaBoaz0Q
+
+->  HTTP CA certificate SHA-256 fingerprint:
+  a52dd93511e8c6045e21f16654b77c9ee0f34aea26d9f40320b531c474676228
+...
+----------------------------------------------------------------
+```
+
+Note down the `elastic` user password and HTTP CA fingerprint for the next sections. In the examples below they will be stored in the variables `ELASTIC_PASSWORD` and `CERT_FINGERPRINT` respectively.
+
+Depending on the circumstances there are two options for verifying the HTTPS connection, either verifying with the CA certificate itself or via the HTTP CA certificate fingerprint.
+
+
+### Verifying HTTPS with CA certificates [ca-certificates]
+
+The generated root CA certificate can be found in the `certs` directory in your {{es}} config location (`$ES_CONF_PATH/certs/http_ca.crt`). If you’re running {{es}} in Docker there is [additional documentation for retrieving the CA certificate](docs-content://deploy-manage/deploy/self-managed/install-elasticsearch-with-docker.md).
+
+Once you have the `http_ca.crt` file somewhere accessible pass the path to the client via `ca_certs`:
+
+```ruby
+client = Elasticsearch::Client.new(
+  host: "https://elastic:#{ELASTIC_PASSWORD}@localhost:9200",
+  transport_options: { ssl: { ca_path: CERT_DIR } }
+)
+```
+
+
+### Verifying HTTPS with certificate fingerprints [ca-fingerprint]
+
+This method of verifying the HTTPS connection takes advantage of the certificate fingerprint value noted down earlier. Take this SHA256 fingerprint value and pass it to the Ruby {{es}} client via `ca_fingerprint`:
+
+```ruby
+# Colons and uppercase/lowercase don't matter when using
+# the 'ca_fingerprint' parameter
+CERT_FINGERPRINT = '64F2593F...'
+
+# Password for the 'elastic' user generated by Elasticsearch
+ELASTIC_PASSWORD = "<password>"
+
+client = Elasticsearch::Client.new(
+  host: "https://elastic:#{ELASTIC_PASSWORD}@localhost:9200",
+  transport_options: { ssl: { verify: false } },
+  ca_fingerprint: CERT_FINGERPRINT
+)
+```
+
+The verification will be run once per connection.
+
+The certificate fingerprint can be calculated using `openssl x509` with the certificate file:
+
+```sh
+openssl x509 -fingerprint -sha256 -noout -in /path/to/http_ca.crt
+```
+
+If you don’t have access to the generated CA file from {{es}} you can use the following script to output the root CA fingerprint of the {{es}} instance with `openssl s_client`:
+
+```sh
+# Replace the values of 'localhost' and '9200' to the
+# corresponding host and port values for the cluster.
+openssl s_client -connect localhost:9200 -servername localhost -showcerts </dev/null 2>/dev/null \
+  | openssl x509 -fingerprint -sha256 -noout -in /dev/stdin
+```
+
+The output of `openssl x509` will look something like this:
+
+```sh
+SHA256 Fingerprint=A5:2D:D9:35:11:E8:C6:04:5E:21:F1:66:54:B7:7C:9E:E0:F3:4A:EA:26:D9:F4:03:20:B5:31:C4:74:67:62:28
+```
+
+
+### API Key authentication [auth-api-key]
+
+You can also use [ApiKey](https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-api-key) authentication.
+
+::::{note}
+If you provide both basic authentication credentials and the ApiKey configuration, the ApiKey takes precedence.
+::::
+
+
+```ruby
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: credentials
+)
+```
+
+Where credentials is either the base64 encoding of `id` and `api_key` joined by a colon or a hash with the `id` and `api_key`:
+
+```ruby
+Elasticsearch::Client.new(
+  host: host,
+  transport_options: transport_options,
+  api_key: {id: 'my_id', api_key: 'my_api_key'}
+)
+```
+
+
+### Basic authentication [auth-basic]
+
+You can pass the authentication credentials, scheme and port in the host configuration hash:
+
+```ruby
+client = Elasticsearch::Client.new(
+  hosts:
+	  [
+  	   {
+    	   host: 'my-protected-host',
+    	   port: '443',
+    	   user: 'USERNAME',
+    	   password: 'PASSWORD',
+    	   scheme: 'https'
+  	   }
+	  ]
+)
+```
+
+Or use the common URL format:
+
+```ruby
+client = Elasticsearch::Client.new(url: 'https://username:password@localhost:9200')
+```
+
+To pass a custom certificate for SSL peer verification to Faraday-based clients, use the `transport_options` option:
+
+```ruby
+Elasticsearch::Client.new(
+  url: 'https://username:password@localhost:9200',
+  transport_options: {
+	ssl: { ca_file: '/path/to/http_ca.crt' }
+  }
+)
+```
+
+
+## Usage [client-usage]
+
+The following snippet shows an example of using the Ruby client:
+
+```ruby
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new log: true
+
+client.cluster.health
+
+client.index(index: 'my-index', id: 1, body: { title: 'Test' })
+
+client.indices.refresh(index: 'my-index')
+
+client.search(index: 'my-index', body: { query: { match: { title: 'test' } } })
+```
+
+
+## Using the Client in a Function-as-a-Service Environment [client-faas]
+
+This section illustrates the best practices for leveraging the {{es}} client in a Function-as-a-Service (FaaS) environment. The most influential optimization is to initialize the client outside of the function, the global scope. This practice does not only improve performance but also enables background functionality as – for example – sniffing. The following examples provide a skeleton for the best practices.
+
+
+### GCP Cloud Functions [_gcp_cloud_functions]
+
+```ruby
+require 'functions_framework'
+require 'elasticsearch'
+
+client = Elasticsearch::Client.new(
+  cloud_id: "elasic-cloud-id",
+  user: "elastic",
+  password: "password",
+  log: true
+)
+
+FunctionsFramework.http "hello_world" do |request|
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
+```
+
+
+### AWS Lambda [_aws_lambda]
+
+```ruby
+require 'elasticsearch'
+
+def client
+  @client ||= Elasticsearch::Client.new(
+    cloud_id: "elastic-cloud-id",
+    user: "elastic",
+    password: "password",
+    log: true
+  )
+end
+
+def lambda_handler(event:, context:)
+  client.search(
+    index: 'stack-overflow',
+    body: {
+      query: {
+        match: {
+          title: {
+            query: 'phone application'
+          }
+        }
+      }
+    }
+  )
+end
+```
+
+Resources used to assess these recommendations:
+
+* [GCP Cloud Functions: Tips & Tricks](https://cloud.google.com/functions/docs/bestpractices/tips#use_global_variables_to_reuse_objects_in_future_invocations)
+* [Best practices for working with AWS Lambda functions](https://docs.aws.amazon.com/lambda/latest/dg/best-practices.md)
+
+
+## Enabling the Compatibility Mode [client-comp]
+
+The Elasticsearch server version 8.0 is introducing a new compatibility mode that allows you a smoother upgrade experience from 7 to 8. In a nutshell, you can use the latest 7.x Elasticsearch client with an 8.x Elasticsearch server, giving more room to coordinate the upgrade of your codebase to the next major version.
+
+If you want to leverage this functionality, please make sure that you are using the latest 7.x client and set the environment variable `ELASTIC_CLIENT_APIVERSIONING` to `true`. The client is handling the rest internally. For every 8.0 and beyond client, you’re all set! The compatibility mode is enabled by default.
