@@ -1,0 +1,24 @@
+toc:
+  - file: index.md
+  - file: getting-started.md
+  - file: installation.md
+  - file: connecting.md
+  - file: configuration.md
+    children:
+      - file: basic-config.md
+      - file: advanced-config.md
+  - file: integrations.md
+    children:
+      - file: transport.md
+      - file: api.md
+      - file: opentelemetry.md
+      - file: ecs.md
+      - file: activemodel_activerecord.md
+      - file: ruby_on_rails.md
+      - file: persistence.md
+      - file: dsl.md
+  - file: examples.md
+  - file: client-helpers.md
+    children:
+      - file: Helpers.md
+      - file: esql.md
