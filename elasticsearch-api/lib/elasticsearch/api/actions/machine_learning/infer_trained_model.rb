@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
@@ -25,22 +25,23 @@ module Elasticsearch
         # Evaluate a trained model.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
-        # @option arguments [Time] :timeout Controls the amount of time to wait for inference results.
+        # @option arguments [Time] :timeout Controls the amount of time to wait for inference results. Server default: 10s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The docs to apply inference on and inference configuration overrides (*Required*)
+        # @option arguments [Hash] :body request body
         #
         # *Deprecation notice*:
         # /_ml/trained_models/{model_id}/deployment/_infer is deprecated. Use /_ml/trained_models/{model_id}/_infer instead
         # Deprecated since version 8.3.0
         #
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-trained-model.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-infer-trained-model
         #
         def infer_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.infer_trained_model' }
 
-          defined_params = [:model_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:model_id].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -55,7 +56,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = ("_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_infer" if _model_id)
+          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/_infer"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

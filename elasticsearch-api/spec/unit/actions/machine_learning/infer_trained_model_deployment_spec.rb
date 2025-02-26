@@ -21,7 +21,7 @@ describe 'client#ml.infer_trained_model_deployment' do
   let(:expected_args) do
     [
       'POST',
-      '_ml/trained_models/foo/deployment/_infer',
+      '_ml/trained_models/foo/_infer',
       {},
       {},
       {},
