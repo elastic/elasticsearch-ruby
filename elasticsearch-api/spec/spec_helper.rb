@@ -25,15 +25,16 @@ else
   require 'debug'
 end
 require 'yaml'
-require 'active_support/isolated_execution_state' unless RUBY_VERSION < '2.7.0'
+# Require logger before jbuilder to avoid concurrent-ruby error uninitialized constant
+# ActiveSupport::LoggerThreadSafeLevel::Logger. Dependencies are fun.
+require 'logger'
 require 'jbuilder'
 require 'jsonify'
 require 'elasticsearch'
 require 'elasticsearch-api'
 require 'openssl'
-require 'logger'
 
-tracer = ::Logger.new(STDERR)
+tracer = ::Logger.new($stderr)
 tracer.formatter = lambda { |s, d, p, m| "#{m.gsub(/^.*$/) { |n| '   ' + n } }\n" }
 
 module HelperModule
