@@ -71,7 +71,7 @@ To log requests and responses to standard output with the default logger (an ins
 Elasticsearch::Client.new(log: true)
 ```
 
-You can also use [`ecs-logging`](https://github.com/elastic/ecs-logging-ruby) which is a set of libraries that enables you to transform your application logs to structured logs that comply with the [Elastic Common Schema](ecs://docs/reference/index.md). See [Elastic Common Schema (ECS)](/reference/ecs.md).
+You can also use [`ecs-logging`](https://github.com/elastic/ecs-logging-ruby) which is a set of libraries that enables you to transform your application logs to structured logs that comply with the [Elastic Common Schema](ecs://reference/index.md). See [Elastic Common Schema (ECS)](/reference/ecs.md).
 
 To trace requests and responses in the Curl format, set the `trace` argument:
 
