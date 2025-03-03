@@ -15,20 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns help for the Cat APIs.
+        # Get CAT help.
+        # Get help for the CAT APIs.
         #
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-cat
         #
         def help(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.help' }
@@ -36,11 +35,11 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = '_cat'
-          params = Utils.process_params(arguments)
+          path   = "_cat"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
