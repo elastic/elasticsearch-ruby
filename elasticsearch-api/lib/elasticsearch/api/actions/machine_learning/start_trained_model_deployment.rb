@@ -34,6 +34,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the amount of time to wait for the model to deploy.
         # @option arguments [String] :wait_for The allocation status for which to wait (options: starting, started, fully_allocated)
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The settings for the trained model deployment
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/start-trained-model-deployment.html
         #
@@ -50,7 +51,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           _model_id = arguments.delete(:model_id)
 
