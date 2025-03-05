@@ -20,7 +20,7 @@ steps:
           - "3.2"
           - "3.1"
         transport:
-          - "8.3"
+          - "8.4"
         ruby_source:
           - 'ruby'
       # Only run platinum once for the latest Ruby. You can use lots of combinations, check the
@@ -42,11 +42,6 @@ steps:
             suite: "free"
             ruby: "3.4"
             ruby_source: "ruby"
-            transport: "8.1"
-        - with:
-            suite: "free"
-            ruby: "3.4"
-            ruby_source: "ruby"
             transport: "8.2"
         - with:
             suite: "free"
@@ -57,7 +52,7 @@ steps:
             suite: "free"
             ruby: "9.4"
             ruby_source: "jruby"
-            transport: "8.3"
+            transport: "8.4"
     command: ./.buildkite/run-tests.sh
     # I'm publishing test results to HTML and JUnit in this directory and this directive makes them
     # available in the Artifacts tab of a build in Buildkite.
