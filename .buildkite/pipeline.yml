@@ -12,7 +12,7 @@ steps:
         ruby_source:
           - "ruby"
         transport:
-          - "8.3"
+          - "8.4"
       adjustments:
         - with: # JRuby tests
             ruby: "9.4"
