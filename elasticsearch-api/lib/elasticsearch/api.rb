@@ -70,7 +70,6 @@ module Elasticsearch
                 Elasticsearch::API::Logstash,
                 Elasticsearch::API::Migration,
                 Elasticsearch::API::MachineLearning,
-                Elasticsearch::API::Rollup,
                 Elasticsearch::API::SearchableSnapshots,
                 Elasticsearch::API::Security,
                 Elasticsearch::API::SnapshotLifecycleManagement,
