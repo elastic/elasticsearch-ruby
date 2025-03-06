@@ -259,7 +259,7 @@ You can write your own transport implementation by including the {Elastic::Trans
 
 * `Elastic::Transport::Client` is composed of `Elastic::Transport::Transport`.
 * `Elastic::Transport::Transport` is composed of `Elastic::Transport::Transport::Connections`, and an instance of logger, tracer, serializer and sniffer.
-* Logger and tracer can be any object conforming to Ruby logging interface, for example, an instance of [`Logger`](https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.md), [log4r](https://rubygems.org/gems/log4r), [logging](https://github.com/TwP/logging/), and so on.
+* Logger and tracer can be any object conforming to Ruby logging interface, for example, an instance of [`Logger`](https://ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html), [log4r](https://rubygems.org/gems/log4r), [logging](https://github.com/TwP/logging/), and so on.
 * The `Elastic::Transport::Transport::Serializer::Base` implementations handle converting data for {{es}} (for example, to JSON). You can implement your own serializer.
 * `Elastic::Transport::Transport::Sniffer` allows to discover nodes in the cluster and use them as connections.
 * `Elastic::Transport::Transport::Connections::Collection` is composed of `Elastic::Transport::Transport::Connections::Connection` instances and a selector instance.
