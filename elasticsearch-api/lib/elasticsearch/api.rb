@@ -15,21 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 
-require "cgi"
-require "multi_json"
-
-require "elasticsearch/api/version"
-require "elasticsearch/api/namespace/common"
-require "elasticsearch/api/utils"
+require 'cgi'
+require 'multi_json'
+require 'elasticsearch/api/version'
+require 'elasticsearch/api/utils'
 require 'elasticsearch/api/response'
 
-Dir[ File.expand_path('../api/actions/**/*.rb', __FILE__) ].each   { |f| require f }
-Dir[ File.expand_path('../api/namespace/**/*.rb', __FILE__) ].each { |f| require f }
+Dir[File.expand_path('api/actions/**/*.rb', __dir__)].each { |f| require f }
 
 module Elasticsearch
   # This is the main module for including all API endpoint functions
   # It includes the namespace modules from ./api/actions
   module API
+    include Elasticsearch::API::Actions
     DEFAULT_SERIALIZER = MultiJson
 
     HTTP_GET          = 'GET'.freeze
@@ -37,56 +35,83 @@ module Elasticsearch
     HTTP_POST         = 'POST'.freeze
     HTTP_PUT          = 'PUT'.freeze
     HTTP_DELETE       = 'DELETE'.freeze
-    UNDERSCORE_SEARCH = '_search'.freeze
-    UNDERSCORE_ALL    = '_all'.freeze
-    DEFAULT_DOC       = '_doc'.freeze
 
-    # Auto-include all namespaces in the receiver
-    #
-    def self.included(base)
-      base.send :include,
-                Elasticsearch::API::Common,
-                Elasticsearch::API::Actions,
-                Elasticsearch::API::Cluster,
-                Elasticsearch::API::Nodes,
-                Elasticsearch::API::Indices,
-                Elasticsearch::API::Ingest,
-                Elasticsearch::API::Snapshot,
-                Elasticsearch::API::Tasks,
-                Elasticsearch::API::Cat,
-                Elasticsearch::API::Remote,
-                Elasticsearch::API::DanglingIndices,
-                Elasticsearch::API::Features,
-                Elasticsearch::API::AsyncSearch,
-                Elasticsearch::API::Autoscaling,
-                Elasticsearch::API::CrossClusterReplication,
-                Elasticsearch::API::DataFrameTransformDeprecated,
-                Elasticsearch::API::Enrich,
-                Elasticsearch::API::Eql,
-                Elasticsearch::API::Fleet,
-                Elasticsearch::API::Graph,
-                Elasticsearch::API::IndexLifecycleManagement,
-                Elasticsearch::API::License,
-                Elasticsearch::API::Logstash,
-                Elasticsearch::API::Migration,
-                Elasticsearch::API::MachineLearning,
-                Elasticsearch::API::SearchableSnapshots,
-                Elasticsearch::API::Security,
-                Elasticsearch::API::SnapshotLifecycleManagement,
-                Elasticsearch::API::SQL,
-                Elasticsearch::API::SSL,
-                Elasticsearch::API::TextStructure,
-                Elasticsearch::API::Transform,
-                Elasticsearch::API::Watcher,
-                Elasticsearch::API::XPack,
-                Elasticsearch::API::SearchApplication,
-                Elasticsearch::API::Synonyms,
-                Elasticsearch::API::Esql,
-                Elasticsearch::API::Inference,
-                Elasticsearch::API::Simulate,
-                Elasticsearch::API::Connector,
-                Elasticsearch::API::QueryRules
+    module CommonClient
+      attr_reader :client
+
+      def initialize(client)
+        @client = client
+      end
+
+      def perform_request(method, path, params = {}, body = nil, headers = nil, request_opts = {})
+        client.perform_request(method, path, params, body, headers, request_opts)
+      end
     end
+
+    # Add new namespaces to this constant
+    #
+    API_NAMESPACES = %i[
+      async_search
+      cat
+      cluster
+      connector
+      cross_cluster_replication
+      dangling_indices
+      enrich
+      eql
+      esql
+      features
+      fleet
+      graph
+      index_lifecycle_management
+      indices
+      inference
+      ingest
+      license
+      logstash
+      machine_learning
+      migration
+      nodes
+      query_rules
+      sql
+      ssl
+      search_application
+      searchable_snapshots
+      security
+      simulate
+      snapshot
+      snapshot_lifecycle_management
+      synonyms
+      tasks
+      text_structure
+      transform
+      watcher
+      xpack
+    ].freeze
+    UPPERCASE_APIS = %w[sql ssl].freeze
+
+    API_NAMESPACES.each do |namespace|
+      name = namespace.to_s
+      module_name = if UPPERCASE_APIS.include?(name)
+                      name.upcase
+                    elsif name == 'xpack'
+                      'XPack'
+                    else
+                      name.split('_').map(&:capitalize).join
+                    end
+      class_name = "#{module_name}Client"
+
+      klass = Class.new(Object) do
+        include CommonClient, Object.const_get("Elasticsearch::API::#{module_name}::Actions")
+      end
+      Object.const_set(class_name, klass)
+      define_method(name) do
+        instance_variable_set("@#{name}", klass.new(self))
+      end
+    end
+
+    alias ml machine_learning
+    alias ilm index_lifecycle_management
 
     # The serializer class
     #
