@@ -73,7 +73,8 @@ namespace :es do
     abort e.message
   end
 
-  desc 'Download artifacts (tests and REST spec) for currently running cluster'
+  # Deprecated
+  desc 'Download Elasticsearch artifacts (tests and REST spec) for currently running cluster'
   task :download_artifacts, :version do |_, args|
     json_filename = CURRENT_PATH.join('tmp/artifacts.json')
 
