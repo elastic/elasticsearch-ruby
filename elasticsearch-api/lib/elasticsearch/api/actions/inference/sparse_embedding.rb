@@ -22,20 +22,19 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete an inference endpoint
+        # Perform sparse embedding inference on the service
         #
-        # @option arguments [String] :task_type The task type
-        # @option arguments [String] :inference_id The inference identifier. (*Required*)
-        # @option arguments [Boolean] :dry_run When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
-        # @option arguments [Boolean] :force When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
+        # @option arguments [String] :inference_id The inference Id (*Required*)
+        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
+        def sparse_embedding(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.sparse_embedding' }
 
-          defined_params = [:inference_id, :task_type].inject({}) do |set_variables, variable|
+          defined_params = [:inference_id].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
             set_variables
           end
@@ -46,18 +45,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          _task_type = arguments.delete(:task_type)
+          body = arguments.delete(:body)
 
           _inference_id = arguments.delete(:inference_id)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}"
-                   end
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_inference/sparse_embedding/#{Utils.__listify(_inference_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

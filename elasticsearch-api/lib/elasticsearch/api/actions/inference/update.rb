@@ -15,30 +15,36 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Inference
       module Actions
-        # Update inference
+        # Update an inference endpoint.
+        # Modify +task_settings+, secrets (within +service_settings+), or +num_allocations+ for an inference endpoint, depending on the specific endpoint service and +task_type+.
+        # IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face.
+        # For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models.
+        # However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
         #
-        # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :inference_id The unique identifier of the inference endpoint. (*Required*)
+        # @option arguments [String] :task_type The type of inference task that the model performs.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference endpoint's task and service settings
+        # @option arguments [Hash] :body inference_config
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-inference-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-update
         #
         def update(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.update' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id, :task_type].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
 
           arguments = arguments.clone
