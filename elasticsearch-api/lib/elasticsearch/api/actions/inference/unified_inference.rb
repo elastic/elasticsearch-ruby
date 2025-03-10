@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/unified-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/unified-inference-api.html
         #
         def unified_inference(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.unified_inference' }

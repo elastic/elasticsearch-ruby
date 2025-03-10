@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-ip-location-database-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/delete-ip-location-database-api.html
         #
         def delete_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_ip_location_database' }

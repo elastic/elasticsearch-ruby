@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The database configuration definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-ip-location-database-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/put-ip-location-database-api.html
         #
         def put_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_ip_location_database' }

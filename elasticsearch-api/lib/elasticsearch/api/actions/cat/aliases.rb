@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/cat-alias.html
         #
         def aliases(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.aliases' }
