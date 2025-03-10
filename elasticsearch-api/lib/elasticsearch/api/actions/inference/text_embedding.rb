@@ -22,23 +22,18 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform inference
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Perform text embedding inference
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
         # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-inference-api.html
         #
-        def inference(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.inference' }
+        def text_embedding(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.text_embedding' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -52,14 +47,8 @@ module Elasticsearch
 
           _inference_id = arguments.delete(:inference_id)
 
-          _task_type = arguments.delete(:task_type)
-
           method = Elasticsearch::API::HTTP_POST
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}"
-                   end
+          path   = "_inference/text_embedding/#{Utils.__listify(_inference_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(
