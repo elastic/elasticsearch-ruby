@@ -17,20 +17,20 @@
 
 require 'spec_helper'
 
-describe 'client#inference.update' do
+describe 'client#inference.completion' do
   let(:expected_args) do
     [
-      'PUT',
-      '_inference/foo/bar/_update',
+      'POST',
+      '_inference/completion/bar',
       {},
+      nil,
       {},
-      {},
-      { defined_params: { inference_id: 'bar', task_type: 'foo' },
-        endpoint: 'inference.update' }
+      { defined_params: { inference_id: 'bar' },
+        endpoint: 'inference.completion' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.update(task_type: 'foo', body: {}, inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.completion(inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

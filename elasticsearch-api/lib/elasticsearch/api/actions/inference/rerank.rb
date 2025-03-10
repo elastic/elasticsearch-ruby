@@ -15,27 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform streaming inference
+        # Perform rereanking inference on the service
         #
-        # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :inference_id The unique identifier for the inference endpoint. (*Required*)
+        # @option arguments [Time] :timeout The amount of time to wait for the inference request to complete. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference payload
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/post-stream-inference-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference
         #
-        def stream_inference(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.stream_inference' }
+        def rerank(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.rerank' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
+            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -48,15 +49,9 @@ module Elasticsearch
 
           _inference_id = arguments.delete(:inference_id)
 
-          _task_type = arguments.delete(:task_type)
-
           method = Elasticsearch::API::HTTP_POST
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}/_stream"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}/_stream"
-                   end
-          params = {}
+          path   = "_inference/rerank/#{Utils.__listify(_inference_id)}"
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

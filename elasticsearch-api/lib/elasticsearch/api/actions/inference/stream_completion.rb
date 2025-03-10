@@ -22,20 +22,22 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete an inference endpoint
+        # Perform streaming inference.
+        # Get real-time responses for completion tasks by delivering answers incrementally, reducing response times during computation.
+        # This API works only with the completion task type.
+        # IMPORTANT: The inference APIs enable you to use certain services, such as built-in machine learning models (ELSER, E5), models uploaded through Eland, Cohere, OpenAI, Azure, Google AI Studio, Google Vertex AI, Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models uploaded through Eland, the inference APIs offer an alternative way to use and manage trained models. However, if you do not plan to use the inference APIs to use these models or if you want to use non-NLP models, use the machine learning trained model APIs.
+        # This API requires the +monitor_inference+ cluster privilege (the built-in +inference_admin+ and +inference_user+ roles grant this privilege). You must use a client that supports streaming.
         #
-        # @option arguments [String] :task_type The task type
-        # @option arguments [String] :inference_id The inference identifier. (*Required*)
-        # @option arguments [Boolean] :dry_run When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
-        # @option arguments [Boolean] :force When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
+        # @option arguments [String] :inference_id The unique identifier for the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-stream-inference
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
+        def stream_completion(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.stream_completion' }
 
-          defined_params = [:inference_id, :task_type].inject({}) do |set_variables, variable|
+          defined_params = [:inference_id].inject({}) do |set_variables, variable|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
             set_variables
           end
@@ -46,19 +48,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
-
-          _task_type = arguments.delete(:task_type)
+          body = arguments.delete(:body)
 
           _inference_id = arguments.delete(:inference_id)
 
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}"
-                   end
-          params = Utils.process_params(arguments)
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_inference/completion/#{Utils.__listify(_inference_id)}/_stream"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
