@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-execute-retention.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/slm-api-execute-retention.html
         #
         def execute_retention(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.execute_retention' }

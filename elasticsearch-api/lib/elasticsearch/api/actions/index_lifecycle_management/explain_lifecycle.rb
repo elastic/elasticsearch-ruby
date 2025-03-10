@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/ilm-explain-lifecycle.html
         #
         def explain_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.explain_lifecycle' }
