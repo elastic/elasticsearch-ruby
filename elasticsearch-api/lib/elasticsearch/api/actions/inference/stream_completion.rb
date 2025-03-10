@@ -22,20 +22,18 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Delete an inference endpoint
+        # Perform streaming completion inference
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
-        # @option arguments [Boolean] :dry_run If true the endpoint will not be deleted and a list of ingest processors which reference this endpoint will be returned.
-        # @option arguments [Boolean] :force If true the endpoint will be forcefully stopped (regardless of whether or not it is referenced by any ingest processors or semantic text fields).
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/delete-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/post-stream-inference-api.html
         #
-        def delete(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
+        def stream_completion(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.stream_completion' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -45,19 +43,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
           _inference_id = arguments.delete(:inference_id)
 
-          _task_type = arguments.delete(:task_type)
-
-          method = Elasticsearch::API::HTTP_DELETE
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}"
-                   end
-          params = Utils.process_params(arguments)
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_inference/completion/#{Utils.__listify(_inference_id)}/_stream"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
