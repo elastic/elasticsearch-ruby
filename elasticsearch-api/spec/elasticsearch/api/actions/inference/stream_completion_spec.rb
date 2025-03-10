@@ -17,19 +17,19 @@
 
 require 'spec_helper'
 
-describe 'client#inference.stream_inference' do
+describe 'client#inference.stream_completion' do
   let(:expected_args) do
     [
       'POST',
-      '_inference/foo/_stream',
+      '_inference/completion/foo/_stream',
       {},
       nil,
       {},
-      { defined_params: { inference_id: 'foo' }, endpoint: 'inference.stream_inference' }
+      { defined_params: { inference_id: 'foo' }, endpoint: 'inference.stream_completion' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.stream_inference(inference_id: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.stream_completion(inference_id: 'foo')).to be_a Elasticsearch::API::Response
   end
 end
