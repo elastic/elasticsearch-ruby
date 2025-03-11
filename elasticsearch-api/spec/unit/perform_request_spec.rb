@@ -35,6 +35,8 @@ describe 'Perform request args' do
       params.merge(part.to_sym => 'testing')
     end
 
+    required_params.merge!(body: {}) if ['inference.put', 'inference.update'].include? spec.endpoint_name
+
     let(:client_double) do
       Class.new { include Elasticsearch::API }.new.tap do |client|
         expect(client).to receive(:perform_request) do |_, _, _, _, _, request_params|
