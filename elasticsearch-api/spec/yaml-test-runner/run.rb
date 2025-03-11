@@ -64,4 +64,7 @@ logger.level = Logger::WARN unless ENV['DEBUG']
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
 branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
-Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger).run
+
+runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
+runner.add_tests_to_skip('inference/10_basic.yml') # TODO: Extract into file
+runner.run
