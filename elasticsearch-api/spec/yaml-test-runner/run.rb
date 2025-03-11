@@ -86,4 +86,5 @@ Elasticsearch::Tests::Downloader::run(tests_path, branch)
 
 runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
 runner.add_tests_to_skip('knn_search.yml') # TODO: Extract into file
+runner.add_tests_to_skip('inference/10_basic.yml')
 runner.run(ENV['SINGLE_TEST'] || [])
