@@ -17,3 +17,4 @@ parsed_alternative_report.json
 .byebug_history
 build/
 *.gem
+elastic-client-generator-ruby
