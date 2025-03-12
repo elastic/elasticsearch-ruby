@@ -129,10 +129,12 @@ docker run \
        --env "RUBY_VERSION=${RUBY_VERSION}" \
        --env "WORKFLOW=${WORKFLOW}" \
        --env "CLIENTS_GITHUB_TOKEN=${CLIENTS_GITHUB_TOKEN}" \
-       --name test-runner \
+       --name elasticsearch-ruby \
        --volume "${repo}:/usr/src/app" \
        --rm \
        "${product}" \
+       git clone https://$CLIENTS_GITHUB_TOKEN@github.com/elastic/elastic-client-generator-ruby.git &&
+       pushd elastic-client-generator-ruby/elasticsearch && bundle install && popd \
        bundle exec rake automation:${TASK}["${args_string}"]
 
 # ------------------------------------------------------- #
