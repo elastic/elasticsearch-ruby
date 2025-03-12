@@ -136,7 +136,7 @@ module Elasticsearch
       def bulk_body_helper
         <<~SRC
           payload = if body.is_a? Array
-                      Elasticsearch::API::Utils.__bulkify(body)
+                      Elasticsearch::API::Utils.bulkify(body)
                     else
                       body
                     end
@@ -150,7 +150,7 @@ module Elasticsearch
       def bulk_doc_helper(info)
         <<~SRC
           # @option arguments [String|Array] :body #{info}. Array of Strings, Header/Data pairs,
-          # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.__bulkify documentation.
+          # or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.bulkify documentation.
         SRC
       end
     end
