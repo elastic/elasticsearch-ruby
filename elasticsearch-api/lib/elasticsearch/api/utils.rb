@@ -24,60 +24,62 @@ module Elasticsearch
       # URL-escape a string
       #
       # @example
-      #     __escape('foo/bar') # => 'foo%2Fbar'
-      #     __escape('bar^bam') # => 'bar%5Ebam'
+      #     escape('foo/bar') # => 'foo%2Fbar'
+      #     escape('bar^bam') # => 'bar%5Ebam'
       #
       # @api private
-      def __escape(string)
+      def escape(string)
         return string if string == '*'
+
         ERB::Util.url_encode(string.to_s)
       end
 
       # Create a "list" of values from arguments, ignoring nil values and encoding special characters.
       #
       # @example Create a list from array
-      #     __listify(['A','B']) # => 'A,B'
+      #     listify(['A','B']) # => 'A,B'
       #
       # @example Create a list from arguments
-      #     __listify('A','B') # => 'A,B'
+      #     listify('A','B') # => 'A,B'
       #
       # @example Escape values
-      #     __listify('foo','bar^bam') # => 'foo,bar%5Ebam'
+      #     listify('foo','bar^bam') # => 'foo,bar%5Ebam'
       #
       # @example Do not escape the values
-      #     __listify('foo','bar^bam', escape: false) # => 'foo,bar^bam'
+      #     listify('foo','bar^bam', escape: false) # => 'foo,bar^bam'
       #
       # @api private
-      def __listify(*list)
+      def listify(*list)
         options = list.last.is_a?(Hash) ? list.pop : {}
 
         escape = options[:escape]
-        Array(list).
-          flat_map { |e| e.respond_to?(:split) ? e.split(',') : e }.
-          flatten.
-          compact.
-          map { |e| escape == false ? e : __escape(e) }.
-          join(',')
+        Array(list)
+          .flat_map { |e| e.respond_to?(:split) ? e.split(',') : e }
+          .flatten
+          .compact
+          .map { |e| escape == false ? e : escape(e) }
+          .join(',')
       end
 
       # Create a path (URL part) from arguments, ignoring nil values and empty strings.
       #
       # @example Create a path from array
-      #     __pathify(['foo', '', nil, 'bar']) # => 'foo/bar'
+      #     pathify(['foo', '', nil, 'bar']) # => 'foo/bar'
       #
       # @example Create a path from arguments
-      #     __pathify('foo', '', nil, 'bar') # => 'foo/bar'
+      #     pathify('foo', '', nil, 'bar') # => 'foo/bar'
       #
       # # @example Encode special characters
-      #     __pathify(['foo', 'bar^bam']) # => 'foo/bar%5Ebam'
+      #     pathify(['foo', 'bar^bam']) # => 'foo/bar%5Ebam'
       #
       # @api private
-      def __pathify(*segments)
-        Array(segments).flatten.
-          compact.
-          reject { |s| s.to_s.strip.empty? }.
-          join('/').
-          squeeze('/')
+      def pathify(*segments)
+        Array(segments)
+          .flatten
+          .compact
+          .reject { |s| s.to_s.strip.empty? }
+          .join('/')
+          .squeeze('/')
       end
 
       # Convert an array of payloads into Elasticsearch `header\ndata` format
@@ -86,7 +88,7 @@ module Elasticsearch
       # or the conveniency "combined" format where data is passed along with the header
       # in a single item.
       #
-      #     Elasticsearch::API::Utils.__bulkify [
+      #     Elasticsearch::API::Utils.bulkify [
       #       { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
       #       { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } }
       #     ]
@@ -96,7 +98,7 @@ module Elasticsearch
       #     # => {"update":{"_index":"myindexB","_type":"mytype","_id":"2"}}
       #     # => {"doc":{"title":"Update"}}
       #
-      def __bulkify(payload)
+      def bulkify(payload)
         operations = %w[index create delete update]
 
         case
@@ -131,7 +133,7 @@ module Elasticsearch
 
       def process_params(arguments)
         arguments = Hash[arguments] unless arguments.is_a?(Hash)
-        Hash[arguments.map { |k, v| v.is_a?(Array) ? [k, __listify(v, { escape: false })] : [k, v] }] # Listify Arrays
+        Hash[arguments.map { |k, v| v.is_a?(Array) ? [k, listify(v, { escape: false })] : [k, v] }] # Listify Arrays
       end
 
       # Extracts the valid parts of the URL from the arguments
@@ -144,14 +146,14 @@ module Elasticsearch
       # @return [Array<String>]            Valid parts of the URL as an array of strings
       #
       # @example Extract parts
-      #   __extract_parts { :foo => true }, [:foo, :bar]
+      #   extract_parts { :foo => true }, [:foo, :bar]
       #   # => [:foo]
       #
       #
       # @api private
       #
-      def __extract_parts(arguments, valid_parts=[])
-        Hash[arguments].reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v  }
+      def extract_parts(arguments, _valid_parts = [])
+        Hash[arguments].reduce([]) { |sum, item| k, v = item; v.is_a?(TrueClass) ? sum << k.to_s : sum << v }
       end
 
       # Calls the given block, rescuing from `StandardError`.
@@ -165,7 +167,7 @@ module Elasticsearch
       #
       # @api private
       #
-      def __rescue_from_not_found(&block)
+      def rescue_from_not_found(&block)
         yield
       rescue StandardError => e
         if e.class.to_s =~ /NotFound/ || e.message =~ /Not\s*Found/i
