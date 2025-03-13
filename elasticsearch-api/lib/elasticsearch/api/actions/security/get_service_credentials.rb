@@ -15,25 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information of all service credentials for a service account.
+        # Get service account credentials.
+        # To use this API, you must have at least the +read_security+ cluster privilege (or a greater privilege such as +manage_service_account+ or +manage_security+).
+        # The response includes service account tokens that were created with the create service account tokens API as well as file-backed tokens from all nodes of the cluster.
+        # NOTE: For tokens backed by the +service_tokens+ file, the API collects them from all nodes of the cluster.
+        # Tokens with the same name from different nodes are assumed to be the same token and are only counted once towards the total number of service tokens.
         #
-        # @option arguments [String] :namespace An identifier for the namespace
-        # @option arguments [String] :service An identifier for the service name
+        # @option arguments [String] :namespace The name of the namespace. (*Required*)
+        # @option arguments [String] :service The service name. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-credentials.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-credentials
         #
         def get_service_credentials(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_service_credentials' }
 
-          defined_params = %i[namespace service].each_with_object({}) do |variable, set_variables|
+          defined_params = [:namespace, :service].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,7 +55,7 @@ module Elasticsearch
           _service = arguments.delete(:service)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential"
+          path   = "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}/credential"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates a refresh token and access token that was generated from the OpenID Connect Authenticate API
+        # Logout of OpenID Connect.
+        # Invalidate an access token and a refresh token that were generated as a response to the +/_security/oidc/authenticate+ API.
+        # If the OpenID Connect authentication realm in Elasticsearch is accordingly configured, the response to this call will contain a URI pointing to the end session endpoint of the OpenID Connect Provider in order to perform single logout.
+        # Elasticsearch exposes all the necessary OpenID Connect related functionality with the OpenID Connect APIs.
+        # These APIs are used internally by Kibana in order to provide OpenID Connect based authentication, but can also be used by other, custom web applications or other clients.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Access token and refresh token to invalidate (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-oidc-logout.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-oidc-logout
         #
         def oidc_logout(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.oidc_logout' }
@@ -37,7 +41,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/oidc/logout'

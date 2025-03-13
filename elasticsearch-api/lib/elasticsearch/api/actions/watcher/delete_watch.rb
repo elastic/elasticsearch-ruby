@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Removes a watch from Watcher.
+        # Delete a watch.
+        # When the watch is removed, the document representing the watch in the +.watches+ index is gone and it will never be run again.
+        # Deleting a watch does not delete any watch execution records related to this watch from the watch history.
+        # IMPORTANT: Deleting a watch must be done by using only this API.
+        # Do not delete the watch directly from the +.watches+ index using the Elasticsearch delete document API
+        # When Elasticsearch security features are enabled, make sure no write privileges are granted to anyone for the +.watches+ index.
         #
-        # @option arguments [String] :id Watch ID
+        # @option arguments [String] :id The watch identifier. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-delete-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-delete-watch
         #
         def delete_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.delete_watch' }
@@ -47,11 +52,11 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_watcher/watch/#{Utils.__listify(_id)}"
+          path   = "_watcher/watch/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

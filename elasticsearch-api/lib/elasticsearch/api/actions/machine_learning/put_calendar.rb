@@ -15,20 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Instantiates a calendar.
+        # Create a calendar.
         #
-        # @option arguments [String] :calendar_id The ID of the calendar to create
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The calendar details
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-put-calendar.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-calendar
         #
         def put_calendar(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_calendar' }
@@ -48,7 +48,7 @@ module Elasticsearch
           _calendar_id = arguments.delete(:calendar_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}"
+          path   = "_ml/calendars/#{Utils.listify(_calendar_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

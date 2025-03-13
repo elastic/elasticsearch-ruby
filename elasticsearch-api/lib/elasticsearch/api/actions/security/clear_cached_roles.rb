@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Evicts roles from the native role cache.
+        # Clear the roles cache.
+        # Evict roles from the native role cache.
         #
-        # @option arguments [List] :name Role name
+        # @option arguments [String, Array<String>] :name A comma-separated list of roles to evict from the role cache.
+        #  To evict all roles, use an asterisk (+*+).
+        #  It does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-role-cache.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-roles
         #
         def clear_cached_roles(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_roles' }
@@ -47,7 +50,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/role/#{Utils.__listify(_name)}/_clear_cache"
+          path   = "_security/role/#{Utils.listify(_name)}/_clear_cache"
           params = {}
 
           Elasticsearch::API::Response.new(

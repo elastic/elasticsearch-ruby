@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Retries executing the policy for an index that is in the ERROR step.
+        # Retry a policy.
+        # Retry running the lifecycle policy for an index that is in the ERROR step.
+        # The API sets the policy back to the step where the error occurred and runs the step.
+        # Use the explain lifecycle state API to determine whether an index is in the ERROR step.
         #
-        # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry
+        # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-retry-policy.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-retry
         #
         def retry(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.retry' }
@@ -42,12 +45,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_ilm/retry"
+          path   = "#{Utils.listify(_index)}/_ilm/retry"
           params = {}
 
           Elasticsearch::API::Response.new(

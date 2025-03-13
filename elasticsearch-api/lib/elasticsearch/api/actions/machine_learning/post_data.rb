@@ -15,22 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Sends data to an anomaly detection job for analysis.
+        # Send data to an anomaly detection job for analysis.
+        # IMPORTANT: For each job, data can be accepted from only a single connection at a time.
+        # It is not currently possible to post data to multiple jobs using wildcards or a comma-separated list.
         #
-        # @option arguments [String] :job_id The name of the job receiving the data
-        # @option arguments [String] :reset_start Optional parameter to specify the start of the bucket resetting range
-        # @option arguments [String] :reset_end Optional parameter to specify the end of the bucket resetting range
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. The job must have a state of open to receive and process the data. (*Required*)
+        # @option arguments [String, Time] :reset_end Specifies the end of the bucket resetting range.
+        # @option arguments [String, Time] :reset_start Specifies the start of the bucket resetting range.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The data to process (*Required*)
+        # @option arguments [Hash] :body data
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-data.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-post-data
         #
         def post_data(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.post_data' }
@@ -51,7 +53,7 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_data"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_data"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

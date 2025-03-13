@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information for Users using a subset of query DSL
+        # Find users with a query.
+        # Get information for users in a paginated manner.
+        # You can optionally filter the results with a query.
+        # NOTE: As opposed to the get user API, built-in users are excluded from the result.
+        # This API is only for native users.
         #
-        # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated with the user
+        # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body From, size, query, sort and search_after
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-query-user.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-user
         #
         def query_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.query_user' }
@@ -36,7 +40,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = if body
                      Elasticsearch::API::HTTP_POST
@@ -44,7 +48,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = '_security/_query/user'
+          path   = '_security/_query/user'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

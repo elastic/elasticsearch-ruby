@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns geoip database configuration.
+        # Get GeoIP database configurations.
+        # Get information about one or more IP geolocation database configurations.
         #
-        # @option arguments [List] :id A comma-separated list of geoip database configurations to get; use `*` to get all geoip database configurations
+        # @option arguments [String, Array] :id A comma-separated list of database configuration IDs to retrieve.
+        #  Wildcard (+*+) expressions are supported.
+        #  To get all database configurations, omit this parameter or use +*+.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-geoip-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-geoip-database
         #
         def get_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_geoip_database' }
@@ -46,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _id
-                     "_ingest/geoip/database/#{Utils.__listify(_id)}"
+                     "_ingest/geoip/database/#{Utils.listify(_id)}"
                    else
                      '_ingest/geoip/database'
                    end

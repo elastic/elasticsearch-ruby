@@ -52,7 +52,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_security/profile/_suggest"
+          path   = '_security/profile/_suggest'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

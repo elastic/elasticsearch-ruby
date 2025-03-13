@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the last_seen timestamp in the connector document.
+        # Check in a connector.
+        # Update the +last_seen+ field in the connector and set it to the current timestamp.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be checked in (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/check-in-connector-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-check-in
         #
         def check_in(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.check_in' }
@@ -51,7 +52,7 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_check_in"
+          path   = "_connector/#{Utils.listify(_connector_id)}/_check_in"
           params = {}
 
           Elasticsearch::API::Response.new(

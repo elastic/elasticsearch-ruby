@@ -15,18 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns statistical information about geoip databases
+        # Get GeoIP statistics.
+        # Get download statistics for GeoIP2 databases that are used with the GeoIP processor.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-stats-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-processor.html
         #
         def geo_ip_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.geo_ip_stats' }
@@ -34,7 +35,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_ingest/geoip/stats'

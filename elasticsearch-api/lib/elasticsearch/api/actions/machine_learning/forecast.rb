@@ -15,23 +15,36 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Predicts the future behavior of a time series by using its historical behavior.
+        # Predict future behavior of a time series.
+        # Forecasts are not supported for jobs that perform population analysis; an
+        # error occurs if you try to create a forecast for a job that has an
+        # +over_field_name+ in its configuration. Forcasts predict future behavior
+        # based on historical data.
         #
-        # @option arguments [String] :job_id The ID of the job to forecast for
-        # @option arguments [Time] :duration The duration of the forecast
-        # @option arguments [Time] :expires_in The time interval after which the forecast expires. Expired forecasts will be deleted at the first opportunity.
-        # @option arguments [String] :max_model_memory The max memory able to be used by the forecast. Default is 20mb.
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. The job must be open when you
+        #  create a forecast; otherwise, an error occurs. (*Required*)
+        # @option arguments [Time] :duration A period of time that indicates how far into the future to forecast. For
+        #  example, +30d+ corresponds to 30 days. The forecast starts at the last
+        #  record that was processed. Server default: 1d.
+        # @option arguments [Time] :expires_in The period of time that forecast results are retained. After a forecast
+        #  expires, the results are deleted. If set to a value of 0, the forecast is
+        #  never automatically deleted. Server default: 14d.
+        # @option arguments [String] :max_model_memory The maximum memory the forecast can use. If the forecast needs to use
+        #  more than the provided amount, it will spool to disk. Default is 20mb,
+        #  maximum is 500mb and minimum is 1mb. If set to 40% or more of the job’s
+        #  configured memory limit, it is automatically reduced to below that
+        #  amount. Server default: 20mb.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Query parameters can be specified in the body
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-forecast.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-forecast
         #
         def forecast(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.forecast' }
@@ -51,7 +64,7 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_forecast"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_forecast"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

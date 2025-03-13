@@ -15,22 +15,32 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes expired and unused machine learning data.
+        # Delete expired ML data.
+        # Delete all job results, model snapshots and forecast data that have exceeded
+        # their retention days period. Machine learning state documents that are not
+        # associated with any job are also deleted.
+        # You can limit the request to a single or set of anomaly detection jobs by
+        # using a job identifier, a group name, a comma-separated list of jobs, or a
+        # wildcard expression. You can delete expired data for all anomaly detection
+        # jobs by using +_all+, by specifying +*+ as the +<job_id>+, or by omitting the
+        # +<job_id>+.
         #
-        # @option arguments [String] :job_id The ID of the job(s) to perform expired data hygiene for
-        # @option arguments [Number] :requests_per_second The desired requests per second for the deletion processes.
-        # @option arguments [Time] :timeout How long can the underlying delete processes run until they are canceled
+        # @option arguments [String] :job_id Identifier for an anomaly detection job. It can be a job identifier, a
+        #  group name, or a wildcard expression.
+        # @option arguments [Float] :requests_per_second The desired requests per second for the deletion processes. The default
+        #  behavior is no throttling.
+        # @option arguments [Time] :timeout How long can the underlying delete processes run until they are canceled. Server default: 8h.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body deleting expired data parameters
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-expired-data.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-expired-data
         #
         def delete_expired_data(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_expired_data' }
@@ -49,7 +59,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = if _job_id
-                     "_ml/_delete_expired_data/#{Utils.__listify(_job_id)}"
+                     "_ml/_delete_expired_data/#{Utils.listify(_job_id)}"
                    else
                      '_ml/_delete_expired_data'
                    end

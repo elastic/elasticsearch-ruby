@@ -15,21 +15,34 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Starts a data frame analytics job.
+        # Start a data frame analytics job.
+        # A data frame analytics job can be started and stopped multiple times
+        # throughout its lifecycle.
+        # If the destination index does not exist, it is created automatically the
+        # first time you start the data frame analytics job. The
+        # +index.number_of_shards+ and +index.number_of_replicas+ settings for the
+        # destination index are copied from the source index. If there are multiple
+        # source indices, the destination index copies the highest setting values. The
+        # mappings for the destination index are also copied from the source indices.
+        # If there are any mapping conflicts, the job fails to start.
+        # If the destination index exists, it is used as is. You can therefore set up
+        # the destination index in advance with custom settings and mappings.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to start
-        # @option arguments [Time] :timeout Controls the time to wait until the task has started. Defaults to 20 seconds
+        # @option arguments [String] :id Identifier for the data frame analytics job. This identifier can contain
+        #  lowercase alphanumeric characters (a-z and 0-9), hyphens, and
+        #  underscores. It must start and end with alphanumeric characters. (*Required*)
+        # @option arguments [Time] :timeout Controls the amount of time to wait until the data frame analytics job
+        #  starts. Server default: 20s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The start data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-start-data-frame-analytics
         #
         def start_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.start_data_frame_analytics' }
@@ -44,12 +57,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_start"
+          path   = "_ml/data_frame/analytics/#{Utils.listify(_id)}/_start"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

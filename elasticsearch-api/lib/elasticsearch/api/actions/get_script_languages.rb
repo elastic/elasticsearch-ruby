@@ -15,17 +15,18 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Returns available script types, languages and contexts
+      # Get script languages.
+      # Get a list of available script types, languages, and contexts.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-languages
       #
       def get_script_languages(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script_languages' }
@@ -33,7 +34,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = nil
+        body = nil
 
         method = Elasticsearch::API::HTTP_GET
         path   = '_script_language'

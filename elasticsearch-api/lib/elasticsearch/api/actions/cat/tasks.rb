@@ -15,34 +15,41 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns information about the tasks currently executing on one or more nodes in the cluster.
+        # Get task information.
+        # Get information about tasks currently running in the cluster.
+        # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the task management API.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :nodes A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [List] :actions A comma-separated list of actions that should be returned. Leave empty to return all.
-        # @option arguments [Boolean] :detailed Return detailed task information (default: false)
-        # @option arguments [String] :parent_task_id Return tasks with specified parent task id (node_id:task_number). Set to -1 to return all.
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
-        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
-        # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
+        # @option arguments [Array<String>] :actions The task action names, which are used to limit the response.
+        # @option arguments [Boolean] :detailed If +true+, the response includes detailed information about shard recoveries.
+        # @option arguments [Array<String>] :nodes Unique node identifiers, which are used to limit the response.
+        # @option arguments [String] :parent_task_id The parent task identifier, which is used to limit the response.
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [String] :time Unit used to display time values.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_completion If +true+, the request blocks until the task has completed.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/tasks.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-tasks
         #
         def tasks(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.tasks' }
@@ -50,7 +57,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_cat/tasks'

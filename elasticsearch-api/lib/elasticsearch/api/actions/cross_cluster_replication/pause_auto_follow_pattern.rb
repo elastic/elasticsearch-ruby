@@ -15,20 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Pauses an auto-follow pattern
+        # Pause an auto-follow pattern.
+        # Pause a cross-cluster replication auto-follow pattern.
+        # When the API returns, the auto-follow pattern is inactive.
+        # New indices that are created on the remote cluster and match the auto-follow patterns are ignored.
+        # You can resume auto-following with the resume auto-follow pattern API.
+        # When it resumes, the auto-follow pattern is active again and automatically configures follower indices for newly created indices on the remote cluster that match its patterns.
+        # Remote indices that were created while the pattern was paused will also be followed, unless they have been deleted or closed in the interim.
         #
-        # @option arguments [String] :name The name of the auto follow pattern that should pause discovering new indices to follow.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :name The name of the auto-follow pattern to pause. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-pause-auto-follow-pattern.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-pause-auto-follow-pattern
         #
         def pause_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.pause_auto_follow_pattern' }
@@ -48,7 +56,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ccr/auto_follow/#{Utils.__listify(_name)}/pause"
+          path   = "_ccr/auto_follow/#{Utils.listify(_name)}/pause"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

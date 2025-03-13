@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
         # Delete a behavioral analytics collection.
+        # The associated data stream is also deleted.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the analytics collection to be deleted
+        # @option arguments [String] :name The name of the analytics collection to be deleted (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-analytics-collection.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete-behavioral-analytics
         #
         def delete_behavioral_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.delete_behavioral_analytics' }
@@ -51,7 +52,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_application/analytics/#{Utils.__listify(_name)}"
+          path   = "_application/analytics/#{Utils.listify(_name)}"
           params = {}
 
           Elasticsearch::API::Response.new(

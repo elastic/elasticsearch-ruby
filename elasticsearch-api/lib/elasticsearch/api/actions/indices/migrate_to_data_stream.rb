@@ -15,21 +15,31 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Migrates an alias to a data stream
+        # Convert an index alias to a data stream.
+        # Converts an index alias to a data stream.
+        # You must have a matching index template that is data stream enabled.
+        # The alias must meet the following criteria:
+        # The alias must have a write index;
+        # All indices for the alias must have a +@timestamp+ field mapping of a +date+ or +date_nanos+ field type;
+        # The alias must not have any filters;
+        # The alias must not use custom routing.
+        # If successful, the request removes the alias and creates a data stream with the same name.
+        # The indices for the alias become hidden backing indices for the stream.
+        # The write index for the alias becomes the write index for the stream.
         #
-        # @option arguments [String] :name The name of the alias to migrate
-        # @option arguments [Time] :timeout Specify timeout for acknowledging the cluster state update
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :name Name of the index alias to convert to a data stream. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-migrate-to-data-stream
         #
         def migrate_to_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.migrate_to_data_stream' }
@@ -49,7 +59,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_data_stream/_migrate/#{Utils.__listify(_name)}"
+          path   = "_data_stream/_migrate/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

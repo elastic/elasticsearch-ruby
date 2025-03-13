@@ -55,9 +55,8 @@ module Elasticsearch
         def start_trained_model_deployment(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.start_trained_model_deployment' }
 
-          defined_params = [:model_id].inject({}) do |set_variables, variable|
+          defined_params = [:model_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -71,7 +70,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_start"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}/deployment/_start"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

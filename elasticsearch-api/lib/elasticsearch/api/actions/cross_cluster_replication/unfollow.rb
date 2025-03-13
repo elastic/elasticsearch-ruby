@@ -15,20 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
+        # Unfollow an index.
+        # Convert a cross-cluster replication follower index to a regular index.
+        # The API stops the following task associated with a follower index and removes index metadata and settings associated with cross-cluster replication.
+        # The follower index must be paused and closed before you call the unfollow API.
         #
-        # @option arguments [String] :index The name of the follower index that should be turned into a regular index.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :index The name of the follower index. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-unfollow.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-unfollow
         #
         def unfollow(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.unfollow' }
@@ -43,12 +48,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_ccr/unfollow"
+          path   = "#{Utils.listify(_index)}/_ccr/unfollow"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

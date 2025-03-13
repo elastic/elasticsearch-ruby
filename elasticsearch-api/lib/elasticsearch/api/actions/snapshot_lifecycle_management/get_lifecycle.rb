@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Retrieves one or more snapshot lifecycle policy definitions and information about the latest snapshot attempts.
+        # Get policy information.
+        # Get snapshot lifecycle policy definitions and information about the latest snapshot attempts.
         #
-        # @option arguments [List] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array<String>] :policy_id Comma-separated list of snapshot lifecycle policies to retrieve
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-policy.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-lifecycle
         #
         def get_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.get_lifecycle' }
@@ -48,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _policy_id
-                     "_slm/policy/#{Utils.__listify(_policy_id)}"
+                     "_slm/policy/#{Utils.listify(_policy_id)}"
                    else
                      '_slm/policy'
                    end

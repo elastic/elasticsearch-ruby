@@ -15,22 +15,37 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the refresh operation in one or more indices.
+        # Refresh an index.
+        # A refresh makes recent operations performed on one or more indices available for search.
+        # For data streams, the API runs the refresh operation on the stream’s backing indices.
+        # By default, Elasticsearch periodically refreshes indices every second, but only on indices that have received one search request or more in the last 30 seconds.
+        # You can change this default interval with the +index.refresh_interval+ setting.
+        # Refresh requests are synchronous and do not return a response until the refresh operation completes.
+        # Refreshes are resource-intensive.
+        # To ensure good cluster performance, it's recommended to wait for Elasticsearch's periodic refresh rather than performing an explicit refresh when possible.
+        # If your application workflow indexes documents and then runs a search to retrieve the indexed document, it's recommended to use the index API's +refresh=wait_for+ query parameter option.
+        # This option ensures the indexing operation waits for a periodic refresh before running the search.
         #
-        # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
+        # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
+        #  Supports wildcards (+*+).
+        #  To target all data streams and indices, omit this parameter or use +*+ or +_all+.
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  This behavior applies even if the request targets other open indices. Server default: true.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as +open,hidden+.
+        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-refresh.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-refresh
         #
         def refresh(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.refresh' }
@@ -43,13 +58,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _index
-                     "#{Utils.__listify(_index)}/_refresh"
+                     "#{Utils.listify(_index)}/_refresh"
                    else
                      '_refresh'
                    end

@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Estimates the model memory
+        # Estimate job model memory usage.
+        # Make an estimation of the memory usage for an anomaly detection job model.
+        # The estimate is based on analysis configuration details for the job and cardinality
+        # estimates for the fields it references.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The analysis config, plus cardinality estimates for fields it references (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-apis.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-estimate-model-memory
         #
         def estimate_model_memory(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.estimate_model_memory' }
@@ -37,7 +40,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_ml/anomaly_detectors/_estimate_model_memory'

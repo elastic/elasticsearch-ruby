@@ -15,24 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves information about the scheduled events in calendars.
+        # Get info about events in calendars.
         #
-        # @option arguments [String] :calendar_id The ID of the calendar containing the events
-        # @option arguments [String] :job_id Get events for the job. When this option is used calendar_id must be '_all'
-        # @option arguments [String] :start Get events after this time
-        # @option arguments [Date] :end Get events before this time
-        # @option arguments [Integer] :from Skips a number of events
-        # @option arguments [Integer] :size Specifies a max number of events to get
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using +_all+ or +*+ or by omitting the calendar identifier. (*Required*)
+        # @option arguments [String, Time] :end Specifies to get events with timestamps earlier than this time.
+        # @option arguments [Integer] :from Skips the specified number of events. Server default: 0.
+        # @option arguments [String] :job_id Specifies to get events for a specific anomaly detection job identifier or job group. It must be used with a calendar identifier of +_all+ or +*+.
+        # @option arguments [Integer] :size Specifies the maximum number of events to obtain. Server default: 100.
+        # @option arguments [String, Time] :start Specifies to get events with timestamps after this time.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar-event.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-calendar-events
         #
         def get_calendar_events(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_calendar_events' }
@@ -52,7 +52,7 @@ module Elasticsearch
           _calendar_id = arguments.delete(:calendar_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
+          path   = "_ml/calendars/#{Utils.listify(_calendar_id)}/events"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,20 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Explains a data frame analytics config.
+        # Explain data frame analytics config.
+        # This API provides explanations for a data frame analytics config that either
+        # exists already or one that has not been created yet. The following
+        # explanations are provided:
+        # * which fields are included or not in the analysis and why,
+        # * how much memory is estimated to be required. The estimate can be used when deciding the appropriate value for model_memory_limit setting later on.
+        # If you have object fields or fields that are excluded via source filtering, they are not included in the explanation.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to explain
+        # @option arguments [String] :id Identifier for the data frame analytics job. This identifier can contain
+        #  lowercase alphanumeric characters (a-z and 0-9), hyphens, and
+        #  underscores. It must start and end with alphanumeric characters.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The data frame analytics config to explain
+        # @option arguments [Hash] :body request body
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/explain-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-explain-data-frame-analytics
         #
         def explain_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.explain_data_frame_analytics' }
@@ -51,11 +59,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _id
-                   "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_explain"
-                 else
-                   '_ml/data_frame/analytics/_explain'
-                 end
+          path   = if _id
+                     "_ml/data_frame/analytics/#{Utils.listify(_id)}/_explain"
+                   else
+                     '_ml/data_frame/analytics/_explain'
+                   end
           params = {}
 
           Elasticsearch::API::Response.new(

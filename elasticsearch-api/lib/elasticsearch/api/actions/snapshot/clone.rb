@@ -15,28 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Clones indices from one snapshot into another snapshot in the same repository.
+        # Clone a snapshot.
+        # Clone part of all of a snapshot into another snapshot in the same repository.
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [String] :snapshot The name of the snapshot to clone from
-        # @option arguments [String] :target_snapshot The name of the cloned snapshot to create
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :repository The name of the snapshot repository that both source and target snapshot belong to. (*Required*)
+        # @option arguments [String] :snapshot The source snapshot name. (*Required*)
+        # @option arguments [String] :target_snapshot The target snapshot name. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period of time to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The snapshot clone definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-clone
         #
         def clone(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.clone' }
 
-          defined_params = %i[repository snapshot target_snapshot].each_with_object({}) do |variable, set_variables|
+          defined_params = [:repository, :snapshot, :target_snapshot].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -58,7 +63,7 @@ module Elasticsearch
           _target_snapshot = arguments.delete(:target_snapshot)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}/_clone/#{Utils.__listify(_target_snapshot)}"
+          path   = "_snapshot/#{Utils.listify(_repository)}/#{Utils.listify(_snapshot)}/_clone/#{Utils.listify(_target_snapshot)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

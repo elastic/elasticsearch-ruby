@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Deletes the specified lifecycle policy definition. A currently used policy cannot be deleted.
+        # Delete a lifecycle policy.
+        # You cannot delete policies that are currently in use. If the policy is being used to manage any indices, the request fails and returns an error.
         #
-        # @option arguments [String] :policy The name of the index lifecycle policy
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :policy Identifier for the policy. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-delete-lifecycle.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-delete-lifecycle
         #
         def delete_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.delete_lifecycle' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _policy = arguments.delete(:policy)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ilm/policy/#{Utils.__listify(_policy)}"
+          path   = "_ilm/policy/#{Utils.listify(_policy)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,26 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
+        # Update a snapshot.
         # Updates certain properties of a snapshot.
         #
-        # @option arguments [String] :job_id The ID of the job to fetch
-        # @option arguments [String] :snapshot_id The ID of the snapshot to update
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :snapshot_id Identifier for the model snapshot. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The model snapshot properties to update (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-snapshot.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-model-snapshot
         #
         def update_model_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_model_snapshot' }
 
-          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -53,7 +54,7 @@ module Elasticsearch
           _snapshot_id = arguments.delete(:snapshot_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}/_update"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/model_snapshots/#{Utils.listify(_snapshot_id)}/_update"
           params = {}
 
           Elasticsearch::API::Response.new(

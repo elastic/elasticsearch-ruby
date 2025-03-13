@@ -15,32 +15,35 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves information about model snapshots.
+        # Get model snapshots info.
         #
-        # @option arguments [String] :job_id The ID of the job to fetch
-        # @option arguments [String] :snapshot_id The ID of the snapshot to fetch
-        # @option arguments [Integer] :from Skips a number of documents
-        # @option arguments [Integer] :size The default number of documents returned in queries as a string.
-        # @option arguments [Date] :start The filter 'start' query parameter
-        # @option arguments [Date] :end The filter 'end' query parameter
-        # @option arguments [String] :sort Name of the field to sort on
-        # @option arguments [Boolean] :desc True if the results should be sorted in descending order
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :snapshot_id A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
+        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using +_all+,
+        #  by specifying +*+ as the snapshot ID, or by omitting the snapshot ID.
+        # @option arguments [Boolean] :desc If true, the results are sorted in descending order.
+        # @option arguments [String, Time] :end Returns snapshots with timestamps earlier than this time.
+        # @option arguments [Integer] :from Skips the specified number of snapshots. Server default: 0.
+        # @option arguments [Integer] :size Specifies the maximum number of snapshots to obtain. Server default: 100.
+        # @option arguments [String] :sort Specifies the sort field for the requested snapshots. By default, the
+        #  snapshots are sorted by their timestamp.
+        # @option arguments [String, Time] :start Returns snapshots with timestamps after this time.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Model snapshot selection criteria
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-snapshot.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-model-snapshots
         #
         def get_model_snapshots(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_model_snapshots' }
 
-          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -62,11 +65,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _job_id && _snapshot_id
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}"
-                 else
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots"
-                 end
+          path   = if _job_id && _snapshot_id
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/model_snapshots/#{Utils.listify(_snapshot_id)}"
+                   else
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/model_snapshots"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

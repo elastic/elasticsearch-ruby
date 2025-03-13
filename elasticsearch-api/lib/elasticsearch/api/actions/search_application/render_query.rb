@@ -15,24 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Renders a query for given search application search parameters
+        # Render a search application query.
+        # Generate an Elasticsearch query using the specified query parameters and the search template associated with the search application or a default template if none is specified.
+        # If a parameter used in the search template is not specified in +params+, the parameter's default value will be used.
+        # The API returns the specific Elasticsearch query that would be generated and run by calling the search application search API.
+        # You must have +read+ privileges on the backing alias of the search application.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the search application to render the query for
+        # @option arguments [String] :name The name of the search application to render teh query for. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Search parameters, which will override any default search parameters defined in the search application template
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-render-query.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-render-query
         #
         def render_query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.render_query' }
@@ -52,7 +56,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_application/search_application/#{Utils.__listify(_name)}/_render_query"
+          path   = "_application/search_application/#{Utils.listify(_name)}/_render_query"
           params = {}
 
           Elasticsearch::API::Response.new(

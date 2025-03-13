@@ -15,19 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Exchanges a SAML Response message for an Elasticsearch access token and refresh token pair
+        # Authenticate SAML.
+        # Submit a SAML response message to Elasticsearch for consumption.
+        # NOTE: This API is intended for use by custom web applications other than Kibana.
+        # If you are using Kibana, refer to the documentation for configuring SAML single-sign-on on the Elastic Stack.
+        # The SAML message that is submitted can be:
+        # * A response to a SAML authentication request that was previously created using the SAML prepare authentication API.
+        # * An unsolicited SAML message in the case of an IdP-initiated single sign-on (SSO) flow.
+        # In either case, the SAML message needs to be a base64 encoded XML document with a root element of +<Response>+.
+        # After successful validation, Elasticsearch responds with an Elasticsearch internal access token and refresh token that can be subsequently used for authentication.
+        # This API endpoint essentially exchanges SAML responses that indicate successful authentication in the IdP for Elasticsearch access and refresh tokens, which can be used for authentication against Elasticsearch.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The SAML response to authenticate (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-authenticate.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-authenticate
         #
         def saml_authenticate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_authenticate' }
@@ -37,7 +46,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/saml/authenticate'

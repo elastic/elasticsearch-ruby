@@ -15,20 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Retrieves follower stats. return shard-level stats about the following tasks associated with each shard for the specified indices.
+        # Get follower stats.
+        # Get cross-cluster replication follower stats.
+        # The API returns shard-level stats about the "following tasks" associated with each shard for the specified indices.
         #
-        # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array] :index A comma-delimited list of index patterns. (*Required*)
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow-stats
         #
         def follow_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_stats' }
@@ -43,12 +46,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "#{Utils.__listify(_index)}/_ccr/stats"
+          path   = "#{Utils.listify(_index)}/_ccr/stats"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Allows to use the Mustache language to pre-render a search definition.
+      # Render a search template.
+      # Render a search template as a search request body.
       #
-      # @option arguments [String] :id The id of the stored search template
+      # @option arguments [String] :id The ID of the search template to render.
+      #  If no +source+ is specified, this or the +id+ request body parameter is required.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The search definition template and its params
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-render-search-template
       #
       def render_search_template(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'render_search_template' }
@@ -50,11 +52,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _id
-                 "_render/template/#{Utils.__listify(_id)}"
-               else
-                 '_render/template'
-               end
+        path   = if _id
+                   "_render/template/#{Utils.listify(_id)}"
+                 else
+                   '_render/template'
+                 end
         params = {}
 
         Elasticsearch::API::Response.new(

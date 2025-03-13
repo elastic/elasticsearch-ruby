@@ -15,22 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Transform
       module Actions
-        # Deletes an existing transform.
+        # Delete a transform.
         #
-        # @option arguments [String] :transform_id The id of the transform to delete
-        # @option arguments [Boolean] :force When `true`, the transform is deleted regardless of its current state. The default value is `false`, meaning that the transform must be `stopped` before it can be deleted.
-        # @option arguments [Boolean] :delete_dest_index When `true`, the destination index is deleted together with the transform. The default value is `false`, meaning that the destination index will not be deleted.
-        # @option arguments [Time] :timeout Controls the time to wait for the transform deletion
+        # @option arguments [String] :transform_id Identifier for the transform. (*Required*)
+        # @option arguments [Boolean] :force If this value is false, the transform must be stopped before it can be deleted. If true, the transform is
+        #  deleted regardless of its current state.
+        # @option arguments [Boolean] :delete_dest_index If this value is true, the destination index is deleted together with the transform. If false, the destination
+        #  index will not be deleted
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-transform.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-delete-transform
         #
         def delete_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.delete_transform' }
@@ -50,7 +52,7 @@ module Elasticsearch
           _transform_id = arguments.delete(:transform_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_transform/#{Utils.__listify(_transform_id)}"
+          path   = "_transform/#{Utils.listify(_transform_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

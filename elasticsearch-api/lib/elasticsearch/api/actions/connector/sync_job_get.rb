@@ -15,23 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Returns the details about a connector sync job.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Get a connector sync job.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be returned.
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-connector-sync-job-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-get
         #
         def sync_job_get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_get' }
@@ -54,7 +54,7 @@ module Elasticsearch
           _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}"
+          path   = "_connector/_sync_job/#{Utils.listify(_connector_sync_job_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

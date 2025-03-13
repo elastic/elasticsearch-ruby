@@ -15,31 +15,31 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Creates a behavioral analytics event for existing collection.
+        # Create a behavioral analytics collection event.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :collection_name The name of behavioral analytics collection
-        # @option arguments [String] :event_type Behavioral analytics event type. Available: page_view, search, search_click
-        # @option arguments [Boolean] :debug If true, returns event information that will be stored
+        # @option arguments [String] :collection_name The name of the behavioral analytics collection. (*Required*)
+        # @option arguments [String] :event_type The analytics event type. (*Required*)
+        # @option arguments [Boolean] :debug Whether the response type has to include more details
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The event definition (*Required*)
+        # @option arguments [Hash] :body payload
         #
-        # @see http://todo.com/tbd
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-post-behavioral-analytics-event
         #
         def post_behavioral_analytics_event(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.post_behavioral_analytics_event' }
 
-          defined_params = %i[collection_name event_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:collection_name, :event_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -58,7 +58,7 @@ module Elasticsearch
           _event_type = arguments.delete(:event_type)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_application/analytics/#{Utils.__listify(_collection_name)}/event/#{Utils.__listify(_event_type)}"
+          path   = "_application/analytics/#{Utils.listify(_collection_name)}/event/#{Utils.listify(_event_type)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

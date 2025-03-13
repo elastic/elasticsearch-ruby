@@ -15,22 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Puts the configuration for a geoip database to be downloaded
+        # Create or update a GeoIP database configuration.
+        # Refer to the create or update IP geolocation database configuration API.
         #
-        # @option arguments [String] :id The id of the database configuration
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :id ID of the database configuration to create or update. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The database configuration definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-geoip-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-geoip-database
         #
         def put_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_geoip_database' }
@@ -51,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_ingest/geoip/database/#{Utils.__listify(_id)}"
+          path   = "_ingest/geoip/database/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

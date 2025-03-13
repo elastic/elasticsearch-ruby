@@ -15,21 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Retrieves a synonym set
+        # Get a synonym set.
         #
-        # @option arguments [String] :id The name of the synonyms set to be retrieved
-        # @option arguments [Integer] :from Starting offset
-        # @option arguments [Integer] :size specifies a max number of results to get
+        # @option arguments [String] :id The synonyms set identifier to retrieve. (*Required*)
+        # @option arguments [Integer] :from The starting offset for query rules to retrieve. Server default: 0.
+        # @option arguments [Integer] :size The max number of query rules to retrieve. Server default: 10.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-synonyms-set.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym
         #
         def get_synonym(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonym' }
@@ -49,7 +49,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_synonyms/#{Utils.__listify(_id)}"
+          path   = "_synonyms/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

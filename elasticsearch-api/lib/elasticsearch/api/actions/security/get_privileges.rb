@@ -15,25 +15,31 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves application privileges.
+        # Get application privileges.
+        # To use this API, you must have one of the following privileges:
+        # * The +read_security+ cluster privilege (or a greater privilege such as +manage_security+ or +all+).
+        # * The "Manage Application Privileges" global privilege for the application being referenced in the request.
         #
-        # @option arguments [String] :application Application name
-        # @option arguments [String] :name Privilege name
+        # @option arguments [String] :application The name of the application.
+        #  Application privileges are always associated with exactly one application.
+        #  If you do not specify this parameter, the API returns information about all privileges for all applications.
+        # @option arguments [String, Array<String>] :name The name of the privilege.
+        #  If you do not specify this parameter, the API returns information about all privileges for the requested application.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-privileges.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-privileges
         #
         def get_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_privileges' }
 
-          defined_params = %i[application name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:application, :name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -49,9 +55,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _application && _name
-                     "_security/privilege/#{Utils.__listify(_application)}/#{Utils.__listify(_name)}"
+                     "_security/privilege/#{Utils.listify(_application)}/#{Utils.listify(_name)}"
                    elsif _application
-                     "_security/privilege/#{Utils.__listify(_application)}"
+                     "_security/privilege/#{Utils.listify(_application)}"
                    else
                      '_security/privilege'
                    end

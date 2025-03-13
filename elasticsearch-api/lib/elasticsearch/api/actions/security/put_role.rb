@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Adds and updates roles in the native realm.
+        # Create or update roles.
+        # The role management APIs are generally the preferred way to manage roles in the native realm, rather than using file-based role management.
+        # The create or update roles API cannot update roles that are defined in roles files.
+        # File-based role management is not available in Elastic Serverless.
         #
-        # @option arguments [String] :name Role name
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :name The name of the role that is being created or updated. On Elasticsearch Serverless, the role name must begin with a letter or digit and can only contain letters, digits and the characters '_', '-', and '.'. Each role must have a unique name, as this will serve as the identifier for that role. (*Required*)
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The role to add (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-put-role.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-role
         #
         def put_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.put_role' }
@@ -50,7 +53,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_security/role/#{Utils.__listify(_name)}"
+          path   = "_security/role/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

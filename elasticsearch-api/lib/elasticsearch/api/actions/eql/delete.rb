@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Eql
       module Actions
-        # Deletes an async EQL search by ID. If the search is still running, the search request will be cancelled. Otherwise, the saved search results are deleted.
+        # Delete an async EQL search.
+        # Delete an async EQL search or a stored synchronous EQL search.
+        # The API also deletes results for the search.
         #
-        # @option arguments [String] :id The async search ID
+        # @option arguments [String] :id Identifier for the search to delete.
+        #  A search ID is provided in the EQL search API's response for an async search.
+        #  A search ID is also provided if the request’s +keep_on_completion+ parameter is +true+. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/eql-search-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'eql.delete' }
@@ -47,7 +51,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_eql/search/#{Utils.__listify(_id)}"
+          path   = "_eql/search/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

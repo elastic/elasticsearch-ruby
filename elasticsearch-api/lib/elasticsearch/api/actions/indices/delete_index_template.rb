@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an index template.
+        # Delete an index template.
+        # The provided <index-template> may contain multiple template names separated by a comma. If multiple template
+        # names are specified then there is no wildcard support and the provided names should match completely with
+        # existing templates.
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String, Array<String>] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-template.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-index-template
         #
         def delete_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_index_template' }
@@ -49,7 +52,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_index_template/#{Utils.__listify(_name)}"
+          path   = "_index_template/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,28 +15,35 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates or updates an alias.
+        # Create or update an alias.
+        # Adds a data stream or index to an alias.
         #
-        # @option arguments [List] :index A comma-separated list of index names the alias should point to (supports wildcards); use `_all` to perform the operation on all indices.
-        # @option arguments [String] :name The name of the alias to be created or updated
-        # @option arguments [Time] :timeout Explicit timestamp for the document
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String, Array] :index Comma-separated list of data streams or indices to add.
+        #  Supports wildcards (+*+).
+        #  Wildcard patterns that match both data streams and indices return an error. (*Required*)
+        # @option arguments [String] :name Alias to update.
+        #  If the alias doesn’t exist, the request creates it.
+        #  Index alias names support date math. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The settings for the alias, such as `routing` or `filter`
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-alias
         #
         def put_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_alias' }
 
-          defined_params = %i[index name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:index, :name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -47,14 +54,14 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = ("#{Utils.__listify(_index)}/_aliases/#{Utils.__listify(_name)}" if _index && _name)
+          path   = ("#{Utils.listify(_index)}/_aliases/#{Utils.listify(_name)}" if _index && _name)
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

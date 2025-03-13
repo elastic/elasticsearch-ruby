@@ -23,7 +23,7 @@ module Elasticsearch
     module Inference
       module Actions
         # Create a Watsonx inference endpoint.
-        # Creates an inference endpoint to perform an inference task with the +watsonxai+ service.
+        # Create an inference endpoint to perform an inference task with the +watsonxai+ service.
         # You need an IBM Cloud Databases for Elasticsearch deployment to use the +watsonxai+ inference service.
         # You can provision one through the IBM catalog, the Cloud Databases CLI plug-in, the Cloud Databases API, or Terraform.
         # When you create an inference endpoint, the associated machine learning model is automatically deployed if it is not already running.
@@ -38,21 +38,22 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/infer-service-watsonx-ai.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-watsonx
         #
         def put_watsonx(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_watsonx' }
 
-          defined_params = [:task_type, :watsonx_inference_id].inject({}) do |set_variables, variable|
+          defined_params = [:task_type, :watsonx_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
           raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
 
-          raise ArgumentError,
-                "Required argument 'watsonx_inference_id' missing" unless arguments[:watsonx_inference_id]
+          unless arguments[:watsonx_inference_id]
+            raise ArgumentError,
+                  "Required argument 'watsonx_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
@@ -64,7 +65,7 @@ module Elasticsearch
           _watsonx_inference_id = arguments.delete(:watsonx_inference_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_watsonx_inference_id)}"
+          path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_watsonx_inference_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -15,21 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Deletes a repository.
+        # Delete snapshot repositories.
+        # When a repository is unregistered, Elasticsearch removes only the reference to the location where the repository is storing the snapshots.
+        # The snapshots themselves are left untouched and in place.
         #
-        # @option arguments [List] :repository Name of the snapshot repository to unregister. Wildcard (`*`) patterns are supported.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array<String>] :repository The ame of the snapshot repositories to unregister.
+        #  Wildcard (+*+) patterns are supported. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+        #  If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete-repository
         #
         def delete_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete_repository' }
@@ -49,11 +56,11 @@ module Elasticsearch
           _repository = arguments.delete(:repository)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_snapshot/#{Utils.__listify(_repository)}"
+          path   = "_snapshot/#{Utils.listify(_repository)}"
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

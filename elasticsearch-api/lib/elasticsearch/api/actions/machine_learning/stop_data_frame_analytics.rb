@@ -15,23 +15,35 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Stops one or more data frame analytics jobs.
+        # Stop data frame analytics jobs.
+        # A data frame analytics job can be started and stopped multiple times
+        # throughout its lifecycle.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to stop
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no data frame analytics. (This includes `_all` string or when no data frame analytics have been specified)
-        # @option arguments [Boolean] :force True if the data frame analytics should be forcefully stopped
-        # @option arguments [Time] :timeout Controls the time to wait until the task has stopped. Defaults to 20 seconds
+        # @option arguments [String] :id Identifier for the data frame analytics job. This identifier can contain
+        #  lowercase alphanumeric characters (a-z and 0-9), hyphens, and
+        #  underscores. It must start and end with alphanumeric characters. (*Required*)
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
+        #  - Contains wildcard expressions and there are no data frame analytics
+        #  jobs that match.
+        #  - Contains the _all string or no identifiers and there are no matches.
+        #  - Contains wildcard expressions and there are only partial matches.
+        #  The default value is true, which returns an empty data_frame_analytics
+        #  array when there are no matches and the subset of results when there are
+        #  partial matches. If this parameter is false, the request returns a 404
+        #  status code when there are no matches or only partial matches. Server default: true.
+        # @option arguments [Boolean] :force If true, the data frame analytics job is stopped forcefully.
+        # @option arguments [Time] :timeout Controls the amount of time to wait until the data frame analytics job
+        #  stops. Defaults to 20 seconds. Server default: 20s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The stop data frame analytics parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-data-frame-analytics
         #
         def stop_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.stop_data_frame_analytics' }
@@ -46,12 +58,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_stop"
+          path   = "_ml/data_frame/analytics/#{Utils.listify(_id)}/_stop"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

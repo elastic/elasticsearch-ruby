@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Bulk delete roles in the native realm.
+        # Bulk delete roles.
+        # The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+        # The bulk delete roles API cannot delete roles that are defined in roles files.
         #
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The roles to delete (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-bulk-delete-role.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-bulk-delete-role
         #
         def bulk_delete_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.bulk_delete_role' }
@@ -38,7 +40,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_security/role'

@@ -15,25 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns a concise representation of the cluster health.
+        # Get the cluster health status.
+        # IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console.
+        # They are not intended for use by applications. For application consumption, use the cluster health API.
+        # This API is often used to check malfunctioning clusters.
+        # To help you track cluster health alongside log files and alerting systems, the API returns timestamps in two formats:
+        # +HH:MM:SS+, which is human-readable but includes no date information;
+        # +Unix epoch time+, which is machine-sortable and includes date information.
+        # The latter format is useful for cluster recoveries that take multiple days.
+        # You can use the cat health API to verify cluster health across multiple nodes.
+        # You also can use the API to track the recovery of a large cluster over a longer period of time.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
-        # @option arguments [Boolean] :ts Set to false to disable timestamping
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :time The unit used to display time values.
+        # @option arguments [Boolean] :ts If true, returns +HH:MM:SS+ and Unix epoch timestamps. Server default: true.
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-health.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-health
         #
         def health(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.health' }
@@ -41,12 +54,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_cat/health'
           params = Utils.process_params(arguments)
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          params[:h] = Utils.listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -15,24 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an index.
+        # Delete indices.
+        # Deleting an index deletes its documents, shards, and metadata.
+        # It does not delete related Kibana components, such as data views, visualizations, or dashboards.
+        # You cannot delete the current write index of a data stream.
+        # To delete the index, you must roll over the data stream so a new write index is created.
+        # You can then use the delete index API to delete the previous write index.
         #
-        # @option arguments [List] :index A comma-separated list of indices to delete; use `_all` or `*` string to delete all indices
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
-        # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open, closed, or hidden indices (options: open, closed, hidden, none, all)
+        # @option arguments [String, Array] :index Comma-separated list of indices to delete.
+        #  You cannot specify index aliases.
+        #  By default, this parameter does not support wildcards (+*+) or +_all+.
+        #  To use wildcards or +_all+, set the +action.destructive_requires_name+ cluster setting to +false+. (*Required*)
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  This behavior applies even if the request targets other open indices. Server default: true.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as +open,hidden+.
+        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete' }
@@ -47,16 +61,16 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "#{Utils.__listify(_index)}"
+          path   = Utils.listify(_index).to_s
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

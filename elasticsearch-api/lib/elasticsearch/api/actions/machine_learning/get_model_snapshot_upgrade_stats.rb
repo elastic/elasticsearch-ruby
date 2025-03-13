@@ -15,26 +15,34 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Gets stats for anomaly detection job model snapshot upgrades that are in progress.
+        # Get anomaly detection job model snapshot upgrade usage info.
         #
-        # @option arguments [String] :job_id The ID of the job. May be a wildcard, comma separated list or `_all`.
-        # @option arguments [String] :snapshot_id The ID of the snapshot. May be a wildcard, comma separated list or `_all`.
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no jobs or no snapshots. (This includes the `_all` string.)
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :snapshot_id A numerical character string that uniquely identifies the model snapshot. You can get information for multiple
+        #  snapshots by using a comma-separated list or a wildcard expression. You can get all snapshots by using +_all+,
+        #  by specifying +*+ as the snapshot ID, or by omitting the snapshot ID. (*Required*)
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
+        #  -  Contains wildcard expressions and there are no jobs that match.
+        #  -  Contains the _all string or no identifiers and there are no matches.
+        #  -  Contains wildcard expressions and there are only partial matches.
+        #  The default value is true, which returns an empty jobs array when there are no matches and the subset of results
+        #  when there are partial matches. If this parameter is false, the request returns a 404 status code when there are
+        #  no matches or only partial matches.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-job-model-snapshot-upgrade-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-model-snapshot-upgrade-stats
         #
         def get_model_snapshot_upgrade_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_model_snapshot_upgrade_stats' }
 
-          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -52,7 +60,7 @@ module Elasticsearch
           _snapshot_id = arguments.delete(:snapshot_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}/_upgrade/_stats"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/model_snapshots/#{Utils.listify(_snapshot_id)}/_upgrade/_stats"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

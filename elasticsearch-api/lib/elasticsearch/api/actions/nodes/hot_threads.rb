@@ -15,26 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Nodes
       module Actions
-        # Returns information about hot threads on each node in the cluster.
+        # Get the hot threads for nodes.
+        # Get a breakdown of the hot threads on each selected node in the cluster.
+        # The output is plain text with a breakdown of the top hot threads for each node.
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [Time] :interval The interval for the second sampling of threads
-        # @option arguments [Number] :snapshots Number of samples of thread stacktrace (default: 10)
-        # @option arguments [Number] :threads Specify the number of threads to provide information for (default: 3)
-        # @option arguments [Boolean] :ignore_idle_threads Don't show threads that are in known-idle places, such as waiting on a socket select or pulling from an empty task queue (default: true)
-        # @option arguments [String] :type The type to sample (default: cpu) (options: cpu, wait, block, mem)
-        # @option arguments [String] :sort The sort order for 'cpu' type (default: total) (options: cpu, total)
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array] :node_id List of node IDs or names used to limit returned information.
+        # @option arguments [Boolean] :ignore_idle_threads If true, known idle threads (e.g. waiting in a socket select, or to get
+        #  a task from an empty queue) are filtered out. Server default: true.
+        # @option arguments [Time] :interval The interval to do the second sampling of threads. Server default: 500ms.
+        # @option arguments [Integer] :snapshots Number of samples of thread stacktrace. Server default: 10.
+        # @option arguments [Integer] :threads Specifies the number of hot threads to provide information for. Server default: 3.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received
+        #  before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [String] :type The type to sample. Server default: cpu.
+        # @option arguments [String] :sort The sort order for 'cpu' type (default: total)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads
         #
         def hot_threads(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.hot_threads' }
@@ -53,7 +57,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_nodes/#{Utils.__listify(_node_id)}/hot_threads"
+                     "_nodes/#{Utils.listify(_node_id)}/hot_threads"
                    else
                      '_nodes/hot_threads'
                    end

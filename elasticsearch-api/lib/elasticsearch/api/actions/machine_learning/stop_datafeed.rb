@@ -15,24 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Stops one or more datafeeds.
+        # Stop datafeeds.
+        # A datafeed that is stopped ceases to retrieve data from Elasticsearch. A datafeed can be started and stopped
+        # multiple times throughout its lifecycle.
         #
-        # @option arguments [String] :datafeed_id The ID of the datafeed to stop
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified)
-        # @option arguments [Boolean] :allow_no_datafeeds Whether to ignore if a wildcard expression matches no datafeeds. (This includes `_all` string or when no datafeeds have been specified) *Deprecated*
-        # @option arguments [Boolean] :force True if the datafeed should be forcefully stopped.
-        # @option arguments [Time] :timeout Controls the time to wait until a datafeed has stopped. Default to 20 seconds
+        # @option arguments [String] :datafeed_id Identifier for the datafeed. You can stop multiple datafeeds in a single API request by using a comma-separated
+        #  list of datafeeds or a wildcard expression. You can close all datafeeds by using +_all+ or by specifying +*+ as
+        #  the identifier. (*Required*)
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
+        #  - Contains wildcard expressions and there are no datafeeds that match.
+        #  - Contains the +_all+ string or no identifiers and there are no matches.
+        #  - Contains wildcard expressions and there are only partial matches.
+        #  If +true+, the API returns an empty datafeeds array when there are no matches and the subset of results when
+        #  there are partial matches. If +false+, the API returns a 404 status code when there are no matches or only
+        #  partial matches. Server default: true.
+        # @option arguments [Boolean] :force If +true+, the datafeed is stopped forcefully.
+        # @option arguments [Time] :timeout Specifies the amount of time to wait until a datafeed stops. Server default: 20s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The URL params optionally sent in the body
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-stop-datafeed.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-datafeed
         #
         def stop_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.stop_datafeed' }
@@ -52,7 +61,7 @@ module Elasticsearch
           _datafeed_id = arguments.delete(:datafeed_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}/_stop"
+          path   = "_ml/datafeeds/#{Utils.listify(_datafeed_id)}/_stop"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

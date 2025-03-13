@@ -15,29 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Lists all connectors.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Get all connectors.
+        # Get information about all connectors.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size Specifies a max number of results to get (default: 100)
-        # @option arguments [List] :index_name A comma-separated list of connector index names to fetch connector documents for
-        # @option arguments [List] :connector_name A comma-separated list of connector names to fetch connector documents for
-        # @option arguments [List] :service_type A comma-separated list of connector service types to fetch connector documents for
-        # @option arguments [String] :query A search string for querying connectors, filtering results by matching against connector names, descriptions, and index names
-        # @option arguments [Boolean] :include_deleted A flag indicating whether to return connectors that have been soft-deleted.
+        # @option arguments [Integer] :size Specifies a max number of results to get
+        # @option arguments [String, Array] :index_name A comma-separated list of connector index names to fetch connector documents for
+        # @option arguments [String, Array<String>] :connector_name A comma-separated list of connector names to fetch connector documents for
+        # @option arguments [String, Array<String>] :service_type A comma-separated list of connector service types to fetch connector documents for
+        # @option arguments [Boolean] :include_deleted A flag to indicate if the desired connector should be fetched, even if it was soft-deleted.
+        # @option arguments [String] :query A wildcard query string that filters connectors with matching name, description or index name
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-list
         #
         def list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.list' }
@@ -45,7 +46,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_connector'

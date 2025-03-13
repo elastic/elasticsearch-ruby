@@ -15,26 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
+        # Get API key information.
         # Retrieves information for one or more API keys.
+        # NOTE: If you have only the +manage_own_api_key+ privilege, this API returns only the API keys that you own.
+        # If you have +read_security+, +manage_api_key+ or greater privileges (including +manage_security+), this API returns all API keys regardless of ownership.
         #
-        # @option arguments [String] :id API key id of the API key to be retrieved
-        # @option arguments [String] :name API key name of the API key to be retrieved
-        # @option arguments [String] :username user name of the user who created this API key to be retrieved
-        # @option arguments [String] :realm_name realm name of the user who created this API key to be retrieved
-        # @option arguments [Boolean] :owner flag to query API keys owned by the currently authenticated user
-        # @option arguments [Boolean] :with_limited_by flag to show the limited-by role descriptors of API Keys
-        # @option arguments [Boolean] :with_profile_uid flag to also retrieve the API Key's owner profile uid, if it exists
-        # @option arguments [Boolean] :active_only flag to limit response to only active (not invalidated or expired) API keys
+        # @option arguments [String] :id An API key id.
+        #  This parameter cannot be used with any of +name+, +realm_name+ or +username+.
+        # @option arguments [String] :name An API key name.
+        #  This parameter cannot be used with any of +id+, +realm_name+ or +username+.
+        #  It supports prefix search with wildcard.
+        # @option arguments [Boolean] :owner A boolean flag that can be used to query API keys owned by the currently authenticated user.
+        #  The +realm_name+ or +username+ parameters cannot be specified when this parameter is set to +true+ as they are assumed to be the currently authenticated ones.
+        # @option arguments [String] :realm_name The name of an authentication realm.
+        #  This parameter cannot be used with either +id+ or +name+ or when +owner+ flag is set to +true+.
+        # @option arguments [String] :username The username of a user.
+        #  This parameter cannot be used with either +id+ or +name+ or when +owner+ flag is set to +true+.
+        # @option arguments [Boolean] :with_limited_by Return the snapshot of the owner user's role descriptors
+        #  associated with the API key. An API key's actual
+        #  permission is the intersection of its assigned role
+        #  descriptors and the owner user's role descriptors.
+        # @option arguments [Boolean] :active_only A boolean flag that can be used to query API keys that are currently active. An API key is considered active if it is neither invalidated, nor expired at query time. You can specify this together with other parameters such as +owner+ or +name+. If +active_only+ is false, the response will include both active and inactive (expired or invalidated) keys.
+        # @option arguments [Boolean] :with_profile_uid Determines whether to also retrieve the profile uid, for the API key owner principal, if it exists.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-api-key.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-api-key
         #
         def get_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_api_key' }
@@ -42,7 +54,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/api_key'

@@ -15,21 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Changes the passwords of users in the native realm and built-in users.
+        # Change passwords.
+        # Change the passwords of users in the native realm and built-in users.
         #
-        # @option arguments [String] :username The username of the user to change the password for
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :username The user whose password you want to change. If you do not specify this
+        #  parameter, the password is changed for the current user.
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body the new password for the user (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-change-password.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-change-password
         #
         def change_password(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.change_password' }
@@ -50,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = if _username
-                     "_security/user/#{Utils.__listify(_username)}/_password"
+                     "_security/user/#{Utils.listify(_username)}/_password"
                    else
                      '_security/user/_password'
                    end

@@ -15,19 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Esql
       module Actions
-        # Delete an async query request given its ID.
+        # Delete an async ES|QL query.
+        # If the query is still running, it is cancelled.
+        # Otherwise, the stored results are deleted.
+        # If the Elasticsearch security features are enabled, only the following users can use this API to delete a query:
+        # * The authenticated user that submitted the original query request
+        # * Users with the +cancel_task+ cluster privilege
         #
-        # @option arguments [String] :id The async query ID
+        # @option arguments [String] :id The unique identifier of the query.
+        #  A query ID is provided in the ES|QL async query API response for a query that does not complete in the designated time.
+        #  A query ID is also provided when the request was submitted with the +keep_on_completion+ parameter set to +true+. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-delete-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-delete
         #
         def async_query_delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_delete' }
@@ -47,7 +54,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_query/async/#{Utils.__listify(_id)}"
+          path   = "_query/async/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

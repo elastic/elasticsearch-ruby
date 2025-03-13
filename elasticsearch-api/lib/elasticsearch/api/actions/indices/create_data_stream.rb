@@ -15,21 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Creates a data stream
+        # Create a data stream.
+        # You must have a matching index template with data stream enabled.
         #
-        # @option arguments [String] :name The name of the data stream
-        # @option arguments [Time] :timeout Specify timeout for acknowledging the cluster state update
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :name Name of the data stream, which must meet the following criteria:
+        #  Lowercase only;
+        #  Cannot include +\+, +/+, +*+, +?+, +"+, +<+, +>+, +|+, +,+, +#+, +:+, or a space character;
+        #  Cannot start with +-+, +_+, +++, or +.ds-+;
+        #  Cannot be +.+ or +..+;
+        #  Cannot be longer than 255 bytes. Multi-byte characters count towards this limit faster. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-data-stream
         #
         def create_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create_data_stream' }
@@ -49,7 +55,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_data_stream/#{Utils.__listify(_name)}"
+          path   = "_data_stream/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

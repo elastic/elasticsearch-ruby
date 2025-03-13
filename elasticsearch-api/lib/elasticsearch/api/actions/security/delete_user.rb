@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Deletes users from the native realm.
+        # Delete users.
+        # Delete users from the native realm.
         #
-        # @option arguments [String] :username username
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :username An identifier for the user. (*Required*)
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-user.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-user
         #
         def delete_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delete_user' }
@@ -48,7 +49,7 @@ module Elasticsearch
           _username = arguments.delete(:username)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_security/user/#{Utils.__listify(_username)}"
+          path   = "_security/user/#{Utils.listify(_username)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,26 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Creates or updates a synonym rule in a synonym set
+        # Create or update a synonym rule.
+        # Create or update a synonym rule in a synonym set.
+        # If any of the synonym rules included is invalid, the API returns an error.
+        # When you update a synonym rule, all analyzers using the synonyms set will be reloaded automatically to reflect the new rule.
         #
-        # @option arguments [String] :set_id The id of the synonym set to be updated with the synonym rule
-        # @option arguments [String] :rule_id The id of the synonym rule to be updated or created
+        # @option arguments [String] :set_id The ID of the synonym set. (*Required*)
+        # @option arguments [String] :rule_id The ID of the synonym rule to be updated or created. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Synonym rule (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonym-rule.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym-rule
         #
         def put_synonym_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.put_synonym_rule' }
 
-          defined_params = %i[set_id rule_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:set_id, :rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -53,7 +56,7 @@ module Elasticsearch
           _rule_id = arguments.delete(:rule_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_synonyms/#{Utils.__listify(_set_id)}/#{Utils.__listify(_rule_id)}"
+          path   = "_synonyms/#{Utils.listify(_set_id)}/#{Utils.listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

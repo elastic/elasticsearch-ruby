@@ -15,27 +15,35 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Returns the information about the capabilities of fields among multiple indices.
+      # Get the field capabilities.
+      # Get information about the capabilities of fields among multiple indices.
+      # For data streams, the API returns field capabilities among the stream’s backing indices.
+      # It returns runtime fields like any other field.
+      # For example, a runtime field with a type of keyword is returned the same as any other field that belongs to the +keyword+ family.
       #
-      # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-      # @option arguments [List] :fields A comma-separated list of field names
-      # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-      # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-      # @option arguments [Boolean] :include_unmapped Indicates whether unmapped fields should be included in the response.
-      # @option arguments [List] :filters An optional set of filters: can include +metadata,-metadata,-nested,-multifield,-parent
-      # @option arguments [List] :types Only return results for fields that have one of the types in the list
-      # @option arguments [Boolean] :include_empty_fields Include empty fields in result
+      # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases used to limit the request. Supports wildcards (*). To target all data streams and indices, omit this parameter or use * or _all.
+      # @option arguments [Boolean] :allow_no_indices If false, the request returns an error if any wildcard expression, index alias,
+      #  or +_all+ value targets only missing or closed indices. This behavior applies even if the request targets other open indices. For example, a request
+      #  targeting +foo*,bar*+ returns an error if an index starts with foo but no index starts with bar. Server default: true.
+      # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match. If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams. Supports comma-separated values, such as +open,hidden+. Server default: open.
+      # @option arguments [String, Array<String>] :fields A comma-separated list of fields to retrieve capabilities for. Wildcard (+*+) expressions are supported.
+      # @option arguments [Boolean] :ignore_unavailable If +true+, missing or closed indices are not included in the response.
+      # @option arguments [Boolean] :include_unmapped If true, unmapped fields are included in the response.
+      # @option arguments [String] :filters A comma-separated list of filters to apply to the response.
+      # @option arguments [Array<String>] :types A comma-separated list of field types to include.
+      #  Any fields that do not match one of these types will be excluded from the results.
+      #  It defaults to empty, meaning that all field types are returned.
+      # @option arguments [Boolean] :include_empty_fields If false, empty fields are not included in the response. Server default: true.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body An index filter specified with the Query DSL
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-field-caps.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-field-caps
       #
       def field_caps(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'field_caps' }
@@ -58,11 +66,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_field_caps"
-               else
-                 '_field_caps'
-               end
+        path   = if _index
+                   "#{Utils.listify(_index)}/_field_caps"
+                 else
+                   '_field_caps'
+                 end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

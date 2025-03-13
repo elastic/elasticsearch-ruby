@@ -15,20 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Allows an arbitrary script to be executed and a result to be returned
+      # Run a script.
+      # Runs a script and returns a result.
+      # Use this API to build and test scripts, such as when defining a script for a runtime field.
+      # This API requires very few dependencies and is especially useful if you don't have permissions to write documents on a cluster.
+      # The API uses several _contexts_, which control how scripts are run, what variables are available at runtime, and what the return type is.
+      # Each context requires a script, but additional parameters depend on the context you're using for that script.
       # This functionality is Experimental and may be changed or removed
       # completely in a future release. Elastic will take a best effort approach
       # to fix any issues, but experimental features are not subject to the
       # support SLA of official GA features.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The script to execute
+      # @option arguments [Hash] :body request body
       #
       # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html
       #
@@ -38,7 +43,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         method = if body
                    Elasticsearch::API::HTTP_POST
@@ -46,7 +51,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = '_scripts/painless/_execute'
+        path   = '_scripts/painless/_execute'
         params = {}
 
         Elasticsearch::API::Response.new(

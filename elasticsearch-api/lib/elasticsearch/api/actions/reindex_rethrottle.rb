@@ -15,19 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Changes the number of requests per second for a particular Reindex operation.
+      # Throttle a reindex operation.
+      # Change the number of requests per second for a particular reindex operation.
+      # For example:
+      # +
+      # POST _reindex/r1A2WoRbTwKZ516z6NEs5A:36619/_rethrottle?requests_per_second=-1
+      # +
+      # Rethrottling that speeds up the query takes effect immediately.
+      # Rethrottling that slows down the query will take effect after completing the current batch.
+      # This behavior prevents scroll timeouts.
       #
-      # @option arguments [String] :task_id The task id to rethrottle
-      # @option arguments [Number] :requests_per_second The throttle to set on this request in floating sub-requests per second. -1 means set no throttle. (*Required*)
+      # @option arguments [String] :task_id The task identifier, which can be found by using the tasks API. (*Required*)
+      # @option arguments [Float] :requests_per_second The throttle for this request in sub-requests per second.
+      #  It can be either +-1+ to turn off throttling or any decimal number like +1.7+ or +12+ to throttle to that level.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex
       #
       def reindex_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'reindex_rethrottle' }
@@ -47,7 +56,7 @@ module Elasticsearch
         _task_id = arguments.delete(:task_id)
 
         method = Elasticsearch::API::HTTP_POST
-        path   = "_reindex/#{Utils.__listify(_task_id)}/_rethrottle"
+        path   = "_reindex/#{Utils.listify(_task_id)}/_rethrottle"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

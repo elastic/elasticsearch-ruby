@@ -15,21 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Returns information about a repository.
+        # Get snapshot repository information.
         #
-        # @option arguments [List] :repository A comma-separated list of repository names
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [String, Array<String>] :repository A comma-separated list of snapshot repository names used to limit the request.
+        #  Wildcard (+*+) expressions are supported including combining wildcards with exclude patterns starting with +-+.To get information about all snapshot repositories registered in the cluster, omit this parameter or use +*+ or +_all+.
+        # @option arguments [Boolean] :local If +true+, the request gets information from the local node only.
+        #  If +false+, the request gets information from the master node.
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: to 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get-repository
         #
         def get_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get_repository' }
@@ -48,14 +52,14 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _repository
-                     "_snapshot/#{Utils.__listify(_repository)}"
+                     "_snapshot/#{Utils.listify(_repository)}"
                    else
                      '_snapshot'
                    end
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

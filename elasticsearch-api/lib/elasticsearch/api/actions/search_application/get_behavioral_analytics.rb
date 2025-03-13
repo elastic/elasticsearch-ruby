@@ -15,23 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Returns the existing behavioral analytics collections.
+        # Get behavioral analytics collections.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [List] :name A comma-separated list of analytics collections to limit the returned information
+        # @option arguments [Array<String>] :name A list of analytics collections to limit the returned information
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-analytics-collection.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics
         #
         def get_behavioral_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.get_behavioral_analytics' }
@@ -50,7 +50,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_application/analytics/#{Utils.__listify(_name)}"
+                     "_application/analytics/#{Utils.listify(_name)}"
                    else
                      '_application/analytics'
                    end

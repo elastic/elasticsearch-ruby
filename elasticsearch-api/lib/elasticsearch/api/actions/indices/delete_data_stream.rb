@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes a data stream.
+        # Delete data streams.
+        # Deletes one or more data streams and their backing indices.
         #
-        # @option arguments [List] :name A comma-separated list of data streams to delete; use `*` to delete all data streams
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String, Array<String>] :name Comma-separated list of data streams to delete. Wildcard (+*+) expressions are supported. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match. Supports comma-separated values,such as +open,hidden+. Server default: open.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream
         #
         def delete_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_stream' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_data_stream/#{Utils.__listify(_name)}"
+          path   = "_data_stream/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

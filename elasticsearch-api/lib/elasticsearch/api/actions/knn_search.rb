@@ -15,24 +15,37 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Performs a kNN search.
+      # Run a knn search.
+      # NOTE: The kNN search API has been replaced by the +knn+ option in the search API.
+      # Perform a k-nearest neighbor (kNN) search on a dense_vector field and return the matching documents.
+      # Given a query vector, the API finds the k closest vectors and returns those documents as search hits.
+      # Elasticsearch uses the HNSW algorithm to support efficient kNN search.
+      # Like most kNN algorithms, HNSW is an approximate method that sacrifices result accuracy for improved search speed.
+      # This means the results returned are not always the true k closest neighbors.
+      # The kNN search API supports restricting the search using a filter.
+      # The search will return the top k documents that also match the filter query.
+      # A kNN search response has the exact same structure as a search API response.
+      # However, certain sections have a meaning specific to kNN search:
+      # * The document +_score+ is determined by the similarity between the query and document vector.
+      # * The +hits.total+ object contains the total number of nearest neighbor candidates considered, which is +num_candidates * num_shards+. The +hits.total.relation+ will always be +eq+, indicating an exact value.
       # This functionality is Experimental and may be changed or removed
       # completely in a future release. Elastic will take a best effort approach
       # to fix any issues, but experimental features are not subject to the
       # support SLA of official GA features.
       #
-      # @option arguments [List] :index A comma-separated list of index names to search; use `_all` to perform the operation on all indices
-      # @option arguments [List] :routing A comma-separated list of specific routing values
+      # @option arguments [String, Array] :index A comma-separated list of index names to search;
+      #  use +_all+ or to perform the operation on all indices. (*Required*)
+      # @option arguments [String] :routing A comma-separated list of specific routing values.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The search definition
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search-api.html
       #
       def knn_search(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'knn_search' }
@@ -57,7 +70,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "#{Utils.__listify(_index)}/_knn_search"
+        path   = "#{Utils.listify(_index)}/_knn_search"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

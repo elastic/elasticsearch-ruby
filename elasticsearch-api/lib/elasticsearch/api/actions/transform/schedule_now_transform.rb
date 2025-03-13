@@ -15,20 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Transform
       module Actions
-        # Schedules now a transform.
+        # Schedule a transform to start now.
+        # Instantly run a transform to process data.
+        # If you run this API, the transform will process the new data instantly,
+        # without waiting for the configured frequency interval. After the API is called,
+        # the transform will be processed again at +now + frequency+ unless the API
+        # is called again in the meantime.
         #
-        # @option arguments [String] :transform_id The id of the transform. (*Required*)
-        # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place
+        # @option arguments [String] :transform_id Identifier for the transform. (*Required*)
+        # @option arguments [Time] :timeout Controls the time to wait for the scheduling to take place Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/schedule-now-transform.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-schedule-now-transform
         #
         def schedule_now_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.schedule_now_transform' }
@@ -48,7 +53,7 @@ module Elasticsearch
           _transform_id = arguments.delete(:transform_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_transform/#{Utils.__listify(_transform_id)}/_schedule_now"
+          path   = "_transform/#{Utils.listify(_transform_id)}/_schedule_now"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

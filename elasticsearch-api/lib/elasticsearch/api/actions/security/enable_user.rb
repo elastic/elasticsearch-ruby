@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Enables users in the native realm.
+        # Enable users.
+        # Enable users in the native realm.
+        # By default, when you create users, they are enabled.
         #
-        # @option arguments [String] :username The username of the user to enable
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :username An identifier for the user. (*Required*)
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-enable-user.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enable-user
         #
         def enable_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.enable_user' }
@@ -48,7 +50,7 @@ module Elasticsearch
           _username = arguments.delete(:username)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_security/user/#{Utils.__listify(_username)}/_enable"
+          path   = "_security/user/#{Utils.listify(_username)}/_enable"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

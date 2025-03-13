@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module License
       module Actions
-        # Retrieves licensing information for the cluster
+        # Get license information.
+        # Get information about your Elastic license including its type, its status, when it was issued, and when it expires.
         #
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Boolean] :accept_enterprise Supported for backwards compatibility with 7.x. If this param is used it must be set to true *Deprecated*
+        # @option arguments [Boolean] :accept_enterprise If +true+, this parameter returns enterprise for Enterprise license types. If +false+, this parameter returns platinum for both platinum and enterprise license types. This behavior is maintained for backwards compatibility.
+        #  This parameter is deprecated and will always be set to true in 8.x. Server default: true.
+        # @option arguments [Boolean] :local Specifies whether to retrieve local information. The default value is +false+, which means the information is retrieved from the master node.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-license.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.get' }
@@ -36,7 +38,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_license'

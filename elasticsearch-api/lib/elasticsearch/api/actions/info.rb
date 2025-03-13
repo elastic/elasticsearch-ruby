@@ -15,17 +15,18 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Returns basic information about the cluster.
+      # Get cluster info.
+      # Get basic build, version, and cluster information.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-info
       #
       def info(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'info' }
@@ -33,7 +34,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = nil
+        body = nil
 
         method = Elasticsearch::API::HTTP_GET
         path   = ''

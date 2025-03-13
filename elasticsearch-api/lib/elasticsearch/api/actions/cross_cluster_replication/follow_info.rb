@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Retrieves information about all follower indices, including parameters and status for each follower index
+        # Get follower information.
+        # Get information about all cross-cluster replication follower indices.
+        # For example, the results include follower index names, leader index names, replication options, and whether the follower indices are active or paused.
         #
-        # @option arguments [List] :index A comma-separated list of index patterns; use `_all` to perform the operation on all indices
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String, Array] :index A comma-delimited list of follower index patterns. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-follow-info.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow-info
         #
         def follow_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow_info' }
@@ -43,12 +47,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "#{Utils.__listify(_index)}/_ccr/info"
+          path   = "#{Utils.listify(_index)}/_ccr/info"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

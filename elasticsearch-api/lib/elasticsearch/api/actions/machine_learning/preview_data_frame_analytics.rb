@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Previews that will be analyzed given a data frame analytics config.
+        # Preview features used by data frame analytics.
+        # Preview the extracted features used by a data frame analytics config.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to preview
+        # @option arguments [String] :id Identifier for the data frame analytics job.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The data frame analytics config to preview
+        # @option arguments [Hash] :body request body
         #
-        # @see http://www.elastic.co/guide/en/elasticsearch/reference/current/preview-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-preview-data-frame-analytics
         #
         def preview_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.preview_data_frame_analytics' }
@@ -51,11 +52,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _id
-                   "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_preview"
-                 else
-                   '_ml/data_frame/analytics/_preview'
-                 end
+          path   = if _id
+                     "_ml/data_frame/analytics/#{Utils.listify(_id)}/_preview"
+                   else
+                     '_ml/data_frame/analytics/_preview'
+                   end
           params = {}
 
           Elasticsearch::API::Response.new(

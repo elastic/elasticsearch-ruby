@@ -15,20 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Opens one or more anomaly detection jobs.
+        # Open anomaly detection jobs.
+        # An anomaly detection job must be opened to be ready to receive and analyze
+        # data. It can be opened and closed multiple times throughout its lifecycle.
+        # When you open a new job, it starts with an empty model.
+        # When you open an existing job, the most recent model state is automatically
+        # loaded. The job is ready to resume its analysis from where it left off, once
+        # new data is received.
         #
-        # @option arguments [String] :job_id The ID of the job to open
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [Time] :timeout Controls the time to wait until a job has opened. Server default: 30m.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Query parameters can be specified in the body
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-open-job.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-open-job
         #
         def open_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.open_job' }
@@ -48,8 +55,8 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_open"
-          params = {}
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_open"
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

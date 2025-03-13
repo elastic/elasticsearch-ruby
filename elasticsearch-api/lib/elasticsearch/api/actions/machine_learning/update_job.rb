@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
+        # Update an anomaly detection job.
         # Updates certain properties of an anomaly detection job.
         #
-        # @option arguments [String] :job_id The ID of the job to create
+        # @option arguments [String] :job_id Identifier for the job. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The job update settings (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-job.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-job
         #
         def update_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_job' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_update"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_update"
           params = {}
 
           Elasticsearch::API::Response.new(

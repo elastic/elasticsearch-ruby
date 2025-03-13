@@ -15,20 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Posts scheduled events in a calendar.
+        # Add scheduled events to the calendar.
         #
-        # @option arguments [String] :calendar_id The ID of the calendar to modify
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body A list of events (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-post-calendar-event.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-post-calendar-events
         #
         def post_calendar_events(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.post_calendar_events' }
@@ -49,7 +49,7 @@ module Elasticsearch
           _calendar_id = arguments.delete(:calendar_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/events"
+          path   = "_ml/calendars/#{Utils.listify(_calendar_id)}/events"
           params = {}
 
           Elasticsearch::API::Response.new(

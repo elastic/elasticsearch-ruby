@@ -15,26 +15,35 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Returns a concise representation of the cluster pending tasks.
+        # Get pending task information.
+        # Get information about cluster-level changes that have not yet taken effect.
+        # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications. For application consumption, use the pending cluster tasks API.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [Boolean] :local If +true+, the request computes the list of selected nodes from the
+        #  local cluster state. If +false+ the list of selected nodes are computed
+        #  from the cluster state of the master node. In both cases the coordinating
+        #  node will send requests for further information to each selected node.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [String] :time Unit used to display time values.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-pending-tasks
         #
         def pending_tasks(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.pending_tasks' }
@@ -42,12 +51,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_cat/pending_tasks'
           params = Utils.process_params(arguments)
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          params[:h] = Utils.listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Creates the enrich index for an existing enrich policy.
+        # Run an enrich policy.
+        # Create the enrich index for an existing enrich policy.
         #
-        # @option arguments [String] :name The name of the enrich policy
-        # @option arguments [Boolean] :wait_for_completion Should the request should block until the execution is complete.
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [String] :name Enrich policy to execute. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_completion If +true+, the request blocks other enrich policy execution requests until complete. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/execute-enrich-policy-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-execute-policy
         #
         def execute_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.execute_policy' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_enrich/policy/#{Utils.__listify(_name)}/_execute"
+          path   = "_enrich/policy/#{Utils.listify(_name)}/_execute"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

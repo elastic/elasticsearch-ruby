@@ -15,18 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns the information about configured remote clusters.
+        # Get remote cluster information.
+        # Get information about configured remote clusters.
+        # The API returns connection and endpoint information keyed by the configured remote cluster alias.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-remote-info.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-remote-info
         #
         def remote_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.remote_info' }
@@ -34,7 +36,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_remote/info'

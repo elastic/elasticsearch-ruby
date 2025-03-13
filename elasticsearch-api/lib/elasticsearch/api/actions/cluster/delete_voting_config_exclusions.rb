@@ -15,20 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Clears cluster voting config exclusions.
+        # Clear cluster voting config exclusions.
+        # Remove master-eligible nodes from the voting configuration exclusion list.
         #
-        # @option arguments [Boolean] :wait_for_removal Specifies whether to wait for all excluded nodes to be removed from the cluster before clearing the voting configuration exclusions list.
-        # @option arguments [Time] :master_timeout Timeout for submitting request to master
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_removal Specifies whether to wait for all excluded nodes to be removed from the
+        #  cluster before clearing the voting configuration exclusions list.
+        #  Defaults to true, meaning that all excluded nodes must be removed from
+        #  the cluster before this API takes any action. If set to false then the
+        #  voting configuration exclusions list is cleared even if some excluded
+        #  nodes are still in the cluster. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/voting-config-exclusions.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions
         #
         def delete_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.delete_voting_config_exclusions' }
@@ -36,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_cluster/voting_config_exclusions'

@@ -34,9 +34,8 @@ module Elasticsearch
         def text_embedding(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.text_embedding' }
 
-          defined_params = [:inference_id].inject({}) do |set_variables, variable|
+          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -50,7 +49,7 @@ module Elasticsearch
           _inference_id = arguments.delete(:inference_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_inference/text_embedding/#{Utils.__listify(_inference_id)}"
+          path   = "_inference/text_embedding/#{Utils.listify(_inference_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

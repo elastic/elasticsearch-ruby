@@ -15,28 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Creates a snapshot in a repository.
+        # Create a snapshot.
+        # Take a snapshot of a cluster or of data streams and indices.
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [String] :snapshot A snapshot name
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
+        # @option arguments [String] :repository The name of the repository for the snapshot. (*Required*)
+        # @option arguments [String] :snapshot The name of the snapshot.
+        #  It supportes date math.
+        #  It must be unique in the repository. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_completion If +true+, the request returns a response when the snapshot is complete.
+        #  If +false+, the request returns a response when the snapshot initializes.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The snapshot definition
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-create
         #
         def create(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.create' }
 
-          defined_params = %i[repository snapshot].each_with_object({}) do |variable, set_variables|
+          defined_params = [:repository, :snapshot].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -54,7 +59,7 @@ module Elasticsearch
           _snapshot = arguments.delete(:snapshot)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
+          path   = "_snapshot/#{Utils.listify(_repository)}/#{Utils.listify(_snapshot)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

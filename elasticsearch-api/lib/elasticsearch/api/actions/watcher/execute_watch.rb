@@ -15,21 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Forces the execution of a stored watch.
+        # Run a watch.
+        # This API can be used to force execution of the watch outside of its triggering logic or to simulate the watch execution for debugging purposes.
+        # For testing and debugging purposes, you also have fine-grained control on how the watch runs.
+        # You can run the watch without running all of its actions or alternatively by simulating them.
+        # You can also force execution by ignoring the watch condition and control whether a watch record would be written to the watch history after it runs.
+        # You can use the run watch API to run watches that are not yet registered by specifying the watch definition inline.
+        # This serves as great tool for testing and debugging your watches prior to adding them to Watcher.
+        # When Elasticsearch security features are enabled on your cluster, watches are run with the privileges of the user that stored the watches.
+        # If your user is allowed to read index +a+, but not index +b+, then the exact same set of rules will apply during execution of a watch.
+        # When using the run watch API, the authorization data of the user that called the API will be used as a base, instead of the information who stored the watch.
         #
-        # @option arguments [String] :id Watch ID
-        # @option arguments [Boolean] :debug indicates whether the watch should execute in debug mode
+        # @option arguments [String] :id The watch identifier.
+        # @option arguments [Boolean] :debug Defines whether the watch runs in debug mode.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Execution control
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-execute-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-execute-watch
         #
         def execute_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.execute_watch' }
@@ -48,7 +57,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = if _id
-                     "_watcher/watch/#{Utils.__listify(_id)}/_execute"
+                     "_watcher/watch/#{Utils.listify(_id)}/_execute"
                    else
                      '_watcher/watch/_execute'
                    end

@@ -15,23 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Cancels a connector sync job.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Cancel a connector sync job.
+        # Cancel a connector sync job, which sets the status to cancelling and updates +cancellation_requested_at+ to the current time.
+        # The connector service is then responsible for setting the status of connector sync jobs to cancelled.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be canceled
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cancel-connector-sync-job-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-cancel
         #
         def sync_job_cancel(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_cancel' }
@@ -54,7 +56,7 @@ module Elasticsearch
           _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_cancel"
+          path   = "_connector/_sync_job/#{Utils.listify(_connector_sync_job_id)}/_cancel"
           params = {}
 
           Elasticsearch::API::Response.new(

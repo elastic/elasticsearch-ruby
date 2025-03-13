@@ -15,24 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the API key id and/or API key secret id fields in the connector document.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Update the connector API key ID.
+        # Update the +api_key_id+ and +api_key_secret_id+ fields of a connector.
+        # You can specify the ID of the API key used for authorization and the ID of the connector secret where the API key is stored.
+        # The connector secret ID is required only for Elastic managed (native) connectors.
+        # Self-managed connectors (connector clients) do not use this field.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body An object containing the connector's API key id and/or Connector Secret document id for that API key. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-api-key-id-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-api-key-id
         #
         def update_api_key_id(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_api_key_id' }
@@ -53,7 +57,7 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_api_key_id"
+          path   = "_connector/#{Utils.listify(_connector_id)}/_api_key_id"
           params = {}
 
           Elasticsearch::API::Response.new(

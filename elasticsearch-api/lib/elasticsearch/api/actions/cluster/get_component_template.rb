@@ -15,22 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns one or more component templates
+        # Get component templates.
+        # Get information about component templates.
         #
-        # @option arguments [List] :name The comma separated names of the component templates
-        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
+        # @option arguments [String] :name Comma-separated list of component template names used to limit the request.
+        #  Wildcard (+*+) expressions are supported.
+        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
         # @option arguments [Boolean] :include_defaults Return all default configurations for the component template (default: false)
+        # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only.
+        #  If +false+, information is retrieved from the master node.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-component-template.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template
         #
         def get_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.get_component_template' }
@@ -49,7 +54,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_component_template/#{Utils.__listify(_name)}"
+                     "_component_template/#{Utils.listify(_name)}"
                    else
                      '_component_template'
                    end

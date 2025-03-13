@@ -15,22 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Retrieves information about the index's current lifecycle state, such as the currently executing phase, action, and step.
+        # Explain the lifecycle state.
+        # Get the current lifecycle status for one or more indices.
+        # For data streams, the API retrieves the current lifecycle status for the stream's backing indices.
+        # The response indicates when the index entered each lifecycle state, provides the definition of the running phase, and information about any failures.
         #
-        # @option arguments [String] :index The name of the index to explain
-        # @option arguments [Boolean] :only_managed filters the indices included in the response to ones managed by ILM
-        # @option arguments [Boolean] :only_errors filters the indices included in the response to ones in an ILM error state, implies only_managed
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :index Comma-separated list of data streams, indices, and aliases to target. Supports wildcards (+*+).
+        #  To target all data streams and indices, use +*+ or +_all+. (*Required*)
+        # @option arguments [Boolean] :only_errors Filters the returned indices to only indices that are managed by ILM and are in an error state, either due to an encountering an error while executing the policy, or attempting to use a policy that does not exist.
+        # @option arguments [Boolean] :only_managed Filters the returned indices to only indices that are managed by ILM.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-explain-lifecycle.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-explain-lifecycle
         #
         def explain_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.explain_lifecycle' }
@@ -45,12 +49,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "#{Utils.__listify(_index)}/_ilm/explain"
+          path   = "#{Utils.listify(_index)}/_ilm/explain"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

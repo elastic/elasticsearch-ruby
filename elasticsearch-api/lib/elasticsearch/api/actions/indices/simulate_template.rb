@@ -15,24 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Simulate resolving the given template name or body
+        # Simulate an index template.
+        # Get the index configuration that would be applied by a particular index template.
         #
-        # @option arguments [String] :name The name of the index template
-        # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
-        # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for this template simulation (default: false)
+        # @option arguments [String] :name Name of the index template to simulate. To test a template configuration before you add it to the cluster, omit
+        #  this parameter and specify the template configuration in the request body.
+        # @option arguments [Boolean] :create If true, the template passed in the body is only used if no existing templates match the same index patterns. If false, the simulation uses the template with the highest priority. Note that the template is not permanently added or updated in either case; it is only used for the simulation.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body New index template definition to be simulated, if no index template name is specified
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-simulate-template.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-simulate-template
         #
         def simulate_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.simulate_template' }
@@ -51,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _name
-                     "_index_template/_simulate/#{Utils.__listify(_name)}"
+                     "_index_template/_simulate/#{Utils.listify(_name)}"
                    else
                      '_index_template/_simulate'
                    end

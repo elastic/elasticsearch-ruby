@@ -15,21 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Transform
       module Actions
-        # Previews a transform.
+        # Preview a transform.
+        # Generates a preview of the results that you will get when you create a transform with the same configuration.
+        # It returns a maximum of 100 results. The calculations are based on all the current data in the source index. It also
+        # generates a list of mappings and settings for the destination index. These values are determined based on the field
+        # types of the source index and the transform aggregations.
         #
-        # @option arguments [String] :transform_id The id of the transform to preview.
-        # @option arguments [Time] :timeout Controls the time to wait for the preview
+        # @option arguments [String] :transform_id Identifier for the transform to preview. If you specify this path parameter, you cannot provide transform
+        #  configuration details in the request body.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the
+        #  timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The definition for the transform to preview
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/preview-transform.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-preview-transform
         #
         def preview_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.preview_transform' }
@@ -52,11 +58,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _transform_id
-                   "_transform/#{Utils.__listify(_transform_id)}/_preview"
-                 else
-                   '_transform/_preview'
-                 end
+          path   = if _transform_id
+                     "_transform/#{Utils.listify(_transform_id)}/_preview"
+                   else
+                     '_transform/_preview'
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

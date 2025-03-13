@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Creates or updates a synonyms set
+        # Create or update a synonym set.
+        # Synonyms sets are limited to a maximum of 10,000 synonym rules per set.
+        # If you need to manage more synonym rules, you can create multiple synonym sets.
+        # When an existing synonyms set is updated, the search analyzers that use the synonyms set are reloaded automatically for all indices.
+        # This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
         #
-        # @option arguments [String] :id The id of the synonyms set to be created or updated
+        # @option arguments [String] :id The ID of the synonyms set to be created or updated. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Synonyms set rules (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-synonyms-set.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-put-synonym
         #
         def put_synonym(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.put_synonym' }
@@ -49,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_synonyms/#{Utils.__listify(_id)}"
+          path   = "_synonyms/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

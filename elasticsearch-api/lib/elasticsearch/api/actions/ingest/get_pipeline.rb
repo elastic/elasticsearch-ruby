@@ -15,21 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns a pipeline.
+        # Get pipelines.
+        # Get information about one or more ingest pipelines.
+        # This API returns a local reference of the pipeline.
         #
-        # @option arguments [String] :id Comma separated list of pipeline ids. Wildcards supported
+        # @option arguments [String] :id Comma-separated list of pipeline IDs to retrieve.
+        #  Wildcard (+*+) expressions are supported.
+        #  To get all ingest pipelines, omit this parameter or use +*+.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :summary Return pipelines without their definitions (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-pipeline-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-pipeline
         #
         def get_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_pipeline' }
@@ -48,7 +53,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _id
-                     "_ingest/pipeline/#{Utils.__listify(_id)}"
+                     "_ingest/pipeline/#{Utils.listify(_id)}"
                    else
                      '_ingest/pipeline'
                    end

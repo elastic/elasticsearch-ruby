@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Clear the cached results from a trained model deployment
+        # Clear trained model deployment cache.
+        # Cache will be cleared on all nodes where the trained model is assigned.
+        # A trained model deployment may have an inference cache enabled.
+        # As requests are handled by each allocated node, their responses may be cached on that individual node.
+        # Calling this API clears the caches without restarting the deployment.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-trained-model-deployment-cache.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-clear-trained-model-deployment-cache
         #
         def clear_trained_model_deployment_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.clear_trained_model_deployment_cache' }
@@ -47,7 +51,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/cache/_clear"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}/deployment/cache/_clear"
           params = {}
 
           Elasticsearch::API::Response.new(

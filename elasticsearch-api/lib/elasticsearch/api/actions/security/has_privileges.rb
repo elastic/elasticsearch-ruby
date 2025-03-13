@@ -15,20 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Determines whether the specified user has a specified list of privileges.
+        # Check user privileges.
+        # Determine whether the specified user has a specified list of privileges.
+        # All users can use this API, but only to determine their own privileges.
+        # To check the privileges of other users, you must use the run as feature.
         #
         # @option arguments [String] :user Username
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The privileges to test (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-has-privileges.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-has-privileges
         #
         def has_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.has_privileges' }
@@ -49,7 +52,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _user
-                     "_security/user/#{Utils.__listify(_user)}/_has_privileges"
+                     "_security/user/#{Utils.listify(_user)}/_has_privileges"
                    else
                      '_security/user/_has_privileges'
                    end

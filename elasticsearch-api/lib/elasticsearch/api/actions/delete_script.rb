@@ -15,20 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Deletes a script.
+      # Delete a script or search template.
+      # Deletes a stored script or search template.
       #
-      # @option arguments [String] :id Script ID
-      # @option arguments [Time] :timeout Explicit operation timeout
-      # @option arguments [Time] :master_timeout Specify timeout for connection to master
+      # @option arguments [String] :id The identifier for the stored script or search template. (*Required*)
+      # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+      #  If no response is received before the timeout expires, the request fails and returns an error.
+      #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
+      # @option arguments [Time] :timeout The period to wait for a response.
+      #  If no response is received before the timeout expires, the request fails and returns an error.
+      #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-script
       #
       def delete_script(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete_script' }
@@ -48,7 +53,7 @@ module Elasticsearch
         _id = arguments.delete(:id)
 
         method = Elasticsearch::API::HTTP_DELETE
-        path   = "_scripts/#{Utils.__listify(_id)}"
+        path   = "_scripts/#{Utils.listify(_id)}"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

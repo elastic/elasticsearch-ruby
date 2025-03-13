@@ -15,24 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the error field in the connector document.
+        # Update the connector error field.
+        # Set the error field for the connector.
+        # If the error provided in the request body is non-null, the connector’s status is updated to error.
+        # Otherwise, if the error is reset to null, the connector status is updated to connected.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body An object containing the connector's error. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-error-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-error
         #
         def update_error(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_error' }
@@ -53,7 +56,7 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_error"
+          path   = "_connector/#{Utils.listify(_connector_id)}/_error"
           params = {}
 
           Elasticsearch::API::Response.new(

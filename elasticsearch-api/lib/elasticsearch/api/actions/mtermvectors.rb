@@ -15,31 +15,41 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Returns multiple termvectors in one request.
+      # Get multiple term vectors.
+      # Get multiple term vectors with a single request.
+      # You can specify existing documents by index and ID or provide artificial documents in the body of the request.
+      # You can specify the index in the request body or request URI.
+      # The response contains a +docs+ array with all the fetched termvectors.
+      # Each element has the structure provided by the termvectors API.
+      # **Artificial documents**
+      # You can also use +mtermvectors+ to generate term vectors for artificial documents provided in the body of the request.
+      # The mapping used is determined by the specified +_index+.
       #
-      # @option arguments [String] :index The index in which the document resides.
-      # @option arguments [List] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
-      # @option arguments [Boolean] :term_statistics Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [Boolean] :field_statistics Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [List] :fields A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [Boolean] :offsets Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [Boolean] :positions Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [Boolean] :payloads Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [String] :routing Specific routing value. Applies to all returned documents unless otherwise specified in body "params" or "docs".
-      # @option arguments [Boolean] :realtime Specifies if requests are real-time as opposed to near-real-time (default: true).
-      # @option arguments [Number] :version Explicit version number for concurrency control
-      # @option arguments [String] :version_type Specific version type (options: internal, external, external_gte)
+      # @option arguments [String] :index The name of the index that contains the documents.
+      # @option arguments [Array<String>] :ids A comma-separated list of documents ids. You must define ids as parameter or set "ids" or "docs" in the request body
+      # @option arguments [String, Array<String>] :fields A comma-separated list or wildcard expressions of fields to include in the statistics.
+      #  It is used as the default list unless a specific field list is provided in the +completion_fields+ or +fielddata_fields+ parameters.
+      # @option arguments [Boolean] :field_statistics If +true+, the response includes the document count, sum of document frequencies, and sum of total term frequencies. Server default: true.
+      # @option arguments [Boolean] :offsets If +true+, the response includes term offsets. Server default: true.
+      # @option arguments [Boolean] :payloads If +true+, the response includes term payloads. Server default: true.
+      # @option arguments [Boolean] :positions If +true+, the response includes term positions. Server default: true.
+      # @option arguments [String] :preference The node or shard the operation should be performed on.
+      #  It is random by default.
+      # @option arguments [Boolean] :realtime If true, the request is real-time as opposed to near-real-time. Server default: true.
+      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [Boolean] :term_statistics If true, the response includes term frequency and document frequency.
+      # @option arguments [Integer] :version If +true+, returns the document version as part of a hit.
+      # @option arguments [String] :version_type The version type.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body Define ids, documents, parameters or a list of parameters per document here. You must at least provide a list of document ids. See documentation.
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-multi-termvectors.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-mtermvectors
       #
       def mtermvectors(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'mtermvectors' }
@@ -52,11 +62,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body = if (ids = arguments.delete(:ids))
-                 { ids: ids }
-               else
-                 arguments.delete(:body)
-               end
+        body = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
@@ -66,11 +72,11 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = if _index
-                 "#{Utils.__listify(_index)}/_mtermvectors"
-               else
-                 '_mtermvectors'
-               end
+        path   = if _index
+                   "#{Utils.listify(_index)}/_mtermvectors"
+                 else
+                   '_mtermvectors'
+                 end
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

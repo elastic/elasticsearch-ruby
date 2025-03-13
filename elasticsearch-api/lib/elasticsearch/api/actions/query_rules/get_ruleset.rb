@@ -15,19 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Returns the details about a query ruleset.
+        # Get a query ruleset.
+        # Get details about a query ruleset.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-ruleset.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-ruleset
         #
         def get_ruleset(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.get_ruleset' }
@@ -47,7 +48,7 @@ module Elasticsearch
           _ruleset_id = arguments.delete(:ruleset_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
+          path   = "_query_rules/#{Utils.listify(_ruleset_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

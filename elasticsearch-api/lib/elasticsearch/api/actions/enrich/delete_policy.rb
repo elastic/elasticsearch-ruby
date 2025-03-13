@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Enrich
       module Actions
+        # Delete an enrich policy.
         # Deletes an existing enrich policy and its enrich index.
         #
-        # @option arguments [String] :name The name of the enrich policy
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [String] :name Enrich policy to delete. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-enrich-policy-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-delete-policy
         #
         def delete_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.delete_policy' }
@@ -48,7 +49,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_enrich/policy/#{Utils.__listify(_name)}"
+          path   = "_enrich/policy/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

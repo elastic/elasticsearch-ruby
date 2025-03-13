@@ -15,19 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Consumes a SAML LogoutRequest
+        # Invalidate SAML.
+        # Submit a SAML LogoutRequest message to Elasticsearch for consumption.
+        # NOTE: This API is intended for use by custom web applications other than Kibana.
+        # If you are using Kibana, refer to the documentation for configuring SAML single-sign-on on the Elastic Stack.
+        # The logout request comes from the SAML IdP during an IdP initiated Single Logout.
+        # The custom web application can use this API to have Elasticsearch process the +LogoutRequest+.
+        # After successful validation of the request, Elasticsearch invalidates the access token and refresh token that corresponds to that specific SAML principal and provides a URL that contains a SAML LogoutResponse message.
+        # Thus the user can be redirected back to their IdP.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The LogoutRequest message (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-invalidate.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-invalidate
         #
         def saml_invalidate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_invalidate' }
@@ -37,7 +44,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/saml/invalidate'

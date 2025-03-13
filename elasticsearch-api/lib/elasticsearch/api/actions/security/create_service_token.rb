@@ -15,27 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Creates a service account token for access without requiring basic authentication.
+        # Create a service account token.
+        # Create a service accounts token for access without requiring basic authentication.
+        # NOTE: Service account tokens never expire.
+        # You must actively delete them if they are no longer needed.
         #
-        # @option arguments [String] :namespace An identifier for the namespace
-        # @option arguments [String] :service An identifier for the service name
-        # @option arguments [String] :name An identifier for the token name
-        # @option arguments [String] :refresh If `true` then refresh the affected shards to make this operation visible to search, if `wait_for` (the default) then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :namespace The name of the namespace, which is a top-level grouping of service accounts. (*Required*)
+        # @option arguments [String] :service The name of the service. (*Required*)
+        # @option arguments [String] :name The name for the service account token.
+        #  If omitted, a random name will be generated.Token names must be at least one and no more than 256 characters.
+        #  They can contain alphanumeric characters (a-z, A-Z, 0-9), dashes (+-+), and underscores (+_+), but cannot begin with an underscore.NOTE: Token names must be unique in the context of the associated service account.
+        #  They must also be globally unique with their fully qualified names, which are comprised of the service account principal and token name, such as +<namespace>/<service>/<token-name>+.
+        # @option arguments [String] :refresh If +true+ then refresh the affected shards to make this operation visible to search, if +wait_for+ (the default) then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-create-service-token.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token
         #
         def create_service_token(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.create_service_token' }
 
-          defined_params = %i[namespace service name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:namespace, :service, :name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -56,9 +62,9 @@ module Elasticsearch
 
           method = _name ? Elasticsearch::API::HTTP_PUT : Elasticsearch::API::HTTP_POST
           path   = if _namespace && _service && _name
-                     "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token/#{Utils.__listify(_name)}"
+                     "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}/credential/token/#{Utils.listify(_name)}"
                    else
-                     "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}/credential/token"
+                     "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}/credential/token"
                    end
           params = Utils.process_params(arguments)
 

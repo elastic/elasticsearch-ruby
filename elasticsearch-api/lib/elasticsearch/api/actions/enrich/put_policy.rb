@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Creates a new enrich policy.
+        # Create an enrich policy.
+        # Creates an enrich policy.
         #
-        # @option arguments [String] :name The name of the enrich policy
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
+        # @option arguments [String] :name Name of the enrich policy to create or update. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The enrich policy to register (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-enrich-policy-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-put-policy
         #
         def put_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.put_policy' }
@@ -50,7 +51,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_enrich/policy/#{Utils.__listify(_name)}"
+          path   = "_enrich/policy/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

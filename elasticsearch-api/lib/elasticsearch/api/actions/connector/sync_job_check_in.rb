@@ -15,23 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Checks in a connector sync job (refreshes 'last_seen').
+        # Check in a connector sync job.
+        # Check in a connector sync job and set the +last_seen+ field to the current time before updating it in the internal index.
+        # To sync data using self-managed connectors, you need to deploy the Elastic connector service on your own infrastructure.
+        # This service runs automatically on Elastic Cloud for Elastic managed connectors.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in
+        # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job to be checked in. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/check-in-connector-sync-job-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-check-in
         #
         def sync_job_check_in(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_check_in' }
@@ -54,7 +57,7 @@ module Elasticsearch
           _connector_sync_job_id = arguments.delete(:connector_sync_job_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/_sync_job/#{Utils.__listify(_connector_sync_job_id)}/_check_in"
+          path   = "_connector/_sync_job/#{Utils.listify(_connector_sync_job_id)}/_check_in"
           params = {}
 
           Elasticsearch::API::Response.new(

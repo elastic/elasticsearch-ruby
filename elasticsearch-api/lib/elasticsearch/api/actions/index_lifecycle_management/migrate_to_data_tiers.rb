@@ -15,21 +15,34 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Migrates the indices and ILM policies away from custom node attribute allocation routing to data tiers routing
+        # Migrate to data tiers routing.
+        # Switch the indices, ILM policies, and legacy, composable, and component templates from using custom node attributes and attribute-based allocation filters to using data tiers.
+        # Optionally, delete one legacy index template.
+        # Using node roles enables ILM to automatically move the indices between data tiers.
+        # Migrating away from custom node attributes routing can be manually performed.
+        # This API provides an automated way of performing three out of the four manual steps listed in the migration guide:
+        # 1. Stop setting the custom hot attribute on new indices.
+        # 1. Remove custom allocation settings from existing ILM policies.
+        # 1. Replace custom allocation settings from existing indices with the corresponding tier preference.
+        # ILM must be stopped before performing the migration.
+        # Use the stop ILM and get ILM status APIs to wait until the reported operation mode is +STOPPED+.
         #
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :dry_run If set to true it will simulate the migration, providing a way to retrieve the ILM policies and indices that need to be migrated. The default is false
+        # @option arguments [Boolean] :dry_run If true, simulates the migration from node attributes based allocation filters to data tiers, but does not perform the migration.
+        #  This provides a way to retrieve the indices and ILM policies that need to be migrated.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Optionally specify a legacy index template name to delete and optionally specify a node attribute name used for index shard routing (defaults to "data")
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-migrate-to-data-tiers.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-migrate-to-data-tiers
         #
         def migrate_to_data_tiers(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.migrate_to_data_tiers' }
@@ -37,7 +50,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_ilm/migrate_to_data_tiers'

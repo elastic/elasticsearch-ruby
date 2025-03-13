@@ -15,19 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
         # Delegate PKI authentication.
+        # This API implements the exchange of an X509Certificate chain for an Elasticsearch access token.
+        # The certificate chain is validated, according to RFC 5280, by sequentially considering the trust configuration of every installed PKI realm that has +delegation.enabled+ set to +true+.
+        # A successfully trusted client certificate is also subject to the validation of the subject distinguished name according to thw +username_pattern+ of the respective realm.
+        # This API is called by smart and trusted proxies, such as Kibana, which terminate the user's TLS session but still want to authenticate the user by using a PKI realm—-​as if the user connected directly to Elasticsearch.
+        # IMPORTANT: The association between the subject public key in the target certificate and the corresponding private key is not validated.
+        # This is part of the TLS authentication process and it is delegated to the proxy that calls this API.
+        # The proxy is trusted to have performed the TLS authentication and this API translates that authentication into an Elasticsearch access token.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The X509Certificate chain. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delegate-pki-authentication.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delegate-pki
         #
         def delegate_pki(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delegate_pki' }
@@ -37,7 +44,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/delegate_pki'

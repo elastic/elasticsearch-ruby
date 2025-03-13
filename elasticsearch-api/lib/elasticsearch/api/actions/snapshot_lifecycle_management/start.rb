@@ -15,20 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Turns on snapshot lifecycle management (SLM).
+        # Start snapshot lifecycle management.
+        # Snapshot lifecycle management (SLM) starts automatically when a cluster is formed.
+        # Manually starting SLM is necessary only if it has been stopped using the stop SLM API.
         #
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
-        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-start.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-start
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.start' }
@@ -36,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_slm/start'

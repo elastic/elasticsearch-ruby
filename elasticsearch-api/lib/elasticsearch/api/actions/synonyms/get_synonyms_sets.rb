@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Retrieves a summary of all defined synonym sets
+        # Get all synonym sets.
+        # Get a summary of all defined synonym sets.
         #
-        # @option arguments [Integer] :from Starting offset
-        # @option arguments [Integer] :size specifies a max number of results to get
+        # @option arguments [Integer] :from The starting offset for synonyms sets to retrieve. Server default: 0.
+        # @option arguments [Integer] :size The maximum number of synonyms sets to retrieve. Server default: 10.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-synonyms-sets.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym
         #
         def get_synonyms_sets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonyms_sets' }
@@ -36,7 +37,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_synonyms'

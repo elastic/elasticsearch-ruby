@@ -15,21 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Update settings for the security system index
+        # Update security index settings.
+        # Update the user-configurable settings for the security internal index (+.security+ and associated indices). Only a subset of settings are allowed to be modified. This includes +index.auto_expand_replicas+ and +index.number_of_replicas+.
+        # NOTE: If +index.auto_expand_replicas+ is set, +index.number_of_replicas+ will be ignored during updates.
+        # If a specific index is not in use on the system and settings are provided for it, the request will be rejected.
+        # This API does not yet support configuring the settings for indices before they are in use.
         #
-        # @option arguments [Time] :master_timeout Timeout for connection to master
-        # @option arguments [Time] :timeout Timeout for acknowledgements from all nodes
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body An object with the new settings for each index, if any (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-settings.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-settings
         #
         def update_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_settings' }
@@ -39,7 +45,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_PUT
           path   = '_security/settings'

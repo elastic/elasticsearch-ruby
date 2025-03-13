@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Logstash
       module Actions
-        # Adds and updates Logstash Pipelines used for Central Management
+        # Create or update a Logstash pipeline.
+        # Create a pipeline that is used for Logstash Central Management.
+        # If the specified pipeline exists, it is replaced.
         #
-        # @option arguments [String] :id The ID of the Pipeline
+        # @option arguments [String] :id An identifier for the pipeline. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The Pipeline to add or update (*Required*)
+        # @option arguments [Hash] :body pipeline
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-put-pipeline.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-put-pipeline
         #
         def put_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.put_pipeline' }
@@ -49,7 +51,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_logstash/pipeline/#{Utils.__listify(_id)}"
+          path   = "_logstash/pipeline/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

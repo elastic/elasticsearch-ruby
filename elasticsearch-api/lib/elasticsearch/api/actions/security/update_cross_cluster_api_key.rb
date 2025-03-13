@@ -15,20 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Updates attributes of an existing cross-cluster API key.
+        # Update a cross-cluster API key.
+        # Update the attributes of an existing cross-cluster API key, which is used for API key based remote cluster access.
+        # To use this API, you must have at least the +manage_security+ cluster privilege.
+        # Users can only update API keys that they created.
+        # To update another user's API key, use the +run_as+ feature to submit a request on behalf of another user.
+        # IMPORTANT: It's not possible to use an API key as the authentication credential for this API.
+        # To update an API key, the owner user's credentials are required.
+        # It's not possible to update expired API keys, or API keys that have been invalidated by the invalidate API key API.
+        # This API supports updates to an API key's access scope, metadata, and expiration.
+        # The owner user's information, such as the +username+ and +realm+, is also updated automatically on every call.
+        # NOTE: This API cannot update REST API keys, which should be updated by either the update API key or bulk update API keys API.
         #
-        # @option arguments [String] :id The ID of the cross-cluster API key to update
+        # @option arguments [String] :id The ID of the cross-cluster API key to update. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The request to update attributes of a cross-cluster API key. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-update-cross-cluster-api-key.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-update-cross-cluster-api-key
         #
         def update_cross_cluster_api_key(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.update_cross_cluster_api_key' }
@@ -49,7 +59,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_security/cross_cluster/api_key/#{Utils.__listify(_id)}"
+          path   = "_security/cross_cluster/api_key/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Returns the specified ip location database configuration
+        # Get IP geolocation database configurations.
         #
-        # @option arguments [List] :id A comma-separated list of ip location database configurations to get; use `*` to get all ip location database configurations
+        # @option arguments [String, Array] :id Comma-separated list of database configuration IDs to retrieve.
+        #  Wildcard (+*+) expressions are supported.
+        #  To get all database configurations, omit this parameter or use +*+.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ip-location-database-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-ip-location-database
         #
         def get_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_ip_location_database' }
@@ -46,11 +51,11 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _id
-                     "_ingest/ip_location/database/#{Utils.__listify(_id)}"
+                     "_ingest/ip_location/database/#{Utils.listify(_id)}"
                    else
                      '_ingest/ip_location/database'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

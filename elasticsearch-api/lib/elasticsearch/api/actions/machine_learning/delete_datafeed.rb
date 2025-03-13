@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing datafeed.
+        # Delete a datafeed.
         #
-        # @option arguments [String] :datafeed_id The ID of the datafeed to delete
-        # @option arguments [Boolean] :force True if the datafeed should be forcefully deleted
+        # @option arguments [String] :datafeed_id A numerical character string that uniquely identifies the datafeed. This
+        #  identifier can contain lowercase alphanumeric characters (a-z and 0-9),
+        #  hyphens, and underscores. It must start and end with alphanumeric
+        #  characters. (*Required*)
+        # @option arguments [Boolean] :force Use to forcefully delete a started datafeed; this method is quicker than
+        #  stopping and deleting the datafeed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-datafeed.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-datafeed
         #
         def delete_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_datafeed' }
@@ -48,7 +52,7 @@ module Elasticsearch
           _datafeed_id = arguments.delete(:datafeed_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}"
+          path   = "_ml/datafeeds/#{Utils.listify(_datafeed_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

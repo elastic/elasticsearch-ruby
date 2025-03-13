@@ -15,21 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Verifies a repository.
+        # Verify a snapshot repository.
+        # Check for common misconfigurations in a snapshot repository.
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :repository The name of the snapshot repository to verify. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response from all relevant nodes in the cluster after updating the cluster metadata.
+        #  If no response is received before the timeout expires, the cluster metadata update still applies but the response will indicate that it was not completely acknowledged.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-verify-repository
         #
         def verify_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.verify_repository' }
@@ -49,7 +54,7 @@ module Elasticsearch
           _repository = arguments.delete(:repository)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_snapshot/#{Utils.__listify(_repository)}/_verify"
+          path   = "_snapshot/#{Utils.listify(_repository)}/_verify"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

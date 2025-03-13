@@ -15,20 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module AsyncSearch
       module Actions
-        # Retrieves the status of a previously submitted async search request given its ID.
+        # Get the async search status.
+        # Get the status of a previously submitted async search request given its identifier, without retrieving search results.
+        # If the Elasticsearch security features are enabled, the access to the status of a specific async search is restricted to:
+        # * The user or API key that submitted the original async search request.
+        # * Users that have the +monitor+ cluster privilege or greater privileges.
         #
-        # @option arguments [String] :id The async search ID
-        # @option arguments [Time] :keep_alive Specify the time interval in which the results (partial or final) for this search will be available
+        # @option arguments [String] :id A unique identifier for the async search. (*Required*)
+        # @option arguments [Time] :keep_alive The length of time that the async search needs to be available.
+        #  Ongoing async searches and any saved search results are deleted after this period. Server default: 5d.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/async-search.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit
         #
         def status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'async_search.status' }
@@ -48,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_async_search/status/#{Utils.__listify(_id)}"
+          path   = "_async_search/status/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

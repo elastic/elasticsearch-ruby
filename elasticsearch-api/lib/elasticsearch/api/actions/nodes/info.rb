@@ -15,27 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Nodes
       module Actions
-        # Returns information about nodes in the cluster.
+        # Get node information.
+        # By default, the API returns all attributes and core settings for cluster nodes.
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [List] :metric A comma-separated list of metrics you wish returned. Use `_all` to retrieve all metrics and `_none` to retrieve the node identity without any additional metrics. (options: settings, os, process, jvm, thread_pool, transport, http, plugins, ingest, indices, aggregations, _all, _none)
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information.
+        # @option arguments [String, Array<String>] :metric Limits the information returned to the specific metrics. Supports a comma-separated list, such as http,ingest.
+        # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-nodes-info.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.info' }
 
-          defined_params = %i[node_id metric].each_with_object({}) do |variable, set_variables|
+          defined_params = [:node_id, :metric].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,11 +52,11 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id && _metric
-                     "_nodes/#{Utils.__listify(_node_id)}/#{Utils.__listify(_metric)}"
+                     "_nodes/#{Utils.listify(_node_id)}/#{Utils.listify(_metric)}"
                    elsif _node_id
-                     "_nodes/#{Utils.__listify(_node_id)}"
+                     "_nodes/#{Utils.listify(_node_id)}"
                    elsif _metric
-                     "_nodes/#{Utils.__listify(_metric)}"
+                     "_nodes/#{Utils.listify(_metric)}"
                    else
                      '_nodes'
                    end

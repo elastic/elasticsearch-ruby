@@ -15,25 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Returns the details about an individual query rule within a ruleset.
+        # Get a query rule.
+        # Get details about a query rule within a query ruleset.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset the rule exists within
-        # @option arguments [String] :rule_id The unique identifier of the rule to be retrieved.
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset containing the rule to retrieve (*Required*)
+        # @option arguments [String] :rule_id The unique identifier of the query rule within the specified ruleset to retrieve (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-query-rule.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-rule
         #
         def get_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.get_rule' }
 
-          defined_params = %i[ruleset_id rule_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:ruleset_id, :rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,7 +52,7 @@ module Elasticsearch
           _rule_id = arguments.delete(:rule_id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_rule/#{Utils.__listify(_rule_id)}"
+          path   = "_query_rules/#{Utils.listify(_ruleset_id)}/_rule/#{Utils.listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

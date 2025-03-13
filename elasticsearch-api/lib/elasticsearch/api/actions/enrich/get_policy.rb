@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Enrich
       module Actions
-        # Gets information about an enrich policy.
+        # Get an enrich policy.
+        # Returns information about an enrich policy.
         #
-        # @option arguments [List] :name A comma-separated list of enrich policy names
-        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [String, Array<String>] :name Comma-separated list of enrich policy names used to limit the request.
+        #  To return information for all enrich policies, omit this parameter.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-enrich-policy-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-enrich-get-policy
         #
         def get_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'enrich.get_policy' }
@@ -47,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_enrich/policy/#{Utils.__listify(_name)}"
+                     "_enrich/policy/#{Utils.listify(_name)}"
                    else
                      '_enrich/policy'
                    end

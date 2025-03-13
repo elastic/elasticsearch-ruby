@@ -15,22 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module DanglingIndices
       module Actions
-        # Imports the specified dangling index
+        # Import a dangling index.
+        # If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+        # For example, this can happen if you delete more than +cluster.indices.tombstones.size+ indices while an Elasticsearch node is offline.
         #
-        # @option arguments [String] :index_uuid The UUID of the dangling index
-        # @option arguments [Boolean] :accept_data_loss Must be set to true in order to import the dangling index
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :index_uuid The UUID of the index to import. Use the get dangling indices API to locate the UUID. (*Required*)
+        # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to import a dangling index.
+        #  Because Elasticsearch cannot know where the dangling index data came from or determine which shard copies are fresh and which are stale, it cannot guarantee that the imported data represents the latest state of the index when it was last in the cluster. (*Required*)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-import-dangling-index
         #
         def import_dangling_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.import_dangling_index' }
@@ -50,7 +53,7 @@ module Elasticsearch
           _index_uuid = arguments.delete(:index_uuid)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_dangling/#{Utils.__listify(_index_uuid)}"
+          path   = "_dangling/#{Utils.listify(_index_uuid)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

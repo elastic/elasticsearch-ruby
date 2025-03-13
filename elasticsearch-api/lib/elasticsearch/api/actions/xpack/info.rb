@@ -15,21 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module XPack
       module Actions
-        # Retrieves information about the installed X-Pack features.
+        # Get information.
+        # The information provided by the API includes:
+        # * Build information including the build number and timestamp.
+        # * License information about the currently installed license.
+        # * Feature information for the features that are currently enabled and available under the current license.
         #
-        # @option arguments [Boolean] :human Defines whether additional human-readable information is included in the response. In particular, it adds descriptions and a tag line. The default value is true.
-        # @option arguments [List] :categories Comma-separated list of info categories. Can be any of: build, license, features
-        # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true *Deprecated*
+        # @option arguments [Array<String>] :categories A comma-separated list of the information categories to include in the response.
+        #  For example, +build,license,features+.
+        # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true
+        # @option arguments [Boolean] :human Defines whether additional human-readable information is included in the response.
+        #  In particular, it adds descriptions and a tag line. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.info' }
@@ -37,7 +43,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_xpack'

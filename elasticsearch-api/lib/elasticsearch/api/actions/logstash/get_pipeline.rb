@@ -15,19 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Logstash
       module Actions
-        # Retrieves Logstash Pipelines used by Central Management
+        # Get Logstash pipelines.
+        # Get pipelines that are used for Logstash Central Management.
         #
-        # @option arguments [String] :id A comma-separated list of Pipeline IDs
+        # @option arguments [String, Array] :id A comma-separated list of pipeline identifiers.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-get-pipeline.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-get-pipeline
         #
         def get_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.get_pipeline' }
@@ -46,7 +47,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _id
-                     "_logstash/pipeline/#{Utils.__listify(_id)}"
+                     "_logstash/pipeline/#{Utils.listify(_id)}"
                    else
                      '_logstash/pipeline'
                    end

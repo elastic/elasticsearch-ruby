@@ -15,19 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieve settings for the security system indices
+        # Get security index settings.
+        # Get the user-configurable settings for the security internal index (+.security+ and associated indices).
+        # Only a subset of the index settings — those that are user-configurable—will be shown.
+        # This includes:
+        # * +index.auto_expand_replicas+
+        # * +index.number_of_replicas+
         #
-        # @option arguments [Time] :master_timeout Timeout for connection to master
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-settings.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-settings
         #
         def get_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_settings' }
@@ -35,7 +41,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/settings'

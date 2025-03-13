@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Retrieves information about the index's current data stream lifecycle, such as any potential encountered error, time since creation etc.
+        # Get the status for a data stream lifecycle.
+        # Get information about an index or data stream's current data stream lifecycle status, such as time since index creation, time since rollover, the lifecycle configuration managing the index, or any errors encountered during lifecycle execution.
         #
-        # @option arguments [String] :index The name of the index to explain
+        # @option arguments [String, Array] :index The name of the index to explain (*Required*)
         # @option arguments [Boolean] :include_defaults indicates if the API should return the default values the system uses for the index's lifecycle
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams-explain-lifecycle.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-explain-data-lifecycle
         #
         def explain_data_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.explain_data_lifecycle' }
@@ -44,12 +45,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "#{Utils.__listify(_index)}/_lifecycle/explain"
+          path   = "#{Utils.listify(_index)}/_lifecycle/explain"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Removes the assigned lifecycle policy and stops managing the specified index
+        # Remove policies from an index.
+        # Remove the assigned lifecycle policies from an index or a data stream's backing indices.
+        # It also stops managing the indices.
         #
-        # @option arguments [String] :index The name of the index to remove policy on
+        # @option arguments [String] :index The name of the index to remove policy on (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-remove-policy.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-remove-policy
         #
         def remove_policy(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.remove_policy' }
@@ -42,12 +44,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_ilm/remove"
+          path   = "#{Utils.listify(_index)}/_ilm/remove"
           params = {}
 
           Elasticsearch::API::Response.new(

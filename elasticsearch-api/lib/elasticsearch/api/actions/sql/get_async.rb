@@ -15,23 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SQL
       module Actions
-        # Returns the current status and available results for an async SQL search or stored synchronous SQL search
+        # Get async SQL search results.
+        # Get the current status and available results for an async SQL search or stored synchronous SQL search.
+        # If the Elasticsearch security features are enabled, only the user who first submitted the SQL search can retrieve the search using this API.
         #
-        # @option arguments [String] :id The async search ID
-        # @option arguments [String] :delimiter Separator for CSV results
-        # @option arguments [String] :format Short version of the Accept header, e.g. json, yaml
-        # @option arguments [Time] :keep_alive Retention period for the search and its results
-        # @option arguments [Time] :wait_for_completion_timeout Duration to wait for complete results
+        # @option arguments [String] :id The identifier for the search. (*Required*)
+        # @option arguments [String] :delimiter The separator for CSV results.
+        #  The API supports this parameter only for CSV responses. Server default: ,.
+        # @option arguments [String] :format The format for the response.
+        #  You must specify a format using this parameter or the +Accept+ HTTP header.
+        #  If you specify both, the API uses this parameter.
+        # @option arguments [Time] :keep_alive The retention period for the search and its results.
+        #  It defaults to the +keep_alive+ period for the original SQL search.
+        # @option arguments [Time] :wait_for_completion_timeout The period to wait for complete results.
+        #  It defaults to no timeout, meaning the request waits for complete search results.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-async-sql-search-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async
         #
         def get_async(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.get_async' }
@@ -51,7 +58,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_sql/async/#{Utils.__listify(_id)}"
+          path   = "_sql/async/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

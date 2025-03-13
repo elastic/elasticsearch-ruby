@@ -15,26 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Creates part of a trained model definition
+        # Create part of a trained model definition.
         #
-        # @option arguments [String] :model_id The ID of the trained model for this definition part
-        # @option arguments [Integer] :part The part number
+        # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [Integer] :part The definition part number. When the definition is loaded for inference the definition parts are streamed in the
+        #  order of their part number. The first part must be +0+ and the final part must be +total_parts - 1+. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The trained model definition part (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-model-definition-part.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model-definition-part
         #
         def put_trained_model_definition_part(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_trained_model_definition_part' }
 
-          defined_params = %i[model_id part].each_with_object({}) do |variable, set_variables|
+          defined_params = [:model_id, :part].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -53,7 +54,7 @@ module Elasticsearch
           _part = arguments.delete(:part)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/definition/#{Utils.__listify(_part)}"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}/definition/#{Utils.listify(_part)}"
           params = {}
 
           Elasticsearch::API::Response.new(
