@@ -21,12 +21,12 @@ describe 'client.cluster#reroute' do
 
   let(:expected_args) do
     [
-        'POST',
-        '_cluster/reroute',
-        {},
-        {},
-        {},
-        { endpoint: 'cluster.reroute' }
+      'POST',
+      '_cluster/reroute',
+      {},
+      nil,
+      {},
+      { endpoint: 'cluster.reroute' }
     ]
   end
 
@@ -35,15 +35,14 @@ describe 'client.cluster#reroute' do
   end
 
   context 'when a body is specified' do
-
     let(:expected_args) do
       [
-          'POST',
-          '_cluster/reroute',
-          {},
-          { commands: [ move: { index: 'myindex', shard: 0 }] },
-          {},
-          { endpoint: 'cluster.reroute' }
+        'POST',
+        '_cluster/reroute',
+        {},
+        { commands: [ move: { index: 'myindex', shard: 0 }] },
+        {},
+        { endpoint: 'cluster.reroute' }
       ]
     end
 

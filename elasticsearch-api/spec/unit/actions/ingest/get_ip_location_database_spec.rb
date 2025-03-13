@@ -22,7 +22,7 @@ describe 'client.ingest#get_ip_location_database' do
     [
       'GET',
       '_ingest/ip_location/database/foo',
-      {},
+      { body: {} },
       nil,
       {},
       { defined_params: { id: 'foo' }, endpoint: 'ingest.get_ip_location_database' }
