@@ -15,22 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves configuration information for calendars.
+        # Get calendar configuration info.
         #
-        # @option arguments [String] :calendar_id The ID of the calendar to fetch
-        # @option arguments [Integer] :from skips a number of calendars
-        # @option arguments [Integer] :size specifies a max number of calendars to get
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. You can get information for multiple calendars by using a comma-separated list of ids or a wildcard expression. You can get information for all calendars by using +_all+ or +*+ or by omitting the calendar identifier.
+        # @option arguments [Integer] :from Skips the specified number of calendars. This parameter is supported only when you omit the calendar identifier. Server default: 0.
+        # @option arguments [Integer] :size Specifies the maximum number of calendars to obtain. This parameter is supported only when you omit the calendar identifier. Server default: 10000.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The from and size parameters optionally sent in the body
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-calendar.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-calendars
         #
         def get_calendars(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_calendars' }
@@ -53,11 +53,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _calendar_id
-                   "_ml/calendars/#{Utils.__listify(_calendar_id)}"
-                 else
-                   '_ml/calendars'
-                 end
+          path   = if _calendar_id
+                     "_ml/calendars/#{Utils.listify(_calendar_id)}"
+                   else
+                     '_ml/calendars'
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

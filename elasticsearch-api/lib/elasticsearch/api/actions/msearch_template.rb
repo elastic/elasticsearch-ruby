@@ -15,24 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Allows to execute several search template operations in one request.
+      # Run multiple templated searches.
+      # Run multiple templated searches with a single request.
+      # If you are providing a text file or text input to +curl+, use the +--data-binary+ flag instead of +-d+ to preserve newlines.
+      # For example:
+      # +
+      # $ cat requests
+      # { "index": "my-index" }
+      # { "id": "my-search-template", "params": { "query_string": "hello world", "from": 0, "size": 10 }}
+      # { "index": "my-other-index" }
+      # { "id": "my-other-search-template", "params": { "query_type": "match_all" }}
+      # $ curl -H "Content-Type: application/x-ndjson" -XGET localhost:9200/_msearch/template --data-binary "@requests"; echo
+      # +
       #
-      # @option arguments [List] :index A comma-separated list of index names to use as default
-      # @option arguments [String] :search_type Search operation type (options: query_then_fetch, dfs_query_then_fetch)
-      # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
-      # @option arguments [Number] :max_concurrent_searches Controls the maximum number of concurrent searches the multi search api will execute
-      # @option arguments [Boolean] :rest_total_hits_as_int Indicates whether hits.total should be rendered as an integer or an object in the rest search response
-      # @option arguments [Boolean] :ccs_minimize_roundtrips Indicates whether network round-trips should be minimized as part of cross-cluster search requests execution
+      # @option arguments [String, Array] :index A comma-separated list of data streams, indices, and aliases to search.
+      #  It supports wildcards (+*+).
+      #  To search all data streams and indices, omit this parameter or use +*+.
+      # @option arguments [Boolean] :ccs_minimize_roundtrips If +true+, network round-trips are minimized for cross-cluster search requests. Server default: true.
+      # @option arguments [Integer] :max_concurrent_searches The maximum number of concurrent searches the API can run.
+      # @option arguments [String] :search_type The type of the search operation.
+      # @option arguments [Boolean] :rest_total_hits_as_int If +true+, the response returns +hits.total+ as an integer.
+      #  If +false+, it returns +hits.total+ as an object.
+      # @option arguments [Boolean] :typed_keys If +true+, the response prefixes aggregation and suggester names with their respective types.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The request definitions (metadata-search request definition pairs), separated by newlines (*Required*)
+      # @option arguments [Hash] :body search_templates
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-msearch-template
       #
       def msearch_template(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'msearch_template' }
@@ -47,13 +61,13 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
         method = Elasticsearch::API::HTTP_POST
         path   = if _index
-                   "#{Utils.__listify(_index)}/_msearch/template"
+                   "#{Utils.listify(_index)}/_msearch/template"
                  else
                    '_msearch/template'
                  end

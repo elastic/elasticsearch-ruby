@@ -15,25 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information about service accounts.
+        # Get service accounts.
+        # Get a list of service accounts that match the provided path parameters.
+        # NOTE: Currently, only the +elastic/fleet-server+ service account is available.
         #
-        # @option arguments [String] :namespace An identifier for the namespace
-        # @option arguments [String] :service An identifier for the service name
+        # @option arguments [String] :namespace The name of the namespace.
+        #  Omit this parameter to retrieve information about all service accounts.
+        #  If you omit this parameter, you must also omit the +service+ parameter.
+        # @option arguments [String] :service The service name.
+        #  Omit this parameter to retrieve information about all service accounts that belong to the specified +namespace+.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-service-accounts.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts
         #
         def get_service_accounts(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_service_accounts' }
 
-          defined_params = %i[namespace service].each_with_object({}) do |variable, set_variables|
+          defined_params = [:namespace, :service].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -49,9 +54,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _namespace && _service
-                     "_security/service/#{Utils.__listify(_namespace)}/#{Utils.__listify(_service)}"
+                     "_security/service/#{Utils.listify(_namespace)}/#{Utils.listify(_service)}"
                    elsif _namespace
-                     "_security/service/#{Utils.__listify(_namespace)}"
+                     "_security/service/#{Utils.listify(_namespace)}"
                    else
                      '_security/service'
                    end

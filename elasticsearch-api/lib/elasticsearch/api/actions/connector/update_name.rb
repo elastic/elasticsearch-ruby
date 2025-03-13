@@ -15,24 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Updates the name and/or description fields in the connector document.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Update the connector name and description.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body An object containing the connector's name and/or description. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-name-description-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-name
         #
         def update_name(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_name' }
@@ -53,7 +53,7 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_name"
+          path   = "_connector/#{Utils.listify(_connector_id)}/_name"
           params = {}
 
           Elasticsearch::API::Response.new(

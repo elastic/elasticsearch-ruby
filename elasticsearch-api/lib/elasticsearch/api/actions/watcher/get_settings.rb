@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieve settings for the watcher system index
+        # Get Watcher index settings.
+        # Get settings for the Watcher internal index (+.watches+).
+        # Only a subset of settings are shown, for example +index.auto_expand_replicas+ and +index.number_of_replicas+.
         #
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-get-settings.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-get-settings
         #
         def get_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.get_settings' }
@@ -35,7 +38,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_watcher/settings'

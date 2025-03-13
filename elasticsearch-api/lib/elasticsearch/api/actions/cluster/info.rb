@@ -15,19 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns different information about the cluster.
+        # Get cluster info.
+        # Returns basic information about the cluster.
         #
-        # @option arguments [List] :target Limit the information returned to the specified target. (options: _all, http, ingest, thread_pool, script)
+        # @option arguments [String, Array<String>] :target Limits the information returned to the specific target. Supports a comma-separated list, such as http,ingest. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-info.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.info' }
@@ -47,7 +48,7 @@ module Elasticsearch
           _target = arguments.delete(:target)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_info/#{Utils.__listify(_target)}"
+          path   = "_info/#{Utils.listify(_target)}"
           params = {}
 
           Elasticsearch::API::Response.new(

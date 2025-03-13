@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module License
       module Actions
-        # Deletes licensing information for the cluster
+        # Delete the license.
+        # When the license expires, your subscription level reverts to Basic.
+        # If the operator privileges feature is enabled, only operator users can use this API.
         #
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
-        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-license.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.delete' }
@@ -36,7 +38,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_license'

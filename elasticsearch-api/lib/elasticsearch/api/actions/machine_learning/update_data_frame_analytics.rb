@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates certain properties of a data frame analytics job.
+        # Update a data frame analytics job.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to update
+        # @option arguments [String] :id Identifier for the data frame analytics job. This identifier can contain
+        #  lowercase alphanumeric characters (a-z and 0-9), hyphens, and
+        #  underscores. It must start and end with alphanumeric characters. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The data frame analytics settings to update (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-data-frame-analytics
         #
         def update_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_data_frame_analytics' }
@@ -49,7 +51,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/data_frame/analytics/#{Utils.__listify(_id)}/_update"
+          path   = "_ml/data_frame/analytics/#{Utils.listify(_id)}/_update"
           params = {}
 
           Elasticsearch::API::Response.new(

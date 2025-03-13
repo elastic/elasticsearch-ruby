@@ -15,22 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Esql
       module Actions
-        # Executes an ESQL request
+        # Run an ES|QL query.
+        # Get search results for an ES|QL (Elasticsearch query language) query.
+        # This functionality is subject to potential breaking changes within a
+        # minor version, meaning that your referencing code may break when this
+        # library is upgraded.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
-        # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
+        # @option arguments [String] :format A short version of the Accept header, e.g. json, yaml.
+        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the CSV format.
+        # @option arguments [Boolean] :drop_null_columns Should columns that are entirely +null+ be removed from the +columns+ and +values+ portion of the results?
+        #  Defaults to +false+. If +true+ then the response will include an extra section under the name +all_columns+ which has the name of all columns.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-query-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html
         #
         def query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.query' }
@@ -40,7 +45,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_query'

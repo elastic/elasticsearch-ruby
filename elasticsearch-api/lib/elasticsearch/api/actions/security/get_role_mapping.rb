@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves role mappings.
+        # Get role mappings.
+        # Role mappings define which roles are assigned to each user.
+        # The role mapping APIs are generally the preferred way to manage role mappings rather than using role mapping files.
+        # The get role mappings API cannot retrieve role mappings that are defined in role mapping files.
         #
-        # @option arguments [List] :name A comma-separated list of role-mapping names
+        # @option arguments [String, Array<String>] :name The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. You can specify multiple mapping names as a comma-separated list. If you do not specify this parameter, the API returns information about all role mappings.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role-mapping.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role-mapping
         #
         def get_role_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_role_mapping' }
@@ -46,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_security/role_mapping/#{Utils.__listify(_name)}"
+                     "_security/role_mapping/#{Utils.listify(_name)}"
                    else
                      '_security/role_mapping'
                    end

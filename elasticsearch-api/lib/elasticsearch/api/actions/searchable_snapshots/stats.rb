@@ -15,20 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Retrieve shard-level statistics about searchable snapshots.
+        # Get searchable snapshot statistics.
         #
-        # @option arguments [List] :index A comma-separated list of index names
-        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level (options: cluster, indices, shards)
+        # @option arguments [String, Array] :index A comma-separated list of data streams and indices to retrieve statistics for.
+        # @option arguments [String] :level Return stats aggregated at cluster, index or shard level
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.stats' }
@@ -41,13 +41,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _index
-                     "#{Utils.__listify(_index)}/_searchable_snapshots/stats"
+                     "#{Utils.listify(_index)}/_searchable_snapshots/stats"
                    else
                      '_searchable_snapshots/stats'
                    end

@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
@@ -25,12 +25,15 @@ module Elasticsearch
         # Stop a trained model deployment.
         #
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no deployments. (This includes `_all` string or when no deployments have been specified)
-        # @option arguments [Boolean] :force True if the deployment should be forcefully stopped
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no deployments that match;
+        #  contains the  +_all+ string or no identifiers and there are no matches; or contains wildcard expressions and
+        #  there are only partial matches. By default, it returns an empty array when there are no matches and the subset of results when there are partial matches.
+        #  If +false+, the request returns a 404 status code when there are no matches or only partial matches. Server default: true.
+        # @option arguments [Boolean] :force Forcefully stops the deployment, even if it is used by ingest pipelines. You can't use these pipelines until you
+        #  restart the model deployment.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The stop deployment parameters
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/stop-trained-model-deployment.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-stop-trained-model-deployment
         #
         def stop_trained_model_deployment(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.stop_trained_model_deployment' }
@@ -45,12 +48,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = arguments.delete(:body)
+          body = nil
 
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}/deployment/_stop"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}/deployment/_stop"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

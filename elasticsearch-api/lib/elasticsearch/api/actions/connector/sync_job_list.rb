@@ -15,27 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Lists all connector sync jobs.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Get all connector sync jobs.
+        # Get information about all stored connector sync jobs listed by their creation date in ascending order.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
         # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
-        # @option arguments [String] :status Sync job status, which sync jobs are fetched for
-        # @option arguments [String] :connector_id Id of the connector to fetch the sync jobs for
-        # @option arguments [List] :job_type A comma-separated list of job types
+        # @option arguments [Integer] :size Specifies a max number of results to get
+        # @option arguments [String] :status A sync job status to fetch connector sync jobs for
+        # @option arguments [String] :connector_id A connector id to fetch connector sync jobs for
+        # @option arguments [Syncjobtype] :job_type A comma-separated list of job types to fetch the sync jobs for
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-connector-sync-jobs-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-list
         #
         def sync_job_list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_list' }
@@ -43,7 +44,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_connector/_sync_job'

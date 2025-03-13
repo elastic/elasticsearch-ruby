@@ -15,32 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Explicitly clears the search context for a scroll.
+      # Clear a scrolling search.
+      # Clear the search context and results for a scrolling search.
       #
-      # @option arguments [List] :scroll_id A comma-separated list of scroll IDs to clear *Deprecated*
+      # @option arguments [String, Array] :scroll_id A comma-separated list of scroll IDs to clear.
+      #  To clear all scroll IDs, use +_all+.
+      #  IMPORTANT: Scroll IDs can be long. It is recommended to specify scroll IDs in the request body parameter.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body A comma-separated list of scroll IDs to clear if none was specified via the scroll_id parameter
+      # @option arguments [Hash] :body request body
       #
       # *Deprecation notice*:
       # A scroll id can be quite large and should be specified as part of the body
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-scroll-api.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-clear-scroll
       #
       def clear_scroll(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'clear_scroll' }
-
-        defined_params = [:scroll_id].each_with_object({}) do |variable, set_variables|
-          set_variables[variable] = arguments[variable] if arguments.key?(variable)
-        end
-        request_opts[:defined_params] = defined_params unless defined_params.empty?
 
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
@@ -50,15 +48,11 @@ module Elasticsearch
         _scroll_id = arguments.delete(:scroll_id)
 
         method = Elasticsearch::API::HTTP_DELETE
-        path   = if _scroll_id
-                   "_search/scroll/#{Utils.__listify(_scroll_id)}"
-                 else
-                   '_search/scroll'
-                 end
+        path   = '_search/scroll'
         params = Utils.process_params(arguments)
 
         if Array(arguments[:ignore]).include?(404)
-          Utils.__rescue_from_not_found do
+          Utils.rescue_from_not_found do
             Elasticsearch::API::Response.new(
               perform_request(method, path, params, body, headers, request_opts)
             )

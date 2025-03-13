@@ -38,9 +38,8 @@ module Elasticsearch
         def async_query_stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_stop' }
 
-          defined_params = [:id].inject({}) do |set_variables, variable|
+          defined_params = [:id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -54,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_query/async/#{Utils.__listify(_id)}/stop"
+          path   = "_query/async/#{Utils.listify(_id)}/stop"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

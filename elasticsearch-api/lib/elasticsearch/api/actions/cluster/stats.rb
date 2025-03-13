@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns high-level overview of cluster statistics.
+        # Get cluster statistics.
+        # Get basic index metrics (shard numbers, store size, memory usage) and information about the current nodes that form the cluster (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
-        # @option arguments [Boolean] :include_remotes Include remote cluster data into the response (default: false)
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array] :node_id Comma-separated list of node filters used to limit returned information. Defaults to all nodes in the cluster.
+        # @option arguments [Boolean] :include_remotes Include remote cluster data into the response
+        # @option arguments [Time] :timeout Period to wait for each node to respond.
+        #  If a node does not respond before its timeout expires, the response does not include its stats.
+        #  However, timed out nodes are included in the response’s +_nodes.failed+ property. Defaults to no timeout.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.stats' }
@@ -48,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_cluster/stats/nodes/#{Utils.__listify(_node_id)}"
+                     "_cluster/stats/nodes/#{Utils.listify(_node_id)}"
                    else
                      '_cluster/stats'
                    end

@@ -15,20 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Evicts users from the user cache. Can completely clear the cache or evict specific users.
+        # Clear the user cache.
+        # Evict users from the user cache.
+        # You can completely clear the cache or evict specific users.
+        # User credentials are cached in memory on each node to avoid connecting to a remote authentication service or hitting the disk for every incoming request.
+        # There are realm settings that you can use to configure the user cache.
+        # For more information, refer to the documentation about controlling the user cache.
         #
-        # @option arguments [List] :realms Comma-separated list of realms to clear
-        # @option arguments [List] :usernames Comma-separated list of usernames to clear from the cache
+        # @option arguments [String, Array<String>] :realms A comma-separated list of realms.
+        #  To clear all realms, use an asterisk (+*+).
+        #  It does not support other wildcard patterns. (*Required*)
+        # @option arguments [Array<String>] :usernames A comma-separated list of the users to clear from the cache.
+        #  If you do not specify this parameter, the API evicts all users from the user cache.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-cache.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-realms
         #
         def clear_cached_realms(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_realms' }
@@ -48,7 +56,7 @@ module Elasticsearch
           _realms = arguments.delete(:realms)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/realm/#{Utils.__listify(_realms)}/_clear_cache"
+          path   = "_security/realm/#{Utils.listify(_realms)}/_clear_cache"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

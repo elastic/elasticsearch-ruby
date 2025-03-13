@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module XPack
       module Actions
-        # Retrieves usage information about the installed X-Pack features.
+        # Get usage information.
+        # Get information about the features that are currently enabled and available under the current license.
+        # The API also provides some usage statistics.
         #
-        # @option arguments [Time] :master_timeout Specify timeout for watch write operation
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack
         #
         def usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.usage' }
@@ -35,7 +39,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_xpack/usage'

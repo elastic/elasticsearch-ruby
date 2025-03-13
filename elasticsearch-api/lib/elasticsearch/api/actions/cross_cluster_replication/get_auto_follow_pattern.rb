@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Gets configured auto-follow patterns. Returns the specified auto-follow pattern collection.
+        # Get auto-follow patterns.
+        # Get cross-cluster replication auto-follow patterns.
         #
-        # @option arguments [String] :name The name of the auto follow pattern.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :name The auto-follow pattern collection that you want to retrieve.
+        #  If you do not specify a name, the API returns information for all collections.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-get-auto-follow-pattern.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-get-auto-follow-pattern-1
         #
         def get_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.get_auto_follow_pattern' }
@@ -47,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_ccr/auto_follow/#{Utils.__listify(_name)}"
+                     "_ccr/auto_follow/#{Utils.listify(_name)}"
                    else
                      '_ccr/auto_follow'
                    end

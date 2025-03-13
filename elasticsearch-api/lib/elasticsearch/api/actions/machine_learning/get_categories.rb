@@ -15,29 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves anomaly detection job results for one or more categories.
+        # Get anomaly detection job results for categories.
         #
-        # @option arguments [String] :job_id The name of the job
-        # @option arguments [Long] :category_id The identifier of the category definition of interest
-        # @option arguments [Integer] :from skips a number of categories
-        # @option arguments [Integer] :size specifies a max number of categories to get
-        # @option arguments [String] :partition_field_value Specifies the partition to retrieve categories for. This is optional, and should never be used for jobs where per-partition categorization is disabled.
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :category_id Identifier for the category, which is unique in the job. If you specify
+        #  neither the category ID nor the partition_field_value, the API returns
+        #  information about all categories. If you specify only the
+        #  partition_field_value, it returns information about all categories for
+        #  the specified partition.
+        # @option arguments [Integer] :from Skips the specified number of categories. Server default: 0.
+        # @option arguments [String] :partition_field_value Only return categories for the specified partition.
+        # @option arguments [Integer] :size Specifies the maximum number of categories to obtain. Server default: 100.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Category selection details if not provided in URI
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-category.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-categories
         #
         def get_categories(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_categories' }
 
-          defined_params = %i[job_id category_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :category_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -59,11 +63,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _job_id && _category_id
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories/#{Utils.__listify(_category_id)}"
-                 else
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/categories"
-                 end
+          path   = if _job_id && _category_id
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories/#{Utils.listify(_category_id)}"
+                   else
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/categories"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

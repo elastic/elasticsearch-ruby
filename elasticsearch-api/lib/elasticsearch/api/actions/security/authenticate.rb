@@ -15,18 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Enables authentication as a user and retrieve information about the authenticated user.
+        # Authenticate a user.
+        # Authenticates a user and returns information about the authenticated user.
+        # Include the user information in a {https://en.wikipedia.org/wiki/Basic_access_authentication basic auth header}.
+        # A successful call returns a JSON structure that shows user information such as their username, the roles that are assigned to the user, any assigned metadata, and information about the realms that authenticated and authorized the user.
+        # If the user cannot be authenticated, this API returns a 401 status code.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-authenticate.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-authenticate
         #
         def authenticate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.authenticate' }
@@ -34,7 +38,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/_authenticate'

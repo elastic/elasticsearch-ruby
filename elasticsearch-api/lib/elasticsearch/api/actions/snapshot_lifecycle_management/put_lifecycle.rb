@@ -15,22 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Creates or updates a snapshot lifecycle policy.
+        # Create or update a policy.
+        # Create or update a snapshot lifecycle policy.
+        # If the policy already exists, this request increments the policy version.
+        # Only the latest version of a policy is stored.
         #
-        # @option arguments [String] :policy_id The id of the snapshot lifecycle policy
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :policy_id The identifier for the snapshot lifecycle policy you want to create or update. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The snapshot lifecycle policy definition to register
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-put-policy.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-put-lifecycle
         #
         def put_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.put_lifecycle' }
@@ -50,7 +57,7 @@ module Elasticsearch
           _policy_id = arguments.delete(:policy_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_slm/policy/#{Utils.__listify(_policy_id)}"
+          path   = "_slm/policy/#{Utils.listify(_policy_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

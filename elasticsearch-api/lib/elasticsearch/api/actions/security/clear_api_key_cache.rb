@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Clear a subset or all entries from the API key cache.
+        # Clear the API key cache.
+        # Evict a subset of all entries from the API key cache.
+        # The cache is also automatically cleared on state changes of the security index.
         #
-        # @option arguments [List] :ids A comma-separated list of IDs of API keys to clear from the cache
+        # @option arguments [String, Array] :ids Comma-separated list of API key IDs to evict from the API key cache.
+        #  To evict all API keys, use +*+.
+        #  Does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-api-key-cache.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-api-key-cache
         #
         def clear_api_key_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_api_key_cache' }
@@ -42,12 +46,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _ids = arguments.delete(:ids)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/api_key/#{Utils.__listify(_ids)}/_clear_cache"
+          path   = "_security/api_key/#{Utils.listify(_ids)}/_clear_cache"
           params = {}
 
           Elasticsearch::API::Response.new(

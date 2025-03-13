@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Creates or updates a pipeline.
+        # Create or update a pipeline.
+        # Changes made using this API take effect immediately.
         #
-        # @option arguments [String] :id Pipeline ID
+        # @option arguments [String] :id ID of the ingest pipeline to create or update. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer] :if_version Required version for optimistic concurrency control for pipeline updates
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The ingest definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-pipeline-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html
         #
         def put_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_pipeline' }
@@ -52,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_ingest/pipeline/#{Utils.__listify(_id)}"
+          path   = "_ingest/pipeline/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

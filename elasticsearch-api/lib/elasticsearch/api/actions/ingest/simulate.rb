@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Allows to simulate a pipeline with example documents.
+        # Simulate a pipeline.
+        # Run an ingest pipeline against a set of provided documents.
+        # You can either specify an existing pipeline to use with the provided documents or supply a pipeline definition in the body of the request.
         #
-        # @option arguments [String] :id Pipeline ID
-        # @option arguments [Boolean] :verbose Verbose mode. Display data output for each processor in executed pipeline
+        # @option arguments [String] :id The pipeline to test.
+        #  If you don't specify a +pipeline+ in the request body, this parameter is required.
+        # @option arguments [Boolean] :verbose If +true+, the response includes output data for each processor in the executed pipeline.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The simulate definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/simulate-pipeline-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-simulate
         #
         def simulate(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.simulate' }
@@ -50,7 +53,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _id
-                     "_ingest/pipeline/#{Utils.__listify(_id)}/_simulate"
+                     "_ingest/pipeline/#{Utils.listify(_id)}/_simulate"
                    else
                      '_ingest/pipeline/_simulate'
                    end

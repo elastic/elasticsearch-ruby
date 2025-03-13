@@ -15,19 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SQL
       module Actions
-        # Returns the current status of an async SQL search or a stored synchronous SQL search
+        # Get the async SQL search status.
+        # Get the current status of an async SQL search or a stored synchronous SQL search.
         #
-        # @option arguments [String] :id The async search ID
+        # @option arguments [String] :id The identifier for the search. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-async-sql-search-status-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status
         #
         def get_async_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.get_async_status' }
@@ -47,7 +48,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_sql/async/status/#{Utils.__listify(_id)}"
+          path   = "_sql/async/status/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

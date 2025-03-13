@@ -15,22 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves usage information for trained inference models.
+        # Get trained models usage info.
+        # You can get usage information for multiple trained
+        # models in a single API request by using a comma-separated list of model IDs or a wildcard expression.
         #
-        # @option arguments [String] :model_id The ID of the trained models stats to fetch
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-        # @option arguments [Integer] :from skips a number of trained models
-        # @option arguments [Integer] :size specifies a max number of trained models to get
+        # @option arguments [String, Array] :model_id The unique identifier of the trained model or a model alias. It can be a
+        #  comma-separated list or a wildcard expression.
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request:
+        #  - Contains wildcard expressions and there are no models that match.
+        #  - Contains the _all string or no identifiers and there are no matches.
+        #  - Contains wildcard expressions and there are only partial matches.
+        #  If true, it returns an empty array when there are no matches and the
+        #  subset of results when there are partial matches. Server default: true.
+        # @option arguments [Integer] :from Skips the specified number of models. Server default: 0.
+        # @option arguments [Integer] :size Specifies the maximum number of models to obtain. Server default: 100.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-trained-models-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-trained-models-stats
         #
         def get_trained_models_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_trained_models_stats' }
@@ -49,7 +57,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _model_id
-                     "_ml/trained_models/#{Utils.__listify(_model_id)}/_stats"
+                     "_ml/trained_models/#{Utils.listify(_model_id)}/_stats"
                    else
                      '_ml/trained_models/_stats'
                    end

@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates an access token and a refresh token that were generated via the SAML Authenticate API
+        # Logout of SAML.
+        # Submits a request to invalidate an access token and refresh token.
+        # NOTE: This API is intended for use by custom web applications other than Kibana.
+        # If you are using Kibana, refer to the documentation for configuring SAML single-sign-on on the Elastic Stack.
+        # This API invalidates the tokens that were generated for a user by the SAML authenticate API.
+        # If the SAML realm in Elasticsearch is configured accordingly and the SAML IdP supports this, the Elasticsearch response contains a URL to redirect the user to the IdP that contains a SAML logout request (starting an SP-initiated SAML Single Logout).
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The tokens to invalidate (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-logout.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-logout
         #
         def saml_logout(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_logout' }
@@ -37,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_security/saml/logout'

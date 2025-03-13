@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Evicts application privileges from the native application privileges cache.
+        # Clear the privileges cache.
+        # Evict privileges from the native application privilege cache.
+        # The cache is also automatically cleared for applications that have their privileges updated.
         #
-        # @option arguments [List] :application A comma-separated list of application names
+        # @option arguments [String] :application A comma-separated list of applications.
+        #  To clear all applications, use an asterism (+*+).
+        #  It does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-clear-privilege-cache.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-privileges
         #
         def clear_cached_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_privileges' }
@@ -47,7 +51,7 @@ module Elasticsearch
           _application = arguments.delete(:application)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_security/privilege/#{Utils.__listify(_application)}/_clear_cache"
+          path   = "_security/privilege/#{Utils.listify(_application)}/_clear_cache"
           params = {}
 
           Elasticsearch::API::Response.new(

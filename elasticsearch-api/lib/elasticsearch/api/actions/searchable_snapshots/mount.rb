@@ -15,29 +15,34 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Mount a snapshot as a searchable index.
+        # Mount a snapshot.
+        # Mount a snapshot as a searchable snapshot index.
+        # Do not use this API for snapshots managed by index lifecycle management (ILM).
+        # Manually mounting ILM-managed snapshots can interfere with ILM processes.
         #
-        # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount
-        # @option arguments [String] :snapshot The name of the snapshot of the index to mount
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
-        # @option arguments [String] :storage Selects the kind of local storage used to accelerate searches. Experimental, and defaults to `full_copy`
+        # @option arguments [String] :repository The name of the repository containing the snapshot of the index to mount. (*Required*)
+        # @option arguments [String] :snapshot The name of the snapshot of the index to mount. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Boolean] :wait_for_completion If true, the request blocks until the operation is complete.
+        # @option arguments [String] :storage The mount option for the searchable snapshot index. Server default: full_copy.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The restore configuration for mounting the snapshot as searchable (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-api-mount-snapshot.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-mount
         #
         def mount(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.mount' }
 
-          defined_params = %i[repository snapshot].each_with_object({}) do |variable, set_variables|
+          defined_params = [:repository, :snapshot].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -56,7 +61,7 @@ module Elasticsearch
           _snapshot = arguments.delete(:snapshot)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}/_mount"
+          path   = "_snapshot/#{Utils.listify(_repository)}/#{Utils.listify(_snapshot)}/_mount"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

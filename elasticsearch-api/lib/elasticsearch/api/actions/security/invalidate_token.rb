@@ -15,19 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Invalidates one or more access tokens or refresh tokens.
+        # Invalidate a token.
+        # The access tokens returned by the get token API have a finite period of time for which they are valid.
+        # After that time period, they can no longer be used.
+        # The time period is defined by the +xpack.security.authc.token.timeout+ setting.
+        # The refresh tokens returned by the get token API are only valid for 24 hours.
+        # They can also be used exactly once.
+        # If you want to invalidate one or more access or refresh tokens immediately, use this invalidate token API.
+        # NOTE: While all parameters are optional, at least one of them is required.
+        # More specifically, either one of +token+ or +refresh_token+ parameters is required.
+        # If none of these two are specified, then +realm_name+ and/or +username+ need to be specified.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The token to invalidate (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-invalidate-token.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-invalidate-token
         #
         def invalidate_token(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.invalidate_token' }
@@ -37,7 +46,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = '_security/oauth2/token'

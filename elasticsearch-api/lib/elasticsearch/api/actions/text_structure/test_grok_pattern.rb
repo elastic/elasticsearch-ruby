@@ -15,20 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module TextStructure
       module Actions
-        # Tests a Grok pattern on some text.
+        # Test a Grok pattern.
+        # Test a Grok pattern on one or more lines of text.
+        # The API indicates whether the lines match the pattern together with the offsets and lengths of the matched substrings.
         #
-        # @option arguments [String] :ecs_compatibility Optional parameter to specify the compatibility mode with ECS Grok patterns - may be either 'v1' or 'disabled'
+        # @option arguments [String] :ecs_compatibility The mode of compatibility with ECS compliant Grok patterns.
+        #  Use this parameter to specify whether to use ECS Grok patterns instead of legacy ones when the structure finder creates a Grok pattern.
+        #  Valid values are +disabled+ and +v1+. Server default: disabled.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The Grok pattern and text. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/test-grok-pattern.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-test-grok-pattern
         #
         def test_grok_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'text_structure.test_grok_pattern' }
@@ -38,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_text_structure/test_grok_pattern'

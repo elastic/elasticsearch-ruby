@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # The terms enum API  can be used to discover terms in the index that begin with the provided string. It is designed for low-latency look-ups used in auto-complete scenarios.
+      # Get terms in an index.
+      # Discover terms that match a partial string in an index.
+      # This API is designed for low-latency look-ups used in auto-complete scenarios.
       #
-      # @option arguments [List] :index A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+      # @option arguments [String] :index A comma-separated list of data streams, indices, and index aliases to search.
+      #  Wildcard (+*+) expressions are supported.
+      #  To search all data streams or indices, omit this parameter or use +*+  or +_all+. (*Required*)
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body field name, string which is the prefix expected in matching terms, timeout and size for max number of results
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-terms-enum
       #
       def terms_enum(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'terms_enum' }
@@ -52,7 +56,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "#{Utils.__listify(_index)}/_terms_enum"
+        path   = "#{Utils.listify(_index)}/_terms_enum"
         params = {}
 
         Elasticsearch::API::Response.new(

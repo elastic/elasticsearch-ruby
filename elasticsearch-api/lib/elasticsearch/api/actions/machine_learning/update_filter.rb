@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Updates the description of a filter, adds items, or removes items.
+        # Update a filter.
+        # Updates the description of a filter, adds items, or removes items from the list.
         #
-        # @option arguments [String] :filter_id The ID of the filter to update
+        # @option arguments [String] :filter_id A string that uniquely identifies a filter. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The filter update (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-update-filter.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-update-filter
         #
         def update_filter(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.update_filter' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _filter_id = arguments.delete(:filter_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/filters/#{Utils.__listify(_filter_id)}/_update"
+          path   = "_ml/filters/#{Utils.listify(_filter_id)}/_update"
           params = {}
 
           Elasticsearch::API::Response.new(

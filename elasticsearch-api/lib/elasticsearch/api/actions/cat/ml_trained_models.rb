@@ -15,29 +15,37 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Gets configuration and usage information about inference trained models.
+        # Get trained models.
+        # Get configuration and usage information about inference trained models.
+        # IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
+        # console or command line. They are not intended for use by applications. For
+        # application consumption, use the get trained models statistics API.
         #
-        # @option arguments [String] :model_id The ID of the trained models stats to fetch
-        # @option arguments [Boolean] :allow_no_match Whether to ignore if a wildcard expression matches no trained models. (This includes `_all` string or when no trained models have been specified)
-        # @option arguments [Integer] :from skips a number of trained models
-        # @option arguments [Integer] :size specifies a max number of trained models to get
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [String] :time The unit in which to display time values (options: d, h, m, s, ms, micros, nanos)
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String] :model_id A unique identifier for the trained model.
+        # @option arguments [Boolean] :allow_no_match Specifies what to do when the request: contains wildcard expressions and there are no models that match; contains the +_all+ string or no identifiers and there are no matches; contains wildcard expressions and there are only partial matches.
+        #  If +true+, the API returns an empty array when there are no matches and the subset of results when there are partial matches.
+        #  If +false+, the API returns a 404 status code when there are no matches or only partial matches. Server default: true.
+        # @option arguments [String] :bytes The unit used to display byte values.
+        # @option arguments [String, Array<String>] :h A comma-separated list of column names to display.
+        # @option arguments [String, Array<String>] :s A comma-separated list of column names or aliases used to sort the response.
+        # @option arguments [Integer] :from Skips the specified number of transforms.
+        # @option arguments [Integer] :size The maximum number of transforms to display.
+        # @option arguments [String] :time Unit used to display time values.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-trained-model.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-ml-trained-models
         #
         def ml_trained_models(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.ml_trained_models' }
@@ -56,7 +64,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _model_id
-                     "_cat/ml/trained_models/#{Utils.__listify(_model_id)}"
+                     "_cat/ml/trained_models/#{Utils.listify(_model_id)}"
                    else
                      '_cat/ml/trained_models'
                    end

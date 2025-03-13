@@ -15,25 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing model snapshot.
+        # Delete a model snapshot.
+        # You cannot delete the active model snapshot. To delete that snapshot, first
+        # revert to a different one. To identify the active model snapshot, refer to
+        # the +model_snapshot_id+ in the results from the get jobs API.
         #
-        # @option arguments [String] :job_id The ID of the job to fetch
-        # @option arguments [String] :snapshot_id The ID of the snapshot to delete
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :snapshot_id Identifier for the model snapshot. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-snapshot.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-model-snapshot
         #
         def delete_model_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_model_snapshot' }
 
-          defined_params = %i[job_id snapshot_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :snapshot_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,7 +54,7 @@ module Elasticsearch
           _snapshot_id = arguments.delete(:snapshot_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/model_snapshots/#{Utils.__listify(_snapshot_id)}"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/model_snapshots/#{Utils.listify(_snapshot_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

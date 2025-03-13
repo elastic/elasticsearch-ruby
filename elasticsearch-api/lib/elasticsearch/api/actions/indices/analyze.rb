@@ -15,20 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Performs the analysis process on a text and return the tokens breakdown of the text.
+        # Get tokens from text analysis.
+        # The analyze API performs analysis on a text string and returns the resulting tokens.
+        # Generating excessive amount of tokens may cause a node to run out of memory.
+        # The +index.analyze.max_token_count+ setting enables you to limit the number of tokens that can be produced.
+        # If more than this limit of tokens gets generated, an error occurs.
+        # The +_analyze+ endpoint without a specified index will always use +10000+ as its limit.
         #
-        # @option arguments [String] :index The name of the index to scope the operation
+        # @option arguments [String] :index Index used to derive the analyzer.
+        #  If specified, the +analyzer+ or field parameter overrides this value.
+        #  If no index is specified or the index does not have a default analyzer, the analyze API uses the standard analyzer.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Define analyzer/tokenizer parameters and the text on which the analysis should be performed
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-analyze.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-analyze
         #
         def analyze(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.analyze' }
@@ -51,12 +58,12 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _index
-                   "#{Utils.__listify(_index)}/_analyze"
-                 else
-                   '_analyze'
-                 end
-          params = Utils.process_params(arguments)
+          path   = if _index
+                     "#{Utils.listify(_index)}/_analyze"
+                   else
+                     '_analyze'
+                   end
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

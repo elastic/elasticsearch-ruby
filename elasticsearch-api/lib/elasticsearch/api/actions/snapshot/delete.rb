@@ -15,27 +15,29 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Snapshot
       module Actions
-        # Deletes one or more snapshots.
+        # Delete snapshots.
         #
-        # @option arguments [String] :repository A repository name
-        # @option arguments [List] :snapshot A comma-separated list of snapshot names
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
+        # @option arguments [String] :repository The name of the repository to delete a snapshot from. (*Required*)
+        # @option arguments [String] :snapshot A comma-separated list of snapshot names to delete.
+        #  It also accepts wildcards (+*+). (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.delete' }
 
-          defined_params = %i[repository snapshot].each_with_object({}) do |variable, set_variables|
+          defined_params = [:repository, :snapshot].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -53,11 +55,11 @@ module Elasticsearch
           _snapshot = arguments.delete(:snapshot)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_snapshot/#{Utils.__listify(_repository)}/#{Utils.__listify(_snapshot)}"
+          path   = "_snapshot/#{Utils.listify(_repository)}/#{Utils.listify(_snapshot)}"
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

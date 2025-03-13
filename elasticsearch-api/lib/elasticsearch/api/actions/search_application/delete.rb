@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Deletes a search application.
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Delete a search application.
+        # Remove a search application and its associated alias. Indices attached to the search application are not removed.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the search application
+        # @option arguments [String] :name The name of the search application to delete. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-search-application.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.delete' }
@@ -51,7 +52,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_application/search_application/#{Utils.__listify(_name)}"
+          path   = "_application/search_application/#{Utils.listify(_name)}"
           params = {}
 
           Elasticsearch::API::Response.new(

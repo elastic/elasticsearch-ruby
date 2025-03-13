@@ -15,18 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Returns defaults and limits used by machine learning.
+        # Get machine learning information.
+        # Get defaults and limits used by machine learning.
+        # This endpoint is designed to be used by a user interface that needs to fully
+        # understand machine learning configurations where some options are not
+        # specified, meaning that the defaults should be used. This endpoint may be
+        # used to find out what those defaults are. It also provides information about
+        # the maximum size of machine learning jobs that could run in the current
+        # cluster configuration.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-info.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.info' }
@@ -34,7 +41,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_ml/info'

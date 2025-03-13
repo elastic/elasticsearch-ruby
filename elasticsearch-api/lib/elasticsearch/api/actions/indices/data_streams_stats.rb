@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Provides statistics on operations happening in a data stream.
+        # Get data stream stats.
+        # Get statistics for one or more data streams.
         #
-        # @option arguments [List] :name A comma-separated list of data stream names; use `_all` or empty string to perform the operation on all data streams
+        # @option arguments [String] :name Comma-separated list of data streams used to limit the request.
+        #  Wildcard expressions (+*+) are supported.
+        #  To target all data streams in a cluster, omit this parameter or use +*+.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match.
+        #  Supports comma-separated values, such as +open,hidden+. Server default: open.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-data-streams-stats-1
         #
         def data_streams_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.data_streams_stats' }
@@ -46,11 +51,11 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_data_stream/#{Utils.__listify(_name)}/_stats"
+                     "_data_stream/#{Utils.listify(_name)}/_stats"
                    else
                      '_data_stream/_stats'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

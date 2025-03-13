@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves roles in the native realm.
+        # Get roles.
+        # Get roles in the native realm.
+        # The role management APIs are generally the preferred way to manage roles, rather than using file-based role management.
+        # The get roles API cannot retrieve roles that are defined in roles files.
         #
-        # @option arguments [List] :name A comma-separated list of role names
+        # @option arguments [String, Array<String>] :name The name of the role.
+        #  You can specify multiple roles as a comma-separated list.
+        #  If you do not specify this parameter, the API returns information about all roles.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-role.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role
         #
         def get_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_role' }
@@ -46,14 +51,14 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_security/role/#{Utils.__listify(_name)}"
+                     "_security/role/#{Utils.listify(_name)}"
                    else
                      '_security/role'
                    end
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

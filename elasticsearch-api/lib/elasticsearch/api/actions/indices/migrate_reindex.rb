@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit dcb1c1df18a84a0182caa631b4577d89a4602cfe
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
 # @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
@@ -47,7 +47,7 @@ module Elasticsearch
           body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_migration/reindex"
+          path   = '_migration/reindex'
           params = {}
 
           Elasticsearch::API::Response.new(

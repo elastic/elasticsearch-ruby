@@ -15,25 +15,55 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Open a point in time that can be used in subsequent searches
+      # Open a point in time.
+      # A search request by default runs against the most recent visible data of the target indices,
+      # which is called point in time. Elasticsearch pit (point in time) is a lightweight view into the
+      # state of the data as it existed when initiated. In some cases, it’s preferred to perform multiple
+      # search requests using the same point in time. For example, if refreshes happen between
+      # +search_after+ requests, then the results of those requests might not be consistent as changes happening
+      # between searches are only visible to the more recent point in time.
+      # A point in time must be opened explicitly before being used in search requests.
+      # A subsequent search request with the +pit+ parameter must not specify +index+, +routing+, or +preference+ values as these parameters are copied from the point in time.
+      # Just like regular searches, you can use +from+ and +size+ to page through point in time search results, up to the first 10,000 hits.
+      # If you want to retrieve more hits, use PIT with +search_after+.
+      # IMPORTANT: The open point in time request and each subsequent search request can return different identifiers; always use the most recently received ID for the next search request.
+      # When a PIT that contains shard failures is used in a search request, the missing are always reported in the search response as a +NoShardAvailableActionException+ exception.
+      # To get rid of these exceptions, a new PIT needs to be created so that shards missing from the previous PIT can be handled, assuming they become available in the meantime.
+      # **Keeping point in time alive**
+      # The +keep_alive+ parameter, which is passed to a open point in time request and search request, extends the time to live of the corresponding point in time.
+      # The value does not need to be long enough to process all data — it just needs to be long enough for the next request.
+      # Normally, the background merge process optimizes the index by merging together smaller segments to create new, bigger segments.
+      # Once the smaller segments are no longer needed they are deleted.
+      # However, open point-in-times prevent the old segments from being deleted since they are still in use.
+      # TIP: Keeping older segments alive means that more disk space and file handles are needed.
+      # Ensure that you have configured your nodes to have ample free file handles.
+      # Additionally, if a segment contains deleted or updated documents then the point in time must keep track of whether each document in the segment was live at the time of the initial search request.
+      # Ensure that your nodes have sufficient heap space if you have many open point-in-times on an index that is subject to ongoing deletes or updates.
+      # Note that a point-in-time doesn't prevent its associated indices from being deleted.
+      # You can check how many point-in-times (that is, search contexts) are open with the nodes stats API.
       #
-      # @option arguments [List] :index A comma-separated list of index names to open point in time; use `_all` or empty string to perform the operation on all indices
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
-      # @option arguments [String] :routing Specific routing value
-      # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-      # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-      # @option arguments [String] :keep_alive Specific the time to live for the point in time (*Required*)
-      # @option arguments [Boolean] :allow_partial_search_results Specify whether to tolerate shards missing when creating the point-in-time, or otherwise throw an exception. (default: false)
+      # @option arguments [String, Array] :index A comma-separated list of index names to open point in time; use +_all+ or empty string to perform the operation on all indices (*Required*)
+      # @option arguments [Time] :keep_alive Extend the length of time that the point in time persists. (*Required*)
+      # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+      # @option arguments [String] :preference The node or shard the operation should be performed on.
+      #  By default, it is random.
+      # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
+      # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
+      #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+      #  It supports comma-separated values, such as +open,hidden+. Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+      # @option arguments [Boolean] :allow_partial_search_results Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
+      #  If +false+, creating a point in time request when a shard is missing or unavailable will throw an exception.
+      #  If +true+, the point in time will contain all the shards that are available at the time of the request.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body An index_filter specified with the Query DSL
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-open-point-in-time
       #
       def open_point_in_time(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'open_point_in_time' }
@@ -48,12 +78,12 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         _index = arguments.delete(:index)
 
         method = Elasticsearch::API::HTTP_POST
-        path   = "#{Utils.__listify(_index)}/_pit"
+        path   = "#{Utils.listify(_index)}/_pit"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

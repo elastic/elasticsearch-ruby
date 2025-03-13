@@ -15,18 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Close a point in time
+      # Close a point in time.
+      # A point in time must be opened explicitly before being used in search requests.
+      # The +keep_alive+ parameter tells Elasticsearch how long it should persist.
+      # A point in time is automatically closed when the +keep_alive+ period has elapsed.
+      # However, keeping points in time has a cost; close them as soon as they are no longer required for search requests.
       #
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body a point-in-time id to close
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/point-in-time-api.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-open-point-in-time
       #
       def close_point_in_time(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'close_point_in_time' }
@@ -34,7 +38,7 @@ module Elasticsearch
         arguments = arguments.clone
         headers = arguments.delete(:headers) || {}
 
-        body   = arguments.delete(:body)
+        body = arguments.delete(:body)
 
         method = Elasticsearch::API::HTTP_DELETE
         path   = '_pit'

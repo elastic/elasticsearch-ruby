@@ -15,27 +15,36 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Provides a snapshot of how many shards are allocated to each data node and how much disk space they are using.
+        # Get shard allocation information.
+        # Get a snapshot of the number of shards allocated to each data node and their disk space.
+        # IMPORTANT: CAT APIs are only intended for human consumption using the command line or Kibana console. They are not intended for use by applications.
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String, Array] :node_id A comma-separated list of node identifiers or names used to limit the returned information.
+        # @option arguments [String] :bytes The unit used to display byte values.
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [Boolean] :local If +true+, the request computes the list of selected nodes from the
+        #  local cluster state. If +false+ the list of selected nodes are computed
+        #  from the cluster state of the master node. In both cases the coordinating
+        #  node will send requests for further information to each selected node.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-allocation
         #
         def allocation(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.allocation' }
@@ -54,12 +63,12 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_cat/allocation/#{Utils.__listify(_node_id)}"
+                     "_cat/allocation/#{Utils.listify(_node_id)}"
                    else
                      '_cat/allocation'
                    end
           params = Utils.process_params(arguments)
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          params[:h] = Utils.listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

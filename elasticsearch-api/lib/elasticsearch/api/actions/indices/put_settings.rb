@@ -15,28 +15,52 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates the index settings.
+        # Update index settings.
+        # Changes dynamic index settings in real time.
+        # For data streams, index setting changes are applied to all backing indices by default.
+        # To revert a setting to the default value, use a null value.
+        # The list of per-index settings that can be updated dynamically on live indices can be found in index module documentation.
+        # To preserve existing settings from being updated, set the +preserve_existing+ parameter to +true+.
+        # NOTE: You can only define new analyzers on closed indices.
+        # To add an analyzer, you must close the index, define the analyzer, and reopen the index.
+        # You cannot close the write index of a data stream.
+        # To update the analyzer for a data stream's write index and future backing indices, update the analyzer in the index template used by the stream.
+        # Then roll over the data stream to apply the new analyzer to the stream's write index and future backing indices.
+        # This affects searches and any new data added to the stream after the rollover.
+        # However, it does not affect the data stream's backing indices or their existing data.
+        # To change the analyzer for existing backing indices, you must create a new data stream and reindex your data into it.
         #
-        # @option arguments [List] :index A comma-separated list of index names; use `_all` or empty string to perform the operation on all indices
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :preserve_existing Whether to update existing settings. If set to `true` existing settings on an index remain unchanged, the default is `false`
-        # @option arguments [Boolean] :reopen Whether to close and reopen the index to apply non-dynamic settings. If set to `true` the indices to which the settings are being applied will be closed temporarily and then reopened in order to apply the changes. The default is `false`
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
+        # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit
+        #  the request. Supports wildcards (+*+). To target all data streams and
+        #  indices, omit this parameter or use +*+ or +_all+.
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index
+        #  alias, or +_all+ value targets only missing or closed indices. This
+        #  behavior applies even if the request targets other open indices. For
+        #  example, a request targeting +foo*,bar*+ returns an error if an index
+        #  starts with +foo+ but no index starts with +bar+.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match. If the request can target
+        #  data streams, this argument determines whether wildcard expressions match
+        #  hidden data streams. Supports comma-separated values, such as
+        #  +open,hidden+. Server default: open.
+        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
+        # @option arguments [Boolean] :ignore_unavailable If +true+, returns settings in flat format.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is
+        #  received before the timeout expires, the request fails and returns an
+        #  error. Server default: 30s.
+        # @option arguments [Boolean] :preserve_existing If +true+, existing index settings remain unchanged.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the
+        #   timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The index settings to be updated (*Required*)
+        # @option arguments [Hash] :body settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-update-settings.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-put-settings
         #
         def put_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_settings' }
@@ -51,13 +75,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_PUT
           path   = if _index
-                     "#{Utils.__listify(_index)}/_settings"
+                     "#{Utils.listify(_index)}/_settings"
                    else
                      '_settings'
                    end

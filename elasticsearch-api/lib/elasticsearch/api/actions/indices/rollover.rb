@@ -15,32 +15,60 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Updates an alias to point to a new index when the existing index
-        # is considered to be too large or too old.
+        # Roll over to a new index.
+        # TIP: It is recommended to use the index lifecycle rollover action to automate rollovers.
+        # The rollover API creates a new index for a data stream or index alias.
+        # The API behavior depends on the rollover target.
+        # **Roll over a data stream**
+        # If you roll over a data stream, the API creates a new write index for the stream.
+        # The stream's previous write index becomes a regular backing index.
+        # A rollover also increments the data stream's generation.
+        # **Roll over an index alias with a write index**
+        # TIP: Prior to Elasticsearch 7.9, you'd typically use an index alias with a write index to manage time series data.
+        # Data streams replace this functionality, require less maintenance, and automatically integrate with data tiers.
+        # If an index alias points to multiple indices, one of the indices must be a write index.
+        # The rollover API creates a new write index for the alias with +is_write_index+ set to +true+.
+        # The API also +sets is_write_index+ to +false+ for the previous write index.
+        # **Roll over an index alias with one index**
+        # If you roll over an index alias that points to only one index, the API creates a new index for the alias and removes the original index from the alias.
+        # NOTE: A rollover creates a new index and is subject to the +wait_for_active_shards+ setting.
+        # **Increment index names for an alias**
+        # When you roll over an index alias, you can specify a name for the new index.
+        # If you don't specify a name and the current index ends with +-+ and a number, such as +my-index-000001+ or +my-index-3+, the new index name increments that number.
+        # For example, if you roll over an alias with a current index of +my-index-000001+, the rollover creates a new index named +my-index-000002+.
+        # This number is always six characters and zero-padded, regardless of the previous index's name.
+        # If you use an index alias for time series data, you can use date math in the index name to track the rollover date.
+        # For example, you can create an alias that points to an index named +<my-index-{now/d}-000001>+.
+        # If you create the index on May 6, 2099, the index's name is +my-index-2099.05.06-000001+.
+        # If you roll over the alias on May 7, 2099, the new index's name is +my-index-2099.05.07-000002+.
         #
-        # @option arguments [String] :alias The name of the alias to rollover
-        # @option arguments [String] :new_index The name of the rollover index
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Boolean] :dry_run If set to true the rollover action will only be validated but not actually performed even if a condition matches. The default is false
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [String] :wait_for_active_shards Set the number of active shards to wait for on the newly created rollover index before the operation returns.
-        # @option arguments [Boolean] :lazy If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write. Only allowed on data streams.
+        # @option arguments [String] :alias Name of the data stream or index alias to roll over. (*Required*)
+        # @option arguments [String] :new_index Name of the index to create.
+        #  Supports date math.
+        #  Data streams do not support this parameter.
+        # @option arguments [Boolean] :dry_run If +true+, checks whether the current index satisfies the specified conditions but does not perform a rollover.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
+        #  Set to all or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The conditions that needs to be met for executing rollover
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-rollover-index.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-rollover
         #
         def rollover(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.rollover' }
 
-          defined_params = %i[alias new_index].each_with_object({}) do |variable, set_variables|
+          defined_params = [:alias, :new_index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -50,7 +78,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _alias = arguments.delete(:alias)
 
@@ -58,9 +86,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _alias && _new_index
-                     "#{Utils.__listify(_alias)}/_rollover/#{Utils.__listify(_new_index)}"
+                     "#{Utils.listify(_alias)}/_rollover/#{Utils.listify(_new_index)}"
                    else
-                     "#{Utils.__listify(_alias)}/_rollover"
+                     "#{Utils.listify(_alias)}/_rollover"
                    end
           params = Utils.process_params(arguments)
 

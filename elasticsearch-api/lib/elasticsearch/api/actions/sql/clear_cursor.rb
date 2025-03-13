@@ -15,19 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SQL
       module Actions
-        # Clears the SQL cursor
+        # Clear an SQL search cursor.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Specify the cursor value in the `cursor` element to clean the cursor. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-clear-cursor
         #
         def clear_cursor(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.clear_cursor' }
@@ -37,7 +37,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_sql/close'

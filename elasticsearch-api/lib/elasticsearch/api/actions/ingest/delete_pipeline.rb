@@ -15,21 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Ingest
       module Actions
-        # Deletes a pipeline.
+        # Delete pipelines.
+        # Delete one or more ingest pipelines.
         #
-        # @option arguments [String] :id Pipeline ID
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :id Pipeline ID or wildcard expression of pipeline IDs used to limit the request.
+        #  To delete all ingest pipelines in a cluster, use a value of +*+. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-pipeline-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-pipeline
         #
         def delete_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_pipeline' }
@@ -49,7 +53,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ingest/pipeline/#{Utils.__listify(_id)}"
+          path   = "_ingest/pipeline/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

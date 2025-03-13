@@ -15,19 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Features
       module Actions
-        # Gets a list of features which can be included in snapshots using the feature_states field when creating a snapshot
+        # Get the features.
+        # Get a list of features that can be included in snapshots using the +feature_states+ field when creating a snapshot.
+        # You can use this API to determine which feature states to include when taking a snapshot.
+        # By default, all feature states are included in a snapshot if that snapshot includes the global state, or none if it does not.
+        # A feature state includes one or more system indices necessary for a given feature to function.
+        # In order to ensure data integrity, all system indices that comprise a feature state are snapshotted and restored together.
+        # The features listed by this API are a combination of built-in features and features defined by plugins.
+        # In order for a feature state to be listed in this API and recognized as a valid feature state by the create snapshot API, the plugin that defines that feature must be installed on the master node.
         #
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-features-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-features-get-features
         #
         def get_features(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'features.get_features' }
@@ -35,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_features'

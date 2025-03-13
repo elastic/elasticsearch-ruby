@@ -15,25 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Deletes a synonym rule in a synonym set
+        # Delete a synonym rule.
+        # Delete a synonym rule from a synonym set.
         #
-        # @option arguments [String] :set_id The id of the synonym set to be updated
-        # @option arguments [String] :rule_id The id of the synonym rule to be deleted
+        # @option arguments [String] :set_id The ID of the synonym set to update. (*Required*)
+        # @option arguments [String] :rule_id The ID of the synonym rule to delete. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-synonym-rule.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule
         #
         def delete_synonym_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.delete_synonym_rule' }
 
-          defined_params = %i[set_id rule_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:set_id, :rule_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,7 +52,7 @@ module Elasticsearch
           _rule_id = arguments.delete(:rule_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_synonyms/#{Utils.__listify(_set_id)}/#{Utils.__listify(_rule_id)}"
+          path   = "_synonyms/#{Utils.listify(_set_id)}/#{Utils.listify(_rule_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

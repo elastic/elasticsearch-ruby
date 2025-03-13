@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Deletes a query ruleset.
+        # Delete a query ruleset.
+        # Remove a query ruleset and its associated data.
+        # This is a destructive action that is not recoverable.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-query-ruleset.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-delete-ruleset
         #
         def delete_ruleset(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.delete_ruleset' }
@@ -47,20 +49,12 @@ module Elasticsearch
           _ruleset_id = arguments.delete(:ruleset_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}"
-          params = Utils.process_params(arguments)
+          path   = "_query_rules/#{Utils.listify(_ruleset_id)}"
+          params = {}
 
-          if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
-              Elasticsearch::API::Response.new(
-                perform_request(method, path, params, body, headers, request_opts)
-              )
-            end
-          else
-            Elasticsearch::API::Response.new(
-              perform_request(method, path, params, body, headers, request_opts)
-            )
-          end
+          Elasticsearch::API::Response.new(
+            perform_request(method, path, params, body, headers, request_opts)
+          )
         end
       end
     end

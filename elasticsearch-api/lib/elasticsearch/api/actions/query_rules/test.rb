@@ -15,24 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Tests a query ruleset to identify the rules that would match input criteria
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Test a query ruleset.
+        # Evaluate match criteria against a query ruleset to identify the rules that would match that criteria.
         #
-        # @option arguments [String] :ruleset_id The unique identifier of the ruleset to test.
+        # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to be created or updated (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The match criteria to test against the ruleset (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/test-query-ruleset.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-test
         #
         def test(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.test' }
@@ -53,7 +50,7 @@ module Elasticsearch
           _ruleset_id = arguments.delete(:ruleset_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_query_rules/#{Utils.__listify(_ruleset_id)}/_test"
+          path   = "_query_rules/#{Utils.listify(_ruleset_id)}/_test"
           params = {}
 
           Elasticsearch::API::Response.new(

@@ -15,21 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Nodes
       module Actions
-        # Reloads secure settings.
+        # Reload the keystore on nodes in the cluster.
+        # Secure settings are stored in an on-disk keystore. Certain of these settings are reloadable.
+        # That is, you can change them on disk and reload them without restarting any nodes in the cluster.
+        # When you have updated reloadable secure settings in your keystore, you can use this API to reload those settings on each node.
+        # When the Elasticsearch keystore is password protected and not simply obfuscated, you must provide the password for the keystore when you reload the secure settings.
+        # Reloading the settings for the whole cluster assumes that the keystores for all nodes are protected with the same password; this method is allowed only when inter-node communications are encrypted.
+        # Alternatively, you can reload the secure settings on each node by locally accessing the API and passing the node-specific Elasticsearch keystore password.
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs to span the reload/reinit call. Should stay empty because reloading usually involves all cluster nodes.
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String, Array] :node_id The names of particular nodes in the cluster to target.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body An object containing the password for the elasticsearch keystore
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html#reloadable-secure-settings
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-reload-secure-settings
         #
         def reload_secure_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.reload_secure_settings' }
@@ -48,7 +55,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _node_id
-                     "_nodes/#{Utils.__listify(_node_id)}/reload_secure_settings"
+                     "_nodes/#{Utils.listify(_node_id)}/reload_secure_settings"
                    else
                      '_nodes/reload_secure_settings'
                    end

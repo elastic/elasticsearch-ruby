@@ -15,22 +15,36 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Esql
       module Actions
-        # Executes an ESQL request asynchronously
+        # Run an async ES|QL query.
+        # Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available.
+        # The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :delimiter The character to use between values within a CSV row. Only valid for the csv format.
-        # @option arguments [Boolean] :drop_null_columns Should entirely null columns be removed from the results? Their name and type will be returning in a new `all_columns` section.
+        # @option arguments [String] :delimiter The character to use between values within a CSV row.
+        #  It is valid only for the CSV format.
+        # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely +null+ will be removed from the +columns+ and +values+ portion of the results.
+        #  If +true+, the response will include an extra section under the name +all_columns+ which has the name of all the columns.
+        # @option arguments [String] :format A short version of the Accept header, for example +json+ or +yaml+.
+        # @option arguments [Time] :keep_alive The period for which the query and its results are stored in the cluster.
+        #  The default period is five days.
+        #  When this period expires, the query and its results are deleted, even if the query is still ongoing.
+        #  If the +keep_on_completion+ parameter is false, Elasticsearch only stores async queries that do not complete within the period set by the +wait_for_completion_timeout+ parameter, regardless of this value. Server default: 5d.
+        # @option arguments [Boolean] :keep_on_completion Indicates whether the query and its results are stored in the cluster.
+        #  If false, the query and its results are stored in the cluster only if the request does not complete during the period set by the +wait_for_completion_timeout+ parameter.
+        # @option arguments [Time] :wait_for_completion_timeout The period to wait for the request to finish.
+        #  By default, the request waits for 1 second for the query results.
+        #  If the query completes during this period, results are returned
+        #  Otherwise, a query ID is returned that can later be used to retrieve the results. Server default: 1s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Use the `query` element to start a query. Use `columnar` to format the answer. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query
         #
         def async_query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query' }
@@ -40,7 +54,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_query/async'

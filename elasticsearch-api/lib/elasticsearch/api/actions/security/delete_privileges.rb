@@ -15,26 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Removes application privileges.
+        # Delete application privileges.
+        # To use this API, you must have one of the following privileges:
+        # * The +manage_security+ cluster privilege (or a greater privilege such as +all+).
+        # * The "Manage Application Privileges" global privilege for the application being referenced in the request.
         #
-        # @option arguments [String] :application Application name
-        # @option arguments [String] :name Privilege name
-        # @option arguments [String] :refresh If `true` (the default) then refresh the affected shards to make this operation visible to search, if `wait_for` then wait for a refresh to make this operation visible to search, if `false` then do nothing with refreshes. (options: true, false, wait_for)
+        # @option arguments [String] :application The name of the application.
+        #  Application privileges are always associated with exactly one application. (*Required*)
+        # @option arguments [String, Array<String>] :name The name of the privilege. (*Required*)
+        # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-delete-privilege.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-privileges
         #
         def delete_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delete_privileges' }
 
-          defined_params = %i[application name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:application, :name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -52,7 +56,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_security/privilege/#{Utils.__listify(_application)}/#{Utils.__listify(_name)}"
+          path   = "_security/privilege/#{Utils.listify(_application)}/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,22 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular index template exists.
+        # Check index templates.
+        # Check whether index templates exist.
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
+        # @option arguments [String] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/index-templates.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-index-template
         #
         def exists_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_index_template' }
@@ -50,7 +49,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_HEAD
-          path   = "_index_template/#{Utils.__listify(_name)}"
+          path   = "_index_template/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit dcb1c1df18a84a0182caa631b4577d89a4602cfe
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
 # @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
@@ -37,9 +37,8 @@ module Elasticsearch
         def get_migrate_reindex_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_migrate_reindex_status' }
 
-          defined_params = [:index].inject({}) do |set_variables, variable|
+          defined_params = [:index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -53,7 +52,7 @@ module Elasticsearch
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_migration/reindex/#{Utils.__listify(_index)}/_status"
+          path   = "_migration/reindex/#{Utils.listify(_index)}/_status"
           params = {}
 
           Elasticsearch::API::Response.new(

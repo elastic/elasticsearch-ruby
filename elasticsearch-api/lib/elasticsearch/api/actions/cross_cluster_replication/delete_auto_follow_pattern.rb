@@ -15,20 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Deletes auto-follow patterns.
+        # Delete auto-follow patterns.
+        # Delete a collection of cross-cluster replication auto-follow patterns.
         #
-        # @option arguments [String] :name The name of the auto follow pattern.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :name The auto-follow pattern collection to delete. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-delete-auto-follow-pattern.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-delete-auto-follow-pattern
         #
         def delete_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.delete_auto_follow_pattern' }
@@ -48,7 +51,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ccr/auto_follow/#{Utils.__listify(_name)}"
+          path   = "_ccr/auto_follow/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

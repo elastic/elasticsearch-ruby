@@ -15,25 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchApplication
       module Actions
-        # Perform a search against a search application
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
+        # Run a search application search.
+        # Generate and run an Elasticsearch query that uses the specified query parameteter and the search template associated with the search application or default template.
+        # Unspecified template parameters are assigned their default values if applicable.
+        # This functionality is in Beta and is subject to change. The design and
+        # code is less mature than official GA features and is being provided
+        # as-is with no warranties. Beta features are not subject to the support
+        # SLA of official GA features.
         #
-        # @option arguments [String] :name The name of the search application to be searched
-        # @option arguments [Boolean] :typed_keys Specify whether aggregation and suggester names should be prefixed by their respective types in the response
+        # @option arguments [String] :name The name of the search application to be searched. (*Required*)
+        # @option arguments [Boolean] :typed_keys Determines whether aggregation names are prefixed by their respective types in the response.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Search parameters, including template parameters that override defaults
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-application-search.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search
         #
         def search(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.search' }
@@ -58,7 +60,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = "_application/search_application/#{Utils.__listify(_name)}/_search"
+          path   = "_application/search_application/#{Utils.listify(_name)}/_search"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,18 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves security privileges for the logged in user.
+        # Get user privileges.
+        # Get the security privileges for the logged in user.
+        # All users can use this API, but only to determine their own privileges.
+        # To check the privileges of other users, you must use the run as feature.
+        # To check whether a user has a specific list of privileges, use the has privileges API.
         #
+        # @option arguments [String] :application The name of the application. Application privileges are always associated with exactly one application. If you do not specify this parameter, the API returns information about all privileges for all applications.
+        # @option arguments [String] :priviledge The name of the privilege. If you do not specify this parameter, the API returns information about all privileges for the requested application.
+        # @option arguments [Name, Null] :username [TODO]
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user-privileges.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-privileges
         #
         def get_user_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_user_privileges' }
@@ -34,11 +41,11 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/user/_privileges'
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

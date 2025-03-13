@@ -15,20 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Pauses a follower index. The follower index will not fetch any additional operations from the leader index.
+        # Pause a follower.
+        # Pause a cross-cluster replication follower index.
+        # The follower index will not fetch any additional operations from the leader index.
+        # You can resume following with the resume follower API.
+        # You can pause and resume a follower index to change the configuration of the following task.
         #
-        # @option arguments [String] :index The name of the follower index that should pause following its leader index.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :index The name of the follower index. (*Required*)
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-pause-follow.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-pause-follow
         #
         def pause_follow(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.pause_follow' }
@@ -43,12 +49,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_ccr/pause_follow"
+          path   = "#{Utils.listify(_index)}/_ccr/pause_follow"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

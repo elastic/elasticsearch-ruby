@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Connector
       module Actions
-        # Activates the draft filtering rules if they are in a validated state.
+        # Activate the connector draft filter.
+        # Activates the valid draft filtering for a connector.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :connector_id The unique identifier of the connector to be updated.
+        # @option arguments [String] :connector_id The unique identifier of the connector to be updated (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering
         #
         def update_active_filtering(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_active_filtering' }
@@ -51,7 +52,7 @@ module Elasticsearch
           _connector_id = arguments.delete(:connector_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_connector/#{Utils.__listify(_connector_id)}/_filtering/_activate"
+          path   = "_connector/#{Utils.listify(_connector_id)}/_filtering/_activate"
           params = {}
 
           Elasticsearch::API::Response.new(

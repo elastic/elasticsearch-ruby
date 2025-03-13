@@ -15,23 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns data streams.
+        # Get data streams.
+        # Get information about one or more data streams.
         #
-        # @option arguments [List] :name A comma-separated list of data streams to get; use `*` to get all data streams
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
-        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the data stream (default: false)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :verbose Whether the maximum timestamp for each data stream should be calculated and returned (default: false)
+        # @option arguments [String, Array<String>] :name Comma-separated list of data stream names used to limit the request.
+        #  Wildcard (+*+) expressions are supported. If omitted, all data streams are returned.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match.
+        #  Supports comma-separated values, such as +open,hidden+. Server default: open.
+        # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :verbose Whether the maximum timestamp for each data stream should be calculated and returned.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/data-streams.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-data-stream
         #
         def get_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_data_stream' }
@@ -50,7 +53,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_data_stream/#{Utils.__listify(_name)}"
+                     "_data_stream/#{Utils.listify(_name)}"
                    else
                      '_data_stream'
                    end

@@ -15,19 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Evaluates the data frame analytics for an annotated index.
+        # Evaluate data frame analytics.
+        # The API packages together commonly used evaluation metrics for various types
+        # of machine learning features. This has been designed for use on indexes
+        # created by data frame analytics. Evaluation requires both a ground truth
+        # field and an analytics result field to be present.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The evaluation definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/evaluate-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-evaluate-data-frame
         #
         def evaluate_data_frame(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.evaluate_data_frame' }
@@ -37,7 +41,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_ml/data_frame/_evaluate'

@@ -15,21 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Returns information on how ML is using memory.
+        # Get machine learning memory usage info.
+        # Get information about how machine learning jobs and trained models are using memory,
+        # on each node, both within the JVM heap, and natively, outside of the JVM.
         #
-        # @option arguments [String] :node_id Specifies the node or nodes to retrieve stats for.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :node_id The names of particular nodes in the cluster to target. For example, +nodeId1,nodeId2+ or
+        #  +ml:true+
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout
+        #  expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request
+        #  fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/get-ml-memory.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-memory-stats
         #
         def get_memory_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_memory_stats' }
@@ -48,7 +53,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_ml/memory/#{Utils.__listify(_node_id)}/_stats"
+                     "_ml/memory/#{Utils.listify(_node_id)}/_stats"
                    else
                      '_ml/memory/_stats'
                    end

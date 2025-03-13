@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
@@ -34,9 +34,14 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = arguments.delete(:body)
 
-          method = Elasticsearch::API::HTTP_GET
+          method = if body
+                     Elasticsearch::API::HTTP_POST
+                   else
+                     Elasticsearch::API::HTTP_GET
+                   end
+
           path   = '_transform/_node_stats'
           params = {}
 

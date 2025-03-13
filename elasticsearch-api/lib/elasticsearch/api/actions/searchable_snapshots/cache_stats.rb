@@ -15,23 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SearchableSnapshots
       module Actions
-        # Retrieve node-level cache statistics about searchable snapshots.
+        # Get cache statistics.
+        # Get statistics about the shared cache for partially mounted indices.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [List] :node_id A comma-separated list of node IDs or names to limit the returned information; use `_local` to return information from the node you're connecting to, leave empty to get information from all nodes
+        # @option arguments [String, Array] :node_id The names of the nodes in the cluster to target.
+        # @option arguments [Time] :master_timeout [TODO]
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/searchable-snapshots-apis.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-cache-stats
         #
         def cache_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.cache_stats' }
@@ -50,11 +52,11 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _node_id
-                     "_searchable_snapshots/#{Utils.__listify(_node_id)}/cache/stats"
+                     "_searchable_snapshots/#{Utils.listify(_node_id)}/cache/stats"
                    else
                      '_searchable_snapshots/cache/stats'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

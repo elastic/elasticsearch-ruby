@@ -15,27 +15,38 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes forecasts from a machine learning job.
+        # Delete forecasts from a job.
+        # By default, forecasts are retained for 14 days. You can specify a
+        # different retention period with the +expires_in+ parameter in the forecast
+        # jobs API. The delete forecast API enables you to delete one or more
+        # forecasts before they expire.
         #
-        # @option arguments [String] :job_id The ID of the job from which to delete forecasts
-        # @option arguments [String] :forecast_id The ID of the forecast to delete, can be comma delimited list. Leaving blank implies `_all`
-        # @option arguments [Boolean] :allow_no_forecasts Whether to ignore if `_all` matches no forecasts
-        # @option arguments [Time] :timeout Controls the time to wait until the forecast(s) are deleted. Default to 30 seconds
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String] :forecast_id A comma-separated list of forecast identifiers. If you do not specify
+        #  this optional parameter or if you specify +_all+ or +*+ the API deletes
+        #  all forecasts from the job.
+        # @option arguments [Boolean] :allow_no_forecasts Specifies whether an error occurs when there are no forecasts. In
+        #  particular, if this parameter is set to +false+ and there are no
+        #  forecasts associated with the job, attempts to delete all forecasts
+        #  return an error. Server default: true.
+        # @option arguments [Time] :timeout Specifies the period of time to wait for the completion of the delete
+        #  operation. When this period of time elapses, the API fails and returns an
+        #  error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-forecast.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-forecast
         #
         def delete_forecast(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_forecast' }
 
-          defined_params = %i[job_id forecast_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :forecast_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -53,9 +64,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = if _job_id && _forecast_id
-                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_forecast/#{Utils.__listify(_forecast_id)}"
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_forecast/#{Utils.listify(_forecast_id)}"
                    else
-                     "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_forecast"
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_forecast"
                    end
           params = Utils.process_params(arguments)
 

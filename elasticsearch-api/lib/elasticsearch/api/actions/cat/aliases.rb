@@ -15,26 +15,37 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Shows information about currently configured aliases to indices including filter and routing infos.
+        # Get aliases.
+        # Get the cluster's index aliases, including filter and routing information.
+        # This API does not return data stream aliases.
+        # IMPORTANT: CAT APIs are only intended for human consumption using the command line or the Kibana console. They are not intended for use by applications. For application consumption, use the aliases API.
         #
-        # @option arguments [List] :name A comma-separated list of alias names to return
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [String, Array<String>] :name A comma-separated list of aliases to retrieve. Supports wildcards (+*+).  To retrieve all aliases, omit this parameter or use +*+ or +_all+.
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [String, Array<String>] :expand_wildcards The type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  It supports comma-separated values, such as +open,hidden+.
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If the master node is not available before the timeout expires, the request fails and returns an error.
+        #  To indicated that the request should never timeout, you can set it to +-1+. Server default: 30s.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-aliases
         #
         def aliases(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.aliases' }
@@ -53,12 +64,12 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_cat/aliases/#{Utils.__listify(_name)}"
+                     "_cat/aliases/#{Utils.listify(_name)}"
                    else
                      '_cat/aliases'
                    end
           params = Utils.process_params(arguments)
-          params[:h] = Utils.__listify(params[:h]) if params[:h]
+          params[:h] = Utils.listify(params[:h]) if params[:h]
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

@@ -15,25 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes anomaly detection jobs from a calendar.
+        # Delete anomaly jobs from a calendar.
         #
-        # @option arguments [String] :calendar_id The ID of the calendar to modify
-        # @option arguments [String] :job_id The ID of the job to remove from the calendar
+        # @option arguments [String] :calendar_id A string that uniquely identifies a calendar. (*Required*)
+        # @option arguments [String, Array] :job_id An identifier for the anomaly detection jobs. It can be a job identifier, a group name, or a
+        #  comma-separated list of jobs or groups. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-calendar-job.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-calendar-job
         #
         def delete_calendar_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_calendar_job' }
 
-          defined_params = %i[calendar_id job_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:calendar_id, :job_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,7 +52,7 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/calendars/#{Utils.__listify(_calendar_id)}/jobs/#{Utils.__listify(_job_id)}"
+          path   = "_ml/calendars/#{Utils.listify(_calendar_id)}/jobs/#{Utils.listify(_job_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

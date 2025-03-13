@@ -15,22 +15,31 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Transform
       module Actions
+        # Update a transform.
         # Updates certain properties of a transform.
+        # All updated properties except +description+ do not take effect until after the transform starts the next checkpoint,
+        # thus there is data consistency in each checkpoint. To use this API, you must have +read+ and +view_index_metadata+
+        # privileges for the source indices. You must also have +index+ and +read+ privileges for the destination index. When
+        # Elasticsearch security features are enabled, the transform remembers which roles the user who updated it had at the
+        # time of update and runs with those privileges.
         #
-        # @option arguments [String] :transform_id The id of the transform. (*Required*)
-        # @option arguments [Boolean] :defer_validation If validations should be deferred until transform starts, defaults to false.
-        # @option arguments [Time] :timeout Controls the time to wait for the update
+        # @option arguments [String] :transform_id Identifier for the transform. (*Required*)
+        # @option arguments [Boolean] :defer_validation When true, deferrable validations are not run. This behavior may be
+        #  desired if the source index does not exist until after the transform is
+        #  created.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the
+        #  timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The update transform definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-transform.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-update-transform
         #
         def update_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.update_transform' }
@@ -51,7 +60,7 @@ module Elasticsearch
           _transform_id = arguments.delete(:transform_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_transform/#{Utils.__listify(_transform_id)}/_update"
+          path   = "_transform/#{Utils.listify(_transform_id)}/_update"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

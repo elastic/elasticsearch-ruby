@@ -38,7 +38,7 @@ module Elasticsearch
           body = nil
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_cat"
+          path   = '_cat'
           params = {}
 
           Elasticsearch::API::Response.new(

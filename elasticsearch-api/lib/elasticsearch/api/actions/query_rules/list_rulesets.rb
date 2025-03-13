@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module QueryRules
       module Actions
-        # Lists query rulesets.
+        # Get all query rulesets.
+        # Get summarized information about the query rulesets.
         #
-        # @option arguments [Integer] :from Starting offset (default: 0)
-        # @option arguments [Integer] :size specifies a max number of results to get (default: 100)
+        # @option arguments [Integer] :from The offset from the first result to fetch. Server default: 0.
+        # @option arguments [Integer] :size The maximum number of results to retrieve.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/list-query-rulesets.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-list-rulesets
         #
         def list_rulesets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.list_rulesets' }
@@ -36,7 +37,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_query_rules'

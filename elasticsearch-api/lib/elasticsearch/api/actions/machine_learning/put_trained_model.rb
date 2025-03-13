@@ -15,22 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Creates an inference trained model.
+        # Create a trained model.
+        # Enable you to supply a trained model that is not created by data frame analytics.
         #
-        # @option arguments [String] :model_id The ID of the trained models to store
-        # @option arguments [Boolean] :defer_definition_decompression If set to `true` and a `compressed_definition` is provided, the request defers definition decompression and skips relevant validations.
-        # @option arguments [Boolean] :wait_for_completion Whether to wait for all child operations(e.g. model download) to complete, before returning or not. Default to false
+        # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [Boolean] :defer_definition_decompression If set to +true+ and a +compressed_definition+ is provided,
+        #  the request defers definition decompression and skips relevant
+        #  validations.
+        # @option arguments [Boolean] :wait_for_completion Whether to wait for all child operations (e.g. model download)
+        #  to complete.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The trained model configuration (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/put-trained-models.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-put-trained-model
         #
         def put_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.put_trained_model' }
@@ -51,7 +55,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

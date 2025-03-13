@@ -15,21 +15,28 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Resets an existing anomaly detection job.
+        # Reset an anomaly detection job.
+        # All model state and results are deleted. The job is ready to start over as if
+        # it had just been created.
+        # It is not currently possible to reset multiple jobs using wildcards or a
+        # comma separated list.
         #
-        # @option arguments [String] :job_id The ID of the job to reset
-        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before returning
-        # @option arguments [Boolean] :delete_user_annotations Should annotations added by the user be deleted
+        # @option arguments [String] :job_id The ID of the job to reset. (*Required*)
+        # @option arguments [Boolean] :wait_for_completion Should this request wait until the operation has completed before
+        #  returning. Server default: true.
+        # @option arguments [Boolean] :delete_user_annotations Specifies whether annotations that have been added by the
+        #  user should be deleted along with any auto-generated annotations when the job is
+        #  reset.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-reset-job.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-reset-job
         #
         def reset_job(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.reset_job' }
@@ -49,7 +56,7 @@ module Elasticsearch
           _job_id = arguments.delete(:job_id)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/_reset"
+          path   = "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/_reset"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

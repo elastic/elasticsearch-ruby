@@ -15,37 +15,51 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Actions
-      # Returns information about why a specific matches (or doesn't match) a query.
+      # Explain a document match result.
+      # Get information about why a specific document matches, or doesn't match, a query.
+      # It computes a score explanation for a query and a specific document.
       #
-      # @option arguments [String] :id The document ID
-      # @option arguments [String] :index The name of the index
-      # @option arguments [Boolean] :analyze_wildcard Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
-      # @option arguments [String] :analyzer The analyzer for the query string query
-      # @option arguments [String] :default_operator The default operator for query string query (AND or OR) (options: AND, OR)
-      # @option arguments [String] :df The default field for query string query (default: _all)
-      # @option arguments [List] :stored_fields A comma-separated list of stored fields to return in the response
-      # @option arguments [Boolean] :lenient Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
-      # @option arguments [String] :preference Specify the node or shard the operation should be performed on (default: random)
-      # @option arguments [String] :q Query in the Lucene query string syntax
-      # @option arguments [String] :routing Specific routing value
-      # @option arguments [List] :_source True or false to return the _source field or not, or a list of fields to return
-      # @option arguments [List] :_source_excludes A list of fields to exclude from the returned _source field
-      # @option arguments [List] :_source_includes A list of fields to extract and return from the _source field
+      # @option arguments [String] :id The document identifier. (*Required*)
+      # @option arguments [String] :index Index names that are used to limit the request.
+      #  Only a single index name can be provided to this parameter. (*Required*)
+      # @option arguments [String] :analyzer The analyzer to use for the query string.
+      #  This parameter can be used only when the +q+ query string parameter is specified.
+      # @option arguments [Boolean] :analyze_wildcard If +true+, wildcard and prefix queries are analyzed.
+      #  This parameter can be used only when the +q+ query string parameter is specified.
+      # @option arguments [String] :default_operator The default operator for query string query: +AND+ or +OR+.
+      #  This parameter can be used only when the +q+ query string parameter is specified. Server default: OR.
+      # @option arguments [String] :df The field to use as default where no field prefix is given in the query string.
+      #  This parameter can be used only when the +q+ query string parameter is specified.
+      # @option arguments [Boolean] :lenient If +true+, format-based query failures (such as providing text to a numeric field) in the query string will be ignored.
+      #  This parameter can be used only when the +q+ query string parameter is specified.
+      # @option arguments [String] :preference The node or shard the operation should be performed on.
+      #  It is random by default.
+      # @option arguments [String] :routing A custom value used to route operations to a specific shard.
+      # @option arguments [Boolean, String, Array<String>] :_source +True+ or +false+ to return the +_source+ field or not or a list of fields to return.
+      # @option arguments [String, Array<String>] :_source_excludes A comma-separated list of source fields to exclude from the response.
+      #  You can also use this parameter to exclude fields from the subset specified in +_source_includes+ query parameter.
+      #  If the +_source+ parameter is +false+, this parameter is ignored.
+      # @option arguments [String, Array<String>] :_source_includes A comma-separated list of source fields to include in the response.
+      #  If this parameter is specified, only these source fields are returned.
+      #  You can exclude fields from this subset using the +_source_excludes+ query parameter.
+      #  If the +_source+ parameter is +false+, this parameter is ignored.
+      # @option arguments [String, Array<String>] :stored_fields A comma-separated list of stored fields to return in the response.
+      # @option arguments [String] :q The query in the Lucene query string syntax.
       # @option arguments [Hash] :headers Custom HTTP headers
-      # @option arguments [Hash] :body The query definition using the Query DSL
+      # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-explain.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-explain
       #
       def explain(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'explain' }
 
-        defined_params = %i[index id].each_with_object({}) do |variable, set_variables|
+        defined_params = [:index, :id].each_with_object({}) do |variable, set_variables|
           set_variables[variable] = arguments[variable] if arguments.key?(variable)
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -68,7 +82,7 @@ module Elasticsearch
                    Elasticsearch::API::HTTP_GET
                  end
 
-        path = "#{Utils.__listify(_index)}/_explain/#{Utils.__listify(_id)}"
+        path   = "#{Utils.listify(_index)}/_explain/#{Utils.listify(_id)}"
         params = Utils.process_params(arguments)
 
         Elasticsearch::API::Response.new(

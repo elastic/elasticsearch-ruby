@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes a filter.
+        # Delete a filter.
+        # If an anomaly detection job references the filter, you cannot delete the
+        # filter. You must update or delete the job before you can delete the filter.
         #
-        # @option arguments [String] :filter_id The ID of the filter to delete
+        # @option arguments [String] :filter_id A string that uniquely identifies a filter. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-delete-filter.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-filter
         #
         def delete_filter(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_filter' }
@@ -47,7 +49,7 @@ module Elasticsearch
           _filter_id = arguments.delete(:filter_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/filters/#{Utils.__listify(_filter_id)}"
+          path   = "_ml/filters/#{Utils.listify(_filter_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

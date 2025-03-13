@@ -15,18 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Allows a new node to enroll to an existing cluster with security enabled.
+        # Enroll a node.
+        # Enroll a new node to allow it to join an existing cluster with security features enabled.
+        # The response contains all the necessary information for the joining node to bootstrap discovery and security related settings so that it can successfully join the cluster.
+        # The response contains key and certificate material that allows the caller to generate valid signed certificates for the HTTP layer of all nodes in the cluster.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-node-enrollment.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enroll-node
         #
         def enroll_node(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.enroll_node' }
@@ -34,7 +37,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/enroll/node'

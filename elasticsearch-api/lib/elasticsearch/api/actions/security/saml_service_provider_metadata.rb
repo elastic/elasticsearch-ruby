@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Generates SAML metadata for the Elastic stack SAML 2.0 Service Provider
+        # Create SAML service provider metadata.
+        # Generate SAML metadata for a SAML 2.0 Service Provider.
+        # The SAML 2.0 specification provides a mechanism for Service Providers to describe their capabilities and configuration using a metadata file.
+        # This API generates Service Provider metadata based on the configuration of a SAML realm in Elasticsearch.
         #
-        # @option arguments [String] :realm_name The name of the SAML realm to get the metadata for
+        # @option arguments [String] :realm_name The name of the SAML realm in Elasticsearch. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-saml-sp-metadata.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-service-provider-metadata
         #
         def saml_service_provider_metadata(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_service_provider_metadata' }
@@ -47,7 +50,7 @@ module Elasticsearch
           _realm_name = arguments.delete(:realm_name)
 
           method = Elasticsearch::API::HTTP_GET
-          path   = "_security/saml/metadata/#{Utils.__listify(_realm_name)}"
+          path   = "_security/saml/metadata/#{Utils.listify(_realm_name)}"
           params = {}
 
           Elasticsearch::API::Response.new(

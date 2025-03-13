@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing trained inference model that is currently not referenced by an ingest pipeline.
+        # Delete an unreferenced trained model.
+        # The request deletes a trained inference model that is not referenced by an ingest pipeline.
         #
-        # @option arguments [String] :model_id The ID of the trained model to delete
-        # @option arguments [Time] :timeout Controls the amount of time to wait for the model to be deleted.
-        # @option arguments [Boolean] :force True if the model should be forcefully deleted
+        # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
+        # @option arguments [Boolean] :force Forcefully deletes a trained model that is referenced by ingest pipelines or has a started deployment.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-trained-models.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-trained-model
         #
         def delete_trained_model(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_trained_model' }
@@ -49,7 +50,7 @@ module Elasticsearch
           _model_id = arguments.delete(:model_id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/trained_models/#{Utils.__listify(_model_id)}"
+          path   = "_ml/trained_models/#{Utils.listify(_model_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

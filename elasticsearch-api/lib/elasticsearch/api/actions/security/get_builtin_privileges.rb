@@ -15,18 +15,19 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
+        # Get builtin privileges.
+        # Get the list of cluster privileges and index privileges that are available in this version of Elasticsearch.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-builtin-privileges.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-builtin-privileges
         #
         def get_builtin_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_builtin_privileges' }
@@ -34,7 +35,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_security/privilege/_builtin'

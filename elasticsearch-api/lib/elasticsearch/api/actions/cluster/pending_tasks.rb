@@ -15,21 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cluster
       module Actions
-        # Returns a list of any cluster-level changes (e.g. create index, update mapping,
-        # allocate or fail shard) which have not yet been executed.
+        # Get the pending cluster tasks.
+        # Get information about cluster-level changes (such as create index, update mapping, allocate or fail shard) that have not yet taken effect.
+        # NOTE: This API returns a list of any pending updates to the cluster state.
+        # These are distinct from the tasks reported by the task management API which include periodic tasks and tasks initiated by the user, such as node stats, search queries, or create index requests.
+        # However, if a user-initiated task such as a create index command causes a cluster state update, the activity of this task might be reported by both task api and pending cluster tasks API.
         #
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only.
+        #  If +false+, information is retrieved from the master node.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-pending.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-pending-tasks
         #
         def pending_tasks(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.pending_tasks' }
@@ -37,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_cluster/pending_tasks'

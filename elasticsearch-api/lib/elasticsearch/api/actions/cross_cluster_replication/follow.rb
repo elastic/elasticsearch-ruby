@@ -15,22 +15,27 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Creates a new follower index configured to follow the referenced leader index.
+        # Create a follower.
+        # Create a cross-cluster replication follower index that follows a specific leader index.
+        # When the API returns, the follower index exists and cross-cluster replication starts replicating operations from the leader index to the follower index.
         #
-        # @option arguments [String] :index The name of the follower index
-        # @option arguments [String] :wait_for_active_shards Sets the number of shard copies that must be active before returning. Defaults to 0. Set to `all` for all shard copies, otherwise set to any non-negative value less than or equal to the total number of copies for the shard (number of replicas + 1)
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :index The name of the follower index. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Integer, String] :wait_for_active_shards Specifies the number of shards to wait on being active before responding. This defaults to waiting on none of the shards to be
+        #  active.
+        #  A shard must be restored from the leader index before being active. Restoring a follower shard requires transferring all the
+        #  remote Lucene segment files to the follower index.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-put-follow.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-follow
         #
         def follow(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.follow' }
@@ -46,12 +51,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "#{Utils.__listify(_index)}/_ccr/follow"
+          path   = "#{Utils.listify(_index)}/_ccr/follow"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

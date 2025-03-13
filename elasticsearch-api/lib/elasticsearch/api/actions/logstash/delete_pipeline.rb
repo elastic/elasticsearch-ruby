@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Logstash
       module Actions
-        # Deletes Logstash Pipelines used by Central Management
+        # Delete a Logstash pipeline.
+        # Delete a pipeline that is used for Logstash Central Management.
+        # If the request succeeds, you receive an empty response with an appropriate status code.
         #
-        # @option arguments [String] :id The ID of the Pipeline
+        # @option arguments [String] :id An identifier for the pipeline. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/logstash-api-delete-pipeline.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-logstash-delete-pipeline
         #
         def delete_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'logstash.delete_pipeline' }
@@ -47,7 +49,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_logstash/pipeline/#{Utils.__listify(_id)}"
+          path   = "_logstash/pipeline/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

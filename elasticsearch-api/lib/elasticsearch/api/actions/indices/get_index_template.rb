@@ -15,23 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns an index template.
+        # Get index templates.
+        # Get information about one or more index templates.
         #
-        # @option arguments [String] :name A pattern that returned template names must match
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false) *Deprecated*
-        # @option arguments [Boolean] :include_defaults Return all relevant default configurations for the index template (default: false)
+        # @option arguments [String] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported.
+        # @option arguments [Boolean] :local If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
+        # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-template.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-index-template
         #
         def get_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_index_template' }
@@ -50,7 +51,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _name
-                     "_index_template/#{Utils.__listify(_name)}"
+                     "_index_template/#{Utils.listify(_name)}"
                    else
                      '_index_template'
                    end

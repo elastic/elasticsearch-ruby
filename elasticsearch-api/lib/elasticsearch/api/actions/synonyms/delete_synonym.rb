@@ -15,19 +15,31 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Synonyms
       module Actions
-        # Deletes a synonym set
+        # Delete a synonym set.
+        # You can only delete a synonyms set that is not in use by any index analyzer.
+        # Synonyms sets can be used in synonym graph token filters and synonym token filters.
+        # These synonym filters can be used as part of search analyzers.
+        # Analyzers need to be loaded when an index is restored (such as when a node starts, or the index becomes open).
+        # Even if the analyzer is not used on any field mapping, it still needs to be loaded on the index recovery phase.
+        # If any analyzers cannot be loaded, the index becomes unavailable and the cluster status becomes red or yellow as index shards are not available.
+        # To prevent that, synonyms sets that are used in analyzers can't be deleted.
+        # A delete request in this case will return a 400 response code.
+        # To remove a synonyms set, you must first remove all indices that contain analyzers using it.
+        # You can migrate an index by creating a new index that does not contain the token filter with the synonyms set, and use the reindex API in order to copy over the index data.
+        # Once finished, you can delete the index.
+        # When the synonyms set is not used in analyzers, you will be able to delete it.
         #
-        # @option arguments [String] :id The id of the synonyms set to be deleted
+        # @option arguments [String] :id The synonyms set identifier to delete. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-synonyms-set.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym
         #
         def delete_synonym(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.delete_synonym' }
@@ -47,7 +59,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_synonyms/#{Utils.__listify(_id)}"
+          path   = "_synonyms/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

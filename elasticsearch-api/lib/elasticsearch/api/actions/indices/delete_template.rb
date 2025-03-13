@@ -15,21 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Deletes an index template.
+        # Delete a legacy index template.
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :name The name of the legacy index template to delete.
+        #  Wildcard (+*+) expressions are supported. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-template-v1.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-template
         #
         def delete_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_template' }
@@ -49,11 +52,11 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_template/#{Utils.__listify(_name)}"
+          path   = "_template/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

@@ -15,25 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular index exists.
+        # Check indices.
+        # Check if one or more indices, index aliases, or data streams exist.
         #
-        # @option arguments [List] :index A comma-separated list of index names
-        # @option arguments [Boolean] :local Return local information, do not retrieve the state from master node (default: false)
-        # @option arguments [Boolean] :ignore_unavailable Ignore unavailable indexes (default: false)
-        # @option arguments [Boolean] :allow_no_indices Ignore if a wildcard expression resolves to no concrete indices (default: false)
-        # @option arguments [String] :expand_wildcards Whether wildcard expressions should get expanded to open or closed indices (default: open) (options: open, closed, hidden, none, all)
-        # @option arguments [Boolean] :flat_settings Return settings in flat format (default: false)
-        # @option arguments [Boolean] :include_defaults Whether to return all default setting for each of the indices.
+        # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases. Supports wildcards (+*+). (*Required*)
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  This behavior applies even if the request targets other open indices. Server default: true.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as +open,hidden+.
+        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+        # @option arguments [Boolean] :flat_settings If +true+, returns settings in flat format.
+        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        # @option arguments [Boolean] :include_defaults If +true+, return all default settings in the response.
+        # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists
         #
         def exists(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists' }
@@ -48,15 +53,15 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_HEAD
-          path   = "#{Utils.__listify(_index)}"
+          path   = Utils.listify(_index).to_s
           params = Utils.process_params(arguments)
 
-          Utils.__rescue_from_not_found do
+          Utils.rescue_from_not_found do
             perform_request(method, path, params, body, headers, request_opts).status == 200
           end
         end

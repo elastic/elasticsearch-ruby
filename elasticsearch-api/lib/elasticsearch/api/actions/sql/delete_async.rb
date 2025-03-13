@@ -15,19 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SQL
       module Actions
-        # Deletes an async SQL search or a stored synchronous SQL search. If the search is still running, the API cancels it.
+        # Delete an async SQL search.
+        # Delete an async SQL search or a stored synchronous SQL search.
+        # If the search is still running, the API cancels it.
+        # If the Elasticsearch security features are enabled, only the following users can use this API to delete a search:
+        # * Users with the +cancel_task+ cluster privilege.
+        # * The user who first submitted the search.
         #
-        # @option arguments [String] :id The async search ID
+        # @option arguments [String] :id The identifier for the search. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-async-sql-search-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-delete-async
         #
         def delete_async(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.delete_async' }
@@ -47,7 +52,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_sql/async/delete/#{Utils.__listify(_id)}"
+          path   = "_sql/async/delete/#{Utils.listify(_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

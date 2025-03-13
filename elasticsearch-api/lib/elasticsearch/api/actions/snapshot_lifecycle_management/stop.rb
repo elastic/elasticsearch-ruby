@@ -15,20 +15,30 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SnapshotLifecycleManagement
       module Actions
-        # Turns off snapshot lifecycle management (SLM).
+        # Stop snapshot lifecycle management.
+        # Stop all snapshot lifecycle management (SLM) operations and the SLM plugin.
+        # This API is useful when you are performing maintenance on a cluster and need to prevent SLM from performing any actions on your data streams or indices.
+        # Stopping SLM does not stop any snapshots that are in progress.
+        # You can manually trigger snapshots with the run snapshot lifecycle policy API even if SLM is stopped.
+        # The API returns a response as soon as the request is acknowledged, but the plugin might continue to run until in-progress operations complete and it can be safely stopped.
+        # Use the get snapshot lifecycle management status API to see if SLM is running.
         #
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
-        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
+        # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
+        # @option arguments [Time] :timeout The period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error.
+        #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-stop.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-stop
         #
         def stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.stop' }
@@ -36,7 +46,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_slm/stop'

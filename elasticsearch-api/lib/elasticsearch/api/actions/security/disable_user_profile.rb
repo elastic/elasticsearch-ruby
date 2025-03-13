@@ -41,9 +41,8 @@ module Elasticsearch
         def disable_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.disable_user_profile' }
 
-          defined_params = [:uid].inject({}) do |set_variables, variable|
+          defined_params = [:uid].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -57,7 +56,7 @@ module Elasticsearch
           _uid = arguments.delete(:uid)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_security/profile/#{Utils.__listify(_uid)}/_disable"
+          path   = "_security/profile/#{Utils.listify(_uid)}/_disable"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

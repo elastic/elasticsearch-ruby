@@ -35,9 +35,8 @@ module Elasticsearch
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
 
-          defined_params = [:inference_id, :task_type].inject({}) do |set_variables, variable|
+          defined_params = [:inference_id, :task_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -54,9 +53,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
+                     "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_inference_id)}"
                    else
-                     "_inference/#{Utils.__listify(_inference_id)}"
+                     "_inference/#{Utils.listify(_inference_id)}"
                    end
           params = Utils.process_params(arguments)
 

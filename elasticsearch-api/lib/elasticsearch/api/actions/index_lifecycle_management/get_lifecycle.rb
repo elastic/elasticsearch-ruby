@@ -15,21 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Returns the specified policy definition. Includes the policy version and last modified date.
+        # Get lifecycle policies.
         #
-        # @option arguments [String] :policy The name of the index lifecycle policy
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :policy Identifier for the policy.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-get-lifecycle.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-get-lifecycle
         #
         def get_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.get_lifecycle' }
@@ -48,7 +48,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _policy
-                     "_ilm/policy/#{Utils.__listify(_policy)}"
+                     "_ilm/policy/#{Utils.listify(_policy)}"
                    else
                      '_ilm/policy'
                    end

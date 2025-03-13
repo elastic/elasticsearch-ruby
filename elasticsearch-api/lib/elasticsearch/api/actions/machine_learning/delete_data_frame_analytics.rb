@@ -15,21 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Deletes an existing data frame analytics job.
+        # Delete a data frame analytics job.
         #
-        # @option arguments [String] :id The ID of the data frame analytics to delete
-        # @option arguments [Boolean] :force True if the job should be forcefully deleted
-        # @option arguments [Time] :timeout Controls the time to wait until a job is deleted. Defaults to 1 minute
+        # @option arguments [String] :id Identifier for the data frame analytics job. (*Required*)
+        # @option arguments [Boolean] :force If +true+, it deletes a job that is not stopped; this method is quicker than stopping and deleting the job.
+        # @option arguments [Time] :timeout The time to wait for the job to be deleted. Server default: 1m.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-dfanalytics.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-data-frame-analytics
         #
         def delete_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_data_frame_analytics' }
@@ -49,7 +49,7 @@ module Elasticsearch
           _id = arguments.delete(:id)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_ml/data_frame/analytics/#{Utils.__listify(_id)}"
+          path   = "_ml/data_frame/analytics/#{Utils.listify(_id)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,25 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Cat
       module Actions
-        # Shows how much heap memory is currently being used by fielddata on every data node in the cluster.
+        # Get field data cache information.
+        # Get the amount of heap memory currently used by the field data cache on every data node in the cluster.
+        # IMPORTANT: cat APIs are only intended for human consumption using the command line or Kibana console.
+        # They are not intended for use by applications. For application consumption, use the nodes stats API.
         #
-        # @option arguments [List] :fields A comma-separated list of fields to return the fielddata size
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
-        # @option arguments [String] :bytes The unit in which to display byte values (options: b, k, kb, m, mb, g, gb, t, tb, p, pb)
-        # @option arguments [List] :h Comma-separated list of column names to display
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
-        # @option arguments [Boolean] :v Verbose mode. Display column headers
+        # @option arguments [String, Array<String>] :fields Comma-separated list of fields used to limit returned information.
+        #  To retrieve all fields, omit this parameter.
+        # @option arguments [String] :bytes The unit used to display byte values.
+        # @option arguments [String, Array<String>] :h List of columns to appear in the response. Supports simple wildcards.
+        # @option arguments [String, Array<String>] :s List of columns that determine how the table should be sorted.
+        #  Sorting defaults to ascending and can be changed by setting +:asc+
+        #  or +:desc+ as a suffix to the column name.
+        # @option arguments [String] :format Specifies the format to return the columnar data in, can be set to
+        #  +text+, +json+, +cbor+, +yaml+, or +smile+. Server default: text.
+        # @option arguments [Boolean] :help When set to +true+ will output available columns. This option
+        #  can't be combined with any other query string option.
+        # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-fielddata
         #
         def fielddata(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.fielddata' }
@@ -52,7 +60,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _fields
-                     "_cat/fielddata/#{Utils.__listify(_fields)}"
+                     "_cat/fielddata/#{Utils.listify(_fields)}"
                    else
                      '_cat/fielddata'
                    end

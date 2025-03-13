@@ -15,21 +15,26 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module License
       module Actions
-        # Starts an indefinite basic license.
+        # Start a basic license.
+        # Start an indefinite basic license, which gives access to all the basic features.
+        # NOTE: In order to start a basic license, you must not currently have a basic license.
+        # If the basic license does not support all of the features that are available with your current license, however, you are notified in the response.
+        # You must then re-submit the API request with the +acknowledge+ parameter set to +true+.
+        # To check the status of your basic license, use the get basic license API.
         #
         # @option arguments [Boolean] :acknowledge whether the user has acknowledged acknowledge messages (default: false)
-        # @option arguments [Time] :master_timeout Timeout for processing on master node
-        # @option arguments [Time] :timeout Timeout for acknowledgement of update from all nodes in cluster
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-basic.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-post-start-basic
         #
         def post_start_basic(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post_start_basic' }
@@ -37,7 +42,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_license/start_basic'

@@ -15,19 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Deactivates a currently active watch.
+        # Deactivate a watch.
+        # A watch can be either active or inactive.
         #
-        # @option arguments [String] :watch_id Watch ID
+        # @option arguments [String] :watch_id The watch identifier. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-deactivate-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-deactivate-watch
         #
         def deactivate_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.deactivate_watch' }
@@ -47,7 +48,7 @@ module Elasticsearch
           _watch_id = arguments.delete(:watch_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_watcher/watch/#{Utils.__listify(_watch_id)}/_deactivate"
+          path   = "_watcher/watch/#{Utils.listify(_watch_id)}/_deactivate"
           params = {}
 
           Elasticsearch::API::Response.new(

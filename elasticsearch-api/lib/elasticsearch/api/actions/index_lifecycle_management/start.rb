@@ -15,20 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module IndexLifecycleManagement
       module Actions
-        # Start the index lifecycle management (ILM) plugin.
+        # Start the ILM plugin.
+        # Start the index lifecycle management plugin if it is currently stopped.
+        # ILM is started automatically when the cluster is formed.
+        # Restarting ILM is necessary only when it has been stopped using the stop ILM API.
         #
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-start.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-start
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.start' }
@@ -36,7 +39,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_ilm/start'

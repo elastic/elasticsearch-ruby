@@ -15,22 +15,24 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module DanglingIndices
       module Actions
-        # Deletes the specified dangling index
+        # Delete a dangling index.
+        # If Elasticsearch encounters index data that is absent from the current cluster state, those indices are considered to be dangling.
+        # For example, this can happen if you delete more than +cluster.indices.tombstones.size+ indices while an Elasticsearch node is offline.
         #
-        # @option arguments [String] :index_uuid The UUID of the dangling index
-        # @option arguments [Boolean] :accept_data_loss Must be set to true in order to delete the dangling index
-        # @option arguments [Time] :timeout Explicit operation timeout
+        # @option arguments [String] :index_uuid The UUID of the index to delete. Use the get dangling indices API to find the UUID. (*Required*)
+        # @option arguments [Boolean] :accept_data_loss This parameter must be set to true to acknowledge that it will no longer be possible to recove data from the dangling index. (*Required*)
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-gateway-dangling-indices.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-dangling-indices-delete-dangling-index
         #
         def delete_dangling_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'dangling_indices.delete_dangling_index' }
@@ -50,7 +52,7 @@ module Elasticsearch
           _index_uuid = arguments.delete(:index_uuid)
 
           method = Elasticsearch::API::HTTP_DELETE
-          path   = "_dangling/#{Utils.__listify(_index_uuid)}"
+          path   = "_dangling/#{Utils.listify(_index_uuid)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

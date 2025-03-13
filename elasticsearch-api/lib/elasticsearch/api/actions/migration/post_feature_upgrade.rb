@@ -15,18 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Migration
       module Actions
-        # Begin upgrades for system features
+        # Start the feature migration.
+        # Version upgrades sometimes require changes to how features store configuration information and data in system indices.
+        # This API starts the automatic migration process.
+        # Some functionality might be temporarily unavailable during the migration process.
+        # TIP: The API is designed for indirect use by the Upgrade Assistant. We strongly recommend you use the Upgrade Assistant.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-feature-upgrade.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-get-feature-upgrade-status
         #
         def post_feature_upgrade(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'migration.post_feature_upgrade' }
@@ -34,7 +38,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_migration/system_features'

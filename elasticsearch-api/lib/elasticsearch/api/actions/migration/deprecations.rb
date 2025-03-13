@@ -15,19 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Migration
       module Actions
-        # Retrieves information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+        # Get deprecation information.
+        # Get information about different cluster, node, and index level settings that use deprecated features that will be removed or changed in the next major version.
+        # TIP: This APIs is designed for indirect use by the Upgrade Assistant.
+        # You are strongly recommended to use the Upgrade Assistant.
         #
-        # @option arguments [String] :index Index pattern
+        # @option arguments [String] :index Comma-separate list of data streams or indices to check. Wildcard (*) expressions are supported.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migration-api-deprecation.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations
         #
         def deprecations(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'migration.deprecations' }
@@ -40,13 +43,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _index
-                     "#{Utils.__listify(_index)}/_migration/deprecations"
+                     "#{Utils.listify(_index)}/_migration/deprecations"
                    else
                      '_migration/deprecations'
                    end

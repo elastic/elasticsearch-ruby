@@ -15,29 +15,36 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Returns information about whether a particular alias exists.
+        # Check aliases.
+        # Check if one or more data stream or index aliases exist.
         #
-        # @option arguments [List] :name A comma-separated list of alias names to return
-        # @option arguments [List] :index A comma-separated list of index names to filter aliases
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-        # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
+        # @option arguments [String, Array<String>] :name Comma-separated list of aliases to check. Supports wildcards (+*+). (*Required*)
+        # @option arguments [String, Array] :index Comma-separated list of data streams or indices used to limit the request. Supports wildcards (+*+).
+        #  To target all data streams and indices, omit this parameter or use +*+ or +_all+.
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  This behavior applies even if the request targets other open indices. Server default: true.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as +open,hidden+.
+        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If +false+, requests that include a missing data stream or index in the target indices or data streams return an error.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-alias
         #
         def exists_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_alias' }
 
-          defined_params = %i[name index].each_with_object({}) do |variable, set_variables|
+          defined_params = [:name, :index].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -55,13 +62,13 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_HEAD
           path   = if _index && _name
-                     "#{Utils.__listify(_index)}/_alias/#{Utils.__listify(_name)}"
+                     "#{Utils.listify(_index)}/_alias/#{Utils.listify(_name)}"
                    else
-                     "_alias/#{Utils.__listify(_name)}"
+                     "_alias/#{Utils.listify(_name)}"
                    end
           params = Utils.process_params(arguments)
 
-          Utils.__rescue_from_not_found do
+          Utils.rescue_from_not_found do
             perform_request(method, path, params, body, headers, request_opts).status == 200
           end
         end

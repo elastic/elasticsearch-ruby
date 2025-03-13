@@ -15,20 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Security
       module Actions
-        # Retrieves information about users in the native realm and built-in users.
+        # Get users.
+        # Get information about users in the native realm and built-in users.
         #
-        # @option arguments [List] :username A comma-separated list of usernames
-        # @option arguments [Boolean] :with_profile_uid flag to retrieve profile uid (if exists) associated to the user
+        # @option arguments [Username] :username An identifier for the user. You can specify multiple usernames as a comma-separated list. If you omit this parameter, the API retrieves information about all users.
+        # @option arguments [Boolean] :with_profile_uid Determines whether to retrieve the user profile UID, if it exists, for the users.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/security-api-get-user.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user
         #
         def get_user(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_user' }
@@ -47,14 +48,14 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _username
-                     "_security/user/#{Utils.__listify(_username)}"
+                     "_security/user/#{Utils.listify(_username)}"
                    else
                      '_security/user'
                    end
           params = Utils.process_params(arguments)
 
           if Array(arguments[:ignore]).include?(404)
-            Utils.__rescue_from_not_found do
+            Utils.rescue_from_not_found do
               Elasticsearch::API::Response.new(
                 perform_request(method, path, params, body, headers, request_opts)
               )

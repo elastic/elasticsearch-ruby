@@ -15,25 +15,52 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Indices
       module Actions
-        # Opens an index.
+        # Open a closed index.
+        # For data streams, the API opens any closed backing indices.
+        # A closed index is blocked for read/write operations and does not allow all operations that opened indices allow.
+        # It is not possible to index documents or to search for documents in a closed index.
+        # This allows closed indices to not have to maintain internal data structures for indexing or searching documents, resulting in a smaller overhead on the cluster.
+        # When opening or closing an index, the master is responsible for restarting the index shards to reflect the new state of the index.
+        # The shards will then go through the normal recovery process.
+        # The data of opened or closed indices is automatically replicated by the cluster to ensure that enough shard copies are safely kept around at all times.
+        # You can open and close multiple indices.
+        # An error is thrown if the request explicitly refers to a missing index.
+        # This behavior can be turned off by using the +ignore_unavailable=true+ parameter.
+        # By default, you must explicitly name the indices you are opening or closing.
+        # To open or close indices with +_all+, +*+, or other wildcard expressions, change the +action.destructive_requires_name+ setting to +false+.
+        # This setting can also be changed with the cluster update settings API.
+        # Closed indices consume a significant amount of disk-space which can cause problems in managed environments.
+        # Closing indices can be turned off with the cluster settings API by setting +cluster.indices.close.enable+ to +false+.
+        # Because opening or closing an index allocates its shards, the +wait_for_active_shards+ setting on index creation applies to the +_open+ and +_close+ index actions as well.
         #
-        # @option arguments [List] :index A comma separated list of indices to open
-        # @option arguments [Time] :timeout Explicit operation timeout
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
-        # @option arguments [Boolean] :ignore_unavailable Whether specified concrete indices should be ignored when unavailable (missing or closed)
-        # @option arguments [Boolean] :allow_no_indices Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
-        # @option arguments [String] :expand_wildcards Whether to expand wildcard expression to concrete indices that are open, closed or both. (options: open, closed, hidden, none, all)
-        # @option arguments [String] :wait_for_active_shards Sets the number of active shards to wait for before the operation returns.
+        # @option arguments [String, Array] :index Comma-separated list of data streams, indices, and aliases used to limit the request.
+        #  Supports wildcards (+*+).
+        #  By default, you must explicitly name the indices you using to limit the request.
+        #  To limit a request using +_all+, +*+, or other wildcard expressions, change the +action.destructive_requires_name+ setting to false.
+        #  You can update this setting in the +elasticsearch.yml+ file or using the cluster update settings API. (*Required*)
+        # @option arguments [Boolean] :allow_no_indices If +false+, the request returns an error if any wildcard expression, index alias, or +_all+ value targets only missing or closed indices.
+        #  This behavior applies even if the request targets other open indices. Server default: true.
+        # @option arguments [String, Array<String>] :expand_wildcards Type of index that wildcard patterns can match.
+        #  If the request can target data streams, this argument determines whether wildcard expressions match hidden data streams.
+        #  Supports comma-separated values, such as +open,hidden+.
+        #  Valid values are: +all+, +open+, +closed+, +hidden+, +none+. Server default: open.
+        # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Time] :timeout Period to wait for a response.
+        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
+        #  Set to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-open-close.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-open
         #
         def open(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.open' }
@@ -48,12 +75,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = nil
+          body = nil
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_open"
+          path   = "#{Utils.listify(_index)}/_open"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

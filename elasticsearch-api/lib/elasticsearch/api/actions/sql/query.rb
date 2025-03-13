@@ -15,20 +15,23 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module SQL
       module Actions
-        # Executes a SQL request
+        # Get SQL search results.
+        # Run an SQL request.
         #
-        # @option arguments [String] :format a short version of the Accept header, e.g. json, yaml
+        # @option arguments [String] :format The format for the response.
+        #  You can also specify a format using the +Accept+ HTTP header.
+        #  If you specify both this parameter and the +Accept+ HTTP header, this parameter takes precedence.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Use the `query` element to start a query. Use the `cursor` element to continue a query. (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query
         #
         def query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.query' }
@@ -38,7 +41,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = Elasticsearch::API::HTTP_POST
           path   = '_sql'

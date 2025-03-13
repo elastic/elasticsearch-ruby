@@ -15,35 +15,39 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves anomaly detection job results for one or more buckets.
+        # Get anomaly detection job results for buckets.
+        # The API presents a chronological view of the records, grouped by bucket.
         #
-        # @option arguments [String] :job_id ID of the job to get bucket results from
-        # @option arguments [String] :timestamp The timestamp of the desired single bucket result
-        # @option arguments [Boolean] :expand Include anomaly records
-        # @option arguments [Boolean] :exclude_interim Exclude interim results
-        # @option arguments [Integer] :from skips a number of buckets
-        # @option arguments [Integer] :size specifies a max number of buckets to get
-        # @option arguments [String] :start Start time filter for buckets
-        # @option arguments [String] :end End time filter for buckets
-        # @option arguments [Double] :anomaly_score Filter for the most anomalous buckets
-        # @option arguments [String] :sort Sort buckets by a particular field
-        # @option arguments [Boolean] :desc Set the sort direction
+        # @option arguments [String] :job_id Identifier for the anomaly detection job. (*Required*)
+        # @option arguments [String, Time] :timestamp The timestamp of a single bucket result. If you do not specify this
+        #  parameter, the API returns information about all buckets.
+        # @option arguments [Float] :anomaly_score Returns buckets with anomaly scores greater or equal than this value. Server default: 0.
+        # @option arguments [Boolean] :desc If +true+, the buckets are sorted in descending order.
+        # @option arguments [String, Time] :end Returns buckets with timestamps earlier than this time. +-1+ means it is
+        #  unset and results are not limited to specific timestamps. Server default: -1.
+        # @option arguments [Boolean] :exclude_interim If +true+, the output excludes interim results.
+        # @option arguments [Boolean] :expand If true, the output includes anomaly records.
+        # @option arguments [Integer] :from Skips the specified number of buckets. Server default: 0.
+        # @option arguments [Integer] :size Specifies the maximum number of buckets to obtain. Server default: 100.
+        # @option arguments [String] :sort Specifies the sort field for the requested buckets. Server default: timestamp.
+        # @option arguments [String, Time] :start Returns buckets with timestamps after this time. +-1+ means it is unset
+        #  and results are not limited to specific timestamps. Server default: -1.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body Bucket selection details if not provided in URI
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-bucket.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-buckets
         #
         def get_buckets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_buckets' }
 
-          defined_params = %i[job_id timestamp].each_with_object({}) do |variable, set_variables|
+          defined_params = [:job_id, :timestamp].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -65,11 +69,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _job_id && _timestamp
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets/#{Utils.__listify(_timestamp)}"
-                 else
-                   "_ml/anomaly_detectors/#{Utils.__listify(_job_id)}/results/buckets"
-                 end
+          path   = if _job_id && _timestamp
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets/#{Utils.listify(_timestamp)}"
+                   else
+                     "_ml/anomaly_detectors/#{Utils.listify(_job_id)}/results/buckets"
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

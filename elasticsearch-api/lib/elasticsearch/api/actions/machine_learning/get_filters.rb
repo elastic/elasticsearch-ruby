@@ -15,21 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Retrieves filters.
+        # Get filters.
+        # You can get a single filter or all filters.
         #
-        # @option arguments [String] :filter_id The ID of the filter to fetch
-        # @option arguments [Integer] :from skips a number of filters
-        # @option arguments [Integer] :size specifies a max number of filters to get
+        # @option arguments [String, Array] :filter_id A string that uniquely identifies a filter.
+        # @option arguments [Integer] :from Skips the specified number of filters. Server default: 0.
+        # @option arguments [Integer] :size Specifies the maximum number of filters to obtain. Server default: 100.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-get-filter.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-filters
         #
         def get_filters(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_filters' }
@@ -48,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _filter_id
-                     "_ml/filters/#{Utils.__listify(_filter_id)}"
+                     "_ml/filters/#{Utils.listify(_filter_id)}"
                    else
                      '_ml/filters'
                    end

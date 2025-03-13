@@ -15,21 +15,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module CrossClusterReplication
       module Actions
-        # Resumes a follower index that has been paused
+        # Resume a follower.
+        # Resume a cross-cluster replication follower index that was paused.
+        # The follower index could have been paused with the pause follower API.
+        # Alternatively it could be paused due to replication that cannot be retried due to failures during following tasks.
+        # When this API returns, the follower index will resume fetching operations from the leader index.
         #
-        # @option arguments [String] :index The name of the follow index to resume following.
-        # @option arguments [Time] :master_timeout Explicit operation timeout for connection to master node
+        # @option arguments [String] :index The name of the follow index to resume following. (*Required*)
+        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The name of the leader index and other optional ccr related parameters
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-post-resume-follow.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-resume-follow
         #
         def resume_follow(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.resume_follow' }
@@ -44,12 +48,12 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "#{Utils.__listify(_index)}/_ccr/resume_follow"
+          path   = "#{Utils.listify(_index)}/_ccr/resume_follow"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

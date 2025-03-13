@@ -35,9 +35,8 @@ module Elasticsearch
         def simulate_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.simulate_index_template' }
 
-          defined_params = [:name].inject({}) do |set_variables, variable|
+          defined_params = [:name].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
-            set_variables
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
@@ -51,7 +50,7 @@ module Elasticsearch
           _name = arguments.delete(:name)
 
           method = Elasticsearch::API::HTTP_POST
-          path   = "_index_template/_simulate_index/#{Utils.__listify(_name)}"
+          path   = "_index_template/_simulate_index/#{Utils.listify(_name)}"
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

@@ -15,19 +15,21 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieves stored watches.
+        # Query watches.
+        # Get all registered watches in a paginated manner and optionally filter watches by a query.
+        # Note that only the +_id+ and +metadata.*+ fields are queryable or sortable.
         #
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body From, size, query, sort and search_after
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-query-watches.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-query-watches
         #
         def query_watches(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.query_watches' }
@@ -35,7 +37,7 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           method = if body
                      Elasticsearch::API::HTTP_POST
@@ -43,7 +45,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = '_watcher/_query/watches'
+          path   = '_watcher/_query/watches'
           params = {}
 
           Elasticsearch::API::Response.new(

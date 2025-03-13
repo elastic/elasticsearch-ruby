@@ -15,22 +15,33 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Previews a datafeed.
+        # Preview a datafeed.
+        # This API returns the first "page" of search results from a datafeed.
+        # You can preview an existing datafeed or provide configuration details for a datafeed
+        # and anomaly detection job in the API. The preview shows the structure of the data
+        # that will be passed to the anomaly detection engine.
+        # IMPORTANT: When Elasticsearch security features are enabled, the preview uses the credentials of the user that
+        # called the API. However, when the datafeed starts it uses the roles of the last user that created or updated the
+        # datafeed. To get a preview that accurately reflects the behavior of the datafeed, use the appropriate credentials.
+        # You can also use secondary authorization headers to supply the credentials.
         #
-        # @option arguments [String] :datafeed_id The ID of the datafeed to preview
-        # @option arguments [String] :start The start time from where the datafeed preview should begin
-        # @option arguments [String] :end The end time when the datafeed preview should stop
+        # @option arguments [String] :datafeed_id A numerical character string that uniquely identifies the datafeed. This identifier can contain lowercase
+        #  alphanumeric characters (a-z and 0-9), hyphens, and underscores. It must start and end with alphanumeric
+        #  characters. NOTE: If you use this path parameter, you cannot provide datafeed or anomaly detection job
+        #  configuration details in the request body.
+        # @option arguments [String, Time] :start The start time from where the datafeed preview should begin
+        # @option arguments [String, Time] :end The end time when the datafeed preview should stop
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The datafeed config and job config with which to execute the preview
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ml-preview-datafeed.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-preview-datafeed
         #
         def preview_datafeed(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.preview_datafeed' }
@@ -53,11 +64,11 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path = if _datafeed_id
-                   "_ml/datafeeds/#{Utils.__listify(_datafeed_id)}/_preview"
-                 else
-                   '_ml/datafeeds/_preview'
-                 end
+          path   = if _datafeed_id
+                     "_ml/datafeeds/#{Utils.listify(_datafeed_id)}/_preview"
+                   else
+                     '_ml/datafeeds/_preview'
+                   end
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(

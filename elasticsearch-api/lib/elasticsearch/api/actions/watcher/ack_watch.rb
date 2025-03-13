@@ -15,25 +15,32 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Acknowledges a watch, manually throttling the execution of the watch's actions.
+        # Acknowledge a watch.
+        # Acknowledging a watch enables you to manually throttle the execution of the watch's actions.
+        # The acknowledgement state of an action is stored in the +status.actions.<id>.ack.state+ structure.
+        # IMPORTANT: If the specified watch is currently being executed, this API will return an error
+        # The reason for this behavior is to prevent overwriting the watch status from a watch execution.
+        # Acknowledging an action throttles further executions of that action until its +ack.state+ is reset to +awaits_successful_execution+.
+        # This happens when the condition of the watch is not met (the condition evaluates to false).
         #
-        # @option arguments [String] :watch_id Watch ID
-        # @option arguments [List] :action_id A comma-separated list of the action ids to be acked
+        # @option arguments [String] :watch_id The watch identifier. (*Required*)
+        # @option arguments [String, Array<String>] :action_id A comma-separated list of the action identifiers to acknowledge.
+        #  If you omit this parameter, all of the actions of the watch are acknowledged.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-ack-watch.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-ack-watch
         #
         def ack_watch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.ack_watch' }
 
-          defined_params = %i[watch_id action_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:watch_id, :action_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -51,9 +58,9 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = if _watch_id && _action_id
-                     "_watcher/watch/#{Utils.__listify(_watch_id)}/_ack/#{Utils.__listify(_action_id)}"
+                     "_watcher/watch/#{Utils.listify(_watch_id)}/_ack/#{Utils.listify(_action_id)}"
                    else
-                     "_watcher/watch/#{Utils.__listify(_watch_id)}/_ack"
+                     "_watcher/watch/#{Utils.listify(_watch_id)}/_ack"
                    end
           params = {}
 

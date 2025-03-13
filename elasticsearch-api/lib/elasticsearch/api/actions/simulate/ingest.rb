@@ -15,25 +15,40 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Simulate
       module Actions
-        # Simulates running ingest with example documents.
+        # Simulate data ingestion.
+        # Run ingest pipelines against a set of provided documents, optionally with substitute pipeline definitions, to simulate ingesting data into an index.
+        # This API is meant to be used for troubleshooting or pipeline development, as it does not actually index any data into Elasticsearch.
+        # The API runs the default and final pipeline for that index against a set of documents provided in the body of the request.
+        # If a pipeline contains a reroute processor, it follows that reroute processor to the new index, running that index's pipelines as well the same way that a non-simulated ingest would.
+        # No data is indexed into Elasticsearch.
+        # Instead, the transformed document is returned, along with the list of pipelines that have been run and the name of the index where the document would have been indexed if this were not a simulation.
+        # The transformed document is validated against the mappings that would apply to this index, and any validation error is reported in the result.
+        # This API differs from the simulate pipeline API in that you specify a single pipeline for that API, and it runs only that one pipeline.
+        # The simulate pipeline API is more useful for developing a single pipeline, while the simulate ingest API is more useful for troubleshooting the interaction of the various pipelines that get applied when ingesting into an index.
+        # By default, the pipeline definitions that are currently in the system are used.
+        # However, you can supply substitute pipeline definitions in the body of the request.
+        # These will be used in place of the pipeline definitions that are already in the system. This can be used to replace existing pipeline definitions or to create new ones. The pipeline substitutions are used only within this request.
         # This functionality is Experimental and may be changed or removed
         # completely in a future release. Elastic will take a best effort approach
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String] :index Default index for docs which don't provide one
-        # @option arguments [String] :pipeline The pipeline id to preprocess incoming documents with if no pipeline is given for a particular document
+        # @option arguments [String] :index The index to simulate ingesting into.
+        #  This value can be overridden by specifying an index on each document.
+        #  If you specify this parameter in the request path, it is used for any documents that do not explicitly specify an index argument.
+        # @option arguments [String] :pipeline The pipeline to use as the default pipeline.
+        #  This value can be used to override the default pipeline of the index.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The simulate definition (*Required*)
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/simulate-ingest-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-simulate-ingest
         #
         def ingest(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'simulate.ingest' }
@@ -48,13 +63,13 @@ module Elasticsearch
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body   = arguments.delete(:body)
+          body = arguments.delete(:body)
 
           _index = arguments.delete(:index)
 
           method = Elasticsearch::API::HTTP_POST
           path   = if _index
-                     "_ingest/#{Utils.__listify(_index)}/_simulate"
+                     "_ingest/#{Utils.listify(_index)}/_simulate"
                    else
                      '_ingest/_simulate'
                    end

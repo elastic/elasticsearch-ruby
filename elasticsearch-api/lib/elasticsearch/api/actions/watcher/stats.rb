@@ -15,20 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Watcher
       module Actions
-        # Retrieves the current Watcher metrics.
+        # Get Watcher statistics.
+        # This API always returns basic metrics.
+        # You retrieve more metrics by using the metric parameter.
         #
-        # @option arguments [List] :metric Controls what additional stat metrics should be include in the response (options: _all, queued_watches, current_watches, pending_watches)
-        # @option arguments [Boolean] :emit_stacktraces Emits stack traces of currently running watches
+        # @option arguments [Watchermetric] :metric Defines which additional metrics are included in the response.
+        # @option arguments [Boolean] :emit_stacktraces Defines whether stack traces are generated for each watch that is running.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/watcher-api-stats.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.stats' }
@@ -47,7 +49,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = if _metric
-                     "_watcher/stats/#{Utils.__listify(_metric)}"
+                     "_watcher/stats/#{Utils.listify(_metric)}"
                    else
                      '_watcher/stats'
                    end
