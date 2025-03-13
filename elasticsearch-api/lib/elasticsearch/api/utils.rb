@@ -177,63 +177,6 @@ module Elasticsearch
         end
       end
 
-      def __report_unsupported_parameters(arguments, params=[])
-        messages = []
-        unsupported_params = params.select {|d| d.is_a?(Hash) ? arguments.include?(d.keys.first) : arguments.include?(d) }
-
-        unsupported_params.each do |param|
-          name = case param
-          when Symbol
-            param
-          when Hash
-            param.keys.first
-          else
-            raise ArgumentError, "The param must be a Symbol or a Hash"
-          end
-
-          explanation = if param.is_a?(Hash)
-            ". #{param.values.first[:explanation]}."
-          else
-            ". This parameter is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
-          end
-
-          message = "[!] You are using unsupported parameter [:#{name}]"
-
-          if source = caller && caller.last
-            message += " in `#{source}`"
-          end
-
-          message += explanation
-
-          messages << message
-        end
-
-        unless messages.empty?
-          messages << "Suppress this warning by the `-WO` command line flag."
-
-          if STDERR.tty?
-            Kernel.warn messages.map { |m| "\e[31;1m#{m}\e[0m" }.join("\n")
-          else
-            Kernel.warn messages.join("\n")
-          end
-        end
-      end
-
-      def __report_unsupported_method(name)
-        message = "[!] You are using unsupported method [#{name}]"
-        if source = caller && caller.last
-          message += " in `#{source}`"
-        end
-
-        message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release. Suppress this warning by the `-WO` command line flag."
-
-        if STDERR.tty?
-          Kernel.warn "\e[31;1m#{message}\e[0m"
-        else
-          Kernel.warn message
-        end
-      end
-
       extend self
     end
   end
