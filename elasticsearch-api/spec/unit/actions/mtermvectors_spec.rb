@@ -18,26 +18,35 @@
 require 'spec_helper'
 
 describe 'client#mtermvectors' do
-  let(:expected_args) do
-    [
-      'POST',
-      'my-index/_mtermvectors',
-      {},
-      body,
-      {},
-      { defined_params: { index: 'my-index' }, endpoint: 'mtermvectors' }
-    ]
-  end
+  context 'in body' do
+    let(:expected_args) do
+      [
+        'POST',
+        'my-index/_mtermvectors',
+        {},
+        { ids: [1, 2, 3] },
+        {},
+        { defined_params: { index: 'my-index' }, endpoint: 'mtermvectors' }
+      ]
+    end
 
-  let(:body) do
-    { ids: [1, 2, 3] }
-  end
-
-  it 'performs the request' do
-    expect(client_double.mtermvectors(index: 'my-index', body: { ids: [1, 2, 3] })).to be_a Elasticsearch::API::Response
+    it 'performs the request' do
+      expect(client_double.mtermvectors(index: 'my-index', body: { ids: [1, 2, 3] })).to be_a Elasticsearch::API::Response
+    end
   end
 
   context 'when a list of ids is passed instead of a body' do
+    let(:expected_args) do
+      [
+        'GET',
+        'my-index/_mtermvectors',
+        { ids: '1,2,3' },
+        nil,
+        {},
+        { defined_params: { index: 'my-index' }, endpoint: 'mtermvectors' }
+      ]
+    end
+
     it 'performs the request' do
       expect(client_double.mtermvectors(index: 'my-index', ids: [1, 2, 3])).to be_a Elasticsearch::API::Response
     end
