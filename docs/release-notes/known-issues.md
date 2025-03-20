@@ -1,5 +1,5 @@
 ---
-navigation_title: "Elasticsearch Ruby Client"
+navigation_title: "Known issues"
 
 ---
 
