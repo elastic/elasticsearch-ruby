@@ -46,7 +46,7 @@ When you click on `Create API key` you can choose a name and set the other optio
 
 After this step you will get the `API key` in the API keys page.
 
-:::{image} ../images/cloud_api_key.png
+:::{image} images/cloud_api_key.png
 :alt: API key
 :::
 
