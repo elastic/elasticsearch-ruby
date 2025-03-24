@@ -27,11 +27,12 @@ module Elasticsearch
         # @option arguments [String] :name The name of the template
         # @option arguments [Number] :order The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
         # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
+        # @option arguments [String] :cause User defined reason for creating/updating the index template
         # @option arguments [Time] :master_timeout Specify timeout for connection to master
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The template definition (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates-v1.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/indices-templates-v1.html
         #
         def put_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.put_template' }

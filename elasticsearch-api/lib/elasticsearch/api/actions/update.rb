@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body The request definition requires either `script` or partial `doc` (*Required*)
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update.html
+      # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/docs-update.html
       #
       def update(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'update' }
