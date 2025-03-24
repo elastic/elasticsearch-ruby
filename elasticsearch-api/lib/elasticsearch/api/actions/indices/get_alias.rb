@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for waiting for new cluster state in case it is blocked
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/indices-aliases.html
         #
         def get_alias(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_alias' }

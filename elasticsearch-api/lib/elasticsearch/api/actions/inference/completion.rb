@@ -22,19 +22,18 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform streaming inference
+        # Perform completion inference
         #
         # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference payload
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/post-stream-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/post-inference-api.html
         #
-        def stream_inference(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.stream_inference' }
+        def completion(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.completion' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -48,14 +47,8 @@ module Elasticsearch
 
           _inference_id = arguments.delete(:inference_id)
 
-          _task_type = arguments.delete(:task_type)
-
           method = Elasticsearch::API::HTTP_POST
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}/_stream"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}/_stream"
-                   end
+          path   = "_inference/completion/#{Utils.__listify(_inference_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

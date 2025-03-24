@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Boolean] :accept_enterprise If this param is used it must be set to true *Deprecated*
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/info-api.html
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.info' }

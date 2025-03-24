@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Timeout for processing on master node
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/start-trial.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/start-trial.html
         #
         def post_start_trial(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.post_start_trial' }

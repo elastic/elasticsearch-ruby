@@ -24,11 +24,9 @@ module Elasticsearch
       module Actions
         # Returns help for the Cat APIs.
         #
-        # @option arguments [Boolean] :help Return help information
-        # @option arguments [List] :s Comma-separated list of column names or column aliases to sort by
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/cat.html
         #
         def help(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.help' }
@@ -40,7 +38,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_GET
           path   = '_cat'
-          params = Utils.process_params(arguments)
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

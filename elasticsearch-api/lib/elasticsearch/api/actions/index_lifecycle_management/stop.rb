@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-stop.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/ilm-stop.html
         #
         def stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.stop' }

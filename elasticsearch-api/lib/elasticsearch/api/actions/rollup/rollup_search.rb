@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The search request body (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/rollup-search.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/rollup-search.html
         #
         def rollup_search(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'rollup.rollup_search' }
