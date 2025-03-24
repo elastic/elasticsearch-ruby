@@ -20,41 +20,44 @@
 #
 module Elasticsearch
   module API
-    module Indices
+    module Inference
       module Actions
-        # Creates or updates an index template.
+        # Configure a HuggingFace inference endpoint
         #
-        # @option arguments [String] :name The name of the template
-        # @option arguments [Number] :order The order for this template when merging multiple matching ones (higher numbers are merged later, overriding the lower numbers)
-        # @option arguments [Boolean] :create Whether the index template should only be added if new or can also replace an existing one
-        # @option arguments [String] :cause User defined reason for creating/updating the index template
-        # @option arguments [Time] :master_timeout Specify timeout for connection to master
+        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :huggingface_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The template definition (*Required*)
+        # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-templates-v1.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/infer-service-hugging-face.html
         #
-        def put_template(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'indices.put_template' }
+        def put_hugging_face(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_hugging_face' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[task_type huggingface_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:huggingface_inference_id]
+            raise ArgumentError,
+                  "Required argument 'huggingface_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
+          _task_type = arguments.delete(:task_type)
+
+          _huggingface_inference_id = arguments.delete(:huggingface_inference_id)
 
           method = Elasticsearch::API::HTTP_PUT
-          path   = "_template/#{Utils.__listify(_name)}"
-          params = Utils.process_params(arguments)
+          path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_huggingface_inference_id)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
