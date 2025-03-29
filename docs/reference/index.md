@@ -1,6 +1,6 @@
 ---
 mapped_pages:
-  https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html
+  - https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/index.html
   - https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/ruby_client.html
 ---
 
