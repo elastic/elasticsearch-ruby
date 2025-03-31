@@ -36,6 +36,7 @@ namespace :test do
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.pattern = 'spec/elasticsearch/api/**/*_spec.rb'
     t.exclude_pattern = 'spec/platinum/**/*_spec.rb'
+    t.exclude_pattern += ',spec/elasticsearch/api/perform_request_spec.rb' unless ENV['TEST_WITH_OTEL']
   end
 
   desc 'Run Rest API Spec tests'
