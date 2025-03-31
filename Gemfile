@@ -38,5 +38,5 @@ end
 group :development, :test do
   gem 'debug' unless defined?(JRUBY_VERSION)
   gem 'rspec'
-  gem 'rubocop', '>= 1.51' unless defined?(JRUBY_VERSION) && Gem::Version.new(JRUBY_VERSION) <= Gem::Version.new('9.4')
+  gem 'rubocop', '>= 1.51' unless defined?(JRUBY_VERSION)
 end
