@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Explicit operation timeout
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/slm-api-get-status.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/slm-api-get-status.html
         #
         def get_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.get_status' }

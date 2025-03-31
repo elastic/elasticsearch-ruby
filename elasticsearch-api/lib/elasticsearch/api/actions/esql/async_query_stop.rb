@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The async query ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/esql-async-query-stop-api.html
         #
         def async_query_stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_stop' }

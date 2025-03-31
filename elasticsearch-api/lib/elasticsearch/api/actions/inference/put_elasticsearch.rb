@@ -22,40 +22,41 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform inference
+        # Configure an Elasticsearch inference endpoint
         #
-        # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
+        # @option arguments [String] :elasticsearch_inference_id The inference Id
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference payload
+        # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/post-inference-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/9.0/infer-service-elasticsearch.html
         #
-        def inference(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.inference' }
+        def put_elasticsearch(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_elasticsearch' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = %i[task_type elasticsearch_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:elasticsearch_inference_id]
+            raise ArgumentError,
+                  "Required argument 'elasticsearch_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _inference_id = arguments.delete(:inference_id)
-
           _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}"
-                   end
+          _elasticsearch_inference_id = arguments.delete(:elasticsearch_inference_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_elasticsearch_inference_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(
