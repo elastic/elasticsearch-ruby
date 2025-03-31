@@ -77,13 +77,23 @@ module Elasticsearch
       # @option arguments [String] :index The name of the data stream or index to target.
       #  If the target doesn't exist and matches the name or wildcard (+*+) pattern of an index template with a +data_stream+ definition, this request creates the data stream.
       #  If the target doesn't exist and doesn’t match a data stream template, this request creates the index. (*Required*)
+      # @option arguments [Integer] :if_primary_term Only perform the operation if the document has this primary term.
+      # @option arguments [Integer] :if_seq_no Only perform the operation if the document has this sequence number.
       # @option arguments [Boolean] :include_source_on_error True or false if to include the document source in the error message in case of parsing errors. Server default: true.
+      # @option arguments [String] :op_type Set to +create+ to only index the document if it does not already exist (put if absent).
+      #  If a document with the specified +_id+ already exists, the indexing operation will fail.
+      #  The behavior is the same as using the +<index>/_create+ endpoint.
+      #  If a document ID is specified, this paramater defaults to +index+.
+      #  Otherwise, it defaults to +create+.
+      #  If the request targets a data stream, an +op_type+ of +create+ is required.
       # @option arguments [String] :pipeline The ID of the pipeline to use to preprocess incoming documents.
       #  If the index has a default ingest pipeline specified, setting the value to +_none+ turns off the default ingest pipeline for this request.
       #  If a final pipeline is configured, it will always run regardless of the value of this parameter.
       # @option arguments [String] :refresh If +true+, Elasticsearch refreshes the affected shards to make this operation visible to search.
       #  If +wait_for+, it waits for a refresh to make this operation visible to search.
       #  If +false+, it does nothing with refreshes. Server default: false.
+      # @option arguments [Boolean] :require_alias If +true+, the destination must be an index alias.
+      # @option arguments [Boolean] :require_data_stream If +true+, the request's actions must target a data stream (existing or to be created).
       # @option arguments [String] :routing A custom value that is used to route operations to a specific shard.
       # @option arguments [Time] :timeout The period the request waits for the following operations: automatic index creation, dynamic mapping updates, waiting for active shards.
       #  Elasticsearch waits for at least the specified timeout period before failing.
@@ -110,11 +120,26 @@ module Elasticsearch
         end
         request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-        if arguments[:id]
-          index arguments.update op_type: 'create'
-        else
-          index arguments
-        end
+        raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+        raise ArgumentError, "Required argument 'index' missing" unless arguments[:index]
+        raise ArgumentError, "Required argument 'id' missing" unless arguments[:id]
+
+        arguments = arguments.clone
+        headers = arguments.delete(:headers) || {}
+
+        body = arguments.delete(:body)
+
+        _id = arguments.delete(:id)
+
+        _index = arguments.delete(:index)
+
+        method = Elasticsearch::API::HTTP_PUT
+        path   = "#{Utils.listify(_index)}/_create/#{Utils.listify(_id)}"
+        params = Utils.process_params(arguments)
+
+        Elasticsearch::API::Response.new(
+          perform_request(method, path, params, body, headers, request_opts)
+        )
       end
     end
   end
