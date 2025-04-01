@@ -17,20 +17,20 @@
 
 require 'spec_helper'
 
-describe 'client#inference.chat_completion_unified' do
+describe 'client#inference.put_alibabacloud' do
   let(:expected_args) do
     [
-      'POST',
-      '_inference/chat_completion/bar/_stream',
+      'PUT',
+      '_inference/foo/bar',
       {},
+      nil,
       {},
-      {},
-      { defined_params: { inference_id: 'bar' },
-        endpoint: 'inference.chat_completion_unified' }
+      { defined_params: { alibabacloud_inference_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.put_alibabacloud' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.chat_completion_unified(inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_alibabacloud(task_type: 'foo', alibabacloud_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

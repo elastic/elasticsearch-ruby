@@ -22,36 +22,44 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform chat completion inference
+        # Create an Elasticsearch inference endpoint.
+        # Create an inference endpoint to perform an inference task with the +elasticsearch+ service.
         #
-        # @option arguments [String] :inference_id The inference Id (*Required*)
-        # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
+        # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
+        # @option arguments [String] :elasticsearch_inference_id The unique identifier of the inference endpoint.
+        #  The must not match the +model_id+. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body chat_completion_request
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elasticsearch
         #
-        def chat_completion_unified(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.chat_completion_unified' }
+        def put_elasticsearch(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_elasticsearch' }
 
-          defined_params = [:inference_id].each_with_object({}) do |variable, set_variables|
+          defined_params = [:task_type, :elasticsearch_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:elasticsearch_inference_id]
+            raise ArgumentError,
+                  "Required argument 'elasticsearch_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _inference_id = arguments.delete(:inference_id)
+          _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = "_inference/chat_completion/#{Utils.listify(_inference_id)}/_stream"
-          params = Utils.process_params(arguments)
+          _elasticsearch_inference_id = arguments.delete(:elasticsearch_inference_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_elasticsearch_inference_id)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

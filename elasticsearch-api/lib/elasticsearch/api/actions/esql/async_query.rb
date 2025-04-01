@@ -26,6 +26,7 @@ module Elasticsearch
         # Asynchronously run an ES|QL (Elasticsearch query language) query, monitor its progress, and retrieve results when they become available.
         # The API accepts the same parameters and request body as the synchronous query API, along with additional async related properties.
         #
+        # @option arguments [Boolean] :allow_partial_results If +true+, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards.
         # @option arguments [String] :delimiter The character to use between values within a CSV row.
         #  It is valid only for the CSV format.
         # @option arguments [Boolean] :drop_null_columns Indicates whether columns that are entirely +null+ will be removed from the +columns+ and +values+ portion of the results.

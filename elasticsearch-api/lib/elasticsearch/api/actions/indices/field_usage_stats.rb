@@ -42,8 +42,6 @@ module Elasticsearch
         #  Supports comma-separated values, such as +open,hidden+.
         # @option arguments [Boolean] :ignore_unavailable If +true+, missing or closed indices are not included in the response.
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
-        # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
-        #  Set to all or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-field-usage-stats

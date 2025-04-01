@@ -17,20 +17,20 @@
 
 require 'spec_helper'
 
-describe 'client#inference.chat_completion_unified' do
+describe 'client#inference.put_mistral' do
   let(:expected_args) do
     [
-      'POST',
-      '_inference/chat_completion/bar/_stream',
+      'PUT',
+      '_inference/foo/bar',
       {},
+      nil,
       {},
-      {},
-      { defined_params: { inference_id: 'bar' },
-        endpoint: 'inference.chat_completion_unified' }
+      { defined_params: { mistral_inference_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.put_mistral' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.chat_completion_unified(inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put_mistral(task_type: 'foo', mistral_inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

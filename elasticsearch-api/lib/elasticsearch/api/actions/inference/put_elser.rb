@@ -20,46 +20,47 @@
 #
 module Elasticsearch
   module API
-    module Indices
+    module Inference
       module Actions
-        # Check index templates.
-        # Check whether index templates exist.
+        # Create an ELSER inference endpoint.
+        # Create an inference endpoint to perform an inference task with the +elser+ service.
+        # You can also deploy ELSER by using the Elasticsearch inference integration.
         #
-        # @option arguments [String] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. (*Required*)
-        # @option arguments [Boolean] :local If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
-        # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
-        # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
+        # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
+        # @option arguments [String] :elser_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-index-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-elser
         #
-        def exists_index_template(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_index_template' }
+        def put_elser(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_elser' }
 
-          defined_params = [:name].each_with_object({}) do |variable, set_variables|
+          defined_params = [:task_type, :elser_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'name' missing" unless arguments[:name]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+          raise ArgumentError, "Required argument 'elser_inference_id' missing" unless arguments[:elser_inference_id]
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _name = arguments.delete(:name)
+          _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_HEAD
-          path   = "_index_template/#{Utils.listify(_name)}"
-          params = Utils.process_params(arguments)
+          _elser_inference_id = arguments.delete(:elser_inference_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_elser_inference_id)}"
+          params = {}
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
           )
         end
-
-        alias exists_index_template? exists_index_template
       end
     end
   end
