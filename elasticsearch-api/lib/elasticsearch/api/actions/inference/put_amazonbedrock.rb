@@ -15,47 +15,49 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit c34efd13258a01121b10a538e5b450b4e65c7bf3
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
     module Inference
       module Actions
-        # Perform inference using the Unified Schema
+        # Create an Amazon Bedrock inference endpoint.
+        # Creates an inference endpoint to perform an inference task with the +amazonbedrock+ service.
         #
-        # @option arguments [String] :inference_id The inference Id
-        # @option arguments [String] :task_type The task type
+        # @option arguments [String] :task_type The type of the inference task that the model will perform. (*Required*)
+        # @option arguments [String] :amazonbedrock_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body The inference payload
+        # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/unified-inference-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-amazonbedrock
         #
-        def unified_inference(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.unified_inference' }
+        def put_amazonbedrock(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.put_amazonbedrock' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:task_type, :amazonbedrock_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
-          raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
+          raise ArgumentError, "Required argument 'task_type' missing" unless arguments[:task_type]
+
+          unless arguments[:amazonbedrock_inference_id]
+            raise ArgumentError,
+                  "Required argument 'amazonbedrock_inference_id' missing"
+          end
 
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
           body = arguments.delete(:body)
 
-          _inference_id = arguments.delete(:inference_id)
-
           _task_type = arguments.delete(:task_type)
 
-          method = Elasticsearch::API::HTTP_POST
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}/_unified"
-                   else
-                     "_inference/#{Utils.__listify(_inference_id)}/_unified"
-                   end
+          _amazonbedrock_inference_id = arguments.delete(:amazonbedrock_inference_id)
+
+          method = Elasticsearch::API::HTTP_PUT
+          path   = "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_amazonbedrock_inference_id)}"
           params = {}
 
           Elasticsearch::API::Response.new(

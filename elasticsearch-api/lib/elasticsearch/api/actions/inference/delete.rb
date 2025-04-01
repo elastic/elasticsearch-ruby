@@ -15,8 +15,8 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from build hash f284cc16f4d4b4289bc679aa1529bb504190fe80
-# @see https://github.com/elastic/elasticsearch/tree/main/rest-api-spec
+# Auto generated from commit c34efd13258a01121b10a538e5b450b4e65c7bf3
+# @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
   module API
@@ -24,18 +24,18 @@ module Elasticsearch
       module Actions
         # Delete an inference endpoint
         #
-        # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
-        # @option arguments [Boolean] :dry_run If true the endpoint will not be deleted and a list of ingest processors which reference this endpoint will be returned.
-        # @option arguments [Boolean] :force If true the endpoint will be forcefully stopped (regardless of whether or not it is referenced by any ingest processors or semantic text fields).
+        # @option arguments [String] :inference_id The inference identifier. (*Required*)
+        # @option arguments [Boolean] :dry_run When true, the endpoint is not deleted and a list of ingest processors which reference this endpoint is returned.
+        # @option arguments [Boolean] :force When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/delete-inference-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }
 
-          defined_params = %i[inference_id task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:inference_id, :task_type].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
@@ -47,15 +47,15 @@ module Elasticsearch
 
           body = nil
 
-          _inference_id = arguments.delete(:inference_id)
-
           _task_type = arguments.delete(:task_type)
+
+          _inference_id = arguments.delete(:inference_id)
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = if _task_type && _inference_id
-                     "_inference/#{Utils.__listify(_task_type)}/#{Utils.__listify(_inference_id)}"
+                     "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_inference_id)}"
                    else
-                     "_inference/#{Utils.__listify(_inference_id)}"
+                     "_inference/#{Utils.listify(_inference_id)}"
                    end
           params = Utils.process_params(arguments)
 
