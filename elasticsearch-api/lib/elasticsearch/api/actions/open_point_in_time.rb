@@ -60,6 +60,7 @@ module Elasticsearch
       # @option arguments [Boolean] :allow_partial_search_results Indicates whether the point in time tolerates unavailable shards or shard failures when initially creating the PIT.
       #  If +false+, creating a point in time request when a shard is missing or unavailable will throw an exception.
       #  If +true+, the point in time will contain all the shards that are available at the time of the request.
+      # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #

@@ -63,7 +63,7 @@ module Elasticsearch
                    else
                      '_analyze'
                    end
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)

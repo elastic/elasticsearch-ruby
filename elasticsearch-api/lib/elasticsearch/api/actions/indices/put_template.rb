@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [Integer] :order Order in which Elasticsearch applies this template if index
         #  matches multiple templates.Templates with lower 'order' values are merged first. Templates with higher
         #  'order' values are merged later, overriding templates with lower values.
-        # @option arguments [String] :cause [TODO]
+        # @option arguments [String] :cause User defined reason for creating/updating the index template
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

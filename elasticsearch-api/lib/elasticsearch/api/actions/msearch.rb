@@ -48,6 +48,7 @@ module Elasticsearch
       #  Typically, this adds a small overhead to a request.
       #  However, using computationally expensive named queries on a large number of hits may add significant overhead.
       # @option arguments [Integer] :max_concurrent_searches Maximum number of concurrent searches the multi search API can execute.
+      #  Defaults to +max(1, (# of data nodes * min(search thread pool size, 10)))+.
       # @option arguments [Integer] :max_concurrent_shard_requests Maximum number of concurrent shard requests that each sub-search request executes per node. Server default: 5.
       # @option arguments [Integer] :pre_filter_shard_size Defines a threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold. This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method i.e., if date filters are mandatory to match but the shard bounds and the query are disjoint.
       # @option arguments [Boolean] :rest_total_hits_as_int If true, hits.total are returned as an integer in the response. Defaults to false, which returns an object.

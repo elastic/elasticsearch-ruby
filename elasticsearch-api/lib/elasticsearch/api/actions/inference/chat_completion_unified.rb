@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :inference_id The inference Id (*Required*)
         # @option arguments [Time] :timeout Specifies the amount of time to wait for the inference request to complete. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
-        # @option arguments [Hash] :body request body
+        # @option arguments [Hash] :body chat_completion_request
         #
         # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-unified-inference
         #
@@ -39,6 +39,7 @@ module Elasticsearch
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
           raise ArgumentError, "Required argument 'inference_id' missing" unless arguments[:inference_id]
 
           arguments = arguments.clone

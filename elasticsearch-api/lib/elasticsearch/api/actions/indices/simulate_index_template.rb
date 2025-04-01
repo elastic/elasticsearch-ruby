@@ -26,6 +26,8 @@ module Elasticsearch
         # Get the index configuration that would be applied to the specified index from an existing index template.
         #
         # @option arguments [String] :name Name of the index to simulate (*Required*)
+        # @option arguments [Boolean] :create Whether the index template we optionally defined in the body should only be dry-run added if new or can also replace an existing one
+        # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes Server default: false.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers
