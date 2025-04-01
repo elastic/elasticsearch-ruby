@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from commit 69cbe7cbe9f49a2886bb419ec847cffb58f8b4fb
 # @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
@@ -52,7 +52,7 @@ module Elasticsearch
                      Elasticsearch::API::HTTP_GET
                    end
 
-          path   = "_security/profile/_suggest"
+          path   = '_security/profile/_suggest'
           params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
