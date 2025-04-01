@@ -28,6 +28,7 @@ module Elasticsearch
         # @option arguments [String] :name Name of the index template to simulate. To test a template configuration before you add it to the cluster, omit
         #  this parameter and specify the template configuration in the request body.
         # @option arguments [Boolean] :create If true, the template passed in the body is only used if no existing templates match the same index patterns. If false, the simulation uses the template with the highest priority. Note that the template is not permanently added or updated in either case; it is only used for the simulation.
+        # @option arguments [String] :cause User defined reason for dry-run creating the new template for simulation purposes
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers

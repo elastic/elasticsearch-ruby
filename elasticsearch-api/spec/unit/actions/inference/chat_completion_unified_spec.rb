@@ -23,7 +23,7 @@ describe 'client#inference.chat_completion_unified' do
       'POST',
       '_inference/chat_completion/bar/_stream',
       {},
-      nil,
+      {},
       {},
       { defined_params: { inference_id: 'bar' },
         endpoint: 'inference.chat_completion_unified' }
@@ -31,6 +31,6 @@ describe 'client#inference.chat_completion_unified' do
   end
 
   it 'performs the request' do
-    expect(client_double.inference.chat_completion_unified(inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.chat_completion_unified(inference_id: 'bar', body: {})).to be_a Elasticsearch::API::Response
   end
 end

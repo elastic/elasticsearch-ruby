@@ -26,6 +26,8 @@ module Elasticsearch
         # Check whether index templates exist.
         #
         # @option arguments [String] :name Comma-separated list of index template names used to limit the request. Wildcard (*) expressions are supported. (*Required*)
+        # @option arguments [Boolean] :local If true, the request retrieves information from the local node only. Defaults to false, which means information is retrieved from the master node.
+        # @option arguments [Boolean] :flat_settings If true, returns settings in flat format.
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #

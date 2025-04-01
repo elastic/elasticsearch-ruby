@@ -60,6 +60,8 @@ module Elasticsearch
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Integer, String] :wait_for_active_shards The number of shard copies that must be active before proceeding with the operation.
         #  Set to all or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
+        # @option arguments [Boolean] :lazy If set to true, the rollover action will only mark a data stream to signal that it needs to be rolled over at the next write.
+        #  Only allowed on data streams.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #

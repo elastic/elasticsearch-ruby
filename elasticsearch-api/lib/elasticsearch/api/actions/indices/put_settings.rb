@@ -55,6 +55,9 @@ module Elasticsearch
         #  received before the timeout expires, the request fails and returns an
         #  error. Server default: 30s.
         # @option arguments [Boolean] :preserve_existing If +true+, existing index settings remain unchanged.
+        # @option arguments [Boolean] :reopen Whether to close and reopen the index to apply non-dynamic settings.
+        #  If set to +true+ the indices to which the settings are being applied
+        #  will be closed temporarily and then reopened in order to apply the changes.
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the
         #   timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
