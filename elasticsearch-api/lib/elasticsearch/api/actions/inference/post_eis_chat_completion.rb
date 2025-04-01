@@ -22,39 +22,35 @@ module Elasticsearch
   module API
     module Inference
       module Actions
-        # Get an inference endpoint
+        # Perform a chat completion task through the Elastic Inference Service (EIS).
+        # Perform a chat completion inference task with the +elastic+ service.
         #
-        # @option arguments [String] :task_type The task type
-        # @option arguments [String] :inference_id The inference Id
+        # @option arguments [String] :eis_inference_id The unique identifier of the inference endpoint. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
+        # @option arguments [Hash] :body chat_completion_request
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-post-eis-chat-completion
         #
-        def get(arguments = {})
-          request_opts = { endpoint: arguments[:endpoint] || 'inference.get' }
+        def post_eis_chat_completion(arguments = {})
+          request_opts = { endpoint: arguments[:endpoint] || 'inference.post_eis_chat_completion' }
 
-          defined_params = [:inference_id, :task_type].each_with_object({}) do |variable, set_variables|
+          defined_params = [:eis_inference_id].each_with_object({}) do |variable, set_variables|
             set_variables[variable] = arguments[variable] if arguments.key?(variable)
           end
           request_opts[:defined_params] = defined_params unless defined_params.empty?
 
+          raise ArgumentError, "Required argument 'body' missing" unless arguments[:body]
+          raise ArgumentError, "Required argument 'eis_inference_id' missing" unless arguments[:eis_inference_id]
+
           arguments = arguments.clone
           headers = arguments.delete(:headers) || {}
 
-          body = nil
+          body = arguments.delete(:body)
 
-          _task_type = arguments.delete(:task_type)
+          _eis_inference_id = arguments.delete(:eis_inference_id)
 
-          _inference_id = arguments.delete(:inference_id)
-
-          method = Elasticsearch::API::HTTP_GET
-          path   = if _task_type && _inference_id
-                     "_inference/#{Utils.listify(_task_type)}/#{Utils.listify(_inference_id)}"
-                   elsif _inference_id
-                     "_inference/#{Utils.listify(_inference_id)}"
-                   else
-                     '_inference'
-                   end
+          method = Elasticsearch::API::HTTP_POST
+          path   = "_inference/chat_completion/#{Utils.listify(_eis_inference_id)}/_stream"
           params = {}
 
           Elasticsearch::API::Response.new(
