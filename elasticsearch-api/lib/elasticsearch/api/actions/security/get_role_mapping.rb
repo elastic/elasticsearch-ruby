@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit f284cc16f4d4b4289bc679aa1529bb504190fe80
+# Auto generated from commit 3e97c19ea994ba17fbdaa94e813b27c345f9bbbd
 # @see https://github.com/elastic/elasticsearch-specification
 #
 module Elasticsearch
