@@ -23,10 +23,6 @@ module Elasticsearch
     module Inference
       module Actions
         # Perform streaming inference
-        # This functionality is Experimental and may be changed or removed
-        # completely in a future release. Elastic will take a best effort approach
-        # to fix any issues, but experimental features are not subject to the
-        # support SLA of official GA features.
         #
         # @option arguments [String] :inference_id The inference Id
         # @option arguments [String] :task_type The task type
