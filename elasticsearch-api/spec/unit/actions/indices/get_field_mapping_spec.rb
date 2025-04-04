@@ -26,7 +26,7 @@ describe 'client.cluster#get_field_mapping' do
         {},
         nil,
         {},
-        { endpoint: 'indices.get_field_mapping' }
+        { endpoint: 'indices.get_field_mapping', defined_params: { fields: 'foo' } }
     ]
   end
 
@@ -35,11 +35,10 @@ describe 'client.cluster#get_field_mapping' do
   end
 
   it 'performs the request' do
-    expect(client_double.indices.get_field_mapping(field: 'foo')).to be_a Elasticsearch::API::Response
+    expect(client_double.indices.get_field_mapping(fields: 'foo')).to be_a Elasticsearch::API::Response
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_mapping/field/bam'
     end
@@ -51,12 +50,12 @@ describe 'client.cluster#get_field_mapping' do
         {},
         nil,
         {},
-        { defined_params: { index: 'foo' }, endpoint: 'indices.get_field_mapping' }
+        { defined_params: { index: 'foo', fields: 'bam' }, endpoint: 'indices.get_field_mapping' }
       ]
     end
 
     it 'performs the request' do
-      expect(client_double.indices.get_field_mapping(index: 'foo', field: 'bam')).to be_a Elasticsearch::API::Response
+      expect(client_double.indices.get_field_mapping(index: 'foo', fields: 'bam')).to be_a Elasticsearch::API::Response
     end
   end
 end

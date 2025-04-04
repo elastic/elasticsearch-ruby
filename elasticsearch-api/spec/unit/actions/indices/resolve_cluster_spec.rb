@@ -30,19 +30,6 @@ describe 'client.indices#delete_alias' do
     ]
   end
 
-  context 'when there is no name specified' do
-    let(:client) do
-      Class.new { include Elasticsearch::API }.new
-    end
-
-    it 'raises an exception' do
-      expect {
-        client.indices.resolve_cluster
-      }.to raise_exception(ArgumentError)
-    end
-  end
-
-
   context 'when name is specified' do
     it 'performs the request' do
       expect(client_double.indices.resolve_cluster(name: 'foo')).to be_a Elasticsearch::API::Response
