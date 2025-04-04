@@ -18,15 +18,14 @@
 require 'spec_helper'
 
 describe 'client#security#get_api_key' do
-
   let(:expected_args) do
     [
-        'GET',
-        '_security/api_key',
-        params,
-        nil,
-        {},
-        { endpoint: 'security.get_api_key' }
+      'GET',
+      '_security/api_key',
+      params,
+      nil,
+      {},
+      { endpoint: 'security.get_api_key' }
     ]
   end
 
@@ -39,7 +38,6 @@ describe 'client#security#get_api_key' do
   end
 
   context 'when params are specified' do
-
     let(:params) do
       { id: '1',
         username: 'user',
@@ -49,9 +47,9 @@ describe 'client#security#get_api_key' do
 
     it 'performs the request' do
       expect(client_double.security.get_api_key(id: '1',
-                                                   username: 'user',
-                                                   name: 'my-api-key',
-                                                   realm_name: '_es_api_key')).to be_a Elasticsearch::API::Response
+                                                username: 'user',
+                                                name: 'my-api-key',
+                                                realm_name: '_es_api_key')).to be_a Elasticsearch::API::Response
     end
   end
 end

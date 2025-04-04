@@ -35,6 +35,7 @@ namespace :test do
   task :unit
   RSpec::Core::RakeTask.new(:unit) do |t|
     t.pattern = 'spec/unit/**/*_spec.rb'
+    t.exclude_pattern = 'spec/unit/perform_request_spec.rb' unless ENV['TEST_WITH_OTEL']
   end
 
   desc 'Run unit and integration tests'

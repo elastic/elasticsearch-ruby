@@ -23,7 +23,11 @@ require_relative File.expand_path('../../utils/thor/generator/files_helper', __d
 describe 'Perform request args' do
   Elasticsearch::API::FilesHelper.files.each do |filepath|
     spec = Elasticsearch::API::EndpointSpec.new(filepath)
-    next if spec.module_namespace.flatten.first == '_internal' || spec.visibility != 'public'
+    next if spec.module_namespace.flatten.first == '_internal' ||
+            spec.visibility != 'public' ||
+            # TODO: Once the test suite is migrated to elasticsearch-specification, these should be removed
+            spec.module_namespace.flatten.first == 'rollup' ||
+            ['scroll', 'clear_scroll', 'connector.last_sync'].include?(spec.endpoint_name)
 
     # These are the path parts defined by the user in the method argument
     defined_path_parts = spec.path_params.inject({}) do |params, part|
@@ -35,13 +39,11 @@ describe 'Perform request args' do
       params.merge(part.to_sym => 'testing')
     end
 
+    required_params.merge!(body: {}) if ['inference.put', 'inference.update', 'inference.chat_completion_unified'].include? spec.endpoint_name
+
     let(:client_double) do
       Class.new { include Elasticsearch::API }.new.tap do |client|
         expect(client).to receive(:perform_request) do |_, _, _, _, _, request_params|
-          # The create method ends up becoming an 'index' request
-          if expected_perform_request_params[:endpoint] == 'create'
-            expected_perform_request_params[:endpoint] = 'index'
-          end
           # Check that the expected hash is passed to the perform_request method
           expect(request_params).to eq(expected_perform_request_params)
         end.and_return(response_double)

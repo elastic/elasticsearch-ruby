@@ -28,7 +28,7 @@ when 'mtermvectors'
 <%- when 'cluster.reroute', 'cluster.put_settings' %>
   body = arguments.delete(:body) || {}
 <%- when 'ml.find_file_structure' %>
-  body = Utils.__bulkify(arguments.delete(:body))
+  body = Utils.bulkify(arguments.delete(:body))
 <%- else -%>
   body   = <%= @spec.body.nil? ? 'nil' : 'arguments.delete(:body)' %>
 <%- end -%>

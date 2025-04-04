@@ -21,16 +21,16 @@ describe 'client#inference.put' do
   let(:expected_args) do
     [
       'PUT',
-      '_inference/foo/bar',
+      '_inference/bar',
       {},
-      nil,
       {},
-      { defined_params: { inference_id: 'bar', task_type: 'foo' },
+      {},
+      { defined_params: { inference_id: 'bar' },
         endpoint: 'inference.put' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.put(body: {}, inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end

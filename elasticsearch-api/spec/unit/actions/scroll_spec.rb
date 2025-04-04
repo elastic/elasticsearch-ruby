@@ -22,11 +22,11 @@ describe 'client#scroll' do
     let(:expected_args) do
       [
         'GET',
-        '_search/scroll/cXVlcn...',
+        '_search/scroll',
         {},
         nil,
         {},
-        { defined_params: { scroll_id: 'cXVlcn...' }, endpoint: 'scroll' }
+        { endpoint: 'scroll' }
       ]
     end
 

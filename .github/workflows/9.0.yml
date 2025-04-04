@@ -7,7 +7,7 @@ on:
     branches:
       - 9.0
 jobs:
-  test-9.0:
+  tests:
     env:
       TEST_ES_SERVER: http://localhost:9250
       PORT: 9250
