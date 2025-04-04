@@ -22,33 +22,15 @@ describe 'client#clear_scroll' do
   let(:expected_args) do
     [
       'DELETE',
-      '_search/scroll/abc123',
+      '_search/scroll',
       {},
-      nil,
+      { scroll_id: 'abc123' },
       {},
-      { defined_params: { scroll_id: 'abc123' }, endpoint: 'clear_scroll' }
+      { endpoint: 'clear_scroll' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.clear_scroll(scroll_id: 'abc123')).to be_a Elasticsearch::API::Response
-  end
-
-  context 'when a list of scroll ids is provided' do
-
-    let(:expected_args) do
-      [
-          'DELETE',
-          '_search/scroll/abc123,def456',
-          {},
-          nil,
-          {},
-          { defined_params: { scroll_id: ['abc123', 'def456'] }, endpoint: 'clear_scroll' }
-      ]
-    end
-
-    it 'performs the request' do
-      expect(client_double.clear_scroll(scroll_id: ['abc123', 'def456'])).to be_a Elasticsearch::API::Response
-    end
+    expect(client_double.clear_scroll(body: { scroll_id: 'abc123' })).to be_a Elasticsearch::API::Response
   end
 end
