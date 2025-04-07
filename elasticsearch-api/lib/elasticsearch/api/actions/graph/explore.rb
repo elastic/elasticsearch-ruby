@@ -15,9 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit 69cbe7cbe9f49a2886bb419ec847cffb58f8b4fb
-# @see https://github.com/elastic/elasticsearch-specification
-#
+# This code was automatically generated from the Elasticsearch Specification
+# See https://github.com/elastic/elasticsearch-specification
+# See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
     module Graph
