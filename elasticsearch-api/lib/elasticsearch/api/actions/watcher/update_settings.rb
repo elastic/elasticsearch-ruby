@@ -15,9 +15,9 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Auto generated from commit 69cbe7cbe9f49a2886bb419ec847cffb58f8b4fb
-# @see https://github.com/elastic/elasticsearch-specification
-#
+# This code was automatically generated from the Elasticsearch Specification
+# See https://github.com/elastic/elasticsearch-specification
+# See Elasticsearch::ES_SPECIFICATION_COMMIT for commit hash.
 module Elasticsearch
   module API
     module Watcher
@@ -25,7 +25,10 @@ module Elasticsearch
         # Update Watcher index settings.
         # Update settings for the Watcher internal index (+.watches+).
         # Only a subset of settings can be modified.
-        # This includes +index.auto_expand_replicas+ and +index.number_of_replicas+.
+        # This includes +index.auto_expand_replicas+, +index.number_of_replicas+, +index.routing.allocation.exclude.*+,
+        # +index.routing.allocation.include.*+ and +index.routing.allocation.require.*+.
+        # Modification of +index.routing.allocation.include._tier_preference+ is an exception and is not allowed as the
+        # Watcher shards must always be in the +data_content+ tier.
         #
         # @option arguments [Time] :master_timeout The period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error.
