@@ -1,5 +1,57 @@
 *See the full release notes on the official documentation website: https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/release_notes.html*
 
+## 8.17.2 Release notes
+
+### API
+
+New APIs:
+* `esql.async_query_delete`
+* `indices.get_data_lifecycle_stats`
+* `inference.update`
+* `security.delegate_pki`
+
+Updates APIs:
+* `async_search.submit` - Adds `keep_alive` Time parameter.
+* `indices.put_template` - Adds `cause` String parameter.
+* `xpack.info` - Adds `human` parameter for human-readable information.
+* Timeout parameters updated:
+  * `:master_timeout` (Time), explicit operation timeout for connection to master node.
+  * `:timeout` (Time), explicit operation timeout.
+    * Added to:
+      * `index_lifecycle_management.delete_lifecycle` - adds both.
+      * `index_lifecycle_management.delete_lifecycle` - adds `master_timeout`.
+      * `index_lifecycle_management.get_lifecycle` - adds both.
+      * `index_lifecycle_management.put_lifecycle` - adds both.
+      * `index_lifecycle_management.start` - adds both.
+      * `index_lifecycle_management.stop` - adds both.
+      * `ingest.delete_geoip_database` - adds both.
+      * `ingest.delete_geoip_location_database` - adds both.
+      * `ingest.put_geoip_database` - adds both.
+      * `ingest.put_ip_location_database` - adds both.
+      * `license.post_start_trial` - removes `timeout`.
+      * `shutdown.delete_node` - adds both.
+      * `shutdown.put_node` - adds both.
+      * `snapshot_lifecycle_management.delete_lifecycle` - adds both.
+      * `snapshot_lifecycle_management.execute_lifecycle` - adds both.
+      * `snapshot_lifecycle_management.execute_retention` - adds both.
+      * `snapshot_lifecycle_management.get_lifecycle` - adds both.
+      * `snapshot_lifecycle_management.get_stats` - adds both.
+      * `snapshot_lifecycle_management.get_status` - adds both.
+      * `snapshot_lifecycle_management.put_lifecycle` - adds both.
+
+APIs promoted from Experimental to Stable:
+* `inference.delete`
+* `inference.get`
+* `inference.inference`
+* `inference.put`
+* `inference.stream_inference`
+
+## 8.17.1 Release notes
+
+### Client
+
+* Fixes ScrollHelper issue #2556 - There was a bug where an additional search (with scroll) request was made to Elasticsearch for each resulting hit. It was rewritten so that the docs are retrieved as needed and the Helper instance doesn't store documents internally, with big savings in memory and requests to Elasticsearch.
+
 ## 8.17.0 Release notes
 
 ### Client
