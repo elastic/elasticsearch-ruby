@@ -31,8 +31,6 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout The period to wait for the master node.
         #  If the master node is not available before the timeout expires, the request fails and returns an error.
         #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
-        # @option arguments [Time] :timeout The period of time to wait for a response.
-        #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
