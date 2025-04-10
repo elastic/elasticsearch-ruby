@@ -11,7 +11,7 @@ Use the information in this section to troubleshoot common problems and find ans
 
 ## Logging [ruby-ts-logging]
 
-The client provides several options for logging that can help when things go wrong. Check out the extensive documentation on [Logging](elasticsearch-ruby://reference/advanced-config.md#logging).
+The client provides several options for logging that can help when things go wrong. Check out the extensive documentation on [Logging](advanced-config.md#logging).
 
 If you are having trouble sending a request to {{es}} with the client, we suggest enabling `tracing` on the client and testing the cURL command that appears in your terminal:
 
@@ -27,7 +27,7 @@ Testing the cURL command can help find out if there’s a connection issue or if
 
 ## Troubleshooting connection issues [ruby-ts-connection]
 
-When working with multiple hosts, you might want to enable the `retry_on_failure` or `retry_on_status` options to perform a failed request on another node (refer to [Retrying on Failures](elasticsearch-ruby://reference/advanced-config.md#retry-failures)).
+When working with multiple hosts, you might want to enable the `retry_on_failure` or `retry_on_status` options to perform a failed request on another node (refer to [Retrying on Failures](advanced-config.md#retry-failures)).
 
 For optimal performance, use a HTTP library which supports persistent ("keep-alive") connections, such as [patron](https://github.com/toland/patron) or [Typhoeus](https://github.com/typhoeus/typhoeus). Require the library (`require 'patron'`) in your code for Faraday 1.x or the adapter (`require 'faraday/patron'`) for Faraday 2.x, and it will be automatically used.
 
