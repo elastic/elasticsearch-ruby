@@ -22,3 +22,4 @@ toc:
     children:
       - file: Helpers.md
       - file: esql.md
+  - file: troubleshoot.md
