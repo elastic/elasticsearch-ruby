@@ -15,9 +15,22 @@
 # specific language governing permissions and limitations
 # under the License.
 
-module Elasticsearch
-  module API
-    VERSION = '9.0.0'.freeze
-    ES_SPECIFICATION_COMMIT = 'f2651fcb540f55100a80629192c021fd2e7a019c'.freeze
+require 'spec_helper'
+
+describe 'client#inference.inference' do
+  let(:expected_args) do
+    [
+      'POST',
+      '_inference/bar',
+      {},
+      nil,
+      {},
+      { defined_params: { inference_id: 'bar' },
+        endpoint: 'inference.inference' }
+    ]
+  end
+
+  it 'performs the request' do
+    expect(client_double.inference.inference(inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
