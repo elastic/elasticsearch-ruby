@@ -21,9 +21,11 @@ Currently these libraries are supported:
 * [Typhoeus](https://github.com/typhoeus/typhoeus)
 * [HTTPClient](https://rubygems.org/gems/httpclient)
 * [Net::HTTP::Persistent](https://rubygems.org/gems/net-http-persistent)
+* [Excon](https://github.com/excon/faraday-excon)
+* [Async::HTTP](https://github.com/socketry/async-http-faraday)
 
 ::::{note}
-Use [Typhoeus](https://github.com/typhoeus/typhoeus) v1.4.0 or up since older versions are not compatible with Faraday 1.0.
+If using [Typhoeus](https://github.com/typhoeus/typhoeus), v1.4.0 or up is needed, since older versions are not compatible with Faraday 1.0.
 ::::
 
 
