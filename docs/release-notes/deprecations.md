@@ -7,6 +7,10 @@ Over time, certain Elastic functionality becomes outdated and is replaced or rem
 
 Review the deprecated functionality for Elasticsearch Ruby Client. While deprecations have no immediate impact, we strongly encourage you update your implementation after you upgrade. To learn how to upgrade, check out [Upgrade](docs-content://deploy-manage/upgrade.md).
 
+## 9.0.0 [elasticsearch-ruby-client-900-deprecations]
+
+_No deprecations_
+
 % ## Next version [elasticsearch-ruby-client-versionnext-deprecations]
 
 % ::::{dropdown} Deprecation title
