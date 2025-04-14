@@ -27,7 +27,7 @@ describe 'Perform request args' do
             spec.visibility != 'public' ||
             # TODO: Once the test suite is migrated to elasticsearch-specification, these should be removed
             spec.module_namespace.flatten.first == 'rollup' ||
-            ['scroll', 'clear_scroll', 'connector.last_sync'].include?(spec.endpoint_name)
+            ['scroll', 'clear_scroll', 'connector.last_sync', 'knn_search'].include?(spec.endpoint_name)
 
     # These are the path parts defined by the user in the method argument
     defined_path_parts = spec.path_params.inject({}) do |params, part|
