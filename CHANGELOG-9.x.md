@@ -1,4 +1,9 @@
 # CHANGELOG 9.x
+## Ruby version
+
+Ruby 3.2 and up are tested and supported. At the time of release, we're testingb
+
+We follow Ruby’s own maintenance policy and officially support all currently maintained versions per [Ruby Maintenance Branches](https://www.ruby-lang.org/en/downloads/branches/).
 
 ## Gem
 
