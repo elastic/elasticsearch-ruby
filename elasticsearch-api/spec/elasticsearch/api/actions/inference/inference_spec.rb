@@ -17,20 +17,20 @@
 
 require 'spec_helper'
 
-describe 'client#inference.put_eis' do
+describe 'client#inference.inference' do
   let(:expected_args) do
     [
-      'PUT',
+      'POST',
       '_inference/foo/bar',
       {},
       nil,
       {},
-      { defined_params: { eis_inference_id: 'bar', task_type: 'foo' },
-        endpoint: 'inference.put_eis' }
+      { defined_params: { inference_id: 'bar', task_type: 'foo' },
+        endpoint: 'inference.inference' }
     ]
   end
 
   it 'performs the request' do
-    expect(client_double.inference.put_eis(task_type: 'foo', eis_inference_id: 'bar')).to be_a Elasticsearch::API::Response
+    expect(client_double.inference.inference(task_type: 'foo', inference_id: 'bar')).to be_a Elasticsearch::API::Response
   end
 end
