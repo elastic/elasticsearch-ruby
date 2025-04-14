@@ -38,7 +38,7 @@ module Elasticsearch
         #  For example, a request targeting +foo*,bar*+ returns an error if an index starts with +foo+ but no index starts with +bar+. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-resolve-index
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-resolve-index
         #
         def resolve_index(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.resolve_index' }

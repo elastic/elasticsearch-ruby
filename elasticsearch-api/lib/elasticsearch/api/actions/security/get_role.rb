@@ -32,7 +32,7 @@ module Elasticsearch
         #  If you do not specify this parameter, the API returns information about all roles.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-role
         #
         def get_role(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_role' }

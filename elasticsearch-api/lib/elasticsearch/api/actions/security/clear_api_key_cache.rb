@@ -31,7 +31,7 @@ module Elasticsearch
         #  Does not support other wildcard patterns. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-api-key-cache
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-api-key-cache
         #
         def clear_api_key_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_api_key_cache' }

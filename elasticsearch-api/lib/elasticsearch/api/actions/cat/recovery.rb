@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-recovery
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-recovery
         #
         def recovery(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.recovery' }

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :name The distinct name that identifies the role mapping. The name is used solely as an identifier to facilitate interaction via the API; it does not affect the behavior of the mapping in any way. You can specify multiple mapping names as a comma-separated list. If you do not specify this parameter, the API returns information about all role mappings.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-role-mapping
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-role-mapping
         #
         def get_role_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_role_mapping' }

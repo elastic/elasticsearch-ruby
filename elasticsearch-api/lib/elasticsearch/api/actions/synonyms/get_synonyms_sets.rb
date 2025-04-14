@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Integer] :size The maximum number of synonyms sets to retrieve. Server default: 10.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-get-synonym
         #
         def get_synonyms_sets(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonyms_sets' }

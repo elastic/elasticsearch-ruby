@@ -60,7 +60,7 @@ module Elasticsearch
         #  Set to +all+ or any positive integer up to the total number of shards in the index (+number_of_replicas+1+). Server default: 1.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-open
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-open
         #
         def open(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.open' }

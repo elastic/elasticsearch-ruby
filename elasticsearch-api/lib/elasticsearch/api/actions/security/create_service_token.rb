@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [String] :refresh If +true+ then refresh the affected shards to make this operation visible to search, if +wait_for+ (the default) then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-create-service-token
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-create-service-token
         #
         def create_service_token(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.create_service_token' }

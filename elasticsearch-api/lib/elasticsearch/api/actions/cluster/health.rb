@@ -45,7 +45,7 @@ module Elasticsearch
         # @option arguments [String] :wait_for_status One of green, yellow or red. Will wait (until the timeout provided) until the status of the cluster changes to the one provided or better, i.e. green > yellow > red. By default, will not wait for any status.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-health
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-health
         #
         def health(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.health' }

@@ -35,7 +35,7 @@ module Elasticsearch
         #  In particular, it adds descriptions and a tag line. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.info' }

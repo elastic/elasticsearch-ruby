@@ -33,7 +33,7 @@ module Elasticsearch
         #  A value of +-1+ indicates that the request should never time out. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-delete-ip-location-database
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ingest-delete-ip-location-database
         #
         def delete_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.delete_ip_location_database' }

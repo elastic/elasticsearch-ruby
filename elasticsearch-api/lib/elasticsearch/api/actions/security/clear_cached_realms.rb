@@ -36,7 +36,7 @@ module Elasticsearch
         #  If you do not specify this parameter, the API evicts all users from the user cache.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-clear-cached-realms
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-clear-cached-realms
         #
         def clear_cached_realms(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.clear_cached_realms' }

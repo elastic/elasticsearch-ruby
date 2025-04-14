@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout The time to wait for the request to be completed. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-set-upgrade-mode
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-set-upgrade-mode
         #
         def set_upgrade_mode(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.set_upgrade_mode' }

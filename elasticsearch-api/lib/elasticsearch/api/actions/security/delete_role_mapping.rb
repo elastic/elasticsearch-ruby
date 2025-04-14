@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String] :refresh If +true+ (the default) then refresh the affected shards to make this operation visible to search, if +wait_for+ then wait for a refresh to make this operation visible to search, if +false+ then do nothing with refreshes.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-delete-role-mapping
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-delete-role-mapping
         #
         def delete_role_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delete_role_mapping' }

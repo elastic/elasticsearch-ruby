@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-query-api-keys
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-query-api-keys
         #
         def query_api_keys(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.query_api_keys' }

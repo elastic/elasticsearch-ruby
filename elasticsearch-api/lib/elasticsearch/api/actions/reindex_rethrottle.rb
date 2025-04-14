@@ -36,7 +36,7 @@ module Elasticsearch
       #  It can be either +-1+ to turn off throttling or any decimal number like +1.7+ or +12+ to throttle to that level.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-reindex
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-reindex
       #
       def reindex_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'reindex_rethrottle' }

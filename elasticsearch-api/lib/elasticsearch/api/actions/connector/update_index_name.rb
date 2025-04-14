@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-index-name
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-update-index-name
         #
         def update_index_name(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_index_name' }

@@ -59,7 +59,7 @@ module Elasticsearch
         # @option arguments [Boolean] :verbose If +true+, returns additional information about each snapshot such as the version of Elasticsearch which took the snapshot, the start and end times of the snapshot, and the number of shards snapshotted.NOTE: The parameters +size+, +order+, +after+, +from_sort_value+, +offset+, +slm_policy_filter+, and +sort+ are not supported when you set +verbose=false+ and the sort order for requests with +verbose=false+ is undefined. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-snapshot-get
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.get' }

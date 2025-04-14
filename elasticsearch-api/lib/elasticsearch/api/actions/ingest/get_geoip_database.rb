@@ -30,7 +30,7 @@ module Elasticsearch
         #  To get all database configurations, omit this parameter or use +*+.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-get-geoip-database
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ingest-get-geoip-database
         #
         def get_geoip_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.get_geoip_database' }

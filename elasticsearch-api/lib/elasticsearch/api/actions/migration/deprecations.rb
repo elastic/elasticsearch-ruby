@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :index Comma-separate list of data streams or indices to check. Wildcard (*) expressions are supported.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-migration-deprecations
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-migration-deprecations
         #
         def deprecations(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'migration.deprecations' }

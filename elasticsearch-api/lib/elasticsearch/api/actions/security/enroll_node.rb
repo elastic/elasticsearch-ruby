@@ -29,7 +29,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enroll-node
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enroll-node
         #
         def enroll_node(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.enroll_node' }

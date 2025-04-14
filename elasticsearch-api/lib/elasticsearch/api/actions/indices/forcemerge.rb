@@ -72,7 +72,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion Should the request wait until the force merge is completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-forcemerge
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-forcemerge
         #
         def forcemerge(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.forcemerge' }

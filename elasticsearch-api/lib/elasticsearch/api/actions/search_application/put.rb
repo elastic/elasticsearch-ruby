@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body search_application
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-application-put
         #
         def put(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.put' }

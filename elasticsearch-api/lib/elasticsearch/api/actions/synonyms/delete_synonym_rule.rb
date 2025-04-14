@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :rule_id The ID of the synonym rule to delete. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-delete-synonym-rule
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-delete-synonym-rule
         #
         def delete_synonym_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.delete_synonym_rule' }

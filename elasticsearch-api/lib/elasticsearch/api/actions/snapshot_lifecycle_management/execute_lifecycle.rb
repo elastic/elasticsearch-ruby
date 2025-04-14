@@ -33,7 +33,7 @@ module Elasticsearch
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-execute-lifecycle
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-slm-execute-lifecycle
         #
         def execute_lifecycle(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.execute_lifecycle' }

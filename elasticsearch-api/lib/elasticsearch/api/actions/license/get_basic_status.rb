@@ -26,7 +26,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-license-get-basic-status
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-license-get-basic-status
         #
         def get_basic_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'license.get_basic_status' }

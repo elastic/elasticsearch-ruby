@@ -49,7 +49,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-template
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-template
       #
       def search_template(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search_template' }

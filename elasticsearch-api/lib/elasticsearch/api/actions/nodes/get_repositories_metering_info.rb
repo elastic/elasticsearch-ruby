@@ -31,11 +31,10 @@ module Elasticsearch
         # to fix any issues, but experimental features are not subject to the
         # support SLA of official GA features.
         #
-        # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information.
-        #  All the nodes selective options are explained {https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster.html#cluster-nodes here}. (*Required*)
+        # @option arguments [String, Array] :node_id Comma-separated list of node IDs or names used to limit returned information. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-get-repositories-metering-info
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-get-repositories-metering-info
         #
         def get_repositories_metering_info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.get_repositories_metering_info' }

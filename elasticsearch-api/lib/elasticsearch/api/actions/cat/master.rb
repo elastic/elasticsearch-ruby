@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-master
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-master
         #
         def master(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.master' }

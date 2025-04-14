@@ -37,7 +37,7 @@ module Elasticsearch
         # @option arguments [Boolean] :hard A flag indicating if the connector should be hard deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-delete
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.delete' }

@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :rule_id The ID of the synonym rule to retrieve. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-synonyms-get-synonym-rule
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-synonyms-get-synonym-rule
         #
         def get_synonym_rule(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'synonyms.get_synonym_rule' }

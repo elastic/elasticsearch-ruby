@@ -47,7 +47,7 @@ module Elasticsearch
         #  tags are returned.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-trained-models
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-trained-models
         #
         def get_trained_models(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_trained_models' }

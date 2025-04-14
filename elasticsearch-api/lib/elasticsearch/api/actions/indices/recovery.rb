@@ -47,7 +47,7 @@ module Elasticsearch
         # @option arguments [Boolean] :detailed If +true+, the response includes detailed information about shard recoveries.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-recovery
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-recovery
         #
         def recovery(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.recovery' }

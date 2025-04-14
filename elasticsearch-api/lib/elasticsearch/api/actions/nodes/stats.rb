@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_unloaded_segments If +true+, the response includes information from segments that are not loaded into memory.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.stats' }

@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :expand_wildcards Type of data stream that wildcard patterns can match. Supports comma-separated values,such as +open,hidden+. Server default: open.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-delete-data-stream
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-delete-data-stream
         #
         def delete_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.delete_data_stream' }

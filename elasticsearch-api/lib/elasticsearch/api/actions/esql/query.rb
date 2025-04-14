@@ -35,7 +35,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html
+        # @see https://www.elastic.co/docs/explore-analyze/query-filter/languages/esql-rest
         #
         def query(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.query' }

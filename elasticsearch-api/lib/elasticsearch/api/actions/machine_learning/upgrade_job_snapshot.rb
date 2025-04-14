@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Controls the time to wait for the request to complete. Server default: 30m.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-upgrade-job-snapshot
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-upgrade-job-snapshot
         #
         def upgrade_job_snapshot(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.upgrade_job_snapshot' }

@@ -30,7 +30,7 @@ module Elasticsearch
         #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stop
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-watcher-stop
         #
         def stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.stop' }

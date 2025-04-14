@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-get-ruleset
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-query-rules-get-ruleset
         #
         def get_ruleset(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.get_ruleset' }

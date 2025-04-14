@@ -34,7 +34,7 @@ module Elasticsearch
         #  If you do not specify this parameter, the API returns information about all privileges for the requested application.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-privileges
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-privileges
         #
         def get_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_privileges' }

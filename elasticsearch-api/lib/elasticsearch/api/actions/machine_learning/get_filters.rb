@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Integer] :size Specifies the maximum number of filters to obtain. Server default: 100.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-filters
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-filters
         #
         def get_filters(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_filters' }

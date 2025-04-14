@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-put-azureopenai
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-put-azureopenai
         #
         def put_azureopenai(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_azureopenai' }

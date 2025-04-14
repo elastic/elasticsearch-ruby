@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :id The identifier for the search. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-sql-get-async-status
         #
         def get_async_status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'sql.get_async_status' }

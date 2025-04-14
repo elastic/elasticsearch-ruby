@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-promote-data-stream
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-promote-data-stream
         #
         def promote_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.promote_data_stream' }

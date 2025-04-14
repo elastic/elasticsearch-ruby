@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout The time to wait for the job to be deleted. Server default: 1m.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-delete-data-frame-analytics
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-delete-data-frame-analytics
         #
         def delete_data_frame_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.delete_data_frame_analytics' }

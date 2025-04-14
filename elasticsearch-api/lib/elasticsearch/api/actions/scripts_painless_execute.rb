@@ -35,7 +35,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/painless/current/painless-execute-api.html
+      # @see https://www.elastic.co/docs/reference/scripting-languages/painless/painless-api-examples
       #
       def scripts_painless_execute(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'scripts_painless_execute' }

@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Integer] :size Specifies a max number of results to get.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-application-get-behavioral-analytics
         #
         def list(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.list' }

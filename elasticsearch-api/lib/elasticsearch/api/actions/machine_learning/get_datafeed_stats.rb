@@ -43,7 +43,7 @@ module Elasticsearch
         #  +404+ status code when there are no matches or only partial matches.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-datafeed-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-datafeed-stats
         #
         def get_datafeed_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_datafeed_stats' }

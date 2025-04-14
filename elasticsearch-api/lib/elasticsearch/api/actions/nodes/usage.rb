@@ -31,7 +31,7 @@ module Elasticsearch
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-usage
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-usage
         #
         def usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.usage' }

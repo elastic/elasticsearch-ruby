@@ -130,7 +130,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [String|Array] :body operations. Array of Strings, Header/Data pairs, or the conveniency "combined" format can be passed, refer to Elasticsearch::API::Utils.bulkify documentation.
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-bulk
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-bulk
       #
       def bulk(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'bulk' }

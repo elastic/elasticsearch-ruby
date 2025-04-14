@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :model_id The unique identifier of the trained model. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-clear-trained-model-deployment-cache
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-clear-trained-model-deployment-cache
         #
         def clear_trained_model_deployment_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.clear_trained_model_deployment_cache' }
