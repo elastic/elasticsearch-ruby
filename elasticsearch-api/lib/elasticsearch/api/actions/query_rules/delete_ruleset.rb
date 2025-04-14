@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [String] :ruleset_id The unique identifier of the query ruleset to delete (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-query-rules-delete-ruleset
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-query-rules-delete-ruleset
         #
         def delete_ruleset(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'query_rules.delete_ruleset' }
@@ -50,11 +50,19 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_DELETE
           path   = "_query_rules/#{Utils.listify(_ruleset_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
-          Elasticsearch::API::Response.new(
-            perform_request(method, path, params, body, headers, request_opts)
-          )
+          if Array(arguments[:ignore]).include?(404)
+            Utils.rescue_from_not_found do
+              Elasticsearch::API::Response.new(
+                perform_request(method, path, params, body, headers, request_opts)
+              )
+            end
+          else
+            Elasticsearch::API::Response.new(
+              perform_request(method, path, params, body, headers, request_opts)
+            )
+          end
         end
       end
     end
