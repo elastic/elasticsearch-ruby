@@ -7,6 +7,10 @@ Review the deprecated functionality for your Elasticsearch Ruby Client version. 
 
 To learn how to upgrade, check out <uprade docs>.
 
+## 9.0.0 [elasticsearch-ruby-client-900-deprecations]
+
+_No deprecations_
+
 % ## Next version [elasticsearch-ruby-client-versionnext-deprecations]
 % **Release date:** Month day, year
 
