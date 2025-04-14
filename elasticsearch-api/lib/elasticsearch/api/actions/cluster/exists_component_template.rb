@@ -34,7 +34,7 @@ module Elasticsearch
         #  Defaults to false, which means information is retrieved from the master node.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-put-component-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-put-component-template
         #
         def exists_component_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.exists_component_template' }

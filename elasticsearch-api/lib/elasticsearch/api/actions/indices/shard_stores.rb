@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Shardstorestatus] :status List of shard health statuses used to limit the request.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-shard-stores
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-shard-stores
         #
         def shard_stores(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.shard_stores' }

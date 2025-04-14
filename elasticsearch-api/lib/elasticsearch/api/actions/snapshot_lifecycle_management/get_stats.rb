@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout Period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-slm-get-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-slm-get-stats
         #
         def get_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'slm.get_stats' }

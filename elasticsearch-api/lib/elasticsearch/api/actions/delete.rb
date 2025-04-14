@@ -66,7 +66,7 @@ module Elasticsearch
       #  The default value of +1+ means it waits for each primary shard to be active. Server default: 1.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-delete
       #
       def delete(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete' }

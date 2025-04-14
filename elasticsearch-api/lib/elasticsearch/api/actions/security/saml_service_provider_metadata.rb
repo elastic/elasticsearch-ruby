@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :realm_name The name of the SAML realm in Elasticsearch. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-saml-service-provider-metadata
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-saml-service-provider-metadata
         #
         def saml_service_provider_metadata(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.saml_service_provider_metadata' }

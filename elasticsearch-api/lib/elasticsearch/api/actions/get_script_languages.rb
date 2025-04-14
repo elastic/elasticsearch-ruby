@@ -26,7 +26,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-languages
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get-script-languages
       #
       def get_script_languages(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script_languages' }

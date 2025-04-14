@@ -26,7 +26,7 @@ module Elasticsearch
       #
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-get-script-context
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-get-script-context
       #
       def get_script_context(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'get_script_context' }

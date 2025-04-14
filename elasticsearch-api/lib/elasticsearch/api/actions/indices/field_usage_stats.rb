@@ -44,7 +44,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :fields Comma-separated list or wildcard expressions of fields to include in the statistics.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-field-usage-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-field-usage-stats
         #
         def field_usage_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.field_usage_stats' }

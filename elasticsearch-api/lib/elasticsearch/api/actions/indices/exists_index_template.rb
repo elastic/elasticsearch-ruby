@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-exists-index-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-exists-index-template
         #
         def exists_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.exists_index_template' }

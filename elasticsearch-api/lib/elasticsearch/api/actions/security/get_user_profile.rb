@@ -35,7 +35,7 @@ module Elasticsearch
         #  By default returns no +data+ content.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-user-profile
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-user-profile
         #
         def get_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_user_profile' }

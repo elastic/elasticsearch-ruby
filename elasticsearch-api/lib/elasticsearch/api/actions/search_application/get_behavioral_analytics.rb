@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [Array<String>] :name A list of analytics collections to limit the returned information
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-application-get-behavioral-analytics
         #
         def get_behavioral_analytics(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.get_behavioral_analytics' }

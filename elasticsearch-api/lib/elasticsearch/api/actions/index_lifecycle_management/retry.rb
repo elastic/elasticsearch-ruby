@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :index The name of the indices (comma-separated) whose failed lifecycle step is to be retry (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-retry
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ilm-retry
         #
         def retry(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.retry' }

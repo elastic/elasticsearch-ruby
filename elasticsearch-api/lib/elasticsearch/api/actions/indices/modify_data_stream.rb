@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-modify-data-stream
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-modify-data-stream
         #
         def modify_data_stream(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.modify_data_stream' }

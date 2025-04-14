@@ -47,7 +47,7 @@ module Elasticsearch
       # @option arguments [String] :routing A custom value used to route operations to a specific shard.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-shards
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-shards
       #
       def search_shards(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'search_shards' }

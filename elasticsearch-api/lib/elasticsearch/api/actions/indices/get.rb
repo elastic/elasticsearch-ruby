@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :features Return only information on specified index features Server default: ['aliases', 'mappings', 'settings'].
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-get
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get' }

@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body repository
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-snapshot-create-repository
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-snapshot-create-repository
         #
         def create_repository(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'snapshot.create_repository' }

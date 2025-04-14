@@ -41,7 +41,7 @@ module Elasticsearch
       # @option arguments [Integer] :size Limit the number of affected resources the health report API returns. Server default: 1000.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-health-report
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-health-report
       #
       def health_report(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'health_report' }

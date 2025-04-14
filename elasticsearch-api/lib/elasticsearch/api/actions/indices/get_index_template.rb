@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_defaults If true, returns all relevant default configurations for the index template.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-index-template
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-get-index-template
         #
         def get_index_template(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_index_template' }

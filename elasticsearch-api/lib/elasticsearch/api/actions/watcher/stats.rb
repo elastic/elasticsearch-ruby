@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :emit_stacktraces Defines whether stack traces are generated for each watch that is running.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-watcher-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.stats' }

@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Boolean] :ignore_unavailable If +false+, the request returns an error if it targets a missing or closed index.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-segments
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-segments
         #
         def segments(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.segments' }

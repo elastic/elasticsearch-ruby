@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ilm-migrate-to-data-tiers
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ilm-migrate-to-data-tiers
         #
         def migrate_to_data_tiers(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ilm.migrate_to_data_tiers' }

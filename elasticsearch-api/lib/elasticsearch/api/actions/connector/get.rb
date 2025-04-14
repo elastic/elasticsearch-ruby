@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Boolean] :include_deleted A flag to indicate if the desired connector should be fetched, even if it was soft-deleted.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-get
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.get' }

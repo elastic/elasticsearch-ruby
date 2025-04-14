@@ -26,6 +26,7 @@ module Elasticsearch
         # This API enables you to use machine learning models to perform specific tasks on data that you provide as an input.
         # It returns a response with the results of the tasks.
         # The inference endpoint you use can perform one specific task that has been defined when the endpoint was created with the create inference API.
+        # For details about using this API with a service, such as Amazon Bedrock, Anthropic, or HuggingFace, refer to the service-specific documentation.
         #
         # @option arguments [String] :task_type The type of inference task that the model performs.
         # @option arguments [String] :inference_id The unique identifier for the inference endpoint. (*Required*)
@@ -33,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-inference
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-inference
         #
         def inference(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.inference' }

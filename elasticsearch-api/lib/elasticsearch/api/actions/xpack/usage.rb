@@ -31,7 +31,7 @@ module Elasticsearch
         #  To indicate that the request should never timeout, set it to +-1+. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-xpack
         #
         def usage(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'xpack.usage' }

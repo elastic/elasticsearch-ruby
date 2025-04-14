@@ -32,7 +32,7 @@ module Elasticsearch
         #  Supports comma-separated values, such as +open,hidden+. Server default: open.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-data-streams-stats-1
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-data-streams-stats-1
         #
         def data_streams_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.data_streams_stats' }

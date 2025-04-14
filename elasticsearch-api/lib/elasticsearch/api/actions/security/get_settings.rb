@@ -33,7 +33,7 @@ module Elasticsearch
         #  If no response is received before the timeout expires, the request fails and returns an error.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-settings
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-settings
         #
         def get_settings(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_settings' }

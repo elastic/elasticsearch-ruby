@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [String] :id A unique identifier for the async search. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-async-search-submit
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'async_search.delete' }

@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-watcher-start
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-watcher-start
         #
         def start(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'watcher.start' }

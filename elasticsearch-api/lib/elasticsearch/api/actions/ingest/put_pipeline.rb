@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest.html
+        # @see https://www.elastic.co/docs/manage-data/ingest/transform-enrich/ingest-pipelines
         #
         def put_pipeline(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_pipeline' }

@@ -33,7 +33,7 @@ module Elasticsearch
         #  Ongoing async searches and any saved search results are deleted after this period. Server default: 5d.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-async-search-submit
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-async-search-submit
         #
         def status(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'async_search.status' }

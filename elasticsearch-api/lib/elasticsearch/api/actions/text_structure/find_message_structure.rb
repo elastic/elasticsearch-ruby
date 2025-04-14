@@ -100,7 +100,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-text-structure-find-message-structure
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-text-structure-find-message-structure
         #
         def find_message_structure(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'text_structure.find_message_structure' }

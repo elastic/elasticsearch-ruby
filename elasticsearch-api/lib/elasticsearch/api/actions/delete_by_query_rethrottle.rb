@@ -30,7 +30,7 @@ module Elasticsearch
       #  To disable throttling, set it to +-1+.
       # @option arguments [Hash] :headers Custom HTTP headers
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-delete-by-query-rethrottle
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-delete-by-query-rethrottle
       #
       def delete_by_query_rethrottle(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'delete_by_query_rethrottle' }

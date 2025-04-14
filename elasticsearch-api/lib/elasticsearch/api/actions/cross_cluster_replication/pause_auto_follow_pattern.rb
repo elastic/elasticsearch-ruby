@@ -36,7 +36,7 @@ module Elasticsearch
         #  It can also be set to +-1+ to indicate that the request should never timeout. Server default: 30s.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ccr-pause-auto-follow-pattern
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ccr-pause-auto-follow-pattern
         #
         def pause_auto_follow_pattern(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ccr.pause_auto_follow_pattern' }

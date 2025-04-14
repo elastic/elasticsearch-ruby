@@ -27,7 +27,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/geoip-processor.html
+        # @see https://www.elastic.co/docs/reference/enrich-processor/geoip-processor
         #
         def geo_ip_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.geo_ip_stats' }

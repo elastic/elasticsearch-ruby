@@ -49,7 +49,7 @@ module Elasticsearch
         # @option arguments [Time] :wait_for_timeout The maximum time to wait for wait_for_metadata_version before timing out
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-state
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-state
         #
         def state(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.state' }

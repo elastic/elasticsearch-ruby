@@ -34,7 +34,7 @@ module Elasticsearch
         #  nodes are still in the cluster. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-post-voting-config-exclusions
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-post-voting-config-exclusions
         #
         def delete_voting_config_exclusions(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.delete_voting_config_exclusions' }

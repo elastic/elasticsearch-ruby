@@ -46,7 +46,7 @@ module Elasticsearch
         # @option arguments [Boolean] :request If +true+, clears the request cache.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-clear-cache
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-clear-cache
         #
         def clear_cache(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.clear_cache' }

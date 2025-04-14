@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [Integer] :size Specifies the maximum number of models to obtain. Server default: 100.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ml-get-trained-models-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ml-get-trained-models-stats
         #
         def get_trained_models_stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ml.get_trained_models_stats' }

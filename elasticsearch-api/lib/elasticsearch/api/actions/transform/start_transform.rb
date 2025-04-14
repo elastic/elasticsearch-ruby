@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [String] :from Restricts the set of transformed entities to those changed after this time. Relative times like now-30d are supported. Only applicable for continuous transforms.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-transform-start-transform
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-transform-start-transform
         #
         def start_transform(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'transform.start_transform' }

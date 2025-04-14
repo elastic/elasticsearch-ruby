@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :name The name of the search application (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-search-application-get
         #
         def get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'search_application.get' }

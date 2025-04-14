@@ -38,7 +38,7 @@ module Elasticsearch
         # @option arguments [String] :sort The sort order for 'cpu' type (default: total)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-nodes-hot-threads
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-nodes-hot-threads
         #
         def hot_threads(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'nodes.hot_threads' }

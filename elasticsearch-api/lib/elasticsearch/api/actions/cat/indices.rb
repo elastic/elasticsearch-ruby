@@ -55,7 +55,7 @@ module Elasticsearch
         # @option arguments [Boolean] :v When set to +true+ will enable verbose output.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cat-indices
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cat-indices
         #
         def indices(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.indices' }

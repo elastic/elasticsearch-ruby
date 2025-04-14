@@ -36,7 +36,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-bulk-update-api-keys
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-bulk-update-api-keys
         #
         def bulk_update_api_keys(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.bulk_update_api_keys' }

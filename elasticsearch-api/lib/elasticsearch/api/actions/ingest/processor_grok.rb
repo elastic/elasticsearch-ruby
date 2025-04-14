@@ -29,7 +29,7 @@ module Elasticsearch
         #
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/grok-processor.html
+        # @see https://www.elastic.co/docs/reference/enrich-processor/grok-processor
         #
         def processor_grok(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.processor_grok' }

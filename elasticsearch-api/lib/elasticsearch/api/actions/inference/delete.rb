@@ -30,7 +30,7 @@ module Elasticsearch
         # @option arguments [Boolean] :force When true, the inference endpoint is forcefully deleted even if it is still being used by ingest processors or semantic text fields.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-inference-delete
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-inference-delete
         #
         def delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.delete' }

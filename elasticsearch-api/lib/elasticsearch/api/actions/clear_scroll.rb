@@ -35,7 +35,7 @@ module Elasticsearch
       # Deprecated since version 7.0.0
       #
       #
-      # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-clear-scroll
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-clear-scroll
       #
       def clear_scroll(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'clear_scroll' }

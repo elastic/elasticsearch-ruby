@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String] :level Return stats aggregated at cluster, index or shard level
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-searchable-snapshots-stats
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-searchable-snapshots-stats
         #
         def stats(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'searchable_snapshots.stats' }

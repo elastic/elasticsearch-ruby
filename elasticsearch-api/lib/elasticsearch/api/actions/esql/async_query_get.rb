@@ -39,7 +39,7 @@ module Elasticsearch
         #  Otherwise, the response returns an +is_running+ value of +true+ and no results.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-esql-async-query-get
         #
         def async_query_get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_get' }

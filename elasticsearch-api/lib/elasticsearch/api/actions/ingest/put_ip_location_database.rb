@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body configuration
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-ingest-put-ip-location-database
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-ingest-put-ip-location-database
         #
         def put_ip_location_database(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'ingest.put_ip_location_database' }

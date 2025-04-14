@@ -34,7 +34,7 @@ module Elasticsearch
         #  A query ID is also provided when the request was submitted with the +keep_on_completion+ parameter set to +true+. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-async-query-delete
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-esql-async-query-delete
         #
         def async_query_delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_delete' }

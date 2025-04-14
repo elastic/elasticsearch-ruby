@@ -46,13 +46,13 @@ module Elasticsearch
         # @option arguments [Array<Integer>] :wait_for_checkpoints A comma separated list of checkpoints. When configured, the search API will only be executed on a shard
         #  after the relevant checkpoint has become visible for search. Defaults to an empty list which will cause
         #  Elasticsearch to immediately execute the search. Server default: [].
-        # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or {https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-replication.html#shard-failures shard failures}. If false, returns
-        #  an error with no partial results. Defaults to the configured cluster setting +search.default_allow_partial_results+
-        #  which is true by default.
+        # @option arguments [Boolean] :allow_partial_search_results If true, returns partial results if there are shard request timeouts or shard failures.
+        #  If false, returns an error with no partial results.
+        #  Defaults to the configured cluster setting +search.default_allow_partial_results+, which is true by default.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body searches
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-fleet-msearch
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-fleet-msearch
         #
         def msearch(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'fleet.msearch' }

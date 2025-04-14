@@ -43,7 +43,7 @@ module Elasticsearch
         # @option arguments [Boolean] :local If +true+, the request retrieves information from the local node only.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-get-mapping
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-get-mapping
         #
         def get_field_mapping(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.get_field_mapping' }

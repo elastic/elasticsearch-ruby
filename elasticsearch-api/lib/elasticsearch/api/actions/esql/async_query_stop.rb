@@ -33,7 +33,7 @@ module Elasticsearch
         #  If +true+, the response will include an extra section under the name +all_columns+ which has the name of all the columns.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-esql-async-query-stop
         #
         def async_query_stop(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_stop' }

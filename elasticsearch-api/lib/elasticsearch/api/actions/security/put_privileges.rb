@@ -40,7 +40,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body privileges
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-put-privileges
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-put-privileges
         #
         def put_privileges(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.put_privileges' }

@@ -45,7 +45,7 @@ module Elasticsearch
       # @option arguments [Hash] :headers Custom HTTP headers
       # @option arguments [Hash] :body request body
       #
-      # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search-api.html
+      # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-knn-search
       #
       def knn_search(arguments = {})
         request_opts = { endpoint: arguments[:endpoint] || 'knn_search' }

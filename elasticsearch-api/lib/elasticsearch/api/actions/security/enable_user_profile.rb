@@ -37,7 +37,7 @@ module Elasticsearch
         #  If 'false', nothing is done with refreshes. Server default: false.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-enable-user-profile
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-enable-user-profile
         #
         def enable_user_profile(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.enable_user_profile' }

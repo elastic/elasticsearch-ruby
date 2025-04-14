@@ -47,7 +47,7 @@ module Elasticsearch
         #  If +false+, Elasticsearch returns an error if you request a flush when another flush operation is running. Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-flush
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-flush
         #
         def flush(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.flush' }

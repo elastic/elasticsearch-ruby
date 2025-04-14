@@ -28,7 +28,7 @@ module Elasticsearch
         # @option arguments [String, Array<String>] :target Limits the information returned to the specific target. Supports a comma-separated list, such as http,ingest. (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-cluster-info
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-cluster-info
         #
         def info(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cluster.info' }

@@ -31,7 +31,7 @@ module Elasticsearch
         # @option arguments [String] :connector_sync_job_id The unique identifier of the connector sync job (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-sync-job-get
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-connector-sync-job-get
         #
         def sync_job_get(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.sync_job_get' }

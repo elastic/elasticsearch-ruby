@@ -33,7 +33,7 @@ module Elasticsearch
         #  Omit this parameter to retrieve information about all service accounts that belong to the specified +namespace+.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-security-get-service-accounts
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-security-get-service-accounts
         #
         def get_service_accounts(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.get_service_accounts' }
