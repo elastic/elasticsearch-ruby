@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [String, Array] :index The index or data stream name (*Required*)
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/group/endpoint-migration
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/v9/operation/operation-indices-cancel-migrate-reindex
         #
         def cancel_migrate_reindex(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.cancel_migrate_reindex' }
