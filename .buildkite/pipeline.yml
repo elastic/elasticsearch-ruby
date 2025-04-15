@@ -8,7 +8,6 @@ steps:
           - "3.4"
           - "3.3"
           - "3.2"
-          - "3.1"
         ruby_source:
           - "ruby"
         transport:
@@ -17,7 +16,7 @@ steps:
         - with: # JRuby tests
             ruby: "9.4"
             ruby_source: "jruby"
-            transport: "8.3"
+            transport: "8.4"
         # Test for different versions of transport
         - with:
             ruby: "3.4"
@@ -26,7 +25,7 @@ steps:
         - with:
             ruby: "3.4"
             ruby_source: "ruby"
-            transport: "8.2"
+            transport: "8.3"
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
       STACK_VERSION: 9.0.0-SNAPSHOT
