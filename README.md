@@ -79,8 +79,8 @@ Elasticsearch language clients are only backwards compatible with default distri
 
 | Gem Version |   | Elasticsearch  Version | Supported |
 |-------------|---|------------------------|-----------|
-| 7.x         | → | 7.x                    | 7.17      |
 | 8.x         | → | 8.x                    | 8.x       |
+| 9.x         | → | 9.x                    | 9.x       |
 | main        | → | main                   |           |
 
 ## Try Elasticsearch and Kibana locally
