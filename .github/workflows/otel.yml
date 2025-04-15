@@ -2,10 +2,10 @@ name: opentelemetry
 on:
   push:
     branches:
-      - 8.x
+      - 8.18
   pull_request:
     branches:
-      - 8.x
+      - 8.18
 jobs:
   test-otel:
     name: 'Test Open Telemetry'
