@@ -1,0 +1,54 @@
+[[release_notes_8_18]]
+=== 8.18 Release notes
+
+[discrete]
+[[release_notes_8_18_0]]
+=== 8.18.0 Release notes
+
+[discrete]
+==== API
+
+New APIs:
+
+* `esql.async_query_stop` - Stops a previously submitted async query request given its ID and collects the results.
+* `inference.chat_completion_unified` - Perform chat completion inference
+* `inference.completion` - Perform completion inference
+* `inference.put_alibabacloud` - Configure an AlibabaCloud AI Search inference endpoint
+* `inference.put_amazonbedrock` - Configure an Amazon Bedrock inference endpoint
+* `inference.put_anthropic` - Configure an Anthropic inference endpoint
+* `inference.put_azureaistudio` - Configure an Azure AI Studio inference endpoint
+* `inference.put_azureopenai` - Configure an Azure OpenAI inference endpoint
+* `inference.put_cohere` - Configure a Cohere inference endpoint
+* `inference.put_elasticsearch` - Configure an Elasticsearch inference endpoint
+* `inference.put_elser` - Configure an ELSER inference endpoint
+* `inference.put_googleaistudio` - Configure a Google AI Studio inference endpoint
+* `inference.put_googlevertexai` - Configure a Google Vertex AI inference endpoint
+* `inference.put_hugging_face` - Configure a HuggingFace inference endpoint
+* `inference.put_jinaai` - Configure a JinaAI inference endpoint
+* `inference.put_mistral` - Configure a Mistral inference endpoint
+* `inference.put_openai` - Configure an OpenAI inference endpoint
+* `inference.put_voyageai` - Configure a VoyageAI inference endpoint
+* `inference.put_watsonx` - Configure a Watsonx inference endpoint
+* `inference.rerank` - Perform reranking inference
+* `inference.sparse_embedding` - Perform sparse embedding inference
+* `inference.stream_inference` renamed to `inference.stream_completion` - Perform streaming completion inference.
+* `inference.text_embedding` - Perform text embedding inference
+
+
+Updated APIs:
+
+* `bulk`, `create`, `index`, `update` - Add Boolean parameter `:include_source_on_error`, if to include the document source in the error message in case of parsing errors (defaults to true).
+* `cat.segments`
+** Adds  Boolean parameter `:local`, return local information, do not retrieve the state from master node (default: false).
+** Adds Time parameter `:master_timeout`, explicit operation timeout for connection to master node.
+* `cat.tasks`
+** Adds Time parameter `:timeout`, period to wait for a response. If no response is received before the timeout expires, the request fails and returns an error.
+** Adds Boolean parameter `:wait_for_completion`, if `true`, the request blocks until the task has completed.
+* `eql.search`
+** Adds Boolean parameter `:allow_partial_search_results`, control whether the query should keep running in case of shard failures, and return partial results.
+** Adds Boolean parameter `:allow_partial_sequence_results`, control whether a sequence query should return partial results or no results at all in case of shard failures. This option has effect only if [allow_partial_search_results] is true.
+* `index_lifecycle_management.delete_lifecycle`, `index_lifecycle_management.explain_lifecycle`, `index_lifecycle_management.get_lifecycle`, `index_lifecycle_management.put_lifecycle`, `index_lifecycle_management.start`, `index_lifecycle_management.stop`, remove `:master_timeout`, `:timeout` parameters.
+* `indices.resolve_cluster` - Adds `:timeout` parameter, `:name` no longer a required parameter.
+* `indices.rollover` - Removes target_failure_store parameter.
+* `ingest.delete_geoip_database`, `ingest.delete_ip_location_database`, `put_geoip_database`, `put_ip_location_database` remove `:master_timeout`, `:timeout` parameters.
+* `machine_learning.start_trained_model_deployment` - Adds body request parameter, the settings for the trained model deployment.
