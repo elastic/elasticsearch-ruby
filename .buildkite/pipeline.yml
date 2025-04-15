@@ -14,7 +14,7 @@ steps:
           - "8.4"
       adjustments:
         - with: # JRuby tests
-            ruby: "9.4"
+            ruby: "10.0"
             ruby_source: "jruby"
             transport: "8.4"
         # Test for different versions of transport
