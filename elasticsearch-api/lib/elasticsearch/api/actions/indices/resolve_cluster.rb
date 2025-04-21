@@ -32,7 +32,7 @@ module Elasticsearch
         # @option arguments [Time] :timeout The maximum time to wait for remote clusters to respond
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-resolve-cluster-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/indices-resolve-cluster-api.html
         #
         def resolve_cluster(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.resolve_cluster' }
