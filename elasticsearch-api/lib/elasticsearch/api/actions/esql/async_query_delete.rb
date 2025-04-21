@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [String] :id The async query ID
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/esql-async-query-delete-api.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/esql-async-query-delete-api.html
         #
         def async_query_delete(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'esql.async_query_delete' }

@@ -42,7 +42,7 @@ module Elasticsearch
         # @option arguments [Boolean] :wait_for_completion If `true`, the request blocks until the task has completed.
         # @option arguments [Hash] :headers Custom HTTP headers
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/tasks.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/tasks.html
         #
         def tasks(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'cat.tasks' }

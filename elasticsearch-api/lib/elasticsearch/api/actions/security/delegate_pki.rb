@@ -27,7 +27,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The X509Certificate chain. (*Required*)
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/security-api-delegate-pki-authentication.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/security-api-delegate-pki-authentication.html
         #
         def delegate_pki(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'security.delegate_pki' }
