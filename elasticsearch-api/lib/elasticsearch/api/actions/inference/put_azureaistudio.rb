@@ -29,7 +29,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body The inference endpoint's task and service settings
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.17/infer-service-azure-ai-studio.html
+        # @see https://www.elastic.co/guide/en/elasticsearch/reference/8.18/infer-service-azure-ai-studio.html
         #
         def put_azureaistudio(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'inference.put_azureaistudio' }
