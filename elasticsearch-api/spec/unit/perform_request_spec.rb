@@ -28,8 +28,8 @@ describe 'Perform request args' do
             # TODO: Once the test suite is migrated to elasticsearch-specification, these should be removed
             spec.module_namespace.flatten.first == 'rollup' ||
             [
-              'scroll', 'clear_scroll', 'connector.last_sync', 'inference.put_eis', 'esql.get_query',
-              'esql.list_queries', 'knn_search'
+              'scroll', 'clear_scroll', 'connector.last_sync', 'inference.put_eis', 'knn_search',
+              'indices.put_data_stream_options', 'indices.delete_data_stream_options', 'indices.get_data_stream_options'
             ].include?(spec.endpoint_name)
 
     # These are the path parts defined by the user in the method argument
