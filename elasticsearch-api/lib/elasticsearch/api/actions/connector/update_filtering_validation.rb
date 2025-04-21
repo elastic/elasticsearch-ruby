@@ -33,7 +33,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/update-connector-filtering-validation-api.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-connector-update-filtering-validation
         #
         def update_filtering_validation(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'connector.update_filtering_validation' }

@@ -34,7 +34,7 @@ module Elasticsearch
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body create_from
         #
-        # @see https://www.elastic.co/guide/en/elasticsearch/reference/current/migrate-data-stream.html
+        # @see https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-indices-create-from
         #
         def create_from(arguments = {})
           request_opts = { endpoint: arguments[:endpoint] || 'indices.create_from' }
