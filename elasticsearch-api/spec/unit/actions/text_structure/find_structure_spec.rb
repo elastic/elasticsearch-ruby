@@ -24,10 +24,16 @@ describe 'client.text_structure#test_grok_pattern' do
       '_text_structure/find_structure',
       {},
       {},
-      { 'Content-Type' => 'application/x-ndjson' },
+      headers,
       { endpoint: 'text_structure.find_structure' }
     ]
   end
+
+  let(:headers) {
+    {
+      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+    }
+  }
 
   it 'performs the request' do
     expect(client_double.text_structure.find_structure(body: {})).to be_a Elasticsearch::API::Response

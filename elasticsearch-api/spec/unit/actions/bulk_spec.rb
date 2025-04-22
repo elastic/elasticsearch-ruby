@@ -25,11 +25,16 @@ describe 'client#bulk' do
         params,
         body,
         headers,
-        {:endpoint=>"bulk"}
+        { endpoint: 'bulk' }
     ]
   end
 
-  let(:headers) { { 'Content-Type' => 'application/x-ndjson' } }
+  let(:headers) {
+    {
+      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+    }
+  }
+
   let(:params) { {} }
   let(:url) { '_bulk' }
   let(:body) { '' }

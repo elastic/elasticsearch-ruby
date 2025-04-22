@@ -41,9 +41,11 @@ describe 'client#msearch' do
     {}
   end
 
-  let(:headers) do
-    { 'Content-Type' => 'application/x-ndjson' }
-  end
+  let(:headers) {
+    {
+      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+    }
+  }
 
   let(:client) do
     Class.new { include Elasticsearch::API }.new
@@ -89,7 +91,6 @@ describe 'client#msearch' do
   end
 
   context 'when an index is specified' do
-
     let(:url) do
       'foo/_msearch'
     end
@@ -115,7 +116,6 @@ describe 'client#msearch' do
   end
 
   context 'when multiple indices are specified' do
-
     let(:url) do
       'foo,bar/_msearch'
     end
