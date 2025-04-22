@@ -24,10 +24,16 @@ describe 'client#fleet.msearch' do
       '_fleet/_fleet_msearch',
       {},
       {},
-      { 'Content-Type' => 'application/x-ndjson' },
+      headers,
       { endpoint: 'fleet.msearch' }
     ]
   end
+
+  let(:headers) {
+    {
+      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+    }
+  }
 
   it 'performs the request' do
     expect(client_double.fleet.msearch(body: {})).to be_a Elasticsearch::API::Response
