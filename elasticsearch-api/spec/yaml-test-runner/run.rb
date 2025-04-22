@@ -81,7 +81,7 @@ logger.level = ENV['DEBUG'] ? Logger::DEBUG : Logger::WARN
 
 # If we're running in a release branch, download the corresponding branch for tests
 current_branch = `git rev-parse --abbrev-ref HEAD`.strip
-branch = current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || ENV['ES_YAML_TESTS_BRANCH'] || nil
+branch = ENV['ES_YAML_TESTS_BRANCH'] || current_branch.match(/[0-9]\.[0-9]+/)&.[](0) || nil
 Elasticsearch::Tests::Downloader::run(tests_path, branch)
 
 runner = Elasticsearch::Tests::TestRunner.new(CLIENT, tests_path, logger)
