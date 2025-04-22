@@ -37,16 +37,17 @@ describe 'client#msearch_template' do
     {}
   end
 
-  let(:headers) do
-    { 'Content-Type' => 'application/x-ndjson' }
-  end
+  let(:headers) {
+    {
+      'Content-Type' => 'application/vnd.elasticsearch+x-ndjson; compatible-with=9'
+    }
+  }
 
   let(:url) do
     '_msearch/template'
   end
 
   context 'when a body is provided as a document' do
-
     let(:body) do
       <<-PAYLOAD.gsub(/^\s+/, '')
             {"index":"foo"}
@@ -67,7 +68,6 @@ describe 'client#msearch_template' do
   end
 
   context 'when a body is provided as a string' do
-
     let(:body) do
       %Q|{"foo":"bar"}\n{"moo":"lam"}|
     end
@@ -78,7 +78,6 @@ describe 'client#msearch_template' do
   end
 
   context 'when an index is provided' do
-
     let(:url) do
       'foo/_msearch/template'
     end
