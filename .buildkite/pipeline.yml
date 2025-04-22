@@ -29,7 +29,7 @@ steps:
     env:
       RUBY_VERSION: "{{ matrix.ruby }}"
       STACK_VERSION: 9.0.0-SNAPSHOT
-      ES_YAML_TESTS_BRANCH: main
+      ES_YAML_TESTS_BRANCH: '9.0'
       TRANSPORT_VERSION: "{{ matrix.transport }}"
       RUBY_SOURCE: "{{ matrix.ruby_source }}"
       TEST_SUITE: "platinum"
@@ -62,7 +62,7 @@ steps:
       RUBY_VERSION: "3.4"
       RUBY_SOURCE: "ruby"
       TEST_SUITE: serverless
-      ES_YAML_TESTS_BRANCH: main
+      ES_YAML_TESTS_BRANCH: '9.0'
       QUIET: false
     command: ./.buildkite/run-yaml-tests.sh
     artifact_paths: "elasticsearch-api/tmp/*"
