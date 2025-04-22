@@ -52,6 +52,7 @@ module Elasticsearch
       api_key(arguments) if arguments[:api_key]
       setup_cloud(arguments) if arguments[:cloud_id]
       set_user_agent!(arguments) unless sent_user_agent?(arguments)
+      set_content_type!(arguments)
       @transport = Elastic::Transport::Client.new(arguments, &block)
     end
 
@@ -175,9 +176,21 @@ module Elasticsearch
       if RbConfig::CONFIG && RbConfig::CONFIG['host_os']
         user_agent << "#{RbConfig::CONFIG['host_os'].split('_').first[/[a-z]+/i].downcase} #{RbConfig::CONFIG['target_cpu']}"
       end
+      set_header({ user_agent: user_agent.join('; ') }, arguments)
+    end
+
+    def set_content_type!(arguments)
+      headers = {
+        'content-type' => 'application/vnd.elasticsearch+json; compatible-with=9',
+        'accept' => 'application/vnd.elasticsearch+json; compatible-with=9'
+      }
+      set_header(headers, arguments)
+    end
+
+    def set_header(header, arguments)
       arguments[:transport_options] ||= {}
       arguments[:transport_options][:headers] ||= {}
-      arguments[:transport_options][:headers].merge!({ user_agent: user_agent.join('; ') })
+      arguments[:transport_options][:headers].merge!(header)
     end
   end
 
