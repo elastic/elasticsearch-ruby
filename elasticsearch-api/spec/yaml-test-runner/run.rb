@@ -62,9 +62,9 @@ options.merge!({ api_key: ENV['ES_API_KEY'] }) if ENV['ES_API_KEY']
 if serverless?
   options.merge!(
     {
-      retry_on_status: [409, 400],
+      retry_on_status: [409, 400, 503],
       retry_on_failure: 10,
-      delay_on_retry: 60_000,
+      delay_on_retry: 5_000,
       request_timeout: 120
     }
   )
