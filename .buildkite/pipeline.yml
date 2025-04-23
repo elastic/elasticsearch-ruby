@@ -1,88 +1,93 @@
 steps:
-  - label: ":yaml: YAML test suite :ruby: {{ matrix.ruby_source}}:{{ matrix.ruby }} :phone: Transport {{ matrix.transport }}"
+  - label: >-
+      :yaml: YAML test suite :ruby: {{ matrix.ruby_source}}:{{ matrix.ruby }}
+      :phone: Transport {{ matrix.transport }}
     agents:
-      provider: "gcp"
+      provider: gcp
     matrix:
       setup:
         ruby:
-          - "3.4"
-          - "3.3"
-          - "3.2"
+          - '3.4'
+          - '3.3'
+          - '3.2'
         ruby_source:
-          - "ruby"
+          - ruby
         transport:
-          - "8.4"
+          - '8.4'
       adjustments:
         - with: # JRuby tests
-            ruby: "9.4"
-            ruby_source: "jruby"
-            transport: "8.4"
-        # Test for different versions of transport
-        - with:
-            ruby: "3.4"
-            ruby_source: "ruby"
-            transport: "main"
-        - with:
-            ruby: "3.4"
-            ruby_source: "ruby"
-            transport: "8.3"
+            ruby: '9.4'
+            ruby_source: jruby
+            transport: '8.4'
+        - with: # Test for main branch of transport
+            ruby: '3.4'
+            ruby_source: ruby
+            transport: main
     env:
-      RUBY_VERSION: "{{ matrix.ruby }}"
+      RUBY_VERSION: '{{ matrix.ruby }}'
       STACK_VERSION: 9.0.0-SNAPSHOT
       ES_YAML_TESTS_BRANCH: '9.0'
-      TRANSPORT_VERSION: "{{ matrix.transport }}"
-      RUBY_SOURCE: "{{ matrix.ruby_source }}"
-      TEST_SUITE: "platinum"
+      TRANSPORT_VERSION: '{{ matrix.transport }}'
+      RUBY_SOURCE: '{{ matrix.ruby_source }}'
+      TEST_SUITE: platinum
       DEBUG: true
     command: ./.buildkite/run-yaml-tests.sh
-    artifact_paths: "elasticsearch-api/tmp/*"
-  - label: "Create :elasticsearch: Serverless projects"
-    key: "create-serverless"
-    agents:
-      image: docker.elastic.co/appex-qa/qaf:latest
-    env:
-      EC_PROJECT_PREFIX: ruby
-      EC_REGISTER_BACKEND: buildkite
-      EC_REGION: aws-eu-west-1
-      EC_ENV: qa
-    commands:
-      - mkdir ~/.elastic
-      - touch ~/.elastic/cloud.json
-      - echo "{\"api_key\":{\"qa\":\"$(vault read -field=qa secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" > ~/.elastic/cloud.json
-      - ./.buildkite/create-serverless.sh
-  - label: "Run :elasticsearch: Serverless :rspec: Tests :ruby:"
-    key: run-serverless-tests
-    depends_on:
-      - step: create-serverless
-    # soft_fail:
-    #   - exit_status: 1
-    agents:
-      provider: "gcp"
-    env:
-      RUBY_VERSION: "3.4"
-      RUBY_SOURCE: "ruby"
-      TEST_SUITE: serverless
-      ES_YAML_TESTS_BRANCH: '9.0'
-      QUIET: false
-    command: ./.buildkite/run-yaml-tests.sh
-    artifact_paths: "elasticsearch-api/tmp/*"
-  - label: "Destroy :elasticsearch: Serverless projects"
-    depends_on:
-      - step: run-serverless-tests
-        allow_failure: true
-    agents:
-      image: docker.elastic.co/appex-qa/qaf:latest
-    env:
-      EC_REGISTER_BACKEND: buildkite
-      EC_ENV: qa
-      EC_REGION: aws-eu-west-1
-    commands:
-      - mkdir ~/.elastic
-      - touch ~/.elastic/cloud.json
-      - export EC_PROJECT_NAME=`buildkite-agent meta-data get "EC_PROJECT_NAME"`
-      - echo "{\"api_key\":{\"qa\":\"$(vault read -field=qa secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" > ~/.elastic/cloud.json
-      - qaf elastic-cloud projects delete
+    artifact_paths: elasticsearch-api/tmp/*
+  - group: 'Elasticsearch Serverless :elasticsearch:'
+    steps:
+      - label: 'Create :elasticsearch: Serverless projects'
+        key: create-serverless
+        agents:
+          image: 'docker.elastic.co/appex-qa/qaf:latest'
+        env:
+          EC_PROJECT_PREFIX: ruby
+          EC_REGISTER_BACKEND: buildkite
+          EC_REGION: aws-eu-west-1
+          EC_ENV: qa
+        commands:
+          - mkdir ~/.elastic
+          - touch ~/.elastic/cloud.json
+          - >-
+            echo "{\"api_key\":{\"qa\":\"$(vault read -field=qa
+            secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" >
+            ~/.elastic/cloud.json
+          - ./.buildkite/create-serverless.sh
+      - label: 'Run :elasticsearch: Serverless :rspec: Tests :ruby:'
+        key: run-serverless-tests
+        depends_on:
+          - step: create-serverless
+        agents:
+          provider: gcp
+        env:
+          RUBY_VERSION: '3.4'
+          RUBY_SOURCE: ruby
+          TEST_SUITE: serverless
+          ES_YAML_TESTS_BRANCH: '9.0'
+          QUIET: false
+        command: ./.buildkite/run-yaml-tests.sh
+        artifact_paths: elasticsearch-api/tmp/*
+      - label: 'Destroy :elasticsearch: Serverless projects'
+        depends_on:
+          - step: run-serverless-tests
+            allow_failure: true
+        agents:
+          image: 'docker.elastic.co/appex-qa/qaf:latest'
+        env:
+          EC_REGISTER_BACKEND: buildkite
+          EC_ENV: qa
+          EC_REGION: aws-eu-west-1
+        commands:
+          - mkdir ~/.elastic
+          - touch ~/.elastic/cloud.json
+          - >-
+            export EC_PROJECT_NAME=`buildkite-agent meta-data get
+            "EC_PROJECT_NAME"`
+          - >-
+            echo "{\"api_key\":{\"qa\":\"$(vault read -field=qa
+            secret/ci/elastic-elasticsearch-ruby/cloud-access)\"}}" >
+            ~/.elastic/cloud.json
+          - qaf elastic-cloud projects delete
   - wait: ~
     continue_on_failure: true
-  - label: "Log Results"
+  - label: Log Results
     command: ./.buildkite/log-results.sh
