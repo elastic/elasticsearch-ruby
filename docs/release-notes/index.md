@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.0.1 [elasticsearch-ruby-client-9.0.1-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.0.1-fixes]
+
+- The request headers were updated for Elasticsearch v9: `compatible-with=9` [#2660](https://github.com/elastic/elasticsearch-ruby/pull/2660).
+
 ## 9.0.0 [elasticsearch-ruby-client-900-release-notes]
 
 ### Features and enhancements [elasticsearch-ruby-client-900-features-enhancements]
