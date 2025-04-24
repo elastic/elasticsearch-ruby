@@ -1,5 +1,9 @@
 **See the full release notes on the official documentation website: https://www.elastic.co/docs/release-notes/elasticsearch/clients/ruby**
 
+# 9.0.2
+
+- Udpates setting 'Accept' and 'Content-Type' headers as to not duplicate or overwrite set headers [#2666](https://github.com/elastic/elasticsearch-ruby/pull/2666).
+
 # 9.0.1
 
 - The request headers were updated for Elasticsearch v9: `compatible-with=9` [#2660](https://github.com/elastic/elasticsearch-ruby/pull/2660).
