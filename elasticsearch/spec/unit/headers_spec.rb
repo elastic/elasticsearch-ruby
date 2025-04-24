@@ -52,4 +52,73 @@ describe Elasticsearch::Client do
       client.search(headers: param_headers)
     end
   end
+
+  context 'when accept header is changed' do
+    let!(:client) do
+      described_class.new(
+        host: 'http://localhost:9200',
+        transport_options: { headers: instance_headers }
+      ).tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+    let(:instance_headers) do
+      { accept: 'application/json' }
+    end
+
+    it 'performs the request with the header' do
+      connection_headers = client.transport.connections.connections.first.connection.headers
+      expect(connection_headers['Accept']).to eq 'application/json'
+      expect(connection_headers['Content-Type']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
+
+  context 'when content-type header is changed' do
+    let!(:client) do
+      described_class.new(
+        host: 'http://localhost:9200',
+        transport_options: { headers: instance_headers }
+      ).tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+    let(:instance_headers) do
+      { content_type: 'application/json' }
+    end
+
+    it 'performs the request with the header' do
+      connection_headers = client.transport.connections.connections.first.connection.headers
+      expect(connection_headers['Accept']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+      expect(connection_headers['Content-Type']).to eq 'application/json'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+              .with(:get, 'http://localhost:9200/_search', nil, connection_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
+
+  context 'when no header is set, uses v9 content-type and accept' do
+    let!(:client) do
+      described_class.new(host: 'http://localhost:9200').tap do |client|
+        client.instance_variable_set('@verified', true)
+      end
+    end
+
+    it 'performs the request with the header' do
+      expected_headers = client.transport.connections.connections.first.connection.headers
+      expect(expected_headers['Accept']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+      expect(expected_headers['Content-Type']).to eq 'application/vnd.elasticsearch+json; compatible-with=9'
+
+      expect_any_instance_of(Faraday::Connection)
+        .to receive(:run_request)
+              .with(:get, 'http://localhost:9200/_search', nil, expected_headers) { OpenStruct.new(body: '') }
+      client.search
+    end
+  end
 end
