@@ -180,11 +180,15 @@ module Elasticsearch
     end
 
     def set_content_type!(arguments)
-      headers = {
-        'content-type' => 'application/vnd.elasticsearch+json; compatible-with=9',
-        'accept' => 'application/vnd.elasticsearch+json; compatible-with=9'
-      }
-      set_header(headers, arguments)
+      headers = {}
+      user_headers = arguments&.[](:transport_options)&.[](:headers)
+      unless user_headers&.keys&.detect { |h| h =~ /content-?_?type/ }
+        headers['content-type'] = 'application/vnd.elasticsearch+json; compatible-with=9'
+      end
+      unless user_headers&.keys&.detect { |h| h =~ /accept/ }
+        headers['accept'] = 'application/vnd.elasticsearch+json; compatible-with=9'
+      end
+      set_header(headers, arguments) unless headers.empty?
     end
 
     def set_header(header, arguments)
