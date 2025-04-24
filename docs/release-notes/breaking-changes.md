@@ -14,6 +14,10 @@ Breaking changes can impact your Elastic applications, potentially disrupting no
 % **Action**<br> Steps for mitigating deprecation impact.
 % ::::
 
+## 9.0.1 [elasticsearch-ruby-client-9.0.1-breaking-changes]
+
+This release fixes an omission in `9.0.0`. The client sends the `Accept` and `Content-Type` headers to Elasticsearch with the value 'application/vnd.elasticsearch+json; compatible-with=9' to ensure compatibility with Elastic Stack 9.0. You can [customize the HTTP headers](/reference/advanced-config.md#custom-http-headers) when instantiating the client or per request. Note that a compatible version is required on both `Content-Type` and `Accept` headers.
+
 ## 9.0.0 [elasticsearch-ruby-client-900-breaking-changes]
 
 ### Scroll APIs need to send scroll_id in request body

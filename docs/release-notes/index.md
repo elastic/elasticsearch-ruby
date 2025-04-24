@@ -20,6 +20,12 @@ To check for security updates, go to [Security announcements for the Elastic sta
 % ### Fixes [elasticsearch-ruby-client-next-fixes]
 % *
 
+## 9.0.2 [elasticsearch-ruby-client-9.0.2-release-notes]
+
+### Fixes [elasticsearch-ruby-client-9.0.2-fixes]
+
+- Udpates setting `Accept` and `Content-Type` headers as to not duplicate or overwrite user set headers [#2666](https://github.com/elastic/elasticsearch-ruby/pull/2666).
+
 ## 9.0.1 [elasticsearch-ruby-client-9.0.1-release-notes]
 
 ### Fixes [elasticsearch-ruby-client-9.0.1-fixes]
