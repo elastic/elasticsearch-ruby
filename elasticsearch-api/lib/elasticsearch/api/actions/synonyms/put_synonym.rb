@@ -29,6 +29,8 @@ module Elasticsearch
         # This is equivalent to invoking the reload search analyzers API for all indices that use the synonyms set.
         #
         # @option arguments [String] :id The ID of the synonyms set to be created or updated. (*Required*)
+        # @option arguments [Boolean] :refresh If +true+, the request will refresh the analyzers with the new synonyms set and wait for the new synonyms to be available before returning.
+        #  If +false+, analyzers will not be reloaded with the new synonym set Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -54,7 +56,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_synonyms/#{Utils.listify(_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
