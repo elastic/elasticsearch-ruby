@@ -29,6 +29,8 @@ module Elasticsearch
         #
         # @option arguments [String] :set_id The ID of the synonym set. (*Required*)
         # @option arguments [String] :rule_id The ID of the synonym rule to be updated or created. (*Required*)
+        # @option arguments [Boolean] :refresh If +true+, the request will refresh the analyzers with the new synonym rule and wait for the new synonyms to be available before returning.
+        #  If +false+, analyzers will not be reloaded with the new synonym rule Server default: true.
         # @option arguments [Hash] :headers Custom HTTP headers
         # @option arguments [Hash] :body request body
         #
@@ -57,7 +59,7 @@ module Elasticsearch
 
           method = Elasticsearch::API::HTTP_PUT
           path   = "_synonyms/#{Utils.listify(_set_id)}/#{Utils.listify(_rule_id)}"
-          params = {}
+          params = Utils.process_params(arguments)
 
           Elasticsearch::API::Response.new(
             perform_request(method, path, params, body, headers, request_opts)
