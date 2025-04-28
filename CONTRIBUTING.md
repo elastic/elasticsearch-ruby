@@ -16,12 +16,12 @@ This will run `bundle install` in all subprojects.
 
 You can run the client code right away in a Interactive Ruby Shell by running the following command from the project's root directory:
 ```
-$ ./elasticsearch/bin/elastic_ruby_console
+$ rake console # calls ./elasticsearch/bin/elastic_ruby_console
 [1] elastic_ruby(main)> client = Elasticsearch::Client.new(host: 'http://elastic:changeme@localhost:9200', log: true)
 [2] elastic_ruby(main)> client.info
 ```
 
-This will use either `irb` or `pry` and load the `elasticsearch` and `elasticsearch-api` gems into the shell. 
+This will use either `irb` or `pry` and load the `elasticsearch` and `elasticsearch-api` gems into the shell.
 
 # Tests
 
@@ -31,8 +31,8 @@ To run the tests, you need to start a testing cluster on port 9200. We suggest u
 rake docker:start[VERSION]
 ```
 
-E.g.: `rake docker:start[8.0-SNAPSHOT]`.
-To start the container with Platinum, pass it in as a parameter: `rake docker:start[7.x-SNAPSHOT,platinum]`.
+E.g.: `rake docker:start[9.0.0-SNAPSHOT]`.
+To start the container with Platinum, pass it in as a parameter: `rake docker:start[8.x-SNAPSHOT,platinum]`.
 
 There's another rake task that will read the STACK_VERSION value from `.buildkite/pipeline.yml` and run that version of Elasticsearch: `rake es:up`.
 
@@ -41,6 +41,12 @@ If you get this error when running the script:
 max virtual memory areas vm.max_map_count [65530] likely too low, increase to at least [262144]
 ```
 Check [this link](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144) for instructions on how to fix it.
+
+You can also use [start-local](https://github.com/elastic/start-local), which can run Elasticsearch and Kibana locally for development/testing. You only need to run Elasticsearch (`-esonly`) for development purposes, and you can specify a version with the `-v` parameter:
+
+```bash
+curl -fsSL https://elastic.co/start-local | sh -s -- -esonly -v 9.0.0
+```
 
 As mentioned, the tests will atempt to run against `http://localhost:9200` by default. We provide the Docker task for the test cluster and recommend using it. But you can provide a different test server of your own. If you're using a different host or port, set the `TEST_ES_SERVER` environment variable with the server information. E.g.:
 
@@ -51,12 +57,20 @@ $ TEST_ES_SERVER='http://localhost:9250' be rake test:client
 To run all the tests in all the subprojects, use the Rake task:
 
 ```
-time rake test:client
+rake test:client
 ```
 
-# Elasticsearch Rest API YAML Test Runner
+# Elasticsearch Rest API Tests
 
-See the API Spec tests [README](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api/api-spec-testing#readme).
+The integration tests on this project run the [Elasticsearch Client tests](https://github.com/elastic/elasticsearch-clients-tests/) with the [Elasticsearch Tests Runner](https://github.com/elastic/es-test-runner-ruby/) library. This runs in CI against an Elasticsearch cluster in Docker. The [Elasticsearch's REST API Spec tests](https://github.com/elastic/elasticsearch/tree/main/rest-api-spec/src/main/resources/rest-api-spec/test#test-suite) can still be ran following [these instructions](https://github.com/elastic/elasticsearch-ruby/tree/main/elasticsearch-api/api-spec-testing#readme).
+
+You can run the yaml API tests with:
+
+```
+rake test:yaml
+```
+
+Check `rake -T` for more test tasks.
 
 # Contributing
 
