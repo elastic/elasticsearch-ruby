@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Get anomaly detection jobs usage info.
+        # Get anomaly detection job stats.
         #
         # @option arguments [String] :job_id Identifier for the anomaly detection job. It can be a job identifier, a
         #  group name, a comma-separated list of jobs, or a wildcard expression. If

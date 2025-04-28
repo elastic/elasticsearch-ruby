@@ -22,7 +22,7 @@ module Elasticsearch
   module API
     module MachineLearning
       module Actions
-        # Get data frame analytics jobs usage info.
+        # Get data frame analytics job stats.
         #
         # @option arguments [String] :id Identifier for the data frame analytics job. If you do not specify this
         #  option, the API returns information for the first hundred data frame
