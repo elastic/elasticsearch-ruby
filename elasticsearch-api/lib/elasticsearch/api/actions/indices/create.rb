@@ -39,7 +39,15 @@ module Elasticsearch
         # You can change the default of only waiting for the primary shards to start through the index setting +index.write.wait_for_active_shards+.
         # Note that changing this setting will also affect the +wait_for_active_shards+ value on all subsequent write operations.
         #
-        # @option arguments [String] :index Name of the index you wish to create. (*Required*)
+        # @option arguments [String] :index Name of the index you wish to create.
+        #  Index names must meet the following criteria:
+        #  - Lowercase only
+        #  - Cannot include +\+, +/+, +*+, +?+, +"+, +<+, +>+, +|+, ++ (space character), +,+, or +#+
+        #  - Indices prior to 7.0 could contain a colon (+:+), but that has been deprecated and will not be supported in later versions
+        #  - Cannot start with +-+, +_+, or +++
+        #  - Cannot be +.+ or +..+
+        #  - Cannot be longer than 255 bytes (note thtat it is bytes, so multi-byte characters will reach the limit faster)
+        #  - Names starting with +.+ are deprecated, except for hidden indices and internal indices managed by plugins (*Required*)
         # @option arguments [Time] :master_timeout Period to wait for a connection to the master node.
         #  If no response is received before the timeout expires, the request fails and returns an error. Server default: 30s.
         # @option arguments [Time] :timeout Period to wait for a response.
