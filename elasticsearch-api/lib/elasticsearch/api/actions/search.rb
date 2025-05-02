@@ -76,8 +76,8 @@ module Elasticsearch
       #  - +_local+ to, if possible, run the search on shards on the local node, or if not, select shards using the default method.
       #  - +_only_nodes:<node-id>,<node-id>+ to run the search on only the specified nodes IDs. If suitable shards exist on more than one selected node, use shards on those nodes using the default method. If none of the specified nodes are available, select shards from any available node using the default method.
       #  - +_prefer_nodes:<node-id>,<node-id>+ to if possible, run the search on the specified nodes IDs. If not, select shards using the default method.
-      #  +_shards:<shard>,<shard>+ to run the search only on the specified shards. You can combine this value with other +preference+ values. However, the +_shards+ value must come first. For example: +_shards:2,3|_local+.
-      #  +<custom-string>+ (any string that does not start with +_+) to route searches with the same +<custom-string>+ to the same shards in the same order.
+      #  - +_shards:<shard>,<shard>+ to run the search only on the specified shards. You can combine this value with other +preference+ values. However, the +_shards+ value must come first. For example: +_shards:2,3|_local+.
+      #  - +<custom-string>+ (any string that does not start with +_+) to route searches with the same +<custom-string>+ to the same shards in the same order.
       # @option arguments [Integer] :pre_filter_shard_size A threshold that enforces a pre-filter roundtrip to prefilter search shards based on query rewriting if the number of shards the search request expands to exceeds the threshold.
       #  This filter roundtrip can limit the number of shards significantly if for instance a shard can not match any documents based on its rewrite method (if date filters are mandatory to match but the shard bounds and the query are disjoint).
       #  When unspecified, the pre-filter phase is executed if any of these conditions is met:
