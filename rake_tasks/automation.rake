@@ -45,7 +45,7 @@ namespace :automation do
     end
 
     sh "export ES_RUBY_CLIENT_PATH=#{path} " \
-       ' && cd elastic-client-generator-ruby/elasticsearch ' \
+       ' && cd elastic-client-generator-ruby ' \
        ' && sudo bundle install ' \
        " && bundle exec rake update[#{branch}]" \
        ' && bundle exec rake gen_es' \
